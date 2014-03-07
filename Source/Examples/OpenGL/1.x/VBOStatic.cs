@@ -102,7 +102,7 @@ namespace Examples.Tutorial
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
 
-            angle += rotation_speed * (float)e.ElapsedTime;
+            angle += rotation_speed * (float)e.DeltaTime;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
             Draw(vbo[0]);

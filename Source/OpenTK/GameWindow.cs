@@ -491,7 +491,7 @@ namespace OpenTK
         void RaiseUpdateFrame(double elapsed, ref double timestamp)
         {
             // Raise UpdateFrame event
-            update_args.ElapsedTime = elapsed;
+            update_args.DeltaTime = elapsed;
             OnUpdateFrameInternal(update_args);
 
             // Update UpdatePeriod/UpdateFrequency properties
@@ -507,7 +507,7 @@ namespace OpenTK
         void RaiseRenderFrame(double elapsed, ref double timestamp)
         {
             // Raise RenderFrame event
-            render_args.ElapsedTime = elapsed;
+            render_args.DeltaTime = elapsed;
             OnRenderFrameInternal(render_args);
 
             // Update RenderPeriod/UpdateFrequency properties

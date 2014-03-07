@@ -50,13 +50,13 @@ namespace OpenTK
         /// <param name="elapsed">The amount of time that has elapsed since the previous event, in seconds.</param>
         public FrameEventArgs(double elapsed)
         {
-            ElapsedTime = elapsed;
+            DeltaTime = elapsed;
         }
 
         /// <summary>
         /// Gets a <see cref="System.Double"/> that indicates how much time (in seconds) has elapsed since the previous event.
         /// </summary>
-        public double ElapsedTime 
+        public double DeltaTime 
         {
             get { return elapsed; }
             internal set
@@ -65,6 +65,15 @@ namespace OpenTK
                     throw new ArgumentOutOfRangeException();
                 elapsed = value;
             }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="System.Double"/> that indicates how much time (in seconds) has elapsed since the previous event.
+        /// </summary>
+        [Obsolete("Use DeltaTime instead.")]
+        public double Time
+        {
+            get { return DeltaTime; }
         }
     }
 }

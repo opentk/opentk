@@ -257,8 +257,8 @@ namespace Examples.Tutorial
             GL.UseProgram(ProgramObject);
 
             // advance the animation by elapsed time, scaling is solely used to make the anim more interesting
-            AnimOffsetX += (float)(e.ElapsedTime * AnimSpeedX);
-            AnimOffsetY += (float)(e.ElapsedTime * AnimSpeedY);
+            AnimOffsetX += (float)(e.DeltaTime * AnimSpeedX);
+            AnimOffsetY += (float)(e.DeltaTime * AnimSpeedY);
 
             // pass uniforms into the fragment shader
             // first the texture

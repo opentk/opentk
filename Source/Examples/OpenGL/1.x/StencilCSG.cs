@@ -261,10 +261,10 @@ namespace Examples.Tutorial
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            this.Title = WindowTitle + "  FPS: " + (1f / e.ElapsedTime).ToString("0.");
+            this.Title = WindowTitle + "  FPS: " + (1f / e.DeltaTime).ToString("0.");
 
-            MySphereZOffset += (float)(e.ElapsedTime * 3.1);
-            MySphereXOffset += (float)(e.ElapsedTime * 4.2);
+            MySphereZOffset += (float)(e.DeltaTime * 3.1);
+            MySphereXOffset += (float)(e.DeltaTime * 4.2);
 
             #region Transform setup
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
