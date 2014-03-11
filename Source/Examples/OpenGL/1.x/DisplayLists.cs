@@ -65,7 +65,7 @@ namespace Examples.Tutorial
                 GL.Rotate(c * 360.0f, 0.0, 0.0, 1.0);
                 GL.Translate(5.0, 0.0, 0.0);
 
-                GL.Begin(BeginMode.Quads);
+                GL.Begin(PrimitiveType.Quads);
 
                 GL.Vertex3(-1.0f, -1.0f, 1.0f);
                 GL.Vertex3(1.0f, -1.0f, 1.0f);

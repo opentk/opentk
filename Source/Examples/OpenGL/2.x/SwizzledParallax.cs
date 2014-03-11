@@ -161,7 +161,7 @@ namespace Examples.Tutorial
             GL.DeleteShader( VertexShaderObject );
             GL.DeleteShader( FragmentShaderObject );
 
-            GL.GetProgram( ProgramObject, ProgramParameter.LinkStatus, out temp[0] );
+            GL.GetProgram(ProgramObject, GetProgramParameterName.LinkStatus, out temp[0]);
             Trace.WriteLine( "Linking Program (" + ProgramObject + ") " + ( ( temp[0] == 1 ) ? "succeeded." : "FAILED!" ) );
             if ( temp[0] != 1 )
             {
@@ -169,7 +169,7 @@ namespace Examples.Tutorial
                 Trace.WriteLine( "Program Log:\n" + LogInfo );
             }
 
-            GL.GetProgram( ProgramObject, ProgramParameter.ActiveAttributes, out temp[0] );
+            GL.GetProgram(ProgramObject, GetProgramParameterName.ActiveAttributes, out temp[0]);
             Trace.WriteLine( "Program registered " + temp[0] + " Attributes. (Should be 4: Pos, UV, Normal, Tangent)" );
 
             Trace.WriteLine( "Tangent attribute bind location: " + GL.GetAttribLocation( ProgramObject, "AttributeTangent" ) );
@@ -315,7 +315,7 @@ namespace Examples.Tutorial
 
             GL.Color3( 1f, 1f, 1f );
 
-            GL.Begin( BeginMode.Quads );
+            GL.Begin(PrimitiveType.Quads);
             {
                 GL.Normal3( Normal );
                 GL.VertexAttrib3( AttribTangent, ref Tangent );
@@ -344,7 +344,7 @@ namespace Examples.Tutorial
             GL.UseProgram( 0 );
 
             // visualize the light position 'somehow'
-            GL.Begin( BeginMode.Points );
+            GL.Begin(PrimitiveType.Points);
             {
                 GL.Color3( LightSpecular );
                 GL.Vertex3( LightPosition );

@@ -34,8 +34,6 @@ namespace OpenTK.Platform.X11
 {
     class X11Factory : PlatformFactoryBase
     {
-        bool disposed;
-
         #region Constructors
 
         public X11Factory()

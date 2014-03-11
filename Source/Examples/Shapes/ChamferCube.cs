@@ -50,7 +50,7 @@ namespace Examples.Shapes
             #region Temporary Storage
 
             List<Chunk> AllChunks = new List<Chunk>();
-            OpenTK.Graphics.OpenGL.BeginMode TemporaryMode;
+            OpenTK.Graphics.OpenGL.PrimitiveType TemporaryMode;
             VertexT2dN3dV3d[] TemporaryVBO;
             uint[] TemporaryIBO;
 
@@ -271,7 +271,7 @@ namespace Examples.Shapes
             #endregion 6 quads for the sides
 
             #region Final Assembly of Chunks
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = OpenTK.Graphics.OpenGL.PrimitiveType.Triangles;
             Chunk.GetArray( ref AllChunks, out VertexArray, out IndexArray );
             AllChunks.Clear();
             #endregion Final Assembly of Chunks
