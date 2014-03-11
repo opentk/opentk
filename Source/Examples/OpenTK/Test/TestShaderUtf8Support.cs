@@ -218,7 +218,7 @@ void main(void)
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.BindVertexArray(vaoHandle);
-            GL.DrawElements(BeginMode.Triangles, indicesVboData.Length,
+            GL.DrawElements(PrimitiveType.Triangles, indicesVboData.Length,
                 DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             SwapBuffers();

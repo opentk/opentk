@@ -21,7 +21,7 @@ namespace Examples.Shapes
             Trace.Assert( shapevertices >= MINShapeVertices, "A Shape must contain at least " + MINShapeVertices + " Vertices to be considered valid and create a volume." );
             Trace.Assert( TexCount >= 1, "at least 1 Texture set is required." );
 
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.TriangleStrip;
+            PrimitiveMode = OpenTK.Graphics.OpenGL.PrimitiveType.TriangleStrip;
 
             Vector3d[] PathPositions = new Vector3d[pathsteps];
 

@@ -114,7 +114,7 @@ namespace Examples.Tutorial
             GL.LoadIdentity();
             GL.BindTexture(TextureTarget.Texture2D, texture);
 
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
 
             GL.TexCoord2(0.0f, 1.0f); GL.Vertex2(-0.6f, -0.4f);
             GL.TexCoord2(1.0f, 1.0f); GL.Vertex2(0.6f, -0.4f);
