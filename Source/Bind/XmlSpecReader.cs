@@ -312,6 +312,14 @@ namespace Bind
                                     }
                                 }
                             }
+                            
+                            p.ComputeSize = param.GetAttribute("count", String.Empty).Trim();
+                            if (p.ComputeSize.StartsWith("COMPSIZE"))
+                            {
+                                //remove the compsize hint, just keep comma delimited param names
+                                var len = "COMPSIZE(".Length;
+                                p.ComputeSize = p.ComputeSize.Substring(len, (p.ComputeSize.Length - len) - 1);
+                            }
 
                             p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", String.Empty).Trim());
 
