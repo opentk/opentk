@@ -5282,7 +5282,7 @@
       <token name="TEXTURE9" value="0x84C9" />
     </enum>
 </add>
-  
+
   <!-- gles2 replacements for 2.0 and 3.0 -->
   <replace name="gles2" version="2.0|3.0">
     <!-- Buffer Objects [2.9] -->
@@ -5770,7 +5770,42 @@
     </function>
    </replace>
 
-  <!--  gles2 overloads for 2.0 backwards compatibility-->
+     <!-- gles2 overloads for backwards compatibility (2.0 and 3.0) -->
+  <overload name="gles2">
+    <function name="GetObjectLabel" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+    </function>
+    <function name="GetObjectPtrLabel" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+    </function>
+    <function name="GetTranslatedShaderSource" extension="ANGLE" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+    </function>
+    <function name="GetProgramPipelineInfoLog" extension="EXT" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+    </function>
+    <function name="GetProgramBinary" extension="OES" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+      <param name="binaryFormat"><count>0</count></param>
+    </function>
+    <function name="ExtGetBuffers" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numBuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetFramebuffers" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numFramebuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetPrograms" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numPrograms"><count>0</count></param>
+    </function>
+    <function name="ExtGetRenderbuffers" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numRenderbuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetShaders" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numShaders"><count>0</count></param>
+    </function> 
+  </overload>
+
+  <!--  gles2 overloads for backwards compatibility (2.0 only) -->
   <overload name="gles2" version="2.0">
     <!-- PrimtiveType <=> BeginMode overloads for backwards compatibility -->
     <function name="DrawArrays" obsolete="Use PrimitiveType overload instead">
@@ -5859,16 +5894,6 @@
         <type>FramebufferSlot</type>
       </param>
     </function>
-    <function name="GetObjectLabel" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
-    <function name="GetObjectPtrLabel" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
     <function name="GetProgram" obsolete="Use GetProgramParameterName overload instead">
       <param name="pname">
         <type>ProgramParameter</type>
@@ -5878,31 +5903,6 @@
       <param name="pname">
         <type>GetTextureParameter</type>
       </param>
-    </function>
-    <function name="GetTranslatedShaderSource" extension="ANGLE" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-    </function>
-    <function name="GetProgramPipelineInfoLog" extension="EXT" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-    </function>
-    <function name="GetProgramBinary" extension="OES" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-      <param name="binaryFormat"><count>0</count></param>
-    </function>
-    <function name="ExtGetBuffers" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numBuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetFramebuffers" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numFramebuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetPrograms" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numPrograms"><count>0</count></param>
-    </function>
-    <function name="ExtGetRenderbuffers" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numRenderbuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetShaders" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numShaders"><count>0</count></param>
     </function>
   </overload>
 
@@ -6693,7 +6693,7 @@
     </enum>
     
   </add>
-  
+
   <!-- gles2 3.0 enums -->
   <add name="gles2" version="3.0">
     <enum name="ActiveAttribType">
@@ -7661,39 +7661,5 @@
     </enum>
 
   </add>
-
-  <overload name="gles3">
-    <function name="GetObjectLabel" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-    </function>
-    <function name="GetObjectPtrLabel" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-    </function>
-    <function name="GetTranslatedShaderSource" extension="ANGLE" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-    </function>
-    <function name="GetProgramPipelineInfoLog" extension="EXT" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-    </function>
-    <function name="GetProgramBinary" extension="OES" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-      <param name="binaryFormat"><count>0</count></param>
-    </function>
-    <function name="ExtGetBuffers" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numBuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetFramebuffers" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numFramebuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetPrograms" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numPrograms"><count>0</count></param>
-    </function>
-    <function name="ExtGetRenderbuffers" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numRenderbuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetShaders" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numShaders"><count>0</count></param>
-    </function> 
-  </overload>
 
 </signatures>
