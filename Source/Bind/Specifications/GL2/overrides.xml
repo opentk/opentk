@@ -1644,6 +1644,34 @@
 
   </replace>
 
+  <overload name="glcore">
+    <function name="GetObjectLabel" extension="Core" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetObjectPtrLabel" extension="Core" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetProgramResourceiv" extension="Core" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetProgramResourceName" extension="Core" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetObjectPtrLabel" extension="KHR" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+  </overload>
+
   <overload name="gl">
     <!-- generated from apitest -->
     <function name="TessellationMode" extension="Amd" obsolete="Use AmdVertexShaderTessellator overload instead">
@@ -1781,9 +1809,44 @@
         <type>BeginMode</type>
       </param>
     </function>
+    <function name="EdgeFlagv" extension="Core" obsolete="Use ref overload instead">
+      <param name="flag">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetObjectLabel" extension="Core" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetObjectPtrLabel" extension="Core" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetPointerv" extension="Core" obsolete="Use out overload instead">
+      <param name="params">
+        <count>0</count>
+      </param>
+    </function>
     <function name="GetProgram" extension="Core" obsolete="Use GetProgramParameterName overload instead">
       <param name="pname" index="1">
         <type>ProgramParameter</type>
+      </param>
+    </function>
+    <function name="GetProgramPipelineInfoLog" extension="Core" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetProgramResourceiv" extension="Core" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetProgramResourceName" extension="Core" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
       </param>
     </function>
     <function name="GetString" extension="Core" obsolete="Use StringNameIndexed overload instead">
@@ -1886,6 +1949,21 @@
         <type>ExtDirectStateAccess</type>
       </param>
     </function>
+    <function name="GetObjectLabel" extension="Ext" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetPointerv" extension="Ext" obsolete="Use out overload instead">
+      <param name="params">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetProgramPipelineInfoLog" extension="Ext" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
     <function name="IsEnabledIndexed" extension="Ext" obsolete="Use IndexedEnableCap overload instead">
       <param name="target" index="0">
         <type>ExtDrawBuffers2</type>
@@ -1934,6 +2012,16 @@
     <function name="FogCoordPointerList" extension="Ibm" obsolete="Use FogPointerType overload instead">
       <param name="type" index="0">
         <type>IbmVertexArrayLists</type>
+      </param>
+    </function>
+    <function name="GetObjectPtrLabel" extension="KHR" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetPointerv" extension="KHR" obsolete="Use out overload instead">
+      <param name="params">
+        <count>0</count>
       </param>
     </function>
     <function name="DrawTransformFeedback" extension="NV" obsolete="Use PrimitiveType overload instead">
@@ -4797,6 +4885,21 @@
     <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
+    <function name="ExtGetBuffersQCOM" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numBuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetFramebuffersQCOM" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numFramebuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetProgramsQCOM" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numPrograms"><count>0</count></param>
+    </function>
+    <function name="ExtGetRenderbuffersQCOM" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numRenderbuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetShadersQCOM" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numShaders"><count>0</count></param>
+    </function>
   </overload>
 
   <replace name="gles1">
@@ -5756,6 +5859,16 @@
         <type>FramebufferSlot</type>
       </param>
     </function>
+    <function name="GetObjectLabel" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
+    <function name="GetObjectPtrLabel" obsolete="Use out overload instead">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
     <function name="GetProgram" obsolete="Use GetProgramParameterName overload instead">
       <param name="pname">
         <type>ProgramParameter</type>
@@ -5765,6 +5878,31 @@
       <param name="pname">
         <type>GetTextureParameter</type>
       </param>
+    </function>
+    <function name="GetTranslatedShaderSource" extension="ANGLE" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+    </function>
+    <function name="GetProgramPipelineInfoLog" extension="EXT" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+    </function>
+    <function name="GetProgramBinary" extension="OES" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+      <param name="binaryFormat"><count>0</count></param>
+    </function>
+    <function name="ExtGetBuffers" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numBuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetFramebuffers" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numFramebuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetPrograms" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numPrograms"><count>0</count></param>
+    </function>
+    <function name="ExtGetRenderbuffers" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numRenderbuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetShaders" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numShaders"><count>0</count></param>
     </function>
   </overload>
 
@@ -7523,5 +7661,39 @@
     </enum>
 
   </add>
+
+  <overload name="gles3">
+    <function name="GetObjectLabel" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+    </function>
+    <function name="GetObjectPtrLabel" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+    </function>
+    <function name="GetTranslatedShaderSource" extension="ANGLE" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+    </function>
+    <function name="GetProgramPipelineInfoLog" extension="EXT" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+    </function>
+    <function name="GetProgramBinary" extension="OES" obsolete="Use out overload instead">
+      <param name="length"><count>0</count></param>
+      <param name="binaryFormat"><count>0</count></param>
+    </function>
+    <function name="ExtGetBuffers" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numBuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetFramebuffers" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numFramebuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetPrograms" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numPrograms"><count>0</count></param>
+    </function>
+    <function name="ExtGetRenderbuffers" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numRenderbuffers"><count>0</count></param>
+    </function>
+    <function name="ExtGetShaders" extension="QCOM" obsolete="Use out overload instead">
+      <param name="numShaders"><count>0</count></param>
+    </function> 
+  </overload>
 
 </signatures>
