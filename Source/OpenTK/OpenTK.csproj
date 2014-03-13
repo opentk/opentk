@@ -782,6 +782,7 @@
     <Compile Include="Graphics\ES20\ES20Enums.cs" />
     <Compile Include="Graphics\ES11\ES11.cs" />
     <Compile Include="Graphics\ES11\ES11Enums.cs" />
+    <Compile Include="Graphics\ES11\ES11Obsolete.cs" />
     <Compile Include="SlotAttribute.cs" />
     <Compile Include="RewrittenAttribute.cs" />
     <Compile Include="Graphics\OpenGL\GLObsolete.cs" />

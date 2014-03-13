@@ -35,18 +35,18 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind
 {
-    class BindStreamWriter : StreamWriter
+    class BindStreamWriter : IDisposable
     {
-        int indent_level = 0;
-        Regex splitLines = new Regex(Environment.NewLine, RegexOptions.Compiled);
-        //Regex splitLines = new Regex("(\r\n|\n\r|\n|\r)", RegexOptions.Compiled);
-
+        static readonly char[] SplitCharacters = new char[] { '\r', '\n' };
+        readonly StreamWriter sw;
         public readonly string File;
 
+        int indent_level = 0;
+
         public BindStreamWriter(string file)
-            : base(file)
         {
             File = file;
+            sw = new StreamWriter(file);
         }
 
         public void Indent()
@@ -60,9 +60,10 @@ namespace Bind
                 --indent_level;
         }
 
-        public override void Write(string value)
+        public void Write(string value)
         {
-            var lines = splitLines.Split(value);
+            var lines = value.Split(SplitCharacters,
+                StringSplitOptions.RemoveEmptyEntries);
             bool is_multiline = lines.Length > 1;
             if (is_multiline)
             {
@@ -71,39 +72,60 @@ namespace Bind
                 {
                     var line = lines[i];
                     WriteIndentations();
-                    base.Write(line);
-                    base.Write(System.Environment.NewLine);
+                    sw.Write(line);
+                    sw.Write(System.Environment.NewLine);
                 }
                 // Write the last line without appending a newline
                 WriteIndentations();
-                base.Write(lines[lines.Length - 1]);
+                sw.Write(lines[lines.Length - 1]);
             }
             else
             {
                 WriteIndentations();
-                base.Write(value);
+                sw.Write(value);
             }
         }
 
-        public override void WriteLine(string value)
+        public void Write(string format, params object[] args)
         {
-            // The Mono implementation of WriteLine calls Write internally.
-            // The .Net implementation does not.
-            // If running on Mono, we must avoid indenting in WriteLine
-            // because then we'll indent twice (once in WriteLine and once in Write).
-            // If running on .Net we must indent in both WriteLine and Write.
-            // Neat, no?
-            if (System.Type.GetType("Mono.Runtime") == null)
-            {
-                WriteIndentations();
-            }
-            base.WriteLine(value);
+            Write(String.Format(format, args));
+        }
+
+        public void WriteLine()
+        {
+            sw.WriteLine();
+        }
+
+        public void WriteLine(string value)
+        {
+            Write(value);
+            WriteLine();
+        }
+
+        public void WriteLine(string format, params object[] args)
+        {
+            WriteLine(String.Format(format, args));
+        }
+
+        public void Flush()
+        {
+            sw.Flush();
+        }
+
+        public void Close()
+        {
+            sw.Close();
         }
 
         void WriteIndentations()
         {
             for (int i = indent_level; i > 0; i--)
-                base.Write("    ");
+                sw.Write("    ");
+        }
+
+        public void Dispose()
+        {
+            sw.Dispose();
         }
     }
 }

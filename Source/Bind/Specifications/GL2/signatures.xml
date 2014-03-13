@@ -4096,6 +4096,28 @@
       <token name="COLOR_ARRAY_PARALLEL_POINTERS_INTEL" value="0x83F7" />
       <token name="TEXTURE_COORD_ARRAY_PARALLEL_POINTERS_INTEL" value="0x83F8" />
     </enum>
+    <enum name="INTEL_performance_query">
+      <token name="PERFQUERY_SINGLE_CONTEXT_INTEL" value="0x00000000" />
+      <token name="PERFQUERY_GLOBAL_CONTEXT_INTEL" value="0x00000001" />
+      <token name="PERFQUERY_WAIT_INTEL" value="0x83FB" />
+      <token name="PERFQUERY_FLUSH_INTEL" value="0x83FA" />
+      <token name="PERFQUERY_DONOT_FLUSH_INTEL" value="0x83F9" />
+      <token name="PERFQUERY_COUNTER_EVENT_INTEL" value="0x94F0" />
+      <token name="PERFQUERY_COUNTER_DURATION_NORM_INTEL" value="0x94F1" />
+      <token name="PERFQUERY_COUNTER_DURATION_RAW_INTEL" value="0x94F2" />
+      <token name="PERFQUERY_COUNTER_THROUGHPUT_INTEL" value="0x94F3" />
+      <token name="PERFQUERY_COUNTER_RAW_INTEL" value="0x94F4" />
+      <token name="PERFQUERY_COUNTER_TIMESTAMP_INTEL" value="0x94F5" />
+      <token name="PERFQUERY_COUNTER_DATA_UINT32_INTEL" value="0x94F8" />
+      <token name="PERFQUERY_COUNTER_DATA_UINT64_INTEL" value="0x94F9" />
+      <token name="PERFQUERY_COUNTER_DATA_FLOAT_INTEL" value="0x94FA" />
+      <token name="PERFQUERY_COUNTER_DATA_DOUBLE_INTEL" value="0x94FB" />
+      <token name="PERFQUERY_COUNTER_DATA_BOOL32_INTEL" value="0x94FC" />
+      <token name="PERFQUERY_QUERY_NAME_LENGTH_MAX_INTEL" value="0x94FD" />
+      <token name="PERFQUERY_COUNTER_NAME_LENGTH_MAX_INTEL" value="0x94FE" />
+      <token name="PERFQUERY_COUNTER_DESC_LENGTH_MAX_INTEL" value="0x94FF" />
+      <token name="PERFQUERY_GPA_EXTENDED_COUNTERS_INTEL" value="0x9500" />
+    </enum>
     <enum name="InterleavedArrayFormat">
       <token name="C3F_V3F" value="0x2A24" deprecated="3.2" />
       <token name="C4F_N3F_V3F" value="0x2A26" deprecated="3.2" />
@@ -5397,6 +5419,13 @@
       <token name="VIDEO_CAPTURE_SURFACE_ORIGIN_NV" value="0x903C" />
     </enum>
     <enum name="NVX_conditional_render" />
+    <enum name="NVX_gpu_memory_info">
+      <token name="GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX" value="0x9047" />
+      <token name="GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX" value="0x9048" />
+      <token name="GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX" value="0x9049" />
+      <token name="GPU_MEMORY_INFO_EVICTION_COUNT_NVX" value="0x904A" />
+      <token name="GPU_MEMORY_INFO_EVICTED_MEMORY_NVX" value="0x904B" />
+    </enum>
     <enum name="OcclusionQueryEventMaskAMD">
       <token name="QUERY_DEPTH_PASS_EVENT_BIT_AMD" value="0x00000001" />
       <token name="QUERY_DEPTH_FAIL_EVENT_BIT_AMD" value="0x00000002" />
@@ -6474,6 +6503,10 @@
       <param name="monitor" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
+    <function name="BeginPerfQueryINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryHandle" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="BeginQueryARB" category="ARB_occlusion_query" extension="ARB">
       <param name="target" type="GLenum" flow="in" />
       <param name="id" type="GLuint" flow="in" />
@@ -6557,16 +6590,16 @@
       <param name="target" type="GLenum" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindBuffersRange" category="ARB_multi_bind" extension="Core">
       <param name="target" type="GLenum" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
-      <param name="offsets" type="GLintptr *" flow="in" />
-      <param name="sizes" type="GLsizeiptr *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
+      <param name="offsets" type="GLintptr *" flow="in" count="count" />
+      <param name="sizes" type="GLsizeiptr *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindFragDataLocationEXT" category="EXT_gpu_shader4" extension="EXT">
@@ -6619,7 +6652,7 @@
     <function name="BindImageTextures" category="ARB_multi_bind" extension="Core">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="textures" type="GLuint *" flow="in" />
+      <param name="textures" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindLightParameterEXT" category="EXT_vertex_shader" extension="EXT">
@@ -6678,7 +6711,7 @@
     <function name="BindSamplers" category="ARB_multi_bind" extension="Core">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="samplers" type="GLuint *" flow="in" />
+      <param name="samplers" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindTexGenParameterEXT" category="EXT_vertex_shader" extension="EXT">
@@ -6695,7 +6728,7 @@
     <function name="BindTextures" category="ARB_multi_bind" extension="Core">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="textures" type="GLuint *" flow="in" />
+      <param name="textures" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindTextureUnitParameterEXT" category="EXT_vertex_shader" extension="EXT">
@@ -6731,9 +6764,9 @@
     <function name="BindVertexBuffers" category="ARB_multi_bind" extension="Core">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
-      <param name="offsets" type="GLintptr *" flow="in" />
-      <param name="strides" type="GLsizei *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
+      <param name="offsets" type="GLintptr *" flow="in" count="count" />
+      <param name="strides" type="GLsizei *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindVertexShaderEXT" category="EXT_vertex_shader" extension="EXT">
@@ -6818,7 +6851,7 @@
       <param name="yorig" type="GLfixed" flow="in" />
       <param name="xmove" type="GLfixed" flow="in" />
       <param name="ymove" type="GLfixed" flow="in" />
-      <param name="bitmap" type="GLubyte *" flow="in" count="COMPSIZE()" />
+      <param name="bitmap" type="GLubyte *" flow="in" count="COMPSIZE(width,height)" />
       <returns type="void" />
     </function>
     <function name="BlendBarrierNV" category="NV_blend_equation_advanced" extension="NV">
@@ -6976,7 +7009,7 @@
     <function name="BufferStorage" category="ARB_buffer_storage" extension="Core">
       <param name="target" type="GLenum" flow="in" />
       <param name="size" type="GLsizeiptr" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="size" />
       <param name="flags" type="GLbitfield" flow="in" />
       <returns type="void" />
     </function>
@@ -7078,10 +7111,10 @@
     <function name="ClearNamedBufferSubDataEXT" category="EXT_direct_state_access" extension="EXT">
       <param name="buffer" type="GLuint" flow="in" />
       <param name="internalformat" type="GLenum" flow="in" />
-      <param name="format" type="PixelFormat" flow="in" />
-      <param name="type" type="PixelType" flow="in" />
       <param name="offset" type="BufferSize" flow="in" />
       <param name="size" type="BufferSize" flow="in" />
+      <param name="format" type="PixelFormat" flow="in" />
+      <param name="type" type="PixelType" flow="in" />
       <param name="data" type="void *" flow="in" count="COMPSIZE(format,type)" />
       <returns type="void" />
     </function>
@@ -7090,7 +7123,7 @@
       <param name="level" type="GLint" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="COMPSIZE(format,type)" />
       <returns type="void" />
     </function>
     <function name="ClearTexSubImage" category="ARB_clear_texture" extension="Core">
@@ -7104,7 +7137,7 @@
       <param name="depth" type="GLsizei" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="COMPSIZE(format,type)" />
       <returns type="void" />
     </function>
     <function name="ClientActiveTextureARB" category="ARB_multitexture" extension="ARB">
@@ -8093,6 +8126,11 @@
       <param name="coverMode" type="PathCoverMode" flow="in" />
       <returns type="void" />
     </function>
+    <function name="CreatePerfQueryINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryId" type="GLuint" flow="in" />
+      <param name="queryHandle" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
     <function name="CreateProgramObjectARB" category="ARB_shader_objects" extension="ARB">
       <returns type="handleARB" />
     </function>
@@ -8114,7 +8152,7 @@
     <function name="CreateShaderProgramvEXT" category="EXT_separate_shader_objects" extension="EXT">
       <param name="type" type="GLenum" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="strings" type="GLchar **" flow="in" />
+      <param name="strings" type="GLchar **" flow="in" count="count" />
       <returns type="GLuint" />
     </function>
     <function name="CreateSyncFromCLeventARB" category="ARB_cl_event" extension="ARB">
@@ -8329,6 +8367,10 @@
       <param name="monitors" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
+    <function name="DeletePerfQueryINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryHandle" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="DeleteProgramPipelines" category="ARB_separate_shader_objects" extension="Core">
       <param name="n" type="GLsizei" flow="in" />
       <param name="pipelines" type="GLuint *" flow="in" count="n" />
@@ -8336,7 +8378,7 @@
     </function>
     <function name="DeleteProgramPipelinesEXT" category="EXT_separate_shader_objects" extension="EXT">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="pipelines" type="GLuint *" flow="in" />
+      <param name="pipelines" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
     </function>
     <function name="DeleteProgramsARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
@@ -8786,6 +8828,10 @@
     </function>
     <function name="EndPerfMonitorAMD" category="AMD_performance_monitor" extension="AMD">
       <param name="monitor" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="EndPerfQueryINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryHandle" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="EndQueryARB" category="ARB_occlusion_query" extension="ARB">
@@ -9296,7 +9342,7 @@
     </function>
     <function name="GenProgramPipelinesEXT" category="EXT_separate_shader_objects" extension="EXT">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="pipelines" type="GLuint *" flow="out" />
+      <param name="pipelines" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
     <function name="GenProgramsARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
@@ -9475,7 +9521,7 @@
       <param name="containerObj" type="handleARB" flow="in" />
       <param name="maxCount" type="GLsizei" flow="in" />
       <param name="count" type="GLsizei *" flow="out" count="1" />
-      <param name="obj" type="handleARB *" flow="out" count="count" />
+      <param name="obj" type="handleARB *" flow="out" count="maxCount" />
       <returns type="void" />
     </function>
     <function name="GetAttribLocationARB" category="ARB_vertex_shader" extension="ARB">
@@ -9765,6 +9811,10 @@
       <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
+    <function name="GetFirstPerfQueryIdINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryId" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
     <function name="GetFixedvOES" category="OES_fixed_point" extension="OES">
       <param name="pname" type="GLenum" flow="in" />
       <param name="params" type="GLfixed *" flow="out" count="COMPSIZE(pname)" />
@@ -10008,7 +10058,7 @@
     <function name="GetLightxvOES" category="OES_fixed_point" extension="OES">
       <param name="light" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="out" />
+      <param name="params" type="GLfixed *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetListParameterfvSGIX" category="SGIX_list_priority" extension="SGIX">
@@ -10092,7 +10142,7 @@
     <function name="GetMaterialxvOES" category="OES_fixed_point" extension="OES">
       <param name="face" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="out" />
+      <param name="params" type="GLfixed *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetMinmax" category="ARB_imaging" extension="Core">
@@ -10359,6 +10409,11 @@
       <param name="image" type="void *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
+    <function name="GetNextPerfQueryIdINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryId" type="GLuint" flow="in" />
+      <param name="nextQueryId" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
     <function name="GetnHistogramARB" category="ARB_robustness" extension="ARB">
       <param name="target" type="GLenum" flow="in" />
       <param name="reset" type="Boolean" flow="in" />
@@ -10485,7 +10540,7 @@
       <param name="identifier" type="GLenum" flow="in" />
       <param name="name" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -10493,7 +10548,7 @@
       <param name="type" type="GLenum" flow="in" />
       <param name="object" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -10527,14 +10582,14 @@
     <function name="GetObjectPtrLabel" category="KHR_debug" extension="Core">
       <param name="ptr" type="void *" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
     <function name="GetObjectPtrLabelKHR" category="KHR_debug" extension="KHR">
       <param name="ptr" type="void *" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -10637,6 +10692,20 @@
       <param name="value" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
+    <function name="GetPerfCounterInfoINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryId" type="GLuint" flow="in" />
+      <param name="counterId" type="GLuint" flow="in" />
+      <param name="counterNameLength" type="GLuint" flow="in" />
+      <param name="counterName" type="GLchar *" flow="out" />
+      <param name="counterDescLength" type="GLuint" flow="in" />
+      <param name="counterDesc" type="GLchar *" flow="out" />
+      <param name="counterOffset" type="GLuint *" flow="out" />
+      <param name="counterDataSize" type="GLuint *" flow="out" />
+      <param name="counterTypeEnum" type="GLuint *" flow="out" />
+      <param name="counterDataTypeEnum" type="GLuint *" flow="out" />
+      <param name="rawCounterMaxValue" type="GLuint64 *" flow="out" />
+      <returns type="void" />
+    </function>
     <function name="GetPerfMonitorCounterDataAMD" category="AMD_performance_monitor" extension="AMD">
       <param name="monitor" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
@@ -10681,6 +10750,29 @@
       <param name="groupString" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
+    <function name="GetPerfQueryDataINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryHandle" type="GLuint" flow="in" />
+      <param name="flags" type="GLuint" flow="in" />
+      <param name="dataSize" type="GLsizei" flow="in" />
+      <param name="data" type="GLvoid *" flow="out" />
+      <param name="bytesWritten" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
+    <function name="GetPerfQueryIdByNameINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryName" type="GLchar *" flow="out" />
+      <param name="queryId" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
+    <function name="GetPerfQueryInfoINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryId" type="GLuint" flow="in" />
+      <param name="queryNameLength" type="GLuint" flow="in" />
+      <param name="queryName" type="GLchar *" flow="out" />
+      <param name="dataSize" type="GLuint *" flow="out" />
+      <param name="noCounters" type="GLuint *" flow="out" />
+      <param name="noInstances" type="GLuint *" flow="out" />
+      <param name="capsMask" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
     <function name="GetPixelMapxv" category="OES_fixed_point" extension="Core">
       <param name="map" type="GLenum" flow="in" />
       <param name="size" type="GLint" flow="in" />
@@ -10723,7 +10815,7 @@
     </function>
     <function name="GetPointerv" category="KHR_debug" extension="Core">
       <param name="pname" type="GetPointervPName" flow="in" />
-      <param name="params" type="void **" flow="out" />
+      <param name="params" type="void **" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="GetPointervEXT" category="EXT_vertex_array" extension="EXT">
@@ -10849,7 +10941,7 @@
     <function name="GetProgramPipelineInfoLogEXT" category="EXT_separate_shader_objects" extension="EXT">
       <param name="pipeline" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="infoLog" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -10878,7 +10970,7 @@
       <param name="propCount" type="GLsizei" flow="in" />
       <param name="props" type="GLenum *" flow="in" count="propCount" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="params" type="GLint *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -10899,7 +10991,7 @@
       <param name="programInterface" type="GLenum" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="name" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -11356,7 +11448,7 @@
     <function name="GetVertexArrayPointervEXT" category="EXT_direct_state_access" extension="EXT">
       <param name="vaobj" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="void **" flow="out" />
+      <param name="param" type="void **" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="GetVertexAttribArrayObjectfvATI" category="ATI_vertex_attrib_array_object" extension="ATI">
@@ -12174,7 +12266,7 @@
       <param name="size" type="GLint" flow="in" />
       <param name="type" type="MatrixIndexPointerTypeARB" flow="in" />
       <param name="stride" type="GLsizei" flow="in" />
-      <param name="pointer" type="void *" flow="in" count="COMPSIZE(type,stride)" />
+      <param name="pointer" type="void *" flow="in" count="COMPSIZE(size,type,stride)" />
       <returns type="void" />
     </function>
     <function name="MatrixIndexubvARB" category="ARB_matrix_palette" extension="ARB">
@@ -13050,7 +13142,7 @@
     <function name="NamedBufferStorageEXT" category="EXT_direct_state_access" extension="EXT">
       <param name="buffer" type="GLuint" flow="in" />
       <param name="size" type="GLsizeiptr" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="size" />
       <param name="flags" type="GLbitfield" flow="in" />
       <returns type="void" />
     </function>
@@ -14340,7 +14432,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint64EXT *" flow="in" count="COMPSIZE(count*2)" />
+      <param name="value" type="GLint64EXT *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="ProgramUniform2iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
@@ -14382,7 +14474,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint64EXT *" flow="in" count="COMPSIZE(count*2)" />
+      <param name="value" type="GLuint64EXT *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="ProgramUniform2uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
@@ -14486,7 +14578,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint64EXT *" flow="in" count="COMPSIZE(count*3)" />
+      <param name="value" type="GLint64EXT *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="ProgramUniform3iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
@@ -14531,7 +14623,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint64EXT *" flow="in" count="COMPSIZE(count*3)" />
+      <param name="value" type="GLuint64EXT *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="ProgramUniform3uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
@@ -14642,7 +14734,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint64EXT *" flow="in" count="COMPSIZE(count*4)" />
+      <param name="value" type="GLint64EXT *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="ProgramUniform4iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
@@ -14690,7 +14782,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint64EXT *" flow="in" count="COMPSIZE(count*4)" />
+      <param name="value" type="GLuint64EXT *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="ProgramUniform4uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
@@ -14732,7 +14824,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="values" type="GLuint64 *" flow="in" />
+      <param name="values" type="GLuint64 *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="ProgramUniformHandleui64vNV" category="NV_bindless_texture" extension="NV">
@@ -15433,7 +15525,7 @@
       <returns type="void" />
     </function>
     <function name="SampleMaski" category="ARB_texture_multisample" extension="Core">
-      <param name="index" type="GLuint" flow="in" />
+      <param name="maskNumber" type="GLuint" flow="in" />
       <param name="mask" type="GLbitfield" flow="in" />
       <returns type="void" />
     </function>
@@ -16962,7 +17054,7 @@
     <function name="Uniform2i64vNV" category="NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint64EXT *" flow="in" count="COMPSIZE(count*2)" />
+      <param name="value" type="GLint64EXT *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform2iARB" category="ARB_shader_objects" extension="ARB">
@@ -16986,7 +17078,7 @@
     <function name="Uniform2ui64vNV" category="NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint64EXT *" flow="in" count="COMPSIZE(count*2)" />
+      <param name="value" type="GLuint64EXT *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform2uiEXT" category="EXT_gpu_shader4" extension="EXT">
@@ -17037,7 +17129,7 @@
     <function name="Uniform3i64vNV" category="NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint64EXT *" flow="in" count="COMPSIZE(count*3)" />
+      <param name="value" type="GLint64EXT *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform3iARB" category="ARB_shader_objects" extension="ARB">
@@ -17063,7 +17155,7 @@
     <function name="Uniform3ui64vNV" category="NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint64EXT *" flow="in" count="COMPSIZE(count*3)" />
+      <param name="value" type="GLuint64EXT *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform3uiEXT" category="EXT_gpu_shader4" extension="EXT">
@@ -17118,7 +17210,7 @@
     <function name="Uniform4i64vNV" category="NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint64EXT *" flow="in" count="COMPSIZE(count*4)" />
+      <param name="value" type="GLint64EXT *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="Uniform4iARB" category="ARB_shader_objects" extension="ARB">
@@ -17146,7 +17238,7 @@
     <function name="Uniform4ui64vNV" category="NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint64EXT *" flow="in" count="COMPSIZE(count*4)" />
+      <param name="value" type="GLuint64EXT *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="Uniform4uiEXT" category="EXT_gpu_shader4" extension="EXT">
@@ -17188,7 +17280,7 @@
     <function name="UniformHandleui64vARB" category="ARB_bindless_texture" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint64 *" flow="in" />
+      <param name="value" type="GLuint64 *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="UniformHandleui64vNV" category="NV_bindless_texture" extension="NV">
@@ -17432,7 +17524,7 @@
     </function>
     <function name="VDPAUIsSurfaceNV" category="NV_vdpau_interop" extension="NV">
       <param name="surface" type="vdpauSurfaceNV" flow="in" />
-      <returns type="void" />
+      <returns type="GLboolean" />
     </function>
     <function name="VDPAUMapSurfacesNV" category="NV_vdpau_interop" extension="NV">
       <param name="numSurfaces" type="GLsizei" flow="in" />
@@ -19601,7 +19693,7 @@
       <returns type="void" />
     </function>
     <function name="EdgeFlagv" category="VERSION_1_0" extension="Core" version="1.0" deprecated="3.2">
-      <param name="flag" type="Boolean *" flow="in" />
+      <param name="flag" type="Boolean *" flow="in" count="1" />
       <returns type="void" />
     </function>
     <function name="Enable" category="VERSION_1_0" extension="Core" version="1.0">
@@ -21534,7 +21626,7 @@
     </function>
     <function name="GetPointerv" category="VERSION_1_1" extension="Core" version="1.1" deprecated="3.2">
       <param name="pname" type="GetPointervPName" flow="in" />
-      <param name="params" type="void **" flow="out" />
+      <param name="params" type="void **" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="IndexPointer" category="VERSION_1_1" extension="Core" version="1.1" deprecated="3.2">
@@ -22713,7 +22805,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="maxCount" type="GLsizei" flow="in" />
       <param name="count" type="GLsizei *" flow="out" count="1" />
-      <param name="shaders" type="GLuint *" flow="out" />
+      <param name="shaders" type="GLuint *" flow="out" count="maxCount" />
       <returns type="void" />
     </function>
     <function name="GetAttribLocation" category="VERSION_2_0" extension="Core" version="2.0">
@@ -24273,7 +24365,7 @@
       <returns type="void" />
     </function>
     <function name="SampleMaski" category="VERSION_3_2" extension="Core" version="3.2">
-      <param name="index" type="GLuint" flow="in" />
+      <param name="maskNumber" type="GLuint" flow="in" />
       <param name="mask" type="GLbitfield" flow="in" />
       <returns type="void" />
     </function>
@@ -26229,20 +26321,20 @@
       <param name="identifier" type="GLenum" flow="in" />
       <param name="name" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
     <function name="GetObjectPtrLabel" category="VERSION_4_3" extension="Core" version="4.3">
       <param name="ptr" type="void *" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
     <function name="GetPointerv" category="VERSION_4_3|VERSION_4_3" extension="Core" version="4.3">
       <param name="pname" type="GetPointervPName" flow="in" />
-      <param name="params" type="void **" flow="out" />
+      <param name="params" type="void **" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="GetProgramInterfaceiv" category="VERSION_4_3" extension="Core" version="4.3">
@@ -26265,7 +26357,7 @@
       <param name="propCount" type="GLsizei" flow="in" />
       <param name="props" type="GLenum *" flow="in" count="propCount" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="params" type="GLint *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -26286,7 +26378,7 @@
       <param name="programInterface" type="GLenum" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="name" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -26479,48 +26571,48 @@
       <param name="target" type="GLenum" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindBuffersRange" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="target" type="GLenum" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
-      <param name="offsets" type="GLintptr *" flow="in" />
-      <param name="sizes" type="GLsizeiptr *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
+      <param name="offsets" type="GLintptr *" flow="in" count="count" />
+      <param name="sizes" type="GLsizeiptr *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindImageTextures" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="textures" type="GLuint *" flow="in" />
+      <param name="textures" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindSamplers" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="samplers" type="GLuint *" flow="in" />
+      <param name="samplers" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindTextures" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="textures" type="GLuint *" flow="in" />
+      <param name="textures" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindVertexBuffers" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
-      <param name="offsets" type="GLintptr *" flow="in" />
-      <param name="strides" type="GLsizei *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
+      <param name="offsets" type="GLintptr *" flow="in" count="count" />
+      <param name="strides" type="GLsizei *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BufferStorage" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="target" type="GLenum" flow="in" />
       <param name="size" type="GLsizeiptr" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="size" />
       <param name="flags" type="GLbitfield" flow="in" />
       <returns type="void" />
     </function>
@@ -26529,7 +26621,7 @@
       <param name="level" type="GLint" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="COMPSIZE(format,type)" />
       <returns type="void" />
     </function>
     <function name="ClearTexSubImage" category="VERSION_4_4" extension="Core" version="4.4">
@@ -26543,7 +26635,7 @@
       <param name="depth" type="GLsizei" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="COMPSIZE(format,type)" />
       <returns type="void" />
     </function>
   </add>
@@ -29117,16 +29209,16 @@
       <param name="target" type="GLenum" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindBuffersRange" category="ARB_multi_bind" extension="Core">
       <param name="target" type="GLenum" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
-      <param name="offsets" type="GLintptr *" flow="in" />
-      <param name="sizes" type="GLsizeiptr *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
+      <param name="offsets" type="GLintptr *" flow="in" count="count" />
+      <param name="sizes" type="GLsizeiptr *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindFragDataLocationIndexed" category="ARB_blend_func_extended" extension="Core">
@@ -29154,7 +29246,7 @@
     <function name="BindImageTextures" category="ARB_multi_bind" extension="Core">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="textures" type="GLuint *" flow="in" />
+      <param name="textures" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindProgramPipeline" category="ARB_separate_shader_objects" extension="Core">
@@ -29174,13 +29266,13 @@
     <function name="BindSamplers" category="ARB_multi_bind" extension="Core">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="samplers" type="GLuint *" flow="in" />
+      <param name="samplers" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindTextures" category="ARB_multi_bind" extension="Core">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="textures" type="GLuint *" flow="in" />
+      <param name="textures" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindTransformFeedback" category="ARB_transform_feedback2" extension="Core">
@@ -29202,9 +29294,9 @@
     <function name="BindVertexBuffers" category="ARB_multi_bind" extension="Core">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
-      <param name="offsets" type="GLintptr *" flow="in" />
-      <param name="strides" type="GLsizei *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
+      <param name="offsets" type="GLintptr *" flow="in" count="count" />
+      <param name="strides" type="GLsizei *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BlendColor" category="ARB_imaging" extension="Core">
@@ -29259,7 +29351,7 @@
     <function name="BufferStorage" category="ARB_buffer_storage" extension="Core">
       <param name="target" type="GLenum" flow="in" />
       <param name="size" type="GLsizeiptr" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="size" />
       <param name="flags" type="GLbitfield" flow="in" />
       <returns type="void" />
     </function>
@@ -29294,7 +29386,7 @@
       <param name="level" type="GLint" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="COMPSIZE(format,type)" />
       <returns type="void" />
     </function>
     <function name="ClearTexSubImage" category="ARB_clear_texture" extension="Core">
@@ -29308,7 +29400,7 @@
       <param name="depth" type="GLsizei" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="COMPSIZE(format,type)" />
       <returns type="void" />
     </function>
     <function name="ClientWaitSync" category="ARB_sync" extension="Core">
@@ -30212,7 +30304,7 @@
       <param name="identifier" type="GLenum" flow="in" />
       <param name="name" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -30227,20 +30319,20 @@
     <function name="GetObjectPtrLabel" category="KHR_debug" extension="Core">
       <param name="ptr" type="void *" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
     <function name="GetObjectPtrLabelKHR" category="KHR_debug" extension="KHR">
       <param name="ptr" type="void *" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
     <function name="GetPointerv" category="KHR_debug" extension="Core">
       <param name="pname" type="GetPointervPName" flow="in" />
-      <param name="params" type="void **" flow="out" />
+      <param name="params" type="void **" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="GetPointervKHR" category="KHR_debug" extension="KHR">
@@ -30289,7 +30381,7 @@
       <param name="propCount" type="GLsizei" flow="in" />
       <param name="props" type="GLenum *" flow="in" count="propCount" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="params" type="GLint *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -30310,7 +30402,7 @@
       <param name="programInterface" type="GLenum" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="name" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -30986,7 +31078,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="values" type="GLuint64 *" flow="in" />
+      <param name="values" type="GLuint64 *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="ProgramUniformMatrix2dv" category="ARB_separate_shader_objects" extension="Core">
@@ -31197,7 +31289,7 @@
       <returns type="void" />
     </function>
     <function name="SampleMaski" category="ARB_texture_multisample" extension="Core">
-      <param name="index" type="GLuint" flow="in" />
+      <param name="maskNumber" type="GLuint" flow="in" />
       <param name="mask" type="GLbitfield" flow="in" />
       <returns type="void" />
     </function>
@@ -31488,7 +31580,7 @@
     <function name="UniformHandleui64vARB" category="ARB_bindless_texture" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint64 *" flow="in" />
+      <param name="value" type="GLuint64 *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2dv" category="ARB_gpu_shader_fp64" extension="Core">
@@ -32954,7 +33046,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="maxCount" type="GLsizei" flow="in" />
       <param name="count" type="GLsizei *" flow="out" count="1" />
-      <param name="shaders" type="GLuint *" flow="out" />
+      <param name="shaders" type="GLuint *" flow="out" count="maxCount" />
       <returns type="void" />
     </function>
     <function name="GetAttribLocation" category="VERSION_2_0" extension="Core" version="2.0">
@@ -34502,7 +34594,7 @@
       <returns type="void" />
     </function>
     <function name="SampleMaski" category="VERSION_3_2" extension="Core" version="3.2">
-      <param name="index" type="GLuint" flow="in" />
+      <param name="maskNumber" type="GLuint" flow="in" />
       <param name="mask" type="GLbitfield" flow="in" />
       <returns type="void" />
     </function>
@@ -36458,20 +36550,20 @@
       <param name="identifier" type="GLenum" flow="in" />
       <param name="name" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
     <function name="GetObjectPtrLabel" category="VERSION_4_3" extension="Core" version="4.3">
       <param name="ptr" type="void *" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
     <function name="GetPointerv" category="VERSION_4_3|VERSION_4_3" extension="Core" version="4.3">
       <param name="pname" type="GetPointervPName" flow="in" />
-      <param name="params" type="void **" flow="out" />
+      <param name="params" type="void **" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="GetProgramInterfaceiv" category="VERSION_4_3" extension="Core" version="4.3">
@@ -36494,7 +36586,7 @@
       <param name="propCount" type="GLsizei" flow="in" />
       <param name="props" type="GLenum *" flow="in" count="propCount" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="params" type="GLint *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -36515,7 +36607,7 @@
       <param name="programInterface" type="GLenum" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="name" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -36708,48 +36800,48 @@
       <param name="target" type="GLenum" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindBuffersRange" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="target" type="GLenum" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
-      <param name="offsets" type="GLintptr *" flow="in" />
-      <param name="sizes" type="GLsizeiptr *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
+      <param name="offsets" type="GLintptr *" flow="in" count="count" />
+      <param name="sizes" type="GLsizeiptr *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindImageTextures" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="textures" type="GLuint *" flow="in" />
+      <param name="textures" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindSamplers" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="samplers" type="GLuint *" flow="in" />
+      <param name="samplers" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindTextures" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="textures" type="GLuint *" flow="in" />
+      <param name="textures" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BindVertexBuffers" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="buffers" type="GLuint *" flow="in" />
-      <param name="offsets" type="GLintptr *" flow="in" />
-      <param name="strides" type="GLsizei *" flow="in" />
+      <param name="buffers" type="GLuint *" flow="in" count="count" />
+      <param name="offsets" type="GLintptr *" flow="in" count="count" />
+      <param name="strides" type="GLsizei *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="BufferStorage" category="VERSION_4_4" extension="Core" version="4.4">
       <param name="target" type="GLenum" flow="in" />
       <param name="size" type="GLsizeiptr" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="size" />
       <param name="flags" type="GLbitfield" flow="in" />
       <returns type="void" />
     </function>
@@ -36758,7 +36850,7 @@
       <param name="level" type="GLint" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="COMPSIZE(format,type)" />
       <returns type="void" />
     </function>
     <function name="ClearTexSubImage" category="VERSION_4_4" extension="Core" version="4.4">
@@ -36772,7 +36864,7 @@
       <param name="depth" type="GLsizei" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="COMPSIZE(format,type)" />
       <returns type="void" />
     </function>
   </add>
@@ -38965,7 +39057,7 @@
       <param name="yorig" type="GLfixed" flow="in" />
       <param name="xmove" type="GLfixed" flow="in" />
       <param name="ymove" type="GLfixed" flow="in" />
-      <param name="bitmap" type="GLubyte *" flow="in" count="COMPSIZE()" />
+      <param name="bitmap" type="GLubyte *" flow="in" count="COMPSIZE(width,height)" />
       <returns type="void" />
     </function>
     <function name="BlendColorxOES" category="OES_fixed_point" extension="OES">
@@ -39029,7 +39121,7 @@
     </function>
     <function name="ClipPlanefIMG" category="IMG_user_clip_plane" extension="IMG">
       <param name="p" type="GLenum" flow="in" />
-      <param name="eqn" type="GLfloat *" flow="in" />
+      <param name="eqn" type="GLfloat *" flow="in" count="4" />
       <returns type="void" />
     </function>
     <function name="ClipPlanefOES" category="OES_single_precision" extension="OES">
@@ -39039,7 +39131,7 @@
     </function>
     <function name="ClipPlanexIMG" category="IMG_user_clip_plane" extension="IMG">
       <param name="p" type="GLenum" flow="in" />
-      <param name="eqn" type="GLfixed *" flow="in" />
+      <param name="eqn" type="GLfixed *" flow="in" count="4" />
       <returns type="void" />
     </function>
     <function name="ClipPlanexOES" category="OES_fixed_point" extension="OES">
@@ -39098,12 +39190,12 @@
     </function>
     <function name="DeleteFramebuffersOES" category="OES_framebuffer_object" extension="OES">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="framebuffers" type="GLuint *" flow="in" />
+      <param name="framebuffers" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
     </function>
     <function name="DeleteRenderbuffersOES" category="OES_framebuffer_object" extension="OES">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="renderbuffers" type="GLuint *" flow="in" />
+      <param name="renderbuffers" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
     </function>
     <function name="DeleteSyncAPPLE" category="APPLE_sync" extension="APPLE">
@@ -39112,7 +39204,7 @@
     </function>
     <function name="DeleteVertexArraysOES" category="OES_vertex_array_object" extension="OES">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="arrays" type="GLuint *" flow="in" />
+      <param name="arrays" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
     </function>
     <function name="DepthRangefOES" category="OES_single_precision" extension="OES">
@@ -39132,7 +39224,7 @@
     <function name="DiscardFramebufferEXT" category="EXT_discard_framebuffer" extension="EXT">
       <param name="target" type="GLenum" flow="in" />
       <param name="numAttachments" type="GLsizei" flow="in" />
-      <param name="attachments" type="GLenum *" flow="in" />
+      <param name="attachments" type="GLenum *" flow="in" count="numAttachments" />
       <returns type="void" />
     </function>
     <function name="DrawTexfOES" category="OES_draw_texture" extension="OES">
@@ -39224,15 +39316,15 @@
       <returns type="void" />
     </function>
     <function name="ExtGetBuffersQCOM" category="QCOM_extended_get" extension="QCOM">
-      <param name="buffers" type="GLuint *" flow="out" />
+      <param name="buffers" type="GLuint *" flow="out" count="maxBuffers" />
       <param name="maxBuffers" type="GLint" flow="in" />
-      <param name="numBuffers" type="GLint *" flow="out" />
+      <param name="numBuffers" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="ExtGetFramebuffersQCOM" category="QCOM_extended_get" extension="QCOM">
-      <param name="framebuffers" type="GLuint *" flow="out" />
+      <param name="framebuffers" type="GLuint *" flow="out" count="maxFramebuffers" />
       <param name="maxFramebuffers" type="GLint" flow="in" />
-      <param name="numFramebuffers" type="GLint *" flow="out" />
+      <param name="numFramebuffers" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="ExtGetProgramBinarySourceQCOM" category="QCOM_extended_get2" extension="QCOM">
@@ -39243,21 +39335,21 @@
       <returns type="void" />
     </function>
     <function name="ExtGetProgramsQCOM" category="QCOM_extended_get2" extension="QCOM">
-      <param name="programs" type="GLuint *" flow="out" />
+      <param name="programs" type="GLuint *" flow="out" count="maxPrograms" />
       <param name="maxPrograms" type="GLint" flow="in" />
-      <param name="numPrograms" type="GLint *" flow="out" />
+      <param name="numPrograms" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="ExtGetRenderbuffersQCOM" category="QCOM_extended_get" extension="QCOM">
-      <param name="renderbuffers" type="GLuint *" flow="out" />
+      <param name="renderbuffers" type="GLuint *" flow="out" count="maxRenderbuffers" />
       <param name="maxRenderbuffers" type="GLint" flow="in" />
-      <param name="numRenderbuffers" type="GLint *" flow="out" />
+      <param name="numRenderbuffers" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="ExtGetShadersQCOM" category="QCOM_extended_get2" extension="QCOM">
-      <param name="shaders" type="GLuint *" flow="out" />
+      <param name="shaders" type="GLuint *" flow="out" count="maxShaders" />
       <param name="maxShaders" type="GLint" flow="in" />
-      <param name="numShaders" type="GLint *" flow="out" />
+      <param name="numShaders" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="ExtGetTexLevelParameterivQCOM" category="QCOM_extended_get" extension="QCOM">
@@ -39391,17 +39483,17 @@
     </function>
     <function name="GenFramebuffersOES" category="OES_framebuffer_object" extension="OES">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="framebuffers" type="GLuint *" flow="out" />
+      <param name="framebuffers" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
     <function name="GenRenderbuffersOES" category="OES_framebuffer_object" extension="OES">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="renderbuffers" type="GLuint *" flow="out" />
+      <param name="renderbuffers" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
     <function name="GenVertexArraysOES" category="OES_vertex_array_object" extension="OES">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="arrays" type="GLuint *" flow="out" />
+      <param name="arrays" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
     <function name="GetBufferPointervOES" category="OES_mapbuffer" extension="OES">
@@ -39454,7 +39546,7 @@
       <param name="target" type="GLenum" flow="in" />
       <param name="attachment" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetGraphicsResetStatusEXT" category="EXT_robustness" extension="EXT">
@@ -39480,7 +39572,7 @@
     <function name="GetLightxvOES" category="OES_fixed_point" extension="OES">
       <param name="light" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="out" />
+      <param name="params" type="GLfixed *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetMapxvOES" category="OES_fixed_point" extension="OES">
@@ -39498,7 +39590,7 @@
     <function name="GetMaterialxvOES" category="OES_fixed_point" extension="OES">
       <param name="face" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="out" />
+      <param name="params" type="GLfixed *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetnUniformfvEXT" category="EXT_robustness" extension="EXT">
@@ -39524,7 +39616,7 @@
     <function name="GetRenderbufferParameterivOES" category="OES_framebuffer_object" extension="OES">
       <param name="target" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetSyncivAPPLE" category="APPLE_sync" extension="APPLE">
@@ -39544,13 +39636,13 @@
     <function name="GetTexGenfvOES" category="OES_texture_cube_map" extension="OES">
       <param name="coord" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" />
+      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetTexGenivOES" category="OES_texture_cube_map" extension="OES">
       <param name="coord" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetTexGenxvOES" category="OES_fixed_point|OES_texture_cube_map" extension="OES" version="">
@@ -39701,7 +39793,7 @@
       <param name="size" type="GLint" flow="in" />
       <param name="type" type="GLenum" flow="in" />
       <param name="stride" type="GLsizei" flow="in" />
-      <param name="pointer" type="void *" flow="in" />
+      <param name="pointer" type="void *" flow="in" count="COMPSIZE(size,type,stride)" />
       <returns type="void" />
     </function>
     <function name="MultiDrawArraysEXT" category="EXT_multi_draw_arrays" extension="EXT">
@@ -39885,7 +39977,7 @@
     <function name="PointSizePointerOES" category="OES_point_size_array" extension="OES">
       <param name="type" type="GLenum" flow="in" />
       <param name="stride" type="GLsizei" flow="in" />
-      <param name="pointer" type="void *" flow="in" />
+      <param name="pointer" type="void *" flow="in" count="COMPSIZE(type,stride)" />
       <returns type="void" />
     </function>
     <function name="PointSizexOES" category="OES_fixed_point" extension="OES">
@@ -40132,7 +40224,7 @@
     <function name="TexGenfvOES" category="OES_texture_cube_map" extension="OES">
       <param name="coord" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfloat *" flow="in" />
+      <param name="params" type="GLfloat *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="TexGeniOES" category="OES_texture_cube_map" extension="OES">
@@ -40144,7 +40236,7 @@
     <function name="TexGenivOES" category="OES_texture_cube_map" extension="OES">
       <param name="coord" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="in" />
+      <param name="params" type="GLint *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="TexGenxOES" category="OES_fixed_point|OES_texture_cube_map" extension="OES" version="">
@@ -40296,7 +40388,7 @@
       <param name="size" type="GLint" flow="in" />
       <param name="type" type="GLenum" flow="in" />
       <param name="stride" type="GLsizei" flow="in" />
-      <param name="pointer" type="void *" flow="in" />
+      <param name="pointer" type="void *" flow="in" count="COMPSIZE(type,stride)" />
       <returns type="void" />
     </function>
   </add>
@@ -40715,12 +40807,12 @@
     </function>
     <function name="ClipPlanef" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="p" type="GLenum" flow="in" />
-      <param name="eqn" type="GLfloat *" flow="in" />
+      <param name="eqn" type="GLfloat *" flow="in" count="4" />
       <returns type="void" />
     </function>
     <function name="ClipPlanex" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="plane" type="GLenum" flow="in" />
-      <param name="equation" type="GLfixed *" flow="in" />
+      <param name="equation" type="GLfixed *" flow="in" count="4" />
       <returns type="void" />
     </function>
     <function name="Color4f" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -40887,7 +40979,7 @@
     </function>
     <function name="Fogxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="GLfixed *" flow="in" />
+      <param name="param" type="GLfixed *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="FrontFace" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -40935,12 +41027,12 @@
     </function>
     <function name="GetClipPlanef" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="plane" type="GLenum" flow="in" />
-      <param name="equation" type="GLfloat *" flow="out" />
+      <param name="equation" type="GLfloat *" flow="out" count="4" />
       <returns type="void" />
     </function>
     <function name="GetClipPlanex" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="plane" type="GLenum" flow="in" />
-      <param name="equation" type="GLfixed *" flow="out" />
+      <param name="equation" type="GLfixed *" flow="out" count="4" />
       <returns type="void" />
     </function>
     <function name="GetError" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -40970,7 +41062,7 @@
     <function name="GetLightxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="light" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="out" />
+      <param name="params" type="GLfixed *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetMaterialfv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -40982,12 +41074,12 @@
     <function name="GetMaterialxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="face" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="out" />
+      <param name="params" type="GLfixed *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetPointerv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPointervPName" flow="in" />
-      <param name="params" type="void **" flow="out" />
+      <param name="params" type="void **" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="GetString" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -41009,7 +41101,7 @@
     <function name="GetTexEnvxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="target" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="out" />
+      <param name="params" type="GLfixed *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetTexParameterfv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -41027,7 +41119,7 @@
     <function name="GetTexParameterxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="target" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="out" />
+      <param name="params" type="GLfixed *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="Hint" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -41076,7 +41168,7 @@
     </function>
     <function name="LightModelxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="GLfixed *" flow="in" />
+      <param name="param" type="GLfixed *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="Lightx" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -41088,7 +41180,7 @@
     <function name="Lightxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="light" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="in" />
+      <param name="params" type="GLfixed *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="LineWidth" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -41107,7 +41199,7 @@
       <returns type="void" />
     </function>
     <function name="LoadMatrixx" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
-      <param name="m" type="GLfixed *" flow="in" />
+      <param name="m" type="GLfixed *" flow="in" count="16" />
       <returns type="void" />
     </function>
     <function name="LogicOp" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -41135,7 +41227,7 @@
     <function name="Materialxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="face" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="GLfixed *" flow="in" />
+      <param name="param" type="GLfixed *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="MatrixMode" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -41163,7 +41255,7 @@
       <returns type="void" />
     </function>
     <function name="MultMatrixx" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
-      <param name="m" type="GLfixed *" flow="in" />
+      <param name="m" type="GLfixed *" flow="in" count="16" />
       <returns type="void" />
     </function>
     <function name="Normal3f" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -41224,7 +41316,7 @@
     </function>
     <function name="PointParameterxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="in" />
+      <param name="params" type="GLfixed *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="PointSize" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -41364,7 +41456,7 @@
     <function name="TexEnvxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="target" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="in" />
+      <param name="params" type="GLfixed *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="TexImage2D" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -41412,7 +41504,7 @@
     <function name="TexParameterxv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="target" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfixed *" flow="in" />
+      <param name="params" type="GLfixed *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="TexSubImage2D" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -42807,6 +42899,28 @@
       <token name="INT" value="0x1404" />
       <token name="SHORT" value="0x1402" />
     </enum>
+    <enum name="INTEL_performance_query">
+      <token name="PERFQUERY_SINGLE_CONTEXT_INTEL" value="0x00000000" />
+      <token name="PERFQUERY_GLOBAL_CONTEXT_INTEL" value="0x00000001" />
+      <token name="PERFQUERY_WAIT_INTEL" value="0x83FB" />
+      <token name="PERFQUERY_FLUSH_INTEL" value="0x83FA" />
+      <token name="PERFQUERY_DONOT_FLUSH_INTEL" value="0x83F9" />
+      <token name="PERFQUERY_COUNTER_EVENT_INTEL" value="0x94F0" />
+      <token name="PERFQUERY_COUNTER_DURATION_NORM_INTEL" value="0x94F1" />
+      <token name="PERFQUERY_COUNTER_DURATION_RAW_INTEL" value="0x94F2" />
+      <token name="PERFQUERY_COUNTER_THROUGHPUT_INTEL" value="0x94F3" />
+      <token name="PERFQUERY_COUNTER_RAW_INTEL" value="0x94F4" />
+      <token name="PERFQUERY_COUNTER_TIMESTAMP_INTEL" value="0x94F5" />
+      <token name="PERFQUERY_COUNTER_DATA_UINT32_INTEL" value="0x94F8" />
+      <token name="PERFQUERY_COUNTER_DATA_UINT64_INTEL" value="0x94F9" />
+      <token name="PERFQUERY_COUNTER_DATA_FLOAT_INTEL" value="0x94FA" />
+      <token name="PERFQUERY_COUNTER_DATA_DOUBLE_INTEL" value="0x94FB" />
+      <token name="PERFQUERY_COUNTER_DATA_BOOL32_INTEL" value="0x94FC" />
+      <token name="PERFQUERY_QUERY_NAME_LENGTH_MAX_INTEL" value="0x94FD" />
+      <token name="PERFQUERY_COUNTER_NAME_LENGTH_MAX_INTEL" value="0x94FE" />
+      <token name="PERFQUERY_COUNTER_DESC_LENGTH_MAX_INTEL" value="0x94FF" />
+      <token name="PERFQUERY_GPA_EXTENDED_COUNTERS_INTEL" value="0x9500" />
+    </enum>
     <enum name="InterleavedArrayFormat">
       <token name="C3F_V3F" value="0x2A24" deprecated="3.2" />
       <token name="C4F_N3F_V3F" value="0x2A26" deprecated="3.2" />
@@ -44131,6 +44245,10 @@
       <param name="monitor" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
+    <function name="BeginPerfQueryINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryHandle" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="BeginQueryEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
       <param name="target" type="GLenum" flow="in" />
       <param name="id" type="GLuint" flow="in" />
@@ -44197,7 +44315,7 @@
       <param name="depth" type="GLsizei" flow="in" />
       <param name="border" type="GLint" flow="in" />
       <param name="imageSize" type="GLsizei" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="imageSize" />
       <returns type="void" />
     </function>
     <function name="CompressedTexSubImage3DOES" category="OES_texture_3D" extension="OES">
@@ -44211,7 +44329,7 @@
       <param name="depth" type="GLsizei" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="imageSize" type="GLsizei" flow="in" />
-      <param name="data" type="void *" flow="in" />
+      <param name="data" type="void *" flow="in" count="imageSize" />
       <returns type="void" />
     </function>
     <function name="CopyBufferSubDataNV" category="NV_copy_buffer" extension="NV">
@@ -44249,6 +44367,11 @@
       <param name="operation" type="GLenum" flow="in" />
       <returns type="void" />
     </function>
+    <function name="CreatePerfQueryINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryId" type="GLuint" flow="in" />
+      <param name="queryHandle" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
     <function name="CreateShaderProgramEXT" category="EXT_separate_shader_objects" extension="EXT">
       <param name="type" type="GLenum" flow="in" />
       <param name="string" type="GLchar *" flow="in" />
@@ -44257,7 +44380,7 @@
     <function name="CreateShaderProgramvEXT" category="EXT_separate_shader_objects" extension="EXT">
       <param name="type" type="GLenum" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="strings" type="GLchar **" flow="in" />
+      <param name="strings" type="GLchar **" flow="in" count="count" />
       <returns type="GLuint" />
     </function>
     <function name="DebugMessageCallback" category="KHR_debug" extension="Core">
@@ -44316,14 +44439,18 @@
       <param name="monitors" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
+    <function name="DeletePerfQueryINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryHandle" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="DeleteProgramPipelinesEXT" category="EXT_separate_shader_objects" extension="EXT">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="pipelines" type="GLuint *" flow="in" />
+      <param name="pipelines" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
     </function>
     <function name="DeleteQueriesEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="ids" type="GLuint *" flow="in" />
+      <param name="ids" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
     </function>
     <function name="DeleteSyncAPPLE" category="APPLE_sync" extension="APPLE">
@@ -44332,7 +44459,7 @@
     </function>
     <function name="DeleteVertexArraysOES" category="OES_vertex_array_object" extension="OES">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="arrays" type="GLuint *" flow="in" />
+      <param name="arrays" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
     </function>
     <function name="DisableDriverControlQCOM" category="QCOM_driver_control" extension="QCOM">
@@ -44342,7 +44469,7 @@
     <function name="DiscardFramebufferEXT" category="EXT_discard_framebuffer" extension="EXT">
       <param name="target" type="GLenum" flow="in" />
       <param name="numAttachments" type="GLsizei" flow="in" />
-      <param name="attachments" type="GLenum *" flow="in" />
+      <param name="attachments" type="GLenum *" flow="in" count="numAttachments" />
       <returns type="void" />
     </function>
     <function name="DrawArraysInstancedANGLE" category="ANGLE_instanced_arrays" extension="ANGLE">
@@ -44373,20 +44500,20 @@
     </function>
     <function name="DrawBuffersIndexedEXT" category="EXT_multiview_draw_buffers" extension="EXT">
       <param name="n" type="GLint" flow="in" />
-      <param name="location" type="GLenum *" flow="in" />
-      <param name="indices" type="GLint *" flow="in" />
+      <param name="location" type="GLenum *" flow="in" count="n" />
+      <param name="indices" type="GLint *" flow="in" count="n" />
       <returns type="void" />
     </function>
     <function name="DrawBuffersNV" category="NV_draw_buffers" extension="NV">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="bufs" type="GLenum *" flow="in" />
+      <param name="bufs" type="GLenum *" flow="in" count="n" />
       <returns type="void" />
     </function>
     <function name="DrawElementsInstancedANGLE" category="ANGLE_instanced_arrays" extension="ANGLE">
       <param name="mode" type="PrimitiveType" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="indices" type="void *" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
       <param name="primcount" type="GLsizei" flow="in" />
       <returns type="void" />
     </function>
@@ -44402,7 +44529,7 @@
       <param name="mode" type="PrimitiveType" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="indices" type="void *" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
       <param name="primcount" type="GLsizei" flow="in" />
       <returns type="void" />
     </function>
@@ -44424,6 +44551,10 @@
       <param name="monitor" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
+    <function name="EndPerfQueryINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryHandle" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="EndQueryEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
       <param name="target" type="GLenum" flow="in" />
       <returns type="void" />
@@ -44438,15 +44569,15 @@
       <returns type="void" />
     </function>
     <function name="ExtGetBuffersQCOM" category="QCOM_extended_get" extension="QCOM">
-      <param name="buffers" type="GLuint *" flow="out" />
+      <param name="buffers" type="GLuint *" flow="out" count="maxBuffers" />
       <param name="maxBuffers" type="GLint" flow="in" />
-      <param name="numBuffers" type="GLint *" flow="out" />
+      <param name="numBuffers" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="ExtGetFramebuffersQCOM" category="QCOM_extended_get" extension="QCOM">
-      <param name="framebuffers" type="GLuint *" flow="out" />
+      <param name="framebuffers" type="GLuint *" flow="out" count="maxFramebuffers" />
       <param name="maxFramebuffers" type="GLint" flow="in" />
-      <param name="numFramebuffers" type="GLint *" flow="out" />
+      <param name="numFramebuffers" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="ExtGetProgramBinarySourceQCOM" category="QCOM_extended_get2" extension="QCOM">
@@ -44457,21 +44588,21 @@
       <returns type="void" />
     </function>
     <function name="ExtGetProgramsQCOM" category="QCOM_extended_get2" extension="QCOM">
-      <param name="programs" type="GLuint *" flow="out" />
+      <param name="programs" type="GLuint *" flow="out" count="maxPrograms" />
       <param name="maxPrograms" type="GLint" flow="in" />
-      <param name="numPrograms" type="GLint *" flow="out" />
+      <param name="numPrograms" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="ExtGetRenderbuffersQCOM" category="QCOM_extended_get" extension="QCOM">
-      <param name="renderbuffers" type="GLuint *" flow="out" />
+      <param name="renderbuffers" type="GLuint *" flow="out" count="maxRenderbuffers" />
       <param name="maxRenderbuffers" type="GLint" flow="in" />
-      <param name="numRenderbuffers" type="GLint *" flow="out" />
+      <param name="numRenderbuffers" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="ExtGetShadersQCOM" category="QCOM_extended_get2" extension="QCOM">
-      <param name="shaders" type="GLuint *" flow="out" />
+      <param name="shaders" type="GLuint *" flow="out" count="maxShaders" />
       <param name="maxShaders" type="GLint" flow="in" />
-      <param name="numShaders" type="GLint *" flow="out" />
+      <param name="numShaders" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="ExtGetTexLevelParameterivQCOM" category="QCOM_extended_get" extension="QCOM">
@@ -44566,17 +44697,17 @@
     </function>
     <function name="GenProgramPipelinesEXT" category="EXT_separate_shader_objects" extension="EXT">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="pipelines" type="GLuint *" flow="out" />
+      <param name="pipelines" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
     <function name="GenQueriesEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="ids" type="GLuint *" flow="out" />
+      <param name="ids" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
     <function name="GenVertexArraysOES" category="OES_vertex_array_object" extension="OES">
       <param name="n" type="GLsizei" flow="in" />
-      <param name="arrays" type="GLuint *" flow="out" />
+      <param name="arrays" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
     <function name="GetBufferPointervOES" category="OES_mapbuffer" extension="OES">
@@ -44626,6 +44757,10 @@
       <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
+    <function name="GetFirstPerfQueryIdINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryId" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
     <function name="GetGraphicsResetStatusEXT" category="EXT_robustness" extension="EXT">
       <returns type="GLenum" />
     </function>
@@ -44638,6 +44773,11 @@
       <param name="target" type="GLenum" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="data" type="GLint *" flow="out" />
+      <returns type="void" />
+    </function>
+    <function name="GetNextPerfQueryIdINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryId" type="GLuint" flow="in" />
+      <param name="nextQueryId" type="GLuint *" flow="out" />
       <returns type="void" />
     </function>
     <function name="GetnUniformfvEXT" category="EXT_robustness" extension="EXT">
@@ -44658,7 +44798,7 @@
       <param name="identifier" type="GLenum" flow="in" />
       <param name="name" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -44666,7 +44806,7 @@
       <param name="type" type="GLenum" flow="in" />
       <param name="object" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -44681,15 +44821,29 @@
     <function name="GetObjectPtrLabel" category="KHR_debug" extension="Core">
       <param name="ptr" type="void *" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
     <function name="GetObjectPtrLabelKHR" category="KHR_debug" extension="KHR">
       <param name="ptr" type="void *" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
+      <returns type="void" />
+    </function>
+    <function name="GetPerfCounterInfoINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryId" type="GLuint" flow="in" />
+      <param name="counterId" type="GLuint" flow="in" />
+      <param name="counterNameLength" type="GLuint" flow="in" />
+      <param name="counterName" type="GLchar *" flow="out" />
+      <param name="counterDescLength" type="GLuint" flow="in" />
+      <param name="counterDesc" type="GLchar *" flow="out" />
+      <param name="counterOffset" type="GLuint *" flow="out" />
+      <param name="counterDataSize" type="GLuint *" flow="out" />
+      <param name="counterTypeEnum" type="GLuint *" flow="out" />
+      <param name="counterDataTypeEnum" type="GLuint *" flow="out" />
+      <param name="rawCounterMaxValue" type="GLuint64 *" flow="out" />
       <returns type="void" />
     </function>
     <function name="GetPerfMonitorCounterDataAMD" category="AMD_performance_monitor" extension="AMD">
@@ -44736,9 +44890,32 @@
       <param name="groupString" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
+    <function name="GetPerfQueryDataINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryHandle" type="GLuint" flow="in" />
+      <param name="flags" type="GLuint" flow="in" />
+      <param name="dataSize" type="GLsizei" flow="in" />
+      <param name="data" type="GLvoid *" flow="out" />
+      <param name="bytesWritten" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
+    <function name="GetPerfQueryIdByNameINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryName" type="GLchar *" flow="out" />
+      <param name="queryId" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
+    <function name="GetPerfQueryInfoINTEL" category="INTEL_performance_query" extension="INTEL">
+      <param name="queryId" type="GLuint" flow="in" />
+      <param name="queryNameLength" type="GLuint" flow="in" />
+      <param name="queryName" type="GLchar *" flow="out" />
+      <param name="dataSize" type="GLuint *" flow="out" />
+      <param name="noCounters" type="GLuint *" flow="out" />
+      <param name="noInstances" type="GLuint *" flow="out" />
+      <param name="capsMask" type="GLuint *" flow="out" />
+      <returns type="void" />
+    </function>
     <function name="GetPointerv" category="KHR_debug" extension="Core">
       <param name="pname" type="GetPointervPName" flow="in" />
-      <param name="params" type="void **" flow="out" />
+      <param name="params" type="void **" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="GetPointervKHR" category="KHR_debug" extension="KHR">
@@ -44749,15 +44926,15 @@
     <function name="GetProgramBinaryOES" category="OES_get_program_binary" extension="OES">
       <param name="program" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
-      <param name="binaryFormat" type="GLenum *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
+      <param name="binaryFormat" type="GLenum *" flow="out" count="1" />
       <param name="binary" type="void *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
     <function name="GetProgramPipelineInfoLogEXT" category="EXT_separate_shader_objects" extension="EXT">
       <param name="pipeline" type="GLuint" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="infoLog" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
@@ -44808,7 +44985,7 @@
     <function name="GetTranslatedShaderSourceANGLE" category="ANGLE_translated_shader_source" extension="ANGLE">
       <param name="shader" type="GLuint" flow="in" />
       <param name="bufsize" type="GLsizei" flow="in" />
-      <param name="length" type="GLsizei *" flow="out" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="source" type="GLchar *" flow="out" />
       <returns type="void" />
     </function>
@@ -44909,7 +45086,7 @@
     <function name="ProgramBinaryOES" category="OES_get_program_binary" extension="OES">
       <param name="program" type="GLuint" flow="in" />
       <param name="binaryFormat" type="GLenum" flow="in" />
-      <param name="binary" type="void *" flow="in" />
+      <param name="binary" type="void *" flow="in" count="length" />
       <param name="length" type="GLint" flow="in" />
       <returns type="void" />
     </function>
@@ -45287,7 +45464,7 @@
       <param name="border" type="GLint" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="pixels" type="void *" flow="in" />
+      <param name="pixels" type="void *" flow="in" count="COMPSIZE(format,type,width,height,depth)" />
       <returns type="void" />
     </function>
     <function name="TexStorage1DEXT" category="EXT_texture_storage" extension="EXT">
@@ -45325,7 +45502,7 @@
       <param name="depth" type="GLsizei" flow="in" />
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="pixels" type="void *" flow="in" />
+      <param name="pixels" type="void *" flow="in" count="COMPSIZE(format,type,width,height,depth)" />
       <returns type="void" />
     </function>
     <function name="TextureStorage1DEXT" category="EXT_texture_storage" extension="EXT">
@@ -46057,7 +46234,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="maxCount" type="GLsizei" flow="in" />
       <param name="count" type="GLsizei *" flow="out" count="1" />
-      <param name="shaders" type="GLuint *" flow="out" />
+      <param name="shaders" type="GLuint *" flow="out" count="maxCount" />
       <returns type="void" />
     </function>
     <function name="GetAttribLocation" category="ES_VERSION_2_0" extension="Core" version="2.0">
