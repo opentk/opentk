@@ -574,7 +574,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -606,7 +606,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -638,7 +638,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -959,7 +959,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -985,7 +985,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -1014,7 +1014,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -1043,7 +1043,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -1072,7 +1072,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -1105,7 +1105,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -1131,7 +1131,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -1160,7 +1160,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -1189,7 +1189,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -1218,7 +1218,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -1463,7 +1463,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1490,7 +1490,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1520,7 +1520,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1550,7 +1550,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1580,7 +1580,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1609,7 +1609,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1635,7 +1635,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1664,7 +1664,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1693,7 +1693,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1722,7 +1722,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1770,7 +1770,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -1817,7 +1817,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -1867,7 +1867,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -1917,7 +1917,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -1967,7 +1967,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2016,7 +2016,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2062,7 +2062,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2111,7 +2111,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2160,7 +2160,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2209,7 +2209,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2262,7 +2262,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2314,7 +2314,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2369,7 +2369,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2424,7 +2424,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2479,7 +2479,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2533,7 +2533,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2584,7 +2584,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2638,7 +2638,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2692,7 +2692,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2746,7 +2746,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2953,7 +2953,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -2970,7 +2970,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -2987,7 +2987,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3004,7 +3004,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3021,7 +3021,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3038,7 +3038,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3055,7 +3055,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3072,7 +3072,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3089,7 +3089,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3106,7 +3106,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3123,7 +3123,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3140,7 +3140,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3157,7 +3157,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3174,7 +3174,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3191,7 +3191,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3208,7 +3208,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3372,7 +3372,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3399,7 +3399,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3429,7 +3429,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3459,7 +3459,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3489,7 +3489,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3518,7 +3518,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3545,7 +3545,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3575,7 +3575,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3605,7 +3605,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3635,7 +3635,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3664,7 +3664,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3690,7 +3690,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3719,7 +3719,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3748,7 +3748,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3777,7 +3777,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -4028,7 +4028,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4045,7 +4045,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4062,7 +4062,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4079,7 +4079,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4096,7 +4096,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4113,7 +4113,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4130,7 +4130,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4147,7 +4147,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4164,7 +4164,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4181,7 +4181,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4198,7 +4198,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4215,7 +4215,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4232,7 +4232,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4249,7 +4249,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -6077,7 +6077,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Replace the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Specifies a pointer to 16 consecutive values, which are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6089,7 +6089,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Replace the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Specifies a pointer to 16 consecutive values, which are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6101,7 +6101,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Replace the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Specifies a pointer to 16 consecutive values, which are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6358,7 +6358,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Multiply the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Points to 16 consecutive values that are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6370,7 +6370,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Multiply the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Points to 16 consecutive values that are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6382,7 +6382,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Multiply the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Points to 16 consecutive values that are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6437,7 +6437,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6459,7 +6459,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6484,7 +6484,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6509,7 +6509,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6534,7 +6534,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6558,7 +6558,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6579,7 +6579,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6603,7 +6603,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6627,7 +6627,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6651,7 +6651,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -7468,7 +7468,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7495,7 +7495,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7525,7 +7525,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7555,7 +7555,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7585,7 +7585,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7614,7 +7614,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7640,7 +7640,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7669,7 +7669,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7698,7 +7698,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7727,7 +7727,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -9500,7 +9500,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9527,7 +9527,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9557,7 +9557,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9587,7 +9587,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9617,7 +9617,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9646,7 +9646,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9672,7 +9672,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9701,7 +9701,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9730,7 +9730,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9759,7 +9759,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9992,12 +9992,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10020,12 +10020,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10048,12 +10048,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10076,12 +10076,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10103,12 +10103,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10130,12 +10130,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10157,7 +10157,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10167,7 +10167,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10190,7 +10190,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10200,7 +10200,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10225,7 +10225,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10235,7 +10235,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10260,7 +10260,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10270,7 +10270,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10295,7 +10295,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10305,7 +10305,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10330,7 +10330,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10340,7 +10340,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10363,7 +10363,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10373,7 +10373,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10398,7 +10398,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10408,7 +10408,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10433,7 +10433,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10443,7 +10443,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10468,7 +10468,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10478,7 +10478,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10503,7 +10503,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10513,7 +10513,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10536,7 +10536,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10546,7 +10546,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10571,7 +10571,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10581,7 +10581,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10606,7 +10606,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10616,7 +10616,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10641,7 +10641,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10651,7 +10651,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10676,7 +10676,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10686,7 +10686,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10708,7 +10708,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10718,7 +10718,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10742,7 +10742,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10752,7 +10752,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10776,7 +10776,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10786,7 +10786,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10810,7 +10810,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10820,7 +10820,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10844,7 +10844,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10854,7 +10854,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10876,7 +10876,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10886,7 +10886,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10910,7 +10910,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10920,7 +10920,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10944,7 +10944,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10954,7 +10954,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10978,7 +10978,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10988,7 +10988,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11012,7 +11012,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -11022,7 +11022,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11044,7 +11044,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -11054,7 +11054,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11078,7 +11078,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -11088,7 +11088,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11112,7 +11112,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -11122,7 +11122,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11146,7 +11146,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -11156,7 +11156,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11850,7 +11850,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES - 1, are accepted.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </para>
@@ -11867,7 +11867,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES - 1, are accepted.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </para>
@@ -11884,7 +11884,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES - 1, are accepted.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </para>
@@ -12927,7 +12927,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
             /// </para>
@@ -12944,7 +12944,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
             /// </para>
@@ -12961,7 +12961,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
             /// </para>
