@@ -98,17 +98,8 @@ namespace Bind
 
         public void WriteLine(string value)
         {
-            // The Mono implementation of WriteLine calls Write internally.
-            // The .Net implementation does not.
-            // If running on Mono, we must avoid indenting in WriteLine
-            // because then we'll indent twice (once in WriteLine and once in Write).
-            // If running on .Net we must indent in both WriteLine and Write.
-            // Neat, no?
-            if (System.Type.GetType("Mono.Runtime") == null)
-            {
-                WriteIndentations();
-            }
-            sw.WriteLine(value);
+            Write(value);
+            WriteLine();
         }
 
         public void WriteLine(string format, params object[] args)
