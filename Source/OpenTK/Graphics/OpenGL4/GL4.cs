@@ -2846,7 +2846,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -2873,7 +2873,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -2900,7 +2900,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -2927,7 +2927,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -2954,7 +2954,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -2981,7 +2981,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -3008,7 +3008,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -3035,7 +3035,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -3062,7 +3062,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -3089,7 +3089,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -3116,7 +3116,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -3143,7 +3143,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specify the number of contiguous binding points to which to bind buffers.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL.
         /// </para>
@@ -3381,7 +3381,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3403,7 +3403,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3425,7 +3425,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3447,7 +3447,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3469,7 +3469,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3491,7 +3491,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3605,7 +3605,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of samplers to bind.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing sampler objects.
         /// </para>
@@ -3627,7 +3627,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of samplers to bind.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing sampler objects.
         /// </para>
@@ -3649,7 +3649,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of samplers to bind.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing sampler objects.
         /// </para>
@@ -3671,7 +3671,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of samplers to bind.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing sampler objects.
         /// </para>
@@ -3693,7 +3693,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of samplers to bind.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing sampler objects.
         /// </para>
@@ -3715,7 +3715,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of samplers to bind.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing sampler objects.
         /// </para>
@@ -3771,7 +3771,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3793,7 +3793,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3815,7 +3815,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3837,7 +3837,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3859,7 +3859,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -3881,7 +3881,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of textures to bind.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing texture objects.
         /// </para>
@@ -4015,12 +4015,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of buffers to bind.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing buffer objects.
         /// </para>
         /// </param>
-        /// <param name="offsets">
+        /// <param name="offsets">[length: count]
         /// <para>
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
@@ -4047,12 +4047,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of buffers to bind.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing buffer objects.
         /// </para>
         /// </param>
-        /// <param name="offsets">
+        /// <param name="offsets">[length: count]
         /// <para>
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
@@ -4079,12 +4079,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of buffers to bind.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing buffer objects.
         /// </para>
         /// </param>
-        /// <param name="offsets">
+        /// <param name="offsets">[length: count]
         /// <para>
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
@@ -4111,12 +4111,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of buffers to bind.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing buffer objects.
         /// </para>
         /// </param>
-        /// <param name="offsets">
+        /// <param name="offsets">[length: count]
         /// <para>
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
@@ -4143,12 +4143,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of buffers to bind.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing buffer objects.
         /// </para>
         /// </param>
-        /// <param name="offsets">
+        /// <param name="offsets">[length: count]
         /// <para>
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
@@ -4175,12 +4175,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the number of buffers to bind.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: count]
         /// <para>
         /// Specifies the address of an array of names of existing buffer objects.
         /// </para>
         /// </param>
-        /// <param name="offsets">
+        /// <param name="offsets">[length: count]
         /// <para>
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
@@ -4660,7 +4660,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -4686,7 +4686,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -4715,7 +4715,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -4744,7 +4744,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -4773,7 +4773,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -5760,7 +5760,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -5792,7 +5792,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -5826,7 +5826,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -5860,7 +5860,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -5894,7 +5894,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -5928,7 +5928,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -5960,7 +5960,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -5994,7 +5994,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6028,7 +6028,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6062,7 +6062,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6126,7 +6126,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6188,7 +6188,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6252,7 +6252,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6316,7 +6316,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6380,7 +6380,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6444,7 +6444,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6506,7 +6506,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6570,7 +6570,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6634,7 +6634,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -6698,7 +6698,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The type of the data whose address in memory is given by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: format,type]
         /// <para>
         /// The address in memory of the data to be used to clear the specified region.
         /// </para>
@@ -17937,7 +17937,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -17964,7 +17964,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -17991,7 +17991,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -18018,7 +18018,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -18045,7 +18045,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -18072,7 +18072,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -20857,7 +20857,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -20890,7 +20890,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -20923,7 +20923,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -20956,7 +20956,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -20989,7 +20989,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21022,7 +21022,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21050,7 +21050,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21078,7 +21078,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21106,7 +21106,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21134,7 +21134,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21164,7 +21164,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21194,7 +21194,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21224,7 +21224,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21254,7 +21254,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21284,7 +21284,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21314,7 +21314,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21344,7 +21344,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21374,7 +21374,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21404,7 +21404,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21434,7 +21434,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -21464,7 +21464,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -23183,7 +23183,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The size of the character array whose address is given by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the length of the resource name.
         /// </para>
@@ -23221,7 +23221,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The size of the character array whose address is given by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the length of the resource name.
         /// </para>
@@ -23259,7 +23259,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The size of the character array whose address is given by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the length of the resource name.
         /// </para>
@@ -23297,7 +23297,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The size of the character array whose address is given by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the length of the resource name.
         /// </para>
@@ -23335,7 +23335,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The size of the character array whose address is given by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the length of the resource name.
         /// </para>
@@ -23373,7 +23373,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// The size of the character array whose address is given by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the length of the resource name.
         /// </para>
@@ -50003,7 +50003,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50031,7 +50031,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50059,7 +50059,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50087,7 +50087,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50117,7 +50117,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50147,7 +50147,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50177,7 +50177,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50207,7 +50207,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50237,7 +50237,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50267,7 +50267,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50297,7 +50297,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50327,7 +50327,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50357,7 +50357,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50387,7 +50387,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -50417,7 +50417,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>

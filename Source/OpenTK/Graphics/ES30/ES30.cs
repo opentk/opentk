@@ -951,7 +951,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -983,7 +983,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1018,7 +1018,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1053,7 +1053,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1088,7 +1088,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1122,7 +1122,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1153,7 +1153,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1187,7 +1187,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1221,7 +1221,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1255,7 +1255,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -13493,7 +13493,7 @@ namespace OpenTK.Graphics.ES30
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -13520,7 +13520,7 @@ namespace OpenTK.Graphics.ES30
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -13547,7 +13547,7 @@ namespace OpenTK.Graphics.ES30
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -13574,7 +13574,7 @@ namespace OpenTK.Graphics.ES30
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -13601,7 +13601,7 @@ namespace OpenTK.Graphics.ES30
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -13628,7 +13628,7 @@ namespace OpenTK.Graphics.ES30
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -15474,7 +15474,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15507,7 +15507,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15540,7 +15540,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15573,7 +15573,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15606,7 +15606,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15639,7 +15639,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15672,7 +15672,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15705,7 +15705,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15738,7 +15738,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15771,7 +15771,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15804,7 +15804,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15837,7 +15837,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15865,7 +15865,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15893,7 +15893,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15921,7 +15921,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15949,7 +15949,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -15979,7 +15979,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -16009,7 +16009,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -16039,7 +16039,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -16069,7 +16069,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -16099,7 +16099,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -16129,7 +16129,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -16159,7 +16159,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -16189,7 +16189,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -16219,7 +16219,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -16249,7 +16249,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -16279,7 +16279,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
@@ -34220,7 +34220,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of source code strings in the array strings.
             /// </para>
             /// </param>
-            /// <param name="strings">
+            /// <param name="strings">[length: count]
             /// <para>
             /// Specifies the address of an array of pointers to source code strings from which to create the program object.
             /// </para>
@@ -34246,7 +34246,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34263,7 +34263,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34280,7 +34280,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34297,7 +34297,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34314,7 +34314,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34331,7 +34331,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34358,7 +34358,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34375,7 +34375,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34392,7 +34392,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34409,7 +34409,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34426,7 +34426,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34443,7 +34443,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -35052,7 +35052,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35069,7 +35069,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35086,7 +35086,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35103,7 +35103,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35120,7 +35120,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35137,7 +35137,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35159,7 +35159,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35176,7 +35176,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35193,7 +35193,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35210,7 +35210,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35227,7 +35227,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35244,7 +35244,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35401,7 +35401,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -35434,7 +35434,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -35467,7 +35467,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -35500,7 +35500,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -35533,7 +35533,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -35566,7 +35566,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -35594,7 +35594,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
@@ -35622,7 +35622,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
@@ -35650,7 +35650,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
@@ -35678,7 +35678,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
@@ -35706,7 +35706,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
@@ -35734,7 +35734,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
@@ -44185,7 +44185,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44213,7 +44213,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44241,7 +44241,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44269,7 +44269,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44299,7 +44299,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44329,7 +44329,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44359,7 +44359,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44389,7 +44389,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44419,7 +44419,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44449,7 +44449,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44479,7 +44479,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44509,7 +44509,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44539,7 +44539,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44569,7 +44569,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -44599,7 +44599,7 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
@@ -45170,7 +45170,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -45188,7 +45188,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -45206,7 +45206,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -45224,7 +45224,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -45241,7 +45241,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -45258,7 +45258,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -45285,7 +45285,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45317,7 +45317,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45352,7 +45352,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45387,7 +45387,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45422,7 +45422,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45456,7 +45456,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45487,7 +45487,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45521,7 +45521,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45555,7 +45555,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45589,7 +45589,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45978,7 +45978,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46030,7 +46030,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46085,7 +46085,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46140,7 +46140,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46195,7 +46195,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46249,7 +46249,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46300,7 +46300,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46354,7 +46354,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46408,7 +46408,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46462,7 +46462,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46520,7 +46520,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46577,7 +46577,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46637,7 +46637,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46697,7 +46697,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46757,7 +46757,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46816,7 +46816,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46872,7 +46872,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46931,7 +46931,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46990,7 +46990,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -47049,7 +47049,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -47170,7 +47170,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -47187,7 +47187,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -47204,7 +47204,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -47221,7 +47221,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -47238,7 +47238,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -47255,7 +47255,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -47295,7 +47295,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -47312,7 +47312,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -47329,7 +47329,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -47346,7 +47346,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -47363,7 +47363,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -47380,7 +47380,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -47469,12 +47469,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47502,12 +47502,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47537,12 +47537,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47572,12 +47572,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47607,12 +47607,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47642,12 +47642,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47675,12 +47675,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47710,12 +47710,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47745,12 +47745,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47780,12 +47780,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47815,12 +47815,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47848,12 +47848,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47883,12 +47883,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47918,12 +47918,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47953,12 +47953,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -47988,12 +47988,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48021,12 +48021,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48056,12 +48056,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48091,12 +48091,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48126,12 +48126,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48161,12 +48161,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48194,12 +48194,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48229,12 +48229,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48264,12 +48264,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48299,12 +48299,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48334,12 +48334,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48367,12 +48367,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48402,12 +48402,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48437,12 +48437,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48472,12 +48472,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
@@ -48547,7 +48547,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48574,7 +48574,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48603,7 +48603,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48632,7 +48632,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48661,7 +48661,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48690,7 +48690,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48717,7 +48717,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48746,7 +48746,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48775,7 +48775,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48804,7 +48804,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>

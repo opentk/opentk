@@ -4374,7 +4374,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
         /// </para>
         /// </param>
-        /// <param name="equation">
+        /// <param name="equation">[length: 4]
         /// <para>
         /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
         /// </para>
@@ -4391,7 +4391,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
         /// </para>
         /// </param>
-        /// <param name="equation">
+        /// <param name="equation">[length: 4]
         /// <para>
         /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
         /// </para>
@@ -4408,7 +4408,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
         /// </para>
         /// </param>
-        /// <param name="equation">
+        /// <param name="equation">[length: 4]
         /// <para>
         /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
         /// </para>
@@ -11964,7 +11964,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -11981,7 +11981,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -11998,7 +11998,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -12015,7 +12015,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -12032,7 +12032,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -12049,7 +12049,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -12076,7 +12076,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12093,7 +12093,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12110,7 +12110,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12127,7 +12127,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12144,7 +12144,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12161,7 +12161,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12188,7 +12188,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12205,7 +12205,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12222,7 +12222,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12239,7 +12239,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12256,7 +12256,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12273,7 +12273,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12663,7 +12663,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12680,7 +12680,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12697,7 +12697,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12714,7 +12714,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12731,7 +12731,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12748,7 +12748,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12770,7 +12770,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12787,7 +12787,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12804,7 +12804,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12821,7 +12821,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12838,7 +12838,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12855,7 +12855,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
