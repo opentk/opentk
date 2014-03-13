@@ -327,6 +327,16 @@ namespace Bind
                     docs[0] = docs[0].Insert(summary_start, category);
                 }
 
+                foreach (var param in f.WrappedDelegate.Parameters)
+                {
+                    var index = docs.IndexOf("/// <param name=\"" + param.Name +"\">");
+                    if (index != -1 && param.ComputeSize != "")
+                    {
+                        var compute_size = string.Format("[length: {0}]", param.ComputeSize);
+                        docs[index] = docs[index] + compute_size;
+                    }
+                }
+
                 foreach (var doc in docs)
                 {
                     sw.WriteLine(doc);
