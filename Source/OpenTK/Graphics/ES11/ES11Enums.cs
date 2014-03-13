@@ -23,8 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
-
 using System;
 
 namespace OpenTK.Graphics.ES11
