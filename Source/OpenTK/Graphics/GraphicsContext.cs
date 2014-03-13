@@ -188,6 +188,10 @@ namespace OpenTK.Graphics
             if (getAddress == null || getCurrent == null)
                 throw new ArgumentNullException();
 
+            // Make sure OpenTK has been initialized.
+            // Fixes https://github.com/opentk/opentk/issues/52
+            Toolkit.Init();
+
             lock (SyncRoot)
             {
                 // Replace a zero-handle by the current context, if any
