@@ -65,7 +65,10 @@ namespace OpenTK.Platform
                 if (caps.IsConnected && joysticks[i].Description == DisconnectedName)
                 {
                     // New joystick connected
-                    joysticks[i] = new LegacyJoystickDevice(i, caps.AxisCount, caps.ButtonCount);
+                    joysticks[i] = new LegacyJoystickDevice(
+                        i,
+                        caps.AxisCount + 2 * caps.HatCount,
+                        caps.ButtonCount);
                     //device.Description = Joystick.GetName(i);
                     joysticks[i].Description = ConnectedName;
                     
@@ -78,15 +81,40 @@ namespace OpenTK.Platform
                 }
 
                 JoystickState state = Joystick.GetState(i);
-                for (int axis_index = 0; axis_index < (int)caps.AxisCount; axis_index++)
+                for (int axis_index = 0; axis_index < caps.AxisCount; axis_index++)
                 {
                     JoystickAxis axis = JoystickAxis.Axis0 + axis_index;
                     joysticks[i].SetAxis(axis, state.GetAxis(axis));
                 }
-                for (int button_index = 0; button_index < (int)caps.ButtonCount; button_index++)
+                for (int button_index = 0; button_index < caps.ButtonCount; button_index++)
                 {
                     JoystickButton button = JoystickButton.Button0 + button_index;
                     joysticks[i].SetButton(button, state.GetButton(button) == ButtonState.Pressed);
+                }
+                for (int hat_index = 0; hat_index < caps.HatCount; hat_index++)
+                {
+                    // LegacyJoystickDriver report hats as pairs of axes
+                    // Make sure we have enough axes left for this mapping
+                    int axis_index = caps.AxisCount + 2 * hat_index;
+                    if (axis_index < JoystickState.MaxAxes)
+                    {
+                        JoystickHat hat = JoystickHat.Hat0 + hat_index;
+                        JoystickHatState hat_state = state.GetHat(hat);
+                        JoystickAxis axis = JoystickAxis.Axis0 + axis_index;
+                        float x = 0;
+                        float y = 0;
+                        if (hat_state.IsDown)
+                            y--;
+                        if (hat_state.IsUp)
+                            y++;
+                        if (hat_state.IsLeft)
+                            x--;
+                        if (hat_state.IsRight)
+                            x++;
+
+                        joysticks[i].SetAxis(axis, x);
+                        joysticks[i].SetAxis(axis + 1, y);
+                    }
                 }
             }
         }
