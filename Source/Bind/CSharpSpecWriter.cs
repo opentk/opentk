@@ -173,7 +173,12 @@ namespace Bind
             sw.WriteLine("{");
             sw.Indent();
             foreach (var d in delegates.Values.Select(d => d.First()))
-                sw.WriteLine("\"{0}{1}\",", Settings.FunctionPrefix, d.Name);
+            {
+                if (!Settings.IsEnabled(Settings.Legacy.UseDllImports) || d.Extension != "Core")
+                {
+                    sw.WriteLine("\"{0}{1}\",", Settings.FunctionPrefix, d.Name);
+                }
+            }
             sw.Unindent();
             sw.WriteLine("};");
             sw.WriteLine("EntryPoints = new IntPtr[EntryPointNames.Length];");
