@@ -21,6 +21,8 @@ Changelog:
 5. GameWindow.Run() now respects TargetRenderFrequency setting
 6. GLControl now works on Mac OS X (thanks Sappharad!)
 7. external contexts no longer require an explicit call to Toolkit.Init()
+8. Joysticks now correctly report hat position on Windows
+9. Joysticks now correctly report +y as up and -y as down
 
 OpenTK 1.1.1 is backwards compatible with 1.1.0. Users of previous versions are encouraged to upgrade.
 
