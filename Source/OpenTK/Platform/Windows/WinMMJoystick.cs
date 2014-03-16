@@ -131,8 +131,16 @@ namespace OpenTK.Platform.Windows
                     // Make sure to reverse the vertical axes, so that +1 points up and -1 points down.
                     for (int axis = 0; axis < caps.NumAxes; axis++)
                     {
-                        stick.Details.Min[axis] = caps.GetMin(axis);
-                        stick.Details.Max[axis] = caps.GetMax(axis);
+                        if (axis % 2 == 1)
+                        {
+                            stick.Details.Min[axis] = caps.GetMax(axis);
+                            stick.Details.Max[axis] = caps.GetMin(axis);
+                        }
+                        else
+                        {
+                            stick.Details.Min[axis] = caps.GetMin(axis);
+                            stick.Details.Max[axis] = caps.GetMax(axis);
+                        }
                     }
 
                     if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
