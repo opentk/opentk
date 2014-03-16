@@ -173,7 +173,7 @@ namespace Examples.Tutorial
         /// <param name="e">Contains timing information.</param>
         protected override void OnRenderFrame( FrameEventArgs e )
         {
-            Angle += (float)(e.Time *20.0);
+            Angle += (float)(e.DeltaTime *20.0);
 
     
             GL.Clear( ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit );

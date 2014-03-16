@@ -52,10 +52,10 @@
                 <para>
                     Specifies the attribute to be returned.  Must be one of
                     <constant>GLX_WIDTH</constant>,
-					<constant>GLX_HEIGHT</constant>,
-					<constant>GLX_PRESERVED_CONTENTS</constant>,
-					<constant>GLX_LARGEST_PBUFFER</constant>, or
-					<constant>GLX_FBCONFIG_ID</constant>.
+                    <constant>GLX_HEIGHT</constant>,
+                    <constant>GLX_PRESERVED_CONTENTS</constant>,
+                    <constant>GLX_LARGEST_PBUFFER</constant>, or
+                    <constant>GLX_FBCONFIG_ID</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -64,7 +64,7 @@
             <listitem>
                 <para>
                     Contains the return value for
-					<parameter>attribute</parameter>. 
+                    <parameter>attribute</parameter>. 
                 </para>
             </listitem>
         </varlistentry>
@@ -73,11 +73,11 @@
     <refsect1 id="description"><title>Description</title>
         <para>
             <function>glXQueryDrawable</function> sets
-			<parameter>value</parameter> to the value of
-			<parameter>attribute</parameter> with respect to the GLXDrawable
-			<parameter>draw</parameter>.
-		</para>
-		<para>
+            <parameter>value</parameter> to the value of
+            <parameter>attribute</parameter> with respect to the GLXDrawable
+            <parameter>draw</parameter>.
+        </para>
+        <para>
             <parameter>attribute</parameter> may be one of the following:
         </para>
         <variablelist>
@@ -102,8 +102,8 @@
                 <listitem>
                     <para>
                         Returns <constant>True</constant> if the contents
-						of a GLXPbuffer are preserved when a resource
-						conflict occurs; <constant>False</constant> otherwise.
+                        of a GLXPbuffer are preserved when a resource
+                        conflict occurs; <constant>False</constant> otherwise.
                     </para>
                 </listitem>
             </varlistentry>
@@ -125,14 +125,14 @@
                     </para>
                 </listitem>
             </varlistentry>
-			<varlistentry>
-			    <term><constant>GLX_FBCONFIG_ID</constant></term>
-				<listitem>
-				    <para>
-					    Returns the XID for <parameter>draw</parameter>.
-					</para>
-				</listitem>
-			</varlistentry>
+            <varlistentry>
+                <term><constant>GLX_FBCONFIG_ID</constant></term>
+                <listitem>
+                    <para>
+                        Returns the XID for <parameter>draw</parameter>.
+                    </para>
+                </listitem>
+            </varlistentry>
         </variablelist>
         <para>
             If <parameter>draw</parameter> is a GLXWindow or GLXPixmap and
@@ -148,16 +148,16 @@
     <refsect1 id="errors"><title>Errors</title>
         <para>
             A <constant>GLXBadDrawable</constant> is generated if
-			<parameter>draw</parameter> is not a valid GLXDrawable.
+            <parameter>draw</parameter> is not a valid GLXDrawable.
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-		    <citerefentry><refentrytitle>glXCreateWindow</refentrytitle></citerefentry>,
-			<citerefentry><refentrytitle>glXCreatePixmap</refentrytitle></citerefentry>,
-			<citerefentry><refentrytitle>glXCreatePbuffer</refentrytitle></citerefentry>,
-			<citerefentry><refentrytitle>glXGetFBConfigAttrib</refentrytitle></citerefentry>,
-			<citerefentry><refentrytitle>glXChooseFBConfig</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glXCreateWindow</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glXCreatePixmap</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glXCreatePbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glXGetFBConfigAttrib</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glXChooseFBConfig</refentrytitle></citerefentry>
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>

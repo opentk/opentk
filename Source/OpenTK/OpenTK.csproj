@@ -147,6 +147,9 @@
     <Compile Include="Input\JoystickCapabilities.cs" />
     <Compile Include="Input\JoystickState.cs" />
     <Compile Include="InteropHelper.cs" />
+    <Compile Include="Math\Vector4i.cs" />
+    <Compile Include="Math\Vector3i.cs" />
+    <Compile Include="Math\Vector2i.cs" />
     <Compile Include="Math\Matrix2.cs" />
     <Compile Include="Math\Matrix2d.cs" />
     <Compile Include="Math\Matrix2x3.cs" />

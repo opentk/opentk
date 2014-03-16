@@ -160,12 +160,12 @@ namespace OpenTK.Platform.MacOS.Carbon
 
     #region --- Types defined in CarbonEvents.h ---
 
-	enum EventAttributes : uint
-	{
-		kEventAttributeNone = 0,
-		kEventAttributeUserEvent = (1 << 0),
-		kEventAttributeMonitored = 1 << 3,
-	}
+    enum EventAttributes : uint
+    {
+        kEventAttributeNone = 0,
+        kEventAttributeUserEvent = (1 << 0),
+        kEventAttributeMonitored = 1 << 3,
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct EventTypeSpec
@@ -286,7 +286,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
     internal enum EventParamName : int 
     {
-		WindowRef = 0x77696e64,           // typeWindowRef,
+        WindowRef = 0x77696e64,           // typeWindowRef,
 
         // Mouse Events
         MouseLocation = 0x6d6c6f63,       // typeHIPoint
@@ -308,7 +308,7 @@ namespace OpenTK.Platform.MacOS.Carbon
     }
     internal enum EventParamType : int
     {
-		typeWindowRef = 0x77696e64,           
+        typeWindowRef = 0x77696e64,           
 
         typeMouseButton = 0x6d62746e,
         typeMouseWheelAxis = 0x6d776178,
@@ -471,23 +471,23 @@ namespace OpenTK.Platform.MacOS.Carbon
     };
 
     #endregion
-	#region --- Process Manager ---
+    #region --- Process Manager ---
 
-	enum ProcessApplicationTransformState : int
-	{
-		kProcessTransformToForegroundApplication = 1,
-	}
+    enum ProcessApplicationTransformState : int
+    {
+        kProcessTransformToForegroundApplication = 1,
+    }
 
-	struct ProcessSerialNumber
-	{
-		public ulong high;
-		public ulong low;
-	}
+    struct ProcessSerialNumber
+    {
+        public ulong high;
+        public ulong low;
+    }
 
-	#endregion
+    #endregion
 
 
-	enum HICoordinateSpace 
+    enum HICoordinateSpace 
     {
         _72DPIGlobal      = 1,
         ScreenPixel      = 2,
@@ -589,11 +589,11 @@ namespace OpenTK.Platform.MacOS.Carbon
         [DllImport(carbon)]
         static extern void ReleaseEvent(IntPtr theEvent);
 
-		internal static void SendEvent(IntPtr theEvent)
-		{
-			IntPtr theTarget = GetEventDispatcherTarget();
-			SendEventToEventTarget(theEvent, theTarget);
-		}
+        internal static void SendEvent(IntPtr theEvent)
+        {
+            IntPtr theTarget = GetEventDispatcherTarget();
+            SendEventToEventTarget(theEvent, theTarget);
+        }
 
         // Processes events in the queue and then returns.
         internal static void ProcessEvents()
@@ -665,25 +665,25 @@ namespace OpenTK.Platform.MacOS.Carbon
         #endregion
         #region --- Getting Event Parameters ---
 
-		[DllImport(carbon,EntryPoint="CreateEvent")]
-		static extern OSStatus _CreateEvent( IntPtr inAllocator,
-			EventClass inClassID, UInt32 kind, EventTime when,
-			EventAttributes flags,out IntPtr outEvent);
+        [DllImport(carbon,EntryPoint="CreateEvent")]
+        static extern OSStatus _CreateEvent( IntPtr inAllocator,
+            EventClass inClassID, UInt32 kind, EventTime when,
+            EventAttributes flags,out IntPtr outEvent);
 
-		internal static IntPtr CreateWindowEvent(WindowEventKind kind)
-		{
-			IntPtr retval;
+        internal static IntPtr CreateWindowEvent(WindowEventKind kind)
+        {
+            IntPtr retval;
 
-			OSStatus stat = _CreateEvent(IntPtr.Zero, EventClass.Window, (uint)kind, 
-				0, EventAttributes.kEventAttributeNone, out retval);
+            OSStatus stat = _CreateEvent(IntPtr.Zero, EventClass.Window, (uint)kind, 
+                0, EventAttributes.kEventAttributeNone, out retval);
 
-			if (stat != OSStatus.NoError)
-			{
-				throw new MacOSException(stat);
-			}
+            if (stat != OSStatus.NoError)
+            {
+                throw new MacOSException(stat);
+            }
 
-			return retval;
-		}
+            return retval;
+        }
 
         [DllImport(carbon)]
         static extern OSStatus GetEventParameter(
@@ -755,68 +755,68 @@ namespace OpenTK.Platform.MacOS.Carbon
         }
         
         internal struct ScrollDelta {
-        	internal float deltaX;
+            internal float deltaX;
             internal float deltaY;
         }
         
         static internal ScrollDelta GetEventWheelScroll(IntPtr inEvent) 
         {
-        	ScrollDelta scrolldelta = new ScrollDelta();
-        	Int32 delta;
-        	
-        	unsafe 
-        	{
-        		Int32* d = &delta;
-				OSStatus result;
-				
-				// vertical scroll Delta in pixels
-				result = API.GetEventParameter(inEvent,
-					 EventParamName.MouseWheelSmoothVerticalDelta, EventParamType.typeSInt32,
-					 IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
+            ScrollDelta scrolldelta = new ScrollDelta();
+            Int32 delta;
+            
+            unsafe 
+            {
+                Int32* d = &delta;
+                OSStatus result;
+                
+                // vertical scroll Delta in pixels
+                result = API.GetEventParameter(inEvent,
+                     EventParamName.MouseWheelSmoothVerticalDelta, EventParamType.typeSInt32,
+                     IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
 
-				if (result == OSStatus.EventParameterNotFound) {
-					// it's okay for it to be simply missing...
-				} else if (result != OSStatus.NoError) {
-					throw new MacOSException(result);
-				} else {
-					scrolldelta.deltaY = delta / 20.0f;
-				}
-				
-				// horizontal scroll Delta in pixels
-				result = API.GetEventParameter(inEvent,
-					 EventParamName.MouseWheelSmoothHorizontalDelta, EventParamType.typeSInt32,
-					 IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
+                if (result == OSStatus.EventParameterNotFound) {
+                    // it's okay for it to be simply missing...
+                } else if (result != OSStatus.NoError) {
+                    throw new MacOSException(result);
+                } else {
+                    scrolldelta.deltaY = delta / 20.0f;
+                }
+                
+                // horizontal scroll Delta in pixels
+                result = API.GetEventParameter(inEvent,
+                     EventParamName.MouseWheelSmoothHorizontalDelta, EventParamType.typeSInt32,
+                     IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
 
-				if (result == OSStatus.EventParameterNotFound) {
-					// it's okay for it to be simply missing...
-				} else if (result != OSStatus.NoError) {
-					throw new MacOSException(result);
-				} else {
-					scrolldelta.deltaY = delta / 20.0f;
-				}
-			}
+                if (result == OSStatus.EventParameterNotFound) {
+                    // it's okay for it to be simply missing...
+                } else if (result != OSStatus.NoError) {
+                    throw new MacOSException(result);
+                } else {
+                    scrolldelta.deltaY = delta / 20.0f;
+                }
+            }
 
-			return scrolldelta;
+            return scrolldelta;
         }
         
-		static internal int GetEventMouseWheelDelta(IntPtr inEvent)
-		{
-			int delta;
+        static internal int GetEventMouseWheelDelta(IntPtr inEvent)
+        {
+            int delta;
 
-			unsafe
-			{
-				int* d = &delta;
+            unsafe
+            {
+                int* d = &delta;
 
-				OSStatus result = API.GetEventParameter(inEvent,
-					 EventParamName.MouseWheelDelta, EventParamType.typeSInt32,
-					 IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
+                OSStatus result = API.GetEventParameter(inEvent,
+                     EventParamName.MouseWheelDelta, EventParamType.typeSInt32,
+                     IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
 
-				if (result != OSStatus.NoError)
-					throw new MacOSException(result);
-			}
+                if (result != OSStatus.NoError)
+                    throw new MacOSException(result);
+            }
 
-			return delta;
-		}
+            return delta;
+        }
 
         static internal OSStatus GetEventWindowMouseLocation(IntPtr inEvent, out HIPoint pt)
         {
@@ -852,22 +852,22 @@ namespace OpenTK.Platform.MacOS.Carbon
             }
         }
 
-		static internal OSStatus GetEventWindowRef(IntPtr inEvent, out IntPtr windowRef)
-		{
-			IntPtr retval;
+        static internal OSStatus GetEventWindowRef(IntPtr inEvent, out IntPtr windowRef)
+        {
+            IntPtr retval;
 
-			unsafe
-			{
-				IntPtr* parm = &retval;
-				OSStatus result = API.GetEventParameter(inEvent,
-					EventParamName.WindowRef, EventParamType.typeWindowRef, IntPtr.Zero,
-					(uint)sizeof(IntPtr), IntPtr.Zero, (IntPtr)parm);
+            unsafe
+            {
+                IntPtr* parm = &retval;
+                OSStatus result = API.GetEventParameter(inEvent,
+                    EventParamName.WindowRef, EventParamType.typeWindowRef, IntPtr.Zero,
+                    (uint)sizeof(IntPtr), IntPtr.Zero, (IntPtr)parm);
 
-				windowRef = retval;
+                windowRef = retval;
 
-				return result;
-			}
-		}
+                return result;
+            }
+        }
 
         static internal OSStatus GetEventMouseLocation(IntPtr inEvent, out HIPoint pt)
         {
@@ -924,18 +924,18 @@ namespace OpenTK.Platform.MacOS.Carbon
         {
             IntPtr windowTarget = GetWindowEventTarget(windowRef);
 
-			//Debug.Print("Window: {0}", windowRef);
-			//Debug.Print("Window Target: {0}", windowTarget);
-			//Debug.Print("Handler: {0}", uppHandlerProc);
-			//Debug.Print("Num Events: {0}", eventTypes.Length);
-			//Debug.Print("User Data: {0}", userData);
-			//Debug.Print("Handler Ref: {0}", handlerRef);
+            //Debug.Print("Window: {0}", windowRef);
+            //Debug.Print("Window Target: {0}", windowTarget);
+            //Debug.Print("Handler: {0}", uppHandlerProc);
+            //Debug.Print("Num Events: {0}", eventTypes.Length);
+            //Debug.Print("User Data: {0}", userData);
+            //Debug.Print("Handler Ref: {0}", handlerRef);
 
             OSStatus error = _InstallEventHandler(windowTarget, uppHandlerProc, 
                                     eventTypes.Length, eventTypes,
                                     userData, handlerRef);
 
-			//Debug.Print("Status: {0}", error);
+            //Debug.Print("Status: {0}", error);
 
             if (error != OSStatus.NoError)
             {
@@ -980,32 +980,32 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static extern void DisposeEventHandlerUPP(IntPtr userUPP);
 
         #endregion
-		#region --- Process Manager ---
+        #region --- Process Manager ---
 
-		[DllImport(carbon)]
-		internal static extern int TransformProcessType(ref Carbon.ProcessSerialNumber psn, ProcessApplicationTransformState type);
-		[DllImport(carbon)]
-		internal static extern int GetCurrentProcess(ref Carbon.ProcessSerialNumber psn);
-		[DllImport(carbon)]
-		internal static extern int SetFrontProcess(ref Carbon.ProcessSerialNumber psn);
+        [DllImport(carbon)]
+        internal static extern int TransformProcessType(ref Carbon.ProcessSerialNumber psn, ProcessApplicationTransformState type);
+        [DllImport(carbon)]
+        internal static extern int GetCurrentProcess(ref Carbon.ProcessSerialNumber psn);
+        [DllImport(carbon)]
+        internal static extern int SetFrontProcess(ref Carbon.ProcessSerialNumber psn);
 
-		#endregion
-		#region --- Setting Dock Tile ---
+        #endregion
+        #region --- Setting Dock Tile ---
 
-		[DllImport(carbon)]
-		internal extern static IntPtr CGColorSpaceCreateDeviceRGB();
-		[DllImport(carbon)]
-		internal extern static IntPtr CGDataProviderCreateWithData(IntPtr info, IntPtr[] data, int size, IntPtr releasefunc);
-		[DllImport(carbon)]
-		internal extern static IntPtr CGImageCreate(int width, int height, int bitsPerComponent, int bitsPerPixel, int bytesPerRow, IntPtr colorspace, uint bitmapInfo, IntPtr provider, IntPtr decode, int shouldInterpolate, int intent);
-		[DllImport(carbon)]
-		internal extern static void SetApplicationDockTileImage(IntPtr imageRef);
-		[DllImport(carbon)]
-		internal extern static void RestoreApplicationDockTileImage();
+        [DllImport(carbon)]
+        internal extern static IntPtr CGColorSpaceCreateDeviceRGB();
+        [DllImport(carbon)]
+        internal extern static IntPtr CGDataProviderCreateWithData(IntPtr info, IntPtr[] data, int size, IntPtr releasefunc);
+        [DllImport(carbon)]
+        internal extern static IntPtr CGImageCreate(int width, int height, int bitsPerComponent, int bitsPerPixel, int bytesPerRow, IntPtr colorspace, uint bitmapInfo, IntPtr provider, IntPtr decode, int shouldInterpolate, int intent);
+        [DllImport(carbon)]
+        internal extern static void SetApplicationDockTileImage(IntPtr imageRef);
+        [DllImport(carbon)]
+        internal extern static void RestoreApplicationDockTileImage();
 
-		#endregion
+        #endregion
 
-		[DllImport(carbon)]
+        [DllImport(carbon)]
         static extern IntPtr GetControlBounds(IntPtr control, out Rect bounds);
 
         internal static Rect GetControlBounds(IntPtr control)

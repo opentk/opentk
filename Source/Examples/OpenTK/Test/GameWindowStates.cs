@@ -239,8 +239,8 @@ namespace Examples.Tests
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             double clock_time = watch.Elapsed.TotalSeconds;
-            update_time += e.Time;
-            timestamp += e.Time;
+            update_time += e.DeltaTime;
+            timestamp += e.DeltaTime;
             update_count++;
 
             using (Graphics gfx = Graphics.FromImage(TextBitmap))
@@ -308,7 +308,7 @@ namespace Examples.Tests
             }
 
             fixed_update_timestep_pos += TargetUpdatePeriod;
-            variable_update_timestep_pos += e.Time;
+            variable_update_timestep_pos += e.DeltaTime;
             if (fixed_update_timestep_pos >= 1)
                 fixed_update_timestep_pos -= 2;
             if (variable_update_timestep_pos >= 1)
@@ -372,7 +372,7 @@ namespace Examples.Tests
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            render_time += e.Time;
+            render_time += e.DeltaTime;
             render_count++;
 
             GL.Clear(ClearBufferMask.ColorBufferBit);
@@ -387,7 +387,7 @@ namespace Examples.Tests
 
             DrawMovingObjects();
 
-            variable_refresh_timestep_pos += e.Time;
+            variable_refresh_timestep_pos += e.DeltaTime;
             if (variable_refresh_timestep_pos >= 1)
                 variable_refresh_timestep_pos -= 2;
 

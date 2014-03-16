@@ -289,7 +289,7 @@ namespace Bind
 
                 case "gl3":
                 case "gl4":
-					mode = GeneratorMode.GL4;
+                    mode = GeneratorMode.GL4;
                     Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL4";
                     break;
 

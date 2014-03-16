@@ -218,7 +218,7 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
        protected override void OnRenderFrame(FrameEventArgs e)
        {
-           this.Title = "FPS: " + (1 / e.Time).ToString("0.");
+           this.Title = "FPS: " + (1 / e.DeltaTime).ToString("0.");
 
            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 

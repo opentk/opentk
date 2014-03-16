@@ -64,20 +64,20 @@
             Calling <function>glEvalPoint1</function> is equivalent to calling
             <programlisting>
 glEvalCoord1( <mml:math>
-	          <!-- eqn: i \cdot DELTA u + u sub 1 :-->
-     	          <mml:mrow>
-     	              <mml:mrow>
-     	                  <mml:mn>i</mml:mn>
-     	                  <mml:mo>&CenterDot;</mml:mo>
-     	                  <mml:mo>&Delta;</mml:mo>
-     	                  <mml:mi mathvariant="italic">u</mml:mi>
-     	              </mml:mrow>
-     	              <mml:mo>+</mml:mo>
-     	              <mml:msub>
-     	                  <mml:mi mathvariant="italic">u</mml:mi>
-     	                  <mml:mn>1</mml:mn>
-     	              </mml:msub>
-     	          </mml:mrow>
+              <!-- eqn: i \cdot DELTA u + u sub 1 :-->
+                   <mml:mrow>
+                       <mml:mrow>
+                           <mml:mn>i</mml:mn>
+                           <mml:mo>&CenterDot;</mml:mo>
+                           <mml:mo>&Delta;</mml:mo>
+                           <mml:mi mathvariant="italic">u</mml:mi>
+                       </mml:mrow>
+                       <mml:mo>+</mml:mo>
+                       <mml:msub>
+                           <mml:mi mathvariant="italic">u</mml:mi>
+                           <mml:mn>1</mml:mn>
+                       </mml:msub>
+                   </mml:mrow>
               </mml:math> );
          </programlisting>
             where
@@ -246,35 +246,35 @@ glEvalCoord1( <mml:math>
             Then the <function>glEvalPoint2</function> command is equivalent to calling
             <programlisting>
 glEvalCoord2( <mml:math>
-			<!-- i \cdot DELTA u + u sub 1 :-->
-		        <mml:mrow>
-			    <mml:mrow>
-			        <mml:mn>i</mml:mn>
-				<mml:mo>&CenterDot;</mml:mo>
-			        <mml:mo>&Delta;</mml:mo>
-		                <mml:mi mathvariant="italic">u</mml:mi>
-			    </mml:mrow>
-		            <mml:mo>+</mml:mo>
-		            <mml:msub>
-		                <mml:mi mathvariant="italic">u</mml:mi>
-		                <mml:mn>1</mml:mn>
-		            </mml:msub>
-			    <mml:mo>,</mml:mo>
-			    <!-- j \cdot DELTA v + v sub 1 :-->
-			    <mml:mrow>
-			        <mml:mn>j</mml:mn>
-				<mml:mo>&CenterDot;</mml:mo>
-			        <mml:mo>&Delta;</mml:mo>
-		                <mml:mi mathvariant="italic">v</mml:mi>
+            <!-- i \cdot DELTA u + u sub 1 :-->
+                <mml:mrow>
+                <mml:mrow>
+                    <mml:mn>i</mml:mn>
+                <mml:mo>&CenterDot;</mml:mo>
+                    <mml:mo>&Delta;</mml:mo>
+                        <mml:mi mathvariant="italic">u</mml:mi>
+                </mml:mrow>
+                    <mml:mo>+</mml:mo>
+                    <mml:msub>
+                        <mml:mi mathvariant="italic">u</mml:mi>
+                        <mml:mn>1</mml:mn>
+                    </mml:msub>
+                <mml:mo>,</mml:mo>
+                <!-- j \cdot DELTA v + v sub 1 :-->
+                <mml:mrow>
+                    <mml:mn>j</mml:mn>
+                <mml:mo>&CenterDot;</mml:mo>
+                    <mml:mo>&Delta;</mml:mo>
+                        <mml:mi mathvariant="italic">v</mml:mi>
 
-			    </mml:mrow>
-		            <mml:mo>+</mml:mo>
-		            <mml:msub>
-		                <mml:mi mathvariant="italic">v</mml:mi>
-		                <mml:mn>1</mml:mn>
-		            </mml:msub>
-			</mml:mrow>
-		    </mml:math> );
+                </mml:mrow>
+                    <mml:mo>+</mml:mo>
+                    <mml:msub>
+                        <mml:mi mathvariant="italic">v</mml:mi>
+                        <mml:mn>1</mml:mn>
+                    </mml:msub>
+            </mml:mrow>
+            </mml:math> );
             </programlisting>
             The only absolute numeric requirements are that if 
             <inlineequation><mml:math>

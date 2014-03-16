@@ -26,7 +26,7 @@ namespace Examples.Tutorial
         Font sans = new Font(FontFamily.GenericSansSerif, 18.0f);
         TextPrinter text = new TextPrinter();
 
- 	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
+         string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
         int lines;  // How many lines the poem contains.
         
         float scroll_speed;

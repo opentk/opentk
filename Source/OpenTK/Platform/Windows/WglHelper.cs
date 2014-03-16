@@ -43,8 +43,8 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Checks if a Wgl extension is supported by the given context.
         /// </summary>
-        /// <param name="context">The device context.</param>
-        /// <param name="ext">The extension to check.</param>
+        /// <param name="dc">The device context.</param>
+        /// <param name="name">The extension to check.</param>
         /// <returns>True if the extension is supported by the given context, false otherwise</returns>
         public static bool SupportsExtension(IntPtr dc, string name)
         {

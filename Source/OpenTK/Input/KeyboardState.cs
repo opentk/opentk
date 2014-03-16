@@ -44,8 +44,8 @@ namespace OpenTK.Input
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         unsafe fixed int Keys[NumInts];
 
-		const int CodesSize = 256;
-		unsafe fixed int Codes[CodesSize];
+        const int CodesSize = 256;
+        unsafe fixed int Codes[CodesSize];
         bool is_connected;
 
         #endregion

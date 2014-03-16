@@ -121,9 +121,9 @@ void main(void)
 
             GL.CompileShader(vertexShaderHandle);
             string log = GL.GetShaderInfoLog(vertexShaderHandle);
-			if (log.Length != 0) {
-				Debug.Print(log);
-			}
+            if (log.Length != 0) {
+                Debug.Print(log);
+            }
             GL.CompileShader(fragmentShaderHandle);
 
             Debug.WriteLine(GL.GetShaderInfoLog(vertexShaderHandle));
@@ -203,7 +203,7 @@ void main(void)
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            Matrix4 rotation = Matrix4.CreateRotationY((float)e.Time);
+            Matrix4 rotation = Matrix4.CreateRotationY((float)e.DeltaTime);
             Matrix4.Mult(ref rotation, ref modelviewMatrix, out modelviewMatrix);
             GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
 

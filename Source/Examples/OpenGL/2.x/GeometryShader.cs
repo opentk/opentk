@@ -44,19 +44,19 @@ namespace Examples.Tutorial
 
             // GLSL for fragment shader.
             String fragSource = @"
-				void main( void )
-				{
-					gl_FragColor = vec4(0, 1, 0, 0);
-				}	
-			";
+                void main( void )
+                {
+                    gl_FragColor = vec4(0, 1, 0, 0);
+                }    
+            ";
 
             // GLSL for vertex shader.
             String vertSource = @"
-				void main( void )
-				{
-					gl_Position = ftransform();
-				}	
-			";
+                void main( void )
+                {
+                    gl_Position = ftransform();
+                }    
+            ";
 
             // GLSL for geometry shader.
             // Note this is a version 1.20 shader
@@ -64,36 +64,36 @@ namespace Examples.Tutorial
             // OpenGL implementations should only have the new tokens, like
             // EmitVertex and EndPrimitive, when this extension is enabled.
             String geomSource = @"
-				#version 120 
-				#extension GL_EXT_geometry_shader4 : enable
+                #version 120 
+                #extension GL_EXT_geometry_shader4 : enable
 
-				void main(void)
-				{
-					// variable to use in for loops
-					int i;
+                void main(void)
+                {
+                    // variable to use in for loops
+                    int i;
 
-					// Emit the original vertices without changing, making
-					// this part exactly the same as if no geometry shader
-					// was used.
-					for(i=0; i< gl_VerticesIn; i++)
-					{
-						gl_Position = gl_PositionIn[i];
-						EmitVertex();
-					}
-					// End the one primitive with the original vertices
-					EndPrimitive();
+                    // Emit the original vertices without changing, making
+                    // this part exactly the same as if no geometry shader
+                    // was used.
+                    for(i=0; i< gl_VerticesIn; i++)
+                    {
+                        gl_Position = gl_PositionIn[i];
+                        EmitVertex();
+                    }
+                    // End the one primitive with the original vertices
+                    EndPrimitive();
 
-					// Now we generate some more! This translates 0.2 over
-					// the positive x axis.
-					for(i=0; i< gl_VerticesIn; i++)
-					{
-						gl_Position = gl_PositionIn[i];
-						gl_Position.x += 0.2;
-						EmitVertex();
-					}
-					EndPrimitive();
-				}
-			";
+                    // Now we generate some more! This translates 0.2 over
+                    // the positive x axis.
+                    for(i=0; i< gl_VerticesIn; i++)
+                    {
+                        gl_Position = gl_PositionIn[i];
+                        gl_Position.x += 0.2;
+                        EmitVertex();
+                    }
+                    EndPrimitive();
+                }
+            ";
 
             // compile shaders.
             compileShader(frag, fragSource);

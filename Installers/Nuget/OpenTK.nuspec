@@ -39,7 +39,7 @@
             <frameworkAssembly assemblyName="System.Drawing" />
             <frameworkAssembly assemblyName="System.Xml" />
         </frameworkAssemblies>
-	</metadata>
+    </metadata>
     <files>
         <file src="lib/net20/OpenTK.dll" target="lib/net20" />
         <file src="lib/net20/OpenTK.xml" target="lib/net20" />

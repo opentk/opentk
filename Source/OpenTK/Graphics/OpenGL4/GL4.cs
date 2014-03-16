@@ -4025,7 +4025,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="strides">
         /// <para>
         /// Specifies the address of an array of strides to associate with the binding points.
         /// </para>
@@ -4057,7 +4057,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="strides">
         /// <para>
         /// Specifies the address of an array of strides to associate with the binding points.
         /// </para>
@@ -4089,7 +4089,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="strides">
         /// <para>
         /// Specifies the address of an array of strides to associate with the binding points.
         /// </para>
@@ -4121,7 +4121,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="strides">
         /// <para>
         /// Specifies the address of an array of strides to associate with the binding points.
         /// </para>
@@ -4153,7 +4153,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="strides">
         /// <para>
         /// Specifies the address of an array of strides to associate with the binding points.
         /// </para>
@@ -4185,7 +4185,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the address of an array of offsets to associate with the binding points.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="strides">
         /// <para>
         /// Specifies the address of an array of strides to associate with the binding points.
         /// </para>

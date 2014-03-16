@@ -89,7 +89,7 @@
         </para>
         <para>
             <informalequation><mml:math>
-                <!-- eqn: F  =  left (   matrix {    ccol { centerX - eyeX above 	  centerY - eyeY above 	  centerZ - eyeZ } }    right ):-->
+                <!-- eqn: F  =  left (   matrix {    ccol { centerX - eyeX above       centerY - eyeY above       centerZ - eyeZ } }    right ):-->
                 <mml:mrow>
                     <mml:mi mathvariant="italic">F</mml:mi>
                     <mml:mo>=</mml:mo>

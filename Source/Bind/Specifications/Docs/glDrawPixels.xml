@@ -779,14 +779,14 @@
                         as an RGBA pixel.
 
                     </para>
-		    </listitem>
-		</varlistentry>
+            </listitem>
+        </varlistentry>
         </variablelist>
 
-			  <para>
+              <para>
                         The following table summarizes the meaning of the valid constants for the
                         <emphasis>type</emphasis> parameter:
-			  </para>
+              </para>
                     <para>
                         <informaltable frame="topbot">
                             <tgroup cols="2" align="left">

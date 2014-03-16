@@ -212,8 +212,8 @@ namespace OpenTK.Platform.Windows
             }
             if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0)
             {
-            	mouse.DisableBit((int)MouseButton.Button1);
-            	Functions.ReleaseCapture();
+                mouse.DisableBit((int)MouseButton.Button1);
+                Functions.ReleaseCapture();
             }
             if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0)
             {
