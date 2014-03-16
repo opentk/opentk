@@ -145,9 +145,10 @@ namespace OpenTK.Input
                 sb.Append(String.Format("{0:f4}", GetAxis(JoystickAxis.Axis0 + i)));
             }
             return String.Format(
-                "{{Axes:{0}; Buttons: {1}; IsConnected: {2}}}",
+                "{{Axes:{0}; Buttons: {1}; Hat: {2}; IsConnected: {3}}}",
                 sb.ToString(),
                 Convert.ToString((int)buttons, 2).PadLeft(16, '0'),
+                hat0,
                 IsConnected);
         }
 
@@ -302,6 +303,11 @@ namespace OpenTK.Input
             for (int i = 0; equals && i < MaxAxes; i++)
             {
                 equals &= GetAxisUnsafe(i) == other.GetAxisUnsafe(i);
+            }
+            for (int i = 0; equals && i < MaxHats; i++)
+            {
+                JoystickHat hat = JoystickHat.Hat0 + i;
+                equals &= GetHat(hat).Equals(other.GetHat(hat));
             }
             return equals;
         }
