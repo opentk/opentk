@@ -130,7 +130,7 @@ namespace Examples.Tutorial
             GL.DeleteShader( FragmentShaderObject );
 
             int[] temp = new int[1];
-            GL.GetProgram( ProgramObject, ProgramParameter.LinkStatus, out temp[0] );
+            GL.GetProgram(ProgramObject, GetProgramParameterName.LinkStatus, out temp[0]);
             Trace.WriteLine( "Linking Program (" + ProgramObject + ") " + ( ( temp[0] == 1 ) ? "succeeded." : "FAILED!" ) );
             if ( temp[0] != 1 )
             {
@@ -138,7 +138,7 @@ namespace Examples.Tutorial
                 Trace.WriteLine( "Program Log:\n" + LogInfo );
             }
 
-            GL.GetProgram( ProgramObject, ProgramParameter.ActiveAttributes, out temp[0] );
+            GL.GetProgram(ProgramObject, GetProgramParameterName.ActiveAttributes, out temp[0]);
             Trace.WriteLine( "Program registered " + temp[0] + " Attributes. (Should be 4: Pos, UV, Normal, Tangent)" );
 
             Trace.WriteLine( "Tangent attribute bind location: " + GL.GetAttribLocation( ProgramObject, "AttributeTangent" ) );

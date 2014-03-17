@@ -99,7 +99,7 @@ namespace Examples
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            GL.Begin(BeginMode.Triangles);
+            GL.Begin(PrimitiveType.Triangles);
 
             GL.Color3(Color.MidnightBlue);
             GL.Vertex2(-1.0f, 1.0f);

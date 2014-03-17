@@ -6,7 +6,7 @@ GLintptr,           IntPtr
 GLboolean,          bool        # Boolean # Int32
 GLbitfield,         UInt32
 # GLvoid*,            IntPtr
-# GLvoid,             Void    #Object
+GLvoid,             Void    #Object
 GLchar,             Char
 GLbyte,             SByte
 GLubyte,            Byte

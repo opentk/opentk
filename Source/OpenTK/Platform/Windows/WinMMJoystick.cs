@@ -131,8 +131,16 @@ namespace OpenTK.Platform.Windows
                     // Make sure to reverse the vertical axes, so that +1 points up and -1 points down.
                     for (int axis = 0; axis < caps.NumAxes; axis++)
                     {
-                        stick.Details.Min[axis] = caps.GetMin(axis);
-                        stick.Details.Max[axis] = caps.GetMax(axis);
+                        if (axis % 2 == 1)
+                        {
+                            stick.Details.Min[axis] = caps.GetMax(axis);
+                            stick.Details.Max[axis] = caps.GetMin(axis);
+                        }
+                        else
+                        {
+                            stick.Details.Min[axis] = caps.GetMin(axis);
+                            stick.Details.Max[axis] = caps.GetMax(axis);
+                        }
                     }
 
                     if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
@@ -389,21 +397,42 @@ namespace OpenTK.Platform.Windows
                     else
                     {
                         // Use joyGetPosEx
-                        JoyInfoEx info = new JoyInfoEx();
-                        info.Size = JoyInfoEx.SizeInBytes;
-                        info.Flags = JoystickFlags.All;
+                        JoyInfoEx info_ex = new JoyInfoEx();
+                        info_ex.Size = JoyInfoEx.SizeInBytes;
+                        info_ex.Flags = JoystickFlags.All;
 
-                        JoystickError result = UnsafeNativeMethods.joyGetPosEx(device_index, ref info);
+                        JoystickError result = UnsafeNativeMethods.joyGetPosEx(device_index, ref info_ex);
                         if (result == JoystickError.NoError)
                         {
                             for (int i = 0; i < stick.Details.Capabilities.AxisCount; i++)
                             {
-                                state.SetAxis(JoystickAxis.Axis0 + i, CalculateOffset(info.GetAxis(i), stick.Details.Min[i], stick.Details.Max[i]));
+                                state.SetAxis(JoystickAxis.Axis0 + i, CalculateOffset(info_ex.GetAxis(i), stick.Details.Min[i], stick.Details.Max[i]));
                             }
 
                             for (int i = 0; i < stick.Details.Capabilities.ButtonCount; i++)
                             {
-                                state.SetButton(JoystickButton.Button0 + i, (info.Buttons & 1 << i) != 0);
+                                state.SetButton(JoystickButton.Button0 + i, (info_ex.Buttons & 1 << i) != 0);
+                            }
+
+                            for (int i = 0; i < stick.Details.Capabilities.HatCount; i++)
+                            {
+                                // A discrete POV returns specific values for left, right, etc.
+                                // A continuous POV returns an integer indicating an angle in degrees * 100, e.g. 18000 == 180.00 degrees.
+                                // The vast majority of joysticks have discrete POVs, so we'll treat all of them as discrete for simplicity.
+                                if ((JoystickPovPosition)info_ex.Pov != JoystickPovPosition.Centered)
+                                {
+                                    HatPosition hatpos = HatPosition.Centered;
+                                    if (info_ex.Pov < 4500 || info_ex.Pov >= 31500)
+                                        hatpos |= HatPosition.Up;
+                                    if (info_ex.Pov >= 4500 && info_ex.Pov < 13500)
+                                        hatpos |= HatPosition.Right;
+                                    if (info_ex.Pov >= 13500 && info_ex.Pov < 22500)
+                                        hatpos |= HatPosition.Down;
+                                    if (info_ex.Pov >= 22500 && info_ex.Pov < 31500)
+                                        hatpos |= HatPosition.Left;
+
+                                    state.SetHat(JoystickHat.Hat0 + i, new JoystickHatState(hatpos));
+                                }
                             }
 
                             state.SetIsConnected(true);

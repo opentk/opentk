@@ -57,7 +57,6 @@
     <None Include="Doxyfile" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Changelog.txt" />
     <None Include="Contributors.txt" />
     <None Include="Instructions.txt" />
     <None Include="License.txt" />

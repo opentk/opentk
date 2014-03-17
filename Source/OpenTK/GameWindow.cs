@@ -400,8 +400,14 @@ namespace OpenTK
                     throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second,
                                                           "Parameter should be inside the range [0.0, 200.0]");
 
-                TargetUpdateFrequency = updates_per_second;
-                TargetRenderFrequency = frames_per_second;
+                if (updates_per_second != 0)
+                {
+                    TargetUpdateFrequency = updates_per_second;
+                }
+                if (frames_per_second != 0)
+                {
+                    TargetRenderFrequency = frames_per_second;
+                }
 
                 Visible = true;   // Make sure the GameWindow is visible.
                 OnLoadInternal(EventArgs.Empty);

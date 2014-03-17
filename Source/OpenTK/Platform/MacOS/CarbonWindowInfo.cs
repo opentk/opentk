@@ -32,6 +32,13 @@ using System.Text;
 
 namespace OpenTK.Platform.MacOS
 {
+    /// <summary>
+    /// This delegate represents any method that takes no arguments and returns an int.
+    /// I would have used Func but that requires .NET 4
+    /// </summary>
+    /// <returns>The int value that your method returns</returns>
+    public delegate int GetInt();
+
     /// \internal
     /// <summary>
     /// Describes a Carbon window.
@@ -44,6 +51,9 @@ namespace OpenTK.Platform.MacOS
         bool isControl = false;
         bool goFullScreenHack = false;
         bool goWindowedHack = false;
+
+        GetInt xOffset;
+        GetInt yOffset;
 
         #region Constructors
 
@@ -58,6 +68,12 @@ namespace OpenTK.Platform.MacOS
             this.windowRef = windowRef;
             this.ownHandle = ownHandle;
             this.isControl = isControl;
+        }
+
+        public CarbonWindowInfo(IntPtr windowRef, bool ownHandle, bool isControl, GetInt getX, GetInt getY) : this(windowRef, ownHandle, isControl)
+        {
+            this.xOffset = getX;
+            this.yOffset = getY;
         }
 
         #endregion
@@ -104,6 +120,16 @@ namespace OpenTK.Platform.MacOS
         // (e.g. MonoGame)
         public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
 
+        public GetInt XOffset
+        {
+            get { return xOffset; }
+            set { xOffset = value; }
+        }
+        public GetInt YOffset
+        {
+            get { return yOffset; }
+            set { yOffset = value; }
+        }
         #endregion
 
         #region IDisposable Members

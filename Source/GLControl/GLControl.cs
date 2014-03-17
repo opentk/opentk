@@ -270,10 +270,28 @@ namespace OpenTK
                 return;
             }
 
-            if (context != null)
-                context.Update(Implementation.WindowInfo);
+            if (Configuration.RunningOnMacOS) 
+            {
+                DelayUpdate delay = PerformContextUpdate;
+                BeginInvoke(delay); //Need the native window to resize first otherwise our control will be in the wrong place.
+            }
+            else if (context != null)
+                context.Update (Implementation.WindowInfo);
 
             base.OnResize(e);
+        }
+
+        /// <summary>
+        /// Needed to delay the invoke on OS X. Also needed because OpenTK is .NET 2, otherwise I'd use an inline Action.
+        /// </summary>
+        public delegate void DelayUpdate();
+        /// <summary>
+        /// Execute the delayed context update
+        /// </summary>
+        public void PerformContextUpdate()
+        {
+            if (context != null)
+                context.Update (Implementation.WindowInfo);
         }
 
         /// <summary>

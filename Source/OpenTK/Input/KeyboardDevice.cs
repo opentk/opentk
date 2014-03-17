@@ -222,6 +222,28 @@ namespace OpenTK.Input
             }
         }
 
+        internal KeyModifiers GetModifiers()
+        {
+            KeyModifiers mods = 0;
+
+            if (this[Key.AltLeft] || this[Key.AltRight])
+            {
+                mods |= KeyModifiers.Alt;
+            }
+
+            if (this[Key.ControlLeft] || this[Key.ControlRight])
+            {
+                mods |= KeyModifiers.Control;
+            }
+
+            if (this[Key.ShiftLeft] || this[Key.ShiftRight])
+            {
+                mods |= KeyModifiers.Shift;
+            }
+
+            return mods;
+        }
+
         #endregion
     }
 }

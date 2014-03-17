@@ -188,7 +188,7 @@ namespace OpenTK
         /// <summary>
         /// Frees a marshalled string that allocated by <c>MarshalStringToPtr</c>.
         /// </summary>
-        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringToPtr</param>
+        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringToPtr</c></param>
         protected static void FreeStringPtr(IntPtr ptr)
         {
             Marshal.FreeHGlobal(ptr);

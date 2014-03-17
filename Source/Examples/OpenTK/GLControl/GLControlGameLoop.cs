@@ -160,7 +160,7 @@ namespace Examples.WinForms
 
         private void DrawCube()
         {
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
 
             GL.Color3(Color.Silver);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);

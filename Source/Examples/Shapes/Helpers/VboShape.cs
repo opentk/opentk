@@ -6,7 +6,7 @@ namespace Examples.Shapes
 {
     public sealed class VboShape: DrawableShape
     {
-        public VboShape( ref OpenTK.Graphics.OpenGL.BeginMode primitives, ref VertexT2dN3dV3d[] vertices, ref uint[] indices, bool useDL )
+        public VboShape(ref OpenTK.Graphics.OpenGL.PrimitiveType primitives, ref VertexT2dN3dV3d[] vertices, ref uint[] indices, bool useDL)
             : base( useDL )
         {
             PrimitiveMode = primitives;

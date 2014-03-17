@@ -34,6 +34,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using OpenTK.Graphics;
+using OpenTK.Input;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -63,8 +64,6 @@ namespace OpenTK.Platform.MacOS
         bool mExists = true;
         DisplayDevice mDisplayDevice;
 
-        WindowAttributes mWindowAttrib;
-        WindowClass mWindowClass;
         WindowPositionMethod mPositionMethod = WindowPositionMethod.CenterOnMainScreen;
         int mTitlebarHeight;
         private WindowBorder windowBorder = WindowBorder.Resizable;
@@ -362,7 +361,7 @@ namespace OpenTK.Platform.MacOS
                     break;
             }
 
-            OpenTK.Input.Key key;
+            Key key;
             switch (evt.KeyboardEventKind)
             {
                 case KeyboardEventKind.RawKeyRepeat:
@@ -371,29 +370,11 @@ namespace OpenTK.Platform.MacOS
                     break;
 
                 case KeyboardEventKind.RawKeyDown:
-                    Keymap.TryGetValue(code, out key);
-                    // Legacy keyboard API
-                    InputDriver.Keyboard[0].SetKey(key, (uint)code, true);
-
-                    // Raise KeyDown for new keyboard API
-                    mKeyDownArgs.Key = key;
-                    KeyDown(this, mKeyDownArgs);
-
-                    // Raise KeyPress for new keyboard API
-                    if (!Char.IsControl(mKeyPressArgs.KeyChar))
-                    {
-                        OnKeyPress(mKeyPressArgs);
-                    }
+                    ProcessKeyDown(code);
                     return OSStatus.NoError;
 
                 case KeyboardEventKind.RawKeyUp:
-                    Keymap.TryGetValue(code, out key);
-                    // Legacy keyboard API
-                    InputDriver.Keyboard[0].SetKey(key, (uint)code, false);
-
-                    // Raise KeyUp for new keyboard API
-                    mKeyUpArgs.Key = key;
-                    KeyUp(this, mKeyUpArgs);
+                    ProcessKeyUp(code);
                     return OSStatus.NoError;
 
                 case KeyboardEventKind.RawKeyModifiersChanged:
@@ -611,6 +592,56 @@ namespace OpenTK.Platform.MacOS
             charCode = API.GetEventKeyboardChar(inEvent);
         }
 
+        void ProcessKeyDown(MacOSKeyCode code)
+        {
+            Key key;
+            Keymap.TryGetValue(code, out key);
+
+            // Legacy keyboard API
+            KeyboardDevice keyboard = InputDriver.Keyboard[0];
+            keyboard.SetKey(key, (uint)code, true);
+
+            // Raise KeyDown for new keyboard API
+            mKeyDownArgs.Key = key;
+            mKeyDownArgs.Modifiers = keyboard.GetModifiers();
+
+            KeyDown(this, mKeyDownArgs);
+
+            // Raise KeyPress for new keyboard API
+            if (!Char.IsControl(mKeyPressArgs.KeyChar))
+            {
+                OnKeyPress(mKeyPressArgs);
+            }
+        }
+
+        void ProcessKeyUp(MacOSKeyCode code)
+        {
+            Key key;
+            Keymap.TryGetValue(code, out key);
+
+            // Legacy keyboard API
+            KeyboardDevice keyboard = InputDriver.Keyboard[0];
+            keyboard.SetKey(key, (uint)code, false);
+
+            // Raise KeyUp for new keyboard API
+            mKeyUpArgs.Key = key;
+            mKeyDownArgs.Modifiers = keyboard.GetModifiers();
+
+            KeyUp(this, mKeyUpArgs);
+        }
+
+        void ProcessKey(MacOSKeyCode code, bool pressed)
+        {
+            if (pressed)
+            {
+                ProcessKeyDown(code);
+            }
+            else
+            {
+                ProcessKeyUp(code);
+            }
+        }
+
         private void ProcessModifierKey(IntPtr inEvent)
         {
             MacOSKeyModifiers modifiers = API.GetEventKeyModifiers(inEvent);
@@ -621,25 +652,32 @@ namespace OpenTK.Platform.MacOS
             bool option = (modifiers & MacOSKeyModifiers.Option) != 0 ? true : false;
             bool shift = (modifiers & MacOSKeyModifiers.Shift) != 0 ? true : false;
             
-            Debug.Print("Modifiers Changed: {0}", modifiers);
-            
             Input.KeyboardDevice keyboard = InputDriver.Keyboard[0];
 
             if (keyboard[OpenTK.Input.Key.AltLeft] ^ option)
-                keyboard.SetKey(OpenTK.Input.Key.AltLeft, (uint)MacOSKeyCode.OptionAlt, option);
+            {
+                ProcessKey(MacOSKeyCode.OptionAlt, option);
+            }
             
             if (keyboard[OpenTK.Input.Key.ShiftLeft] ^ shift)
-                keyboard.SetKey(OpenTK.Input.Key.ShiftLeft, (uint)MacOSKeyCode.Shift, shift);
-            
+            {
+                ProcessKey(MacOSKeyCode.Shift, shift);
+            }
+
             if (keyboard[OpenTK.Input.Key.WinLeft] ^ command)
-                keyboard.SetKey(OpenTK.Input.Key.WinLeft, (uint)MacOSKeyCode.Command, command);
-            
+            {
+                ProcessKey(MacOSKeyCode.Command, command);
+            }
+
             if (keyboard[OpenTK.Input.Key.ControlLeft] ^ control)
-                keyboard.SetKey(OpenTK.Input.Key.ControlLeft, (uint)MacOSKeyCode.Control, control);
+            {
+                ProcessKey(MacOSKeyCode.Control, control);
+            }
             
             if (keyboard[OpenTK.Input.Key.CapsLock] ^ caps)
-                keyboard.SetKey(OpenTK.Input.Key.CapsLock, (uint)MacOSKeyCode.CapsLock, caps);
-            
+            {
+                ProcessKey(MacOSKeyCode.CapsLock, caps);
+            }
         }
 
         Rect GetClientSize()

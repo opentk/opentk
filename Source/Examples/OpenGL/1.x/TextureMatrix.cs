@@ -45,7 +45,7 @@ namespace Examples.Tutorial
                 const int slices = 32;
                 const float distance = 0.25f;
 
-                GL.Begin(BeginMode.Quads);
+                GL.Begin(PrimitiveType.Quads);
 
                 for (float scale = 0.26f; scale < 5f; scale += distance)
                     for (int i = 0; i < slices; i++)

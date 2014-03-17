@@ -33,6 +33,7 @@ namespace Bind.ES
             // overloads using the "All" enum in addition to strongly-typed enums.
             // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
             Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
+            Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
         }
     }
 }

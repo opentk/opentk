@@ -23,8 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
-
 namespace OpenTK.Graphics.ES30
 {
     using System;
@@ -44,127 +42,56 @@ namespace OpenTK.Graphics.ES30
             {
                 "glActiveProgramEXT",
                 "glActiveShaderProgramEXT",
-                "glActiveTexture",
                 "glAlphaFuncQCOM",
-                "glAttachShader",
                 "glBeginPerfMonitorAMD",
-                "glBeginQuery",
+                "glBeginPerfQueryINTEL",
                 "glBeginQueryEXT",
-                "glBeginTransformFeedback",
-                "glBindAttribLocation",
-                "glBindBuffer",
-                "glBindBufferBase",
-                "glBindBufferRange",
-                "glBindFramebuffer",
                 "glBindProgramPipelineEXT",
-                "glBindRenderbuffer",
-                "glBindSampler",
-                "glBindTexture",
-                "glBindTransformFeedback",
-                "glBindVertexArray",
                 "glBindVertexArrayOES",
                 "glBlendBarrierNV",
-                "glBlendColor",
-                "glBlendEquation",
                 "glBlendEquationEXT",
-                "glBlendEquationSeparate",
-                "glBlendFunc",
-                "glBlendFuncSeparate",
                 "glBlendParameteriNV",
-                "glBlitFramebuffer",
                 "glBlitFramebufferANGLE",
                 "glBlitFramebufferNV",
-                "glBufferData",
-                "glBufferSubData",
-                "glCheckFramebufferStatus",
-                "glClear",
-                "glClearBufferfi",
-                "glClearBufferfv",
-                "glClearBufferiv",
-                "glClearBufferuiv",
-                "glClearColor",
-                "glClearDepthf",
-                "glClearStencil",
-                "glClientWaitSync",
                 "glClientWaitSyncAPPLE",
-                "glColorMask",
-                "glCompileShader",
-                "glCompressedTexImage2D",
-                "glCompressedTexImage3D",
                 "glCompressedTexImage3DOES",
-                "glCompressedTexSubImage2D",
-                "glCompressedTexSubImage3D",
                 "glCompressedTexSubImage3DOES",
-                "glCopyBufferSubData",
                 "glCopyBufferSubDataNV",
-                "glCopyTexImage2D",
-                "glCopyTexSubImage2D",
-                "glCopyTexSubImage3D",
                 "glCopyTexSubImage3DOES",
                 "glCopyTextureLevelsAPPLE",
                 "glCoverageMaskNV",
                 "glCoverageOperationNV",
-                "glCreateProgram",
-                "glCreateShader",
+                "glCreatePerfQueryINTEL",
                 "glCreateShaderProgramEXT",
                 "glCreateShaderProgramvEXT",
-                "glCullFace",
-                "glDebugMessageCallback",
                 "glDebugMessageCallbackKHR",
-                "glDebugMessageControl",
                 "glDebugMessageControlKHR",
-                "glDebugMessageInsert",
                 "glDebugMessageInsertKHR",
-                "glDeleteBuffers",
                 "glDeleteFencesNV",
-                "glDeleteFramebuffers",
                 "glDeletePerfMonitorsAMD",
-                "glDeleteProgram",
+                "glDeletePerfQueryINTEL",
                 "glDeleteProgramPipelinesEXT",
-                "glDeleteQueries",
                 "glDeleteQueriesEXT",
-                "glDeleteRenderbuffers",
-                "glDeleteSamplers",
-                "glDeleteShader",
-                "glDeleteSync",
                 "glDeleteSyncAPPLE",
-                "glDeleteTextures",
-                "glDeleteTransformFeedbacks",
-                "glDeleteVertexArrays",
                 "glDeleteVertexArraysOES",
-                "glDepthFunc",
-                "glDepthMask",
-                "glDepthRangef",
-                "glDetachShader",
-                "glDisable",
                 "glDisableDriverControlQCOM",
-                "glDisableVertexAttribArray",
                 "glDiscardFramebufferEXT",
-                "glDrawArrays",
-                "glDrawArraysInstanced",
                 "glDrawArraysInstancedANGLE",
                 "glDrawArraysInstancedEXT",
                 "glDrawArraysInstancedNV",
-                "glDrawBuffers",
                 "glDrawBuffersEXT",
                 "glDrawBuffersIndexedEXT",
                 "glDrawBuffersNV",
-                "glDrawElements",
-                "glDrawElementsInstanced",
                 "glDrawElementsInstancedANGLE",
                 "glDrawElementsInstancedEXT",
                 "glDrawElementsInstancedNV",
-                "glDrawRangeElements",
                 "glEGLImageTargetRenderbufferStorageOES",
                 "glEGLImageTargetTexture2DOES",
-                "glEnable",
                 "glEnableDriverControlQCOM",
-                "glEnableVertexAttribArray",
                 "glEndPerfMonitorAMD",
-                "glEndQuery",
+                "glEndPerfQueryINTEL",
                 "glEndQueryEXT",
                 "glEndTilingQCOM",
-                "glEndTransformFeedback",
                 "glExtGetBufferPointervQCOM",
                 "glExtGetBuffersQCOM",
                 "glExtGetFramebuffersQCOM",
@@ -177,159 +104,69 @@ namespace OpenTK.Graphics.ES30
                 "glExtGetTexturesQCOM",
                 "glExtIsProgramBinaryQCOM",
                 "glExtTexObjectStateOverrideiQCOM",
-                "glFenceSync",
                 "glFenceSyncAPPLE",
-                "glFinish",
                 "glFinishFenceNV",
-                "glFlush",
-                "glFlushMappedBufferRange",
                 "glFlushMappedBufferRangeEXT",
-                "glFramebufferRenderbuffer",
-                "glFramebufferTexture2D",
                 "glFramebufferTexture2DMultisampleEXT",
                 "glFramebufferTexture2DMultisampleIMG",
                 "glFramebufferTexture3DOES",
-                "glFramebufferTextureLayer",
-                "glFrontFace",
-                "glGenBuffers",
-                "glGenerateMipmap",
                 "glGenFencesNV",
-                "glGenFramebuffers",
                 "glGenPerfMonitorsAMD",
                 "glGenProgramPipelinesEXT",
-                "glGenQueries",
                 "glGenQueriesEXT",
-                "glGenRenderbuffers",
-                "glGenSamplers",
-                "glGenTextures",
-                "glGenTransformFeedbacks",
-                "glGenVertexArrays",
                 "glGenVertexArraysOES",
-                "glGetActiveAttrib",
-                "glGetActiveUniform",
-                "glGetActiveUniformBlockiv",
-                "glGetActiveUniformBlockName",
-                "glGetActiveUniformsiv",
-                "glGetAttachedShaders",
-                "glGetAttribLocation",
-                "glGetBooleanv",
-                "glGetBufferParameteri64v",
-                "glGetBufferParameteriv",
-                "glGetBufferPointerv",
                 "glGetBufferPointervOES",
-                "glGetDebugMessageLog",
                 "glGetDebugMessageLogKHR",
                 "glGetDriverControlsQCOM",
                 "glGetDriverControlStringQCOM",
-                "glGetError",
                 "glGetFenceivNV",
-                "glGetFloatv",
-                "glGetFragDataLocation",
-                "glGetFramebufferAttachmentParameteriv",
+                "glGetFirstPerfQueryIdINTEL",
                 "glGetGraphicsResetStatusEXT",
-                "glGetInteger64i_v",
-                "glGetInteger64v",
                 "glGetInteger64vAPPLE",
-                "glGetIntegeri_v",
                 "glGetIntegeri_vEXT",
-                "glGetIntegerv",
-                "glGetInternalformativ",
+                "glGetNextPerfQueryIdINTEL",
                 "glGetnUniformfvEXT",
                 "glGetnUniformivEXT",
-                "glGetObjectLabel",
                 "glGetObjectLabelEXT",
                 "glGetObjectLabelKHR",
-                "glGetObjectPtrLabel",
                 "glGetObjectPtrLabelKHR",
+                "glGetPerfCounterInfoINTEL",
                 "glGetPerfMonitorCounterDataAMD",
                 "glGetPerfMonitorCounterInfoAMD",
                 "glGetPerfMonitorCountersAMD",
                 "glGetPerfMonitorCounterStringAMD",
                 "glGetPerfMonitorGroupsAMD",
                 "glGetPerfMonitorGroupStringAMD",
-                "glGetPointerv",
+                "glGetPerfQueryDataINTEL",
+                "glGetPerfQueryIdByNameINTEL",
+                "glGetPerfQueryInfoINTEL",
                 "glGetPointervKHR",
-                "glGetProgramBinary",
                 "glGetProgramBinaryOES",
-                "glGetProgramInfoLog",
-                "glGetProgramiv",
                 "glGetProgramPipelineInfoLogEXT",
                 "glGetProgramPipelineivEXT",
-                "glGetQueryiv",
                 "glGetQueryivEXT",
                 "glGetQueryObjecti64vEXT",
                 "glGetQueryObjectivEXT",
                 "glGetQueryObjectui64vEXT",
-                "glGetQueryObjectuiv",
                 "glGetQueryObjectuivEXT",
-                "glGetRenderbufferParameteriv",
-                "glGetSamplerParameterfv",
-                "glGetSamplerParameteriv",
-                "glGetShaderInfoLog",
-                "glGetShaderiv",
-                "glGetShaderPrecisionFormat",
-                "glGetShaderSource",
-                "glGetString",
-                "glGetStringi",
-                "glGetSynciv",
                 "glGetSyncivAPPLE",
-                "glGetTexParameterfv",
-                "glGetTexParameteriv",
-                "glGetTransformFeedbackVarying",
                 "glGetTranslatedShaderSourceANGLE",
-                "glGetUniformBlockIndex",
-                "glGetUniformfv",
-                "glGetUniformIndices",
-                "glGetUniformiv",
-                "glGetUniformLocation",
-                "glGetUniformuiv",
-                "glGetVertexAttribfv",
-                "glGetVertexAttribIiv",
-                "glGetVertexAttribIuiv",
-                "glGetVertexAttribiv",
-                "glGetVertexAttribPointerv",
-                "glHint",
                 "glInsertEventMarkerEXT",
-                "glInvalidateFramebuffer",
-                "glInvalidateSubFramebuffer",
-                "glIsBuffer",
-                "glIsEnabled",
                 "glIsFenceNV",
-                "glIsFramebuffer",
-                "glIsProgram",
                 "glIsProgramPipelineEXT",
-                "glIsQuery",
                 "glIsQueryEXT",
-                "glIsRenderbuffer",
-                "glIsSampler",
-                "glIsShader",
-                "glIsSync",
                 "glIsSyncAPPLE",
-                "glIsTexture",
-                "glIsTransformFeedback",
-                "glIsVertexArray",
                 "glIsVertexArrayOES",
                 "glLabelObjectEXT",
-                "glLineWidth",
-                "glLinkProgram",
                 "glMapBufferOES",
-                "glMapBufferRange",
                 "glMapBufferRangeEXT",
                 "glMultiDrawArraysEXT",
                 "glMultiDrawElementsEXT",
-                "glObjectLabel",
                 "glObjectLabelKHR",
-                "glObjectPtrLabel",
                 "glObjectPtrLabelKHR",
-                "glPauseTransformFeedback",
-                "glPixelStorei",
-                "glPolygonOffset",
-                "glPopDebugGroup",
                 "glPopDebugGroupKHR",
                 "glPopGroupMarkerEXT",
-                "glProgramBinary",
                 "glProgramBinaryOES",
-                "glProgramParameteri",
                 "glProgramParameteriEXT",
                 "glProgramUniform1fEXT",
                 "glProgramUniform1fvEXT",
@@ -364,129 +201,43 @@ namespace OpenTK.Graphics.ES30
                 "glProgramUniformMatrix4fvEXT",
                 "glProgramUniformMatrix4x2fvEXT",
                 "glProgramUniformMatrix4x3fvEXT",
-                "glPushDebugGroup",
                 "glPushDebugGroupKHR",
                 "glPushGroupMarkerEXT",
                 "glQueryCounterEXT",
-                "glReadBuffer",
                 "glReadBufferIndexedEXT",
                 "glReadBufferNV",
                 "glReadnPixelsEXT",
-                "glReadPixels",
-                "glReleaseShaderCompiler",
-                "glRenderbufferStorage",
-                "glRenderbufferStorageMultisample",
                 "glRenderbufferStorageMultisampleANGLE",
                 "glRenderbufferStorageMultisampleAPPLE",
                 "glRenderbufferStorageMultisampleEXT",
                 "glRenderbufferStorageMultisampleIMG",
                 "glRenderbufferStorageMultisampleNV",
                 "glResolveMultisampleFramebufferAPPLE",
-                "glResumeTransformFeedback",
-                "glSampleCoverage",
-                "glSamplerParameterf",
-                "glSamplerParameterfv",
-                "glSamplerParameteri",
-                "glSamplerParameteriv",
-                "glScissor",
                 "glSelectPerfMonitorCountersAMD",
                 "glSetFenceNV",
-                "glShaderBinary",
-                "glShaderSource",
                 "glStartTilingQCOM",
-                "glStencilFunc",
-                "glStencilFuncSeparate",
-                "glStencilMask",
-                "glStencilMaskSeparate",
-                "glStencilOp",
-                "glStencilOpSeparate",
                 "glTestFenceNV",
-                "glTexImage2D",
-                "glTexImage3D",
                 "glTexImage3DOES",
-                "glTexParameterf",
-                "glTexParameterfv",
-                "glTexParameteri",
-                "glTexParameteriv",
                 "glTexStorage1DEXT",
-                "glTexStorage2D",
                 "glTexStorage2DEXT",
-                "glTexStorage3D",
                 "glTexStorage3DEXT",
-                "glTexSubImage2D",
-                "glTexSubImage3D",
                 "glTexSubImage3DOES",
                 "glTextureStorage1DEXT",
                 "glTextureStorage2DEXT",
                 "glTextureStorage3DEXT",
-                "glTransformFeedbackVaryings",
-                "glUniform1f",
-                "glUniform1fv",
-                "glUniform1i",
-                "glUniform1iv",
-                "glUniform1ui",
-                "glUniform1uiv",
-                "glUniform2f",
-                "glUniform2fv",
-                "glUniform2i",
-                "glUniform2iv",
-                "glUniform2ui",
-                "glUniform2uiv",
-                "glUniform3f",
-                "glUniform3fv",
-                "glUniform3i",
-                "glUniform3iv",
-                "glUniform3ui",
-                "glUniform3uiv",
-                "glUniform4f",
-                "glUniform4fv",
-                "glUniform4i",
-                "glUniform4iv",
-                "glUniform4ui",
-                "glUniform4uiv",
-                "glUniformBlockBinding",
-                "glUniformMatrix2fv",
-                "glUniformMatrix2x3fv",
                 "glUniformMatrix2x3fvNV",
-                "glUniformMatrix2x4fv",
                 "glUniformMatrix2x4fvNV",
-                "glUniformMatrix3fv",
-                "glUniformMatrix3x2fv",
                 "glUniformMatrix3x2fvNV",
-                "glUniformMatrix3x4fv",
                 "glUniformMatrix3x4fvNV",
-                "glUniformMatrix4fv",
-                "glUniformMatrix4x2fv",
                 "glUniformMatrix4x2fvNV",
-                "glUniformMatrix4x3fv",
                 "glUniformMatrix4x3fvNV",
-                "glUnmapBuffer",
                 "glUnmapBufferOES",
-                "glUseProgram",
                 "glUseProgramStagesEXT",
                 "glUseShaderProgramEXT",
-                "glValidateProgram",
                 "glValidateProgramPipelineEXT",
-                "glVertexAttrib1f",
-                "glVertexAttrib1fv",
-                "glVertexAttrib2f",
-                "glVertexAttrib2fv",
-                "glVertexAttrib3f",
-                "glVertexAttrib3fv",
-                "glVertexAttrib4f",
-                "glVertexAttrib4fv",
-                "glVertexAttribDivisor",
                 "glVertexAttribDivisorANGLE",
                 "glVertexAttribDivisorEXT",
                 "glVertexAttribDivisorNV",
-                "glVertexAttribI4i",
-                "glVertexAttribI4iv",
-                "glVertexAttribI4ui",
-                "glVertexAttribI4uiv",
-                "glVertexAttribIPointer",
-                "glVertexAttribPointer",
-                "glViewport",
-                "glWaitSync",
                 "glWaitSyncAPPLE",
             };
             EntryPoints = new IntPtr[EntryPointNames.Length];
@@ -943,7 +694,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -975,7 +726,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1010,7 +761,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1045,7 +796,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1080,7 +831,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1114,7 +865,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1145,7 +896,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1179,7 +930,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1213,7 +964,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1247,7 +998,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -1263,31 +1014,37 @@ namespace OpenTK.Graphics.ES30
              { throw new NotImplementedException(); }
 
             /// <summary>[requires: ANGLE_translated_shader_source]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "ANGLE_translated_shader_source", Version = "", EntryPoint = "glGetTranslatedShaderSourceANGLE")]
             [CLSCompliant(false)]
             public static void GetTranslatedShaderSource(Int32 shader, Int32 bufsize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder source) { throw new NotImplementedException(); }
 
             /// <summary>[requires: ANGLE_translated_shader_source]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "ANGLE_translated_shader_source", Version = "", EntryPoint = "glGetTranslatedShaderSourceANGLE")]
             [CLSCompliant(false)]
             public static void GetTranslatedShaderSource(Int32 shader, Int32 bufsize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder source) { throw new NotImplementedException(); }
 
             /// <summary>[requires: ANGLE_translated_shader_source]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "ANGLE_translated_shader_source", Version = "", EntryPoint = "glGetTranslatedShaderSourceANGLE")]
             [CLSCompliant(false)]
             public static unsafe void GetTranslatedShaderSource(Int32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder source) { throw new NotImplementedException(); }
 
             /// <summary>[requires: ANGLE_translated_shader_source]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "ANGLE_translated_shader_source", Version = "", EntryPoint = "glGetTranslatedShaderSourceANGLE")]
             [CLSCompliant(false)]
             public static void GetTranslatedShaderSource(UInt32 shader, Int32 bufsize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder source) { throw new NotImplementedException(); }
 
             /// <summary>[requires: ANGLE_translated_shader_source]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "ANGLE_translated_shader_source", Version = "", EntryPoint = "glGetTranslatedShaderSourceANGLE")]
             [CLSCompliant(false)]
             public static void GetTranslatedShaderSource(UInt32 shader, Int32 bufsize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder source) { throw new NotImplementedException(); }
 
             /// <summary>[requires: ANGLE_translated_shader_source]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "ANGLE_translated_shader_source", Version = "", EntryPoint = "glGetTranslatedShaderSourceANGLE")]
             [CLSCompliant(false)]
             public static unsafe void GetTranslatedShaderSource(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder source) { throw new NotImplementedException(); }
@@ -1604,7 +1361,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -1637,7 +1394,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -1670,7 +1427,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -1703,7 +1460,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -1735,7 +1492,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -1767,7 +1524,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -3027,7 +2784,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -3054,7 +2811,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -3084,7 +2841,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -3114,7 +2871,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -3144,7 +2901,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -3173,7 +2930,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -3199,7 +2956,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -3228,7 +2985,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -3257,7 +3014,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -3286,7 +3043,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -3319,7 +3076,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -3346,7 +3103,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -3376,7 +3133,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -3406,7 +3163,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -3436,7 +3193,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -3465,7 +3222,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -3491,7 +3248,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -3520,7 +3277,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -3549,7 +3306,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -3578,7 +3335,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -3710,7 +3467,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -3743,7 +3500,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -3776,7 +3533,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -3809,7 +3566,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -3841,7 +3598,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -3873,7 +3630,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -3905,7 +3662,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -3938,7 +3695,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -3971,7 +3728,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -4004,7 +3761,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -4036,7 +3793,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -4068,7 +3825,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -4100,7 +3857,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -4133,7 +3890,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -4166,7 +3923,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -4199,7 +3956,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -4231,7 +3988,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -4263,7 +4020,7 @@ namespace OpenTK.Graphics.ES30
         /// Specify a particular draw buffer to clear.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: buffer]
         /// <para>
         /// For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.
         /// </para>
@@ -4483,7 +4240,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -4530,7 +4287,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -4580,7 +4337,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -4630,7 +4387,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -4680,7 +4437,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -4729,7 +4486,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -4775,7 +4532,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -4824,7 +4581,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -4873,7 +4630,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -4922,7 +4679,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -4975,7 +4732,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5027,7 +4784,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5082,7 +4839,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5137,7 +4894,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5192,7 +4949,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5246,7 +5003,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5297,7 +5054,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5351,7 +5108,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5405,7 +5162,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5459,7 +5216,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5512,7 +5269,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5564,7 +5321,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5619,7 +5376,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5674,7 +5431,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5729,7 +5486,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5783,7 +5540,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5834,7 +5591,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5888,7 +5645,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5942,7 +5699,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -5996,7 +5753,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -6054,7 +5811,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -6111,7 +5868,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -6171,7 +5928,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -6231,7 +5988,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -6291,7 +6048,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -6350,7 +6107,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -6406,7 +6163,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -6465,7 +6222,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -6524,7 +6281,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -6583,7 +6340,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -7081,7 +6838,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7119,7 +6876,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7157,7 +6914,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7195,7 +6952,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7233,7 +6990,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7271,7 +7028,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7309,7 +7066,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7346,7 +7103,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7383,7 +7140,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7420,7 +7177,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7457,7 +7214,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7494,7 +7251,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the array ids.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
         /// </para>
@@ -7666,7 +7423,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -7683,7 +7440,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -7700,7 +7457,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -7717,7 +7474,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -7734,7 +7491,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -7751,7 +7508,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -7768,7 +7525,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -7785,7 +7542,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -7802,7 +7559,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of framebuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="framebuffers">
+        /// <param name="framebuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n framebuffer objects to be deleted.
         /// </para>
@@ -7819,7 +7576,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of framebuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="framebuffers">
+        /// <param name="framebuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n framebuffer objects to be deleted.
         /// </para>
@@ -7836,7 +7593,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of framebuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="framebuffers">
+        /// <param name="framebuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n framebuffer objects to be deleted.
         /// </para>
@@ -7853,7 +7610,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of framebuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="framebuffers">
+        /// <param name="framebuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n framebuffer objects to be deleted.
         /// </para>
@@ -7870,7 +7627,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of framebuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="framebuffers">
+        /// <param name="framebuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n framebuffer objects to be deleted.
         /// </para>
@@ -7887,7 +7644,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of framebuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="framebuffers">
+        /// <param name="framebuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n framebuffer objects to be deleted.
         /// </para>
@@ -7904,7 +7661,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of framebuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="framebuffers">
+        /// <param name="framebuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n framebuffer objects to be deleted.
         /// </para>
@@ -7921,7 +7678,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of framebuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="framebuffers">
+        /// <param name="framebuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n framebuffer objects to be deleted.
         /// </para>
@@ -7962,7 +7719,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of query objects to be deleted.
         /// </para>
@@ -7979,7 +7736,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of query objects to be deleted.
         /// </para>
@@ -7996,7 +7753,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of query objects to be deleted.
         /// </para>
@@ -8013,7 +7770,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of query objects to be deleted.
         /// </para>
@@ -8030,7 +7787,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of query objects to be deleted.
         /// </para>
@@ -8047,7 +7804,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of query objects to be deleted.
         /// </para>
@@ -8064,7 +7821,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of query objects to be deleted.
         /// </para>
@@ -8081,7 +7838,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of query objects to be deleted.
         /// </para>
@@ -8098,7 +7855,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n renderbuffer objects to be deleted.
         /// </para>
@@ -8115,7 +7872,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n renderbuffer objects to be deleted.
         /// </para>
@@ -8132,7 +7889,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n renderbuffer objects to be deleted.
         /// </para>
@@ -8149,7 +7906,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n renderbuffer objects to be deleted.
         /// </para>
@@ -8166,7 +7923,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n renderbuffer objects to be deleted.
         /// </para>
@@ -8183,7 +7940,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n renderbuffer objects to be deleted.
         /// </para>
@@ -8200,7 +7957,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n renderbuffer objects to be deleted.
         /// </para>
@@ -8217,7 +7974,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// A pointer to an array containing n renderbuffer objects to be deleted.
         /// </para>
@@ -8234,7 +7991,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array of sampler objects to be deleted.
         /// </para>
@@ -8251,7 +8008,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array of sampler objects to be deleted.
         /// </para>
@@ -8268,7 +8025,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array of sampler objects to be deleted.
         /// </para>
@@ -8285,7 +8042,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array of sampler objects to be deleted.
         /// </para>
@@ -8302,7 +8059,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array of sampler objects to be deleted.
         /// </para>
@@ -8319,7 +8076,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array of sampler objects to be deleted.
         /// </para>
@@ -8336,7 +8093,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array of sampler objects to be deleted.
         /// </para>
@@ -8353,7 +8110,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array of sampler objects to be deleted.
         /// </para>
@@ -8405,7 +8162,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -8422,7 +8179,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -8439,7 +8196,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -8456,7 +8213,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -8473,7 +8230,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -8490,7 +8247,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -8507,7 +8264,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -8524,7 +8281,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -8541,7 +8298,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback objects to delete.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of names of transform feedback objects to delete.
         /// </para>
@@ -8558,7 +8315,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback objects to delete.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of names of transform feedback objects to delete.
         /// </para>
@@ -8575,7 +8332,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback objects to delete.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of names of transform feedback objects to delete.
         /// </para>
@@ -8592,7 +8349,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback objects to delete.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of names of transform feedback objects to delete.
         /// </para>
@@ -8609,7 +8366,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback objects to delete.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of names of transform feedback objects to delete.
         /// </para>
@@ -8626,7 +8383,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback objects to delete.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of names of transform feedback objects to delete.
         /// </para>
@@ -8643,7 +8400,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback objects to delete.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of names of transform feedback objects to delete.
         /// </para>
@@ -8660,7 +8417,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback objects to delete.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of names of transform feedback objects to delete.
         /// </para>
@@ -8677,7 +8434,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies the address of an array containing the n names of the objects to be deleted.
         /// </para>
@@ -8694,7 +8451,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies the address of an array containing the n names of the objects to be deleted.
         /// </para>
@@ -8711,7 +8468,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies the address of an array containing the n names of the objects to be deleted.
         /// </para>
@@ -8728,7 +8485,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies the address of an array containing the n names of the objects to be deleted.
         /// </para>
@@ -8745,7 +8502,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies the address of an array containing the n names of the objects to be deleted.
         /// </para>
@@ -8762,7 +8519,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies the address of an array containing the n names of the objects to be deleted.
         /// </para>
@@ -8779,7 +8536,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies the address of an array containing the n names of the objects to be deleted.
         /// </para>
@@ -8796,7 +8553,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies the address of an array containing the n names of the objects to be deleted.
         /// </para>
@@ -9012,7 +8769,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffers in bufs.
         /// </para>
         /// </param>
-        /// <param name="bufs">
+        /// <param name="bufs">[length: n]
         /// <para>
         /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
         /// </para>
@@ -9030,7 +8787,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffers in bufs.
         /// </para>
         /// </param>
-        /// <param name="bufs">
+        /// <param name="bufs">[length: n]
         /// <para>
         /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
         /// </para>
@@ -9048,7 +8805,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffers in bufs.
         /// </para>
         /// </param>
-        /// <param name="bufs">
+        /// <param name="bufs">[length: n]
         /// <para>
         /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
         /// </para>
@@ -9066,7 +8823,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffers in bufs.
         /// </para>
         /// </param>
-        /// <param name="bufs">
+        /// <param name="bufs">[length: n]
         /// <para>
         /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
         /// </para>
@@ -9083,7 +8840,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffers in bufs.
         /// </para>
         /// </param>
-        /// <param name="bufs">
+        /// <param name="bufs">[length: n]
         /// <para>
         /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
         /// </para>
@@ -9100,7 +8857,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffers in bufs.
         /// </para>
         /// </param>
-        /// <param name="bufs">
+        /// <param name="bufs">[length: n]
         /// <para>
         /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
         /// </para>
@@ -9127,7 +8884,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9154,7 +8911,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9184,7 +8941,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9214,7 +8971,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9244,7 +9001,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9273,7 +9030,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9299,7 +9056,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9328,7 +9085,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9357,7 +9114,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9386,7 +9143,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9414,7 +9171,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9446,7 +9203,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9481,7 +9238,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9516,7 +9273,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9551,7 +9308,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9585,7 +9342,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9616,7 +9373,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9650,7 +9407,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9684,7 +9441,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9718,7 +9475,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9761,7 +9518,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9799,7 +9556,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9839,7 +9596,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9879,7 +9636,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9919,7 +9676,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9959,7 +9716,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -9997,7 +9754,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10037,7 +9794,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10077,7 +9834,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10117,7 +9874,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10157,7 +9914,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10194,7 +9951,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10233,7 +9990,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10272,7 +10029,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10311,7 +10068,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10350,7 +10107,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10387,7 +10144,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10426,7 +10183,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10465,7 +10222,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10504,7 +10261,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -10966,7 +10723,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -10983,7 +10740,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -11000,7 +10757,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -11017,7 +10774,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -11034,7 +10791,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -11051,7 +10808,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -11068,7 +10825,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -11227,7 +10984,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array in which the generated query object names are stored.
         /// </para>
@@ -11244,7 +11001,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array in which the generated query object names are stored.
         /// </para>
@@ -11261,7 +11018,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array in which the generated query object names are stored.
         /// </para>
@@ -11278,7 +11035,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array in which the generated query object names are stored.
         /// </para>
@@ -11295,7 +11052,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array in which the generated query object names are stored.
         /// </para>
@@ -11312,7 +11069,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array in which the generated query object names are stored.
         /// </para>
@@ -11329,7 +11086,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of query object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array in which the generated query object names are stored.
         /// </para>
@@ -11346,7 +11103,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer object names to generate.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated renderbuffer object names are stored.
         /// </para>
@@ -11363,7 +11120,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer object names to generate.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated renderbuffer object names are stored.
         /// </para>
@@ -11380,7 +11137,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer object names to generate.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated renderbuffer object names are stored.
         /// </para>
@@ -11397,7 +11154,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer object names to generate.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated renderbuffer object names are stored.
         /// </para>
@@ -11414,7 +11171,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer object names to generate.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated renderbuffer object names are stored.
         /// </para>
@@ -11431,7 +11188,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer object names to generate.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated renderbuffer object names are stored.
         /// </para>
@@ -11448,7 +11205,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of renderbuffer object names to generate.
         /// </para>
         /// </param>
-        /// <param name="renderbuffers">
+        /// <param name="renderbuffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated renderbuffer object names are stored.
         /// </para>
@@ -11465,7 +11222,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler object names to generate.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array in which the generated sampler object names are stored.
         /// </para>
@@ -11482,7 +11239,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler object names to generate.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array in which the generated sampler object names are stored.
         /// </para>
@@ -11499,7 +11256,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler object names to generate.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array in which the generated sampler object names are stored.
         /// </para>
@@ -11516,7 +11273,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler object names to generate.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array in which the generated sampler object names are stored.
         /// </para>
@@ -11533,7 +11290,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler object names to generate.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array in which the generated sampler object names are stored.
         /// </para>
@@ -11550,7 +11307,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler object names to generate.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array in which the generated sampler object names are stored.
         /// </para>
@@ -11567,7 +11324,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of sampler object names to generate.
         /// </para>
         /// </param>
-        /// <param name="samplers">
+        /// <param name="samplers">[length: count]
         /// <para>
         /// Specifies an array in which the generated sampler object names are stored.
         /// </para>
@@ -11584,7 +11341,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -11601,7 +11358,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -11618,7 +11375,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -11635,7 +11392,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -11652,7 +11409,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -11669,7 +11426,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -11686,7 +11443,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -11703,7 +11460,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback object names to reserve.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of into which the reserved names will be written.
         /// </para>
@@ -11720,7 +11477,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback object names to reserve.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of into which the reserved names will be written.
         /// </para>
@@ -11737,7 +11494,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback object names to reserve.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of into which the reserved names will be written.
         /// </para>
@@ -11754,7 +11511,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback object names to reserve.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of into which the reserved names will be written.
         /// </para>
@@ -11771,7 +11528,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback object names to reserve.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of into which the reserved names will be written.
         /// </para>
@@ -11788,7 +11545,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback object names to reserve.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of into which the reserved names will be written.
         /// </para>
@@ -11805,7 +11562,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of transform feedback object names to reserve.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: n]
         /// <para>
         /// Specifies an array of into which the reserved names will be written.
         /// </para>
@@ -11822,7 +11579,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array object names to generate.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies an array in which the generated vertex array object names are stored.
         /// </para>
@@ -11839,7 +11596,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array object names to generate.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies an array in which the generated vertex array object names are stored.
         /// </para>
@@ -11856,7 +11613,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array object names to generate.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies an array in which the generated vertex array object names are stored.
         /// </para>
@@ -11873,7 +11630,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array object names to generate.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies an array in which the generated vertex array object names are stored.
         /// </para>
@@ -11890,7 +11647,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array object names to generate.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies an array in which the generated vertex array object names are stored.
         /// </para>
@@ -11907,7 +11664,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array object names to generate.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies an array in which the generated vertex array object names are stored.
         /// </para>
@@ -11924,7 +11681,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of vertex array object names to generate.
         /// </para>
         /// </param>
-        /// <param name="arrays">
+        /// <param name="arrays">[length: n]
         /// <para>
         /// Specifies an array in which the generated vertex array object names are stored.
         /// </para>
@@ -11951,22 +11708,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the attribute variable.
         /// </para>
@@ -11993,22 +11750,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the attribute variable.
         /// </para>
@@ -12036,22 +11793,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the attribute variable.
         /// </para>
@@ -12078,22 +11835,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the attribute variable.
         /// </para>
@@ -12121,22 +11878,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the attribute variable.
         /// </para>
@@ -12163,22 +11920,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the attribute variable.
         /// </para>
@@ -12206,22 +11963,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the attribute variable.
         /// </para>
@@ -12248,22 +12005,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the attribute variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the attribute variable.
         /// </para>
@@ -12291,22 +12048,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the uniform variable.
         /// </para>
@@ -12333,22 +12090,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the uniform variable.
         /// </para>
@@ -12376,22 +12133,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the uniform variable.
         /// </para>
@@ -12418,22 +12175,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the uniform variable.
         /// </para>
@@ -12461,22 +12218,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the uniform variable.
         /// </para>
@@ -12503,22 +12260,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the uniform variable.
         /// </para>
@@ -12546,22 +12303,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the uniform variable.
         /// </para>
@@ -12588,22 +12345,22 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// Returns the size of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// Returns the data type of the uniform variable.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// Returns a null terminated string containing the name of the uniform variable.
         /// </para>
@@ -12961,12 +12718,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer addressed by uniformBlockName.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of characters that were written to uniformBlockName.
         /// </para>
         /// </param>
-        /// <param name="uniformBlockName">
+        /// <param name="uniformBlockName">[length: bufSize]
         /// <para>
         /// Specifies the address an array of characters to receive the name of the uniform block at uniformBlockIndex.
         /// </para>
@@ -12993,12 +12750,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer addressed by uniformBlockName.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of characters that were written to uniformBlockName.
         /// </para>
         /// </param>
-        /// <param name="uniformBlockName">
+        /// <param name="uniformBlockName">[length: bufSize]
         /// <para>
         /// Specifies the address an array of characters to receive the name of the uniform block at uniformBlockIndex.
         /// </para>
@@ -13025,12 +12782,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer addressed by uniformBlockName.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of characters that were written to uniformBlockName.
         /// </para>
         /// </param>
-        /// <param name="uniformBlockName">
+        /// <param name="uniformBlockName">[length: bufSize]
         /// <para>
         /// Specifies the address an array of characters to receive the name of the uniform block at uniformBlockIndex.
         /// </para>
@@ -13057,12 +12814,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer addressed by uniformBlockName.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of characters that were written to uniformBlockName.
         /// </para>
         /// </param>
-        /// <param name="uniformBlockName">
+        /// <param name="uniformBlockName">[length: bufSize]
         /// <para>
         /// Specifies the address an array of characters to receive the name of the uniform block at uniformBlockIndex.
         /// </para>
@@ -13084,7 +12841,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13116,7 +12873,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13149,7 +12906,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13181,7 +12938,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13214,7 +12971,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13246,7 +13003,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13279,7 +13036,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13311,7 +13068,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13344,7 +13101,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13376,7 +13133,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13409,7 +13166,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13441,7 +13198,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
         /// </para>
@@ -13474,12 +13231,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the array for storing the returned object names.
         /// </para>
         /// </param>
-        /// <param name="count">
+        /// <param name="count">[length: 1]
         /// <para>
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -13501,12 +13258,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the array for storing the returned object names.
         /// </para>
         /// </param>
-        /// <param name="count">
+        /// <param name="count">[length: 1]
         /// <para>
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -13528,12 +13285,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the array for storing the returned object names.
         /// </para>
         /// </param>
-        /// <param name="count">
+        /// <param name="count">[length: 1]
         /// <para>
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -13555,12 +13312,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the array for storing the returned object names.
         /// </para>
         /// </param>
-        /// <param name="count">
+        /// <param name="count">[length: 1]
         /// <para>
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -13582,12 +13339,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the array for storing the returned object names.
         /// </para>
         /// </param>
-        /// <param name="count">
+        /// <param name="count">[length: 1]
         /// <para>
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -13609,12 +13366,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the array for storing the returned object names.
         /// </para>
         /// </param>
-        /// <param name="count">
+        /// <param name="count">[length: 1]
         /// <para>
         /// Returns the number of names actually returned in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: maxCount]
         /// <para>
         /// Specifies an array that is used to return the names of attached shader objects.
         /// </para>
@@ -14221,32 +13978,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14269,32 +14026,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14317,32 +14074,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14365,32 +14122,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14412,32 +14169,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14459,32 +14216,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14506,32 +14263,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14554,32 +14311,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14602,32 +14359,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14650,32 +14407,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14697,32 +14454,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14744,32 +14501,32 @@ namespace OpenTK.Graphics.ES30
         /// The size of the buffer whose address is given by messageLog.
         /// </para>
         /// </param>
-        /// <param name="sources">
+        /// <param name="sources">[length: count]
         /// <para>
         /// The address of an array of variables to receive the sources of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="types">
+        /// <param name="types">[length: count]
         /// <para>
         /// The address of an array of variables to receive the types of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="ids">
+        /// <param name="ids">[length: count]
         /// <para>
         /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="severities">
+        /// <param name="severities">[length: count]
         /// <para>
         /// The address of an array of variables to receive the severites of the retrieved messages.
         /// </para>
         /// </param>
-        /// <param name="lengths">
+        /// <param name="lengths">[length: count]
         /// <para>
         /// The address of an array of variables to receive the lengths of the received messages.
         /// </para>
         /// </param>
-        /// <param name="messageLog">
+        /// <param name="messageLog">[length: bufSize]
         /// <para>
         /// The address of an array of characters that will receive the messages.
         /// </para>
@@ -14836,7 +14593,7 @@ namespace OpenTK.Graphics.ES30
         /// The name of the program containing varying out variable whose binding to query
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: name]
         /// <para>
         /// The name of the user-defined varying out variable whose binding to query
         /// </para>
@@ -14853,7 +14610,7 @@ namespace OpenTK.Graphics.ES30
         /// The name of the program containing varying out variable whose binding to query
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: name]
         /// <para>
         /// The name of the user-defined varying out variable whose binding to query
         /// </para>
@@ -15460,12 +15217,12 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
@@ -15493,12 +15250,12 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
@@ -15526,12 +15283,12 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
@@ -15559,12 +15316,12 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
@@ -15592,12 +15349,12 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
@@ -15625,12 +15382,12 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
@@ -15658,16 +15415,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static void GetObjectLabel(OpenTK.Graphics.ES30.ObjectLabelIdentifier identifier, Int32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -15690,16 +15448,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static void GetObjectLabel(OpenTK.Graphics.ES30.ObjectLabelIdentifier identifier, Int32 name, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -15722,16 +15481,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static unsafe void GetObjectLabel(OpenTK.Graphics.ES30.ObjectLabelIdentifier identifier, Int32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -15754,16 +15514,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static void GetObjectLabel(OpenTK.Graphics.ES30.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -15786,16 +15547,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static void GetObjectLabel(OpenTK.Graphics.ES30.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -15818,16 +15580,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static unsafe void GetObjectLabel(OpenTK.Graphics.ES30.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -15845,16 +15608,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -15872,16 +15636,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -15899,16 +15664,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static unsafe void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -15926,16 +15692,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label)
@@ -15955,16 +15722,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label)
@@ -15984,16 +15752,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label)
@@ -16013,16 +15782,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label)
@@ -16042,16 +15812,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label)
@@ -16071,16 +15842,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label)
@@ -16100,16 +15872,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label)
@@ -16129,16 +15902,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label)
@@ -16158,16 +15932,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label)
@@ -16187,16 +15962,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label)
@@ -16216,16 +15992,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label)
@@ -16245,16 +16022,17 @@ namespace OpenTK.Graphics.ES30
         /// The length of the buffer whose address is in label.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable to receive the length of the object label.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: bufSize]
         /// <para>
         /// The address of a string that will receive the object label.
         /// </para>
         /// </param>
+        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
         [CLSCompliant(false)]
         public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label)
@@ -16461,17 +16239,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16493,17 +16271,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16527,17 +16305,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16561,17 +16339,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16595,17 +16373,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16629,17 +16407,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16661,17 +16439,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16695,17 +16473,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16729,17 +16507,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16763,17 +16541,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16797,17 +16575,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16829,17 +16607,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16863,17 +16641,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16897,17 +16675,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16931,17 +16709,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16965,17 +16743,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -16997,17 +16775,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -17031,17 +16809,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -17065,17 +16843,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -17099,17 +16877,17 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given by binary.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive the number of bytes written into binary.
         /// </para>
         /// </param>
-        /// <param name="binaryFormat">
+        /// <param name="binaryFormat">[length: 1]
         /// <para>
         /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: bufSize]
         /// <para>
         /// Specifies the address an array into which the GL will return program's binary representation.
         /// </para>
@@ -17133,12 +16911,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned information log.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in infoLog (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="infoLog">
+        /// <param name="infoLog">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the information log.
         /// </para>
@@ -17160,12 +16938,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned information log.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in infoLog (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="infoLog">
+        /// <param name="infoLog">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the information log.
         /// </para>
@@ -17187,12 +16965,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned information log.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in infoLog (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="infoLog">
+        /// <param name="infoLog">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the information log.
         /// </para>
@@ -17214,12 +16992,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned information log.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in infoLog (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="infoLog">
+        /// <param name="infoLog">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the information log.
         /// </para>
@@ -18591,12 +18369,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned information log.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in infoLog (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="infoLog">
+        /// <param name="infoLog">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the information log.
         /// </para>
@@ -18618,12 +18396,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned information log.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in infoLog (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="infoLog">
+        /// <param name="infoLog">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the information log.
         /// </para>
@@ -18645,12 +18423,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned information log.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in infoLog (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="infoLog">
+        /// <param name="infoLog">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the information log.
         /// </para>
@@ -18672,12 +18450,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned information log.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in infoLog (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="infoLog">
+        /// <param name="infoLog">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the information log.
         /// </para>
@@ -18969,12 +18747,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the numeric format whose precision and range to query.
         /// </para>
         /// </param>
-        /// <param name="range">
+        /// <param name="range">[length: 2]
         /// <para>
         /// Specifies the address of array of two integers into which encodings of the implementation's numeric range are returned.
         /// </para>
         /// </param>
-        /// <param name="precision">
+        /// <param name="precision">[length: 2]
         /// <para>
         /// Specifies the address of an integer into which the numeric precision of the implementation is written.
         /// </para>
@@ -18997,12 +18775,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the numeric format whose precision and range to query.
         /// </para>
         /// </param>
-        /// <param name="range">
+        /// <param name="range">[length: 2]
         /// <para>
         /// Specifies the address of array of two integers into which encodings of the implementation's numeric range are returned.
         /// </para>
         /// </param>
-        /// <param name="precision">
+        /// <param name="precision">[length: 2]
         /// <para>
         /// Specifies the address of an integer into which the numeric precision of the implementation is written.
         /// </para>
@@ -19025,12 +18803,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the numeric format whose precision and range to query.
         /// </para>
         /// </param>
-        /// <param name="range">
+        /// <param name="range">[length: 2]
         /// <para>
         /// Specifies the address of array of two integers into which encodings of the implementation's numeric range are returned.
         /// </para>
         /// </param>
-        /// <param name="precision">
+        /// <param name="precision">[length: 2]
         /// <para>
         /// Specifies the address of an integer into which the numeric precision of the implementation is written.
         /// </para>
@@ -19053,12 +18831,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the numeric format whose precision and range to query.
         /// </para>
         /// </param>
-        /// <param name="range">
+        /// <param name="range">[length: 2]
         /// <para>
         /// Specifies the address of array of two integers into which encodings of the implementation's numeric range are returned.
         /// </para>
         /// </param>
-        /// <param name="precision">
+        /// <param name="precision">[length: 2]
         /// <para>
         /// Specifies the address of an integer into which the numeric precision of the implementation is written.
         /// </para>
@@ -19080,12 +18858,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the numeric format whose precision and range to query.
         /// </para>
         /// </param>
-        /// <param name="range">
+        /// <param name="range">[length: 2]
         /// <para>
         /// Specifies the address of array of two integers into which encodings of the implementation's numeric range are returned.
         /// </para>
         /// </param>
-        /// <param name="precision">
+        /// <param name="precision">[length: 2]
         /// <para>
         /// Specifies the address of an integer into which the numeric precision of the implementation is written.
         /// </para>
@@ -19107,12 +18885,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the numeric format whose precision and range to query.
         /// </para>
         /// </param>
-        /// <param name="range">
+        /// <param name="range">[length: 2]
         /// <para>
         /// Specifies the address of array of two integers into which encodings of the implementation's numeric range are returned.
         /// </para>
         /// </param>
-        /// <param name="precision">
+        /// <param name="precision">[length: 2]
         /// <para>
         /// Specifies the address of an integer into which the numeric precision of the implementation is written.
         /// </para>
@@ -19134,12 +18912,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned source code string.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in source (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="source">
+        /// <param name="source">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the source code string.
         /// </para>
@@ -19161,12 +18939,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned source code string.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in source (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="source">
+        /// <param name="source">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the source code string.
         /// </para>
@@ -19188,12 +18966,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned source code string.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in source (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="source">
+        /// <param name="source">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the source code string.
         /// </para>
@@ -19215,12 +18993,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the character buffer for storing the returned source code string.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Returns the length of the string returned in source (excluding the null terminator).
         /// </para>
         /// </param>
-        /// <param name="source">
+        /// <param name="source">[length: bufSize]
         /// <para>
         /// Specifies an array of characters that is used to return the source code string.
         /// </para>
@@ -19350,12 +19128,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given in values.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of an variable to receive the number of integers placed in values.
         /// </para>
         /// </param>
-        /// <param name="values">
+        /// <param name="values">[length: bufSize]
         /// <para>
         /// Specifies the address of an array to receive the values of the queried parameter.
         /// </para>
@@ -19383,12 +19161,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given in values.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of an variable to receive the number of integers placed in values.
         /// </para>
         /// </param>
-        /// <param name="values">
+        /// <param name="values">[length: bufSize]
         /// <para>
         /// Specifies the address of an array to receive the values of the queried parameter.
         /// </para>
@@ -19416,12 +19194,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given in values.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of an variable to receive the number of integers placed in values.
         /// </para>
         /// </param>
-        /// <param name="values">
+        /// <param name="values">[length: bufSize]
         /// <para>
         /// Specifies the address of an array to receive the values of the queried parameter.
         /// </para>
@@ -19449,12 +19227,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given in values.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of an variable to receive the number of integers placed in values.
         /// </para>
         /// </param>
-        /// <param name="values">
+        /// <param name="values">[length: bufSize]
         /// <para>
         /// Specifies the address of an array to receive the values of the queried parameter.
         /// </para>
@@ -19481,12 +19259,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given in values.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of an variable to receive the number of integers placed in values.
         /// </para>
         /// </param>
-        /// <param name="values">
+        /// <param name="values">[length: bufSize]
         /// <para>
         /// Specifies the address of an array to receive the values of the queried parameter.
         /// </para>
@@ -19513,12 +19291,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the size of the buffer whose address is given in values.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// Specifies the address of an variable to receive the number of integers placed in values.
         /// </para>
         /// </param>
-        /// <param name="values">
+        /// <param name="values">[length: bufSize]
         /// <para>
         /// Specifies the address of an array to receive the values of the queried parameter.
         /// </para>
@@ -19815,22 +19593,22 @@ namespace OpenTK.Graphics.ES30
         /// The maximum number of characters, including the null terminator, that may be written into name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the number of characters written into name, excluding the null-terminator. If length is NULL no length is returned.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// The address of a variable that will receive the size of the varying.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// The address of a variable that will recieve the type of the varying.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// The address of a buffer into which will be written the name of the varying.
         /// </para>
@@ -19858,22 +19636,22 @@ namespace OpenTK.Graphics.ES30
         /// The maximum number of characters, including the null terminator, that may be written into name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the number of characters written into name, excluding the null-terminator. If length is NULL no length is returned.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// The address of a variable that will receive the size of the varying.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// The address of a variable that will recieve the type of the varying.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// The address of a buffer into which will be written the name of the varying.
         /// </para>
@@ -19900,22 +19678,22 @@ namespace OpenTK.Graphics.ES30
         /// The maximum number of characters, including the null terminator, that may be written into name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the number of characters written into name, excluding the null-terminator. If length is NULL no length is returned.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// The address of a variable that will receive the size of the varying.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// The address of a variable that will recieve the type of the varying.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// The address of a buffer into which will be written the name of the varying.
         /// </para>
@@ -19943,22 +19721,22 @@ namespace OpenTK.Graphics.ES30
         /// The maximum number of characters, including the null terminator, that may be written into name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the number of characters written into name, excluding the null-terminator. If length is NULL no length is returned.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// The address of a variable that will receive the size of the varying.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// The address of a variable that will recieve the type of the varying.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// The address of a buffer into which will be written the name of the varying.
         /// </para>
@@ -19985,22 +19763,22 @@ namespace OpenTK.Graphics.ES30
         /// The maximum number of characters, including the null terminator, that may be written into name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the number of characters written into name, excluding the null-terminator. If length is NULL no length is returned.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// The address of a variable that will receive the size of the varying.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// The address of a variable that will recieve the type of the varying.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// The address of a buffer into which will be written the name of the varying.
         /// </para>
@@ -20028,22 +19806,22 @@ namespace OpenTK.Graphics.ES30
         /// The maximum number of characters, including the null terminator, that may be written into name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the number of characters written into name, excluding the null-terminator. If length is NULL no length is returned.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// The address of a variable that will receive the size of the varying.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// The address of a variable that will recieve the type of the varying.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// The address of a buffer into which will be written the name of the varying.
         /// </para>
@@ -20070,22 +19848,22 @@ namespace OpenTK.Graphics.ES30
         /// The maximum number of characters, including the null terminator, that may be written into name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the number of characters written into name, excluding the null-terminator. If length is NULL no length is returned.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// The address of a variable that will receive the size of the varying.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// The address of a variable that will recieve the type of the varying.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// The address of a buffer into which will be written the name of the varying.
         /// </para>
@@ -20113,22 +19891,22 @@ namespace OpenTK.Graphics.ES30
         /// The maximum number of characters, including the null terminator, that may be written into name.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: 1]
         /// <para>
         /// The address of a variable which will receive the number of characters written into name, excluding the null-terminator. If length is NULL no length is returned.
         /// </para>
         /// </param>
-        /// <param name="size">
+        /// <param name="size">[length: 1]
         /// <para>
         /// The address of a variable that will receive the size of the varying.
         /// </para>
         /// </param>
-        /// <param name="type">
+        /// <param name="type">[length: 1]
         /// <para>
         /// The address of a variable that will recieve the type of the varying.
         /// </para>
         /// </param>
-        /// <param name="name">
+        /// <param name="name">[length: bufSize]
         /// <para>
         /// The address of a buffer into which will be written the name of the varying.
         /// </para>
@@ -20316,12 +20094,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of uniforms whose indices to query.
         /// </para>
         /// </param>
-        /// <param name="uniformNames">
+        /// <param name="uniformNames">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of pointers to buffers containing the names of the queried uniforms.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array that will receive the indices of the uniforms.
         /// </para>
@@ -20343,12 +20121,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of uniforms whose indices to query.
         /// </para>
         /// </param>
-        /// <param name="uniformNames">
+        /// <param name="uniformNames">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of pointers to buffers containing the names of the queried uniforms.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array that will receive the indices of the uniforms.
         /// </para>
@@ -20370,12 +20148,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of uniforms whose indices to query.
         /// </para>
         /// </param>
-        /// <param name="uniformNames">
+        /// <param name="uniformNames">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of pointers to buffers containing the names of the queried uniforms.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array that will receive the indices of the uniforms.
         /// </para>
@@ -20397,12 +20175,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of uniforms whose indices to query.
         /// </para>
         /// </param>
-        /// <param name="uniformNames">
+        /// <param name="uniformNames">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of pointers to buffers containing the names of the queried uniforms.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array that will receive the indices of the uniforms.
         /// </para>
@@ -20424,12 +20202,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of uniforms whose indices to query.
         /// </para>
         /// </param>
-        /// <param name="uniformNames">
+        /// <param name="uniformNames">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of pointers to buffers containing the names of the queried uniforms.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array that will receive the indices of the uniforms.
         /// </para>
@@ -20451,12 +20229,12 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of uniforms whose indices to query.
         /// </para>
         /// </param>
-        /// <param name="uniformNames">
+        /// <param name="uniformNames">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array of pointers to buffers containing the names of the queried uniforms.
         /// </para>
         /// </param>
-        /// <param name="uniformIndices">
+        /// <param name="uniformIndices">[length: uniformCount]
         /// <para>
         /// Specifies the address of an array that will receive the indices of the uniforms.
         /// </para>
@@ -21280,7 +21058,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21303,7 +21081,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21328,7 +21106,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21353,7 +21131,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21378,7 +21156,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21403,7 +21181,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21425,7 +21203,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21449,7 +21227,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21473,7 +21251,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21497,7 +21275,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21521,7 +21299,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21544,7 +21322,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21569,7 +21347,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21594,7 +21372,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21619,7 +21397,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21644,7 +21422,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21666,7 +21444,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21690,7 +21468,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21714,7 +21492,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21738,7 +21516,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: 1]
         /// <para>
         /// Returns the pointer value.
         /// </para>
@@ -21795,7 +21573,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -21818,7 +21596,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -21841,7 +21619,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -21864,7 +21642,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -21886,7 +21664,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -21908,7 +21686,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -21930,7 +21708,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -21973,7 +21751,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -22016,7 +21794,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -22059,7 +21837,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -22101,7 +21879,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -22143,7 +21921,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of entries in the attachments array.
         /// </para>
         /// </param>
-        /// <param name="attachments">
+        /// <param name="attachments">[length: numAttachments]
         /// <para>
         /// The address of an array identifying the attachments to be invalidated.
         /// </para>
@@ -22562,7 +22340,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the label to be used for the object.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: label,length]
         /// <para>
         /// The address of a string containing the label to assign to the object.
         /// </para>
@@ -22590,7 +22368,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the label to be used for the object.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: label,length]
         /// <para>
         /// The address of a string containing the label to assign to the object.
         /// </para>
@@ -22618,7 +22396,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the label to be used for the object.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: label,length]
         /// <para>
         /// The address of a string containing the label to assign to the object.
         /// </para>
@@ -22645,7 +22423,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the label to be used for the object.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: label,length]
         /// <para>
         /// The address of a string containing the label to assign to the object.
         /// </para>
@@ -22667,7 +22445,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the label to be used for the object.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: label,length]
         /// <para>
         /// The address of a string containing the label to assign to the object.
         /// </para>
@@ -22688,7 +22466,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the label to be used for the object.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: label,length]
         /// <para>
         /// The address of a string containing the label to assign to the object.
         /// </para>
@@ -22712,7 +22490,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the label to be used for the object.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: label,length]
         /// <para>
         /// The address of a string containing the label to assign to the object.
         /// </para>
@@ -22736,7 +22514,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the label to be used for the object.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: label,length]
         /// <para>
         /// The address of a string containing the label to assign to the object.
         /// </para>
@@ -22760,7 +22538,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the label to be used for the object.
         /// </para>
         /// </param>
-        /// <param name="label">
+        /// <param name="label">[length: label,length]
         /// <para>
         /// The address of a string containing the label to assign to the object.
         /// </para>
@@ -22844,7 +22622,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the binary data in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address an array containing the binary to be loaded into program.
         /// </para>
@@ -22871,7 +22649,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the binary data in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address an array containing the binary to be loaded into program.
         /// </para>
@@ -22900,7 +22678,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the binary data in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address an array containing the binary to be loaded into program.
         /// </para>
@@ -22929,7 +22707,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the binary data in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address an array containing the binary to be loaded into program.
         /// </para>
@@ -22958,7 +22736,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the binary data in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address an array containing the binary to be loaded into program.
         /// </para>
@@ -22987,7 +22765,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the binary data in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address an array containing the binary to be loaded into program.
         /// </para>
@@ -23014,7 +22792,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the binary data in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address an array containing the binary to be loaded into program.
         /// </para>
@@ -23043,7 +22821,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the binary data in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address an array containing the binary to be loaded into program.
         /// </para>
@@ -23072,7 +22850,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the binary data in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address an array containing the binary to be loaded into program.
         /// </para>
@@ -23101,7 +22879,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the binary data in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address an array containing the binary to be loaded into program.
         /// </para>
@@ -23225,7 +23003,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the message to be sent to the debug output stream.
         /// </para>
         /// </param>
-        /// <param name="message">
+        /// <param name="message">[length: message,length]
         /// <para>
         /// The a string containing the message to be sent to the debug output stream.
         /// </para>
@@ -23252,7 +23030,7 @@ namespace OpenTK.Graphics.ES30
         /// The length of the message to be sent to the debug output stream.
         /// </para>
         /// </param>
-        /// <param name="message">
+        /// <param name="message">[length: message,length]
         /// <para>
         /// The a string containing the message to be sent to the debug output stream.
         /// </para>
@@ -23888,7 +23666,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -23916,7 +23694,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -23944,7 +23722,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -23971,7 +23749,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -23998,7 +23776,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24026,7 +23804,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24054,7 +23832,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24081,7 +23859,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24218,7 +23996,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24246,7 +24024,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24274,7 +24052,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24301,7 +24079,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24328,7 +24106,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24356,7 +24134,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24384,7 +24162,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24411,7 +24189,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC.
         /// </para>
         /// </param>
-        /// <param name="param">
+        /// <param name="param">[length: pname]
         /// <para>
         /// For the scalar commands, specifies the value of pname.
         /// </para>
@@ -24449,7 +24227,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24459,7 +24237,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24482,7 +24260,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24492,7 +24270,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24517,7 +24295,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24527,7 +24305,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24552,7 +24330,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24562,7 +24340,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24587,7 +24365,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24597,7 +24375,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24622,7 +24400,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24632,7 +24410,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24654,7 +24432,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24664,7 +24442,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24688,7 +24466,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24698,7 +24476,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24722,7 +24500,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24732,7 +24510,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24756,7 +24534,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24766,7 +24544,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24790,7 +24568,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24800,7 +24578,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24823,7 +24601,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24833,7 +24611,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24858,7 +24636,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24868,7 +24646,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24893,7 +24671,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24903,7 +24681,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24928,7 +24706,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24938,7 +24716,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24963,7 +24741,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -24973,7 +24751,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -24995,7 +24773,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25005,7 +24783,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25029,7 +24807,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25039,7 +24817,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25063,7 +24841,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25073,7 +24851,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25097,7 +24875,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25107,7 +24885,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25131,7 +24909,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25141,7 +24919,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25164,7 +24942,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25174,7 +24952,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25199,7 +24977,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25209,7 +24987,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25234,7 +25012,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25244,7 +25022,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25269,7 +25047,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25279,7 +25057,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25304,7 +25082,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25314,7 +25092,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25336,7 +25114,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25346,7 +25124,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25370,7 +25148,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25380,7 +25158,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25404,7 +25182,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25414,7 +25192,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25438,7 +25216,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25448,7 +25226,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25472,7 +25250,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25482,7 +25260,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25505,7 +25283,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25515,7 +25293,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25540,7 +25318,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25550,7 +25328,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25575,7 +25353,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25585,7 +25363,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25610,7 +25388,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25620,7 +25398,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25645,7 +25423,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25655,7 +25433,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25677,7 +25455,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25687,7 +25465,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25711,7 +25489,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25721,7 +25499,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25745,7 +25523,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25755,7 +25533,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25779,7 +25557,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25789,7 +25567,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25813,7 +25591,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25823,7 +25601,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25846,7 +25624,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25856,7 +25634,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25881,7 +25659,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25891,7 +25669,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25916,7 +25694,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25926,7 +25704,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25951,7 +25729,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25961,7 +25739,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -25986,7 +25764,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -25996,7 +25774,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26018,7 +25796,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26028,7 +25806,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26052,7 +25830,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26062,7 +25840,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26086,7 +25864,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26096,7 +25874,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26120,7 +25898,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26130,7 +25908,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26154,7 +25932,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26164,7 +25942,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26187,7 +25965,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26197,7 +25975,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26222,7 +26000,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26232,7 +26010,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26257,7 +26035,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26267,7 +26045,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26292,7 +26070,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26302,7 +26080,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26327,7 +26105,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26337,7 +26115,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26359,7 +26137,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26369,7 +26147,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26393,7 +26171,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26403,7 +26181,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26427,7 +26205,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26437,7 +26215,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26461,7 +26239,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the number of shader object handles contained in shaders.
         /// </para>
         /// </param>
-        /// <param name="shaders">
+        /// <param name="shaders">[length: count]
         /// <para>
         /// Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
         /// </para>
@@ -26471,7 +26249,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the format of the shader binaries contained in binary.
         /// </para>
         /// </param>
-        /// <param name="binary">
+        /// <param name="binary">[length: length]
         /// <para>
         /// Specifies the address of an array of bytes containing pre-compiled binary shader code.
         /// </para>
@@ -26505,7 +26283,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies an array of pointers to strings containing the source code to be loaded into the shader.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: count]
         /// <para>
         /// Specifies an array of string lengths.
         /// </para>
@@ -26532,7 +26310,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies an array of pointers to strings containing the source code to be loaded into the shader.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: count]
         /// <para>
         /// Specifies an array of string lengths.
         /// </para>
@@ -26559,7 +26337,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies an array of pointers to strings containing the source code to be loaded into the shader.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: count]
         /// <para>
         /// Specifies an array of string lengths.
         /// </para>
@@ -26586,7 +26364,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies an array of pointers to strings containing the source code to be loaded into the shader.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: count]
         /// <para>
         /// Specifies an array of string lengths.
         /// </para>
@@ -26613,7 +26391,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies an array of pointers to strings containing the source code to be loaded into the shader.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: count]
         /// <para>
         /// Specifies an array of string lengths.
         /// </para>
@@ -26640,7 +26418,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies an array of pointers to strings containing the source code to be loaded into the shader.
         /// </para>
         /// </param>
-        /// <param name="length">
+        /// <param name="length">[length: count]
         /// <para>
         /// Specifies an array of string lengths.
         /// </para>
@@ -29848,7 +29626,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of varying variables used for transform feedback.
         /// </para>
         /// </param>
-        /// <param name="varyings">
+        /// <param name="varyings">[length: count]
         /// <para>
         /// An array of count zero-terminated strings specifying the names of the varying variables to use for transform feedback.
         /// </para>
@@ -29876,7 +29654,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of varying variables used for transform feedback.
         /// </para>
         /// </param>
-        /// <param name="varyings">
+        /// <param name="varyings">[length: count]
         /// <para>
         /// An array of count zero-terminated strings specifying the names of the varying variables to use for transform feedback.
         /// </para>
@@ -29903,7 +29681,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of varying variables used for transform feedback.
         /// </para>
         /// </param>
-        /// <param name="varyings">
+        /// <param name="varyings">[length: count]
         /// <para>
         /// An array of count zero-terminated strings specifying the names of the varying variables to use for transform feedback.
         /// </para>
@@ -29931,7 +29709,7 @@ namespace OpenTK.Graphics.ES30
         /// The number of varying variables used for transform feedback.
         /// </para>
         /// </param>
-        /// <param name="varyings">
+        /// <param name="varyings">[length: count]
         /// <para>
         /// An array of count zero-terminated strings specifying the names of the varying variables to use for transform feedback.
         /// </para>
@@ -30005,7 +29783,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30040,7 +29818,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30075,7 +29853,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30144,7 +29922,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30179,7 +29957,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30214,7 +29992,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30284,7 +30062,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30319,7 +30097,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30354,7 +30132,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30423,7 +30201,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30458,7 +30236,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30493,7 +30271,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30562,7 +30340,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30597,7 +30375,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30667,7 +30445,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count*2]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30702,7 +30480,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count*2]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30737,7 +30515,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count*2]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30806,7 +30584,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30841,7 +30619,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30876,7 +30654,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30945,7 +30723,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -30980,7 +30758,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31015,7 +30793,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31085,7 +30863,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count*3]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31120,7 +30898,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count*3]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31155,7 +30933,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count*3]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31224,7 +31002,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31259,7 +31037,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31294,7 +31072,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31363,7 +31141,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31398,7 +31176,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31433,7 +31211,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31503,7 +31281,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count*4]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31538,7 +31316,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count*4]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31573,7 +31351,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
         /// </para>
         /// </param>
-        /// <param name="value">
+        /// <param name="value">[length: count*4]
         /// <para>
         /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
         /// </para>
@@ -31905,7 +31683,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 1]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -31942,7 +31720,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 1]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32053,7 +31831,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 2]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32090,7 +31868,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 2]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32127,7 +31905,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 2]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32164,7 +31942,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 2]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32201,7 +31979,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 2]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32238,7 +32016,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 2]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32349,7 +32127,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 3]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32386,7 +32164,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 3]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32423,7 +32201,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 3]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32460,7 +32238,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 3]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32497,7 +32275,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 3]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32534,7 +32312,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 3]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32645,7 +32423,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 4]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32682,7 +32460,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 4]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32719,7 +32497,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 4]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32756,7 +32534,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 4]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32793,7 +32571,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 4]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -32830,7 +32608,7 @@ namespace OpenTK.Graphics.ES30
         /// For the scalar commands, specifies the new values to be used for the specified vertex attribute.
         /// </para>
         /// </param>
-        /// <param name="v">
+        /// <param name="v">[length: 4]
         /// <para>
         /// For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute.
         /// </para>
@@ -33118,7 +32896,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33156,7 +32934,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33196,7 +32974,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33236,7 +33014,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33276,7 +33054,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33316,7 +33094,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33353,7 +33131,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33392,7 +33170,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33431,7 +33209,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33470,7 +33248,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33509,7 +33287,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33547,7 +33325,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33587,7 +33365,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33627,7 +33405,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33667,7 +33445,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33707,7 +33485,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33744,7 +33522,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33783,7 +33561,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33822,7 +33600,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -33861,7 +33639,7 @@ namespace OpenTK.Graphics.ES30
         /// Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. The initial value is 0.
         /// </para>
@@ -34185,7 +33963,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of source code strings in the array strings.
             /// </para>
             /// </param>
-            /// <param name="strings">
+            /// <param name="strings">[length: count]
             /// <para>
             /// Specifies the address of an array of pointers to source code strings from which to create the program object.
             /// </para>
@@ -34211,7 +33989,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34228,7 +34006,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34245,7 +34023,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34262,7 +34040,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34279,7 +34057,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34296,7 +34074,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline objects to delete.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of names of program pipeline objects to delete.
             /// </para>
@@ -34323,7 +34101,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34340,7 +34118,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34357,7 +34135,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34374,7 +34152,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34391,7 +34169,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34408,7 +34186,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array of query objects to be deleted.
             /// </para>
@@ -34623,7 +34401,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -34655,7 +34433,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -34690,7 +34468,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -34725,7 +34503,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -34760,7 +34538,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -34794,7 +34572,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -34825,7 +34603,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -34859,7 +34637,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -34893,7 +34671,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -34927,7 +34705,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -35017,7 +34795,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35034,7 +34812,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35051,7 +34829,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35068,7 +34846,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35085,7 +34863,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35102,7 +34880,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of program pipeline object names to reserve.
             /// </para>
             /// </param>
-            /// <param name="pipelines">
+            /// <param name="pipelines">[length: n]
             /// <para>
             /// Specifies an array of into which the reserved names will be written.
             /// </para>
@@ -35124,7 +34902,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35141,7 +34919,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35158,7 +34936,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35175,7 +34953,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35192,7 +34970,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35209,7 +34987,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of query object names to be generated.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: n]
             /// <para>
             /// Specifies an array in which the generated query object names are stored.
             /// </para>
@@ -35366,16 +35144,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static void GetObjectLabel(OpenTK.Graphics.ES30.All type, Int32 @object, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -35398,16 +35177,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static void GetObjectLabel(OpenTK.Graphics.ES30.All type, Int32 @object, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -35430,16 +35210,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static unsafe void GetObjectLabel(OpenTK.Graphics.ES30.All type, Int32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -35462,16 +35243,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static void GetObjectLabel(OpenTK.Graphics.ES30.All type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -35494,16 +35276,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static void GetObjectLabel(OpenTK.Graphics.ES30.All type, UInt32 @object, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -35526,16 +35309,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static unsafe void GetObjectLabel(OpenTK.Graphics.ES30.All type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -35553,16 +35337,17 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="infoLog">
+            /// <param name="infoLog">[length: bufSize]
             /// <para>
             /// Specifies the address of an array of characters into which will be written the info log for pipeline.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_separate_shader_objects", Version = "", EntryPoint = "glGetProgramPipelineInfoLogEXT")]
             [CLSCompliant(false)]
             public static void GetProgramPipelineInfoLog(Int32 pipeline, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder infoLog) { throw new NotImplementedException(); }
@@ -35580,16 +35365,17 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="infoLog">
+            /// <param name="infoLog">[length: bufSize]
             /// <para>
             /// Specifies the address of an array of characters into which will be written the info log for pipeline.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_separate_shader_objects", Version = "", EntryPoint = "glGetProgramPipelineInfoLogEXT")]
             [CLSCompliant(false)]
             public static void GetProgramPipelineInfoLog(Int32 pipeline, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder infoLog) { throw new NotImplementedException(); }
@@ -35607,16 +35393,17 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="infoLog">
+            /// <param name="infoLog">[length: bufSize]
             /// <para>
             /// Specifies the address of an array of characters into which will be written the info log for pipeline.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_separate_shader_objects", Version = "", EntryPoint = "glGetProgramPipelineInfoLogEXT")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramPipelineInfoLog(Int32 pipeline, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog) { throw new NotImplementedException(); }
@@ -35634,16 +35421,17 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="infoLog">
+            /// <param name="infoLog">[length: bufSize]
             /// <para>
             /// Specifies the address of an array of characters into which will be written the info log for pipeline.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_separate_shader_objects", Version = "", EntryPoint = "glGetProgramPipelineInfoLogEXT")]
             [CLSCompliant(false)]
             public static void GetProgramPipelineInfoLog(UInt32 pipeline, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder infoLog) { throw new NotImplementedException(); }
@@ -35661,16 +35449,17 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="infoLog">
+            /// <param name="infoLog">[length: bufSize]
             /// <para>
             /// Specifies the address of an array of characters into which will be written the info log for pipeline.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_separate_shader_objects", Version = "", EntryPoint = "glGetProgramPipelineInfoLogEXT")]
             [CLSCompliant(false)]
             public static void GetProgramPipelineInfoLog(UInt32 pipeline, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder infoLog) { throw new NotImplementedException(); }
@@ -35688,16 +35477,17 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the maximum number of characters, including the null terminator, that may be written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable into which will be written the number of characters written into infoLog.
             /// </para>
             /// </param>
-            /// <param name="infoLog">
+            /// <param name="infoLog">[length: bufSize]
             /// <para>
             /// Specifies the address of an array of characters into which will be written the info log for pipeline.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_separate_shader_objects", Version = "", EntryPoint = "glGetProgramPipelineInfoLogEXT")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramPipelineInfoLog(UInt32 pipeline, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog) { throw new NotImplementedException(); }
@@ -36857,12 +36647,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -36885,12 +36675,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -36913,12 +36703,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -36941,12 +36731,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -36968,12 +36758,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -36995,12 +36785,12 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -37022,7 +36812,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37032,7 +36822,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37055,7 +36845,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37065,7 +36855,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37090,7 +36880,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37100,7 +36890,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37125,7 +36915,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37135,7 +36925,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37160,7 +36950,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37170,7 +36960,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37195,7 +36985,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37205,7 +36995,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37228,7 +37018,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37238,7 +37028,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37263,7 +37053,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37273,7 +37063,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37298,7 +37088,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37308,7 +37098,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37333,7 +37123,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37343,7 +37133,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37368,7 +37158,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37378,7 +37168,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37401,7 +37191,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37411,7 +37201,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37436,7 +37226,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37446,7 +37236,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37471,7 +37261,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37481,7 +37271,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37506,7 +37296,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37516,7 +37306,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37541,7 +37331,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37551,7 +37341,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37573,7 +37363,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37583,7 +37373,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37607,7 +37397,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37617,7 +37407,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37641,7 +37431,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37651,7 +37441,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37675,7 +37465,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37685,7 +37475,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37709,7 +37499,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37719,7 +37509,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37741,7 +37531,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37751,7 +37541,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37775,7 +37565,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37785,7 +37575,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37809,7 +37599,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37819,7 +37609,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37843,7 +37633,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37853,7 +37643,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37877,7 +37667,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37887,7 +37677,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37909,7 +37699,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37919,7 +37709,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37943,7 +37733,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37953,7 +37743,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -37977,7 +37767,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -37987,7 +37777,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -38011,7 +37801,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -38021,7 +37811,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -38242,7 +38032,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38282,7 +38072,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38322,7 +38112,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38362,7 +38152,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38402,7 +38192,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38442,7 +38232,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38562,7 +38352,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38602,7 +38392,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38642,7 +38432,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38682,7 +38472,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38722,7 +38512,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38762,7 +38552,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38842,7 +38632,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38882,7 +38672,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -38922,7 +38712,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39042,7 +38832,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39082,7 +38872,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39122,7 +38912,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39162,7 +38952,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39202,7 +38992,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39242,7 +39032,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39362,7 +39152,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39402,7 +39192,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39442,7 +39232,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39482,7 +39272,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39562,7 +39352,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39602,7 +39392,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39642,7 +39432,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*2]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39762,7 +39552,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39802,7 +39592,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39842,7 +39632,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39882,7 +39672,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39922,7 +39712,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -39962,7 +39752,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40082,7 +39872,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40122,7 +39912,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40162,7 +39952,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40202,7 +39992,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40242,7 +40032,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40282,7 +40072,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40362,7 +40152,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40402,7 +40192,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40442,7 +40232,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*3]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40562,7 +40352,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40602,7 +40392,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40642,7 +40432,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40682,7 +40472,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40722,7 +40512,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40762,7 +40552,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40882,7 +40672,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40922,7 +40712,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -40962,7 +40752,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -41002,7 +40792,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -41042,7 +40832,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -41082,7 +40872,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -41162,7 +40952,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -41202,7 +40992,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -41242,7 +41032,7 @@ namespace OpenTK.Graphics.ES30
             /// For the scalar commands, specifies the new values to be used for the specified uniform variable.
             /// </para>
             /// </param>
-            /// <param name="value">
+            /// <param name="value">[length: count*4]
             /// <para>
             /// For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable.
             /// </para>
@@ -42040,6 +41830,438 @@ namespace OpenTK.Graphics.ES30
 
         }
 
+        public static partial class Intel
+        {
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glBeginPerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static void BeginPerfQuery(Int32 queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glBeginPerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static void BeginPerfQuery(UInt32 queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glCreatePerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static void CreatePerfQuery(Int32 queryId, [OutAttribute] Int32[] queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glCreatePerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static void CreatePerfQuery(Int32 queryId, [OutAttribute] out Int32 queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glCreatePerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void CreatePerfQuery(Int32 queryId, [OutAttribute] Int32* queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glCreatePerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static void CreatePerfQuery(UInt32 queryId, [OutAttribute] UInt32[] queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glCreatePerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static void CreatePerfQuery(UInt32 queryId, [OutAttribute] out UInt32 queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glCreatePerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void CreatePerfQuery(UInt32 queryId, [OutAttribute] UInt32* queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glDeletePerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static void DeletePerfQuery(Int32 queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glDeletePerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static void DeletePerfQuery(UInt32 queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glEndPerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static void EndPerfQuery(Int32 queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glEndPerfQueryINTEL")]
+            [CLSCompliant(false)]
+            public static void EndPerfQuery(UInt32 queryHandle) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetFirstPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static Int32 GetFirstPerfQueryI() { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetFirstPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static void GetFirstPerfQueryI([OutAttribute] Int32[] queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetFirstPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static void GetFirstPerfQueryI([OutAttribute] out Int32 queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetFirstPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetFirstPerfQueryI([OutAttribute] Int32* queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetFirstPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static void GetFirstPerfQueryI([OutAttribute] UInt32[] queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetFirstPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static void GetFirstPerfQueryI([OutAttribute] out UInt32 queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetFirstPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetFirstPerfQueryI([OutAttribute] UInt32* queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetNextPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static Int32 GetNextPerfQueryI(Int32 queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetNextPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static Int32 GetNextPerfQueryI(UInt32 queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetNextPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static void GetNextPerfQueryI(Int32 queryId, [OutAttribute] Int32[] nextQueryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetNextPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static void GetNextPerfQueryI(Int32 queryId, [OutAttribute] out Int32 nextQueryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetNextPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetNextPerfQueryI(Int32 queryId, [OutAttribute] Int32* nextQueryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetNextPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static void GetNextPerfQueryI(UInt32 queryId, [OutAttribute] UInt32[] nextQueryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetNextPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static void GetNextPerfQueryI(UInt32 queryId, [OutAttribute] out UInt32 nextQueryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetNextPerfQueryIdINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetNextPerfQueryI(UInt32 queryId, [OutAttribute] UInt32* nextQueryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfCounterInfoINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfCounterInfo(Int32 queryId, Int32 counterId, Int32 counterNameLength, [OutAttribute] StringBuilder counterName, Int32 counterDescLength, [OutAttribute] StringBuilder counterDesc, [OutAttribute] Int32[] counterOffset, [OutAttribute] Int32[] counterDataSize, [OutAttribute] Int32[] counterTypeEnum, [OutAttribute] Int32[] counterDataTypeEnum, [OutAttribute] Int64[] rawCounterMaxValue) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfCounterInfoINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfCounterInfo(Int32 queryId, Int32 counterId, Int32 counterNameLength, [OutAttribute] StringBuilder counterName, Int32 counterDescLength, [OutAttribute] StringBuilder counterDesc, [OutAttribute] out Int32 counterOffset, [OutAttribute] out Int32 counterDataSize, [OutAttribute] out Int32 counterTypeEnum, [OutAttribute] out Int32 counterDataTypeEnum, [OutAttribute] out Int64 rawCounterMaxValue) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfCounterInfoINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfCounterInfo(Int32 queryId, Int32 counterId, Int32 counterNameLength, [OutAttribute] StringBuilder counterName, Int32 counterDescLength, [OutAttribute] StringBuilder counterDesc, [OutAttribute] Int32* counterOffset, [OutAttribute] Int32* counterDataSize, [OutAttribute] Int32* counterTypeEnum, [OutAttribute] Int32* counterDataTypeEnum, [OutAttribute] Int64* rawCounterMaxValue) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfCounterInfoINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfCounterInfo(UInt32 queryId, UInt32 counterId, UInt32 counterNameLength, [OutAttribute] StringBuilder counterName, UInt32 counterDescLength, [OutAttribute] StringBuilder counterDesc, [OutAttribute] UInt32[] counterOffset, [OutAttribute] UInt32[] counterDataSize, [OutAttribute] UInt32[] counterTypeEnum, [OutAttribute] UInt32[] counterDataTypeEnum, [OutAttribute] UInt64[] rawCounterMaxValue) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfCounterInfoINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfCounterInfo(UInt32 queryId, UInt32 counterId, UInt32 counterNameLength, [OutAttribute] StringBuilder counterName, UInt32 counterDescLength, [OutAttribute] StringBuilder counterDesc, [OutAttribute] out UInt32 counterOffset, [OutAttribute] out UInt32 counterDataSize, [OutAttribute] out UInt32 counterTypeEnum, [OutAttribute] out UInt32 counterDataTypeEnum, [OutAttribute] out UInt64 rawCounterMaxValue) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfCounterInfoINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfCounterInfo(UInt32 queryId, UInt32 counterId, UInt32 counterNameLength, [OutAttribute] StringBuilder counterName, UInt32 counterDescLength, [OutAttribute] StringBuilder counterDesc, [OutAttribute] UInt32* counterOffset, [OutAttribute] UInt32* counterDataSize, [OutAttribute] UInt32* counterTypeEnum, [OutAttribute] UInt32* counterDataTypeEnum, [OutAttribute] UInt64* rawCounterMaxValue) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData(Int32 queryHandle, Int32 flags, Int32 dataSize, [OutAttribute] IntPtr data, [OutAttribute] Int32[] bytesWritten) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData(Int32 queryHandle, Int32 flags, Int32 dataSize, [OutAttribute] IntPtr data, [OutAttribute] out Int32 bytesWritten) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryData(Int32 queryHandle, Int32 flags, Int32 dataSize, [OutAttribute] IntPtr data, [OutAttribute] Int32* bytesWritten) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[] data, [OutAttribute] Int32[] bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[] data, [OutAttribute] out Int32 bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[] data, [OutAttribute] Int32* bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,] data, [OutAttribute] Int32[] bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,] data, [OutAttribute] out Int32 bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,] data, [OutAttribute] Int32* bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,,] data, [OutAttribute] Int32[] bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,,] data, [OutAttribute] out Int32 bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,,] data, [OutAttribute] Int32* bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] ref T3 data, [OutAttribute] Int32[] bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] ref T3 data, [OutAttribute] out Int32 bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryData<T3>(Int32 queryHandle, Int32 flags, Int32 dataSize, [InAttribute, OutAttribute] ref T3 data, [OutAttribute] Int32* bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [OutAttribute] IntPtr data, [OutAttribute] UInt32[] bytesWritten) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [OutAttribute] IntPtr data, [OutAttribute] out UInt32 bytesWritten) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryData(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [OutAttribute] IntPtr data, [OutAttribute] UInt32* bytesWritten) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[] data, [OutAttribute] UInt32[] bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[] data, [OutAttribute] out UInt32 bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[] data, [OutAttribute] UInt32* bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,] data, [OutAttribute] UInt32[] bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,] data, [OutAttribute] out UInt32 bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,] data, [OutAttribute] UInt32* bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,,] data, [OutAttribute] UInt32[] bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,,] data, [OutAttribute] out UInt32 bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] T3[,,] data, [OutAttribute] UInt32* bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] ref T3 data, [OutAttribute] UInt32[] bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] ref T3 data, [OutAttribute] out UInt32 bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryDataINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryData<T3>(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [InAttribute, OutAttribute] ref T3 data, [OutAttribute] UInt32* bytesWritten)
+                where T3 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryIdByNameINTEL")]
+            [CLSCompliant(false)]
+            public static Int32 GetPerfQueryIdByName([OutAttribute] StringBuilder queryName) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryIdByNameINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryIdByName([OutAttribute] StringBuilder queryName, [OutAttribute] Int32[] queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryIdByNameINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryIdByName([OutAttribute] StringBuilder queryName, [OutAttribute] out Int32 queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryIdByNameINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryIdByName([OutAttribute] StringBuilder queryName, [OutAttribute] Int32* queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryIdByNameINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryIdByName([OutAttribute] StringBuilder queryName, [OutAttribute] UInt32[] queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryIdByNameINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryIdByName([OutAttribute] StringBuilder queryName, [OutAttribute] out UInt32 queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryIdByNameINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryIdByName([OutAttribute] StringBuilder queryName, [OutAttribute] UInt32* queryId) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryInfoINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryInfo(Int32 queryId, Int32 queryNameLength, [OutAttribute] StringBuilder queryName, [OutAttribute] Int32[] dataSize, [OutAttribute] Int32[] noCounters, [OutAttribute] Int32[] noInstances, [OutAttribute] Int32[] capsMask) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryInfoINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryInfo(Int32 queryId, Int32 queryNameLength, [OutAttribute] StringBuilder queryName, [OutAttribute] out Int32 dataSize, [OutAttribute] out Int32 noCounters, [OutAttribute] out Int32 noInstances, [OutAttribute] out Int32 capsMask) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryInfoINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryInfo(Int32 queryId, Int32 queryNameLength, [OutAttribute] StringBuilder queryName, [OutAttribute] Int32* dataSize, [OutAttribute] Int32* noCounters, [OutAttribute] Int32* noInstances, [OutAttribute] Int32* capsMask) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryInfoINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryInfo(UInt32 queryId, UInt32 queryNameLength, [OutAttribute] StringBuilder queryName, [OutAttribute] UInt32[] dataSize, [OutAttribute] UInt32[] noCounters, [OutAttribute] UInt32[] noInstances, [OutAttribute] UInt32[] capsMask) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryInfoINTEL")]
+            [CLSCompliant(false)]
+            public static void GetPerfQueryInfo(UInt32 queryId, UInt32 queryNameLength, [OutAttribute] StringBuilder queryName, [OutAttribute] out UInt32 dataSize, [OutAttribute] out UInt32 noCounters, [OutAttribute] out UInt32 noInstances, [OutAttribute] out UInt32 capsMask) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: INTEL_performance_query]</summary>
+            [AutoGenerated(Category = "INTEL_performance_query", Version = "", EntryPoint = "glGetPerfQueryInfoINTEL")]
+            [CLSCompliant(false)]
+            public static unsafe void GetPerfQueryInfo(UInt32 queryId, UInt32 queryNameLength, [OutAttribute] StringBuilder queryName, [OutAttribute] UInt32* dataSize, [OutAttribute] UInt32* noCounters, [OutAttribute] UInt32* noInstances, [OutAttribute] UInt32* capsMask) { throw new NotImplementedException(); }
+
+        }
+
         public static partial class Khr
         {
             /// <summary>[requires: KHR_debug]
@@ -42746,32 +42968,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -42794,32 +43016,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -42842,32 +43064,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -42890,32 +43112,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -42937,32 +43159,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -42984,32 +43206,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -43031,32 +43253,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -43079,32 +43301,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -43127,32 +43349,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -43175,32 +43397,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -43222,32 +43444,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -43269,32 +43491,32 @@ namespace OpenTK.Graphics.ES30
             /// The size of the buffer whose address is given by messageLog.
             /// </para>
             /// </param>
-            /// <param name="sources">
+            /// <param name="sources">[length: count]
             /// <para>
             /// The address of an array of variables to receive the sources of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="types">
+            /// <param name="types">[length: count]
             /// <para>
             /// The address of an array of variables to receive the types of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="ids">
+            /// <param name="ids">[length: count]
             /// <para>
             /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="severities">
+            /// <param name="severities">[length: count]
             /// <para>
             /// The address of an array of variables to receive the severites of the retrieved messages.
             /// </para>
             /// </param>
-            /// <param name="lengths">
+            /// <param name="lengths">[length: count]
             /// <para>
             /// The address of an array of variables to receive the lengths of the received messages.
             /// </para>
             /// </param>
-            /// <param name="messageLog">
+            /// <param name="messageLog">[length: bufSize]
             /// <para>
             /// The address of an array of characters that will receive the messages.
             /// </para>
@@ -43326,7 +43548,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43359,7 +43581,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43392,7 +43614,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43425,7 +43647,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43458,7 +43680,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43491,7 +43713,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43524,7 +43746,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43556,7 +43778,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43588,7 +43810,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43620,7 +43842,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43652,7 +43874,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43684,7 +43906,7 @@ namespace OpenTK.Graphics.ES30
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
@@ -43706,16 +43928,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -43733,16 +43956,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -43760,16 +43984,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static unsafe void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -43787,16 +44012,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label)
@@ -43816,16 +44042,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label)
@@ -43845,16 +44072,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label)
@@ -43874,16 +44102,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label)
@@ -43903,16 +44132,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label)
@@ -43932,16 +44162,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label)
@@ -43961,16 +44192,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label)
@@ -43990,16 +44222,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label)
@@ -44019,16 +44252,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label)
@@ -44048,16 +44282,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label)
@@ -44077,16 +44312,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label)
@@ -44106,16 +44342,17 @@ namespace OpenTK.Graphics.ES30
             /// The length of the buffer whose address is in label.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// The address of a variable to receive the length of the object label.
             /// </para>
             /// </param>
-            /// <param name="label">
+            /// <param name="label">[length: bufSize]
             /// <para>
             /// The address of a string that will receive the object label.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
             [CLSCompliant(false)]
             public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label)
@@ -44676,7 +44913,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -44694,7 +44931,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -44712,7 +44949,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -44730,7 +44967,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -44747,7 +44984,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -44764,7 +45001,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of buffers in bufs.
             /// </para>
             /// </param>
-            /// <param name="bufs">
+            /// <param name="bufs">[length: n]
             /// <para>
             /// Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.
             /// </para>
@@ -44791,7 +45028,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -44823,7 +45060,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -44858,7 +45095,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -44893,7 +45130,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -44928,7 +45165,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -44962,7 +45199,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -44993,7 +45230,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45027,7 +45264,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45061,7 +45298,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45095,7 +45332,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: count,type]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -45484,7 +45721,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -45536,7 +45773,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -45591,7 +45828,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -45646,7 +45883,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -45701,7 +45938,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -45755,7 +45992,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -45806,7 +46043,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -45860,7 +46097,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -45914,7 +46151,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -45968,7 +46205,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46026,7 +46263,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46083,7 +46320,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46143,7 +46380,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46203,7 +46440,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46263,7 +46500,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46322,7 +46559,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46378,7 +46615,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46437,7 +46674,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46496,7 +46733,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46555,7 +46792,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
             /// </para>
             /// </param>
-            /// <param name="data">
+            /// <param name="data">[length: imageSize]
             /// <para>
             /// Specifies a pointer to the compressed image data in memory.
             /// </para>
@@ -46676,7 +46913,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -46693,7 +46930,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -46710,7 +46947,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -46727,7 +46964,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -46744,7 +46981,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -46761,7 +46998,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -46801,7 +47038,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -46818,7 +47055,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -46835,7 +47072,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -46852,7 +47089,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -46869,7 +47106,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -46886,7 +47123,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -46975,21 +47212,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary(Int32 program, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] OpenTK.Graphics.ES30.All[] binaryFormat, [OutAttribute] IntPtr binary) { throw new NotImplementedException(); }
@@ -47007,21 +47245,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] OpenTK.Graphics.ES30.All[] binaryFormat, [InAttribute, OutAttribute] T4[] binary)
@@ -47041,21 +47280,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] OpenTK.Graphics.ES30.All[] binaryFormat, [InAttribute, OutAttribute] T4[,] binary)
@@ -47075,21 +47315,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] OpenTK.Graphics.ES30.All[] binaryFormat, [InAttribute, OutAttribute] T4[,,] binary)
@@ -47109,21 +47350,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] OpenTK.Graphics.ES30.All[] binaryFormat, [InAttribute, OutAttribute] ref T4 binary)
@@ -47143,21 +47385,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary(Int32 program, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] out OpenTK.Graphics.ES30.All binaryFormat, [OutAttribute] IntPtr binary) { throw new NotImplementedException(); }
@@ -47175,21 +47418,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] out OpenTK.Graphics.ES30.All binaryFormat, [InAttribute, OutAttribute] T4[] binary)
@@ -47209,21 +47453,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] out OpenTK.Graphics.ES30.All binaryFormat, [InAttribute, OutAttribute] T4[,] binary)
@@ -47243,21 +47488,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] out OpenTK.Graphics.ES30.All binaryFormat, [InAttribute, OutAttribute] T4[,,] binary)
@@ -47277,21 +47523,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] out OpenTK.Graphics.ES30.All binaryFormat, [InAttribute, OutAttribute] ref T4 binary)
@@ -47311,21 +47558,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramBinary(Int32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES30.All* binaryFormat, [OutAttribute] IntPtr binary) { throw new NotImplementedException(); }
@@ -47343,21 +47591,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES30.All* binaryFormat, [InAttribute, OutAttribute] T4[] binary)
@@ -47377,21 +47626,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES30.All* binaryFormat, [InAttribute, OutAttribute] T4[,] binary)
@@ -47411,21 +47661,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES30.All* binaryFormat, [InAttribute, OutAttribute] T4[,,] binary)
@@ -47445,21 +47696,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramBinary<T4>(Int32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES30.All* binaryFormat, [InAttribute, OutAttribute] ref T4 binary)
@@ -47479,21 +47731,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary(UInt32 program, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] OpenTK.Graphics.ES30.All[] binaryFormat, [OutAttribute] IntPtr binary) { throw new NotImplementedException(); }
@@ -47511,21 +47764,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] OpenTK.Graphics.ES30.All[] binaryFormat, [InAttribute, OutAttribute] T4[] binary)
@@ -47545,21 +47799,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] OpenTK.Graphics.ES30.All[] binaryFormat, [InAttribute, OutAttribute] T4[,] binary)
@@ -47579,21 +47834,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] OpenTK.Graphics.ES30.All[] binaryFormat, [InAttribute, OutAttribute] T4[,,] binary)
@@ -47613,21 +47869,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] OpenTK.Graphics.ES30.All[] binaryFormat, [InAttribute, OutAttribute] ref T4 binary)
@@ -47647,21 +47904,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary(UInt32 program, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] out OpenTK.Graphics.ES30.All binaryFormat, [OutAttribute] IntPtr binary) { throw new NotImplementedException(); }
@@ -47679,21 +47937,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] out OpenTK.Graphics.ES30.All binaryFormat, [InAttribute, OutAttribute] T4[] binary)
@@ -47713,21 +47972,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] out OpenTK.Graphics.ES30.All binaryFormat, [InAttribute, OutAttribute] T4[,] binary)
@@ -47747,21 +48007,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] out OpenTK.Graphics.ES30.All binaryFormat, [InAttribute, OutAttribute] T4[,,] binary)
@@ -47781,21 +48042,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] out OpenTK.Graphics.ES30.All binaryFormat, [InAttribute, OutAttribute] ref T4 binary)
@@ -47815,21 +48077,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramBinary(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES30.All* binaryFormat, [OutAttribute] IntPtr binary) { throw new NotImplementedException(); }
@@ -47847,21 +48110,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES30.All* binaryFormat, [InAttribute, OutAttribute] T4[] binary)
@@ -47881,21 +48145,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES30.All* binaryFormat, [InAttribute, OutAttribute] T4[,] binary)
@@ -47915,21 +48180,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES30.All* binaryFormat, [InAttribute, OutAttribute] T4[,,] binary)
@@ -47949,21 +48215,22 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the size of the buffer whose address is given by binary.
             /// </para>
             /// </param>
-            /// <param name="length">
+            /// <param name="length">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive the number of bytes written into binary.
             /// </para>
             /// </param>
-            /// <param name="binaryFormat">
+            /// <param name="binaryFormat">[length: 1]
             /// <para>
             /// Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: bufSize]
             /// <para>
             /// Specifies the address an array into which the GL will return program's binary representation.
             /// </para>
             /// </param>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "OES_get_program_binary", Version = "", EntryPoint = "glGetProgramBinaryOES")]
             [CLSCompliant(false)]
             public static unsafe void GetProgramBinary<T4>(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES30.All* binaryFormat, [InAttribute, OutAttribute] ref T4 binary)
@@ -48023,7 +48290,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48050,7 +48317,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48079,7 +48346,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48108,7 +48375,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48137,7 +48404,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48166,7 +48433,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48193,7 +48460,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48222,7 +48489,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48251,7 +48518,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -48280,7 +48547,7 @@ namespace OpenTK.Graphics.ES30
             /// Specifies the format of the binary data in binary.
             /// </para>
             /// </param>
-            /// <param name="binary">
+            /// <param name="binary">[length: length]
             /// <para>
             /// Specifies the address an array containing the binary to be loaded into program.
             /// </para>
@@ -49611,6 +49878,7 @@ namespace OpenTK.Graphics.ES30
              { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetBuffers([OutAttribute] Int32[] buffers, Int32 maxBuffers, [OutAttribute] Int32[] numBuffers) { throw new NotImplementedException(); }
@@ -49618,14 +49886,22 @@ namespace OpenTK.Graphics.ES30
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetBuffers([OutAttribute] Int32[] buffers, Int32 maxBuffers, [OutAttribute] out Int32 numBuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetBuffers([OutAttribute] out Int32 buffers, Int32 maxBuffers, [OutAttribute] out Int32 numBuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetBuffers([OutAttribute] Int32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetBuffers([OutAttribute] UInt32[] buffers, Int32 maxBuffers, [OutAttribute] Int32[] numBuffers) { throw new NotImplementedException(); }
@@ -49633,14 +49909,22 @@ namespace OpenTK.Graphics.ES30
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetBuffers([OutAttribute] UInt32[] buffers, Int32 maxBuffers, [OutAttribute] out Int32 numBuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetBuffers([OutAttribute] out UInt32 buffers, Int32 maxBuffers, [OutAttribute] out Int32 numBuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetBuffers([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetFramebuffers([OutAttribute] Int32[] framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32[] numFramebuffers) { throw new NotImplementedException(); }
@@ -49648,14 +49932,22 @@ namespace OpenTK.Graphics.ES30
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetFramebuffers([OutAttribute] Int32[] framebuffers, Int32 maxFramebuffers, [OutAttribute] out Int32 numFramebuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetFramebuffers([OutAttribute] out Int32 framebuffers, Int32 maxFramebuffers, [OutAttribute] out Int32 numFramebuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetFramebuffers([OutAttribute] Int32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetFramebuffers([OutAttribute] UInt32[] framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32[] numFramebuffers) { throw new NotImplementedException(); }
@@ -49663,9 +49955,16 @@ namespace OpenTK.Graphics.ES30
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetFramebuffers([OutAttribute] UInt32[] framebuffers, Int32 maxFramebuffers, [OutAttribute] out Int32 numFramebuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetFramebuffers([OutAttribute] out UInt32 framebuffers, Int32 maxFramebuffers, [OutAttribute] out Int32 numFramebuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetFramebuffers([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers) { throw new NotImplementedException(); }
@@ -49701,6 +50000,7 @@ namespace OpenTK.Graphics.ES30
             public static unsafe void ExtGetProgramBinarySource(UInt32 program, OpenTK.Graphics.ES30.All shadertype, [OutAttribute] StringBuilder source, [OutAttribute] Int32* length) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetProgram([OutAttribute] Int32[] programs, Int32 maxPrograms, [OutAttribute] Int32[] numPrograms) { throw new NotImplementedException(); }
@@ -49708,14 +50008,22 @@ namespace OpenTK.Graphics.ES30
             /// <summary>[requires: QCOM_extended_get2]</summary>
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetProgram([OutAttribute] Int32[] programs, Int32 maxPrograms, [OutAttribute] out Int32 numPrograms) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetProgram([OutAttribute] out Int32 programs, Int32 maxPrograms, [OutAttribute] out Int32 numPrograms) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetProgram([OutAttribute] Int32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetProgram([OutAttribute] UInt32[] programs, Int32 maxPrograms, [OutAttribute] Int32[] numPrograms) { throw new NotImplementedException(); }
@@ -49723,14 +50031,22 @@ namespace OpenTK.Graphics.ES30
             /// <summary>[requires: QCOM_extended_get2]</summary>
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetProgram([OutAttribute] UInt32[] programs, Int32 maxPrograms, [OutAttribute] out Int32 numPrograms) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetProgram([OutAttribute] out UInt32 programs, Int32 maxPrograms, [OutAttribute] out Int32 numPrograms) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetProgram([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetRenderbuffers([OutAttribute] Int32[] renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32[] numRenderbuffers) { throw new NotImplementedException(); }
@@ -49738,14 +50054,22 @@ namespace OpenTK.Graphics.ES30
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetRenderbuffers([OutAttribute] Int32[] renderbuffers, Int32 maxRenderbuffers, [OutAttribute] out Int32 numRenderbuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetRenderbuffers([OutAttribute] out Int32 renderbuffers, Int32 maxRenderbuffers, [OutAttribute] out Int32 numRenderbuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetRenderbuffers([OutAttribute] Int32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32* numRenderbuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetRenderbuffers([OutAttribute] UInt32[] renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32[] numRenderbuffers) { throw new NotImplementedException(); }
@@ -49753,14 +50077,22 @@ namespace OpenTK.Graphics.ES30
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetRenderbuffers([OutAttribute] UInt32[] renderbuffers, Int32 maxRenderbuffers, [OutAttribute] out Int32 numRenderbuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetRenderbuffers([OutAttribute] out UInt32 renderbuffers, Int32 maxRenderbuffers, [OutAttribute] out Int32 numRenderbuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetRenderbuffers([OutAttribute] UInt32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32* numRenderbuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetShaders([OutAttribute] Int32[] shaders, Int32 maxShaders, [OutAttribute] Int32[] numShaders) { throw new NotImplementedException(); }
@@ -49768,14 +50100,22 @@ namespace OpenTK.Graphics.ES30
             /// <summary>[requires: QCOM_extended_get2]</summary>
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetShaders([OutAttribute] Int32[] shaders, Int32 maxShaders, [OutAttribute] out Int32 numShaders) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetShaders([OutAttribute] out Int32 shaders, Int32 maxShaders, [OutAttribute] out Int32 numShaders) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetShaders([OutAttribute] Int32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetShaders([OutAttribute] UInt32[] shaders, Int32 maxShaders, [OutAttribute] Int32[] numShaders) { throw new NotImplementedException(); }
@@ -49783,9 +50123,16 @@ namespace OpenTK.Graphics.ES30
             /// <summary>[requires: QCOM_extended_get2]</summary>
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetShaders([OutAttribute] UInt32[] shaders, Int32 maxShaders, [OutAttribute] out Int32 numShaders) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetShaders([OutAttribute] out UInt32 shaders, Int32 maxShaders, [OutAttribute] out Int32 numShaders) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetShaders([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders) { throw new NotImplementedException(); }
@@ -49967,856 +50314,856 @@ namespace OpenTK.Graphics.ES30
 
         }
 
-        [Slot(5)]
+        [Slot(3)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBeginPerfMonitorAMD(UInt32 monitor);
-        [Slot(76)]
+        [Slot(28)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDeletePerfMonitorsAMD(Int32 n, UInt32* monitors);
-        [Slot(118)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEndPerfMonitorAMD(UInt32 monitor);
-        [Slot(153)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenPerfMonitorsAMD(Int32 n, [OutAttribute] UInt32* monitors);
-        [Slot(199)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetPerfMonitorCounterDataAMD(UInt32 monitor, System.Int32 pname, Int32 dataSize, [OutAttribute] UInt32* data, [OutAttribute] Int32* bytesWritten);
-        [Slot(200)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetPerfMonitorCounterInfoAMD(UInt32 group, UInt32 counter, System.Int32 pname, [OutAttribute] IntPtr data);
-        [Slot(201)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetPerfMonitorCountersAMD(UInt32 group, [OutAttribute] Int32* numCounters, [OutAttribute] Int32* maxActiveCounters, Int32 counterSize, [OutAttribute] UInt32* counters);
-        [Slot(202)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetPerfMonitorCounterStringAMD(UInt32 group, UInt32 counter, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr counterString);
-        [Slot(203)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetPerfMonitorGroupsAMD([OutAttribute] Int32* numGroups, Int32 groupsSize, [OutAttribute] UInt32* groups);
-        [Slot(204)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetPerfMonitorGroupStringAMD(UInt32 group, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr groupString);
-        [Slot(347)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glSelectPerfMonitorCountersAMD(UInt32 monitor, bool enable, UInt32 group, Int32 numCounters, [OutAttribute] UInt32* counterList);
-        [Slot(30)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlitFramebufferANGLE(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, System.Int32 mask, System.Int32 filter);
-        [Slot(100)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawArraysInstancedANGLE(System.Int32 mode, Int32 first, Int32 count, Int32 primcount);
-        [Slot(109)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawElementsInstancedANGLE(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 primcount);
-        [Slot(234)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTranslatedShaderSourceANGLE(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] IntPtr source);
-        [Slot(334)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleANGLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(434)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertexAttribDivisorANGLE(UInt32 index, UInt32 divisor);
-        [Slot(44)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern System.Int32 glClientWaitSyncAPPLE(IntPtr sync, System.Int32 flags, UInt64 timeout);
-        [Slot(59)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
-        [Slot(85)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDeleteSyncAPPLE(IntPtr sync);
-        [Slot(136)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glFenceSyncAPPLE(System.Int32 condition, System.Int32 flags);
-        [Slot(187)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetInteger64vAPPLE(System.Int32 pname, [OutAttribute] Int64* @params);
-        [Slot(230)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetSyncivAPPLE(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
-        [Slot(262)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsSyncAPPLE(IntPtr sync);
-        [Slot(335)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleAPPLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(339)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glResolveMultisampleFramebufferAPPLE();
-        [Slot(445)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glWaitSyncAPPLE(IntPtr sync, System.Int32 flags, UInt64 timeout);
-        [Slot(2)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glActiveTexture(System.Int32 texture);
-        [Slot(4)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glAttachShader(UInt32 program, UInt32 shader);
-        [Slot(6)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBeginQuery(System.Int32 target, UInt32 id);
-        [Slot(8)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBeginTransformFeedback(System.Int32 primitiveMode);
-        [Slot(9)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindAttribLocation(UInt32 program, UInt32 index, IntPtr name);
-        [Slot(10)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindBuffer(System.Int32 target, UInt32 buffer);
-        [Slot(11)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindBufferBase(System.Int32 target, UInt32 index, UInt32 buffer);
-        [Slot(12)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindBufferRange(System.Int32 target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
-        [Slot(13)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindFramebuffer(System.Int32 target, UInt32 framebuffer);
-        [Slot(15)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindRenderbuffer(System.Int32 target, UInt32 renderbuffer);
-        [Slot(16)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindSampler(UInt32 unit, UInt32 sampler);
-        [Slot(17)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindTexture(System.Int32 target, UInt32 texture);
-        [Slot(18)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindTransformFeedback(System.Int32 target, UInt32 id);
-        [Slot(19)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindVertexArray(UInt32 array);
-        [Slot(22)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendColor(Single red, Single green, Single blue, Single alpha);
-        [Slot(23)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendEquation(System.Int32 mode);
-        [Slot(25)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendEquationSeparate(System.Int32 modeRGB, System.Int32 modeAlpha);
-        [Slot(26)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendFunc(System.Int32 sfactor, System.Int32 dfactor);
-        [Slot(27)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendFuncSeparate(System.Int32 sfactorRGB, System.Int32 dfactorRGB, System.Int32 sfactorAlpha, System.Int32 dfactorAlpha);
-        [Slot(29)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlitFramebuffer(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, System.Int32 mask, System.Int32 filter);
-        [Slot(32)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBufferData(System.Int32 target, IntPtr size, IntPtr data, System.Int32 usage);
-        [Slot(33)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBufferSubData(System.Int32 target, IntPtr offset, IntPtr size, IntPtr data);
-        [Slot(34)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern System.Int32 glCheckFramebufferStatus(System.Int32 target);
-        [Slot(35)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClear(System.Int32 mask);
-        [Slot(36)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearBufferfi(System.Int32 buffer, Int32 drawbuffer, Single depth, Int32 stencil);
-        [Slot(37)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClearBufferfv(System.Int32 buffer, Int32 drawbuffer, Single* value);
-        [Slot(38)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClearBufferiv(System.Int32 buffer, Int32 drawbuffer, Int32* value);
-        [Slot(39)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClearBufferuiv(System.Int32 buffer, Int32 drawbuffer, UInt32* value);
-        [Slot(40)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearColor(Single red, Single green, Single blue, Single alpha);
-        [Slot(41)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearDepthf(Single d);
-        [Slot(42)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearStencil(Int32 s);
-        [Slot(43)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern System.Int32 glClientWaitSync(IntPtr sync, System.Int32 flags, UInt64 timeout);
-        [Slot(45)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColorMask(bool red, bool green, bool blue, bool alpha);
-        [Slot(46)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompileShader(UInt32 shader);
-        [Slot(47)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
         [Slot(48)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexImage3D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
-        [Slot(50)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
-        [Slot(51)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexSubImage3D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, Int32 imageSize, IntPtr data);
-        [Slot(53)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyBufferSubData(System.Int32 readTarget, System.Int32 writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
-        [Slot(55)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
-        [Slot(56)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(57)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTexSubImage3D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(62)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glCreateProgram();
-        [Slot(63)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glCreateShader(System.Int32 type);
-        [Slot(66)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCullFace(System.Int32 mode);
-        [Slot(67)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDebugMessageCallback(DebugProc callback, IntPtr userParam);
-        [Slot(69)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDebugMessageControl(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
+        static extern void glEndPerfMonitorAMD(UInt32 monitor);
         [Slot(71)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDebugMessageInsert(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, IntPtr buf);
-        [Slot(73)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
-        [Slot(75)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteFramebuffers(Int32 n, UInt32* framebuffers);
-        [Slot(77)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDeleteProgram(UInt32 program);
-        [Slot(79)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteQueries(Int32 n, UInt32* ids);
-        [Slot(81)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteRenderbuffers(Int32 n, UInt32* renderbuffers);
-        [Slot(82)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteSamplers(Int32 count, UInt32* samplers);
-        [Slot(83)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDeleteShader(UInt32 shader);
-        [Slot(84)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDeleteSync(IntPtr sync);
-        [Slot(86)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteTextures(Int32 n, UInt32* textures);
-        [Slot(87)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteTransformFeedbacks(Int32 n, UInt32* ids);
-        [Slot(88)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteVertexArrays(Int32 n, UInt32* arrays);
-        [Slot(90)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthFunc(System.Int32 func);
+        static extern unsafe void glGenPerfMonitorsAMD(Int32 n, [OutAttribute] UInt32* monitors);
         [Slot(91)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthMask(bool flag);
+        static extern unsafe void glGetPerfMonitorCounterDataAMD(UInt32 monitor, System.Int32 pname, Int32 dataSize, [OutAttribute] UInt32* data, [OutAttribute] Int32* bytesWritten);
         [Slot(92)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthRangef(Single n, Single f);
+        static extern void glGetPerfMonitorCounterInfoAMD(UInt32 group, UInt32 counter, System.Int32 pname, [OutAttribute] IntPtr data);
         [Slot(93)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDetachShader(UInt32 program, UInt32 shader);
+        static extern unsafe void glGetPerfMonitorCountersAMD(UInt32 group, [OutAttribute] Int32* numCounters, [OutAttribute] Int32* maxActiveCounters, Int32 counterSize, [OutAttribute] UInt32* counters);
         [Slot(94)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisable(System.Int32 cap);
+        static extern unsafe void glGetPerfMonitorCounterStringAMD(UInt32 group, UInt32 counter, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr counterString);
+        [Slot(95)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetPerfMonitorGroupsAMD([OutAttribute] Int32* numGroups, Int32 groupsSize, [OutAttribute] UInt32* groups);
         [Slot(96)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisableVertexAttribArray(UInt32 index);
-        [Slot(98)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
-        [Slot(99)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawArraysInstanced(System.Int32 mode, Int32 first, Int32 count, Int32 instancecount);
-        [Slot(103)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDrawBuffers(Int32 n, System.Int32* bufs);
-        [Slot(107)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
-        [Slot(108)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawElementsInstanced(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 instancecount);
-        [Slot(112)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawRangeElements(System.Int32 mode, UInt32 start, UInt32 end, Int32 count, System.Int32 type, IntPtr indices);
-        [Slot(115)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnable(System.Int32 cap);
-        [Slot(117)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnableVertexAttribArray(UInt32 index);
-        [Slot(119)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEndQuery(System.Int32 target);
-        [Slot(122)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEndTransformFeedback();
-        [Slot(135)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glFenceSync(System.Int32 condition, System.Int32 flags);
-        [Slot(137)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFinish();
-        [Slot(139)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFlush();
-        [Slot(140)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFlushMappedBufferRange(System.Int32 target, IntPtr offset, IntPtr length);
-        [Slot(142)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferRenderbuffer(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
-        [Slot(143)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferTexture2D(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
-        [Slot(147)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferTextureLayer(System.Int32 target, System.Int32 attachment, UInt32 texture, Int32 level, Int32 layer);
-        [Slot(148)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrontFace(System.Int32 mode);
-        [Slot(149)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
-        [Slot(150)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGenerateMipmap(System.Int32 target);
-        [Slot(152)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenFramebuffers(Int32 n, [OutAttribute] UInt32* framebuffers);
-        [Slot(155)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenQueries(Int32 n, [OutAttribute] UInt32* ids);
-        [Slot(157)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenRenderbuffers(Int32 n, [OutAttribute] UInt32* renderbuffers);
-        [Slot(158)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenSamplers(Int32 count, [OutAttribute] UInt32* samplers);
-        [Slot(159)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenTextures(Int32 n, [OutAttribute] UInt32* textures);
-        [Slot(160)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenTransformFeedbacks(Int32 n, [OutAttribute] UInt32* ids);
-        [Slot(161)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenVertexArrays(Int32 n, [OutAttribute] UInt32* arrays);
-        [Slot(163)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] IntPtr name);
-        [Slot(164)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetActiveUniform(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] IntPtr name);
-        [Slot(165)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetActiveUniformBlockiv(UInt32 program, UInt32 uniformBlockIndex, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(166)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetActiveUniformBlockName(UInt32 program, UInt32 uniformBlockIndex, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr uniformBlockName);
-        [Slot(167)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetActiveUniformsiv(UInt32 program, Int32 uniformCount, UInt32* uniformIndices, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(168)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetAttachedShaders(UInt32 program, Int32 maxCount, [OutAttribute] Int32* count, [OutAttribute] UInt32* shaders);
-        [Slot(169)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetAttribLocation(UInt32 program, IntPtr name);
-        [Slot(170)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
-        [Slot(171)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetBufferParameteri64v(System.Int32 target, System.Int32 pname, [OutAttribute] Int64* @params);
-        [Slot(172)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetPerfMonitorGroupStringAMD(UInt32 group, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr groupString);
         [Slot(173)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glSelectPerfMonitorCountersAMD(UInt32 monitor, bool enable, UInt32 group, Int32 numCounters, [OutAttribute] UInt32* counterList);
+        [Slot(11)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlitFramebufferANGLE(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, System.Int32 mask, System.Int32 filter);
+        [Slot(36)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawArraysInstancedANGLE(System.Int32 mode, Int32 first, Int32 count, Int32 primcount);
+        [Slot(42)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawElementsInstancedANGLE(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 primcount);
+        [Slot(110)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTranslatedShaderSourceANGLE(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] IntPtr source);
+        [Slot(167)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRenderbufferStorageMultisampleANGLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(195)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertexAttribDivisorANGLE(UInt32 index, UInt32 divisor);
+        [Slot(13)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern System.Int32 glClientWaitSyncAPPLE(IntPtr sync, System.Int32 flags, UInt64 timeout);
+        [Slot(18)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
+        [Slot(32)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDeleteSyncAPPLE(IntPtr sync);
+        [Slot(64)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern IntPtr glFenceSyncAPPLE(System.Int32 condition, System.Int32 flags);
+        [Slot(82)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetInteger64vAPPLE(System.Int32 pname, [OutAttribute] Int64* @params);
+        [Slot(109)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetSyncivAPPLE(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+        [Slot(115)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glIsSyncAPPLE(IntPtr sync);
+        [Slot(168)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRenderbufferStorageMultisampleAPPLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(172)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glResolveMultisampleFramebufferAPPLE();
+        [Slot(198)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glWaitSyncAPPLE(IntPtr sync, System.Int32 flags, UInt64 timeout);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glActiveTexture(System.Int32 texture);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glAttachShader(UInt32 program, UInt32 shader);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBeginQuery(System.Int32 target, UInt32 id);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBeginTransformFeedback(System.Int32 primitiveMode);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindAttribLocation(UInt32 program, UInt32 index, IntPtr name);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindBuffer(System.Int32 target, UInt32 buffer);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindBufferBase(System.Int32 target, UInt32 index, UInt32 buffer);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindBufferRange(System.Int32 target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindFramebuffer(System.Int32 target, UInt32 framebuffer);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindRenderbuffer(System.Int32 target, UInt32 renderbuffer);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindSampler(UInt32 unit, UInt32 sampler);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindTexture(System.Int32 target, UInt32 texture);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindTransformFeedback(System.Int32 target, UInt32 id);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindVertexArray(UInt32 array);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlendColor(Single red, Single green, Single blue, Single alpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlendEquation(System.Int32 mode);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlendEquationSeparate(System.Int32 modeRGB, System.Int32 modeAlpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlendFunc(System.Int32 sfactor, System.Int32 dfactor);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlendFuncSeparate(System.Int32 sfactorRGB, System.Int32 dfactorRGB, System.Int32 sfactorAlpha, System.Int32 dfactorAlpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlitFramebuffer(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, System.Int32 mask, System.Int32 filter);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBufferData(System.Int32 target, IntPtr size, IntPtr data, System.Int32 usage);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBufferSubData(System.Int32 target, IntPtr offset, IntPtr size, IntPtr data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern System.Int32 glCheckFramebufferStatus(System.Int32 target);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClear(System.Int32 mask);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClearBufferfi(System.Int32 buffer, Int32 drawbuffer, Single depth, Int32 stencil);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glClearBufferfv(System.Int32 buffer, Int32 drawbuffer, Single* value);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glClearBufferiv(System.Int32 buffer, Int32 drawbuffer, Int32* value);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glClearBufferuiv(System.Int32 buffer, Int32 drawbuffer, UInt32* value);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClearColor(Single red, Single green, Single blue, Single alpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClearDepthf(Single d);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClearStencil(Int32 s);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern System.Int32 glClientWaitSync(IntPtr sync, System.Int32 flags, UInt64 timeout);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glColorMask(bool red, bool green, bool blue, bool alpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCompileShader(UInt32 shader);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCompressedTexImage3D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCompressedTexSubImage3D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, Int32 imageSize, IntPtr data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCopyBufferSubData(System.Int32 readTarget, System.Int32 writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCopyTexSubImage3D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern Int32 glCreateProgram();
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern Int32 glCreateShader(System.Int32 type);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCullFace(System.Int32 mode);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDebugMessageCallback(DebugProc callback, IntPtr userParam);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDebugMessageControl(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDebugMessageInsert(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, IntPtr buf);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteFramebuffers(Int32 n, UInt32* framebuffers);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDeleteProgram(UInt32 program);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteQueries(Int32 n, UInt32* ids);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteRenderbuffers(Int32 n, UInt32* renderbuffers);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteSamplers(Int32 count, UInt32* samplers);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDeleteShader(UInt32 shader);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDeleteSync(IntPtr sync);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteTextures(Int32 n, UInt32* textures);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteTransformFeedbacks(Int32 n, UInt32* ids);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteVertexArrays(Int32 n, UInt32* arrays);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDepthFunc(System.Int32 func);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDepthMask(bool flag);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDepthRangef(Single n, Single f);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDetachShader(UInt32 program, UInt32 shader);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDisable(System.Int32 cap);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDisableVertexAttribArray(UInt32 index);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawArraysInstanced(System.Int32 mode, Int32 first, Int32 count, Int32 instancecount);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDrawBuffers(Int32 n, System.Int32* bufs);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawElementsInstanced(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 instancecount);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawRangeElements(System.Int32 mode, UInt32 start, UInt32 end, Int32 count, System.Int32 type, IntPtr indices);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEnable(System.Int32 cap);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEnableVertexAttribArray(UInt32 index);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEndQuery(System.Int32 target);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEndTransformFeedback();
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern IntPtr glFenceSync(System.Int32 condition, System.Int32 flags);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFinish();
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFlush();
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFlushMappedBufferRange(System.Int32 target, IntPtr offset, IntPtr length);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFramebufferRenderbuffer(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFramebufferTexture2D(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFramebufferTextureLayer(System.Int32 target, System.Int32 attachment, UInt32 texture, Int32 level, Int32 layer);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFrontFace(System.Int32 mode);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glGenerateMipmap(System.Int32 target);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenFramebuffers(Int32 n, [OutAttribute] UInt32* framebuffers);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenQueries(Int32 n, [OutAttribute] UInt32* ids);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenRenderbuffers(Int32 n, [OutAttribute] UInt32* renderbuffers);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenSamplers(Int32 count, [OutAttribute] UInt32* samplers);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenTextures(Int32 n, [OutAttribute] UInt32* textures);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenTransformFeedbacks(Int32 n, [OutAttribute] UInt32* ids);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenVertexArrays(Int32 n, [OutAttribute] UInt32* arrays);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] IntPtr name);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetActiveUniform(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] IntPtr name);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetActiveUniformBlockiv(UInt32 program, UInt32 uniformBlockIndex, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetActiveUniformBlockName(UInt32 program, UInt32 uniformBlockIndex, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr uniformBlockName);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetActiveUniformsiv(UInt32 program, Int32 uniformCount, UInt32* uniformIndices, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetAttachedShaders(UInt32 program, Int32 maxCount, [OutAttribute] Int32* count, [OutAttribute] UInt32* shaders);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern Int32 glGetAttribLocation(UInt32 program, IntPtr name);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetBufferParameteri64v(System.Int32 target, System.Int32 pname, [OutAttribute] Int64* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glGetBufferPointerv(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
-        [Slot(175)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe Int32 glGetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] System.Int32* sources, [OutAttribute] System.Int32* types, [OutAttribute] UInt32* ids, [OutAttribute] System.Int32* severities, [OutAttribute] Int32* lengths, [OutAttribute] IntPtr messageLog);
-        [Slot(179)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern System.Int32 glGetError();
-        [Slot(181)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
-        [Slot(182)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern Int32 glGetFragDataLocation(UInt32 program, IntPtr name);
-        [Slot(183)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetFramebufferAttachmentParameteriv(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(185)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetInteger64i_v(System.Int32 target, UInt32 index, [OutAttribute] Int64* data);
-        [Slot(186)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetInteger64v(System.Int32 pname, [OutAttribute] Int64* data);
-        [Slot(188)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetIntegeri_v(System.Int32 target, UInt32 index, [OutAttribute] Int32* data);
-        [Slot(190)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute] Int32* data);
-        [Slot(191)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetInternalformativ(System.Int32 target, System.Int32 internalformat, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* @params);
-        [Slot(194)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetObjectLabel(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
-        [Slot(197)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
-        [Slot(205)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
-        [Slot(207)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetProgramBinary(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] System.Int32* binaryFormat, [OutAttribute] IntPtr binary);
-        [Slot(209)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetProgramInfoLog(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr infoLog);
-        [Slot(210)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetProgramiv(UInt32 program, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(213)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetQueryiv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(218)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetQueryObjectuiv(UInt32 id, System.Int32 pname, [OutAttribute] UInt32* @params);
-        [Slot(220)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetRenderbufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(221)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetSamplerParameterfv(UInt32 sampler, System.Int32 pname, [OutAttribute] Single* @params);
-        [Slot(222)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetSamplerParameteriv(UInt32 sampler, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(223)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetShaderInfoLog(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr infoLog);
-        [Slot(224)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetShaderiv(UInt32 shader, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(225)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetShaderPrecisionFormat(System.Int32 shadertype, System.Int32 precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
-        [Slot(226)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetShaderSource(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr source);
-        [Slot(227)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern IntPtr glGetString(System.Int32 name);
-        [Slot(228)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern IntPtr glGetStringi(System.Int32 name, UInt32 index);
-        [Slot(229)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetSynciv(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
-        [Slot(231)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
-        [Slot(232)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(233)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetTransformFeedbackVarying(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] IntPtr name);
-        [Slot(235)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern Int32 glGetUniformBlockIndex(UInt32 program, IntPtr uniformBlockName);
-        [Slot(236)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetUniformfv(UInt32 program, Int32 location, [OutAttribute] Single* @params);
-        [Slot(237)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetUniformIndices(UInt32 program, Int32 uniformCount, IntPtr uniformNames, [OutAttribute] UInt32* uniformIndices);
-        [Slot(238)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetUniformiv(UInt32 program, Int32 location, [OutAttribute] Int32* @params);
-        [Slot(239)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern Int32 glGetUniformLocation(UInt32 program, IntPtr name);
-        [Slot(240)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetUniformuiv(UInt32 program, Int32 location, [OutAttribute] UInt32* @params);
-        [Slot(241)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetVertexAttribfv(UInt32 index, System.Int32 pname, [OutAttribute] Single* @params);
-        [Slot(242)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetVertexAttribIiv(UInt32 index, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(243)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetVertexAttribIuiv(UInt32 index, System.Int32 pname, [OutAttribute] UInt32* @params);
-        [Slot(244)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetVertexAttribiv(UInt32 index, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(245)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glGetVertexAttribPointerv(UInt32 index, System.Int32 pname, [OutAttribute] IntPtr pointer);
-        [Slot(246)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glHint(System.Int32 target, System.Int32 mode);
-        [Slot(248)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glInvalidateFramebuffer(System.Int32 target, Int32 numAttachments, System.Int32* attachments);
-        [Slot(249)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glInvalidateSubFramebuffer(System.Int32 target, Int32 numAttachments, System.Int32* attachments, Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(250)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsBuffer(UInt32 buffer);
-        [Slot(251)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsEnabled(System.Int32 cap);
-        [Slot(253)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsFramebuffer(UInt32 framebuffer);
-        [Slot(254)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsProgram(UInt32 program);
-        [Slot(256)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsQuery(UInt32 id);
-        [Slot(258)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsRenderbuffer(UInt32 renderbuffer);
-        [Slot(259)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsSampler(UInt32 sampler);
-        [Slot(260)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsShader(UInt32 shader);
-        [Slot(261)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsSync(IntPtr sync);
-        [Slot(263)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsTexture(UInt32 texture);
-        [Slot(264)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsTransformFeedback(UInt32 id);
-        [Slot(265)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsVertexArray(UInt32 array);
-        [Slot(268)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLineWidth(Single width);
-        [Slot(269)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLinkProgram(UInt32 program);
-        [Slot(271)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern IntPtr glMapBufferRange(System.Int32 target, IntPtr offset, IntPtr length, System.Int32 access);
-        [Slot(275)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glObjectLabel(System.Int32 identifier, UInt32 name, Int32 length, IntPtr label);
-        [Slot(277)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glObjectPtrLabel(IntPtr ptr, Int32 length, IntPtr label);
-        [Slot(279)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPauseTransformFeedback();
-        [Slot(280)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPixelStorei(System.Int32 pname, Int32 param);
-        [Slot(281)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPolygonOffset(Single factor, Single units);
-        [Slot(282)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPopDebugGroup();
-        [Slot(285)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glProgramBinary(UInt32 program, System.Int32 binaryFormat, IntPtr binary, Int32 length);
-        [Slot(287)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glProgramParameteri(UInt32 program, System.Int32 pname, Int32 value);
-        [Slot(322)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPushDebugGroup(System.Int32 source, UInt32 id, Int32 length, IntPtr message);
-        [Slot(326)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glReadBuffer(System.Int32 mode);
-        [Slot(330)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
-        [Slot(331)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glReleaseShaderCompiler();
-        [Slot(332)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glRenderbufferStorage(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(333)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glRenderbufferStorageMultisample(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(340)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glResumeTransformFeedback();
-        [Slot(341)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glSampleCoverage(Single value, bool invert);
-        [Slot(342)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glSamplerParameterf(UInt32 sampler, System.Int32 pname, Single param);
-        [Slot(343)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glSamplerParameterfv(UInt32 sampler, System.Int32 pname, Single* param);
-        [Slot(344)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glSamplerParameteri(UInt32 sampler, System.Int32 pname, Int32 param);
-        [Slot(345)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glSamplerParameteriv(UInt32 sampler, System.Int32 pname, Int32* param);
-        [Slot(346)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(349)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glShaderBinary(Int32 count, UInt32* shaders, System.Int32 binaryformat, IntPtr binary, Int32 length);
-        [Slot(350)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glShaderSource(UInt32 shader, Int32 count, IntPtr @string, Int32* length);
-        [Slot(352)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
-        [Slot(353)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStencilFuncSeparate(System.Int32 face, System.Int32 func, Int32 @ref, UInt32 mask);
-        [Slot(354)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStencilMask(UInt32 mask);
-        [Slot(355)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStencilMaskSeparate(System.Int32 face, UInt32 mask);
-        [Slot(356)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
-        [Slot(357)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStencilOpSeparate(System.Int32 face, System.Int32 sfail, System.Int32 dpfail, System.Int32 dppass);
-        [Slot(359)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
-        [Slot(360)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexImage3D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
-        [Slot(362)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
-        [Slot(363)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
-        [Slot(364)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
-        [Slot(365)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
-        [Slot(367)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexStorage2D(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(369)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexStorage3D(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
-        [Slot(371)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
-        [Slot(372)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexSubImage3D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, IntPtr pixels);
-        [Slot(377)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTransformFeedbackVaryings(UInt32 program, Int32 count, IntPtr varyings, System.Int32 bufferMode);
-        [Slot(378)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform1f(Int32 location, Single v0);
-        [Slot(379)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform1fv(Int32 location, Int32 count, Single* value);
-        [Slot(380)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform1i(Int32 location, Int32 v0);
-        [Slot(381)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform1iv(Int32 location, Int32 count, Int32* value);
-        [Slot(382)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform1ui(Int32 location, UInt32 v0);
-        [Slot(383)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform1uiv(Int32 location, Int32 count, UInt32* value);
-        [Slot(384)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform2f(Int32 location, Single v0, Single v1);
-        [Slot(385)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform2fv(Int32 location, Int32 count, Single* value);
-        [Slot(386)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform2i(Int32 location, Int32 v0, Int32 v1);
-        [Slot(387)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform2iv(Int32 location, Int32 count, Int32* value);
-        [Slot(388)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform2ui(Int32 location, UInt32 v0, UInt32 v1);
-        [Slot(389)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform2uiv(Int32 location, Int32 count, UInt32* value);
-        [Slot(390)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform3f(Int32 location, Single v0, Single v1, Single v2);
-        [Slot(391)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform3fv(Int32 location, Int32 count, Single* value);
-        [Slot(392)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform3i(Int32 location, Int32 v0, Int32 v1, Int32 v2);
-        [Slot(393)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform3iv(Int32 location, Int32 count, Int32* value);
-        [Slot(394)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform3ui(Int32 location, UInt32 v0, UInt32 v1, UInt32 v2);
-        [Slot(395)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform3uiv(Int32 location, Int32 count, UInt32* value);
-        [Slot(396)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform4f(Int32 location, Single v0, Single v1, Single v2, Single v3);
-        [Slot(397)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform4fv(Int32 location, Int32 count, Single* value);
-        [Slot(398)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform4i(Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
-        [Slot(399)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform4iv(Int32 location, Int32 count, Int32* value);
-        [Slot(400)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform4ui(Int32 location, UInt32 v0, UInt32 v1, UInt32 v2, UInt32 v3);
-        [Slot(401)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniform4uiv(Int32 location, Int32 count, UInt32* value);
-        [Slot(402)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniformBlockBinding(UInt32 program, UInt32 uniformBlockIndex, UInt32 uniformBlockBinding);
-        [Slot(403)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix2fv(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(404)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix2x3fv(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(406)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix2x4fv(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(408)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix3fv(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(409)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix3x2fv(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(411)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix3x4fv(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(413)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix4fv(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(414)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix4x2fv(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(416)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix4x3fv(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(418)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glUnmapBuffer(System.Int32 target);
-        [Slot(420)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUseProgram(UInt32 program);
-        [Slot(423)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glValidateProgram(UInt32 program);
-        [Slot(425)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttrib1f(UInt32 index, Single x);
-        [Slot(426)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glVertexAttrib1fv(UInt32 index, Single* v);
-        [Slot(427)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttrib2f(UInt32 index, Single x, Single y);
-        [Slot(428)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glVertexAttrib2fv(UInt32 index, Single* v);
-        [Slot(429)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttrib3f(UInt32 index, Single x, Single y, Single z);
-        [Slot(430)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glVertexAttrib3fv(UInt32 index, Single* v);
-        [Slot(431)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttrib4f(UInt32 index, Single x, Single y, Single z, Single w);
-        [Slot(432)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glVertexAttrib4fv(UInt32 index, Single* v);
-        [Slot(433)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttribDivisor(UInt32 index, UInt32 divisor);
-        [Slot(437)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttribI4i(UInt32 index, Int32 x, Int32 y, Int32 z, Int32 w);
-        [Slot(438)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glVertexAttribI4iv(UInt32 index, Int32* v);
-        [Slot(439)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttribI4ui(UInt32 index, UInt32 x, UInt32 y, UInt32 z, UInt32 w);
-        [Slot(440)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glVertexAttribI4uiv(UInt32 index, UInt32* v);
-        [Slot(441)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttribIPointer(UInt32 index, Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
-        [Slot(442)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttribPointer(UInt32 index, Int32 size, System.Int32 type, bool normalized, Int32 stride, IntPtr pointer);
-        [Slot(443)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glViewport(Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(444)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glWaitSync(IntPtr sync, System.Int32 flags, UInt64 timeout);
         [Slot(0)]
@@ -50825,484 +51172,514 @@ namespace OpenTK.Graphics.ES30
         [Slot(1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glActiveShaderProgramEXT(UInt32 pipeline, UInt32 program);
-        [Slot(7)]
+        [Slot(5)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBeginQueryEXT(System.Int32 target, UInt32 id);
-        [Slot(14)]
+        [Slot(6)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBindProgramPipelineEXT(UInt32 pipeline);
-        [Slot(24)]
+        [Slot(9)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBlendEquationEXT(System.Int32 mode);
-        [Slot(64)]
+        [Slot(22)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern Int32 glCreateShaderProgramEXT(System.Int32 type, IntPtr @string);
-        [Slot(65)]
+        [Slot(23)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern Int32 glCreateShaderProgramvEXT(System.Int32 type, Int32 count, IntPtr strings);
-        [Slot(78)]
+        [Slot(30)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDeleteProgramPipelinesEXT(Int32 n, UInt32* pipelines);
-        [Slot(80)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteQueriesEXT(Int32 n, UInt32* ids);
-        [Slot(97)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDiscardFramebufferEXT(System.Int32 target, Int32 numAttachments, System.Int32* attachments);
-        [Slot(101)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawArraysInstancedEXT(System.Int32 mode, Int32 start, Int32 count, Int32 primcount);
-        [Slot(104)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDrawBuffersEXT(Int32 n, System.Int32* bufs);
-        [Slot(105)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDrawBuffersIndexedEXT(Int32 n, System.Int32* location, Int32* indices);
-        [Slot(110)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawElementsInstancedEXT(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 primcount);
-        [Slot(120)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEndQueryEXT(System.Int32 target);
-        [Slot(141)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFlushMappedBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length);
-        [Slot(144)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferTexture2DMultisampleEXT(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
-        [Slot(154)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenProgramPipelinesEXT(Int32 n, [OutAttribute] UInt32* pipelines);
-        [Slot(156)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenQueriesEXT(Int32 n, [OutAttribute] UInt32* ids);
-        [Slot(184)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern System.Int32 glGetGraphicsResetStatusEXT();
-        [Slot(189)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetIntegeri_vEXT(System.Int32 target, UInt32 index, [OutAttribute] Int32* data);
-        [Slot(192)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
-        [Slot(193)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
-        [Slot(195)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetObjectLabelEXT(System.Int32 type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
-        [Slot(211)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetProgramPipelineInfoLogEXT(UInt32 pipeline, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr infoLog);
-        [Slot(212)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetProgramPipelineivEXT(UInt32 pipeline, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(214)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetQueryivEXT(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(215)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetQueryObjecti64vEXT(UInt32 id, System.Int32 pname, [OutAttribute] Int64* @params);
-        [Slot(216)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetQueryObjectivEXT(UInt32 id, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(217)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetQueryObjectui64vEXT(UInt32 id, System.Int32 pname, [OutAttribute] UInt64* @params);
-        [Slot(219)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetQueryObjectuivEXT(UInt32 id, System.Int32 pname, [OutAttribute] UInt32* @params);
-        [Slot(247)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glInsertEventMarkerEXT(Int32 length, IntPtr marker);
-        [Slot(255)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsProgramPipelineEXT(UInt32 pipeline);
-        [Slot(257)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsQueryEXT(UInt32 id);
-        [Slot(267)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLabelObjectEXT(System.Int32 type, UInt32 @object, Int32 length, IntPtr label);
-        [Slot(272)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
-        [Slot(273)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, Int32* first, Int32* count, Int32 primcount);
-        [Slot(274)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 primcount);
-        [Slot(284)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPopGroupMarkerEXT();
-        [Slot(288)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramParameteriEXT(UInt32 program, System.Int32 pname, Int32 value);
-        [Slot(289)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform1fEXT(UInt32 program, Int32 location, Single v0);
-        [Slot(290)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform1fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
-        [Slot(291)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform1iEXT(UInt32 program, Int32 location, Int32 v0);
-        [Slot(292)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform1ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
-        [Slot(293)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform1uiEXT(UInt32 program, Int32 location, UInt32 v0);
-        [Slot(294)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform1uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
-        [Slot(295)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform2fEXT(UInt32 program, Int32 location, Single v0, Single v1);
-        [Slot(296)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform2fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
-        [Slot(297)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform2iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1);
-        [Slot(298)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform2ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
-        [Slot(299)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform2uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1);
-        [Slot(300)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform2uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
-        [Slot(301)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform3fEXT(UInt32 program, Int32 location, Single v0, Single v1, Single v2);
-        [Slot(302)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform3fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
-        [Slot(303)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform3iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2);
-        [Slot(304)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform3ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
-        [Slot(305)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform3uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2);
-        [Slot(306)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform3uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
-        [Slot(307)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform4fEXT(UInt32 program, Int32 location, Single v0, Single v1, Single v2, Single v3);
-        [Slot(308)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform4fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
-        [Slot(309)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform4iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
-        [Slot(310)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform4ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
-        [Slot(311)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform4uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2, UInt32 v3);
-        [Slot(312)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform4uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
-        [Slot(313)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(314)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix2x3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(315)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix2x4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(316)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(317)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix3x2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(318)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix3x4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(319)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(320)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix4x2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(321)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix4x3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(324)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPushGroupMarkerEXT(Int32 length, IntPtr marker);
-        [Slot(325)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glQueryCounterEXT(UInt32 id, System.Int32 target);
-        [Slot(327)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glReadBufferIndexedEXT(System.Int32 src, Int32 index);
-        [Slot(329)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
-        [Slot(336)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleEXT(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(366)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
-        [Slot(368)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(370)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
-        [Slot(374)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
-        [Slot(375)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(376)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage3DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
-        [Slot(421)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUseProgramStagesEXT(UInt32 pipeline, UInt32 stages, UInt32 program);
-        [Slot(422)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUseShaderProgramEXT(System.Int32 type, UInt32 program);
-        [Slot(424)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glValidateProgramPipelineEXT(UInt32 pipeline);
-        [Slot(435)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertexAttribDivisorEXT(UInt32 index, UInt32 divisor);
-        [Slot(145)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
-        [Slot(337)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(68)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDebugMessageCallbackKHR(DebugProcKhr callback, IntPtr userParam);
-        [Slot(70)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDebugMessageControlKHR(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
-        [Slot(72)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDebugMessageInsertKHR(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, IntPtr buf);
-        [Slot(176)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe Int32 glGetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] System.Int32* sources, [OutAttribute] System.Int32* types, [OutAttribute] UInt32* ids, [OutAttribute] System.Int32* severities, [OutAttribute] Int32* lengths, [OutAttribute] IntPtr messageLog);
-        [Slot(196)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
-        [Slot(198)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetObjectPtrLabelKHR(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
-        [Slot(206)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetPointervKHR(System.Int32 pname, [OutAttribute] IntPtr @params);
-        [Slot(276)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 length, IntPtr label);
-        [Slot(278)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glObjectPtrLabelKHR(IntPtr ptr, Int32 length, IntPtr label);
-        [Slot(283)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPopDebugGroupKHR();
-        [Slot(323)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPushDebugGroupKHR(System.Int32 source, UInt32 id, Int32 length, IntPtr message);
-        [Slot(21)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendBarrierNV();
-        [Slot(28)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendParameteriNV(System.Int32 pname, Int32 value);
         [Slot(31)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlitFramebufferNV(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, System.Int32 mask, System.Int32 filter);
-        [Slot(54)]
+        static extern unsafe void glDeleteQueriesEXT(Int32 n, UInt32* ids);
+        [Slot(35)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyBufferSubDataNV(System.Int32 readTarget, System.Int32 writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
-        [Slot(60)]
+        static extern unsafe void glDiscardFramebufferEXT(System.Int32 target, Int32 numAttachments, System.Int32* attachments);
+        [Slot(37)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCoverageMaskNV(bool mask);
-        [Slot(61)]
+        static extern void glDrawArraysInstancedEXT(System.Int32 mode, Int32 start, Int32 count, Int32 primcount);
+        [Slot(39)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCoverageOperationNV(System.Int32 operation);
-        [Slot(74)]
+        static extern unsafe void glDrawBuffersEXT(Int32 n, System.Int32* bufs);
+        [Slot(40)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteFencesNV(Int32 n, UInt32* fences);
+        static extern unsafe void glDrawBuffersIndexedEXT(Int32 n, System.Int32* location, Int32* indices);
+        [Slot(43)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawElementsInstancedEXT(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 primcount);
+        [Slot(50)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEndQueryEXT(System.Int32 target);
+        [Slot(66)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFlushMappedBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length);
+        [Slot(67)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFramebufferTexture2DMultisampleEXT(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
+        [Slot(72)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenProgramPipelinesEXT(Int32 n, [OutAttribute] UInt32* pipelines);
+        [Slot(73)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenQueriesEXT(Int32 n, [OutAttribute] UInt32* ids);
+        [Slot(81)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern System.Int32 glGetGraphicsResetStatusEXT();
+        [Slot(83)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetIntegeri_vEXT(System.Int32 target, UInt32 index, [OutAttribute] Int32* data);
+        [Slot(85)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
+        [Slot(86)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
+        [Slot(87)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetObjectLabelEXT(System.Int32 type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
         [Slot(102)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawArraysInstancedNV(System.Int32 mode, Int32 first, Int32 count, Int32 primcount);
+        static extern unsafe void glGetProgramPipelineInfoLogEXT(UInt32 pipeline, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr infoLog);
+        [Slot(103)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetProgramPipelineivEXT(UInt32 pipeline, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(104)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetQueryivEXT(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(105)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetQueryObjecti64vEXT(UInt32 id, System.Int32 pname, [OutAttribute] Int64* @params);
         [Slot(106)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDrawBuffersNV(Int32 n, System.Int32* bufs);
+        static extern unsafe void glGetQueryObjectivEXT(UInt32 id, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(107)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetQueryObjectui64vEXT(UInt32 id, System.Int32 pname, [OutAttribute] UInt64* @params);
+        [Slot(108)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetQueryObjectuivEXT(UInt32 id, System.Int32 pname, [OutAttribute] UInt32* @params);
         [Slot(111)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawElementsInstancedNV(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 primcount);
-        [Slot(138)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFinishFenceNV(UInt32 fence);
-        [Slot(151)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenFencesNV(Int32 n, [OutAttribute] UInt32* fences);
-        [Slot(180)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFenceivNV(UInt32 fence, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(252)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsFenceNV(UInt32 fence);
-        [Slot(328)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glReadBufferNV(System.Int32 mode);
-        [Slot(338)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleNV(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(348)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSetFenceNV(UInt32 fence, System.Int32 condition);
-        [Slot(358)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glTestFenceNV(UInt32 fence);
-        [Slot(405)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniformMatrix2x3fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(407)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniformMatrix2x4fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(410)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniformMatrix3x2fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(412)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniformMatrix3x4fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(415)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniformMatrix4x2fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(417)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniformMatrix4x3fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(436)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertexAttribDivisorNV(UInt32 index, UInt32 divisor);
-        [Slot(20)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindVertexArrayOES(UInt32 array);
-        [Slot(49)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexImage3DOES(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
-        [Slot(52)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexSubImage3DOES(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, Int32 imageSize, IntPtr data);
-        [Slot(58)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTexSubImage3DOES(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(89)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteVertexArraysOES(Int32 n, UInt32* arrays);
+        static extern void glInsertEventMarkerEXT(Int32 length, IntPtr marker);
         [Slot(113)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEGLImageTargetRenderbufferStorageOES(System.Int32 target, IntPtr image);
+        static extern bool glIsProgramPipelineEXT(UInt32 pipeline);
         [Slot(114)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEGLImageTargetTexture2DOES(System.Int32 target, IntPtr image);
-        [Slot(146)]
+        static extern bool glIsQueryEXT(UInt32 id);
+        [Slot(117)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferTexture3DOES(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 zoffset);
-        [Slot(162)]
+        static extern void glLabelObjectEXT(System.Int32 type, UInt32 @object, Int32 length, IntPtr label);
+        [Slot(119)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
-        [Slot(174)]
+        static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
+        [Slot(120)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
-        [Slot(208)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetProgramBinaryOES(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] System.Int32* binaryFormat, [OutAttribute] IntPtr binary);
-        [Slot(266)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsVertexArrayOES(UInt32 array);
-        [Slot(270)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
-        [Slot(286)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramBinaryOES(UInt32 program, System.Int32 binaryFormat, IntPtr binary, Int32 length);
-        [Slot(361)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexImage3DOES(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
-        [Slot(373)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexSubImage3DOES(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, IntPtr pixels);
-        [Slot(419)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glUnmapBufferOES(System.Int32 target);
-        [Slot(3)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glAlphaFuncQCOM(System.Int32 func, Single @ref);
-        [Slot(95)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisableDriverControlQCOM(UInt32 driverControl);
-        [Slot(116)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnableDriverControlQCOM(UInt32 driverControl);
+        static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, Int32* first, Int32* count, Int32 primcount);
         [Slot(121)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEndTilingQCOM(UInt32 preserveMask);
-        [Slot(123)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glExtGetBufferPointervQCOM(System.Int32 target, [OutAttribute] IntPtr @params);
-        [Slot(124)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetBuffersQCOM([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers);
+        static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 primcount);
         [Slot(125)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetFramebuffersQCOM([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers);
-        [Slot(126)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, [OutAttribute] IntPtr source, [OutAttribute] Int32* length);
+        static extern void glPopGroupMarkerEXT();
         [Slot(127)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetProgramsQCOM([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms);
+        static extern void glProgramParameteriEXT(UInt32 program, System.Int32 pname, Int32 value);
         [Slot(128)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetRenderbuffersQCOM([OutAttribute] UInt32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32* numRenderbuffers);
+        static extern void glProgramUniform1fEXT(UInt32 program, Int32 location, Single v0);
         [Slot(129)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetShadersQCOM([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders);
+        static extern unsafe void glProgramUniform1fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
         [Slot(130)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
+        static extern void glProgramUniform1iEXT(UInt32 program, Int32 location, Int32 v0);
         [Slot(131)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr texels);
+        static extern unsafe void glProgramUniform1ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
         [Slot(132)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
+        static extern void glProgramUniform1uiEXT(UInt32 program, Int32 location, UInt32 v0);
         [Slot(133)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glExtIsProgramBinaryQCOM(UInt32 program);
+        static extern unsafe void glProgramUniform1uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
         [Slot(134)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
-        [Slot(177)]
+        static extern void glProgramUniform2fEXT(UInt32 program, Int32 location, Single v0, Single v1);
+        [Slot(135)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
+        static extern unsafe void glProgramUniform2fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
+        [Slot(136)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glProgramUniform2iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1);
+        [Slot(137)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniform2ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
+        [Slot(138)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glProgramUniform2uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1);
+        [Slot(139)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniform2uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
+        [Slot(140)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glProgramUniform3fEXT(UInt32 program, Int32 location, Single v0, Single v1, Single v2);
+        [Slot(141)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniform3fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
+        [Slot(142)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glProgramUniform3iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2);
+        [Slot(143)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniform3ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
+        [Slot(144)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glProgramUniform3uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2);
+        [Slot(145)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniform3uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
+        [Slot(146)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glProgramUniform4fEXT(UInt32 program, Int32 location, Single v0, Single v1, Single v2, Single v3);
+        [Slot(147)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniform4fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
+        [Slot(148)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glProgramUniform4iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
+        [Slot(149)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniform4ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
+        [Slot(150)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glProgramUniform4uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2, UInt32 v3);
+        [Slot(151)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniform4uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
+        [Slot(152)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(153)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix2x3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(154)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix2x4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(155)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(156)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix3x2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(157)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix3x4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(158)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(159)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix4x2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(160)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix4x3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(162)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPushGroupMarkerEXT(Int32 length, IntPtr marker);
+        [Slot(163)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glQueryCounterEXT(UInt32 id, System.Int32 target);
+        [Slot(164)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glReadBufferIndexedEXT(System.Int32 src, Int32 index);
+        [Slot(166)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
+        [Slot(169)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRenderbufferStorageMultisampleEXT(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(178)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
+        [Slot(179)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(180)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
+        [Slot(182)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
+        [Slot(183)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(184)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTextureStorage3DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
+        [Slot(192)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glUseProgramStagesEXT(UInt32 pipeline, UInt32 stages, UInt32 program);
+        [Slot(193)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glUseShaderProgramEXT(System.Int32 type, UInt32 program);
+        [Slot(194)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glValidateProgramPipelineEXT(UInt32 pipeline);
+        [Slot(196)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertexAttribDivisorEXT(UInt32 index, UInt32 divisor);
+        [Slot(68)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
+        [Slot(170)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(4)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBeginPerfQueryINTEL(UInt32 queryHandle);
+        [Slot(21)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glCreatePerfQueryINTEL(UInt32 queryId, [OutAttribute] UInt32* queryHandle);
+        [Slot(29)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDeletePerfQueryINTEL(UInt32 queryHandle);
+        [Slot(49)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEndPerfQueryINTEL(UInt32 queryHandle);
+        [Slot(80)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetFirstPerfQueryIdINTEL([OutAttribute] UInt32* queryId);
+        [Slot(84)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetNextPerfQueryIdINTEL(UInt32 queryId, [OutAttribute] UInt32* nextQueryId);
+        [Slot(90)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetPerfCounterInfoINTEL(UInt32 queryId, UInt32 counterId, UInt32 counterNameLength, [OutAttribute] IntPtr counterName, UInt32 counterDescLength, [OutAttribute] IntPtr counterDesc, [OutAttribute] UInt32* counterOffset, [OutAttribute] UInt32* counterDataSize, [OutAttribute] UInt32* counterTypeEnum, [OutAttribute] UInt32* counterDataTypeEnum, [OutAttribute] UInt64* rawCounterMaxValue);
+        [Slot(97)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetPerfQueryDataINTEL(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [OutAttribute] IntPtr data, [OutAttribute] UInt32* bytesWritten);
+        [Slot(98)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetPerfQueryIdByNameINTEL([OutAttribute] IntPtr queryName, [OutAttribute] UInt32* queryId);
+        [Slot(99)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetPerfQueryInfoINTEL(UInt32 queryId, UInt32 queryNameLength, [OutAttribute] IntPtr queryName, [OutAttribute] UInt32* dataSize, [OutAttribute] UInt32* noCounters, [OutAttribute] UInt32* noInstances, [OutAttribute] UInt32* capsMask);
+        [Slot(24)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDebugMessageCallbackKHR(DebugProcKhr callback, IntPtr userParam);
+        [Slot(25)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDebugMessageControlKHR(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
+        [Slot(26)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDebugMessageInsertKHR(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, IntPtr buf);
+        [Slot(76)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe Int32 glGetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] System.Int32* sources, [OutAttribute] System.Int32* types, [OutAttribute] UInt32* ids, [OutAttribute] System.Int32* severities, [OutAttribute] Int32* lengths, [OutAttribute] IntPtr messageLog);
+        [Slot(88)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
+        [Slot(89)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetObjectPtrLabelKHR(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
+        [Slot(100)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glGetPointervKHR(System.Int32 pname, [OutAttribute] IntPtr @params);
+        [Slot(122)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 length, IntPtr label);
+        [Slot(123)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glObjectPtrLabelKHR(IntPtr ptr, Int32 length, IntPtr label);
+        [Slot(124)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPopDebugGroupKHR();
+        [Slot(161)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPushDebugGroupKHR(System.Int32 source, UInt32 id, Int32 length, IntPtr message);
+        [Slot(8)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlendBarrierNV();
+        [Slot(10)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlendParameteriNV(System.Int32 pname, Int32 value);
+        [Slot(12)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlitFramebufferNV(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, System.Int32 mask, System.Int32 filter);
+        [Slot(16)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCopyBufferSubDataNV(System.Int32 readTarget, System.Int32 writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
+        [Slot(19)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCoverageMaskNV(bool mask);
+        [Slot(20)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCoverageOperationNV(System.Int32 operation);
+        [Slot(27)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteFencesNV(Int32 n, UInt32* fences);
+        [Slot(38)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawArraysInstancedNV(System.Int32 mode, Int32 first, Int32 count, Int32 primcount);
+        [Slot(41)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDrawBuffersNV(Int32 n, System.Int32* bufs);
+        [Slot(44)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawElementsInstancedNV(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 primcount);
+        [Slot(65)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFinishFenceNV(UInt32 fence);
+        [Slot(70)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenFencesNV(Int32 n, [OutAttribute] UInt32* fences);
+        [Slot(79)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetFenceivNV(UInt32 fence, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(112)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glIsFenceNV(UInt32 fence);
+        [Slot(165)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glReadBufferNV(System.Int32 mode);
+        [Slot(171)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRenderbufferStorageMultisampleNV(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(174)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glSetFenceNV(UInt32 fence, System.Int32 condition);
+        [Slot(176)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glTestFenceNV(UInt32 fence);
+        [Slot(185)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glUniformMatrix2x3fvNV(Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(186)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glUniformMatrix2x4fvNV(Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(187)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glUniformMatrix3x2fvNV(Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(188)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glUniformMatrix3x4fvNV(Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(189)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glUniformMatrix4x2fvNV(Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(190)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glUniformMatrix4x3fvNV(Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(197)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertexAttribDivisorNV(UInt32 index, UInt32 divisor);
+        [Slot(7)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindVertexArrayOES(UInt32 array);
+        [Slot(14)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCompressedTexImage3DOES(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
+        [Slot(15)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCompressedTexSubImage3DOES(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, Int32 imageSize, IntPtr data);
+        [Slot(17)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCopyTexSubImage3DOES(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        [Slot(33)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteVertexArraysOES(Int32 n, UInt32* arrays);
+        [Slot(45)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEGLImageTargetRenderbufferStorageOES(System.Int32 target, IntPtr image);
+        [Slot(46)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEGLImageTargetTexture2DOES(System.Int32 target, IntPtr image);
+        [Slot(69)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFramebufferTexture3DOES(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 zoffset);
+        [Slot(74)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
+        [Slot(75)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
+        [Slot(101)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetProgramBinaryOES(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] System.Int32* binaryFormat, [OutAttribute] IntPtr binary);
+        [Slot(116)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glIsVertexArrayOES(UInt32 array);
+        [Slot(118)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
+        [Slot(126)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glProgramBinaryOES(UInt32 program, System.Int32 binaryFormat, IntPtr binary, Int32 length);
+        [Slot(177)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexImage3DOES(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
+        [Slot(181)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexSubImage3DOES(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, IntPtr pixels);
+        [Slot(191)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glUnmapBufferOES(System.Int32 target);
+        [Slot(2)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glAlphaFuncQCOM(System.Int32 func, Single @ref);
+        [Slot(34)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDisableDriverControlQCOM(UInt32 driverControl);
+        [Slot(47)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEnableDriverControlQCOM(UInt32 driverControl);
+        [Slot(51)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEndTilingQCOM(UInt32 preserveMask);
+        [Slot(52)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glExtGetBufferPointervQCOM(System.Int32 target, [OutAttribute] IntPtr @params);
+        [Slot(53)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetBuffersQCOM([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers);
+        [Slot(54)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetFramebuffersQCOM([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers);
+        [Slot(55)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, [OutAttribute] IntPtr source, [OutAttribute] Int32* length);
+        [Slot(56)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetProgramsQCOM([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms);
+        [Slot(57)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetRenderbuffersQCOM([OutAttribute] UInt32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32* numRenderbuffers);
+        [Slot(58)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetShadersQCOM([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders);
+        [Slot(59)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(60)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr texels);
+        [Slot(61)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
+        [Slot(62)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glExtIsProgramBinaryQCOM(UInt32 program);
+        [Slot(63)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(77)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
+        [Slot(78)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr driverControlString);
-        [Slot(351)]
+        [Slot(175)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStartTilingQCOM(UInt32 x, UInt32 y, UInt32 width, UInt32 height, UInt32 preserveMask);
     }
