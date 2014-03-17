@@ -169,10 +169,13 @@ namespace OpenTK
             {
                 lock (InitLock)
                 {
-                    platform_factory.Dispose();
-                    platform_factory = null;
-                    toolkit = null;
-                    initialized = false;
+                    if (initialized)
+                    {
+                        platform_factory.Dispose();
+                        platform_factory = null;
+                        toolkit = null;
+                        initialized = false;
+                    }
                 }
             }
             else

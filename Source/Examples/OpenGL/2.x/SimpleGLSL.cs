@@ -252,7 +252,7 @@ namespace Examples.Tutorial
             GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, element_buffer_object);
 
-            GL.DrawElements(BeginMode.Triangles, shape.Indices.Length,
+            GL.DrawElements(PrimitiveType.Triangles, shape.Indices.Length,
                 DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             //GL.DrawArrays(GL.Enums.BeginMode.POINTS, 0, shape.Vertices.Length);

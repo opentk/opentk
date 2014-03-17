@@ -44,7 +44,6 @@ namespace OpenTK
     {
         static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux;
         static bool runningOnMono;
-        static bool runningOnAndroid;
         volatile static bool initialized;
         readonly static object InitLock = new object();
 

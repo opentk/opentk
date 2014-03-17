@@ -192,6 +192,17 @@ namespace Bind.Structures
 
         #endregion
 
+        #region public string ComputeSize
+
+        string computeSize;
+        public string ComputeSize
+        {
+            get { return computeSize; }
+            set { computeSize = value; }
+        }
+
+        #endregion
+
         #region Static Members
 
         // Returns the FlowDirection that matches the specified string

@@ -39,7 +39,6 @@ namespace Examples.Tutorial
             {
                 throw new NotSupportedException(
                      "GL_EXT_framebuffer_object extension is required. Please update your drivers.");
-                Exit();
             }
 
             Object = new Shapes.TorusKnot(256, 16, 0.2, 7,8, 1, true);
@@ -234,7 +233,7 @@ namespace Examples.Tutorial
                 // Draw the Color Texture
                 GL.Translate(-1.1f, 0f, 0f);
                 GL.BindTexture(TextureTarget.Texture2D, ColorTexture);
-                GL.Begin(BeginMode.Quads);
+                GL.Begin(PrimitiveType.Quads);
                 {
                     GL.TexCoord2(0f, 1f);
                     GL.Vertex2(-1.0f, 1.0f);
@@ -250,7 +249,7 @@ namespace Examples.Tutorial
                 // Draw the Depth Texture
                 GL.Translate(+2.2f, 0f, 0f);
                 GL.BindTexture(TextureTarget.Texture2D, DepthTexture);
-                GL.Begin(BeginMode.Quads);
+                GL.Begin(PrimitiveType.Quads);
                 {
                     GL.TexCoord2(0f, 1f);
                     GL.Vertex2(-1.0f, 1.0f);

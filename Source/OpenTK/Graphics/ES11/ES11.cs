@@ -23,8 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
-
 namespace OpenTK.Graphics.ES11
 {
     using System;
@@ -43,80 +41,43 @@ namespace OpenTK.Graphics.ES11
             EntryPointNames = new string[]
             {
                 "glAccumxOES",
-                "glActiveTexture",
-                "glAlphaFunc",
-                "glAlphaFuncx",
                 "glAlphaFuncxOES",
-                "glBindBuffer",
                 "glBindFramebufferOES",
                 "glBindRenderbufferOES",
-                "glBindTexture",
                 "glBindVertexArrayOES",
                 "glBitmapxOES",
                 "glBlendColorxOES",
                 "glBlendEquationEXT",
                 "glBlendEquationOES",
                 "glBlendEquationSeparateOES",
-                "glBlendFunc",
                 "glBlendFuncSeparateOES",
-                "glBufferData",
-                "glBufferSubData",
                 "glCheckFramebufferStatusOES",
-                "glClear",
                 "glClearAccumxOES",
-                "glClearColor",
-                "glClearColorx",
                 "glClearColorxOES",
-                "glClearDepthf",
                 "glClearDepthfOES",
-                "glClearDepthx",
                 "glClearDepthxOES",
-                "glClearStencil",
-                "glClientActiveTexture",
                 "glClientWaitSyncAPPLE",
-                "glClipPlanef",
                 "glClipPlanefIMG",
                 "glClipPlanefOES",
-                "glClipPlanex",
                 "glClipPlanexIMG",
                 "glClipPlanexOES",
                 "glColor3xOES",
                 "glColor3xvOES",
-                "glColor4f",
-                "glColor4ub",
-                "glColor4x",
                 "glColor4xOES",
                 "glColor4xvOES",
-                "glColorMask",
-                "glColorPointer",
-                "glCompressedTexImage2D",
-                "glCompressedTexSubImage2D",
                 "glConvolutionParameterxOES",
                 "glConvolutionParameterxvOES",
-                "glCopyTexImage2D",
-                "glCopyTexSubImage2D",
                 "glCopyTextureLevelsAPPLE",
-                "glCullFace",
                 "glCurrentPaletteMatrixOES",
-                "glDeleteBuffers",
                 "glDeleteFencesNV",
                 "glDeleteFramebuffersOES",
                 "glDeleteRenderbuffersOES",
                 "glDeleteSyncAPPLE",
-                "glDeleteTextures",
                 "glDeleteVertexArraysOES",
-                "glDepthFunc",
-                "glDepthMask",
-                "glDepthRangef",
                 "glDepthRangefOES",
-                "glDepthRangex",
                 "glDepthRangexOES",
-                "glDisable",
-                "glDisableClientState",
                 "glDisableDriverControlQCOM",
                 "glDiscardFramebufferEXT",
-                "glDrawArrays",
-                "glDrawElements",
                 "glDrawTexfOES",
                 "glDrawTexfvOES",
                 "glDrawTexiOES",
@@ -127,8 +88,6 @@ namespace OpenTK.Graphics.ES11
                 "glDrawTexxvOES",
                 "glEGLImageTargetRenderbufferStorageOES",
                 "glEGLImageTargetTexture2DOES",
-                "glEnable",
-                "glEnableClientState",
                 "glEnableDriverControlQCOM",
                 "glEndTilingQCOM",
                 "glEvalCoord1xOES",
@@ -149,127 +108,72 @@ namespace OpenTK.Graphics.ES11
                 "glExtTexObjectStateOverrideiQCOM",
                 "glFeedbackBufferxOES",
                 "glFenceSyncAPPLE",
-                "glFinish",
                 "glFinishFenceNV",
-                "glFlush",
                 "glFlushMappedBufferRangeEXT",
-                "glFogf",
-                "glFogfv",
-                "glFogx",
                 "glFogxOES",
-                "glFogxv",
                 "glFogxvOES",
                 "glFramebufferRenderbufferOES",
                 "glFramebufferTexture2DMultisampleEXT",
                 "glFramebufferTexture2DMultisampleIMG",
                 "glFramebufferTexture2DOES",
-                "glFrontFace",
-                "glFrustumf",
                 "glFrustumfOES",
-                "glFrustumx",
                 "glFrustumxOES",
-                "glGenBuffers",
                 "glGenerateMipmapOES",
                 "glGenFencesNV",
                 "glGenFramebuffersOES",
                 "glGenRenderbuffersOES",
-                "glGenTextures",
                 "glGenVertexArraysOES",
-                "glGetBooleanv",
-                "glGetBufferParameteriv",
                 "glGetBufferPointervOES",
-                "glGetClipPlanef",
                 "glGetClipPlanefOES",
-                "glGetClipPlanex",
                 "glGetClipPlanexOES",
                 "glGetConvolutionParameterxvOES",
                 "glGetDriverControlsQCOM",
                 "glGetDriverControlStringQCOM",
-                "glGetError",
                 "glGetFenceivNV",
-                "glGetFixedv",
                 "glGetFixedvOES",
-                "glGetFloatv",
                 "glGetFramebufferAttachmentParameterivOES",
                 "glGetGraphicsResetStatusEXT",
                 "glGetHistogramParameterxvOES",
                 "glGetInteger64vAPPLE",
-                "glGetIntegerv",
-                "glGetLightfv",
                 "glGetLightxOES",
-                "glGetLightxv",
                 "glGetLightxvOES",
                 "glGetMapxvOES",
-                "glGetMaterialfv",
                 "glGetMaterialxOES",
-                "glGetMaterialxv",
                 "glGetMaterialxvOES",
                 "glGetnUniformfvEXT",
                 "glGetnUniformivEXT",
-                "glGetPixelMapxv",
-                "glGetPointerv",
                 "glGetRenderbufferParameterivOES",
-                "glGetString",
                 "glGetSyncivAPPLE",
-                "glGetTexEnvfv",
-                "glGetTexEnviv",
-                "glGetTexEnvxv",
                 "glGetTexEnvxvOES",
                 "glGetTexGenfvOES",
                 "glGetTexGenivOES",
                 "glGetTexGenxvOES",
                 "glGetTexLevelParameterxvOES",
-                "glGetTexParameterfv",
-                "glGetTexParameteriv",
-                "glGetTexParameterxv",
                 "glGetTexParameterxvOES",
-                "glHint",
                 "glIndexxOES",
                 "glIndexxvOES",
-                "glIsBuffer",
-                "glIsEnabled",
                 "glIsFenceNV",
                 "glIsFramebufferOES",
                 "glIsRenderbufferOES",
                 "glIsSyncAPPLE",
-                "glIsTexture",
                 "glIsVertexArrayOES",
-                "glLightf",
-                "glLightfv",
-                "glLightModelf",
-                "glLightModelfv",
-                "glLightModelx",
                 "glLightModelxOES",
-                "glLightModelxv",
                 "glLightModelxvOES",
-                "glLightx",
                 "glLightxOES",
-                "glLightxv",
                 "glLightxvOES",
-                "glLineWidth",
-                "glLineWidthx",
                 "glLineWidthxOES",
-                "glLoadIdentity",
-                "glLoadMatrixf",
-                "glLoadMatrixx",
                 "glLoadMatrixxOES",
                 "glLoadPaletteFromModelViewMatrixOES",
                 "glLoadTransposeMatrixxOES",
-                "glLogicOp",
                 "glMap1xOES",
                 "glMap2xOES",
                 "glMapBufferOES",
                 "glMapBufferRangeEXT",
                 "glMapGrid1xOES",
                 "glMapGrid2xOES",
-                "glMaterialf",
-                "glMaterialfv",
-                "glMaterialx",
                 "glMaterialxOES",
-                "glMaterialxv",
                 "glMaterialxvOES",
                 "glMatrixIndexPointerOES",
-                "glMatrixMode",
                 "glMultiDrawArraysEXT",
                 "glMultiDrawElementsEXT",
                 "glMultiTexCoord1bOES",
@@ -286,45 +190,23 @@ namespace OpenTK.Graphics.ES11
                 "glMultiTexCoord3xvOES",
                 "glMultiTexCoord4bOES",
                 "glMultiTexCoord4bvOES",
-                "glMultiTexCoord4f",
-                "glMultiTexCoord4x",
                 "glMultiTexCoord4xOES",
                 "glMultiTexCoord4xvOES",
-                "glMultMatrixf",
-                "glMultMatrixx",
                 "glMultMatrixxOES",
                 "glMultTransposeMatrixxOES",
-                "glNormal3f",
-                "glNormal3x",
                 "glNormal3xOES",
                 "glNormal3xvOES",
-                "glNormalPointer",
-                "glOrthof",
                 "glOrthofOES",
-                "glOrthox",
                 "glOrthoxOES",
                 "glPassThroughxOES",
-                "glPixelMapx",
-                "glPixelStorei",
-                "glPixelStorex",
                 "glPixelTransferxOES",
                 "glPixelZoomxOES",
-                "glPointParameterf",
-                "glPointParameterfv",
-                "glPointParameterx",
                 "glPointParameterxOES",
-                "glPointParameterxv",
                 "glPointParameterxvOES",
-                "glPointSize",
                 "glPointSizePointerOES",
-                "glPointSizex",
                 "glPointSizexOES",
-                "glPolygonOffset",
-                "glPolygonOffsetx",
                 "glPolygonOffsetxOES",
-                "glPopMatrix",
                 "glPrioritizeTexturesxOES",
-                "glPushMatrix",
                 "glQueryMatrixxOES",
                 "glRasterPos2xOES",
                 "glRasterPos2xvOES",
@@ -333,7 +215,6 @@ namespace OpenTK.Graphics.ES11
                 "glRasterPos4xOES",
                 "glRasterPos4xvOES",
                 "glReadnPixelsEXT",
-                "glReadPixels",
                 "glRectxOES",
                 "glRectxvOES",
                 "glRenderbufferStorageMultisampleAPPLE",
@@ -341,23 +222,12 @@ namespace OpenTK.Graphics.ES11
                 "glRenderbufferStorageMultisampleIMG",
                 "glRenderbufferStorageOES",
                 "glResolveMultisampleFramebufferAPPLE",
-                "glRotatef",
-                "glRotatex",
                 "glRotatexOES",
-                "glSampleCoverage",
                 "glSampleCoverageOES",
-                "glSampleCoveragex",
                 "glSampleCoveragexOES",
-                "glScalef",
-                "glScalex",
                 "glScalexOES",
-                "glScissor",
                 "glSetFenceNV",
-                "glShadeModel",
                 "glStartTilingQCOM",
-                "glStencilFunc",
-                "glStencilMask",
-                "glStencilOp",
                 "glTestFenceNV",
                 "glTexCoord1bOES",
                 "glTexCoord1bvOES",
@@ -375,14 +245,7 @@ namespace OpenTK.Graphics.ES11
                 "glTexCoord4bvOES",
                 "glTexCoord4xOES",
                 "glTexCoord4xvOES",
-                "glTexCoordPointer",
-                "glTexEnvf",
-                "glTexEnvfv",
-                "glTexEnvi",
-                "glTexEnviv",
-                "glTexEnvx",
                 "glTexEnvxOES",
-                "glTexEnvxv",
                 "glTexEnvxvOES",
                 "glTexGenfOES",
                 "glTexGenfvOES",
@@ -390,24 +253,14 @@ namespace OpenTK.Graphics.ES11
                 "glTexGenivOES",
                 "glTexGenxOES",
                 "glTexGenxvOES",
-                "glTexImage2D",
-                "glTexParameterf",
-                "glTexParameterfv",
-                "glTexParameteri",
-                "glTexParameteriv",
-                "glTexParameterx",
                 "glTexParameterxOES",
-                "glTexParameterxv",
                 "glTexParameterxvOES",
                 "glTexStorage1DEXT",
                 "glTexStorage2DEXT",
                 "glTexStorage3DEXT",
-                "glTexSubImage2D",
                 "glTextureStorage1DEXT",
                 "glTextureStorage2DEXT",
                 "glTextureStorage3DEXT",
-                "glTranslatef",
-                "glTranslatex",
                 "glTranslatexOES",
                 "glUnmapBufferOES",
                 "glVertex2bOES",
@@ -422,8 +275,6 @@ namespace OpenTK.Graphics.ES11
                 "glVertex4bvOES",
                 "glVertex4xOES",
                 "glVertex4xvOES",
-                "glVertexPointer",
-                "glViewport",
                 "glWaitSyncAPPLE",
                 "glWeightPointerOES",
             };
@@ -574,7 +425,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -606,7 +457,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -638,7 +489,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the address of an variable to receive the number of integers placed in values.
             /// </para>
             /// </param>
-            /// <param name="values">
+            /// <param name="values">[length: bufSize]
             /// <para>
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </para>
@@ -959,7 +810,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -985,7 +836,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -1014,7 +865,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -1043,7 +894,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -1072,7 +923,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the buffer object's new data store.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
         /// </para>
@@ -1105,7 +956,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -1131,7 +982,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -1160,7 +1011,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -1189,7 +1040,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -1218,7 +1069,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the size in bytes of the data store region being replaced.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: size]
         /// <para>
         /// Specifies a pointer to the new data that will be copied into the data store.
         /// </para>
@@ -1463,7 +1314,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1490,7 +1341,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1520,7 +1371,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1550,7 +1401,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1580,7 +1431,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1609,7 +1460,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1635,7 +1486,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1664,7 +1515,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1693,7 +1544,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1722,7 +1573,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first component of the first color element in the array. The initial value is 0.
         /// </para>
@@ -1770,7 +1621,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -1817,7 +1668,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -1867,7 +1718,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -1917,7 +1768,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -1967,7 +1818,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2016,7 +1867,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2062,7 +1913,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2111,7 +1962,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2160,7 +2011,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2209,7 +2060,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2262,7 +2113,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2314,7 +2165,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2369,7 +2220,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2424,7 +2275,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2479,7 +2330,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2533,7 +2384,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2584,7 +2435,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2638,7 +2489,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2692,7 +2543,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2746,7 +2597,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of unsigned bytes of image data starting at the address specified by data.
         /// </para>
         /// </param>
-        /// <param name="data">
+        /// <param name="data">[length: imageSize]
         /// <para>
         /// Specifies a pointer to the compressed image data in memory.
         /// </para>
@@ -2953,7 +2804,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -2970,7 +2821,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -2987,7 +2838,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3004,7 +2855,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3021,7 +2872,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3038,7 +2889,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3055,7 +2906,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3072,7 +2923,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer objects to be deleted.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array of buffer objects to be deleted.
         /// </para>
@@ -3089,7 +2940,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3106,7 +2957,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3123,7 +2974,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3140,7 +2991,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3157,7 +3008,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3174,7 +3025,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3191,7 +3042,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3208,7 +3059,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of textures to be deleted.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array of textures to be deleted.
         /// </para>
@@ -3372,7 +3223,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3399,7 +3250,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3429,7 +3280,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3459,7 +3310,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3489,7 +3340,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3518,7 +3369,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3545,7 +3396,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3575,7 +3426,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3605,7 +3456,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3635,7 +3486,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3664,7 +3515,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3690,7 +3541,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3719,7 +3570,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3748,7 +3599,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -3777,7 +3628,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
         /// </para>
         /// </param>
-        /// <param name="indices">
+        /// <param name="indices">[length: count,type]
         /// <para>
         /// Specifies a pointer to the location where the indices are stored.
         /// </para>
@@ -4028,7 +3879,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4045,7 +3896,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4062,7 +3913,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4079,7 +3930,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4096,7 +3947,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4113,7 +3964,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4130,7 +3981,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of buffer object names to be generated.
         /// </para>
         /// </param>
-        /// <param name="buffers">
+        /// <param name="buffers">[length: n]
         /// <para>
         /// Specifies an array in which the generated buffer object names are stored.
         /// </para>
@@ -4147,7 +3998,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4164,7 +4015,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4181,7 +4032,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4198,7 +4049,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4215,7 +4066,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4232,7 +4083,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4249,7 +4100,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the number of texture names to be generated.
         /// </para>
         /// </param>
-        /// <param name="textures">
+        /// <param name="textures">[length: n]
         /// <para>
         /// Specifies an array in which the generated texture names are stored.
         /// </para>
@@ -4376,24 +4227,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
         /// </para>
         /// </param>
-        /// <param name="equation">
-        /// <para>
-        /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
-        /// </para>
-        /// </param>
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanef")]
-        [CLSCompliant(false)]
-        public static Single GetClipPlane(OpenTK.Graphics.ES11.All plane) { throw new NotImplementedException(); }
-
-        /// <summary>[requires: v1.0]
-        /// Return the coefficients of the specified clipping plane
-        /// </summary>
-        /// <param name="plane">
-        /// <para>
-        /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
-        /// </para>
-        /// </param>
-        /// <param name="equation">
+        /// <param name="equation">[length: 4]
         /// <para>
         /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
         /// </para>
@@ -4410,7 +4244,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
         /// </para>
         /// </param>
-        /// <param name="equation">
+        /// <param name="equation">[length: 4]
         /// <para>
         /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
         /// </para>
@@ -4427,7 +4261,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
         /// </para>
         /// </param>
-        /// <param name="equation">
+        /// <param name="equation">[length: 4]
         /// <para>
         /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
         /// </para>
@@ -4435,11 +4269,6 @@ namespace OpenTK.Graphics.ES11
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanef")]
         [CLSCompliant(false)]
         public static unsafe void GetClipPlane(OpenTK.Graphics.ES11.All plane, [OutAttribute] Single* equation) { throw new NotImplementedException(); }
-
-        /// <summary>[requires: v1.0]</summary>
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanex")]
-        [CLSCompliant(false)]
-        public static int GetClipPlanex(OpenTK.Graphics.ES11.All plane) { throw new NotImplementedException(); }
 
         /// <summary>[requires: v1.0]</summary>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanex")]
@@ -6077,7 +5906,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Replace the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Specifies a pointer to 16 consecutive values, which are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6089,7 +5918,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Replace the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Specifies a pointer to 16 consecutive values, which are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6101,7 +5930,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Replace the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Specifies a pointer to 16 consecutive values, which are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6358,7 +6187,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Multiply the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Points to 16 consecutive values that are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6370,7 +6199,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Multiply the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Points to 16 consecutive values that are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6382,7 +6211,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]
         /// Multiply the current matrix with the specified matrix
         /// </summary>
-        /// <param name="m">
+        /// <param name="m">[length: 16]
         /// <para>
         /// Points to 16 consecutive values that are used as the elements of a 4 times 4 column-major matrix.
         /// </para>
@@ -6437,7 +6266,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6459,7 +6288,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6484,7 +6313,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6509,7 +6338,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6534,7 +6363,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6558,7 +6387,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6579,7 +6408,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6603,7 +6432,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6627,7 +6456,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -6651,7 +6480,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
         /// </para>
@@ -7468,7 +7297,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7495,7 +7324,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7525,7 +7354,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7555,7 +7384,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7585,7 +7414,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7614,7 +7443,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7640,7 +7469,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7669,7 +7498,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7698,7 +7527,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -7727,7 +7556,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive texture coordinate sets. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </para>
@@ -9500,7 +9329,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9527,7 +9356,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9557,7 +9386,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9587,7 +9416,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9617,7 +9446,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9646,7 +9475,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9672,7 +9501,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9701,7 +9530,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9730,7 +9559,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9759,7 +9588,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.
         /// </para>
         /// </param>
-        /// <param name="pointer">
+        /// <param name="pointer">[length: size,type,stride]
         /// <para>
         /// Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.
         /// </para>
@@ -9992,12 +9821,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10020,12 +9849,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10048,12 +9877,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10076,12 +9905,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10103,12 +9932,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10130,12 +9959,12 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="first">
+            /// <param name="first">[length: primcount]
             /// <para>
             /// Points to an array of starting indices in the enabled arrays.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the number of indices to be rendered.
             /// </para>
@@ -10157,7 +9986,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10167,7 +9996,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10190,7 +10019,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10200,7 +10029,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10225,7 +10054,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10235,7 +10064,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10260,7 +10089,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10270,7 +10099,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10295,7 +10124,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10305,7 +10134,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10330,7 +10159,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10340,7 +10169,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10363,7 +10192,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10373,7 +10202,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10398,7 +10227,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10408,7 +10237,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10433,7 +10262,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10443,7 +10272,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10468,7 +10297,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10478,7 +10307,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10503,7 +10332,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10513,7 +10342,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10536,7 +10365,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10546,7 +10375,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10571,7 +10400,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10581,7 +10410,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10606,7 +10435,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10616,7 +10445,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10641,7 +10470,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10651,7 +10480,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10676,7 +10505,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10686,7 +10515,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10708,7 +10537,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10718,7 +10547,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10742,7 +10571,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10752,7 +10581,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10776,7 +10605,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10786,7 +10615,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10810,7 +10639,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10820,7 +10649,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10844,7 +10673,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10854,7 +10683,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10876,7 +10705,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10886,7 +10715,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10910,7 +10739,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10920,7 +10749,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10944,7 +10773,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10954,7 +10783,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -10978,7 +10807,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -10988,7 +10817,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11012,7 +10841,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -11022,7 +10851,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11044,7 +10873,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -11054,7 +10883,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11078,7 +10907,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -11088,7 +10917,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11112,7 +10941,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -11122,7 +10951,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11146,7 +10975,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted.
             /// </para>
             /// </param>
-            /// <param name="count">
+            /// <param name="count">[length: primcount]
             /// <para>
             /// Points to an array of the elements counts.
             /// </para>
@@ -11156,7 +10985,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.
             /// </para>
             /// </param>
-            /// <param name="indices">
+            /// <param name="indices">[length: primcount]
             /// <para>
             /// Specifies a pointer to the location where the indices are stored.
             /// </para>
@@ -11850,7 +11679,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES - 1, are accepted.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </para>
@@ -11867,7 +11696,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES - 1, are accepted.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </para>
@@ -11884,7 +11713,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES - 1, are accepted.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </para>
@@ -11988,7 +11817,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -12005,7 +11834,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -12022,7 +11851,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -12039,7 +11868,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -12056,7 +11885,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -12073,7 +11902,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of framebuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="framebuffers">
+            /// <param name="framebuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n framebuffer objects to be deleted.
             /// </para>
@@ -12100,7 +11929,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12117,7 +11946,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12134,7 +11963,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12151,7 +11980,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12168,7 +11997,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12185,7 +12014,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// A pointer to an array containing n renderbuffer objects to be deleted.
             /// </para>
@@ -12212,7 +12041,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12229,7 +12058,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12246,7 +12075,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12263,7 +12092,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12280,7 +12109,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12297,7 +12126,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array objects to be deleted.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies the address of an array containing the n names of the objects to be deleted.
             /// </para>
@@ -12687,7 +12516,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12704,7 +12533,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12721,7 +12550,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12738,7 +12567,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12755,7 +12584,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12772,7 +12601,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of renderbuffer object names to generate.
             /// </para>
             /// </param>
-            /// <param name="renderbuffers">
+            /// <param name="renderbuffers">[length: n]
             /// <para>
             /// Specifies an array in which the generated renderbuffer object names are stored.
             /// </para>
@@ -12794,7 +12623,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12811,7 +12640,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12828,7 +12657,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12845,7 +12674,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12862,7 +12691,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12879,7 +12708,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the number of vertex array object names to generate.
             /// </para>
             /// </param>
-            /// <param name="arrays">
+            /// <param name="arrays">[length: n]
             /// <para>
             /// Specifies an array in which the generated vertex array object names are stored.
             /// </para>
@@ -12927,7 +12756,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
             /// </para>
@@ -12944,7 +12773,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
             /// </para>
@@ -12961,7 +12790,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1.
             /// </para>
             /// </param>
-            /// <param name="equation">
+            /// <param name="equation">[length: 4]
             /// <para>
             /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
             /// </para>
@@ -15493,6 +15322,7 @@ namespace OpenTK.Graphics.ES11
              { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetBuffers([OutAttribute] Int32[] buffers, Int32 maxBuffers, [OutAttribute] Int32[] numBuffers) { throw new NotImplementedException(); }
@@ -15500,14 +15330,22 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetBuffers([OutAttribute] Int32[] buffers, Int32 maxBuffers, [OutAttribute] out Int32 numBuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetBuffers([OutAttribute] out Int32 buffers, Int32 maxBuffers, [OutAttribute] out Int32 numBuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetBuffers([OutAttribute] Int32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetBuffers([OutAttribute] UInt32[] buffers, Int32 maxBuffers, [OutAttribute] Int32[] numBuffers) { throw new NotImplementedException(); }
@@ -15515,14 +15353,22 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetBuffers([OutAttribute] UInt32[] buffers, Int32 maxBuffers, [OutAttribute] out Int32 numBuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetBuffers([OutAttribute] out UInt32 buffers, Int32 maxBuffers, [OutAttribute] out Int32 numBuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetBuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetBuffers([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetFramebuffers([OutAttribute] Int32[] framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32[] numFramebuffers) { throw new NotImplementedException(); }
@@ -15530,14 +15376,22 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetFramebuffers([OutAttribute] Int32[] framebuffers, Int32 maxFramebuffers, [OutAttribute] out Int32 numFramebuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetFramebuffers([OutAttribute] out Int32 framebuffers, Int32 maxFramebuffers, [OutAttribute] out Int32 numFramebuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetFramebuffers([OutAttribute] Int32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetFramebuffers([OutAttribute] UInt32[] framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32[] numFramebuffers) { throw new NotImplementedException(); }
@@ -15545,9 +15399,16 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetFramebuffers([OutAttribute] UInt32[] framebuffers, Int32 maxFramebuffers, [OutAttribute] out Int32 numFramebuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetFramebuffers([OutAttribute] out UInt32 framebuffers, Int32 maxFramebuffers, [OutAttribute] out Int32 numFramebuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetFramebuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetFramebuffers([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers) { throw new NotImplementedException(); }
@@ -15583,6 +15444,7 @@ namespace OpenTK.Graphics.ES11
             public static unsafe void ExtGetProgramBinarySource(UInt32 program, OpenTK.Graphics.ES11.All shadertype, [OutAttribute] StringBuilder source, [OutAttribute] Int32* length) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetProgram([OutAttribute] Int32[] programs, Int32 maxPrograms, [OutAttribute] Int32[] numPrograms) { throw new NotImplementedException(); }
@@ -15590,14 +15452,22 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: QCOM_extended_get2]</summary>
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetProgram([OutAttribute] Int32[] programs, Int32 maxPrograms, [OutAttribute] out Int32 numPrograms) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetProgram([OutAttribute] out Int32 programs, Int32 maxPrograms, [OutAttribute] out Int32 numPrograms) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetProgram([OutAttribute] Int32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetProgram([OutAttribute] UInt32[] programs, Int32 maxPrograms, [OutAttribute] Int32[] numPrograms) { throw new NotImplementedException(); }
@@ -15605,14 +15475,22 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: QCOM_extended_get2]</summary>
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetProgram([OutAttribute] UInt32[] programs, Int32 maxPrograms, [OutAttribute] out Int32 numPrograms) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetProgram([OutAttribute] out UInt32 programs, Int32 maxPrograms, [OutAttribute] out Int32 numPrograms) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramsQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetProgram([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetRenderbuffers([OutAttribute] Int32[] renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32[] numRenderbuffers) { throw new NotImplementedException(); }
@@ -15620,14 +15498,22 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetRenderbuffers([OutAttribute] Int32[] renderbuffers, Int32 maxRenderbuffers, [OutAttribute] out Int32 numRenderbuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetRenderbuffers([OutAttribute] out Int32 renderbuffers, Int32 maxRenderbuffers, [OutAttribute] out Int32 numRenderbuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetRenderbuffers([OutAttribute] Int32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32* numRenderbuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetRenderbuffers([OutAttribute] UInt32[] renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32[] numRenderbuffers) { throw new NotImplementedException(); }
@@ -15635,14 +15521,22 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: QCOM_extended_get]</summary>
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetRenderbuffers([OutAttribute] UInt32[] renderbuffers, Int32 maxRenderbuffers, [OutAttribute] out Int32 numRenderbuffers) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetRenderbuffers([OutAttribute] out UInt32 renderbuffers, Int32 maxRenderbuffers, [OutAttribute] out Int32 numRenderbuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetRenderbuffersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetRenderbuffers([OutAttribute] UInt32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32* numRenderbuffers) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetShaders([OutAttribute] Int32[] shaders, Int32 maxShaders, [OutAttribute] Int32[] numShaders) { throw new NotImplementedException(); }
@@ -15650,14 +15544,22 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: QCOM_extended_get2]</summary>
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetShaders([OutAttribute] Int32[] shaders, Int32 maxShaders, [OutAttribute] out Int32 numShaders) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetShaders([OutAttribute] out Int32 shaders, Int32 maxShaders, [OutAttribute] out Int32 numShaders) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetShaders([OutAttribute] Int32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetShaders([OutAttribute] UInt32[] shaders, Int32 maxShaders, [OutAttribute] Int32[] numShaders) { throw new NotImplementedException(); }
@@ -15665,9 +15567,16 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: QCOM_extended_get2]</summary>
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetShaders([OutAttribute] UInt32[] shaders, Int32 maxShaders, [OutAttribute] out Int32 numShaders) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetShaders([OutAttribute] out UInt32 shaders, Int32 maxShaders, [OutAttribute] out Int32 numShaders) { throw new NotImplementedException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
+            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetShadersQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetShaders([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders) { throw new NotImplementedException(); }
@@ -15849,1153 +15758,1153 @@ namespace OpenTK.Graphics.ES11
 
         }
 
-        [Slot(31)]
+        [Slot(16)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern System.Int32 glClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
-        [Slot(53)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
-        [Slot(60)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDeleteSyncAPPLE(IntPtr sync);
-        [Slot(106)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glFenceSyncAPPLE(System.Int32 condition, UInt32 flags);
-        [Slot(151)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetInteger64vAPPLE(System.Int32 pname, [OutAttribute] Int64* @params);
-        [Slot(168)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetSyncivAPPLE(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
-        [Slot(189)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsSyncAPPLE(IntPtr sync);
-        [Slot(294)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleAPPLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(298)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glResolveMultisampleFramebufferAPPLE();
-        [Slot(382)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
-        [Slot(1)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glActiveTexture(System.Int32 texture);
-        [Slot(2)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glAlphaFunc(System.Int32 func, Single @ref);
-        [Slot(3)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glAlphaFuncx(System.Int32 func, int @ref);
-        [Slot(5)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindBuffer(System.Int32 target, UInt32 buffer);
-        [Slot(8)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindTexture(System.Int32 target, UInt32 texture);
-        [Slot(15)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendFunc(System.Int32 sfactor, System.Int32 dfactor);
-        [Slot(17)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBufferData(System.Int32 target, IntPtr size, IntPtr data, System.Int32 usage);
-        [Slot(18)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBufferSubData(System.Int32 target, IntPtr offset, IntPtr size, IntPtr data);
-        [Slot(20)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClear(System.Int32 mask);
-        [Slot(22)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearColor(Single red, Single green, Single blue, Single alpha);
-        [Slot(23)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearColorx(int red, int green, int blue, int alpha);
-        [Slot(25)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearDepthf(Single d);
         [Slot(27)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearDepthx(int depth);
-        [Slot(29)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearStencil(Int32 s);
-        [Slot(30)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClientActiveTexture(System.Int32 texture);
+        static extern void glCopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
         [Slot(32)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanef(System.Int32 p, Single* eqn);
-        [Slot(35)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanex(System.Int32 plane, int* equation);
-        [Slot(40)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor4f(Single red, Single green, Single blue, Single alpha);
-        [Slot(41)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor4ub(Byte red, Byte green, Byte blue, Byte alpha);
-        [Slot(42)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor4x(int red, int green, int blue, int alpha);
-        [Slot(45)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColorMask(bool red, bool green, bool blue, bool alpha);
-        [Slot(46)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColorPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
-        [Slot(47)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
-        [Slot(48)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
-        [Slot(51)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
-        [Slot(52)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(54)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCullFace(System.Int32 mode);
-        [Slot(56)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
-        [Slot(61)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteTextures(Int32 n, UInt32* textures);
-        [Slot(63)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthFunc(System.Int32 func);
-        [Slot(64)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthMask(bool flag);
-        [Slot(65)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthRangef(Single n, Single f);
+        static extern void glDeleteSyncAPPLE(IntPtr sync);
         [Slot(67)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthRangex(int n, int f);
-        [Slot(69)]
+        static extern IntPtr glFenceSyncAPPLE(System.Int32 condition, UInt32 flags);
+        [Slot(94)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisable(System.Int32 cap);
-        [Slot(70)]
+        static extern unsafe void glGetInteger64vAPPLE(System.Int32 pname, [OutAttribute] Int64* @params);
+        [Slot(103)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisableClientState(System.Int32 array);
-        [Slot(73)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
-        [Slot(74)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
-        [Slot(85)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnable(System.Int32 cap);
-        [Slot(86)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnableClientState(System.Int32 array);
-        [Slot(107)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFinish();
-        [Slot(109)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFlush();
-        [Slot(111)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFogf(System.Int32 pname, Single param);
-        [Slot(112)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glFogfv(System.Int32 pname, Single* @params);
-        [Slot(113)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFogx(System.Int32 pname, int param);
+        static extern unsafe void glGetSyncivAPPLE(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
         [Slot(115)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glFogxv(System.Int32 pname, int* param);
-        [Slot(121)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrontFace(System.Int32 mode);
-        [Slot(122)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrustumf(Single l, Single r, Single b, Single t, Single n, Single f);
-        [Slot(124)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrustumx(int l, int r, int b, int t, int n, int f);
-        [Slot(126)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
-        [Slot(131)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenTextures(Int32 n, [OutAttribute] UInt32* textures);
-        [Slot(133)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
-        [Slot(134)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(136)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetClipPlanef(System.Int32 plane, [OutAttribute] Single* equation);
-        [Slot(138)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetClipPlanex(System.Int32 plane, [OutAttribute] int* equation);
-        [Slot(143)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern System.Int32 glGetError();
-        [Slot(145)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFixedv(System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(147)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
-        [Slot(152)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute] Int32* data);
-        [Slot(153)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetLightfv(System.Int32 light, System.Int32 pname, [OutAttribute] Single* @params);
-        [Slot(155)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetLightxv(System.Int32 light, System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(158)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetMaterialfv(System.Int32 face, System.Int32 pname, [OutAttribute] Single* @params);
-        [Slot(160)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetMaterialxv(System.Int32 face, System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(164)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetPixelMapxv(System.Int32 map, Int32 size, [OutAttribute] int* values);
-        [Slot(165)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
-        [Slot(167)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glGetString(System.Int32 name);
-        [Slot(169)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnvfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
-        [Slot(170)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnviv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(171)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnvxv(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
+        static extern bool glIsSyncAPPLE(IntPtr sync);
         [Slot(177)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
-        [Slot(178)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(179)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameterxv(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
+        static extern void glRenderbufferStorageMultisampleAPPLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(181)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glResolveMultisampleFramebufferAPPLE();
+        [Slot(235)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glActiveTexture(System.Int32 texture);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glAlphaFunc(System.Int32 func, Single @ref);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glAlphaFuncx(System.Int32 func, int @ref);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindBuffer(System.Int32 target, UInt32 buffer);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBindTexture(System.Int32 target, UInt32 texture);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBlendFunc(System.Int32 sfactor, System.Int32 dfactor);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBufferData(System.Int32 target, IntPtr size, IntPtr data, System.Int32 usage);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glBufferSubData(System.Int32 target, IntPtr offset, IntPtr size, IntPtr data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClear(System.Int32 mask);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClearColor(Single red, Single green, Single blue, Single alpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClearColorx(int red, int green, int blue, int alpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClearDepthf(Single d);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClearDepthx(int depth);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClearStencil(Int32 s);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glClientActiveTexture(System.Int32 texture);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glClipPlanef(System.Int32 p, Single* eqn);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glClipPlanex(System.Int32 plane, int* equation);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glColor4f(Single red, Single green, Single blue, Single alpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glColor4ub(Byte red, Byte green, Byte blue, Byte alpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glColor4x(int red, int green, int blue, int alpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glColorMask(bool red, bool green, bool blue, bool alpha);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glColorPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glCullFace(System.Int32 mode);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteTextures(Int32 n, UInt32* textures);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDepthFunc(System.Int32 func);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDepthMask(bool flag);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDepthRangef(Single n, Single f);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDepthRangex(int n, int f);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDisable(System.Int32 cap);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDisableClientState(System.Int32 array);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEnable(System.Int32 cap);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEnableClientState(System.Int32 array);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFinish();
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFlush();
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFogf(System.Int32 pname, Single param);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glFogfv(System.Int32 pname, Single* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFogx(System.Int32 pname, int param);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glFogxv(System.Int32 pname, int* param);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFrontFace(System.Int32 mode);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFrustumf(Single l, Single r, Single b, Single t, Single n, Single f);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFrustumx(int l, int r, int b, int t, int n, int f);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenTextures(Int32 n, [OutAttribute] UInt32* textures);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetClipPlanef(System.Int32 plane, [OutAttribute] Single* equation);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetClipPlanex(System.Int32 plane, [OutAttribute] int* equation);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern System.Int32 glGetError();
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetFixedv(System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute] Int32* data);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetLightfv(System.Int32 light, System.Int32 pname, [OutAttribute] Single* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetLightxv(System.Int32 light, System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetMaterialfv(System.Int32 face, System.Int32 pname, [OutAttribute] Single* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetMaterialxv(System.Int32 face, System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetPixelMapxv(System.Int32 map, Int32 size, [OutAttribute] int* values);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern IntPtr glGetString(System.Int32 name);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexEnvfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexEnviv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexEnvxv(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexParameterxv(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(-1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glHint(System.Int32 target, System.Int32 mode);
-        [Slot(184)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsBuffer(UInt32 buffer);
-        [Slot(185)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsEnabled(System.Int32 cap);
-        [Slot(190)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsTexture(UInt32 texture);
-        [Slot(192)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLightf(System.Int32 light, System.Int32 pname, Single param);
-        [Slot(193)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glLightfv(System.Int32 light, System.Int32 pname, Single* @params);
-        [Slot(194)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLightModelf(System.Int32 pname, Single param);
-        [Slot(195)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glLightModelfv(System.Int32 pname, Single* @params);
-        [Slot(196)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLightModelx(System.Int32 pname, int param);
-        [Slot(198)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glLightModelxv(System.Int32 pname, int* param);
-        [Slot(200)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLightx(System.Int32 light, System.Int32 pname, int param);
-        [Slot(202)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glLightxv(System.Int32 light, System.Int32 pname, int* @params);
-        [Slot(204)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLineWidth(Single width);
-        [Slot(205)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLineWidthx(int width);
-        [Slot(207)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLoadIdentity();
-        [Slot(208)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glLoadMatrixf(Single* m);
-        [Slot(209)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glLoadMatrixx(int* m);
-        [Slot(213)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLogicOp(System.Int32 opcode);
-        [Slot(220)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glMaterialf(System.Int32 face, System.Int32 pname, Single param);
-        [Slot(221)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glMaterialfv(System.Int32 face, System.Int32 pname, Single* @params);
-        [Slot(222)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glMaterialx(System.Int32 face, System.Int32 pname, int param);
-        [Slot(224)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glMaterialxv(System.Int32 face, System.Int32 pname, int* param);
-        [Slot(227)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glMatrixMode(System.Int32 mode);
-        [Slot(244)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glMultiTexCoord4f(System.Int32 target, Single s, Single t, Single r, Single q);
-        [Slot(245)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glMultiTexCoord4x(System.Int32 texture, int s, int t, int r, int q);
-        [Slot(248)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glMultMatrixf(Single* m);
-        [Slot(249)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glMultMatrixx(int* m);
-        [Slot(252)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glNormal3f(Single nx, Single ny, Single nz);
-        [Slot(253)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glNormal3x(int nx, int ny, int nz);
-        [Slot(256)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glNormalPointer(System.Int32 type, Int32 stride, IntPtr pointer);
-        [Slot(257)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glOrthof(Single l, Single r, Single b, Single t, Single n, Single f);
-        [Slot(259)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glOrthox(int l, int r, int b, int t, int n, int f);
-        [Slot(262)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glPixelMapx(System.Int32 map, Int32 size, int* values);
-        [Slot(263)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPixelStorei(System.Int32 pname, Int32 param);
-        [Slot(264)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPixelStorex(System.Int32 pname, int param);
-        [Slot(267)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPointParameterf(System.Int32 pname, Single param);
-        [Slot(268)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glPointParameterfv(System.Int32 pname, Single* @params);
-        [Slot(269)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPointParameterx(System.Int32 pname, int param);
-        [Slot(271)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glPointParameterxv(System.Int32 pname, int* @params);
-        [Slot(273)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPointSize(Single size);
-        [Slot(275)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPointSizex(int size);
-        [Slot(277)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPolygonOffset(Single factor, Single units);
-        [Slot(278)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPolygonOffsetx(int factor, int units);
-        [Slot(280)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPopMatrix();
-        [Slot(282)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPushMatrix();
-        [Slot(291)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
-        [Slot(299)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glRotatef(Single angle, Single x, Single y, Single z);
-        [Slot(300)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glRotatex(int angle, int x, int y, int z);
-        [Slot(302)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glSampleCoverage(Single value, bool invert);
-        [Slot(304)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glSampleCoveragex(int value, bool invert);
-        [Slot(306)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glScalef(Single x, Single y, Single z);
-        [Slot(307)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glScalex(int x, int y, int z);
-        [Slot(309)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(311)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glShadeModel(System.Int32 mode);
-        [Slot(313)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
-        [Slot(314)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStencilMask(UInt32 mask);
-        [Slot(315)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
-        [Slot(333)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexCoordPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
-        [Slot(334)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexEnvf(System.Int32 target, System.Int32 pname, Single param);
-        [Slot(335)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glTexEnvfv(System.Int32 target, System.Int32 pname, Single* @params);
-        [Slot(336)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexEnvi(System.Int32 target, System.Int32 pname, Int32 param);
-        [Slot(337)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glTexEnviv(System.Int32 target, System.Int32 pname, Int32* @params);
-        [Slot(338)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexEnvx(System.Int32 target, System.Int32 pname, int param);
-        [Slot(340)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glTexEnvxv(System.Int32 target, System.Int32 pname, int* @params);
-        [Slot(348)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexImage2D(System.Int32 target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
-        [Slot(349)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
-        [Slot(350)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
-        [Slot(351)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
-        [Slot(352)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
-        [Slot(353)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexParameterx(System.Int32 target, System.Int32 pname, int param);
-        [Slot(355)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glTexParameterxv(System.Int32 target, System.Int32 pname, int* @params);
-        [Slot(360)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
-        [Slot(364)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTranslatef(Single x, Single y, Single z);
-        [Slot(365)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTranslatex(int x, int y, int z);
-        [Slot(380)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
-        [Slot(381)]
+        [Slot(-1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glViewport(Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(12)]
+        [Slot(7)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBlendEquationEXT(System.Int32 mode);
-        [Slot(72)]
+        [Slot(37)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDiscardFramebufferEXT(System.Int32 target, Int32 numAttachments, System.Int32* attachments);
-        [Slot(110)]
+        [Slot(69)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glFlushMappedBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length);
-        [Slot(118)]
+        [Slot(73)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glFramebufferTexture2DMultisampleEXT(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
-        [Slot(149)]
+        [Slot(92)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern System.Int32 glGetGraphicsResetStatusEXT();
-        [Slot(162)]
+        [Slot(100)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
-        [Slot(163)]
+        [Slot(101)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
-        [Slot(217)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
-        [Slot(228)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, Int32* first, Int32* count, Int32 primcount);
-        [Slot(229)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 primcount);
-        [Slot(290)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
-        [Slot(295)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleEXT(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(357)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
-        [Slot(358)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(359)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
-        [Slot(361)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
-        [Slot(362)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(363)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage3DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
-        [Slot(33)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanefIMG(System.Int32 p, Single* eqn);
-        [Slot(36)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanexIMG(System.Int32 p, int* eqn);
-        [Slot(119)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
-        [Slot(296)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(57)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteFencesNV(Int32 n, UInt32* fences);
-        [Slot(108)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFinishFenceNV(UInt32 fence);
         [Slot(128)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
+        [Slot(134)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, Int32* first, Int32* count, Int32 primcount);
+        [Slot(135)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 primcount);
+        [Slot(174)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
+        [Slot(178)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRenderbufferStorageMultisampleEXT(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(215)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
+        [Slot(216)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(217)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
+        [Slot(218)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
+        [Slot(219)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(220)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTextureStorage3DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
+        [Slot(17)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glClipPlanefIMG(System.Int32 p, Single* eqn);
+        [Slot(19)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glClipPlanexIMG(System.Int32 p, int* eqn);
+        [Slot(74)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
+        [Slot(179)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(29)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glDeleteFencesNV(Int32 n, UInt32* fences);
+        [Slot(68)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFinishFenceNV(UInt32 fence);
+        [Slot(79)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGenFencesNV(Int32 n, [OutAttribute] UInt32* fences);
-        [Slot(144)]
+        [Slot(89)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetFenceivNV(UInt32 fence, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(186)]
+        [Slot(112)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsFenceNV(UInt32 fence);
-        [Slot(310)]
+        [Slot(186)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glSetFenceNV(UInt32 fence, System.Int32 condition);
-        [Slot(316)]
+        [Slot(188)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glTestFenceNV(UInt32 fence);
         [Slot(0)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glAccumxOES(System.Int32 op, int value);
-        [Slot(4)]
+        [Slot(1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glAlphaFuncxOES(System.Int32 func, int @ref);
-        [Slot(6)]
+        [Slot(2)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBindFramebufferOES(System.Int32 target, UInt32 framebuffer);
-        [Slot(7)]
+        [Slot(3)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBindRenderbufferOES(System.Int32 target, UInt32 renderbuffer);
-        [Slot(9)]
+        [Slot(4)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBindVertexArrayOES(UInt32 array);
-        [Slot(10)]
+        [Slot(5)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glBitmapxOES(Int32 width, Int32 height, int xorig, int yorig, int xmove, int ymove, Byte* bitmap);
-        [Slot(11)]
+        [Slot(6)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBlendColorxOES(int red, int green, int blue, int alpha);
-        [Slot(13)]
+        [Slot(8)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBlendEquationOES(System.Int32 mode);
-        [Slot(14)]
+        [Slot(9)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBlendEquationSeparateOES(System.Int32 modeRGB, System.Int32 modeAlpha);
-        [Slot(16)]
+        [Slot(10)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBlendFuncSeparateOES(System.Int32 srcRGB, System.Int32 dstRGB, System.Int32 srcAlpha, System.Int32 dstAlpha);
-        [Slot(19)]
+        [Slot(11)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern System.Int32 glCheckFramebufferStatusOES(System.Int32 target);
-        [Slot(21)]
+        [Slot(12)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glClearAccumxOES(int red, int green, int blue, int alpha);
-        [Slot(24)]
+        [Slot(13)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glClearColorxOES(int red, int green, int blue, int alpha);
-        [Slot(26)]
+        [Slot(14)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glClearDepthfOES(Single depth);
-        [Slot(28)]
+        [Slot(15)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glClearDepthxOES(int depth);
-        [Slot(34)]
+        [Slot(18)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glClipPlanefOES(System.Int32 plane, Single* equation);
-        [Slot(37)]
+        [Slot(20)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glClipPlanexOES(System.Int32 plane, int* equation);
-        [Slot(38)]
+        [Slot(21)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glColor3xOES(int red, int green, int blue);
-        [Slot(39)]
+        [Slot(22)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glColor3xvOES(int* components);
-        [Slot(43)]
+        [Slot(23)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glColor4xOES(int red, int green, int blue, int alpha);
-        [Slot(44)]
+        [Slot(24)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glColor4xvOES(int* components);
-        [Slot(49)]
+        [Slot(25)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glConvolutionParameterxOES(System.Int32 target, System.Int32 pname, int param);
-        [Slot(50)]
+        [Slot(26)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, int* @params);
-        [Slot(55)]
+        [Slot(28)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glCurrentPaletteMatrixOES(UInt32 matrixpaletteindex);
-        [Slot(58)]
+        [Slot(30)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDeleteFramebuffersOES(Int32 n, UInt32* framebuffers);
-        [Slot(59)]
+        [Slot(31)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDeleteRenderbuffersOES(Int32 n, UInt32* renderbuffers);
-        [Slot(62)]
+        [Slot(33)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDeleteVertexArraysOES(Int32 n, UInt32* arrays);
-        [Slot(66)]
+        [Slot(34)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glDepthRangefOES(Single n, Single f);
-        [Slot(68)]
+        [Slot(35)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glDepthRangexOES(int n, int f);
-        [Slot(75)]
+        [Slot(38)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glDrawTexfOES(Single x, Single y, Single z, Single width, Single height);
-        [Slot(76)]
+        [Slot(39)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDrawTexfvOES(Single* coords);
-        [Slot(77)]
+        [Slot(40)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glDrawTexiOES(Int32 x, Int32 y, Int32 z, Int32 width, Int32 height);
-        [Slot(78)]
+        [Slot(41)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDrawTexivOES(Int32* coords);
-        [Slot(79)]
+        [Slot(42)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glDrawTexsOES(Int16 x, Int16 y, Int16 z, Int16 width, Int16 height);
-        [Slot(80)]
+        [Slot(43)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDrawTexsvOES(Int16* coords);
-        [Slot(81)]
+        [Slot(44)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glDrawTexxOES(int x, int y, int z, int width, int height);
-        [Slot(82)]
+        [Slot(45)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDrawTexxvOES(int* coords);
-        [Slot(83)]
+        [Slot(46)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glEGLImageTargetRenderbufferStorageOES(System.Int32 target, IntPtr image);
-        [Slot(84)]
+        [Slot(47)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glEGLImageTargetTexture2DOES(System.Int32 target, IntPtr image);
-        [Slot(89)]
+        [Slot(50)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glEvalCoord1xOES(int u);
-        [Slot(90)]
+        [Slot(51)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glEvalCoord1xvOES(int* coords);
-        [Slot(91)]
+        [Slot(52)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glEvalCoord2xOES(int u, int v);
-        [Slot(92)]
+        [Slot(53)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glEvalCoord2xvOES(int* coords);
-        [Slot(105)]
+        [Slot(66)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glFeedbackBufferxOES(Int32 n, System.Int32 type, int* buffer);
-        [Slot(114)]
+        [Slot(70)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glFogxOES(System.Int32 pname, int param);
-        [Slot(116)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glFogxvOES(System.Int32 pname, int* param);
-        [Slot(117)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferRenderbufferOES(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
-        [Slot(120)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferTexture2DOES(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
-        [Slot(123)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrustumfOES(Single l, Single r, Single b, Single t, Single n, Single f);
-        [Slot(125)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrustumxOES(int l, int r, int b, int t, int n, int f);
-        [Slot(127)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGenerateMipmapOES(System.Int32 target);
-        [Slot(129)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenFramebuffersOES(Int32 n, [OutAttribute] UInt32* framebuffers);
-        [Slot(130)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenRenderbuffersOES(Int32 n, [OutAttribute] UInt32* renderbuffers);
-        [Slot(132)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
-        [Slot(135)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
-        [Slot(137)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetClipPlanefOES(System.Int32 plane, [OutAttribute] Single* equation);
-        [Slot(139)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetClipPlanexOES(System.Int32 plane, [OutAttribute] int* equation);
-        [Slot(140)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(146)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFixedvOES(System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(148)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFramebufferAttachmentParameterivOES(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(150)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetHistogramParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(154)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetLightxOES(System.Int32 light, System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(157)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetMapxvOES(System.Int32 target, System.Int32 query, [OutAttribute] int* v);
-        [Slot(159)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetMaterialxOES(System.Int32 face, System.Int32 pname, int param);
-        [Slot(161)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetMaterialxvOES(System.Int32 face, System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(166)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetRenderbufferParameterivOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(172)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnvxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(173)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexGenfvOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Single* @params);
-        [Slot(174)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexGenivOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(175)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexGenxvOES(System.Int32 coord, System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(176)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexLevelParameterxvOES(System.Int32 target, Int32 level, System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(180)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
-        [Slot(182)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glIndexxOES(int component);
-        [Slot(183)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glIndexxvOES(int* component);
-        [Slot(187)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsFramebufferOES(UInt32 framebuffer);
-        [Slot(188)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsRenderbufferOES(UInt32 renderbuffer);
-        [Slot(191)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsVertexArrayOES(UInt32 array);
-        [Slot(197)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightModelxOES(System.Int32 pname, int param);
-        [Slot(199)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightModelxvOES(System.Int32 pname, int* param);
-        [Slot(201)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightxOES(System.Int32 light, System.Int32 pname, int param);
-        [Slot(203)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightxvOES(System.Int32 light, System.Int32 pname, int* @params);
-        [Slot(206)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLineWidthxOES(int width);
-        [Slot(210)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLoadMatrixxOES(int* m);
-        [Slot(211)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLoadPaletteFromModelViewMatrixOES();
-        [Slot(212)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLoadTransposeMatrixxOES(int* m);
-        [Slot(214)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMap1xOES(System.Int32 target, int u1, int u2, Int32 stride, Int32 order, int points);
-        [Slot(215)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMap2xOES(System.Int32 target, int u1, int u2, Int32 ustride, Int32 uorder, int v1, int v2, Int32 vstride, Int32 vorder, int points);
-        [Slot(216)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
-        [Slot(218)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMapGrid1xOES(Int32 n, int u1, int u2);
-        [Slot(219)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMapGrid2xOES(Int32 n, int u1, int u2, int v1, int v2);
-        [Slot(223)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMaterialxOES(System.Int32 face, System.Int32 pname, int param);
-        [Slot(225)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMaterialxvOES(System.Int32 face, System.Int32 pname, int* param);
-        [Slot(226)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMatrixIndexPointerOES(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
-        [Slot(230)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord1bOES(System.Int32 texture, SByte s);
-        [Slot(231)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord1bvOES(System.Int32 texture, SByte* coords);
-        [Slot(232)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord1xOES(System.Int32 texture, int s);
-        [Slot(233)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord1xvOES(System.Int32 texture, int* coords);
-        [Slot(234)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord2bOES(System.Int32 texture, SByte s, SByte t);
-        [Slot(235)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord2bvOES(System.Int32 texture, SByte* coords);
-        [Slot(236)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord2xOES(System.Int32 texture, int s, int t);
-        [Slot(237)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord2xvOES(System.Int32 texture, int* coords);
-        [Slot(238)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord3bOES(System.Int32 texture, SByte s, SByte t, SByte r);
-        [Slot(239)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord3bvOES(System.Int32 texture, SByte* coords);
-        [Slot(240)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord3xOES(System.Int32 texture, int s, int t, int r);
-        [Slot(241)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord3xvOES(System.Int32 texture, int* coords);
-        [Slot(242)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord4bOES(System.Int32 texture, SByte s, SByte t, SByte r, SByte q);
-        [Slot(243)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord4bvOES(System.Int32 texture, SByte* coords);
-        [Slot(246)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord4xOES(System.Int32 texture, int s, int t, int r, int q);
-        [Slot(247)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord4xvOES(System.Int32 texture, int* coords);
-        [Slot(250)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultMatrixxOES(int* m);
-        [Slot(251)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultTransposeMatrixxOES(int* m);
-        [Slot(254)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glNormal3xOES(int nx, int ny, int nz);
-        [Slot(255)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glNormal3xvOES(int* coords);
-        [Slot(258)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glOrthofOES(Single l, Single r, Single b, Single t, Single n, Single f);
-        [Slot(260)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glOrthoxOES(int l, int r, int b, int t, int n, int f);
-        [Slot(261)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPassThroughxOES(int token);
-        [Slot(265)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPixelTransferxOES(System.Int32 pname, int param);
-        [Slot(266)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPixelZoomxOES(int xfactor, int yfactor);
-        [Slot(270)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointParameterxOES(System.Int32 pname, int param);
-        [Slot(272)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glPointParameterxvOES(System.Int32 pname, int* @params);
-        [Slot(274)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointSizePointerOES(System.Int32 type, Int32 stride, IntPtr pointer);
-        [Slot(276)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointSizexOES(int size);
-        [Slot(279)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPolygonOffsetxOES(int factor, int units);
-        [Slot(281)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glPrioritizeTexturesxOES(Int32 n, UInt32* textures, int* priorities);
-        [Slot(283)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe Int32 glQueryMatrixxOES([OutAttribute] int* mantissa, [OutAttribute] Int32* exponent);
-        [Slot(284)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRasterPos2xOES(int x, int y);
-        [Slot(285)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glRasterPos2xvOES(int* coords);
-        [Slot(286)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRasterPos3xOES(int x, int y, int z);
-        [Slot(287)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glRasterPos3xvOES(int* coords);
-        [Slot(288)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRasterPos4xOES(int x, int y, int z, int w);
-        [Slot(289)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glRasterPos4xvOES(int* coords);
-        [Slot(292)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRectxOES(int x1, int y1, int x2, int y2);
-        [Slot(293)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glRectxvOES(int* v1, int* v2);
-        [Slot(297)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageOES(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(301)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRotatexOES(int angle, int x, int y, int z);
-        [Slot(303)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSampleCoverageOES(int value, bool invert);
-        [Slot(305)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSampleCoveragexOES(int value, bool invert);
-        [Slot(308)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glScalexOES(int x, int y, int z);
-        [Slot(317)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord1bOES(SByte s);
-        [Slot(318)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord1bvOES(SByte* coords);
-        [Slot(319)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord1xOES(int s);
-        [Slot(320)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord1xvOES(int* coords);
-        [Slot(321)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord2bOES(SByte s, SByte t);
-        [Slot(322)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord2bvOES(SByte* coords);
-        [Slot(323)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord2xOES(int s, int t);
-        [Slot(324)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord2xvOES(int* coords);
-        [Slot(325)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord3bOES(SByte s, SByte t, SByte r);
-        [Slot(326)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord3bvOES(SByte* coords);
-        [Slot(327)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord3xOES(int s, int t, int r);
-        [Slot(328)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord3xvOES(int* coords);
-        [Slot(329)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord4bOES(SByte s, SByte t, SByte r, SByte q);
-        [Slot(330)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord4bvOES(SByte* coords);
-        [Slot(331)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord4xOES(int s, int t, int r, int q);
-        [Slot(332)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord4xvOES(int* coords);
-        [Slot(339)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexEnvxOES(System.Int32 target, System.Int32 pname, int param);
-        [Slot(341)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexEnvxvOES(System.Int32 target, System.Int32 pname, int* @params);
-        [Slot(342)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexGenfOES(System.Int32 coord, System.Int32 pname, Single param);
-        [Slot(343)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexGenfvOES(System.Int32 coord, System.Int32 pname, Single* @params);
-        [Slot(344)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexGeniOES(System.Int32 coord, System.Int32 pname, Int32 param);
-        [Slot(345)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexGenivOES(System.Int32 coord, System.Int32 pname, Int32* @params);
-        [Slot(346)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexGenxOES(System.Int32 coord, System.Int32 pname, int param);
-        [Slot(347)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexGenxvOES(System.Int32 coord, System.Int32 pname, int* @params);
-        [Slot(354)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexParameterxOES(System.Int32 target, System.Int32 pname, int param);
-        [Slot(356)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameterxvOES(System.Int32 target, System.Int32 pname, int* @params);
-        [Slot(366)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTranslatexOES(int x, int y, int z);
-        [Slot(367)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glUnmapBufferOES(System.Int32 target);
-        [Slot(368)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex2bOES(SByte x);
-        [Slot(369)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex2bvOES(SByte* coords);
-        [Slot(370)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex2xOES(int x);
-        [Slot(371)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex2xvOES(int* coords);
-        [Slot(372)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex3bOES(SByte x, SByte y);
-        [Slot(373)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex3bvOES(SByte* coords);
-        [Slot(374)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex3xOES(int x, int y);
-        [Slot(375)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex3xvOES(int* coords);
-        [Slot(376)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex4bOES(SByte x, SByte y, SByte z);
-        [Slot(377)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex4bvOES(SByte* coords);
-        [Slot(378)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex4xOES(int x, int y, int z);
-        [Slot(379)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex4xvOES(int* coords);
-        [Slot(383)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glWeightPointerOES(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(71)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisableDriverControlQCOM(UInt32 driverControl);
-        [Slot(87)]
+        static extern unsafe void glFogxvOES(System.Int32 pname, int* param);
+        [Slot(72)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnableDriverControlQCOM(UInt32 driverControl);
-        [Slot(88)]
+        static extern void glFramebufferRenderbufferOES(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
+        [Slot(75)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEndTilingQCOM(UInt32 preserveMask);
+        static extern void glFramebufferTexture2DOES(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
+        [Slot(76)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFrustumfOES(Single l, Single r, Single b, Single t, Single n, Single f);
+        [Slot(77)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glFrustumxOES(int l, int r, int b, int t, int n, int f);
+        [Slot(78)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glGenerateMipmapOES(System.Int32 target);
+        [Slot(80)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenFramebuffersOES(Int32 n, [OutAttribute] UInt32* framebuffers);
+        [Slot(81)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenRenderbuffersOES(Int32 n, [OutAttribute] UInt32* renderbuffers);
+        [Slot(82)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
+        [Slot(83)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
+        [Slot(84)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetClipPlanefOES(System.Int32 plane, [OutAttribute] Single* equation);
+        [Slot(85)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetClipPlanexOES(System.Int32 plane, [OutAttribute] int* equation);
+        [Slot(86)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(90)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetFixedvOES(System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(91)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetFramebufferAttachmentParameterivOES(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(93)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glExtGetBufferPointervQCOM(System.Int32 target, [OutAttribute] IntPtr @params);
-        [Slot(94)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetBuffersQCOM([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers);
+        static extern unsafe void glGetHistogramParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(95)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetFramebuffersQCOM([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers);
-        [Slot(96)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, [OutAttribute] IntPtr source, [OutAttribute] Int32* length);
+        static extern unsafe void glGetLightxOES(System.Int32 light, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(97)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetProgramsQCOM([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms);
+        static extern unsafe void glGetMapxvOES(System.Int32 target, System.Int32 query, [OutAttribute] int* v);
         [Slot(98)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetRenderbuffersQCOM([OutAttribute] UInt32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32* numRenderbuffers);
+        static extern void glGetMaterialxOES(System.Int32 face, System.Int32 pname, int param);
         [Slot(99)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetShadersQCOM([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders);
-        [Slot(100)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(101)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr texels);
+        static extern unsafe void glGetMaterialxvOES(System.Int32 face, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(102)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
-        [Slot(103)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glExtIsProgramBinaryQCOM(UInt32 program);
+        static extern unsafe void glGetRenderbufferParameterivOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(104)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
+        static extern unsafe void glGetTexEnvxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(105)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexGenfvOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Single* @params);
+        [Slot(106)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexGenivOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(107)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexGenxvOES(System.Int32 coord, System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(108)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexLevelParameterxvOES(System.Int32 target, Int32 level, System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(109)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetTexParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(110)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glIndexxOES(int component);
+        [Slot(111)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glIndexxvOES(int* component);
+        [Slot(113)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glIsFramebufferOES(UInt32 framebuffer);
+        [Slot(114)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glIsRenderbufferOES(UInt32 renderbuffer);
+        [Slot(116)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glIsVertexArrayOES(UInt32 array);
+        [Slot(117)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glLightModelxOES(System.Int32 pname, int param);
+        [Slot(118)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glLightModelxvOES(System.Int32 pname, int* param);
+        [Slot(119)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glLightxOES(System.Int32 light, System.Int32 pname, int param);
+        [Slot(120)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glLightxvOES(System.Int32 light, System.Int32 pname, int* @params);
+        [Slot(121)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glLineWidthxOES(int width);
+        [Slot(122)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glLoadMatrixxOES(int* m);
+        [Slot(123)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glLoadPaletteFromModelViewMatrixOES();
+        [Slot(124)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glLoadTransposeMatrixxOES(int* m);
+        [Slot(125)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMap1xOES(System.Int32 target, int u1, int u2, Int32 stride, Int32 order, int points);
+        [Slot(126)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMap2xOES(System.Int32 target, int u1, int u2, Int32 ustride, Int32 uorder, int v1, int v2, Int32 vstride, Int32 vorder, int points);
+        [Slot(127)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
+        [Slot(129)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMapGrid1xOES(Int32 n, int u1, int u2);
+        [Slot(130)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMapGrid2xOES(Int32 n, int u1, int u2, int v1, int v2);
+        [Slot(131)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMaterialxOES(System.Int32 face, System.Int32 pname, int param);
+        [Slot(132)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMaterialxvOES(System.Int32 face, System.Int32 pname, int* param);
+        [Slot(133)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMatrixIndexPointerOES(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        [Slot(136)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMultiTexCoord1bOES(System.Int32 texture, SByte s);
+        [Slot(137)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultiTexCoord1bvOES(System.Int32 texture, SByte* coords);
+        [Slot(138)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMultiTexCoord1xOES(System.Int32 texture, int s);
+        [Slot(139)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultiTexCoord1xvOES(System.Int32 texture, int* coords);
+        [Slot(140)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMultiTexCoord2bOES(System.Int32 texture, SByte s, SByte t);
         [Slot(141)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
+        static extern unsafe void glMultiTexCoord2bvOES(System.Int32 texture, SByte* coords);
         [Slot(142)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMultiTexCoord2xOES(System.Int32 texture, int s, int t);
+        [Slot(143)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultiTexCoord2xvOES(System.Int32 texture, int* coords);
+        [Slot(144)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMultiTexCoord3bOES(System.Int32 texture, SByte s, SByte t, SByte r);
+        [Slot(145)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultiTexCoord3bvOES(System.Int32 texture, SByte* coords);
+        [Slot(146)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMultiTexCoord3xOES(System.Int32 texture, int s, int t, int r);
+        [Slot(147)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultiTexCoord3xvOES(System.Int32 texture, int* coords);
+        [Slot(148)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMultiTexCoord4bOES(System.Int32 texture, SByte s, SByte t, SByte r, SByte q);
+        [Slot(149)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultiTexCoord4bvOES(System.Int32 texture, SByte* coords);
+        [Slot(150)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glMultiTexCoord4xOES(System.Int32 texture, int s, int t, int r, int q);
+        [Slot(151)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultiTexCoord4xvOES(System.Int32 texture, int* coords);
+        [Slot(152)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultMatrixxOES(int* m);
+        [Slot(153)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glMultTransposeMatrixxOES(int* m);
+        [Slot(154)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glNormal3xOES(int nx, int ny, int nz);
+        [Slot(155)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glNormal3xvOES(int* coords);
+        [Slot(156)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glOrthofOES(Single l, Single r, Single b, Single t, Single n, Single f);
+        [Slot(157)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glOrthoxOES(int l, int r, int b, int t, int n, int f);
+        [Slot(158)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPassThroughxOES(int token);
+        [Slot(159)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPixelTransferxOES(System.Int32 pname, int param);
+        [Slot(160)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPixelZoomxOES(int xfactor, int yfactor);
+        [Slot(161)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPointParameterxOES(System.Int32 pname, int param);
+        [Slot(162)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glPointParameterxvOES(System.Int32 pname, int* @params);
+        [Slot(163)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPointSizePointerOES(System.Int32 type, Int32 stride, IntPtr pointer);
+        [Slot(164)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPointSizexOES(int size);
+        [Slot(165)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPolygonOffsetxOES(int factor, int units);
+        [Slot(166)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glPrioritizeTexturesxOES(Int32 n, UInt32* textures, int* priorities);
+        [Slot(167)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe Int32 glQueryMatrixxOES([OutAttribute] int* mantissa, [OutAttribute] Int32* exponent);
+        [Slot(168)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRasterPos2xOES(int x, int y);
+        [Slot(169)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glRasterPos2xvOES(int* coords);
+        [Slot(170)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRasterPos3xOES(int x, int y, int z);
+        [Slot(171)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glRasterPos3xvOES(int* coords);
+        [Slot(172)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRasterPos4xOES(int x, int y, int z, int w);
+        [Slot(173)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glRasterPos4xvOES(int* coords);
+        [Slot(175)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRectxOES(int x1, int y1, int x2, int y2);
+        [Slot(176)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glRectxvOES(int* v1, int* v2);
+        [Slot(180)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRenderbufferStorageOES(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(182)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glRotatexOES(int angle, int x, int y, int z);
+        [Slot(183)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glSampleCoverageOES(int value, bool invert);
+        [Slot(184)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glSampleCoveragexOES(int value, bool invert);
+        [Slot(185)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glScalexOES(int x, int y, int z);
+        [Slot(189)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexCoord1bOES(SByte s);
+        [Slot(190)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexCoord1bvOES(SByte* coords);
+        [Slot(191)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexCoord1xOES(int s);
+        [Slot(192)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexCoord1xvOES(int* coords);
+        [Slot(193)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexCoord2bOES(SByte s, SByte t);
+        [Slot(194)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexCoord2bvOES(SByte* coords);
+        [Slot(195)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexCoord2xOES(int s, int t);
+        [Slot(196)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexCoord2xvOES(int* coords);
+        [Slot(197)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexCoord3bOES(SByte s, SByte t, SByte r);
+        [Slot(198)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexCoord3bvOES(SByte* coords);
+        [Slot(199)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexCoord3xOES(int s, int t, int r);
+        [Slot(200)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexCoord3xvOES(int* coords);
+        [Slot(201)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexCoord4bOES(SByte s, SByte t, SByte r, SByte q);
+        [Slot(202)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexCoord4bvOES(SByte* coords);
+        [Slot(203)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexCoord4xOES(int s, int t, int r, int q);
+        [Slot(204)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexCoord4xvOES(int* coords);
+        [Slot(205)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexEnvxOES(System.Int32 target, System.Int32 pname, int param);
+        [Slot(206)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexEnvxvOES(System.Int32 target, System.Int32 pname, int* @params);
+        [Slot(207)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexGenfOES(System.Int32 coord, System.Int32 pname, Single param);
+        [Slot(208)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexGenfvOES(System.Int32 coord, System.Int32 pname, Single* @params);
+        [Slot(209)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexGeniOES(System.Int32 coord, System.Int32 pname, Int32 param);
+        [Slot(210)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexGenivOES(System.Int32 coord, System.Int32 pname, Int32* @params);
+        [Slot(211)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexGenxOES(System.Int32 coord, System.Int32 pname, int param);
+        [Slot(212)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexGenxvOES(System.Int32 coord, System.Int32 pname, int* @params);
+        [Slot(213)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexParameterxOES(System.Int32 target, System.Int32 pname, int param);
+        [Slot(214)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexParameterxvOES(System.Int32 target, System.Int32 pname, int* @params);
+        [Slot(221)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTranslatexOES(int x, int y, int z);
+        [Slot(222)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glUnmapBufferOES(System.Int32 target);
+        [Slot(223)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertex2bOES(SByte x);
+        [Slot(224)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glVertex2bvOES(SByte* coords);
+        [Slot(225)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertex2xOES(int x);
+        [Slot(226)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glVertex2xvOES(int* coords);
+        [Slot(227)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertex3bOES(SByte x, SByte y);
+        [Slot(228)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glVertex3bvOES(SByte* coords);
+        [Slot(229)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertex3xOES(int x, int y);
+        [Slot(230)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glVertex3xvOES(int* coords);
+        [Slot(231)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertex4bOES(SByte x, SByte y, SByte z);
+        [Slot(232)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glVertex4bvOES(SByte* coords);
+        [Slot(233)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertex4xOES(int x, int y, int z);
+        [Slot(234)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glVertex4xvOES(int* coords);
+        [Slot(236)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glWeightPointerOES(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        [Slot(36)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glDisableDriverControlQCOM(UInt32 driverControl);
+        [Slot(48)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEnableDriverControlQCOM(UInt32 driverControl);
+        [Slot(49)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glEndTilingQCOM(UInt32 preserveMask);
+        [Slot(54)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glExtGetBufferPointervQCOM(System.Int32 target, [OutAttribute] IntPtr @params);
+        [Slot(55)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetBuffersQCOM([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers);
+        [Slot(56)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetFramebuffersQCOM([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers);
+        [Slot(57)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, [OutAttribute] IntPtr source, [OutAttribute] Int32* length);
+        [Slot(58)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetProgramsQCOM([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms);
+        [Slot(59)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetRenderbuffersQCOM([OutAttribute] UInt32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32* numRenderbuffers);
+        [Slot(60)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetShadersQCOM([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders);
+        [Slot(61)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(62)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr texels);
+        [Slot(63)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
+        [Slot(64)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern bool glExtIsProgramBinaryQCOM(UInt32 program);
+        [Slot(65)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(87)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
+        [Slot(88)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr driverControlString);
-        [Slot(312)]
+        [Slot(187)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStartTilingQCOM(UInt32 x, UInt32 y, UInt32 width, UInt32 height, UInt32 preserveMask);
     }

@@ -65,7 +65,7 @@ namespace Examples.Tutorial
 
         const TextureTarget Target = TextureTarget.TextureRectangleArb;
         float angle;
-        BeginMode VBO_PrimMode;
+        PrimitiveType VBO_PrimMode;
         Vertex[] VBO_Array;
         uint VBO_Handle;
 
@@ -235,7 +235,7 @@ namespace Examples.Tutorial
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             GL.Color3(Color.White);
-            GL.EnableClientState(EnableCap.ColorArray);
+            GL.EnableClientState(ArrayCap.ColorArray);
 
             #region Pass 1: Draw Object and pick Triangle
             GL.ClearColor(1f, 1f, 1f, 1f); // clears to uint.MaxValue
@@ -261,7 +261,7 @@ namespace Examples.Tutorial
             #endregion Pass 1: Draw Object and pick Triangle
 
             GL.Color3(Color.White);
-            GL.DisableClientState(EnableCap.ColorArray);
+            GL.DisableClientState(ArrayCap.ColorArray);
 
             #region Pass 2: Draw Shape
             if (SelectedTriangle == uint.MaxValue)

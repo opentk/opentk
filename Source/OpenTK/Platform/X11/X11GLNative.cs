@@ -849,11 +849,15 @@ namespace OpenTK.Platform.X11
                         Key key;
                         if (driver.TranslateKey(ref e.KeyEvent, out key))
                         {
+                            // Update legacy GameWindow.Keyboard API:
+                            keyboard.SetKey(key, (uint)e.KeyEvent.keycode, pressed);
+
                             if (pressed)
                             {
                                 // Raise KeyDown event
                                 KeyDownEventArgs.Key = key;
                                 KeyDownEventArgs.ScanCode = (uint)e.KeyEvent.keycode;
+                                KeyDownEventArgs.Modifiers = keyboard.GetModifiers();
                                 KeyDown(this, KeyDownEventArgs);
                             }
                             else
@@ -861,11 +865,9 @@ namespace OpenTK.Platform.X11
                                 // Raise KeyUp event
                                 KeyUpEventArgs.Key = key;
                                 KeyUpEventArgs.ScanCode = (uint)e.KeyEvent.keycode;
-                                KeyUp(this, KeyDownEventArgs);
+                                KeyUpEventArgs.Modifiers = keyboard.GetModifiers();
+                                KeyUp(this, KeyUpEventArgs);
                             }
-
-                            // Update legacy GameWindow.Keyboard API:
-                            keyboard.SetKey(key, (uint)e.KeyEvent.keycode, pressed);
 
                             if (pressed)
                             {

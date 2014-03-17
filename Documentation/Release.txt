@@ -1,30 +1,30 @@
-The Open Toolkit 1.1
-15 February 2014
+The Open Toolkit 1.1.1
+15 March 2014
 
 http://www.opentk.com
 https://github.com/opentk/opentk
+https://www.nuget.org/packages/OpenTK/
 
 
 [Overview]
 
-This is the first stable release for OpenTK 1.1
+This is the second stable release for OpenTK 1.1. It fixes various reported issues and synchronizes the OpenGL and OpenGL ES API with the March 2014 Khronos specifications.
 
-New features:
-1. support for OpenGL 4.4 and OpenGL ES 3.0
-2. strongly-typed enums for OpenGL ES 2.0 and 3.0
-3. new, faster OpenGL bindings based on hand-optimized IL
-4. a new SDL2 backend for improved platform compatibility
-5. new Joystick and GamePad APIs under OpenTK.Input
-6. improved startup time and reduced memory consumption
-7. inline documentation for all OpenGL and OpenGL ES core functions
-8. a greatly expanded math library
-9. numerous bugfixes for Mac OS X, Windows 8 and Linux
-10. ANGLE support for Windows systems without OpenGL drivers
-11. support for Retina / high-DPI monitors
-12. monolinker can now be used to reduce the size of OpenTK.dll
-13. precompiled binaries for optional dependencies (OpenAL, SDL2, monolinker)
+Changelog:
+1. new OpenGL extensions:
+   - INTEL_performance_query
+2. Debug builds will now throw exceptions on OpenGL errors (thanks Frassle!)
+3. OpenGL documentation tooltips now report expected array lengths (thanks Frassle!)
+4. OpenGL documentation is now generated from the new docbook 5 API reference
+3. OpenGL ES now works on more platforms, including Android
+4. keyboard events now report Alt, Ctrl, Shift key states
+5. GameWindow.Run() now respects TargetRenderFrequency setting
+6. GLControl now works on Mac OS X (thanks Sappharad!)
+7. external contexts no longer require an explicit call to Toolkit.Init()
+8. Joysticks now correctly report hat position on Windows
+9. Joysticks now correctly report +y as up and -y as down
 
-Users of previous versions are strongly encouraged to upgrade to OpenTK 1.1
+OpenTK 1.1.1 is backwards compatible with 1.1.0. Users of previous versions are encouraged to upgrade.
 
 Visit http://www.opentk.com for the latest news and information on the Open Toolkit library.
 
@@ -32,9 +32,8 @@ Visit http://www.opentk.com for the latest news and information on the Open Tool
 
 [Resolved issues]
 
-Please refer to the following pages:
-- https://github.com/opentk/opentk/issues/closed
-- http://www.opentk.com/project/issues/opentk?sort=desc&order=Last+updated&text=&versions=1357%2C1395&states=2%2C7&submitted=&assigned=&participated=&form_token=a33a92f28934981edc50bea360f01762&form_id=project_issue_query
+Visit the following page for a complete list:
+- https://github.com/opentk/opentk/issues?milestone=2&page=1&state=closed
 
 
 
@@ -54,17 +53,15 @@ Please refer to the following pages:
 
 If you encounter an issue with OpenTK, please report it at https://github.com/opentk/opentk/issues
 
-Don’t forget to mention your operating system and GPU! If possible, try to attach a small, self-contained test case that reproduces the bug.
+Don't forget to mention your operating system and GPU! If possible, try to attach a small, self-contained test case that reproduces the bug.
 
 
 
 [API compatibility]
 
-Most projects will be able to upgrade to OpenTK 1.1 without any modifications. However, due to updates in the official OpenGL specification and due to bugfixes in the binding generator, a number of OpenGL signatures have changed between OpenTK 1.0 and 1.1. 
+OpenTK 1.1.1 is backwards compatible with 1.1.0.
 
-Modified signatures have been marked with the [Obsolete] attribute. A warning message will be generated with instructions on a suggested replacement.
-
-In a small number of cases, using the original signature would lead to incorrect results or a crash. These cases will generate a compile-time error now. If you use any of the following signatures, please apply the suggested modification:
+OpenTK 1.1.0 is not backwards compatible with 1.0. Most projects will be able to upgrade without any modifications. Projects using the following signatures will have to implement the suggested changes:
 
 Namespace OpenTK.Graphics.OpenGL
 Change signature:

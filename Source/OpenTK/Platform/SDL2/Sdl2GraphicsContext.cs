@@ -240,9 +240,6 @@ namespace OpenTK.Platform.SDL2
 
             if (major > 0)
             {
-                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MAJOR_VERSION, major);
-                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MINOR_VERSION, minor);
-
                 // Workaround for https://github.com/opentk/opentk/issues/44
                 // Mac OS X desktop OpenGL 3.x/4.x contexts require require
                 // ContextProfileFlags.Core, otherwise they will fail to construct.
@@ -250,7 +247,17 @@ namespace OpenTK.Platform.SDL2
                     (flags & GraphicsContextFlags.Embedded) == 0)
                 {
                     cpflags |= ContextProfileFlags.CORE;
+
+                    // According to https://developer.apple.com/graphicsimaging/opengl/capabilities/GLInfo_1075_Core.html
+                    // Mac OS X supports 3.2+. Indeed, requesting 3.0 or 3.1 results in failure.
+                    if (major == 3 && minor < 2)
+                    {
+                        minor = 2;
+                    }
                 }
+
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MAJOR_VERSION, major);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MINOR_VERSION, minor);
             }
 
             if ((flags & GraphicsContextFlags.Debug) != 0)

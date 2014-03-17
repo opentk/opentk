@@ -185,7 +185,7 @@ namespace Examples.Tutorial
             // Fill newly allocated buffer
             GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexC4ubV3f.SizeInBytes * MaxParticleCount), VBO, BufferUsageHint.StreamDraw);
             // Only draw particles that are alive
-            GL.DrawArrays(BeginMode.Points, MaxParticleCount - VisibleParticleCount, VisibleParticleCount);
+            GL.DrawArrays(PrimitiveType.Points, MaxParticleCount - VisibleParticleCount, VisibleParticleCount);
 
             GL.PopMatrix();
 

@@ -173,7 +173,12 @@ namespace Bind
             sw.WriteLine("{");
             sw.Indent();
             foreach (var d in delegates.Values.Select(d => d.First()))
-                sw.WriteLine("\"{0}{1}\",", Settings.FunctionPrefix, d.Name);
+            {
+                if (!Settings.IsEnabled(Settings.Legacy.UseDllImports) || d.Extension != "Core")
+                {
+                    sw.WriteLine("\"{0}{1}\",", Settings.FunctionPrefix, d.Name);
+                }
+            }
             sw.Unindent();
             sw.WriteLine("};");
             sw.WriteLine("EntryPoints = new IntPtr[EntryPointNames.Length];");
@@ -325,6 +330,16 @@ namespace Bind
                     else
                         category = String.Format(category, "v" + f.Version + " and " + f.Category);
                     docs[0] = docs[0].Insert(summary_start, category);
+                }
+
+                foreach (var param in f.WrappedDelegate.Parameters)
+                {
+                    var index = docs.IndexOf("/// <param name=\"" + param.Name +"\">");
+                    if (index != -1 && param.ComputeSize != "")
+                    {
+                        var compute_size = string.Format("[length: {0}]", param.ComputeSize);
+                        docs[index] = docs[index] + compute_size;
+                    }
                 }
 
                 foreach (var doc in docs)

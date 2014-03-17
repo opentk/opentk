@@ -1243,6 +1243,93 @@ namespace OpenTK.Graphics.OpenGL
 
         public static partial class Ext
         {
+            /// <summary>[requires: EXT_direct_state_access]</summary>
+            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
+            public static void ClearNamedBufferSubData(Int32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, IntPtr data)
+            {
+                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
+            }
+
+            /// <summary>[requires: EXT_direct_state_access]</summary>
+            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
+            [CLSCompliant(false)]
+            public static void ClearNamedBufferSubData<T6>(Int32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[] data)
+                where T6 : struct
+            {
+                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
+            }
+
+            /// <summary>[requires: EXT_direct_state_access]</summary>
+            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
+            [CLSCompliant(false)]
+            public static void ClearNamedBufferSubData<T6>(Int32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[,] data)
+                where T6 : struct
+            {
+                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
+            }
+
+            /// <summary>[requires: EXT_direct_state_access]</summary>
+            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
+            [CLSCompliant(false)]
+            public static void ClearNamedBufferSubData<T6>(Int32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[,,] data)
+                where T6 : struct
+            {
+                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
+            }
+
+            /// <summary>[requires: EXT_direct_state_access]</summary>
+            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
+            [CLSCompliant(false)]
+            public static void ClearNamedBufferSubData<T6>(Int32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] ref T6 data)
+                where T6 : struct
+            {
+                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, ref data);
+            }
+
+            /// <summary>[requires: EXT_direct_state_access]</summary>
+            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
+            [CLSCompliant(false)]
+            public static void ClearNamedBufferSubData(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, IntPtr data)
+            {
+                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
+            }
+
+            /// <summary>[requires: EXT_direct_state_access]</summary>
+            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
+            [CLSCompliant(false)]
+            public static void ClearNamedBufferSubData<T6>(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[] data)
+                where T6 : struct
+            {
+                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
+            }
+
+            /// <summary>[requires: EXT_direct_state_access]</summary>
+            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
+            [CLSCompliant(false)]
+            public static void ClearNamedBufferSubData<T6>(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[,] data)
+                where T6 : struct
+            {
+                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
+            }
+
+            /// <summary>[requires: EXT_direct_state_access]</summary>
+            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
+            [CLSCompliant(false)]
+            public static void ClearNamedBufferSubData<T6>(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[,,] data)
+                where T6 : struct
+            {
+                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
+            }
+
+            /// <summary>[requires: EXT_direct_state_access]</summary>
+            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
+            [CLSCompliant(false)]
+            public static void ClearNamedBufferSubData<T6>(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] ref T6 data)
+                where T6 : struct
+            {
+                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, ref data);
+            }
+
             [Obsolete("Use ProgramParameter(..., AssemblyProgramParameterArb, ...) instead.")]
             public static void ProgramParameter(Int32 program, ExtGeometryShader4 pname, Int32 value)
             {

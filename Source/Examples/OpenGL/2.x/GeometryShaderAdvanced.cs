@@ -352,10 +352,10 @@ namespace Examples.Tutorial
 
             int tmp;
             GL.GetInteger((GetPName)ExtGeometryShader4.MaxGeometryOutputVerticesExt, out tmp);
-            GL.Ext.ProgramParameter(shaderProgramCubemap, ExtGeometryShader4.GeometryVerticesOutExt, 18);
+            GL.Ext.ProgramParameter(shaderProgramCubemap, AssemblyProgramParameterArb.GeometryVerticesOut, 18);
 
-            GL.Ext.ProgramParameter(shaderProgramCubemap, ExtGeometryShader4.GeometryInputTypeExt, (int)All.Triangles);
-            GL.Ext.ProgramParameter(shaderProgramCubemap, ExtGeometryShader4.GeometryOutputTypeExt, (int)All.TriangleStrip);
+            GL.Ext.ProgramParameter(shaderProgramCubemap, AssemblyProgramParameterArb.GeometryInputType, (int)All.Triangles);
+            GL.Ext.ProgramParameter(shaderProgramCubemap, AssemblyProgramParameterArb.GeometryOutputType, (int)All.TriangleStrip);
 
             // attach shaders and link the program.
             GL.AttachShader(shaderProgramCubemap, frag);
@@ -623,7 +623,7 @@ namespace Examples.Tutorial
 
             GL.PushMatrix();
             GL.LoadIdentity();
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
 
             // 0 -x
             GL.TexCoord3(-1.0f, +1.0f, -1.0f);
@@ -705,7 +705,7 @@ namespace Examples.Tutorial
             GL.TexCoordPointer(2, TexCoordPointerType.Float, vboCubeStride, new IntPtr(Vector3.SizeInBytes + Vector3.SizeInBytes));
 
             //GL.Arb.DrawArraysInstanced(BeginMode.Triangles, 0, cubeData.Length/8, 1);
-            GL.DrawArrays(BeginMode.Triangles, 0, cubeData.Length / (vboCubeStride / sizeof(float)));
+            GL.DrawArrays(PrimitiveType.Triangles, 0, cubeData.Length / (vboCubeStride / sizeof(float)));
 
             GL.DisableClientState(ArrayCap.VertexArray);
             GL.DisableClientState(ArrayCap.NormalArray);
@@ -725,7 +725,7 @@ namespace Examples.Tutorial
             GL.TexCoordPointer(2, TexCoordPointerType.Float, vboSphereStride, new IntPtr(Vector3.SizeInBytes + Vector3.SizeInBytes));
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboSphere);
-            GL.DrawElements(BeginMode.Triangles, 16 * 16 * 6, DrawElementsType.UnsignedShort, IntPtr.Zero);
+            GL.DrawElements(PrimitiveType.Triangles, 16 * 16 * 6, DrawElementsType.UnsignedShort, IntPtr.Zero);
 
             //GL.Arb.DrawArraysInstanced(BeginMode.Triangles, 0, cubeData.Length/8, 1);
             //GL.DrawArrays(BeginMode.Triangles, 0, sphereData.Length / (vboSphereStride / sizeof(float)));
@@ -758,7 +758,7 @@ namespace Examples.Tutorial
                 // Create 6 ModelViewProjection matrices, one to look in each direction
                 // proj with 90 degrees (1/2 pi) fov
                 // translate negative to place cam insize sphere
-                Matrix4 model = Matrix4.Scale(-1) * Matrix4.CreateTranslation(spherePos);
+                Matrix4 model = Matrix4.CreateScale(-1) * Matrix4.CreateTranslation(spherePos);
                 Matrix4 proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1, 0.1f, 100f);
 
                 Matrix4[] m = new Matrix4[6];

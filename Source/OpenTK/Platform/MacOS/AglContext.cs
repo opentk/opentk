@@ -49,7 +49,6 @@ namespace OpenTK.Platform.MacOS
 
         CarbonWindowInfo carbonWindow;
         IntPtr shareContextRef;
-        DisplayDevice device;
         bool mIsFullscreen = false;
 
         public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext)
@@ -172,32 +171,20 @@ namespace OpenTK.Platform.MacOS
             if (carbonWindow.IsControl == false)
                 return;
 
-            // Todo: See if there is a way around using WinForms.
-            throw new NotImplementedException();
-#if false
-            System.Windows.Forms.Control ctrl = Control.FromHandle(carbonWindow.WindowRef);
-            
-            if (ctrl.TopLevelControl == null)
-                return;
-            
-            Rect rect = API.GetControlBounds(carbonWindow.WindowRef);
-            System.Windows.Forms.Form frm = (System.Windows.Forms.Form)ctrl.TopLevelControl;
-            
-            System.Drawing.Point loc = frm.PointToClient(ctrl.PointToScreen(System.Drawing.Point.Empty));
-            
-            rect.X = (short)loc.X;
-            rect.Y = (short)loc.Y;
+            Rect rect = API.GetControlBounds(carbonWindow.WindowHandle);
             
             Debug.Print("Setting buffer_rect for control.");
             Debug.Print("MacOS Coordinate Rect:   {0}", rect);
-            
-            rect.Y = (short)(ctrl.TopLevelControl.ClientSize.Height - rect.Y - rect.Height);
-            Debug.Print("  AGL Coordinate Rect:   {0}", rect);
-            
             int[] glrect = new int[4];
-            
-            glrect[0] = rect.X;
-            glrect[1] = rect.Y;
+
+            if (carbonWindow.XOffset != null)
+                glrect[0] = rect.X + carbonWindow.XOffset();
+            else
+                glrect[0] = rect.X;
+            if (carbonWindow.YOffset != null)
+                glrect[1] = rect.Y + carbonWindow.YOffset();
+            else
+                glrect[1] = rect.Y;
             glrect[2] = rect.Width;
             glrect[3] = rect.Height;
             
@@ -206,7 +193,6 @@ namespace OpenTK.Platform.MacOS
             
             Agl.aglEnable(Handle.Handle, Agl.ParameterNames.AGL_BUFFER_RECT);
             MyAGLReportError("aglEnable");
-#endif
         }
         void SetDrawable(CarbonWindowInfo carbonWindow)
         {

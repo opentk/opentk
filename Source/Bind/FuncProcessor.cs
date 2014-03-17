@@ -136,15 +136,26 @@ namespace Bind
 
         #region Private Members
 
-        static void GenerateAddressTable(DelegateCollection delegates)
+        void GenerateAddressTable(DelegateCollection delegates)
         {
             int slot = -1;
             foreach (var list in delegates.Values)
             {
-                slot++;
-                foreach (var d in list)
+                if (!Settings.IsEnabled(Settings.Legacy.UseDllImports) || list.First().Extension != "Core")
                 {
-                    d.Slot = slot;
+                    slot++;
+                    foreach (var d in list)
+                    {
+                        d.Slot = slot;
+                    }
+                }
+                else
+                {
+                    // Core function routed through DllImport - no slot generated
+                    foreach (var d in list)
+                    {
+                        d.Slot = -1;
+                    }
                 }
             }
         }
