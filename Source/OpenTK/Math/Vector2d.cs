@@ -925,6 +925,19 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Component-wise multiplication between the specified instance by a scale vector.
+        /// </summary>
+        /// <param name="scale">Left operand.</param>
+        /// <param name="vec">Right operand.</param>
+        /// <returns>Result of multiplication.</returns>
+        public static Vector2d operator *(Vector2d vec, Vector2d scale)
+        {
+            vec.X *= scale.X;
+            vec.Y *= scale.Y;
+            return vec;
+        }
+		
+        /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
