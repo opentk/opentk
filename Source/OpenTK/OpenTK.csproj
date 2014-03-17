@@ -147,6 +147,11 @@
     <Compile Include="Input\JoystickCapabilities.cs" />
     <Compile Include="Input\JoystickState.cs" />
     <Compile Include="InteropHelper.cs" />
+    <Compile Include="Math\BezierCurve.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BezierCurve.tt</DependentUpon>
+    </Compile>
     <Compile Include="Math\Matrix2.cs" />
     <Compile Include="Math\Matrix2d.cs" />
     <Compile Include="Math\Matrix2x3.cs" />
@@ -519,9 +524,6 @@
     <Compile Include="Math\Vector4.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Math\BezierCurve.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Math\Vector3.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -759,6 +761,10 @@
     <None Include="Math\Quaternion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Quaternion.cs</LastGenOutput>
+    </None>
+    <None Include="Math\BezierCurve.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BezierCurve.cs</LastGenOutput>
     </None>
     <Compile Include="Input\KeyModifiers.cs" />
     <Compile Include="Platform\MacOS\CocoaContext.cs" />
