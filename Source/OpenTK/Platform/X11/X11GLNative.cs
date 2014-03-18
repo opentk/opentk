@@ -898,8 +898,14 @@ namespace OpenTK.Platform.X11
                         // is very very uncommon. Todo: Can this be remedied?
                         int x = e.MotionEvent.x;
                         int y =e.MotionEvent.y;
-                        int middle_x = (Bounds.Left + Bounds.Right) / 2;
-                        int middle_y = (Bounds.Top + Bounds.Bottom) / 2;
+                        // TODO: Have offset as a stored field, only update it when the window moves
+                        // The middle point cannot be the average of the Bounds.left/right/top/bottom,
+                        // because these fields take into account window decoration (borders, etc),
+                        // which we do not want to account for.
+                        Point offset = this.PointToClient(Point.Empty);
+                        int middle_x = Width/2-offset.X;
+                        int middle_y = Height/2-offset.Y;
+
                         Point screen_xy = PointToScreen(new Point(x, y));
                         if (!CursorVisible && MouseWarpActive &&
                             screen_xy.X == middle_x && screen_xy.Y == middle_y)
