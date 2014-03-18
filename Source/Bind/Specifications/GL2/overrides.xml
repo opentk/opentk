@@ -4009,6 +4009,10 @@
       <use enum="VERSION_3_1" token="RG8_SNORM" />
       <use enum="VERSION_3_1" token="RGB8_SNORM" />
       <use enum="VERSION_3_1" token="RGBA8_SNORM" />
+      <use enum="VERSION_3_1" token="R16_SNORM" />
+      <use enum="VERSION_3_1" token="RG16_SNORM" />
+      <use enum="VERSION_3_1" token="RGB16_SNORM" />
+      <use enum="VERSION_3_1" token="RGBA16_SNORM" />
       <use enum="VERSION_3_3" token="RGB10_A2UI" />
       <use enum="VERSION_4_3" token="COMPRESSED_RED_RGTC1" />
       <use enum="VERSION_4_3" token="COMPRESSED_RG_RGTC2" />

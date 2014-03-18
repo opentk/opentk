@@ -46667,6 +46667,22 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Rgba8Snorm = ((int)0x8F97)        ,
         /// <summary>
+        /// Original was GL_R16_SNORM = 0x8F98
+        /// </summary>
+        R16Snorm = ((int)0x8F98)        ,
+        /// <summary>
+        /// Original was GL_RG16_SNORM = 0x8F99
+        /// </summary>
+        Rg16Snorm = ((int)0x8F99)        ,
+        /// <summary>
+        /// Original was GL_RGB16_SNORM = 0x8F9A
+        /// </summary>
+        Rgb16Snorm = ((int)0x8F9A)        ,
+        /// <summary>
+        /// Original was GL_RGBA16_SNORM = 0x8F9B
+        /// </summary>
+        Rgba16Snorm = ((int)0x8F9B)        ,
+        /// <summary>
         /// Original was GL_RGB10_A2UI = 0x906F
         /// </summary>
         Rgb10A2ui = ((int)0x906F)        ,
