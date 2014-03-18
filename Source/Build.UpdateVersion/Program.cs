@@ -114,7 +114,7 @@ namespace Build.UpdateVersion
         static string RetrieveRevisionNumber(DateTime now)
         {
             double timespan = now.Subtract(new DateTime(2010, 1, 1)).TotalDays;
-            string revision = RetrieveGitRevision() ?? RetrieveSvnRevision() ?? RetrieveBzrRevision() ?? RetrieveSeconds(timespan);
+            string revision = RetrieveGitRevision() ?? RetrieveSvnRevision() ?? RetrieveBzrRevision() ?? "0";
             revision = revision.Trim();
             return revision;
         }
