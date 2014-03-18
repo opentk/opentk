@@ -104,7 +104,7 @@ namespace Build.UpdateVersion
                 "",
                 "[assembly: AssemblyCompany(\"The Open Toolkit Library\")]",
                 "[assembly: AssemblyProduct(\"The Open Toolkit Library\")]",
-                "[assembly: AssemblyCopyright(\"Copyright © 2006 - 2013 the Open Toolkit Library\")]",
+                "[assembly: AssemblyCopyright(\"Copyright © 2006 - 2014 the Open Toolkit Library\")]",
                 "[assembly: AssemblyTrademark(\"OpenTK\")]",
                 String.Format("[assembly: AssemblyVersion(\"{0}.{1}.0.0\")]", major, minor),
                 String.Format("[assembly: AssemblyFileVersion(\"{0}\")]", version),
