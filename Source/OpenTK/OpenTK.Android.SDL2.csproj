@@ -526,7 +526,7 @@
     <Compile Include="Math\Vector4h.cs">
       <Link>OpenTK\Math\Vector4h.cs</Link>
     </Compile>
-    <Compile Include=“Platform\DesktopGraphicsContext.cs">
+    <Compile Include="Platform\DesktopGraphicsContext.cs">
       <Link>OpenTK\Platform\DesktopGraphicsContext.cs</Link>
     </Compile>
     <Compile Include="Platform\DisplayDeviceBase.cs">
@@ -656,7 +656,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="OpenTK\" />
-    <!—-<Folder Include="Properties\" />—->
     <Folder Include="Additions\" />
   </ItemGroup>
 </Project>

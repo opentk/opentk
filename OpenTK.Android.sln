@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Android", "Source\OpenTK\OpenTK.Android.csproj", "{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Android.SDL2", "Source\OpenTK\OpenTK.Android.SDL2.csproj", "{A00D026E-E230-499C-AA18-C995C0A88056}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A00D026E-E230-499C-AA18-C995C0A88056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A00D026E-E230-499C-AA18-C995C0A88056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A00D026E-E230-499C-AA18-C995C0A88056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A00D026E-E230-499C-AA18-C995C0A88056}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Source\OpenTK\OpenTK.Android.csproj
