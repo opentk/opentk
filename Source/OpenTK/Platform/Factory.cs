@@ -52,17 +52,19 @@ namespace OpenTK.Platform
             Toolkit.Init();
 
             // Create regular platform backend
-            if (Configuration.RunningOnSdl2) Default = new SDL2.Sdl2Factory();
+            #if SDL2
+            Default = Configuration.RunningOnSdl2 ? new SDL2.Sdl2Factory() : null;
+            #endif
             #if WIN32
-            else if (Configuration.RunningOnWindows) Default = new Windows.WinFactory();
+            Default = Default ?? Configuration.RunningOnWindows ? new Windows.WinFactory() : null;
             #endif
             #if CARBON
-            else if (Configuration.RunningOnMacOS) Default = new MacOS.MacOSFactory();
+            Default = Default ?? Configuration.RunningOnMacOS ? new MacOS.MacOSFactory() : null;
             #endif
             #if X11
-            else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
+            Default = Default ?? Configuration.RunningOnX11 ? new X11.X11Factory() : null;
             #endif
-            else Default = new UnsupportedPlatform();
+            Default = Default ?? new UnsupportedPlatform();
 
             // Create embedded platform backend for EGL / OpenGL ES.
             // Todo: we could probably delay this until the embedded

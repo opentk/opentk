@@ -25,6 +25,8 @@
 //
 #endregion
 
+#if X11
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -58,3 +60,5 @@ namespace OpenTK.Platform.Egl
         }
     }
 }
+
+#endif
