@@ -29,9 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-#if ANDROID || IPHONE || MINIMAL
-using OpenTK.Minimal;
-#else
+#if !(ANDROID || IPHONE || MINIMAL)
 using System.Drawing.Imaging;
 #endif
 using System.Runtime.InteropServices;
