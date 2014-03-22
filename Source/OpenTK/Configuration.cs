@@ -267,9 +267,13 @@ namespace OpenTK
 
         static bool DetectX11()
         {
+            #if X11
             // Detect whether X is present.
             try { return OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
             catch { return false; }
+            #else
+            return false;
+            #endif
         }
 
         #endregion
@@ -289,7 +293,6 @@ namespace OpenTK
                 {
 #if ANDROID
                     runningOnMono = true;
-                    runningOnAnroid = true;
 #elif IPHONE
                     runningOnMono = true;
                     runningOnIOS = true;

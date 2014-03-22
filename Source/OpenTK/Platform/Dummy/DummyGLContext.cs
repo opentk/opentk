@@ -20,7 +20,7 @@ namespace OpenTK.Platform.Dummy
     /// An empty IGraphicsContext implementation to be used inside the Visual Studio designer.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class DummyGLContext : DesktopGraphicsContext
+    internal sealed class DummyGLContext : GraphicsContextBase
     {
         readonly GraphicsContext.GetAddressDelegate Loader;
 
@@ -106,12 +106,16 @@ namespace OpenTK.Platform.Dummy
 
         public override void LoadAll()
         {
+            #if OPENGL
             new OpenTK.Graphics.OpenGL.GL().LoadEntryPoints();
             new OpenTK.Graphics.OpenGL4.GL().LoadEntryPoints();
+            #endif
+            #if OPENGLES
             new OpenTK.Graphics.ES10.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES11.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES30.GL().LoadEntryPoints();
+            #endif
         }
 
         #endregion
