@@ -25,6 +25,8 @@
 //
 #endregion
 
+#if WIN32
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -84,3 +86,5 @@ namespace OpenTK.Platform.Egl
         #endregion
     }
 }
+
+#endif

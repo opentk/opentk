@@ -198,6 +198,7 @@ namespace OpenTK
 
         static bool DetectSdl2()
         {
+            #if SDL2
             bool supported = false;
 
             // Detect whether SDL2 is supported
@@ -228,6 +229,9 @@ namespace OpenTK
             Debug.Print("SDL2 is {0}", supported ? "supported" : "not supported");
 
             return supported;
+            #else
+            return false;
+            #endif
         }
 
         static void DetectUnix(out bool unix, out bool linux, out bool macos)
