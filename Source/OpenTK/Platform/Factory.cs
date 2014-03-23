@@ -56,13 +56,13 @@ namespace OpenTK.Platform
             Default = Configuration.RunningOnSdl2 ? new SDL2.Sdl2Factory() : null;
             #endif
             #if WIN32
-            Default = Default ?? Configuration.RunningOnWindows ? new Windows.WinFactory() : null;
+            Default = Default ?? (Configuration.RunningOnWindows ? new Windows.WinFactory() : null);
             #endif
             #if CARBON
-            Default = Default ?? Configuration.RunningOnMacOS ? new MacOS.MacOSFactory() : null;
+            Default = Default ?? (Configuration.RunningOnMacOS ? new MacOS.MacOSFactory() : null);
             #endif
             #if X11
-            Default = Default ?? Configuration.RunningOnX11 ? new X11.X11Factory() : null;
+            Default = Default ?? (Configuration.RunningOnX11 ? new X11.X11Factory() : null);
             #endif
             Default = Default ?? new UnsupportedPlatform();
 
@@ -78,12 +78,16 @@ namespace OpenTK.Platform
             }
             else if (Egl.Egl.IsSupported)
             {
-                #if !(ANDROID || IPHONE)
-                if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
-                else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
-                else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
-                else Embedded = new UnsupportedPlatform();
+                #if WIN32
+                Embedded = Configuration.RunningOnWindows ? new Egl.EglWinPlatformFactory() : null;
                 #endif
+                #if CARBON
+                Embedded = Embedded ?? (Configuration.RunningOnMacOS ? new Egl.EglMacPlatformFactory() : null);
+                #endif
+                #if X11
+                Embedded = Embedded ?? (Configuration.RunningOnX11 ? new Egl.EglX11PlatformFactory() : null);
+                #endif
+                Embedded = Embedded ?? new UnsupportedPlatform();
             }
             else
             {
