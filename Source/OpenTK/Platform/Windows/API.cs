@@ -111,6 +111,13 @@ namespace OpenTK.Platform.Windows
 
     internal static class Functions
     {
+        #region GetLastError
+
+        [DllImport("Kernel32.dll")]
+        internal static extern uint GetLastError();
+
+        #endregion
+
         #region Window functions
 
         #region SetWindowPos
@@ -368,6 +375,21 @@ namespace OpenTK.Platform.Windows
         //[return: MarshalAs(UnmanagedType.Bool)]
         internal static extern INT GetMessage(ref MSG msg,
             IntPtr windowHandle, int messageFilterMin, int messageFilterMax);
+
+        #endregion
+
+        #region GetMessageTime
+
+        /// <summary>
+        /// Retrieves the message time for the last message retrieved by the 
+        /// GetMessage function. The time is a long integer that specifies the 
+        /// elapsed time, in milliseconds, from the time the system was started 
+        /// to the time the message was created (that is, placed in the thread's
+        /// message queue).
+        /// </summary>
+        /// <returns>The return value specifies the message time.</returns>
+        [DllImport("User32.dll")]
+        internal static extern int GetMessageTime();
 
         #endregion
 
@@ -1004,6 +1026,30 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll")]
         public static extern bool SetCursorPos(int X, int Y);
 
+        /// <summary>
+        /// Retrieves a history of up to 64 previous coordinates of the mouse or pen.
+        /// </summary>
+        /// <param name="cbSize">The size, in bytes, of the MouseMovePoint structure.</param>
+        /// <param name="pointsIn">
+        /// A pointer to a MOUSEMOVEPOINT structure containing valid mouse 
+        /// coordinates (in screen coordinates). It may also contain a time 
+        /// stamp.
+        /// </param>
+        /// <param name="pointsBufferOut">
+        /// A pointer to a buffer that will receive the points. It should be at 
+        /// least cbSize * nBufPoints in size.
+        /// </param>
+        /// <param name="nBufPoints">The number of points to be retrieved.</param>
+        /// <param name="resolution">
+        /// The resolution desired. This parameter can GMMP_USE_DISPLAY_POINTS 
+        /// or GMMP_USE_HIGH_RESOLUTION_POINTS.
+        /// </param>
+        /// <returns></returns>
+        [DllImport("user32", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
+        unsafe internal static extern int GetMouseMovePointsEx(
+            uint cbSize, MouseMovePoint* pointsIn, 
+            MouseMovePoint* pointsBufferOut, int nBufPoints, uint resolution);
+
         #region Async input
 
         #region GetCursorPos
@@ -1633,6 +1679,19 @@ namespace OpenTK.Platform.Windows
             internal static readonly IntPtr MESSAGE_ONLY = new IntPtr(-3);
 
             internal static readonly IntPtr HKEY_LOCAL_MACHINE = new IntPtr(unchecked((int)0x80000002));
+
+            /// <summary>
+            /// Retrieves the points using the display resolution.
+            /// </summary>
+            internal const int GMMP_USE_DISPLAY_POINTS = 1;
+
+            /// <summary>
+            /// Retrieves high resolution points. Points can range from zero to 
+            /// 65,535 (0xFFFF) in both x and y coordinates. This is the resolution 
+            /// provided by absolute coordinate pointing devices such as drawing 
+            /// tablets.
+            /// </summary>
+            internal const int GMMP_USE_HIGH_RESOLUTION_POINTS = 2;
         }
 
         #endregion
@@ -2914,6 +2973,36 @@ namespace OpenTK.Platform.Windows
     }
 
 #endif
+
+    #endregion
+
+    #region MouseMovePoint
+
+    /// <summary>
+    /// Contains information about the mouse's location in screen coordinates.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MouseMovePoint
+    {
+        /// <summary>
+        /// The x-coordinate of the mouse.
+        /// </summary>
+        public int X;
+        /// <summary>
+        /// The y-coordinate of the mouse.
+        /// </summary>
+        public int Y;
+        /// <summary>
+        /// The time stamp of the mouse coordinate.
+        /// </summary>
+        public int Time;
+        /// <summary>
+        /// Additional information associated with this coordinate.
+        /// </summary>
+        public IntPtr ExtraInfo;
+
+        public static readonly int SizeInBytes = Marshal.SizeOf(default(MouseMovePoint));
+    }
 
     #endregion
 
