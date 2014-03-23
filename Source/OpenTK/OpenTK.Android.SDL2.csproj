@@ -12,14 +12,14 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
-    <AssemblyName>OpenTK.Android.SDL2</AssemblyName>
+    <AssemblyName>OpenTK</AssemblyName>
     <TargetFrameworkVersion>v3.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\..\Binaries\Android.SDL2\Debug\</OutputPath>
     <DefineConstants>DEBUG;__MOBILE__;__ANDROID__;ANDROID;SDL2;OPENGLES</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,7 +30,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
+    <OutputPath>..\..\Binaries\Android.SDL2\Release\</OutputPath>
     <DefineConstants>__MOBILE__;__ANDROID__;ANDROID;SDL2;OPENGLES</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,7 +42,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
@@ -657,5 +656,16 @@
   <ItemGroup>
     <Folder Include="OpenTK\" />
     <Folder Include="Additions\" />
+    <Folder Include="lib\" />
+    <Folder Include="lib\armeabi\" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedNativeLibrary Include="lib\armeabi\libSDL2.so" />
+  </ItemGroup>
+  <Target Name="AfterBuild">
+    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) != 'Debug'" />
+    <Exec Command="mono $(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="mono $(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) != 'Debug'" />
+  </Target>
 </Project>
