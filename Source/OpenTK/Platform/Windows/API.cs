@@ -111,13 +111,6 @@ namespace OpenTK.Platform.Windows
 
     internal static class Functions
     {
-        #region GetLastError
-
-        [DllImport("Kernel32.dll")]
-        internal static extern uint GetLastError();
-
-        #endregion
-
         #region Window functions
 
         #region SetWindowPos
@@ -1679,6 +1672,14 @@ namespace OpenTK.Platform.Windows
             internal static readonly IntPtr MESSAGE_ONLY = new IntPtr(-3);
 
             internal static readonly IntPtr HKEY_LOCAL_MACHINE = new IntPtr(unchecked((int)0x80000002));
+
+            // System Error Codes
+            // http://msdn.microsoft.com/en-us/library/windows/desktop/ms681381(v=vs.85).aspx
+
+            /// <summary>
+            /// The point passed to GetMouseMovePoints is not in the buffer.
+            /// </summary>
+            internal const int ERROR_POINT_NOT_FOUND = 1171;
 
             /// <summary>
             /// Retrieves the points using the display resolution.

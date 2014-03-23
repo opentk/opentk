@@ -435,17 +435,17 @@ namespace OpenTK.Platform.Windows
                     &movePoint, movePoints, numPoints,
                     Constants.GMMP_USE_DISPLAY_POINTS);
 
-                uint lastError = Functions.GetLastError();
+                int lastError = Marshal.GetLastWin32Error();
 
                 // No points returned or search point not found
-                if (points == 0 || (points == -1 && lastError == 1171))
+                if (points == 0 || (points == -1 && lastError == Constants.ERROR_POINT_NOT_FOUND))
                 {
                     // Just use the mouse move position
                     mouse.Position = point;
                 }
                 else if (points == -1)
                 {
-                    throw new System.ComponentModel.Win32Exception((int)lastError);
+                    throw new System.ComponentModel.Win32Exception(lastError);
                 }
                 else
                 {
