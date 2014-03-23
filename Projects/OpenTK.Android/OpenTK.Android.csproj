@@ -242,5 +242,6 @@
     <Folder Include="Graphics\ES30\" />
     <Folder Include="Input\" />
     <Folder Include="Graphics\ES10\" />
+    <Folder Include="Platform\Android\" />
   </ItemGroup>
 </Project>
