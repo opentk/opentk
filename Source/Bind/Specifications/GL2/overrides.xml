@@ -4899,6 +4899,9 @@
     <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
+    <function name="EnableClientState" extension="Core" obsolete="Use ArrayCap overload instead">
+      <param name="array"><type>EnableCap</type></param>
+    </function>
     <function name="ExtGetBuffersQCOM" extension="QCOM" obsolete="Use out overload instead">
       <param name="numBuffers"><count>0</count></param>
     </function>
@@ -4917,21 +4920,85 @@
   </overload>
 
   <replace name="gles1">
+    <function name="BindBuffer">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="usage"><type>BufferUsageHint</type></param>
+    </function>
+    <function name="BufferData">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="usage"><type>BufferUsageHint</type></param>
+    </function>
+    <function name="BufferSubData">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
     <!-- AMD_performance_monitors is not const-correct -->
     <function name="DeletePerfMonitors" extension="AMD">
       <param name="monitors"><flow>in</flow></param>
     </function>
+    <function name="DrawArrays">
+      <param name="mode"><type>PrimitiveType</type></param>
+    </function>
+    <function name="DrawElements">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+    <function name="EnableClientState">
+      <param name="array"><type>ArrayCap</type></param>
+    </function>
+    <function name="GetBufferParameter">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferParameterName</type></param>
+    </function>
   </replace>
   
   <add name="gles1">
+    <enum name="ArrayCap">
+      <use token="VERTEX_ARRAY" />
+      <use token="NORMAL_ARRAY" />
+      <use token="COLOR_ARRAY" />
+      <use token="TEXTURE_COORD_ARRAY" />
+      <use token="POINT_SIZE_ARRAY_OES" />
+    </enum>
     <enum name="BeginMode">
-      <token name="Points" value="0X0000" />
-      <token name="Lines" value="0X0001" />
-      <token name="LineLoop" value="0X0002" />
-      <token name="LineStrip" value="0X0003" />
-      <token name="Triangles" value="0X0004" />
-      <token name="TriangleStrip" value="0X0005" />
-      <token name="TriangleFan" value="0X0006" />
+      <token name="POINTS" value="0x0000" />
+      <token name="LINES" value="0x0001" />
+      <token name="LINE_LOOP" value="0x0002" />
+      <token name="LINE_STRIP" value="0x0003" />
+      <token name="TRIANGLES" value="0x0004" />
+      <token name="TRIANGLE_STRIP" value="0x0005" />
+      <token name="TRIANGLE_FAN" value="0x0006" />
+    </enum>
+    <enum name="BufferTarget">
+      <token name="ARRAY_BUFFER" value="0x8892" />
+      <token name="ELEMENT_ARRAY_BUFFER" value="0x8893" />
+    </enum>
+    <enum name="BufferUsage">
+      <reuse enum="BufferUsageHint" />
+    </enum>
+    <enum name="BufferUsageHint">
+      <token name="DYNAMIC_DRAW" value="0x88e8" />
+      <token name="STATIC_DRAW" value="0x88e4" />
+      <token name="STREAM_DRAW" value="0x88e0" />
+    </enum>
+    <enum name="BufferParameterName">
+      <token name="BUFFER_SIZE" value="0x8764" />
+      <token name="BUFFER_USAGE" value="0x8765" />
+    </enum>
+    <enum name="DrawElementsType">
+      <token name="UNSIGNED_BYTE" value="0x1401" />
+      <token name="UNSIGNED_SHORT" value="0x1403" />
+    </enum>
+    <enum name="GetTextureParameterName">
+      <reuse enum="TextureParameterName" />
+    </enum>
+    <enum name="PrimitiveType">
+      <reuse enum="BeginMode" />
+    </enum>
+    <enum name="TextureParameterName">
+      <use token="TEXTURE_MAG_FILTER" />
+      <use token="TEXTURE_MIN_FILTER" />
+      <use token="TEXTURE_WRAP_S" />
+      <use token="TEXTURE_WRAP_T" />
     </enum>
     
     <!-- Enums from old ESCL parser -->
@@ -5449,7 +5516,7 @@
       <param name="bufferMode"><type>TransformFeedbackMode</type></param>
     </function>
 
-	<!-- Shader Queries [6.1.12] -->
+    <!-- Shader Queries [6.1.12] -->
     <function name="GetShader">
       <param name="pname"><type>ShaderParameter</type></param> 
     </function>
