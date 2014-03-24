@@ -84,9 +84,9 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         Zero = ((int)0)        ,
         /// <summary>
-        /// Original was GL_Points = 0X0000
+        /// Original was GL_POINTS = 0x0000
         /// </summary>
-        Points = ((int)0X0000)        ,
+        Points = ((int)0x0000)        ,
         /// <summary>
         /// Original was GL_CLIENT_PIXEL_STORE_BIT = 0x00000001
         /// </summary>
@@ -428,6 +428,10 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         QueryBufferBarrierBit = ((int)0x00008000)        ,
         /// <summary>
+        /// Original was GL_LINES = 0x0001
+        /// </summary>
+        Lines = ((int)0x0001)        ,
+        /// <summary>
         /// Original was GL_MAP_READ_BIT = 0x0001
         /// </summary>
         MapReadBit = ((int)0x0001)        ,
@@ -435,10 +439,6 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_MAP_READ_BIT_EXT = 0x0001
         /// </summary>
         MapReadBitExt = ((int)0x0001)        ,
-        /// <summary>
-        /// Original was GL_Lines = 0X0001
-        /// </summary>
-        Lines = ((int)0X0001)        ,
         /// <summary>
         /// Original was GL_EVAL_BIT = 0x00010000
         /// </summary>
@@ -480,9 +480,9 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         MapInvalidateRangeBitExt = ((int)0x0004)        ,
         /// <summary>
-        /// Original was GL_Triangles = 0X0004
+        /// Original was GL_TRIANGLES = 0x0004
         /// </summary>
-        Triangles = ((int)0X0004)        ,
+        Triangles = ((int)0x0004)        ,
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT2_QCOM = 0x00040000
         /// </summary>
@@ -5340,6 +5340,10 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         BufferMapPointerOes = ((int)0x88BD)        ,
         /// <summary>
+        /// Original was GL_STREAM_DRAW = 0x88e0
+        /// </summary>
+        StreamDraw = ((int)0x88e0)        ,
+        /// <summary>
         /// Original was GL_STATIC_DRAW = 0x88E4
         /// </summary>
         StaticDraw = ((int)0x88E4)        ,
@@ -6350,6 +6354,33 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
+    /// Used in GL.EnableClientState
+    /// </summary>
+    public enum ArrayCap : int
+    {
+        /// <summary>
+        /// Original was GL_VERTEX_ARRAY = 0x8074
+        /// </summary>
+        VertexArray = ((int)0x8074)        ,
+        /// <summary>
+        /// Original was GL_NORMAL_ARRAY = 0x8075
+        /// </summary>
+        NormalArray = ((int)0x8075)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ARRAY = 0x8076
+        /// </summary>
+        ColorArray = ((int)0x8076)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_COORD_ARRAY = 0x8078
+        /// </summary>
+        TextureCoordArray = ((int)0x8078)        ,
+        /// <summary>
+        /// Original was GL_POINT_SIZE_ARRAY_OES = 0x8B9C
+        /// </summary>
+        PointSizeArrayOes = ((int)0x8B9C)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     [Flags]
@@ -6463,33 +6494,33 @@ namespace OpenTK.Graphics.ES11
     public enum BeginMode : int
     {
         /// <summary>
-        /// Original was GL_Points = 0X0000
+        /// Original was GL_POINTS = 0x0000
         /// </summary>
-        Points = ((int)0X0000)        ,
+        Points = ((int)0x0000)        ,
         /// <summary>
-        /// Original was GL_Lines = 0X0001
+        /// Original was GL_LINES = 0x0001
         /// </summary>
-        Lines = ((int)0X0001)        ,
+        Lines = ((int)0x0001)        ,
         /// <summary>
-        /// Original was GL_LineLoop = 0X0002
+        /// Original was GL_LINE_LOOP = 0x0002
         /// </summary>
-        LineLoop = ((int)0X0002)        ,
+        LineLoop = ((int)0x0002)        ,
         /// <summary>
-        /// Original was GL_LineStrip = 0X0003
+        /// Original was GL_LINE_STRIP = 0x0003
         /// </summary>
-        LineStrip = ((int)0X0003)        ,
+        LineStrip = ((int)0x0003)        ,
         /// <summary>
-        /// Original was GL_Triangles = 0X0004
+        /// Original was GL_TRIANGLES = 0x0004
         /// </summary>
-        Triangles = ((int)0X0004)        ,
+        Triangles = ((int)0x0004)        ,
         /// <summary>
-        /// Original was GL_TriangleStrip = 0X0005
+        /// Original was GL_TRIANGLE_STRIP = 0x0005
         /// </summary>
-        TriangleStrip = ((int)0X0005)        ,
+        TriangleStrip = ((int)0x0005)        ,
         /// <summary>
-        /// Original was GL_TriangleFan = 0X0006
+        /// Original was GL_TRIANGLE_FAN = 0x0006
         /// </summary>
-        TriangleFan = ((int)0X0006)        ,
+        TriangleFan = ((int)0x0006)        ,
     }
 
     /// <summary>
@@ -6713,6 +6744,74 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_DYNAMIC_DRAW = 0x88E8
         /// </summary>
         DynamicDraw = ((int)0x88E8)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetBufferParameter
+    /// </summary>
+    public enum BufferParameterName : int
+    {
+        /// <summary>
+        /// Original was GL_BUFFER_SIZE = 0x8764
+        /// </summary>
+        BufferSize = ((int)0x8764)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_USAGE = 0x8765
+        /// </summary>
+        BufferUsage = ((int)0x8765)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.BindBuffer, GL.BufferData and 2 other functions
+    /// </summary>
+    public enum BufferTarget : int
+    {
+        /// <summary>
+        /// Original was GL_ARRAY_BUFFER = 0x8892
+        /// </summary>
+        ArrayBuffer = ((int)0x8892)        ,
+        /// <summary>
+        /// Original was GL_ELEMENT_ARRAY_BUFFER = 0x8893
+        /// </summary>
+        ElementArrayBuffer = ((int)0x8893)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum BufferUsage : int
+    {
+        /// <summary>
+        /// Original was GL_STREAM_DRAW = 0x88e0
+        /// </summary>
+        StreamDraw = ((int)0x88e0)        ,
+        /// <summary>
+        /// Original was GL_STATIC_DRAW = 0x88e4
+        /// </summary>
+        StaticDraw = ((int)0x88e4)        ,
+        /// <summary>
+        /// Original was GL_DYNAMIC_DRAW = 0x88e8
+        /// </summary>
+        DynamicDraw = ((int)0x88e8)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.BufferData
+    /// </summary>
+    public enum BufferUsageHint : int
+    {
+        /// <summary>
+        /// Original was GL_STREAM_DRAW = 0x88e0
+        /// </summary>
+        StreamDraw = ((int)0x88e0)        ,
+        /// <summary>
+        /// Original was GL_STATIC_DRAW = 0x88e4
+        /// </summary>
+        StaticDraw = ((int)0x88e4)        ,
+        /// <summary>
+        /// Original was GL_DYNAMIC_DRAW = 0x88e8
+        /// </summary>
+        DynamicDraw = ((int)0x88e8)        ,
     }
 
     /// <summary>
@@ -7236,6 +7335,21 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_AUX3 = 0x040C
         /// </summary>
         Aux3 = ((int)0x040C)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.DrawElements, GL.Ext.MultiDrawElements
+    /// </summary>
+    public enum DrawElementsType : int
+    {
+        /// <summary>
+        /// Original was GL_UNSIGNED_BYTE = 0x1401
+        /// </summary>
+        UnsignedByte = ((int)0x1401)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_SHORT = 0x1403
+        /// </summary>
+        UnsignedShort = ((int)0x1403)        ,
     }
 
     /// <summary>
@@ -10392,6 +10506,29 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_TEXTURE_MAX_CLAMP_R_SGIX = 0x836B
         /// </summary>
         TextureMaxClampRSgix = ((int)0x836B)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum GetTextureParameterName : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE_MAG_FILTER = 0x2800
+        /// </summary>
+        TextureMagFilter = ((int)0x2800)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_MIN_FILTER = 0x2801
+        /// </summary>
+        TextureMinFilter = ((int)0x2801)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_WRAP_S = 0x2802
+        /// </summary>
+        TextureWrapS = ((int)0x2802)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_WRAP_T = 0x2803
+        /// </summary>
+        TextureWrapT = ((int)0x2803)        ,
     }
 
     /// <summary>
