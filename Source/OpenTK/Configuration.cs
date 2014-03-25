@@ -321,11 +321,26 @@ namespace OpenTK
                     initialized = true;
 #endif
                     Debug.Print("Detected configuration: {0} / {1}",
-                        RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" :
-                        runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
-                        RunningOnMono ? "Mono" : ".Net");
+                        GetPlatformName(), GetRuntimeName());
                 }
             }
+        }
+
+        static string GetPlatformName()
+        {
+            return
+                RunningOnAndroid ? "Android" :
+                RunningOnWindows ? "Windows" :
+                RunningOnLinux ? "Linux" :
+                RunningOnMacOS ? "MacOS" :
+                runningOnUnix ? "Unix" :
+                RunningOnX11 ? "X11" :
+                "Unknown Platform";
+        }
+
+        static string GetRuntimeName()
+        {
+            return RunningOnMono ? "Mono" : ".Net";
         }
 
         #endregion
