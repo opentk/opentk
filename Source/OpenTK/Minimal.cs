@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 
@@ -14,27 +15,93 @@ namespace OpenTK
     // System.Diagnostics.Debug
     static class Debug
     {
-        public static void Write(string message) { }
-        public static void Write(object obj) { }
-        public static void WriteLine(string message) { }
-        public static void WriteLine(object obj) { }
-        public static void Print(string message) { }
-        public static void Print(string format, params object[] args) { }
-        public static void Indent() { }
-        public static void Unindent() { }
-        public static void Flush() { }
+        [Conditional("DEBUG")]
+        public static void Write(string message)
+        {
+            Console.Error.Write(message);
+        }
+
+        [Conditional("DEBUG")]
+        public static void Write(object obj)
+        {
+            Console.Error.Write(obj);
+        }
+
+        [Conditional("DEBUG")]
+        public static void WriteLine(string message)
+        {
+            Console.Error.WriteLine(message);
+        }
+
+        [Conditional("DEBUG")]
+        public static void WriteLine(object obj)
+        {
+            Console.Error.WriteLine(obj);
+        }
+
+        [Conditional("DEBUG")]
+        public static void Print(string message)
+        {
+            Console.Error.WriteLine(message);
+        }
+
+        [Conditional("DEBUG")]
+        public static void Print(string format, params object[] args)
+        {
+            Console.Error.WriteLine(format, args);
+        }
+        [Conditional("DEBUG")]
+        public static void Indent()
+        {
+        }
+
+        [Conditional("DEBUG")]
+        public static void Unindent()
+        {
+        }
+
+        [Conditional("DEBUG")]
+        public static void Flush()
+        {
+            Console.Error.Flush();
+        }
     }
 
     // System.Diagnostics.Trace
     static class Trace
     {
-        public static void Write(string message) { }
-        public static void Write(object obj) { }
-        public static void WriteLine(string message) { }
-        public static void WriteLine(object obj) { }
-        public static void Indent() { }
-        public static void Unindent() { }
-        public static void Flush() { }
+        public static void Write(string message)
+        {
+            Console.Error.Write(message);
+        }
+
+        public static void Write(object obj)
+        {
+            Console.Error.Write(obj);
+        }
+
+        public static void WriteLine(string message)
+        {
+            Console.Error.WriteLine(message);
+        }
+
+        public static void WriteLine(object obj)
+        {
+            Console.Error.WriteLine(obj);
+        }
+
+        public static void Indent()
+        {
+        }
+
+        public static void Unindent()
+        {
+        }
+
+        public static void Flush()
+        {
+            Console.Error.Flush();
+        }
     }
 
     #if MINIMAL
