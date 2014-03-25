@@ -42,7 +42,12 @@ namespace OpenTK
     /// </summary>
     public sealed class Configuration
     {
-        static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux;
+        static bool runningOnWindows;
+        static bool runningOnUnix;
+        static bool runningOnX11;
+        static bool runningOnMacOS;
+        static bool runningOnLinux;
+        static bool runningOnSdl2;
         static bool runningOnMono;
         volatile static bool initialized;
         readonly static object InitLock = new object();
@@ -87,8 +92,7 @@ namespace OpenTK
         /// </summary>
         public static bool RunningOnSdl2
         {
-            get;
-            private set;
+            get { return runningOnSdl2; }
         }
 
         #endregion
@@ -297,9 +301,17 @@ namespace OpenTK
                 {
 #if ANDROID
                     runningOnMono = true;
+                    if (options.Backend == PlatformBackend.Default)
+                    {
+                        runningOnSdl2 = DetectSdl2();
+                    }
 #elif IPHONE
                     runningOnMono = true;
                     runningOnIOS = true;
+                    if (options.Backend == PlatformBackend.Default)
+                    {
+                        runningOnSdl2 = DetectSdl2();
+                    }
 #else
                     runningOnMono = DetectMono();
                     runningOnWindows = DetectWindows();
@@ -317,9 +329,9 @@ namespace OpenTK
                     {
                         runningOnX11 = DetectX11();
                     }
+#endif
 
                     initialized = true;
-#endif
                     Debug.Print("Detected configuration: {0} / {1}",
                         GetPlatformName(), GetRuntimeName());
                 }
