@@ -1,3 +1,0 @@
-Starting with the Win8 SDK, d3dcompiler.dll can be distributed as a 'naked' dll.
-
-See http://msdn.microsoft.com/en-us/library/windows/desktop/ee663275(v=vs.85).aspx
