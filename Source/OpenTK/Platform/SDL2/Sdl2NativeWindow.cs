@@ -67,22 +67,27 @@ namespace OpenTK.Platform.SDL2
         static readonly Dictionary<uint, Sdl2NativeWindow> windows =
             new Dictionary<uint, Sdl2NativeWindow>();
 
-        public Sdl2NativeWindow(int x, int y, int width, int height,
-            string title, GameWindowFlags options, DisplayDevice device)
+        static readonly Sdl2KeyMap map = new Sdl2KeyMap();
+
+        public Sdl2NativeWindow(
+            int x, int y, int width, int height, string title,
+            Graphics.GraphicsMode mode, GameWindowFlags options, DisplayDevice device,
+            int major, int minor, Graphics.GraphicsContextFlags flags,
+            IInputDriver input_driver)
         {
             lock (sync)
             {
                 var bounds = device.Bounds;
-                var flags = TranslateFlags(options);
-                flags |= WindowFlags.OPENGL;
-                flags |= WindowFlags.HIDDEN;
+                var options_flags = TranslateFlags(options);
+                options_flags |= WindowFlags.OPENGL;
+                options_flags |= WindowFlags.HIDDEN;
                 if (Toolkit.Options.EnableHighResolution)
                 {
-                    flags |= WindowFlags.ALLOW_HIGHDPI;
+                    options_flags |= WindowFlags.ALLOW_HIGHDPI;
                 }
 
-                if ((flags & WindowFlags.FULLSCREEN_DESKTOP) != 0 ||
-                    (flags & WindowFlags.FULLSCREEN) != 0)
+                if ((options_flags & WindowFlags.FULLSCREEN_DESKTOP) != 0 ||
+                    (options_flags & WindowFlags.FULLSCREEN) != 0)
                     window_state = WindowState.Fullscreen;
 
                 if ((flags & WindowFlags.RESIZABLE) == 0)
@@ -91,7 +96,17 @@ namespace OpenTK.Platform.SDL2
                 IntPtr handle;
                 lock (SDL.Sync)
                 {
-                    handle = SDL.CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, flags);
+                    // SDL2 requires OpenGL attributes to be set
+                    // before constructing a window.
+                    // Note: we call this again in the Sdl2GraphicsContext
+                    // constructor, because there are some attributes that
+                    // are only known there (e.g. for context sharing.)
+                    // Specifying different parameters to NativeWindow
+                    // and GraphicsContext leads to undefined behavior.
+                    // This issue is unlikely to show up in practice.
+                    Sdl2GraphicsContext.ClearGLAttributes();
+                    Sdl2GraphicsContext.SetGLAttributes(mode, null, major, minor, flags);
+                    handle = SDL.CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, options_flags);
                     exists = true;
                 }
                 ProcessEvents();
@@ -890,7 +905,7 @@ namespace OpenTK.Platform.SDL2
             get
             {
                 int w, h;
-                if (SDL.Version.Number > 2000)
+                if (SDL.Version.Number > 200)
                 {
                     // SDL > 2.0.0 supports SDL_GL_GetDrawableSize for
                     // hidpi windows.
