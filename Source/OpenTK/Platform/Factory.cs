@@ -119,9 +119,9 @@ namespace OpenTK.Platform
         #region IPlatformFactory Members
 
         public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
-            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
         {
-            return default_implementation.CreateNativeWindow(x, y, width, height, title, mode, options, device);
+            return default_implementation.CreateNativeWindow(x, y, width, height, title, mode, options, device, major, minor, flags);
         }
 
         public IDisplayDeviceDriver CreateDisplayDeviceDriver()
@@ -184,7 +184,7 @@ namespace OpenTK.Platform
             
             #region IPlatformFactory Members
 
-            public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+            public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }

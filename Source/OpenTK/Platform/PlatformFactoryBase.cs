@@ -50,7 +50,7 @@ namespace OpenTK.Platform
 
         #region IPlatformFactory Members
 
-        public abstract INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device);
+        public abstract INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags);
 
         public abstract IDisplayDeviceDriver CreateDisplayDeviceDriver();
 
