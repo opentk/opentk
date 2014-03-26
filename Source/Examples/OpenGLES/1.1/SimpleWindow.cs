@@ -183,9 +183,9 @@ namespace Examples.Tutorial
             GL.VertexPointer(3, VertexPointerType.Float,
                 BlittableValueType.StrideOf(CubeVertices),
                 new IntPtr(0));
-            GL.ColorPointer(4, ColorPointerType.UnsignedByte,
+            GL.ColorPointer(4, ColorPointerType.Float,
                 BlittableValueType.StrideOf(CubeVertices),
-                new IntPtr(12));
+                new IntPtr(BlittableValueType<Vector3>.Stride));
 
             GL.DrawElements(PrimitiveType.Triangles,
                 CubeElements.Length,
