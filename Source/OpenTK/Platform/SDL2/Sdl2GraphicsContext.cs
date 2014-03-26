@@ -166,7 +166,7 @@ namespace OpenTK.Platform.SDL2
                 stereo != 0 ? true : false);
         }
 
-        internal static void ClearGLAttributes()
+        static void ClearGLAttributes()
         {
             if (SDL.Version.Number >= 202)
             {
