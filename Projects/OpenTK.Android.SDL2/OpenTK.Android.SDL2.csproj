@@ -8,18 +8,18 @@
     <ProjectGuid>{A00D026E-E230-499C-AA18-C995C0A88056}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{10368E6C-D01B-4462-8E8B-01FC667A7035};{F278D4AB-4730-4720-B08E-FE5E31564D9E};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>OpenTK.Android.SDL2</RootNamespace>
+    <RootNamespace>OpenTK</RootNamespace>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
-    <AssemblyName>OpenTK</AssemblyName>
-    <TargetFrameworkVersion>v3.1</TargetFrameworkVersion>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <AssemblyName>OpenTK.Android.SDL2</AssemblyName>
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\Android.SDL2\Debug\</OutputPath>
+    <OutputPath>..\..\Binaries\Android\Debug\</OutputPath>
     <DefineConstants>DEBUG;__MOBILE__;__ANDROID__;ANDROID;SDL2;OPENGLES</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,11 +27,12 @@
     <ConsolePause>false</ConsolePause>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>..\..\Binaries\Android.SDL2\Debug\OpenTK.xml</DocumentationFile>
+    <NoStdLib>true</NoStdLib>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\Android.SDL2\Release\</OutputPath>
+    <OutputPath>..\..\Binaries\Android\Release\</OutputPath>
     <DefineConstants>__MOBILE__;__ANDROID__;ANDROID;SDL2;OPENGLES</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,6 +41,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugSymbols>true</DebugSymbols>
     <DocumentationFile>..\..\Binaries\Android.SDL2\Release\OpenTK.xml</DocumentationFile>
+    <NoStdLib>true</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -638,10 +640,14 @@
     <Compile Include="..\..\Source\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\Source\OpenTK\Platform\Android\GameActivity.cs">
+      <Link>OpenTK\Platform\Android\GameActivity.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="OpenTK.dll.config">
+    <None Include="..\..\Source\OpenTK\OpenTK.dll.config">
       <Link>OpenTK\OpenTK.dll.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -649,20 +655,21 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Xamarin.Android.Bindings.targets" />
   <ItemGroup>
+    <Folder Include="Jars\" />
+    <Folder Include="lib\" />
+  </ItemGroup>
+  <Target Name="AfterBuild">
+    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)$(AssemblyName).dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)$(AssemblyName).dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) != 'Debug'" />
+    <Exec Command="mono $(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)$(AssemblyName).dll ..\..\OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="mono $(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)$(AssemblyName).dll ..\..\OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) != 'Debug'" />
+  </Target>
+  <ItemGroup>
     <EmbeddedJar Include="Jars\sdl2.jar" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="OpenTK\" />
-    <Folder Include="lib\" />
-    <Folder Include="lib\armeabi\" />
+    <EmbeddedNativeLibrary Include="..\..\Dependencies\android\lib\armeabi-v7a\libSDL2.so">
+      <Link>lib\armeabi-v7a\libSDL2.so</Link>
+    </EmbeddedNativeLibrary>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedNativeLibrary Include="lib\armeabi\libSDL2.so" />
-  </ItemGroup>
-  <Target Name="AfterBuild">
-    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) != 'Debug'" />
-    <Exec Command="mono $(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec Command="mono $(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) != 'Debug'" />
-  </Target>
 </Project>
