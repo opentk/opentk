@@ -665,7 +665,9 @@
     <Exec Command="mono $(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)$(AssemblyName).dll ..\..\OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) != 'Debug'" />
   </Target>
   <ItemGroup>
-    <EmbeddedJar Include="Jars\sdl2.jar" />
+    <EmbeddedJar Include="..\..\Dependencies\android\java\sdl2.jar">
+      <Link>Jars\sdl2.jar</Link>
+    </EmbeddedJar>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedNativeLibrary Include="..\..\Dependencies\android\lib\armeabi-v7a\libSDL2.so">
