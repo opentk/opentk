@@ -110,7 +110,6 @@ namespace OpenTK.Platform.SDL2
                     // Specifying different parameters to NativeWindow
                     // and GraphicsContext leads to undefined behavior.
                     // This issue is unlikely to show up in practice.
-                    Sdl2GraphicsContext.ClearGLAttributes();
                     Sdl2GraphicsContext.SetGLAttributes(mode, null, major, minor, flags);
                     handle = SDL.CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, options_flags);
                     exists = true;
