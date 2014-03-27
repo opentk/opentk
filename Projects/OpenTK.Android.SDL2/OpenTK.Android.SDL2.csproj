@@ -657,6 +657,7 @@
   <ItemGroup>
     <Folder Include="Jars\" />
     <Folder Include="lib\" />
+    <Folder Include="lib\x86\" />
   </ItemGroup>
   <Target Name="AfterBuild">
     <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)$(AssemblyName).dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
@@ -672,6 +673,9 @@
   <ItemGroup>
     <EmbeddedNativeLibrary Include="..\..\Dependencies\android\lib\armeabi-v7a\libSDL2.so">
       <Link>lib\armeabi-v7a\libSDL2.so</Link>
+    </EmbeddedNativeLibrary>
+    <EmbeddedNativeLibrary Include="..\..\Dependencies\android\lib\x86\libSDL2.so">
+      <Link>lib\x86\libSDL2.so</Link>
     </EmbeddedNativeLibrary>
   </ItemGroup>
 </Project>
