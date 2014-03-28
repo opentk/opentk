@@ -299,29 +299,29 @@ namespace Bind
                 if (!docfiles.ContainsKey(docfile))
                     docfile = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
 
-                var docs = new List<string>();
-                if (docfiles.ContainsKey(docfile))
-                {
-                    docs.AddRange(Processor.ProcessFile(docfiles[docfile]));
-                }
-                if (docs.Count == 0)
-                {
-                    docs.Add("/// <summary></summary>");
-                }
+                Documentation docs = 
+                    (docfiles.ContainsKey(docfile) ?
+                        Processor.ProcessFile(docfiles[docfile]) :
+                        null) ?? 
+                    new Documentation
+                    {
+                        Summary = String.Empty,
+                        Parameters = f.Parameters.Select(p =>
+                            new KeyValuePair<string, string>(p.Name, String.Empty)).ToList()
+                    };
 
-                int summary_start = docs[0].IndexOf("<summary>") + "<summary>".Length;
                 string warning = "[deprecated: v{0}]";
                 string category = "[requires: {0}]";
                 if (f.Deprecated)
                 {
                     warning = String.Format(warning, f.DeprecatedVersion);
-                    docs[0] = docs[0].Insert(summary_start, warning);
+                    docs.Summary = docs.Summary.Insert(0, warning);
                 }
 
                 if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
                 {
                     category = String.Format(category, f.Category);
-                    docs[0] = docs[0].Insert(summary_start, category);
+                    docs.Summary = docs.Summary.Insert(0, category);
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
@@ -329,22 +329,23 @@ namespace Bind
                         category = String.Format(category, "v" + f.Version);
                     else
                         category = String.Format(category, "v" + f.Version + " and " + f.Category);
-                    docs[0] = docs[0].Insert(summary_start, category);
+                    docs.Summary = docs.Summary.Insert(0, category);
                 }
 
-                foreach (var param in f.WrappedDelegate.Parameters)
+                for (int i = 0; i < f.Parameters.Count; i++)
                 {
-                    var index = docs.IndexOf("/// <param name=\"" + param.Name +"\">");
-                    if (index != -1 && param.ComputeSize != "")
+                    var param = f.Parameters[i];
+                    if (!String.IsNullOrEmpty(param.ComputeSize))
                     {
-                        var compute_size = string.Format("[length: {0}]", param.ComputeSize);
-                        docs[index] = docs[index] + compute_size;
+                        docs.Parameters[i].Value.Insert(0,
+                            String.Format("[length: {0}]", param.ComputeSize));
                     }
                 }
 
-                foreach (var doc in docs)
+                sw.WriteLine("/// <summary>{0}</summary>", docs.Summary);
+                foreach (var p in docs.Parameters)
                 {
-                    sw.WriteLine(doc);
+                    sw.WriteLine("/// <param name=\"{0}\">{1}</param>", p.Key, p.Value);
                 }
             }
             catch (Exception e)

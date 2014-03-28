@@ -22,6 +22,8 @@ namespace Bind.ES
             Settings.DefaultDelegatesFile = "ES11Delegates.cs";
             Settings.DefaultEnumsFile = "ES11Enums.cs";
             Settings.DefaultWrappersFile = "ES11.cs";
+            Settings.DefaultDocPath = Path.Combine(
+                Settings.DefaultDocPath, "ES20"); // no ES11 docbook sources available
 
             // Khronos releases a combined 1.0+1.1 specification,
             // so we cannot distinguish between the two.
