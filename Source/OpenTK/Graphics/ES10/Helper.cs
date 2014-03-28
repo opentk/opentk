@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -24,5 +24,14 @@ namespace OpenTK.Graphics.ES10
 
         #endregion
 
+        internal override void LoadEntryPoints()
+        {
+            // nothing to do
+        }
+
+        internal override bool LoadEntryPoint(string function)
+        {
+            return true; // nothing to do
+        }
     }
 }

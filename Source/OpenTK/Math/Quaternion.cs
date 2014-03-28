@@ -68,21 +68,9 @@ namespace OpenTK
             : this(new Vector3(x, y, z), w)
         { }
 
-        public Quaternion (ref Matrix3 matrix)
+        public Quaternion(ref Matrix3 matrix)
         {
-            double scale = System.Math.Pow(matrix.Determinant, 1.0d / 3.0d);
-            float x, y, z;
-  
-            w = (float) (System.Math.Sqrt(System.Math.Max(0, scale + matrix[0, 0] + matrix[1, 1] + matrix[2, 2])) / 2);
-            x = (float) (System.Math.Sqrt(System.Math.Max(0, scale + matrix[0, 0] - matrix[1, 1] - matrix[2, 2])) / 2);
-            y = (float) (System.Math.Sqrt(System.Math.Max(0, scale - matrix[0, 0] + matrix[1, 1] - matrix[2, 2])) / 2);
-            z = (float) (System.Math.Sqrt(System.Math.Max(0, scale - matrix[0, 0] - matrix[1, 1] + matrix[2, 2])) / 2);
-
-            xyz = new Vector3 (x, y, z);
-
-            if (matrix[2, 1] - matrix[1, 2] < 0) X = -X;
-            if (matrix[0, 2] - matrix[2, 0] < 0) Y = -Y;
-            if (matrix[1, 0] - matrix[0, 1] < 0) Z = -Z;
+            FromMatrix(ref matrix, out this);
         }
 
         #endregion
@@ -95,14 +83,15 @@ namespace OpenTK
         /// Gets or sets an OpenTK.Vector3 with the X, Y and Z components of this instance.
         /// </summary>
         [Obsolete("Use Xyz property instead.")]
-        [CLSCompliant(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [XmlIgnore]
+        [CLSCompliant(false)]
         public Vector3 XYZ { get { return Xyz; } set { Xyz = value; } }
 
         /// <summary>
         /// Gets or sets an OpenTK.Vector3 with the X, Y and Z components of this instance.
         /// </summary>
+        [CLSCompliant(false)]
         public Vector3 Xyz { get { return xyz; } set { xyz = value; } }
 
         /// <summary>
@@ -207,6 +196,34 @@ namespace OpenTK
 
         #endregion
 
+        /// <summary>
+        /// Returns a copy of the Quaternion scaled to unit length.
+        /// </summary>
+        public Quaternion Normalized()
+        {
+            Quaternion q = this;
+            q.Normalize();
+            return q;
+        }
+
+        /// <summary>
+        /// Reverses the rotation angle of this Quaterniond.
+        /// </summary>
+        public void Invert()
+        {
+            W = -W;
+        }
+
+        /// <summary>
+        /// Returns a copy of this Quaterniond with its rotation angle reversed.
+        /// </summary>
+        public Quaternion Inverted()
+        {
+            var q = this;
+            q.Invert();
+            return q;
+        }
+
         #region public void Normalize()
 
         /// <summary>
@@ -224,7 +241,7 @@ namespace OpenTK
         #region public void Conjugate()
 
         /// <summary>
-        /// Convert this quaternion to its conjugate
+        /// Inverts the Vector3 component of this Quaternion.
         /// </summary>
         public void Conjugate()
         {
@@ -242,7 +259,7 @@ namespace OpenTK
         /// <summary>
         /// Defines the identity quaternion.
         /// </summary>
-        public static Quaternion Identity = new Quaternion(0, 0, 0, 1);
+        public static readonly Quaternion Identity = new Quaternion(0, 0, 0, 1);
 
         #endregion
 
@@ -373,12 +390,6 @@ namespace OpenTK
             result = new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
         }
 
-        [Obsolete ("Use the overload without the ref float scale")]
-        public static void Multiply(ref Quaternion quaternion, ref float scale, out Quaternion result)
-        {
-            result = new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);    
-        }
-
         /// <summary>
         /// Multiplies an instance by a scalar.
         /// </summary>
@@ -485,7 +496,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="axis">The axis to rotate about</param>
         /// <param name="angle">The rotation angle in radians</param>
-        /// <returns></returns>
+        /// <returns>The equivalent quaternion</returns>
         public static Quaternion FromAxisAngle(Vector3 axis, float angle)
         {
             if (axis.LengthSquared == 0.0f)
@@ -499,6 +510,78 @@ namespace OpenTK
             result.W = (float)System.Math.Cos(angle);
 
             return Normalize(result);
+        }
+
+        #endregion
+
+        #region FromMatrix
+
+        /// <summary>
+        /// Builds a quaternion from the given rotation matrix
+        /// </summary>
+        /// <param name="matrix">A rotation matrix</param>
+        /// <returns>The equivalent quaternion</returns>
+        public static Quaternion FromMatrix(Matrix3 matrix)
+        {
+            Quaternion result;
+            FromMatrix(ref matrix, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a quaternion from the given rotation matrix
+        /// </summary>
+        /// <param name="matrix">A rotation matrix</param>
+        /// <param name="result">The equivalent quaternion</param>
+        public static void FromMatrix(ref Matrix3 matrix, out Quaternion result)
+        {
+            float trace = matrix.Trace;
+
+            if (trace > 0)
+            {
+                float s = (float)Math.Sqrt(trace + 1) * 2;
+                float invS = 1f / s;
+
+                result.w = s * 0.25f;
+                result.xyz.X = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                result.xyz.Y = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                result.xyz.Z = (matrix.Row1.X - matrix.Row0.Y) * invS;
+            }
+            else
+            {
+                float m00 = matrix.Row0.X, m11 = matrix.Row1.Y, m22 = matrix.Row2.Z;
+
+                if (m00 > m11 && m00 > m22)
+                {
+                    float s = (float)Math.Sqrt(1 + m00 - m11 - m22) * 2;
+                    float invS = 1f / s;
+
+                    result.w = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                    result.xyz.X = s * 0.25f;
+                    result.xyz.Y = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.xyz.Z = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                }
+                else if (m11 > m22)
+                {
+                    float s = (float)Math.Sqrt(1 + m11 - m00 - m22) * 2;
+                    float invS = 1f / s;
+
+                    result.w = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                    result.xyz.X = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.xyz.Y = s * 0.25f;
+                    result.xyz.Z = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                }
+                else
+                {
+                    float s = (float)Math.Sqrt(1 + m22 - m00 - m11) * 2;
+                    float invS = 1f / s;
+
+                    result.w = (matrix.Row1.X - matrix.Row0.Y) * invS;
+                    result.xyz.X = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                    result.xyz.Y = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                    result.xyz.Z = s * 0.25f;
+                }
+            }
         }
 
         #endregion

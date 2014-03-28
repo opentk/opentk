@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -25,6 +25,8 @@
 //
 #endregion
 
+#if WIN32
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -43,7 +45,7 @@ namespace OpenTK.Platform.Egl
         {
             WinWindowInfo win_win = (WinWindowInfo)window;
             IntPtr egl_display = GetDisplay(win_win.DeviceContext);
-            EglWindowInfo egl_win = new OpenTK.Platform.Egl.EglWindowInfo(win_win.WindowHandle, egl_display);
+            EglWindowInfo egl_win = new OpenTK.Platform.Egl.EglWindowInfo(win_win.Handle, egl_display);
             return new EglContext(mode, egl_win, shareContext, major, minor, flags);
         }
 
@@ -51,7 +53,7 @@ namespace OpenTK.Platform.Egl
         {
             WinWindowInfo win_win = (WinWindowInfo)window;
             IntPtr egl_display = GetDisplay(win_win.DeviceContext);
-            EglWindowInfo egl_win = new OpenTK.Platform.Egl.EglWindowInfo(win_win.WindowHandle, egl_display);
+            EglWindowInfo egl_win = new OpenTK.Platform.Egl.EglWindowInfo(win_win.Handle, egl_display);
             return new EglContext(handle, egl_win, shareContext, major, minor, flags);
         }
 
@@ -84,3 +86,5 @@ namespace OpenTK.Platform.Egl
         #endregion
     }
 }
+
+#endif

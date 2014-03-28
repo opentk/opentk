@@ -8,6 +8,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+#if ANDROID || IPHONE || MINIMAL
+using OpenTK.Minimal;
+#else
+using System.Drawing.Imaging;
+#endif
 using System.Text;
 using System.Runtime.InteropServices;
 
@@ -544,7 +550,7 @@ namespace OpenTK.Platform.X11
             xev = new XEvent();
             xev.ClientMessageEvent.type = XEventName.ClientMessage;
             xev.ClientMessageEvent.send_event = true;
-            xev.ClientMessageEvent.window = window.WindowHandle;
+            xev.ClientMessageEvent.window = window.Handle;
             xev.ClientMessageEvent.message_type = message_type;
             xev.ClientMessageEvent.format = 32;
             xev.ClientMessageEvent.ptr1 = l0;
@@ -564,14 +570,14 @@ namespace OpenTK.Platform.X11
             xev = new XEvent();
             xev.ClientMessageEvent.type = XEventName.ClientMessage;
             xev.ClientMessageEvent.send_event = true;
-            xev.ClientMessageEvent.window = window.WindowHandle;
+            xev.ClientMessageEvent.window = window.Handle;
             xev.ClientMessageEvent.message_type = message_type;
             xev.ClientMessageEvent.format = 32;
             xev.ClientMessageEvent.ptr1 = l0;
             xev.ClientMessageEvent.ptr2 = l1;
             xev.ClientMessageEvent.ptr3 = l2;
 
-            XSendEvent(window.Display, window.WindowHandle, false, new IntPtr((int)EventMask.NoEventMask), ref xev);
+            XSendEvent(window.Display, window.Handle, false, new IntPtr((int)EventMask.NoEventMask), ref xev);
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -594,15 +600,15 @@ namespace OpenTK.Platform.X11
                     (byte)(argb & 0xFF));
             }
         }
-        public static IntPtr CreatePixmapFromImage(Display display, System.Drawing.Bitmap image) 
+        public static IntPtr CreatePixmapFromImage(Display display, Bitmap image) 
         { 
             int width = image.Width;
             int height = image.Height;
             int size = width * height; 
 
-            System.Drawing.Imaging.BitmapData data = image.LockBits(new System.Drawing.Rectangle(0, 0, width, height),
-                System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            BitmapData data = image.LockBits(new Rectangle(0, 0, width, height),
+                ImageLockMode.ReadOnly,
+                PixelFormat.Format32bppArgb);
             
             IntPtr ximage = XCreateImage(display, CopyFromParent, 24, ImageFormat.ZPixmap, 
                 0, data.Scan0, (uint)width, (uint)height, 32, 0); 
@@ -618,7 +624,7 @@ namespace OpenTK.Platform.X11
             return pixmap; 
         } 
         
-        public static IntPtr CreateMaskFromImage(Display display, System.Drawing.Bitmap image) 
+        public static IntPtr CreateMaskFromImage(Display display, Bitmap image) 
         { 
             int width = image.Width; 
             int height = image.Height; 

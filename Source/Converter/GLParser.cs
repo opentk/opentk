@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -35,12 +35,14 @@ namespace CHeaderToXML
     class GLParser : Parser
     {
         static readonly Regex extensions = new Regex(
-            "(ARB|EXT|ATI|NV|SUNX|SUN|SGIS|SGIX|SGI|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D)",
-            RegexOptions.RightToLeft | RegexOptions.Compiled);
+            @"3DFX|(?!(?<=[1-4])D)[A-Z]{2,}$",
+            RegexOptions.Compiled);
         static readonly char[] splitters = new char[] { ' ', '\t', ',', '(', ')', ';', '\n', '\r' };
 
         enum ParserModes { None, Enum, Func };
         ParserModes CurrentMode;
+
+        enum EntryModes { Core, Compatibility };
 
         public override IEnumerable<XElement> Parse(string[] lines)
         {
@@ -96,6 +98,16 @@ namespace CHeaderToXML
                                 current.Add(new XElement("token",
                                     new XAttribute("name", words[0]),
                                     new XAttribute("value", words[2])));
+                            }
+                            else if (words[0] == "profile:")
+                            {
+                            }
+                            else if (words[0].Contains("future_use"))
+                            {
+                                // This is a bug in the 4.3 specs. Unfortunately,
+                                // Khronos is no longer accepting bug reports for
+                                // the .spec files.
+                                continue;
                             }
                             else
                             {

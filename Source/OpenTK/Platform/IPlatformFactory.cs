@@ -33,9 +33,9 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform
 {
-    interface IPlatformFactory
+    interface IPlatformFactory : IDisposable
     {
-        INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device);
+        INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags);
 
         IDisplayDeviceDriver CreateDisplayDeviceDriver();
 
@@ -47,10 +47,14 @@ namespace OpenTK.Platform
         
         IGraphicsMode CreateGraphicsMode();
         
-#if !IPHONE
         OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver();
 
         OpenTK.Input.IMouseDriver2 CreateMouseDriver();
-#endif
+
+        OpenTK.Input.IGamePadDriver CreateGamePadDriver();
+
+        Input.IJoystickDriver2 CreateJoystickDriver();
+
+        Input.IJoystickDriver CreateLegacyJoystickDriver();
     }
 }

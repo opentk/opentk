@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glTexImage2DMultisample">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2010</year>
-                <holder>Khronos Group</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glTexImage2DMultisample</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -22,7 +22,7 @@
                 <funcdef>void <function>glTexImage2DMultisample</function></funcdef>
                 <paramdef>GLenum <parameter>target</parameter></paramdef>
                 <paramdef>GLsizei <parameter>samples</parameter></paramdef>
-                <paramdef>GLint <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
                 <paramdef>GLsizei <parameter>width</parameter></paramdef>
                 <paramdef>GLsizei <parameter>height</parameter></paramdef>
                 <paramdef>GLboolean <parameter>fixedsamplelocations</parameter></paramdef>
@@ -87,10 +87,16 @@
             <function>glTexImage2DMultisample</function> establishes the data storage, format, dimensions and number of samples of a multisample texture's image.
         </para>
         <para>
-            <parameter>target</parameter> must be <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE</constant>.
-            <parameter>width</parameter> and <parameter>height</parameter> are the dimensions in texels of the texture, and must be in the range zero
-            to <constant>GL_MAX_TEXTURE_SIZE</constant> - 1. <parameter>samples</parameter> specifies the number of samples in the image and must be
-            in the range zero to <constant>GL_MAX_SAMPLES</constant> - 1.
+            <parameter>target</parameter> must be
+            <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or
+            <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE</constant>.
+            <parameter>width</parameter> and <parameter>height</parameter>
+            are the dimensions in texels of the texture, and must be in the
+            range zero to the value of
+            <constant>GL_MAX_TEXTURE_SIZE</constant> minus one.
+            <parameter>samples</parameter> specifies the number of samples
+            in the image and must be in the range zero to the value of
+            <constant>GL_MAX_SAMPLES</constant> minus one.
         </para>
         <para>
             <parameter>internalformat</parameter> must be a color-renderable, depth-renderable, or stencil-renderable format.
@@ -138,8 +144,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

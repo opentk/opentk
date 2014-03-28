@@ -17,12 +17,8 @@ namespace Bind.Structures
     /// can be retrieved or set. The value can be either a number, another constant
     /// or an alias to a constant 
     /// </summary>
-    public class Constant : IComparable<Constant>
+    class Constant : IComparable<Constant>
     {
-        static StringBuilder translator = new StringBuilder();
-        static readonly int MaxReferenceDepth = 8;
-        static int CurrentReferenceDepth = 0;
-
         #region PreviousName
 
         string original_name;
@@ -98,9 +94,7 @@ namespace Bind.Structures
             get { return _reference; }
             set
             {
-                if (!String.IsNullOrEmpty(value))
-                    _reference = EnumProcessor.TranslateEnumName(value.Trim());
-                else _reference = value;
+                _reference = value;
             }
         }
 
@@ -145,51 +139,6 @@ namespace Bind.Structures
 
         #endregion
 
-        #region Translate
-
-        [Obsolete]
-        public static string Translate(string s, bool isValue)
-        {
-            translator.Remove(0, translator.Length);
-
-            // Translate the constant's name to match .Net naming conventions
-            bool name_is_all_caps = s.AsEnumerable().All(c => Char.IsLetter(c) ? Char.IsUpper(c) : true);
-            bool name_contains_underscore = s.Contains("_");
-            if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None &&
-                (name_is_all_caps || name_contains_underscore))
-            {
-                bool next_char_uppercase = true;
-                bool is_after_digit = false;
-
-                if (!isValue && Char.IsDigit(s[0]))
-                    translator.Insert(0, Settings.ConstantPrefix);
-
-                foreach (char c in s)
-                {
-                    if (c == '_')
-                        next_char_uppercase = true;
-                    else if (Char.IsDigit(c))
-                    {
-                        is_after_digit = true;
-                        translator.Append(c);
-                    }
-                    else
-                    {
-                        translator.Append(next_char_uppercase || (is_after_digit && c == 'd') ? Char.ToUpper(c) : Char.ToLower(c));
-                        is_after_digit = next_char_uppercase = false;
-                    }
-                }
-
-                translator[0] = Char.ToUpper(translator[0]);
-            }
-            else
-                translator.Append(s);
-
-            return translator.ToString();
-        }
-
-        #endregion
-
         /// <summary>
         /// Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
         /// </summary>
@@ -197,81 +146,62 @@ namespace Bind.Structures
         /// <param name="enums">The list of enums to check.</param>
         /// <param name="auxEnums">The list of auxilliary enums to check.</param>
         /// <returns>True if the reference was found; false otherwise.</returns>
-        public static bool TranslateConstantWithReference(Constant c, EnumCollection enums, EnumCollection auxEnums)
+        public static bool TranslateConstantWithReference(Constant c, EnumCollection enums)
         {
             if (c == null)
                 throw new ArgumentNullException("c");
             if (enums == null)
                 throw new ArgumentNullException("enums");
 
-            if (++CurrentReferenceDepth >= MaxReferenceDepth)
-                throw new InvalidOperationException("Enum specification contains cycle");
-
             if (!String.IsNullOrEmpty(c.Reference))
             {
-                Constant referenced_constant;
+                // Resolve the referenced Constant. Be careful
+                // to avoid loops in the definitions.
+                Constant reference = c;
+                do
+                {
+                    reference =
+                        enums.ContainsKey(reference.Reference) &&
+                        enums[reference.Reference].ConstantCollection.ContainsKey(reference.Value) ?
+                        enums[reference.Reference].ConstantCollection[reference.Value] : null;
+                } while (reference != null && reference.Reference != null && reference.Reference != c.Reference);
 
-                if (enums.ContainsKey(c.Reference) && enums[c.Reference].ConstantCollection.ContainsKey(c.Value))
+                // If we haven't managed to locate the reference, do
+                // a brute-force search through all enums.
+                if (reference == null || reference.Reference != null)
                 {
-                    // Transitively translate the referenced token
-                    // Todo: this may cause loops if two tokens reference each other.
-                    // Add a max reference depth and bail out?
-                    TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value], enums, auxEnums);
-                    referenced_constant = (enums[c.Reference].ConstantCollection[c.Value]);
+                    reference = enums.Values.Select(e =>
+                        e.ConstantCollection.Values.FirstOrDefault(t =>
+                            t.Reference == null && t.Name == c.Name))
+                        .FirstOrDefault(t => t != null);
                 }
-                else if (auxEnums != null && auxEnums.ContainsKey(c.Reference) && auxEnums[c.Reference].ConstantCollection.ContainsKey(c.Value))
+
+                // Resolve the value for this Constant
+                if (reference != null)
                 {
-                    // Legacy from previous generator incarnation.
-                    // Todo: merge everything into enums and get rid of auxEnums.
-                    TranslateConstantWithReference(auxEnums[c.Reference].ConstantCollection[c.Value], enums, auxEnums);
-                    referenced_constant = (auxEnums[c.Reference].ConstantCollection[c.Value]);
-                }
-                else if (enums.ContainsKey(Settings.CompleteEnumName) &&
-                    enums[Settings.CompleteEnumName].ConstantCollection.ContainsKey(c.Value))
-                {
-                    // Try the All enum
-                    var reference = enums[Settings.CompleteEnumName].ConstantCollection[c.Value];
-                    if (reference.Reference == null)
-                        referenced_constant = (enums[Settings.CompleteEnumName].ConstantCollection[c.Value]);
-                    else
-                    {
-                        --CurrentReferenceDepth;
-                        return false;
-                    }
+                    c.Value = reference.Value;
+                    c.Reference = null;
+                    return true;
                 }
                 else
                 {
-                    --CurrentReferenceDepth;
+                    Trace.WriteLine(String.Format("[Warning] Failed to resolve token: {0}", c));
                     return false;
                 }
-                //else throw new InvalidOperationException(String.Format("Unknown Enum \"{0}\" referenced by Constant \"{1}\"",
-                //                                                       c.Reference, c.ToString()));
-
-                c.Value = referenced_constant.Value;
-                c.Reference = null;
             }
-
-            --CurrentReferenceDepth;
             return true;
         }
 
-        #region public override string ToString()
+        #region ToString
 
-        /// <summary>
-        /// Returns a string that represents the full constant declaration without decorations
-        /// (eg GL_XXX_YYY = (int)0xDEADBEEF or GL_XXX_YYY = GL_ZZZ.FOOBAR).
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("This belongs to the language-specific ISpecWriter implementations.")]
         public override string ToString()
         {
-            if (String.IsNullOrEmpty(Name))
-                return "";
-            return String.Format("{0} = {1}((int){2}{3})",
-                Name, Unchecked ? "unchecked" : "",
-                !String.IsNullOrEmpty(Reference) ? Reference + Settings.NamespaceSeparator : "", Value);
-
-            //return String.Format("{0} = {1}((int){2})", Name, Unchecked ? "unchecked" : "", Value);
+            return
+                String.Format("{0} = {1}((int){2}{3})",
+                Name,
+                Unchecked ? "unchecked" : String.Empty,
+                !String.IsNullOrEmpty(Reference) ? Reference + "." : String.Empty,
+                Value);
         }
 
         #endregion

@@ -31,7 +31,10 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+#if !MINIMAL
 using System.Drawing;
+#endif
+
 using EventTime = System.Double;
 
 
@@ -60,6 +63,11 @@ namespace OpenTK.Platform.MacOS.Carbon
         short left;
         short bottom;
         short right;
+
+        internal Rect(int left, int top, int width, int height)
+            : this((short)left, (short)top, (short)width, (short)height)
+        {
+        }
 
         internal Rect(short _left, short _top, short _width, short _height)
         {
@@ -233,6 +241,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         WindowClickProxyIconRgn = 38,
         WindowClose = 72,
         WindowClosed = 73,
+        WindowPaint = 1013,
     }
     internal enum MouseEventKind : int
     {
@@ -243,6 +252,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         MouseEntered = 8,
         MouseExited = 9,
         WheelMoved = 10,
+        WheelScroll = 11,
     }
     internal enum MouseButton : short
     {
@@ -283,8 +293,11 @@ namespace OpenTK.Platform.MacOS.Carbon
         WindowMouseLocation = 0x776d6f75, // typeHIPoint
         MouseButton = 0x6d62746e,         // typeMouseButton
         ClickCount = 0x63636e74,          // typeUInt32
-        MouseWheelAxis = 0x6d776178,      // typeMouseWheelAxis
-        MouseWheelDelta = 0x6d77646c,     // typeSInt32
+        MouseWheelAxis = 0x6d776178,      // typeMouseWheelAxis   'mwax'
+        MouseWheelDelta = 0x6d77646c,     // typeSInt32           'mwdl'
+        MouseWheelSmoothVerticalDelta = 0x73617879,        // typeSInt32 'saxy'
+        MouseWheelSmoothHorizontalDelta = 0x73617878,      // typeSInt32 'saxx'
+        
         MouseDelta = 0x6d647461,          // typeHIPoint
 
         // Keyboard events
@@ -376,7 +389,35 @@ namespace OpenTK.Platform.MacOS.Carbon
         SideTitlebar         = (1u << 5),  /* window wants a titlebar on the side    (floating window class only)*/
         NoUpdates            = (1u << 16), /* this window receives no update events*/
         NoActivates          = (1u << 17), /* this window receives no activate events*/
-        NoBuffering          = (1u << 20), /* this window is not buffered (Mac OS X only)*/
+
+        /// <summary>
+        /// This window uses composited drawing. This means that the entire
+        /// window is comprised of HIViews, and can be treated thusly. This
+        /// attribute must be specified at window creation, and cannot be
+        /// changed later with ChangeWindows. In 64-bit mode, all windows must
+        /// be compositing, and you must always specify this attribute when
+        /// creating a window from code or designing a window in Interface
+        /// Builder. Available on Mac OS X 10.2 and later.
+        /// </summary>
+        Compositing          = (1u << 19),
+
+        /// <summary>
+        /// This window's context should be scaled to match the display scale
+        /// factor. This attribute can only be used when
+        /// kHIWindowBitCompositing is also enabled. When this attribute is
+        /// enabled, you may not draw with QuickDraw in the window. If this
+        /// attribute is enabled and if the scale factor is something other
+        /// than 1.0, the window's scale mode will be
+        /// kHIWindowScaleModeFrameworkScaled. You may only specify this
+        /// attribute at window creation time. Available for all windows in
+        /// Mac OS X 10.4 and later.
+        /// </summary>
+        FrameworkScaled = (1u << 20),
+
+        /// <summary>
+        /// This window has the standard Carbon window event handler
+        /// installed. Available for all windows.
+        /// </summary>
         StandardHandler      = (1u << 25),
         InWindowMenu         = (1u << 27),
         LiveResize           = (1u << 28),
@@ -522,6 +563,9 @@ namespace OpenTK.Platform.MacOS.Carbon
 
             return retval;
         }
+
+        [DllImport(carbon)]
+        internal static extern OSStatus SetWindowBounds(IntPtr Windows, WindowRegionCode WindowRegionCode, ref Rect globalBounds);
 
         //[DllImport(carbon)]
         //internal static extern void MoveWindow(IntPtr window, short hGlobal, short vGlobal, bool front);
@@ -677,9 +721,9 @@ namespace OpenTK.Platform.MacOS.Carbon
                 char* codeAddr = &code;
 
                 OSStatus result = API.GetEventParameter(inEvent,
-                     EventParamName.KeyMacCharCode, EventParamType.typeChar, IntPtr.Zero,
-                     (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(char)), IntPtr.Zero,
-                     (IntPtr)codeAddr);
+                    EventParamName.KeyMacCharCode, EventParamType.typeChar, IntPtr.Zero,
+                    (uint)BlittableValueType<char>.Stride, IntPtr.Zero,
+                    (IntPtr)codeAddr);
 
                 if (result != OSStatus.NoError)
                 {
@@ -709,6 +753,52 @@ namespace OpenTK.Platform.MacOS.Carbon
 
             return (MouseButton)button;
         }
+        
+        internal struct ScrollDelta {
+        	internal float deltaX;
+            internal float deltaY;
+        }
+        
+        static internal ScrollDelta GetEventWheelScroll(IntPtr inEvent) 
+        {
+        	ScrollDelta scrolldelta = new ScrollDelta();
+        	Int32 delta;
+        	
+        	unsafe 
+        	{
+        		Int32* d = &delta;
+				OSStatus result;
+				
+				// vertical scroll Delta in pixels
+				result = API.GetEventParameter(inEvent,
+					 EventParamName.MouseWheelSmoothVerticalDelta, EventParamType.typeSInt32,
+					 IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
+
+				if (result == OSStatus.EventParameterNotFound) {
+					// it's okay for it to be simply missing...
+				} else if (result != OSStatus.NoError) {
+					throw new MacOSException(result);
+				} else {
+					scrolldelta.deltaY = delta / 20.0f;
+				}
+				
+				// horizontal scroll Delta in pixels
+				result = API.GetEventParameter(inEvent,
+					 EventParamName.MouseWheelSmoothHorizontalDelta, EventParamType.typeSInt32,
+					 IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
+
+				if (result == OSStatus.EventParameterNotFound) {
+					// it's okay for it to be simply missing...
+				} else if (result != OSStatus.NoError) {
+					throw new MacOSException(result);
+				} else {
+					scrolldelta.deltaY = delta / 20.0f;
+				}
+			}
+
+			return scrolldelta;
+        }
+        
 		static internal int GetEventMouseWheelDelta(IntPtr inEvent)
 		{
 			int delta;
@@ -953,6 +1043,12 @@ namespace OpenTK.Platform.MacOS.Carbon
 
             return retval;
         }
+
+        //[DllImport(carbon)]
+        //static extern OSStatus HIWindowCreate(WindowClass class, int[] attributes,
+        //    ref WindowDefSpec defSpec, HICoordinateSpace space, ref HIRect bounds,
+        //    out IntPtr window);
+
         #region --- SetWindowTitle ---
 
         [DllImport(carbon)]

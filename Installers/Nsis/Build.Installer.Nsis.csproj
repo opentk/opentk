@@ -17,17 +17,42 @@
   <PropertyGroup>
     <ProjectGuid>{ADC34399-7613-44D2-90B2-19250F06FE7A}</ProjectGuid>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Build.Installer.Nsis</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Documentation|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nsis|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <None Include="opentk.nsi" />
   </ItemGroup>
   <Target Name="Build">
     <Exec Command="makensis opentk.nsi" />
-    <ReadLinesFromFile File="../../Version.txt">
-      <Output TaskParameter="Lines" ItemName="Version"/>
+    <ReadLinesFromFile File="../../Timestamp.txt">
+      <Output TaskParameter="Lines" ItemName="Version" />
     </ReadLinesFromFile>
-    <Copy SourceFiles=".\opentk.exe" DestinationFiles="@(Version->'../../opentk-%(Identity).exe')" />
+    <Move SourceFiles=".\opentk.exe" DestinationFiles="@(Version-&gt;'../../opentk-%(Identity).exe')" />
   </Target>
   <Target Name="Clean">
     <CreateItem Include=".\opentk.exe;..\..\opentk-*.exe">

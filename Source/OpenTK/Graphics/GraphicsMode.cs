@@ -1,7 +1,6 @@
 #region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
- * Copyright 2013 Xamarin Inc
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
@@ -23,22 +22,12 @@ namespace OpenTK.Graphics
         IntPtr? index = null;  // The id of the pixel format or visual.
 
         static GraphicsMode defaultMode;
-        static IGraphicsMode implementation;
         static readonly object SyncRoot = new object();
 
-        #region --- Constructors ---
+        #region Constructors
 
-        #region static GraphicsMode()
-        
-        static GraphicsMode()
-        {
-            lock (SyncRoot)
-            {
-                implementation = Platform.Factory.Default.CreateGraphicsMode();
-            }
-        }
-
-        #endregion
+        // Disable BeforeFieldInit
+        static GraphicsMode() { }
 
         #region internal GraphicsMode(GraphicsMode mode)
 
@@ -54,7 +43,7 @@ namespace OpenTK.Graphics
         {
             if (depth < 0) throw new ArgumentOutOfRangeException("depth", "Must be greater than, or equal to zero.");
             if (stencil < 0) throw new ArgumentOutOfRangeException("stencil", "Must be greater than, or equal to zero.");
-            if (buffers <= 0) throw new ArgumentOutOfRangeException("buffers", "Must be greater than zero.");
+            if (buffers < 0) throw new ArgumentOutOfRangeException("buffers", "Must be greater than, or equal to zero.");
             if (samples < 0) throw new ArgumentOutOfRangeException("samples", "Must be greater than, or equal to zero.");
 
             this.Index = index;
@@ -181,7 +170,6 @@ namespace OpenTK.Graphics
         {
             get
             {
-                LazySelectGraphicsMode();
                 return index;
             }
             set { index = value; }
@@ -198,17 +186,9 @@ namespace OpenTK.Graphics
         {
             get
             {
-#if !MOBILE
-                LazySelectGraphicsMode();
-#endif
                 return color_format;
             }
-#if MOBILE
-            internal
-#else
-            private
-#endif
-            set { color_format = value; }
+            private set { color_format = value; }
         }
 
         #endregion
@@ -222,17 +202,9 @@ namespace OpenTK.Graphics
         {
             get 
             {
-#if !MOBILE
-                LazySelectGraphicsMode();
-#endif
                 return accumulator_format;
             }
-#if MOBILE
-            internal
-#else
-            private
-#endif
-            set { accumulator_format = value; }
+            private set { accumulator_format = value; }
         }
 
         #endregion
@@ -247,17 +219,9 @@ namespace OpenTK.Graphics
         {
             get
             {
-#if !MOBILE
-                LazySelectGraphicsMode();
-#endif
                 return depth;
             }
-#if MOBILE
-            internal
-#else
-            private
-#endif
-            set { depth = value; }
+            private set { depth = value; }
         }
 
         #endregion
@@ -272,17 +236,9 @@ namespace OpenTK.Graphics
         {
             get
             {
-#if !MOBILE
-                LazySelectGraphicsMode();
-#endif
                 return stencil;
             }
-#if MOBILE
-            internal
-#else
-            private
-#endif
-            set { stencil = value; }
+            private set { stencil = value; }
         }
 
         #endregion
@@ -296,17 +252,16 @@ namespace OpenTK.Graphics
         {
             get
             {
-#if !MOBILE
-                LazySelectGraphicsMode();
-#endif
                 return samples;
             }
-#if MOBILE
-            internal
-#else
-            private
-#endif
-            set { samples = value; }
+            private set
+            {
+                // Clamp antialiasing samples to max 64x
+                // This protects against a potential DOS during
+                // mode selection, when the user requests an
+                // abnormally high AA level.
+                samples = MathHelper.Clamp(value, 0, 64);
+            }
         }
 
         #endregion
@@ -320,17 +275,9 @@ namespace OpenTK.Graphics
         {
             get
             {
-#if !MOBILE
-                LazySelectGraphicsMode();
-#endif
                 return stereo;
             }
-#if MOBILE
-            internal
-#else
-            private
-#endif
-            set { stereo = value; }
+            private set { stereo = value; }
         }
 
         #endregion
@@ -345,17 +292,9 @@ namespace OpenTK.Graphics
         {
             get
             {
-#if !MOBILE
-                LazySelectGraphicsMode();
-#endif
                 return buffers;
             }
-#if MOBILE
-            internal
-#else
-            private
-#endif
-			set { buffers = value; }
+            private set { buffers = value; }
         }
 
         #endregion
@@ -371,13 +310,8 @@ namespace OpenTK.Graphics
                 {
                     if (defaultMode == null)
                     {
-#if !IPHONE
-                        Debug.Print("Creating default GraphicsMode ({0}, {1}, {2}, {3}, {4}, {5}, {6}).",
-                            DisplayDevice.Default.BitsPerPixel, 16, 0, 0, 0, 2, false);
-                        defaultMode = new GraphicsMode(DisplayDevice.Default.BitsPerPixel, 16, 0, 0, 0, 2, false);
-#else
-                        defaultMode = new GraphicsMode(32, 16, 0, 0, 0, 2, false);
-#endif
+                        defaultMode = new GraphicsMode(null, 32, 16, 0, 0, 0, 2, false);
+                        Debug.Print("GraphicsMode.Default = {0}", defaultMode.ToString());
                     }
                     return defaultMode;
                 }
@@ -385,30 +319,6 @@ namespace OpenTK.Graphics
         }
 
         #endregion
-
-        #endregion
-
-        #region --- Private Methods ---
-
-        // Queries the implementation for the actual graphics mode if this hasn't been done already.
-        // This method allows for lazy evaluation of the actual GraphicsMode and should be called
-        // by all GraphicsMode properties.
-        void LazySelectGraphicsMode()
-        {
-            if (index == null)
-            {
-                GraphicsMode mode = implementation.SelectGraphicsMode(color_format, depth, stencil, samples, accumulator_format, buffers, stereo);
-
-                Index = mode.Index;
-                ColorFormat = mode.ColorFormat;
-                Depth = mode.Depth;
-                Stencil = mode.Stencil;
-                Samples = mode.Samples;
-                AccumulatorFormat = mode.AccumulatorFormat;
-                Buffers = mode.Buffers;
-                Stereo = mode.Stereo;
-            }
-        }
 
         #endregion
 

@@ -47,18 +47,15 @@ namespace OpenTK.Platform.MacOS
         // Todo: keep track of which display adapter was specified when the context was created.
         // IntPtr displayID;
 
-        GraphicsMode graphics_mode;
         CarbonWindowInfo carbonWindow;
         IntPtr shareContextRef;
-        DisplayDevice device;
         bool mIsFullscreen = false;
 
         public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext)
         {
             Debug.Print("Context Type: {0}", shareContext);
             Debug.Print("Window info: {0}", window);
-            
-            this.graphics_mode = mode;
+
             this.carbonWindow = (CarbonWindowInfo)window;
             
             if (shareContext is AglContext)
@@ -103,97 +100,38 @@ namespace OpenTK.Platform.MacOS
             aglAttributes.Add((int)pixelFormatAttribute);
             aglAttributes.Add(value);
         }
+
         void CreateContext(GraphicsMode mode, CarbonWindowInfo carbonWindow, IntPtr shareContextRef, bool fullscreen)
         {
-            List<int> aglAttributes = new List<int>();
-            
             Debug.Print("AGL pixel format attributes:");
-            Debug.Indent();
-            
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_RGBA);
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_DOUBLEBUFFER);
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_RED_SIZE, mode.ColorFormat.Red);
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_GREEN_SIZE, mode.ColorFormat.Green);
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_BLUE_SIZE, mode.ColorFormat.Blue);
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ALPHA_SIZE, mode.ColorFormat.Alpha);
-            
-            if (mode.Depth > 0)
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_DEPTH_SIZE, mode.Depth);
-            
-            if (mode.Stencil > 0)
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_STENCIL_SIZE, mode.Stencil);
-            
-            if (mode.AccumulatorFormat.BitsPerPixel > 0)
-            {
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_RED_SIZE, mode.AccumulatorFormat.Red);
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_GREEN_SIZE, mode.AccumulatorFormat.Green);
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_BLUE_SIZE, mode.AccumulatorFormat.Blue);
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
-            }
-            
-            if (mode.Samples > 1)
-            {
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_SAMPLE_BUFFERS_ARB, 1);
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_SAMPLES_ARB, mode.Samples);
-            }
-            
-            if (fullscreen)
-            {
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
-            }
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_NONE);
-            
-            Debug.Unindent();
-            
-            Debug.Write("Attribute array:  ");
-            for (int i = 0; i < aglAttributes.Count; i++)
-                Debug.Write(aglAttributes[i].ToString() + "  ");
-            Debug.WriteLine("");
             
             AGLPixelFormat myAGLPixelFormat;
             
             // Choose a pixel format with the attributes we specified.
-            if (fullscreen)
-            {
-                IntPtr gdevice;
-                IntPtr cgdevice = GetQuartzDevice(carbonWindow);
+            IntPtr gdevice;
+            IntPtr cgdevice = GetQuartzDevice(carbonWindow);
                 
-                if (cgdevice == IntPtr.Zero)
-                    cgdevice = (IntPtr)DisplayDevice.Default.Id;
+            if (cgdevice == IntPtr.Zero)
+                cgdevice = (IntPtr)DisplayDevice.Default.Id;
                 
-                OSStatus status = Carbon.API.DMGetGDeviceByDisplayID(cgdevice, out gdevice, false);
+            OSStatus status = Carbon.API.DMGetGDeviceByDisplayID(cgdevice, out gdevice, false);
                 
-                if (status != OSStatus.NoError)
-                    throw new MacOSException(status, "DMGetGDeviceByDisplayID failed.");
-                
-                myAGLPixelFormat = Agl.aglChoosePixelFormat(ref gdevice, 1, aglAttributes.ToArray());
-                
-                Agl.AglError err = Agl.GetError();
-                
-                if (err == Agl.AglError.BadPixelFormat)
-                {
-                    Debug.Print("Failed to create full screen pixel format.");
-                    Debug.Print("Trying again to create a non-fullscreen pixel format.");
-                    
-                    CreateContext(mode, carbonWindow, shareContextRef, false);
-                    return;
-                }
-            }
+            if (status != OSStatus.NoError)
+                throw new MacOSException(status, "DMGetGDeviceByDisplayID failed.");
 
-            else
-            {
-                myAGLPixelFormat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, aglAttributes.ToArray());
-                
-                MyAGLReportError("aglChoosePixelFormat");
-            }
-            
-            
+            IGraphicsMode selector = new MacOSGraphicsMode(gdevice);
+            Mode = selector.SelectGraphicsMode(
+                mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
+                mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
+            MyAGLReportError("aglChoosePixelFormat");
+
             Debug.Print("Creating AGL context.  Sharing with {0}", shareContextRef);
-            
+            myAGLPixelFormat = Mode.Index.Value;
+
             // create the context and share it with the share reference.
             Handle = new ContextHandle(Agl.aglCreateContext(myAGLPixelFormat, shareContextRef));
             MyAGLReportError("aglCreateContext");
-            
+
             // Free the pixel format from memory.
             Agl.aglDestroyPixelFormat(myAGLPixelFormat);
             MyAGLReportError("aglDestroyPixelFormat");
@@ -205,13 +143,12 @@ namespace OpenTK.Platform.MacOS
             Update(carbonWindow);
             
             MakeCurrent(carbonWindow);
-            
             Debug.Print("context: {0}", Handle.Handle);
         }
 
         private IntPtr GetQuartzDevice(CarbonWindowInfo carbonWindow)
         {
-            IntPtr windowRef = carbonWindow.WindowRef;
+            IntPtr windowRef = carbonWindow.Handle;
             
             if (CarbonGLNative.WindowRefMap.ContainsKey(windowRef) == false)
                 return IntPtr.Zero;
@@ -234,32 +171,20 @@ namespace OpenTK.Platform.MacOS
             if (carbonWindow.IsControl == false)
                 return;
 
-            // Todo: See if there is a way around using WinForms.
-            throw new NotImplementedException();
-#if false
-            System.Windows.Forms.Control ctrl = Control.FromHandle(carbonWindow.WindowRef);
-            
-            if (ctrl.TopLevelControl == null)
-                return;
-            
-            Rect rect = API.GetControlBounds(carbonWindow.WindowRef);
-            System.Windows.Forms.Form frm = (System.Windows.Forms.Form)ctrl.TopLevelControl;
-            
-            System.Drawing.Point loc = frm.PointToClient(ctrl.PointToScreen(System.Drawing.Point.Empty));
-            
-            rect.X = (short)loc.X;
-            rect.Y = (short)loc.Y;
+            Rect rect = API.GetControlBounds(carbonWindow.WindowHandle);
             
             Debug.Print("Setting buffer_rect for control.");
             Debug.Print("MacOS Coordinate Rect:   {0}", rect);
-            
-            rect.Y = (short)(ctrl.TopLevelControl.ClientSize.Height - rect.Y - rect.Height);
-            Debug.Print("  AGL Coordinate Rect:   {0}", rect);
-            
             int[] glrect = new int[4];
-            
-            glrect[0] = rect.X;
-            glrect[1] = rect.Y;
+
+            if (carbonWindow.XOffset != null)
+                glrect[0] = rect.X + carbonWindow.XOffset();
+            else
+                glrect[0] = rect.X;
+            if (carbonWindow.YOffset != null)
+                glrect[1] = rect.Y + carbonWindow.YOffset();
+            else
+                glrect[1] = rect.Y;
             glrect[2] = rect.Width;
             glrect[3] = rect.Height;
             
@@ -268,7 +193,6 @@ namespace OpenTK.Platform.MacOS
             
             Agl.aglEnable(Handle.Handle, Agl.ParameterNames.AGL_BUFFER_RECT);
             MyAGLReportError("aglEnable");
-#endif
         }
         void SetDrawable(CarbonWindowInfo carbonWindow)
         {
@@ -286,14 +210,15 @@ namespace OpenTK.Platform.MacOS
             IntPtr windowPort;
             if (carbonWindow.IsControl)
             {
-                IntPtr controlOwner = API.GetControlOwner(carbonWindow.WindowRef);
+                IntPtr controlOwner = API.GetControlOwner(carbonWindow.Handle);
                 
                 windowPort = API.GetWindowPort(controlOwner);
             }
-
             else
-                windowPort = API.GetWindowPort(carbonWindow.WindowRef);
-            
+            {
+                windowPort = API.GetWindowPort(carbonWindow.Handle);
+            }
+
             return windowPort;
         }
         public override void Update(IWindowInfo window)
@@ -336,7 +261,7 @@ namespace OpenTK.Platform.MacOS
 
         private CarbonGLNative GetCarbonWindow(CarbonWindowInfo carbonWindow)
         {
-            WeakReference r = CarbonGLNative.WindowRefMap[carbonWindow.WindowRef];
+            WeakReference r = CarbonGLNative.WindowRefMap[carbonWindow.Handle];
             
             if (r.IsAlive)
             {
@@ -475,6 +400,9 @@ namespace OpenTK.Platform.MacOS
             // I do not know MacOS allows us to destroy a context from a separate thread,
             // like the finalizer thread.  It's untested, but worst case is probably
             // an exception on application exit, which would be logged to the console.
+
+            // Actually, it seems to crash the mono runtime. -AMK 2013
+
             Debug.Print("Destroying context");
             if (Agl.aglDestroyContext(Handle.Handle) == true)
             {
@@ -500,28 +428,16 @@ namespace OpenTK.Platform.MacOS
 
         #region IGraphicsContextInternal Members
 
-        private const string Library = "libdl.dylib";
-
-        [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
-        private static extern bool NSIsSymbolNameDefined(string s);
-        [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
-        private static extern IntPtr NSLookupAndBindSymbol(string s);
-        [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
-        private static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
-
         public override IntPtr GetAddress(string function)
         {
-            string fname = "_" + function;
-            if (!NSIsSymbolNameDefined(fname))
-                return IntPtr.Zero;
-            
-            IntPtr symbol = NSLookupAndBindSymbol(fname);
-            if (symbol != IntPtr.Zero)
-                symbol = NSAddressOfSymbol(symbol);
-            
-            return symbol;
+            return NS.GetAddress(function);
         }
-        
+
+        public override IntPtr GetAddress(IntPtr function)
+        {
+            return NS.GetAddress(function);
+        }
+
         #endregion
     }
 }

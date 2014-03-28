@@ -46,6 +46,9 @@ namespace Bind
         const string DigitPrefix = "T"; // Prefix for identifiers that start with a digit
         const string OutputFileHeader = "gl++.h";
 
+        IBind Generator { get; set; }
+        Settings Settings { get { return Generator.Settings; } }
+
         #region Verbatim parts of output file
 
         const string GetAddressDefinition = @"
@@ -293,6 +296,7 @@ typedef const char* GLstring;
 
         public void WriteBindings(IBind generator)
         {
+            Generator = generator;
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
         }
 
@@ -328,7 +332,7 @@ typedef const char* GLstring;
                 WriteGetAddress(sw);
                 WriteTypes(sw);
                 WriteEnums(sw, enums);
-                WriteDefinitions(sw, enums, wrappers, Type.CSTypes); // Core definitions
+                WriteDefinitions(sw, enums, wrappers, Generator.CSTypes); // Core definitions
 
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -471,7 +475,7 @@ typedef const char* GLstring;
 
         void WriteDefinitions(BindStreamWriter sw,
             EnumCollection enums, FunctionCollection wrappers,
-            Dictionary<string, string> CSTypes)
+            IDictionary<string, string> CSTypes)
         {
             sw.WriteLine("namespace {0}", Settings.GLClass);
             sw.WriteLine("{");
@@ -553,7 +557,7 @@ typedef const char* GLstring;
 
         #endregion
 
-        static string GetNamespace(string ext)
+        string GetNamespace(string ext)
         {
             if (ext == "Core")
                 return Settings.GLClass;
@@ -661,8 +665,17 @@ typedef const char* GLstring;
             return sb.ToString();
         }
 
-        static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
-        static Dictionary<string, string> docfiles;
+        DocProcessor processor_;
+        DocProcessor Processor
+        {
+            get
+            {
+                if (processor_ == null)
+                    processor_ = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
+                return processor_;
+            }
+        }
+        Dictionary<string, string> docfiles;
         void WriteDocumentation(BindStreamWriter sw, Function f)
         {
             if (docfiles == null)
@@ -683,29 +696,29 @@ typedef const char* GLstring;
                 if (!docfiles.ContainsKey(docfile))
                     docfile = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
 
-                string doc = null;
+                var docs = new List<string>();
                 if (docfiles.ContainsKey(docfile))
                 {
-                    doc = processor.ProcessFile(docfiles[docfile]);
+                    docs.AddRange(Processor.ProcessFile(docfiles[docfile]));
                 }
-                if (doc == null)
+                if (docs.Count == 0)
                 {
-                    doc = "/// <summary></summary>";
+                    docs.Add("/// <summary></summary>");
                 }
 
-                int summary_start = doc.IndexOf("<summary>") + "<summary>".Length;
+                int summary_start = docs[0].IndexOf("<summary>") + "<summary>".Length;
                 string warning = "[deprecated: v{0}]";
                 string category = "[requires: {0}]";
                 if (f.Deprecated)
                 {
                     warning = String.Format(warning, f.DeprecatedVersion);
-                    doc = doc.Insert(summary_start, warning);
+                    docs[0] = docs[0].Insert(summary_start, warning);
                 }
 
                 if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
                 {
                     category = String.Format(category, f.Category);
-                    doc = doc.Insert(summary_start, category);
+                    docs[0] = docs[0].Insert(summary_start, category);
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
@@ -713,10 +726,13 @@ typedef const char* GLstring;
                         category = String.Format(category, "v" + f.Version);
                     else
                         category = String.Format(category, "v" + f.Version + " and " + f.Category);
-                    doc = doc.Insert(summary_start, category);
+                    docs[0] = docs[0].Insert(summary_start, category);
                 }
 
-                sw.WriteLine(doc);
+                foreach (var doc in docs)
+                {
+                    sw.WriteLine(doc);
+                }
             }
             catch (Exception e)
             {

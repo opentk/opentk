@@ -5,13 +5,16 @@ namespace OpenTK.Platform.Windows
 
     public enum ArbCreateContext
     {
+        CoreProfileBit = 0x0001,
+        CompatibilityProfileBit = 0x0002,
         DebugBit = 0x0001,
         ForwardCompatibleBit = 0x0002,
         MajorVersion = 0x2091,
         MinorVersion = 0x2092,
         LayerPlane = 0x2093,
-        Flags = 0x2094,
+        ContextFlags = 0x2094,
         ErrorInvalidVersion = 0x2095,
+        ProfileMask = 0x9126
     }
 
     public enum WGL_ARB_buffer_region

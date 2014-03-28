@@ -63,6 +63,10 @@ namespace OpenTK
         GraphicsMode mode;
         IWindowInfo window_info;
         IntPtr display;
+        IntPtr rootWindow;
+
+        // Use reflection to retrieve the necessary values from Mono's Windows.Forms implementation.
+        Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
 
         #endregion
 
@@ -72,20 +76,26 @@ namespace OpenTK
                 throw new ArgumentNullException("mode");
             if (control == null)
                 throw new ArgumentNullException("control");
-            if (!mode.Index.HasValue)
-                throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
 
             this.mode = mode;
 
-            // Use reflection to retrieve the necessary values from Mono's Windows.Forms implementation.
-            Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
             if (xplatui == null) throw new PlatformNotSupportedException(
                     "System.Windows.Forms.XplatUIX11 missing. Unsupported platform or Mono runtime version, aborting.");
 
             // get the required handles from the X11 API.
             display = (IntPtr)GetStaticFieldValue(xplatui, "DisplayHandle");
-            IntPtr rootWindow = (IntPtr)GetStaticFieldValue(xplatui, "RootWindow");
+            rootWindow = (IntPtr)GetStaticFieldValue(xplatui, "RootWindow");
             int screen = (int)GetStaticFieldValue(xplatui, "ScreenNo");
+
+            window_info = Utilities.CreateX11WindowInfo(display, screen, control.Handle, rootWindow, IntPtr.Zero);
+        }
+
+        #region IGLControl Members
+
+        public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
+        {
+            GraphicsContext context =  new GraphicsContext(mode, this.WindowInfo, major, minor, flags);
+            mode = context.GraphicsMode;
 
             // get the XVisualInfo for this GraphicsMode
             XVisualInfo info = new XVisualInfo();
@@ -98,14 +108,7 @@ namespace OpenTK
             SetStaticFieldValue(xplatui, "CustomVisual", info.Visual);
             SetStaticFieldValue(xplatui, "CustomColormap", XCreateColormap(display, rootWindow, info.Visual, 0));
 
-            window_info = Utilities.CreateX11WindowInfo(display, screen, control.Handle, rootWindow, infoPtr);
-        }
-
-        #region IGLControl Members
-
-        public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
-        {
-            return new GraphicsContext(mode, this.WindowInfo, major, minor, flags);
+            return context;
         }
 
         public bool IsIdle

@@ -58,6 +58,7 @@ namespace OpenTK.Platform.Windows
             WndProc = WindowProcedure;
 
             InputThread = new Thread(ProcessEvents);
+            InputThread.SetApartmentState(ApartmentState.STA);
             InputThread.IsBackground = true;
             InputThread.Start();
 
@@ -79,7 +80,7 @@ namespace OpenTK.Platform.Windows
             INativeWindow native = new NativeWindow();
             native.ProcessEvents();
             WinWindowInfo parent = native.WindowInfo as WinWindowInfo;
-            Functions.SetParent(parent.WindowHandle, Constants.MESSAGE_ONLY);
+            Functions.SetParent(parent.Handle, Constants.MESSAGE_ONLY);
             native.ProcessEvents();
 
             Debug.Unindent();
@@ -97,7 +98,7 @@ namespace OpenTK.Platform.Windows
             CreateDrivers();
 
             // Subclass the window to retrieve the events we are interested in.
-            OldWndProc = Functions.SetWindowLong(Parent.WindowHandle, WndProc);
+            OldWndProc = Functions.SetWindowLong(Parent.Handle, WndProc);
             Debug.Print("Input window attached to {0}", Parent);
 
             InputReady.Set();
@@ -105,7 +106,7 @@ namespace OpenTK.Platform.Windows
             MSG msg = new MSG();
             while (Native.Exists)
             {
-                int ret = Functions.GetMessage(ref msg, Parent.WindowHandle, 0, 0);
+                int ret = Functions.GetMessage(ref msg, Parent.Handle, 0, 0);
                 if (ret == -1)
                 {
                     throw new PlatformException(String.Format(
@@ -162,6 +163,8 @@ namespace OpenTK.Platform.Windows
         public abstract IMouseDriver2 MouseDriver { get; }
         public abstract IKeyboardDriver2 KeyboardDriver { get; }
         public abstract IGamePadDriver GamePadDriver { get; }
+
+        public abstract IJoystickDriver2 JoystickDriver { get; }
 
         #endregion
 

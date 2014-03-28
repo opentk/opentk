@@ -1,7 +1,30 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
+﻿#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit Library
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
+
+
 #endregion
 
 using System;
@@ -12,18 +35,18 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind
 {
-    class BindStreamWriter : StreamWriter
+    class BindStreamWriter : IDisposable
     {
-        int indent_level = 0;
-        Regex splitLines = new Regex(Environment.NewLine, RegexOptions.Compiled);
-        //Regex splitLines = new Regex("(\r\n|\n\r|\n|\r)", RegexOptions.Compiled);
-
+        static readonly char[] SplitCharacters = new char[] { '\r', '\n' };
+        readonly StreamWriter sw;
         public readonly string File;
 
+        int indent_level = 0;
+
         public BindStreamWriter(string file)
-            : base(file)
         {
             File = file;
+            sw = new StreamWriter(file);
         }
 
         public void Indent()
@@ -37,43 +60,72 @@ namespace Bind
                 --indent_level;
         }
 
-        public override void Write(string value)
+        public void Write(string value)
+        {
+            var lines = value.Split(SplitCharacters,
+                StringSplitOptions.RemoveEmptyEntries);
+            bool is_multiline = lines.Length > 1;
+            if (is_multiline)
+            {
+                // Write all internal lines
+                for (int i = 0; i < lines.Length - 1; i++)
+                {
+                    var line = lines[i];
+                    WriteIndentations();
+                    sw.Write(line);
+                    sw.Write(System.Environment.NewLine);
+                }
+                // Write the last line without appending a newline
+                WriteIndentations();
+                sw.Write(lines[lines.Length - 1]);
+            }
+            else
+            {
+                WriteIndentations();
+                sw.Write(value);
+            }
+        }
+
+        public void Write(string format, params object[] args)
+        {
+            Write(String.Format(format, args));
+        }
+
+        public void WriteLine()
+        {
+            sw.WriteLine();
+        }
+
+        public void WriteLine(string value)
+        {
+            Write(value);
+            WriteLine();
+        }
+
+        public void WriteLine(string format, params object[] args)
+        {
+            WriteLine(String.Format(format, args));
+        }
+
+        public void Flush()
+        {
+            sw.Flush();
+        }
+
+        public void Close()
+        {
+            sw.Close();
+        }
+
+        void WriteIndentations()
         {
             for (int i = indent_level; i > 0; i--)
-                base.Write("    ");
-
-            base.Write(value);
+                sw.Write("    ");
         }
 
-        public override void WriteLine(string value)
+        public void Dispose()
         {
-            // Todo: it seems that spacing is not correct if this code
-            // is enabled on Linux/Mono. However, it works as it should on Windows/.Net.
-            // This could be related to line-ending differences, but I haven't been able to
-            // find the cause yet.
-            // This ugly workaround should work until the real cause is found.
-            if (Environment.OSVersion.Platform == PlatformID.Win32Windows ||
-                Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                Environment.OSVersion.Platform == PlatformID.Win32S ||
-                Environment.OSVersion.Platform == PlatformID.WinCE)
-            {
-                for (int i = indent_level; i > 0; i--)
-                    base.Write("    ");
-            }
-            
-            base.WriteLine(value);
-        }
-
-        public void Write(Enum e)
-        {
-            foreach (string s in splitLines.Split(e.ToString()))
-                WriteLine(s.TrimEnd('\r', '\n'));
-        }
-
-        public void Write(Function f)
-        {
-            foreach (string s in splitLines.Split(f.ToString()))
-                WriteLine(s);
+            sw.Dispose();
         }
     }
 }

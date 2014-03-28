@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,5 +13,10 @@ namespace OpenTK.Platform.Dummy
         }
 
         #endregion
+
+        public IntPtr Handle
+        {
+            get { return IntPtr.Zero; }
+        }
     }
 }

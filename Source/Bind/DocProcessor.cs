@@ -15,7 +15,7 @@ namespace Bind
         static readonly XslCompiledTransform xslt = new XslCompiledTransform();
         static readonly XmlReaderSettings settings = new XmlReaderSettings();
 
-        string Text;
+        string[] Text;
         string LastFile;
 
         public DocProcessor(string transform_file)
@@ -29,19 +29,21 @@ namespace Bind
         // found in the <!-- eqn: :--> comments in the docs.
         // Todo: Some simple MathML tags do not include comments, find a solution.
         // Todo: Some files include more than 1 function - find a way to map these extra functions.
-        public string ProcessFile(string file)
+        public string[] ProcessFile(string file)
         {
+            string text;
+
             if (LastFile == file)
                 return Text;
 
             LastFile = file;
-            Text = File.ReadAllText(file);
+            text = File.ReadAllText(file);
 
-            Match m = remove_mathml.Match(Text);
+            Match m = remove_mathml.Match(text);
             while (m.Length > 0)
             {
-                string removed = Text.Substring(m.Index, m.Length);
-                Text = Text.Remove(m.Index, m.Length);
+                string removed = text.Substring(m.Index, m.Length);
+                text = text.Remove(m.Index, m.Length);
                 int equation = removed.IndexOf("eqn");
                 if (equation > 0)
                 {
@@ -60,24 +62,32 @@ namespace Bind
                     }
 
                     string eqn_substring = removed.Substring(eqn_start, eqn_end);
-                    Text = Text.Insert(m.Index, "<![CDATA[" + eqn_substring + "]]>");
+                    text = text.Insert(m.Index, "<![CDATA[" + eqn_substring + "]]>");
                 }
 
             next:
-                m = remove_mathml.Match(Text);
+                m = remove_mathml.Match(text);
             }
 
             XmlReader doc = null;
             try
             {
                 // The pure XmlReader is ~20x faster than the XmlTextReader.
-                doc = XmlReader.Create(new StringReader(Text), settings);
+                doc = XmlReader.Create(new StringReader(text), settings);
                 //doc = new XmlTextReader(new StringReader(text));
                 
                 using (StringWriter sw = new StringWriter())
                 {
                     xslt.Transform(doc, null, sw);
-                    Text = sw.ToString().TrimEnd('\n');
+                    Text = sw.ToString().Split(new char[] { '\r', '\n' },
+                        StringSplitOptions.RemoveEmptyEntries);
+
+                    // Remove unecessary whitespace
+                    // Indentation is handled by BindStreamWriter
+                    for (int i = 0; i < Text.Length; i++)
+                    {
+                        Text[i] = Text[i].Trim();
+                    }
                     return Text;
                 }
             }
@@ -85,7 +95,7 @@ namespace Bind
             {
                 Console.WriteLine(e.ToString());
                 Console.WriteLine(doc.ToString());
-                return String.Empty;
+                return new string[0];
             }
         }
     }

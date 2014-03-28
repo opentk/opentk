@@ -22,6 +22,7 @@ namespace OpenTK.Input
     {
         //private IKeyboard keyboard;
         private bool[] keys = new bool[Enum.GetValues(typeof(Key)).Length];
+        private bool[] scancodes = new bool[256];
         private string description;
         private int numKeys, numFKeys, numLeds;
         private IntPtr devID;
@@ -44,24 +45,16 @@ namespace OpenTK.Input
         public bool this[Key key]
         {
             get { return keys[(int)key]; }
-            internal set
-            {
-                if (keys[(int)key] != value || KeyRepeat)
-                {
-                    keys[(int)key] = value;
+        }
 
-                    if (value && KeyDown != null)
-                    {
-                        args.Key = key;
-                        KeyDown(this, args);
-                    }
-                    else if (!value && KeyUp != null)
-                    {
-                        args.Key = key;
-                        KeyUp(this, args);
-                    }
-                }
-            }
+        /// <summary>
+        /// Gets a value indicating the status of the specified Key.
+        /// </summary>
+        /// <param name="scancode">The scancode to check.</param>
+        /// <returns>True if the scancode is pressed, false otherwise.</returns>
+        public bool this[uint scancode]
+        {
+            get { return scancodes[scancode]; }
         }
 
         /// <summary>
@@ -197,11 +190,59 @@ namespace OpenTK.Input
         internal void ClearKeys()
         {
             for (int i = 0; i < keys.Length; i++)
-                if (this[(Key)i])       // Make sure KeyUp events are *not* raised for keys that are up, even if key repeat is on.
-                    this[(Key)i] = false;
+                keys[i] = false;
+            for (uint i = 0; i < scancodes.Length; i++)
+                scancodes[i] = false;
         }
 
         #endregion
+
+        internal void SetKey(Key key, uint scancode, bool state)
+        {
+            if (keys[(int)key] != state || KeyRepeat)
+            {
+                // limit scancode to 8bits, otherwise the assignment
+                // below will crash randomly
+                scancode &= 0xff;
+
+                keys[(int)key] = scancodes[scancode] = state;
+
+                if (state && KeyDown != null)
+                {
+                    args.Key = key;
+                    args.ScanCode = scancode;
+                    KeyDown(this, args);
+                }
+                else if (!state && KeyUp != null)
+                {
+                    args.Key = key;
+                    args.ScanCode = scancode;
+                    KeyUp(this, args);
+                }
+            }
+        }
+
+        internal KeyModifiers GetModifiers()
+        {
+            KeyModifiers mods = 0;
+
+            if (this[Key.AltLeft] || this[Key.AltRight])
+            {
+                mods |= KeyModifiers.Alt;
+            }
+
+            if (this[Key.ControlLeft] || this[Key.ControlRight])
+            {
+                mods |= KeyModifiers.Control;
+            }
+
+            if (this[Key.ShiftLeft] || this[Key.ShiftRight])
+            {
+                mods |= KeyModifiers.Shift;
+            }
+
+            return mods;
+        }
 
         #endregion
     }

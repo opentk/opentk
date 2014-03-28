@@ -1,9 +1,8 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
-// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +27,9 @@
 
 using System;
 using System.ComponentModel;
+#if !MINIMAL
 using System.Drawing;
+#endif
 using OpenTK.Graphics;
 using OpenTK.Input;
 using OpenTK.Platform;
@@ -89,6 +90,28 @@ namespace OpenTK
         /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
         public NativeWindow(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
+            : this(device.Bounds.Left + (device.Bounds.Width - width) / 2,
+                device.Bounds.Top + (device.Bounds.Height - height) / 2,
+                width, height, title, options, mode, device,
+                1, 0, GraphicsContextFlags.Default) { }
+
+        /// <summary>Constructs a new NativeWindow with the specified attributes.</summary>
+        /// <param name="x">Horizontal screen space coordinate of the NativeWindow's origin.</param>
+        /// <param name="y">Vertical screen space coordinate of the NativeWindow's origin.</param>
+        /// <param name="width">The width of the NativeWindow in pixels.</param>
+        /// <param name="height">The height of the NativeWindow in pixels.</param>
+        /// <param name="title">The title of the NativeWindow.</param>
+        /// <param name="options">GameWindow options specifying window appearance and behavior.</param>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the NativeWindow.</param>
+        /// <param name="device">The OpenTK.Graphics.DisplayDevice to construct the NativeWindow in.</param>
+        /// <param name="major">The major version of the OpenGL context that will be instantiated on this window.</param>
+        /// <param name="major">The minor version of the OpenGL context that will be instantiated on this window.</param>
+        /// <param name="flags">A bitwise combination of <see cref="OpenTK.Graphics.GraphicsContextFlags"/> for the OpenGL context that will be instantiated on this window.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
+        /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
+        public NativeWindow(int x, int y, int width, int height, string title,
+            GameWindowFlags options, GraphicsMode mode, DisplayDevice device,
+            int major, int minor, GraphicsContextFlags flags)
         {
             // TODO: Should a constraint be added for the position?
             if (width < 1)
@@ -103,7 +126,10 @@ namespace OpenTK
             this.options = options;
             this.device = device;
 
-            implementation = Factory.Default.CreateNativeWindow(x, y, width, height, title, mode, options, this.device);
+            implementation = Factory.Default.CreateNativeWindow(
+                x, y, width, height, title,
+                mode, options, this.device,
+                major, minor, flags);
 
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {
@@ -191,8 +217,10 @@ namespace OpenTK
         #region Bounds
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure that contains the external bounds of this window, in screen coordinates.
-        /// External bounds include the title bar, borders and drawing area of the window.
+        /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure
+        /// that specifies the external bounds of this window, in screen coordinates.
+        /// The coordinates are specified in device-independent points and
+        /// include the title bar, borders and drawing area of the window.
         /// </summary>
         public Rectangle Bounds
         {
@@ -213,8 +241,9 @@ namespace OpenTK
         #region ClientRectangle
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure that contains the internal bounds of this window, in client coordinates.
-        /// The internal bounds include the drawing area of the window, but exclude the titlebar and window borders.
+        /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure
+        /// that defines the bounds of the OpenGL surface, in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public Rectangle ClientRectangle
         {
@@ -235,7 +264,9 @@ namespace OpenTK
         #region ClientSize
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Size"/> structure that contains the internal size this window.
+        /// Gets or sets a <see cref="System.Drawing.Size"/> structure
+        /// that defines the size of the OpenGL surface in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public Size ClientSize
         {
@@ -287,7 +318,8 @@ namespace OpenTK
         #region Height
 
         /// <summary>
-        /// Gets or sets the external height of this window.
+        /// Gets or sets the height of the OpenGL surface in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public int Height
         {
@@ -305,7 +337,6 @@ namespace OpenTK
 
         #endregion
 
-#if !MOBILE
         #region Icon
 
         /// <summary>
@@ -326,8 +357,7 @@ namespace OpenTK
         }
 
         #endregion
-#endif
-#if !IPHONE
+
         #region InputDriver
 
         /// <summary>
@@ -344,7 +374,7 @@ namespace OpenTK
         }
 
         #endregion
-#endif
+
         #region Location
 
         /// <summary>
@@ -432,7 +462,8 @@ namespace OpenTK
         #region Width
 
         /// <summary>
-        /// Gets or sets the external width of this window.
+        /// Gets or sets the height of the OpenGL surface in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public int Width
         {
@@ -507,7 +538,8 @@ namespace OpenTK
         #region X
 
         /// <summary>
-        /// Gets or sets the horizontal location of this window on the desktop.
+        /// Gets or sets the horizontal location of this window in screen coordinates.
+        /// The coordinates are specified in device-independent points.
         /// </summary>
         public int X
         {
@@ -528,7 +560,8 @@ namespace OpenTK
         #region Y
 
         /// <summary>
-        /// Gets or sets the vertical location of this window on the desktop.
+        /// Gets or sets the vertical location of this window in screen coordinates.
+        /// The coordinates are specified in device-independent points.
         /// </summary>
         public int Y
         {
@@ -557,9 +590,7 @@ namespace OpenTK
             set
             {
                 cursor_visible = value;
-#if !MOBILE
                 implementation.CursorVisible = value;
-#endif
             }
         }
 
@@ -589,12 +620,11 @@ namespace OpenTK
         /// </summary>
         public event EventHandler<EventArgs> FocusedChanged = delegate { };
 
-#if !MOBILE
         /// <summary>
         /// Occurs when the <see cref="Icon"/> property of the window changes. 
         /// </summary>
         public event EventHandler<EventArgs> IconChanged = delegate { };
-#endif
+
         /// <summary>
         /// Occurs whenever a keybord key is pressed.
         /// </summary>
@@ -782,7 +812,6 @@ namespace OpenTK
 
         #endregion
 
-#if !MOBILE
         #region OnIconChanged
 
         /// <summary>
@@ -807,7 +836,7 @@ namespace OpenTK
         }
 
         #endregion
-#endif
+
         #region OnKeyPress
 
         /// <summary>
@@ -826,7 +855,7 @@ namespace OpenTK
         /// <summary>
         /// Called when a keybord key is released.
         /// </summary>
-        /// <param name="e">The <see cref="OpenTK.KeyboardKeyEventArgs"/> for this event.</param>
+        /// <param name="e">The <see cref="OpenTK.Input.KeyboardKeyEventArgs"/> for this event.</param>
         protected virtual void OnKeyUp(KeyboardKeyEventArgs e)
         {
             KeyUp(this, e);
@@ -989,16 +1018,27 @@ namespace OpenTK
 
         #endregion
 
-#if !MOBILE
         #region OnIconChangedInternal
 
         private void OnIconChangedInternal(object sender, EventArgs e) { OnIconChanged(e); }
 
         #endregion
-#endif
+
+        #region OnKeyDownInternal
+
+        private void OnKeyDownInternal(object sender, KeyboardKeyEventArgs e) { OnKeyDown(e); }
+
+        #endregion
+
         #region OnKeyPressInternal
 
         private void OnKeyPressInternal(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
+
+        #endregion
+
+        #region OnKeyUpInternal
+
+        private void OnKeyUpInternal(object sender, KeyboardKeyEventArgs e) { OnKeyUp(e); }
 
         #endregion
 
@@ -1070,12 +1110,12 @@ namespace OpenTK
                     implementation.Closing += OnClosingInternal;
                     implementation.Disposed += OnDisposedInternal;
                     implementation.FocusedChanged += OnFocusedChangedInternal;
-#if !MOBILE
                     implementation.IconChanged += OnIconChangedInternal;
+                    implementation.KeyDown += OnKeyDownInternal;
+                    implementation.KeyPress += OnKeyPressInternal;
+                    implementation.KeyUp += OnKeyUpInternal;
                     implementation.MouseEnter += OnMouseEnterInternal;
                     implementation.MouseLeave += OnMouseLeaveInternal;
-#endif
-                    implementation.KeyPress += OnKeyPressInternal;
                     implementation.Move += OnMoveInternal;
                     implementation.Resize += OnResizeInternal;
                     implementation.TitleChanged += OnTitleChangedInternal;
@@ -1090,12 +1130,12 @@ namespace OpenTK
                     implementation.Closing -= OnClosingInternal;
                     implementation.Disposed -= OnDisposedInternal;
                     implementation.FocusedChanged -= OnFocusedChangedInternal;
-#if !MOBILE
                     implementation.IconChanged -= OnIconChangedInternal;
+                    implementation.KeyDown -= OnKeyDownInternal;
+                    implementation.KeyPress -= OnKeyPressInternal;
+                    implementation.KeyUp -= OnKeyUpInternal;
                     implementation.MouseEnter -= OnMouseEnterInternal;
                     implementation.MouseLeave -= OnMouseLeaveInternal;
-#endif
-                    implementation.KeyPress -= OnKeyPressInternal;
                     implementation.Move -= OnMoveInternal;
                     implementation.Resize -= OnResizeInternal;
                     implementation.TitleChanged -= OnTitleChangedInternal;

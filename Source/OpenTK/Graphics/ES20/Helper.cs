@@ -1,9 +1,8 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
-// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +27,10 @@
 
 using System;
 using System.Collections.Generic;
+#if !MINIMAL
+using System.Drawing;
+#endif
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace OpenTK.Graphics.ES20
@@ -39,6 +42,22 @@ namespace OpenTK.Graphics.ES20
     {
         const string Library = "libGLESv2.dll";
         static readonly object sync_root = new object();
+
+        static IntPtr[] EntryPoints;
+        static string[] EntryPointNames;
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        public GL()
+        {
+            EntryPointsInstance = EntryPoints;
+            EntryPointNamesInstance = EntryPointNames;
+        }
+
+        #endregion
 
         #region --- Protected Members ---
 
@@ -64,33 +83,29 @@ namespace OpenTK.Graphics.ES20
 
         #region public static void ClearColor() overloads
 
-        public static void ClearColor(System.Drawing.Color color)
+        public static void ClearColor(Color color)
         {
             GL.ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
-#if !IPHONE
         public static void ClearColor(Color4 color)
         {
             GL.ClearColor(color.R, color.G, color.B, color.A);
         }
-#endif
 
         #endregion
 
         #region public static void BlendColor() overloads
 
-        public static void BlendColor(System.Drawing.Color color)
+        public static void BlendColor(Color color)
         {
             GL.BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
-#if !IPHONE
         public static void BlendColor(Color4 color)
         {
             GL.BlendColor(color.R, color.G, color.B, color.A);
         }
-#endif
 
         #endregion
 
@@ -128,17 +143,37 @@ namespace OpenTK.Graphics.ES20
         {
             GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
-		
-#if !IPHONE
+
         public static void Uniform4(int location, Color4 color)
         {
             GL.Uniform4(location, color.R, color.G, color.B, color.A);
         }
-#endif
 
         public static void Uniform4(int location, Quaternion quaternion)
         {
             GL.Uniform4(location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
+        }
+
+        public static void UniformMatrix2(int location, bool transpose, ref Matrix2 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix2(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void UniformMatrix3(int location, bool transpose, ref Matrix3 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix3(location, 1, transpose, matrix_ptr);
+                }
+            }
         }
 
         public static void UniformMatrix4(int location, bool transpose, ref Matrix4 matrix)
@@ -162,7 +197,7 @@ namespace OpenTK.Graphics.ES20
         public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
         {
             int length;
-            GetProgram(program, ProgramParameter.ActiveAttributeMaxLength, out length);
+			GetProgram(program, GetProgramParameterName.ActiveAttributeMaxLength, out length);
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
             GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
@@ -176,7 +211,7 @@ namespace OpenTK.Graphics.ES20
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
         {
             int length;
-            GetProgram(program, ProgramParameter.ActiveUniformMaxLength, out length);
+			GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out length);
 
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
             GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
@@ -248,7 +283,7 @@ namespace OpenTK.Graphics.ES20
             unsafe
             {
                 int length;
-                GL.GetProgram(program, ProgramParameter.InfoLogLength, out length); if (length == 0)
+				GL.GetProgram(program, GetProgramParameterName.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;
@@ -339,33 +374,7 @@ namespace OpenTK.Graphics.ES20
 
         public static void DrawElements(BeginMode mode, int count, DrawElementsType type, int offset)
         {
-            DrawElements(mode, count, type, new IntPtr(offset));
-        }
-
-        #endregion
-
-        #region public static int GenTexture()
-
-        public static int GenTexture()
-        {
-            int id;
-            GenTextures(1, out id);
-            return id;
-        }
-
-        #endregion
-
-        #region public static int GenTexture()
-
-        public static void DeleteTexture(int id)
-        {
-            DeleteTextures(1, ref id);
-        }
-
-        [CLSCompliant(false)]
-        public static void DeleteTexture(uint id)
-        {
-            DeleteTextures(1, ref id);
+            DrawElements((PrimitiveType)mode, count, type, new IntPtr(offset));
         }
 
         #endregion
@@ -412,17 +421,17 @@ namespace OpenTK.Graphics.ES20
 
         #region Viewport
 
-        public static void Viewport(System.Drawing.Size size)
+        public static void Viewport(Size size)
         {
             GL.Viewport(0, 0, size.Width, size.Height);
         }
 
-        public static void Viewport(System.Drawing.Point location, System.Drawing.Size size)
+        public static void Viewport(Point location, Size size)
         {
             GL.Viewport(location.X, location.Y, size.Width, size.Height);
         }
 
-        public static void Viewport(System.Drawing.Rectangle rectangle)
+        public static void Viewport(Rectangle rectangle)
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
@@ -452,4 +461,16 @@ namespace OpenTK.Graphics.ES20
 
         #endregion
     }
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate void DebugProc(
+        DebugSource source, DebugType type, int id,
+        DebugSeverity severity, int length, IntPtr message,
+        IntPtr userParam);
+
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate void DebugProcKhr(
+        DebugSource source, DebugType type, int id,
+        DebugSeverity severity, int length, IntPtr message,
+        IntPtr userParam);
 }

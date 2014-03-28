@@ -1,6 +1,5 @@
 #region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * Copyright 2013 Xamarin Inc
  * See license.txt for license info
  */
 #endregion
@@ -20,7 +19,7 @@ namespace Bind.Structures
     /// Represents an opengl function.
     /// The return value, function name, function parameters and opengl version can be retrieved or set.
     /// </summary>
-    class Delegate : IComparable<Delegate>
+    class Delegate : IComparable<Delegate>, IEquatable<Delegate>
     {
         //internal static DelegateCollection Delegates;
 
@@ -44,6 +43,7 @@ namespace Bind.Structures
         public Delegate(Delegate d)
         {
             Category = d.Category;
+            Extension = d.Extension;
             Name = d.Name;
             Parameters = new ParameterCollection(d.Parameters);
             ReturnType = new Type(d.ReturnType);
@@ -51,6 +51,10 @@ namespace Bind.Structures
             //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
             Deprecated = d.Deprecated;
             DeprecatedVersion = d.DeprecatedVersion;
+            EntryPoint = d.EntryPoint;
+            Obsolete = d.Obsolete;
+            CLSCompliant = d.CLSCompliant;
+            Slot = d.Slot;
         }
 
         #endregion
@@ -227,74 +231,27 @@ namespace Bind.Structures
 
         #region public bool Extension
 
-        string _extension;
-
         public string Extension
         {
-            get
-            {
-                if (!String.IsNullOrEmpty(Name))
-                {
-                    _extension = Utilities.GetGL2Extension(Name);
-                    return String.IsNullOrEmpty(_extension) ? "Core" : _extension;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            get;
+            set;
         }
 
         #endregion
 
         public bool Deprecated { get; set; }
         public string DeprecatedVersion { get; set; }
+        public string EntryPoint { get; set; }
+        public string Obsolete { get; set; }
+
+        // Slot index in the address table
+        public int Slot { get; set; }
 
         #endregion
 
-        /// <summary>
-        /// Returns a string that represents an invocation of this delegate.
-        /// </summary>
-        public string CallString()
-        {
-            StringBuilder sb = new StringBuilder();
-
-#if !MOBILE
-            sb.Append(Settings.DelegatesClass);
-#else
-            sb.Append(Settings.ImportsClass);
-#endif
-            sb.Append(Settings.NamespaceSeparator);
-#if !MOBILE
-            sb.Append(Settings.FunctionPrefix);
-#endif
-            sb.Append(Name);
-            sb.Append(Parameters.CallString());
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns a string representing the full non-delegate declaration without decorations.
-        /// (ie "(unsafe) void glXxxYyy(int a, float b, IntPtr c)"
-        /// </summary>
-        public string DeclarationString()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(Unsafe ? "unsafe " : "");
-            sb.Append(ReturnType);
-            sb.Append(" ");
-            sb.Append(Name);
-            sb.Append(Parameters.ToString(true));
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns a string representing the full delegate declaration without decorations.
-        /// (ie "(unsafe) void delegate glXxxYyy(int a, float b, IntPtr c)"
-        /// </summary>
+        // This method should only be used for debugging purposes, not for code generation!
+        // Returns a string representing the full delegate declaration without decorations.
+        // (ie "(unsafe) void delegate glXxxYyy(int a, float b, IntPtr c)"
         override public string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -304,52 +261,207 @@ namespace Bind.Structures
             sb.Append(ReturnType);
             sb.Append(" ");
             sb.Append(Name);
-            sb.Append(Parameters.ToString(true));
+            sb.Append(Parameters.ToString());
 
             return sb.ToString();
-        }
-
-        public Delegate GetCLSCompliantDelegate()
-        {
-            Delegate f = new Delegate(this);
-
-            for (int i = 0; i < f.Parameters.Count; i++)
-            {
-                f.Parameters[i].CurrentType = f.Parameters[i].GetCLSCompliantType();
-            }
-
-            f.ReturnType.CurrentType = f.ReturnType.GetCLSCompliantType();
-
-            return f;
         }
 
         #region IComparable<Delegate> Members
 
         public int CompareTo(Delegate other)
         {
-            return Name.CompareTo(other.Name);
+            int ret = Name.CompareTo(other.Name);
+            if (ret == 0)
+                ret = Parameters.CompareTo(other.Parameters);
+            if (ret == 0)
+                ret = ReturnType.CompareTo(other.ReturnType);
+            return ret;
+        }
+
+        #endregion
+
+        #region IEquatable<Delegate> Members
+
+        public bool Equals(Delegate other)
+        {
+            return
+                Name.Equals(other.Name) &&
+                Parameters.Equals(other.Parameters) &&
+                ReturnType.Equals(other.ReturnType);
         }
 
         #endregion
     }
 
-    #region class DelegateCollection : SortedDictionary<string, Delegate>
+    #region DelegateCollection
 
-    class DelegateCollection : SortedDictionary<string, Delegate>
+    class DelegateCollection : IDictionary<string, List<Delegate>>
     {
+        readonly SortedDictionary<string, List<Delegate>> Delegates =
+            new SortedDictionary<string, List<Delegate>>();
+
         public void Add(Delegate d)
         {
             if (!ContainsKey(d.Name))
             {
-                Add(d.Name, d);
+                Add(d.Name, new List<Delegate> { d });
             }
             else
             {
-                Trace.WriteLine(String.Format(
-                    "Spec error: function {0} redefined, ignoring second definition.",
-                    d.Name));
+                var list = Delegates[d.Name];
+                var index = list.FindIndex(w => w.CompareTo(d) == 0);
+                if (index < 0)
+                {
+                    // Function not defined - add it!
+                    list.Add(d);
+                }
+                else
+                {
+                    // Function redefined with identical parameters:
+                    // merge their version and category properties and
+                    // discard the duplicate definition
+                    if (!list[index].Category.Contains(d.Category))
+                    {
+                        list[index].Category += "|" + d.Category;
+                    }
+                    if (String.IsNullOrEmpty(list[index].Version))
+                    {
+                        list[index].Version = d.Version;
+                    }
+                }
             }
         }
+
+        public void AddRange(IEnumerable<Delegate> delegates)
+        {
+            foreach (var d in delegates)
+            {
+                Add(d);
+            }
+        }
+
+        public void AddRange(DelegateCollection delegates)
+        {
+            foreach (var d in delegates.Values.SelectMany(v => v))
+            {
+                Add(d);
+            }
+        }
+
+        #region IDictionary Members
+
+        public void Add(string key, List<Delegate> value)
+        {
+            Delegates.Add(key, value.ToList());
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return Delegates.ContainsKey(key);
+        }
+
+        public bool Remove(string key)
+        {
+            return Delegates.Remove(key);
+        }
+
+        public bool TryGetValue(string key, out List<Delegate> value)
+        {
+            return Delegates.TryGetValue(key, out value);
+        }
+
+        public List<Delegate> this[string index]
+        {
+            get
+            {
+                return Delegates[index];
+            }
+            set
+            {
+                Delegates[index] = value;
+            }
+        }
+
+        public ICollection<string> Keys
+        {
+            get
+            {
+                return Delegates.Keys;
+            }
+        }
+
+        public ICollection<List<Delegate>> Values
+        {
+            get
+            {
+                return Delegates.Values;
+            }
+        }
+
+        #endregion
+
+        #region ICollection implementation
+
+        public void Add(KeyValuePair<string, List<Delegate>> item)
+        {
+            Delegates.Add(item.Key, item.Value.ToList());
+        }
+
+        public void Clear()
+        {
+            Delegates.Clear();
+        }
+
+        public bool Contains(KeyValuePair<string, List<Delegate>> item)
+        {
+            return Delegates.Contains(item);
+        }
+
+        public void CopyTo(KeyValuePair<string, List<Delegate>>[] array, int arrayIndex)
+        {
+            Delegates.CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(KeyValuePair<string, List<Delegate>> item)
+        {
+            return Delegates.Remove(item.Key);
+        }
+
+        public int Count
+        {
+            get
+            {
+                return Delegates.Count;
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region IEnumerable implementation
+
+        public IEnumerator<KeyValuePair<string, List<Delegate>>> GetEnumerator()
+        {
+            return Delegates.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IEnumerable implementation
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return Delegates.GetEnumerator();
+        }
+
+        #endregion
     }
 
     #endregion

@@ -85,10 +85,26 @@ namespace OpenTK.Platform.MacOS.Carbon
         static void ConnectEvents()
         {
             
-            EventTypeSpec[] eventTypes = new EventTypeSpec[] { new EventTypeSpec(EventClass.Application, AppEventKind.AppActivated), new EventTypeSpec(EventClass.Application, AppEventKind.AppDeactivated), new EventTypeSpec(EventClass.Application, AppEventKind.AppQuit), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDown), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseUp), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseMoved), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDragged), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseEntered), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseExited), new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelMoved),
+            EventTypeSpec[] eventTypes = new EventTypeSpec[] { 
+            	new EventTypeSpec(EventClass.Application, AppEventKind.AppActivated), 
+            	new EventTypeSpec(EventClass.Application, AppEventKind.AppDeactivated), 
+            	new EventTypeSpec(EventClass.Application, AppEventKind.AppQuit), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDown), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseUp), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseMoved), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDragged), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseEntered), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseExited), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelMoved),
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelScroll),
             
             
-            new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyDown), new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyRepeat), new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyUp), new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyModifiersChanged), new EventTypeSpec(EventClass.AppleEvent, AppleEventKind.AppleEvent) };
+            	new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyDown), 
+            	new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyRepeat), 
+            	new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyUp), 
+            	new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyModifiersChanged), 
+            	new EventTypeSpec(EventClass.AppleEvent, AppleEventKind.AppleEvent), 
+            };
             
             MacOSEventHandler handler = EventHandler;
             uppHandler = API.NewEventHandlerUPP(handler);
@@ -104,28 +120,32 @@ namespace OpenTK.Platform.MacOS.Carbon
             
             switch (evt.EventClass)
             {
-            case EventClass.Application:
-                switch (evt.AppEventKind)
-                {
-                default:
-                    return OSStatus.EventNotHandled;
-                }
+                case EventClass.Application:
+                    switch (evt.AppEventKind)
+                    {
+                        case AppEventKind.AppQuit:
+                            API.RemoveEventHandler(uppHandler);
+                            return OSStatus.EventNotHandled;
+
+                        default:
+                            return OSStatus.EventNotHandled;
+                    }
 
             
-            case EventClass.AppleEvent:
+                case EventClass.AppleEvent:
                 // only event here is the apple event.
-                Debug.Print("Processing apple event.");
-                API.ProcessAppleEvent(inEvent);
-                break;
+                    Debug.Print("Processing apple event.");
+                    API.ProcessAppleEvent(inEvent);
+                    break;
             
-            case EventClass.Keyboard:
-            case EventClass.Mouse:
-                if (WindowEventHandler != null)
-                {
-                    return WindowEventHandler.DispatchEvent(inCaller, inEvent, evt, userData);
-                }
+                case EventClass.Keyboard:
+                case EventClass.Mouse:
+                    if (WindowEventHandler != null)
+                    {
+                        return WindowEventHandler.DispatchEvent(inCaller, inEvent, evt, userData);
+                    }
 
-                break;
+                    break;
             }
             
             return OSStatus.EventNotHandled;

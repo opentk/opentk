@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Bind.Structures;
 using Delegate=Bind.Structures.Delegate;
@@ -26,54 +27,103 @@ namespace Bind
         /// <summary>
         /// Function takes bool parameter - C uses Int for bools, so we have to marshal.
         /// </summary>
-        BoolParameter,
+        BoolParameter = 1 << 0,
         /// <summary>
         /// Function takes generic parameters - add ref/out generic and generic overloads.
         /// </summary>
-        GenericParameter,
+        GenericParameter = 1 << 1,
         /// <summary>
         /// Function takes arrays as parameters - add ref/out and ([Out]) array overloads.
         /// </summary>
-        ArrayParameter,
+        ArrayParameter = 1 << 2,
         /// <summary>
         /// Function with bitmask parameters. Bitmask parameters map to UInt, but since we can only use signed
         /// types (for CLS compliance), we must add the unchecked keyword.
         /// Usually found in bitmasks
         /// </summary>
-        UncheckedParameter,
+        UncheckedParameter = 1 << 3,
         /// <summary>
         /// Function that takes (in/ref/out) a naked pointer as a parameter - we pass an IntPtr.
         /// </summary>
-        PointerParameter,
+        PointerParameter = 1 << 4,
         /// <summary>
         /// Function that takes a reference to a struct.
         /// </summary>
-        ReferenceParameter,
+        ReferenceParameter = 1 << 5,
         /// <summary>
         /// Function returns string - needs manual marshalling through IntPtr to prevent the managed GC
         /// from freeing memory allocated on the unmanaged side (e.g. glGetString).
         /// </summary>
-        StringReturnType,
+        StringReturnType = 1 << 6,
         /// <summary>
         /// Function returns a void pointer - maps to IntPtr, and the user has to manually marshal the type.
         /// </summary>
-        GenericReturnType,
+        GenericReturnType = 1 << 7,
         /// <summary>
         /// Function returns a typed pointer - we have to copy the data to an array to protect it from the GC.
         /// </summary>
-        ArrayReturnType
+        ArrayReturnType = 1 << 8,
+        /// <summary>
+        /// Function normally returns a value via an out parameter.
+        /// This overload returns a single item directly.
+        /// e.g. void GetIntegerv(enum pname, out int value) => int GetInteger(enum pname)
+        /// </summary>
+        ConvenienceReturnType = 1 << 9,
+        /// <summary>
+        /// Function normally returns an array via an out parameter.
+        /// This overload returns a single item directly.
+        /// e.g. void GenBuffers(int count, int[] ids) => int GenBuffer()
+        /// </summary>
+        ConvenienceArrayReturnType = 1 << 10,
+        /// <summary>
+        /// Function normally takes an array in parameter.
+        /// This overload takes a single item directly.
+        /// e.g. void DeleteBuffers(int count, int[] ids) => DeleteBuffer(int id)
+        /// </summary>
+        ConvenienceArrayType = 1 << 11,
+        /// <summary>
+        /// Function takes a String or StringBuilder parameter
+        /// </summary>
+        StringParameter = 1 << 12,
+        /// <summary>
+        /// Function takes a String[] parameter
+        /// </summary>
+        StringArrayParameter = 1 << 13,
     }
 
     #endregion
 
-    public static class Utilities
+    static class Utilities
     {
         public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
-        public static readonly Regex Extensions = new Regex(
-            "ARB|EXT|ATIX|ATI|AMDX|AMD|NV|NVX|SUNX|SUN|SGIS|SGIX|SGI|MESAX|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D|ARM|ANGLE|OES|QCOM|VIV|IMG",
-            RegexOptions.Compiled);
-        public static readonly Regex Acronyms = new Regex(Extensions.ToString() + "|EGL|3TC|DXT|ES|GL|CL|RGBA|BGRA|RGB|BGR|ETC",
-            RegexOptions.Compiled);
+        public static Regex Extensions { get; private set; }
+        public static Regex Acronyms { get; private set; }
+        //public static readonly Regex Extensions = new Regex(
+        //    "ARB|EXT|ATIX|ATI|AMDX|AMD|NV|NVX|SUNX|SUN|SGIS|SGIX|SGI|MESAX|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D|ARM|ANGLE|OES|QCOM|VIV|IMG",
+        //    RegexOptions.Compiled);
+        //public static readonly Regex Acronyms = new Regex(Extensions.ToString() + "|EGL|3TC|DXT|ES|GL|CL|RGBA|BGRA|RGB|BGR|ETC",
+        //    RegexOptions.Compiled);
+
+        public static void InitExtensions(IEnumerable<string> extensions)
+        {
+            var acronyms = new string[]
+            {
+                "EGL",  "ES", "GL", "CL",
+                "RGBA", "BGRA", "RGB", "BGR",
+                "SRGB", "YCBCR",
+                "3TC", "DXT", "BPTC", "RGTC",
+                "3DC", "ATC", "ETC",
+                "ANGLE",  "MESAX", "MESA",
+            };
+
+            Extensions = new Regex(
+                String.Join("|", extensions.ToArray()),
+                RegexOptions.Compiled);
+                        
+            Acronyms = new Regex(
+                String.Join("|", extensions.Concat(acronyms).ToArray()),
+                RegexOptions.Compiled);
+        }
 
         #region internal StreamReader OpenSpecFile(string file)
 
@@ -93,17 +143,14 @@ namespace Bind
 
         #region Keywords
 
-        public static List<string> Keywords
+        public static List<string> Keywords(GeneratorLanguage language)
         {
-            get
+            switch (language)
             {
-                switch (Settings.Language)
-                {
-                    case GeneratorLanguage.CSharp: return CSharpKeywords;
-                    case GeneratorLanguage.Cpp: return CppKeywords;
-                    case GeneratorLanguage.Java: return JavaKeywords;
-                    default: throw new NotImplementedException();
-                }
+                case GeneratorLanguage.CSharp: return CSharpKeywords;
+                case GeneratorLanguage.Cpp: return CppKeywords;
+                case GeneratorLanguage.Java: return JavaKeywords;
+                default: throw new NotImplementedException();
             }
         }
 
@@ -186,16 +233,6 @@ namespace Bind
             }
         }
 
-        internal static string ResolveName (string s)
-        {
-            if (s.Length > 0 && s[0] == '#') {
-                if (s.Length > 1 && s[1] == '#')
-                    return s.Substring (2);
-                return s.Substring (1);
-            }
-            return s;
-        }
-
         /// <summary>
         /// Places a new constant in the specified enum, if it doesn't already exist.
         /// The existing constant is replaced iff the new has a numeric value and the old
@@ -206,39 +243,22 @@ namespace Bind
         /// <returns></returns>
         internal static Enum Merge(Enum s, Constant t)
         {
-            string name = ResolveName (t.Name);
-            if (!s.ConstantCollection.ContainsKey(name))
+            if (!s.ConstantCollection.ContainsKey(t.Name))
             {
-                s.ConstantCollection.Add(name, t);
+                s.ConstantCollection.Add(t.Name, t);
             }
             else
             {
                 // Tried to add a constant that already exists. If one constant
                 // is like: 'Foo = 0x5' and the other like: 'Foo = Bar.Foo', then 
                 // keep the first one.
-                if (!Char.IsDigit(((Constant)s.ConstantCollection[t.Name]).Value[0]))
+                if (!String.IsNullOrEmpty(s.ConstantCollection[t.Name].Reference))
                 {
-                    s.ConstantCollection.Remove(t.Name);
-                    s.ConstantCollection.Add(t.Name, t);
+                    s.ConstantCollection[t.Name] = t;
                 }
             }
 
             return s;
-        }
-
-        // Merges the specified delegate collections.
-        internal static void Merge(DelegateCollection delegates, DelegateCollection new_delegates)
-        {
-            foreach (var d in new_delegates)
-            {
-                Merge(delegates, d.Value);
-            }
-        }
-
-        // Merges the given delegate into the delegate list.
-        internal static void Merge(DelegateCollection delegates, Delegate t)
-        {
-            delegates.Add(t.Name, t);
         }
 
         #endregion

@@ -3,7 +3,6 @@
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
-// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,16 +27,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace OpenTK.Platform
 {
     using Graphics;
+    using Input;
 
     sealed class Factory : IPlatformFactory
     {
         #region Fields
 
+        bool disposed;
         static IPlatformFactory default_implementation, embedded_implementation;
 
         #endregion
@@ -46,26 +48,51 @@ namespace OpenTK.Platform
 
         static Factory()
         {
-#if MOBILE
-            if (Configuration.RunningOnAndroid) Default = new Android.AndroidFactory ();
-#else
-            if (Configuration.RunningOnWindows) Default = new Windows.WinFactory();
-            else if (Configuration.RunningOnMacOS) Default = new MacOS.MacOSFactory();
-            else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
-#endif
-            else Default = new UnsupportedPlatform();
-            if (Egl.Egl.IsSupported)
+            // Ensure we are correctly initialized.
+            Toolkit.Init();
+
+            // Create regular platform backend
+            #if SDL2
+            Default = Configuration.RunningOnSdl2 ? new SDL2.Sdl2Factory() : null;
+            #endif
+            #if WIN32
+            Default = Default ?? (Configuration.RunningOnWindows ? new Windows.WinFactory() : null);
+            #endif
+            #if CARBON
+            Default = Default ?? (Configuration.RunningOnMacOS ? new MacOS.MacOSFactory() : null);
+            #endif
+            #if X11
+            Default = Default ?? (Configuration.RunningOnX11 ? new X11.X11Factory() : null);
+            #endif
+            Default = Default ?? new UnsupportedPlatform();
+
+            // Create embedded platform backend for EGL / OpenGL ES.
+            // Todo: we could probably delay this until the embedded
+            // factory is actually accessed. This might improve startup
+            // times slightly.
+            if (Configuration.RunningOnSdl2)
             {
-#if MOBILE
-                if (Configuration.RunningOnAndroid) Embedded = new Egl.EglAndroidPlatformFactory ();
-#else
-                if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
-                else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
-                else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
-#endif
-                else Embedded = new UnsupportedPlatform();
+                // SDL supports both EGL and desktop backends
+                // using the same API.
+                Embedded = Default;
             }
-            else Embedded = new UnsupportedPlatform();
+            else if (Egl.Egl.IsSupported)
+            {
+                #if WIN32
+                Embedded = Configuration.RunningOnWindows ? new Egl.EglWinPlatformFactory() : null;
+                #endif
+                #if CARBON
+                Embedded = Embedded ?? (Configuration.RunningOnMacOS ? new Egl.EglMacPlatformFactory() : null);
+                #endif
+                #if X11
+                Embedded = Embedded ?? (Configuration.RunningOnX11 ? new Egl.EglX11PlatformFactory() : null);
+                #endif
+                Embedded = Embedded ?? new UnsupportedPlatform();
+            }
+            else
+            {
+                Embedded = new UnsupportedPlatform();
+            }
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
                 Default = Embedded;
@@ -92,9 +119,9 @@ namespace OpenTK.Platform
         #region IPlatformFactory Members
 
         public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
-            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
         {
-            return default_implementation.CreateNativeWindow(x, y, width, height, title, mode, options, device);
+            return default_implementation.CreateNativeWindow(x, y, width, height, title, mode, options, device, major, minor, flags);
         }
 
         public IDisplayDeviceDriver CreateDisplayDeviceDriver()
@@ -121,73 +148,123 @@ namespace OpenTK.Platform
         {
             return default_implementation.CreateGraphicsMode();
         }
-#if !IPHONE
-        public OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+        
+        public IKeyboardDriver2 CreateKeyboardDriver()
         {
             return default_implementation.CreateKeyboardDriver();
         }
 
-        public OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        public IMouseDriver2 CreateMouseDriver()
         {
             return default_implementation.CreateMouseDriver();
         }
-#endif
-        class UnsupportedPlatform : IPlatformFactory
+
+        public IGamePadDriver CreateGamePadDriver()
+        {
+            return default_implementation.CreateGamePadDriver();
+        }
+
+        public IJoystickDriver2 CreateJoystickDriver()
+        {
+            return default_implementation.CreateJoystickDriver();
+        }
+
+        public IJoystickDriver CreateLegacyJoystickDriver()
+        {
+            return default_implementation.CreateLegacyJoystickDriver();
+        }
+
+        class UnsupportedPlatform : PlatformFactoryBase
         {
             #region Fields
-            
+
             static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
             
             #endregion
             
             #region IPlatformFactory Members
 
-            public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+            public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IDisplayDeviceDriver CreateDisplayDeviceDriver()
+            public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+            public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+            public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IGraphicsContext CreateESContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, int major, int minor, GraphicsContextFlags flags)
+            public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+            public override IGraphicsMode CreateGraphicsMode()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IGraphicsMode CreateGraphicsMode()
+            public override IKeyboardDriver2 CreateKeyboardDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+            public override IMouseDriver2 CreateMouseDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+            public override IJoystickDriver2 CreateJoystickDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
-            
+
             #endregion
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    Default.Dispose();
+                    if (Embedded != Default)
+                    {
+                        Embedded.Dispose();
+                    }
+                }
+                else
+                {
+                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~Factory()
+        {
+            Dispose(false);
         }
 
         #endregion

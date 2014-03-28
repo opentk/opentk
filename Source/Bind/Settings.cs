@@ -5,53 +5,66 @@
 #endregion
 
 using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Bind
 {
-    static class Settings
+    [Serializable]
+    class Settings
     {
         // Disable BeforeFieldInit.
-        static Settings() { }
+        public Settings()
+        {
+        }
 
-        public static string DefaultInputPath = "../../../Source/Bind/Specifications";
-        public static string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
-        public static string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-        public static string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
-        public static string DefaultDocFile = "ToInlineDocs.xslt";
-        public static string DefaultLicenseFile = "License.txt";
-        public static string DefaultOverridesFile = "GL2/gloverrides.xml";
-        public static string DefaultLanguageTypeMapFile = "csharp.tm";
-        public static string DefaultKeywordEscapeCharacter = "@";
+        public string DefaultInputPath = "../../../Source/Bind/Specifications";
+        public string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
+        public string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
+        public string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
+        public string DefaultDocFile = "ToInlineDocs.xslt";
+        public string DefaultLicenseFile = "License.txt";
+        public string DefaultOverridesFile = "GL2/gloverrides.xml";
+        public string DefaultLanguageTypeMapFile = "csharp.tm";
+        public string DefaultKeywordEscapeCharacter = "@";
+        public string DefaultImportsFile = "Core.cs";
+        public string DefaultDelegatesFile = "Delegates.cs";
+        public string DefaultEnumsFile = "Enums.cs";
+        public string DefaultWrappersFile = "GL.cs";
+        public Legacy DefaultCompatibility = Legacy.NoDropMultipleTokens;
 
-        static string inputPath, outputPath, outputNamespace, docPath, docFile, licenseFile, overridesFile,
-            languageTypeMapFile, keywordEscapeCharacter;
-        public static string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
-        public static string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
-        public static string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
-        public static string DocPath { get { return docPath ?? DefaultDocPath; } set { docPath = value; } }
-        public static string DocFile { get { return docFile ?? DefaultDocFile; } set { docFile = value; } }
-        public static string LicenseFile { get { return licenseFile ?? DefaultLicenseFile; } set { licenseFile = value; } }
-        public static string OverridesFile { get { return overridesFile ?? DefaultOverridesFile; } set { overridesFile = value; } }
-        public static string LanguageTypeMapFile { get { return languageTypeMapFile ?? DefaultLanguageTypeMapFile; } set { languageTypeMapFile = value; } }
-        public static string KeywordEscapeCharacter { get { return keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter; } set { keywordEscapeCharacter = value; } }
+        string inputPath, outputPath, outputNamespace, docPath, docFile, licenseFile, overridesFile,
+            languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
+            wrappersFile;
+        Nullable<Legacy> compatibility;
+        public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
+        public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
+        public string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
+        public string DocPath { get { return docPath ?? DefaultDocPath; } set { docPath = value; } }
+        public string DocFile { get { return docFile ?? DefaultDocFile; } set { docFile = value; } }
+        public string LicenseFile { get { return licenseFile ?? DefaultLicenseFile; } set { licenseFile = value; } }
+        public string OverridesFile { get { return overridesFile ?? DefaultOverridesFile; } set { overridesFile = value; } }
+        public string LanguageTypeMapFile { get { return languageTypeMapFile ?? DefaultLanguageTypeMapFile; } set { languageTypeMapFile = value; } }
+        public string KeywordEscapeCharacter { get { return keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter; } set { keywordEscapeCharacter = value; } }
+        public string ImportsFile { get { return importsFile ?? DefaultImportsFile; } set { importsFile = value; } }
+        public string DelegatesFile { get { return delegatesFile ?? DefaultDelegatesFile; } set { delegatesFile = value; } }
+        public string EnumsFile { get { return enumsFile ?? DefaultEnumsFile; } set { enumsFile = value; } }
+        public string WrappersFile { get { return wrappersFile ?? DefaultWrappersFile; } set { wrappersFile = value; } }
+        public Legacy Compatibility { get { return compatibility ?? DefaultCompatibility; } set { compatibility = value; } }
 
-        public static string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
-        public static string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
-        public static string FunctionPrefix = "gl";
-        public static string ConstantPrefix = "GL_";
-        public static string EnumPrefix = "";
-        public static string NamespaceSeparator = ".";
-
-        public static string ImportsFile = "Core.cs";
-        public static string DelegatesFile = "Delegates.cs";
-        public static string EnumsFile = "Enums.cs";
-        public static string WrappersFile = "GL.cs";
+        public string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
+        public string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
+        public string FunctionPrefix = "gl";
+        public string ConstantPrefix = "GL_";
+        public string EnumPrefix = "";
+        public string NamespaceSeparator = ".";
 
         // TODO: This code is too fragile.
         // Old enums code:
-        public static string normalEnumsClassOverride = null;
-        public static string NestedEnumsClass = "Enums";
-        public static string NormalEnumsClass
+        public string normalEnumsClassOverride = null;
+        public string NestedEnumsClass = "Enums";
+        public string NormalEnumsClass
         {
             get
             {
@@ -62,12 +75,12 @@ namespace Bind
             }
         }
  
-        public static string AuxEnumsClass 
+        public string AuxEnumsClass 
         {
             get { return GLClass + NamespaceSeparator + NestedEnumsClass; }
         }
 
-        public static string EnumsOutput
+        public string EnumsOutput
         {
             get
             {
@@ -78,7 +91,7 @@ namespace Bind
             }
         }
 
-        public static string EnumsAuxOutput
+        public string EnumsAuxOutput
         {
             get
             {
@@ -90,17 +103,15 @@ namespace Bind
         }
 
         // New enums namespace (don't use a nested class).
-        public static string EnumsNamespace = null;// = "Enums";
+        public string EnumsNamespace = null;// = "Enums";
 
-        public static string DelegatesClass = "Delegates";
-        public static string ImportsClass = "Core";
-
-        public static Legacy Compatibility = Legacy.NoDropMultipleTokens;
+        public string DelegatesClass = "Delegates";
+        public string ImportsClass = "Core";
 
         /// <summary>
         /// The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
         /// </summary>
-        public static string CompleteEnumName = "All";
+        public string CompleteEnumName = "All";
         [Flags]
         public enum Legacy
         {
@@ -143,6 +154,8 @@ namespace Bind
             KeepUntypedEnums = 0x1000,
             /// <summary>Marks deprecated functions as [Obsolete]</summary>
             AddDeprecationWarnings = 0x2000,
+            /// <summary>Use DllImport declaration for core functions (do not generate entry point slots)</summary>
+            UseDllImports = 0x4000,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |
@@ -153,38 +166,49 @@ namespace Bind
                   NestedEnums |
                   NoBoolParameters |
                   NoDropMultipleTokens |
-                  NoDocumentation | 
-                  NoDebugHelpers
-                  /*GenerateAllPermutations,*/
+                  NoDocumentation |
+                  NoDebugHelpers,
+            /*GenerateAllPermutations,*/
         }
 
         // Returns true if flag is enabled.
-        public static bool IsEnabled(Legacy flag)
+        public bool IsEnabled(Legacy flag)
         {
             return (Compatibility & flag) != (Legacy)0;
         }
 
         // Enables the specified flag.
-        public static void Enable(Legacy flag)
+        public void Enable(Legacy flag)
         {
             Compatibility |= flag;
         }
 
         // Disables the specified flag.
-        public static void Disable(Legacy flag)
+        public void Disable(Legacy flag)
         {
             Compatibility &= ~flag;
         }
 
         /// <summary>True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).</summary>
-        public static bool DropMultipleTokens
+        public bool DropMultipleTokens
         { 
             get { return (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; } 
             set { if (value) Compatibility |= Legacy.NoDropMultipleTokens; else Compatibility &= ~Legacy.NoDropMultipleTokens; }
         }
         
-        public static string WindowsGDI = "OpenTK.Platform.Windows.API";
+        public string WindowsGDI = "OpenTK.Platform.Windows.API";
 
-        public static GeneratorLanguage Language { get; set; }
+        public GeneratorLanguage Language { get; set; }
+
+        public Settings Clone()
+        {
+            IFormatter formatter = new BinaryFormatter();
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, this);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (Settings)formatter.Deserialize(stream);
+            }
+        }
     }
 }

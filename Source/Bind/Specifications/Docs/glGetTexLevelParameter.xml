@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glGetTexLevelParameter">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glGetTexLevelParameter</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -36,7 +36,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -78,9 +77,9 @@
                 <para>
                     Specifies the level-of-detail number of the desired image.
                     Level 0 is the base image level.
-                    Level 
+                    Level
                     <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
-                    is the 
+                    is the
                     <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
                     mipmap reduction image.
                 </para>
@@ -95,14 +94,14 @@
                     <constant>GL_TEXTURE_HEIGHT</constant>,
                     <constant>GL_TEXTURE_DEPTH</constant>,
                     <constant>GL_TEXTURE_INTERNAL_FORMAT</constant>,
-                    <constant>GL_TEXTURE_BORDER</constant>,
                     <constant>GL_TEXTURE_RED_SIZE</constant>,
                     <constant>GL_TEXTURE_GREEN_SIZE</constant>,
                     <constant>GL_TEXTURE_BLUE_SIZE</constant>,
                     <constant>GL_TEXTURE_ALPHA_SIZE</constant>,
                     <constant>GL_TEXTURE_DEPTH_SIZE</constant>,
-                    <constant>GL_TEXTURE_COMPRESSED</constant>, and
-                    <constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant>
+                    <constant>GL_TEXTURE_COMPRESSED</constant>,
+                    <constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant>, and
+                    <constant>GL_TEXTURE_BUFFER_OFFSET</constant>
                      are accepted.
                 </para>
             </listitem>
@@ -139,8 +138,8 @@
             <constant>GL_MAX_TEXTURE_SIZE</constant>, and <constant>GL_MAX_3D_TEXTURE_SIZE</constant> are not really
             descriptive enough.
             It has to report the largest square texture image that can be
-            accommodated with mipmaps and borders,
-            but a long skinny texture, or a texture without mipmaps and borders, may
+            accommodated with mipmaps
+            but a long skinny texture, or a texture without mipmaps may
             easily fit in texture memory.
             The proxy targets allow the user to more accurately query
             whether the GL can accommodate a texture of a given configuration.
@@ -161,12 +160,9 @@
                 <term><constant>GL_TEXTURE_WIDTH</constant></term>
                 <listitem>
                     <para>
-                    </para>
-                    <para>
                         <parameter>params</parameter> returns a single value,
                         the width of the texture image.
-                        This value includes the border of the texture image. The initial value is
-                        0.
+                        The initial value is 0.
                     </para>
                 </listitem>
             </varlistentry>
@@ -174,12 +170,9 @@
                 <term><constant>GL_TEXTURE_HEIGHT</constant></term>
                 <listitem>
                     <para>
-                    </para>
-                    <para>
                         <parameter>params</parameter> returns a single value,
                         the height of the texture image.
-                        This value includes the border of the texture image. The initial value is
-                        0.
+                        The initial value is 0.
                     </para>
                 </listitem>
             </varlistentry>
@@ -187,12 +180,9 @@
                 <term><constant>GL_TEXTURE_DEPTH</constant></term>
                 <listitem>
                     <para>
-                    </para>
-                    <para>
                         <parameter>params</parameter> returns a single value,
                         the depth of the texture image.
-                        This value includes the border of the texture image. The initial value is
-                        0.
+                        The initial value is 0.
                     </para>
                 </listitem>
             </varlistentry>
@@ -200,38 +190,18 @@
                 <term><constant>GL_TEXTURE_INTERNAL_FORMAT</constant></term>
                 <listitem>
                     <para>
-                    </para>
-                    <para>
                         <parameter>params</parameter> returns a single value,
                         the internal format of the texture image.
                     </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><constant>GL_TEXTURE_RED_TYPE</constant>,</term>
+                <term><constant>GL_TEXTURE_RED_TYPE</constant>,
+                      <constant>GL_TEXTURE_GREEN_TYPE</constant>,
+                      <constant>GL_TEXTURE_BLUE_TYPE</constant>,
+                      <constant>GL_TEXTURE_ALPHA_TYPE</constant>,
+                      <constant>GL_TEXTURE_DEPTH_TYPE</constant></term>
                 <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_GREEN_TYPE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_BLUE_TYPE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_ALPHA_TYPE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_DEPTH_TYPE</constant></term>
-                <listitem>
-                    <para>
-                    </para>
                     <para>
                         The data type used to store the component.
                         The types <constant>GL_NONE</constant>, <constant>GL_SIGNED_NORMALIZED</constant>,
@@ -243,27 +213,11 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><constant>GL_TEXTURE_RED_SIZE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_GREEN_SIZE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_BLUE_SIZE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_ALPHA_SIZE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_DEPTH_SIZE</constant></term>
+                <term><constant>GL_TEXTURE_RED_SIZE</constant>,
+                      <constant>GL_TEXTURE_GREEN_SIZE</constant>,
+                      <constant>GL_TEXTURE_BLUE_SIZE</constant>,
+                      <constant>GL_TEXTURE_ALPHA_SIZE</constant>,
+                      <constant>GL_TEXTURE_DEPTH_SIZE</constant></term>
                 <listitem>
                     <para>
                     </para>
@@ -299,6 +253,30 @@
                     </para>
                 </listitem>
             </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_BUFFER_OFFSET</constant></term>
+                <listitem>
+                    <para>
+                    </para>
+                    <para>
+                        <parameter>params</parameter> returns a single integer value, the offset into the
+                        data store of the buffer bound to a buffer texture.
+                        <citerefentry><refentrytitle>glTexBufferRange</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_BUFFER_SIZE</constant></term>
+                <listitem>
+                    <para>
+                    </para>
+                    <para>
+                        <parameter>params</parameter> returns a single integer value, the size of the range of a
+                        data store of the buffer bound to a buffer texture.
+                        <citerefentry><refentrytitle>glTexBufferRange</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
         </variablelist>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
@@ -308,6 +286,10 @@
         </para>
         <para>
             <function>glGetTexLevelParameter</function> returns the texture level parameters for the active texture unit.
+        </para>
+        <para>
+            <constant>GL_TEXTURE_BUFFER_OFFSET</constant> and <constant>GL_TEXTURE_BUFFER_SIZE</constant> are available only
+            if the GL version is 4.3 or greater.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -320,7 +302,7 @@
         </para>
         <para>
             <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater
-            than 
+            than
             <inlineequation><mml:math>
                 <!-- eqn: log sub 2: -->
                 <mml:msub><mml:mi mathvariant="italic">log</mml:mi>
@@ -361,7 +343,7 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2010
+            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2010-2013
             Khronos Group. This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.

@@ -9,32 +9,31 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind.ES
 {
+    // Generator implementation for OpenGL ES 1.0 and 1.1
     class ESGenerator : Generator
     {
-        public ESGenerator(string nsName, string dirName)
+        public ESGenerator(Settings settings, string dirName)
+            : base(settings, dirName)
         {
-            if (String.IsNullOrEmpty(nsName))
-                throw new ArgumentNullException("nsName");
-            if (dirName == null)
-                dirName = nsName;
+            Settings.DefaultOutputPath = Path.Combine(
+                Settings.DefaultOutputPath, "../ES11");
+            Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
+            Settings.DefaultImportsFile = "ES11Core.cs";
+            Settings.DefaultDelegatesFile = "ES11Delegates.cs";
+            Settings.DefaultEnumsFile = "ES11Enums.cs";
+            Settings.DefaultWrappersFile = "ES11.cs";
 
-            glTypemap = "GL2/gl.tm";
-            csTypemap = Settings.LanguageTypeMapFile;
+            // Khronos releases a combined 1.0+1.1 specification,
+            // so we cannot distinguish between the two.
+            // Todo: add support for common and light profiles.
+            Profile = "gles1";
+            // no explicit version means both 1.0 and 1.1 versions
 
-            enumSpec = dirName + "/signatures.xml";
-            enumSpecExt = String.Empty;
-            glSpec = dirName  + "/signatures.xml";
-            glSpecExt = String.Empty;
-            Settings.OverridesFile = dirName + "/overrides.xml";
-
-            Settings.ImportsFile = "Core.cs";
-            Settings.DelegatesFile = "Delegates.cs";
-            Settings.EnumsFile = "Enums.cs";
-            Settings.WrappersFile = "ES.cs";
-            Settings.ImportsClass = "Core";
-            Settings.DelegatesClass = "Delegates";
-
-            Settings.OutputClass = "GL";
+            // For compatibility with OpenTK 1.0 and Xamarin, generate
+            // overloads using the "All" enum in addition to strongly-typed enums.
+            // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
+            Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
+            Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
         }
     }
 }

@@ -26,6 +26,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace OpenTK
 {
@@ -149,6 +150,7 @@ namespace OpenTK
         /// The new Half2 instance will convert the Vector2d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector2d</param>
+        [CLSCompliant(false)]
         public Vector2h(Vector2d v)
         {
             X = new Half(v.X);
@@ -160,6 +162,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="v">OpenTK.Vector2d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
+        [CLSCompliant(false)]
         public Vector2h(Vector2d v, bool throwOnError)
         {
             X = new Half(v.X, throwOnError);
@@ -191,6 +194,16 @@ namespace OpenTK
         }
 
         #endregion Constructors
+
+        #region Swizzle
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2h with the Y and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2h Yx { get { return new Vector2h(Y, X); } set { Y = value.X; X = value.Y; } }
+
+        #endregion
 
         #region Half -> Single
 
@@ -312,10 +325,11 @@ namespace OpenTK
 
         #region ToString()
 
+        private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>Returns a string that contains this Half2's numbers in human-legible form.</summary>
         public override string ToString()
         {
-            return String.Format("({0}, {1})", X.ToString(), Y.ToString());
+            return String.Format("({0}{2} {1})", X, Y, listSeparator);
         }
 
         #endregion ToString()

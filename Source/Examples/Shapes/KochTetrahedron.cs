@@ -50,7 +50,7 @@ namespace Examples.Shapes
 
             }
 
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = OpenTK.Graphics.OpenGL.PrimitiveType.Triangles;
             SierpinskiTetrahedron.GetVertexArray( ref Triangles, out VertexArray );
             IndexArray = null;
         }

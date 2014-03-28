@@ -37,18 +37,53 @@ namespace OpenTK.Platform.MacOS
 
     class MacOSGraphicsMode : IGraphicsMode
     {
+        readonly IntPtr Device;
+
+        public MacOSGraphicsMode(IntPtr device)
+        {
+            Device = device;
+        }
+
         #region IGraphicsMode Members
 
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil,
             int samples, ColorFormat accum, int buffers, bool stereo)
         {
-            IntPtr pixelformat = SelectPixelFormat(color, depth, stencil, samples, accum, buffers, stereo);
+            IntPtr pixelformat;
+            do
+            {
+                pixelformat = SelectPixelFormat(
+                    color, depth, stencil, samples, accum, buffers, stereo,
+                    true, Device);
+
+                Agl.AglError err = Agl.GetError();
+                if (pixelformat == IntPtr.Zero || err == Agl.AglError.BadPixelFormat)
+                {
+                    Debug.Print("Failed to create full screen pixel format.");
+                    Debug.Print("Trying again to create a non-fullscreen pixel format.");
+                    pixelformat = SelectPixelFormat(
+                        color, depth, stencil, samples, accum, buffers, stereo,
+                        false, IntPtr.Zero);
+                }
+
+                if (pixelformat == IntPtr.Zero)
+                {
+                    if (!Utilities.RelaxGraphicsMode(
+                        ref color, ref depth, ref stencil, ref samples, ref accum,
+                        ref buffers, ref stereo))
+                    {
+                        throw new GraphicsModeException("Requested GraphicsMode not available.");
+                    }
+                }
+            }
+            while (pixelformat == IntPtr.Zero);
+
             return GetGraphicsModeFromPixelFormat(pixelformat);
         }
 
         #endregion
 
-        #region Private Members
+        #region Internal Members
 
         GraphicsMode GetGraphicsModeFromPixelFormat(IntPtr pixelformat)
         {
@@ -74,7 +109,7 @@ namespace OpenTK.Platform.MacOS
         }
 
         IntPtr SelectPixelFormat(ColorFormat color, int depth, int stencil, int samples,
-            ColorFormat accum, int buffers, bool stereo)
+            ColorFormat accum, int buffers, bool stereo, bool fullscreen, IntPtr device)
         {
             List<int> attribs = new List<int>();
 
@@ -140,14 +175,22 @@ namespace OpenTK.Platform.MacOS
                 attribs.Add((int)Agl.PixelFormatAttribute.AGL_STEREO);
             }
 
+            if (fullscreen)
+            {
+                attribs.Add((int)Agl.PixelFormatAttribute.AGL_FULLSCREEN);
+            }
+
             attribs.Add(0);
             attribs.Add(0);
 
-            IntPtr pixelformat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, attribs.ToArray());
-            if (pixelformat == IntPtr.Zero)
+            IntPtr pixelformat = IntPtr.Zero;
+            if (device != IntPtr.Zero)
             {
-                throw new GraphicsModeException(String.Format(
-                    "[Error] Failed to select GraphicsMode, error {0}.", Agl.GetError()));
+                pixelformat = Agl.aglChoosePixelFormat(ref device, 0, attribs.ToArray());
+            }
+            else
+            {
+                pixelformat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, attribs.ToArray());
             }
             return pixelformat;
         }

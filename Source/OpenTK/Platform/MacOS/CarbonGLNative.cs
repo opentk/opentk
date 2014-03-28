@@ -33,11 +33,18 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Text;
+using OpenTK.Graphics;
+using OpenTK.Input;
 
 namespace OpenTK.Platform.MacOS
 {
     using Carbon;
-    using Graphics;
+#if ANDROID || IPHONE || MINIMAL
+    using Minimal;
+    using Graphics = OpenTK.Minimal.Graphics;
+#else
+    using Graphics = System.Drawing.Graphics;
+#endif
 
     class CarbonGLNative : INativeWindow
     {
@@ -57,8 +64,6 @@ namespace OpenTK.Platform.MacOS
         bool mExists = true;
         DisplayDevice mDisplayDevice;
 
-        WindowAttributes mWindowAttrib;
-        WindowClass mWindowClass;
         WindowPositionMethod mPositionMethod = WindowPositionMethod.CenterOnMainScreen;
         int mTitlebarHeight;
         private WindowBorder windowBorder = WindowBorder.Resizable;
@@ -68,6 +73,8 @@ namespace OpenTK.Platform.MacOS
             new Dictionary<IntPtr, WeakReference>(new IntPtrEqualityComparer());
 
         KeyPressEventArgs mKeyPressArgs = new KeyPressEventArgs((char)0);
+        OpenTK.Input.KeyboardKeyEventArgs mKeyDownArgs = new OpenTK.Input.KeyboardKeyEventArgs();
+        OpenTK.Input.KeyboardKeyEventArgs mKeyUpArgs = new OpenTK.Input.KeyboardKeyEventArgs();
 
         bool mMouseIn = false;
         bool mIsActive = false;
@@ -100,18 +107,6 @@ namespace OpenTK.Platform.MacOS
             Application.Initialize();
         }
 
-        CarbonGLNative() : this(WindowClass.Document,
-            WindowAttributes.StandardDocument | WindowAttributes.StandardHandler |
-            WindowAttributes.InWindowMenu | WindowAttributes.LiveResize)
-        {
-        }
-
-        CarbonGLNative(WindowClass @class, WindowAttributes attrib)
-        {
-            mWindowClass = @class;
-            mWindowAttrib = attrib;
-        }
-
         public CarbonGLNative(int x, int y, int width, int height, string title,
             GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
@@ -141,7 +136,7 @@ namespace OpenTK.Platform.MacOS
             Debug.Print("Disposing of CarbonGLNative window.");
 
             CursorVisible = true;
-            API.DisposeWindow(window.WindowRef);
+            API.DisposeWindow(window.Handle);
             mIsDisposed = true;
             mExists = false;
 
@@ -149,7 +144,7 @@ namespace OpenTK.Platform.MacOS
 
             if (disposing)
             {
-                mWindows.Remove(window.WindowRef);
+                mWindows.Remove(window.Handle);
                 
                 window.Dispose();
                 window = null;
@@ -173,8 +168,8 @@ namespace OpenTK.Platform.MacOS
         {
             if (uppHandler != IntPtr.Zero)
             {
-                //API.RemoveEventHandler(uppHandler);
-                //API.DisposeEventHandlerUPP(uppHandler);
+                API.RemoveEventHandler(uppHandler);
+                API.DisposeEventHandlerUPP(uppHandler);
             }
             
             uppHandler = IntPtr.Zero;
@@ -200,7 +195,7 @@ namespace OpenTK.Platform.MacOS
             
             LoadSize();
             
-            Rect titleSize = API.GetWindowBounds(window.WindowRef, WindowRegionCode.TitleBarRegion);
+            Rect titleSize = API.GetWindowBounds(window.Handle, WindowRegionCode.TitleBarRegion);
             mTitlebarHeight = titleSize.Height;
             
             Debug.Print("Titlebar size: {0}", titleSize);
@@ -239,29 +234,29 @@ namespace OpenTK.Platform.MacOS
             MacOSEventHandler handler = EventHandler;
             uppHandler = API.NewEventHandlerUPP(handler);
             
-            API.InstallWindowEventHandler(window.WindowRef, uppHandler, eventTypes,
-                window.WindowRef, IntPtr.Zero);
+            API.InstallWindowEventHandler(window.Handle, uppHandler, eventTypes,
+                window.Handle, IntPtr.Zero);
             
             Application.WindowEventHandler = this;
         }
 
         void Activate()
         {
-            API.SelectWindow(window.WindowRef);
+            API.SelectWindow(window.Handle);
         }
 
         void Show()
         {
             IntPtr parent = IntPtr.Zero;
             
-            API.ShowWindow(window.WindowRef);
-            API.RepositionWindow(window.WindowRef, parent, WindowPositionMethod);
-            API.SelectWindow(window.WindowRef);
+            API.ShowWindow(window.Handle);
+            API.RepositionWindow(window.Handle, parent, WindowPositionMethod);
+            API.SelectWindow(window.Handle);
         }
 
         void Hide()
         {
-            API.HideWindow(window.WindowRef);
+            API.HideWindow(window.Handle);
         }
 
         internal void SetFullscreen(AglContext context)
@@ -366,6 +361,7 @@ namespace OpenTK.Platform.MacOS
                     break;
             }
 
+            Key key;
             switch (evt.KeyboardEventKind)
             {
                 case KeyboardEventKind.RawKeyRepeat:
@@ -374,25 +370,12 @@ namespace OpenTK.Platform.MacOS
                     break;
 
                 case KeyboardEventKind.RawKeyDown:
-                {
-                    OpenTK.Input.Key key;
-                    if (Keymap.TryGetValue(code, out key))
-                    {
-                        InputDriver.Keyboard[0][key] = true;
-                        OnKeyPress(mKeyPressArgs);
-                    }
+                    ProcessKeyDown(code);
                     return OSStatus.NoError;
-                }
 
                 case KeyboardEventKind.RawKeyUp:
-                {
-                    OpenTK.Input.Key key;
-                    if (Keymap.TryGetValue(code, out key))
-                    {
-                        InputDriver.Keyboard[0][key] = false;
-                    }
+                    ProcessKeyUp(code);
                     return OSStatus.NoError;
-                }
 
                 case KeyboardEventKind.RawKeyModifiersChanged:
                     ProcessModifierKey(inEvent);
@@ -517,9 +500,19 @@ namespace OpenTK.Platform.MacOS
                     }
                     return OSStatus.NoError;
 
-                case MouseEventKind.WheelMoved:
-                    float delta = API.GetEventMouseWheelDelta(inEvent);
-                    InputDriver.Mouse[0].WheelPrecise += delta;
+                case MouseEventKind.WheelMoved:    // older, integer resolution only
+                    {
+                        // this is really an int, we use a float to avoid clipping the wheel value
+                        float delta = API.GetEventMouseWheelDelta (inEvent);
+                        InputDriver.Mouse[0].WheelPrecise += delta;
+                    }
+                    return OSStatus.NoError;
+
+                case MouseEventKind.WheelScroll:   // newer, more precise X and Y scroll
+                    {
+                        API.ScrollDelta delta = API.GetEventWheelScroll(inEvent);
+                        InputDriver.Mouse[0].WheelPrecise += delta.deltaY;
+                    }
                     return OSStatus.NoError;
 
                 case MouseEventKind.MouseMoved:
@@ -562,7 +555,7 @@ namespace OpenTK.Platform.MacOS
             if (window == null)
                 return;
 
-            bool thisIn = eventWindowRef == window.WindowRef;
+            bool thisIn = eventWindowRef == window.Handle;
 
             if (pt.Y < 0)
                 thisIn = false;
@@ -599,6 +592,56 @@ namespace OpenTK.Platform.MacOS
             charCode = API.GetEventKeyboardChar(inEvent);
         }
 
+        void ProcessKeyDown(MacOSKeyCode code)
+        {
+            Key key;
+            Keymap.TryGetValue(code, out key);
+
+            // Legacy keyboard API
+            KeyboardDevice keyboard = InputDriver.Keyboard[0];
+            keyboard.SetKey(key, (uint)code, true);
+
+            // Raise KeyDown for new keyboard API
+            mKeyDownArgs.Key = key;
+            mKeyDownArgs.Modifiers = keyboard.GetModifiers();
+
+            KeyDown(this, mKeyDownArgs);
+
+            // Raise KeyPress for new keyboard API
+            if (!Char.IsControl(mKeyPressArgs.KeyChar))
+            {
+                OnKeyPress(mKeyPressArgs);
+            }
+        }
+
+        void ProcessKeyUp(MacOSKeyCode code)
+        {
+            Key key;
+            Keymap.TryGetValue(code, out key);
+
+            // Legacy keyboard API
+            KeyboardDevice keyboard = InputDriver.Keyboard[0];
+            keyboard.SetKey(key, (uint)code, false);
+
+            // Raise KeyUp for new keyboard API
+            mKeyUpArgs.Key = key;
+            mKeyDownArgs.Modifiers = keyboard.GetModifiers();
+
+            KeyUp(this, mKeyUpArgs);
+        }
+
+        void ProcessKey(MacOSKeyCode code, bool pressed)
+        {
+            if (pressed)
+            {
+                ProcessKeyDown(code);
+            }
+            else
+            {
+                ProcessKeyUp(code);
+            }
+        }
+
         private void ProcessModifierKey(IntPtr inEvent)
         {
             MacOSKeyModifiers modifiers = API.GetEventKeyModifiers(inEvent);
@@ -609,73 +652,79 @@ namespace OpenTK.Platform.MacOS
             bool option = (modifiers & MacOSKeyModifiers.Option) != 0 ? true : false;
             bool shift = (modifiers & MacOSKeyModifiers.Shift) != 0 ? true : false;
             
-            Debug.Print("Modifiers Changed: {0}", modifiers);
-            
             Input.KeyboardDevice keyboard = InputDriver.Keyboard[0];
-            
+
             if (keyboard[OpenTK.Input.Key.AltLeft] ^ option)
-                keyboard[OpenTK.Input.Key.AltLeft] = option;
+            {
+                ProcessKey(MacOSKeyCode.OptionAlt, option);
+            }
             
             if (keyboard[OpenTK.Input.Key.ShiftLeft] ^ shift)
-                keyboard[OpenTK.Input.Key.ShiftLeft] = shift;
-            
+            {
+                ProcessKey(MacOSKeyCode.Shift, shift);
+            }
+
             if (keyboard[OpenTK.Input.Key.WinLeft] ^ command)
-                keyboard[OpenTK.Input.Key.WinLeft] = command;
-            
+            {
+                ProcessKey(MacOSKeyCode.Command, command);
+            }
+
             if (keyboard[OpenTK.Input.Key.ControlLeft] ^ control)
-                keyboard[OpenTK.Input.Key.ControlLeft] = control;
+            {
+                ProcessKey(MacOSKeyCode.Control, control);
+            }
             
             if (keyboard[OpenTK.Input.Key.CapsLock] ^ caps)
-                keyboard[OpenTK.Input.Key.CapsLock] = caps;
-            
+            {
+                ProcessKey(MacOSKeyCode.CapsLock, caps);
+            }
         }
 
-        Rect GetRegion()
+        Rect GetClientSize()
         {
-            Rect retval = API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
-            
+            Rect retval = API.GetWindowBounds(window.Handle, WindowRegionCode.ContentRegion);
             return retval;
-        }
-
-        void SetLocation(short x, short y)
-        {
-            if (windowState == WindowState.Fullscreen)
-                return;
-            
-            API.MoveWindow(window.WindowRef, x, y, false);
-        }
-
-        void SetSize(short width, short height)
-        {
-            if (WindowState == WindowState.Fullscreen)
-                return;
-            
-            // The bounds of the window should be the size specified, but
-            // API.SizeWindow sets the content region size.  So
-            // we reduce the size to get the correct bounds.
-            width -= (short)(bounds.Width - clientRectangle.Width);
-            height -= (short)(bounds.Height - clientRectangle.Height);
-            
-            API.SizeWindow(window.WindowRef, width, height, true);
         }
 
         void SetClientSize(short width, short height)
         {
             if (WindowState == WindowState.Fullscreen)
                 return;
-            
-            API.SizeWindow(window.WindowRef, width, height, true);
+
+            Rect new_bounds = new Rect(Bounds.X, Bounds.Y, width, height);
+            API.SetWindowBounds(window.Handle, WindowRegionCode.ContentRegion, ref new_bounds);
+            LoadSize();
+        }
+
+        void SetLocation(short x, short y)
+        {
+            if (windowState == WindowState.Fullscreen)
+                return;
+
+            Rect new_bounds = new Rect(x, y, Bounds.Width, Bounds.Height);
+            API.SetWindowBounds(window.Handle, WindowRegionCode.StructureRegion, ref new_bounds);
+            LoadSize();
+        }
+
+        void SetSize(short width, short height)
+        {
+            if (WindowState == WindowState.Fullscreen)
+                return;
+
+            Rect new_bounds = new Rect(Bounds.X, Bounds.Y, width, height);
+            API.SetWindowBounds(window.Handle, WindowRegionCode.StructureRegion, ref new_bounds);
+            LoadSize();
         }
 
         private void LoadSize()
         {
             if (WindowState == WindowState.Fullscreen)
                 return;
-            
-            Rect r = API.GetWindowBounds(window.WindowRef, WindowRegionCode.StructureRegion);
+
+            Rect r = API.GetWindowBounds(window.Handle, WindowRegionCode.StructureRegion);
             bounds = new Rectangle(r.X, r.Y, r.Width, r.Height);
-            
-            r = API.GetWindowBounds(window.WindowRef, WindowRegionCode.GlobalPortRegion);
+
+            r = API.GetWindowBounds(window.Handle, WindowRegionCode.ContentRegion);
             clientRectangle = new Rectangle(0, 0, r.Width, r.Height);
         }
 
@@ -690,13 +739,13 @@ namespace OpenTK.Platform.MacOS
 
         public Point PointToClient(Point point)
         {
-            Rect r = Carbon.API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
+            Rect r = Carbon.API.GetWindowBounds(window.Handle, WindowRegionCode.ContentRegion);
             return new Point(point.X - r.X, point.Y - r.Y);
         }
 
         public Point PointToScreen(Point point)
         {
-            Rect r = Carbon.API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
+            Rect r = Carbon.API.GetWindowBounds(window.Handle, WindowRegionCode.ContentRegion);
             return new Point(point.X + r.X, point.Y + r.Y);
         }
 
@@ -752,7 +801,7 @@ namespace OpenTK.Platform.MacOS
                 int index;
                 
                 bitmap = new Bitmap(128, 128);
-                using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
+                using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     g.DrawImage(icon.ToBitmap(), 0, 0, 128, 128);
                 }
@@ -795,7 +844,7 @@ namespace OpenTK.Platform.MacOS
             {
                 if (value != Title)
                 {
-                    API.SetWindowTitle(window.WindowRef, value);
+                    API.SetWindowTitle(window.Handle, value);
                     title = value;
                     TitleChanged(this, EventArgs.Empty);
                 }
@@ -804,7 +853,7 @@ namespace OpenTK.Platform.MacOS
 
         public bool Visible
         {
-            get { return API.IsWindowVisible(window.WindowRef); }
+            get { return API.IsWindowVisible(window.Handle); }
             set
             {
                 if (value != Visible)
@@ -861,13 +910,13 @@ namespace OpenTK.Platform.MacOS
 
         public int X
         {
-            get { return ClientRectangle.X; }
+            get { return Bounds.X; }
             set { Location = new Point(value, Y); }
         }
 
         public int Y
         {
-            get { return ClientRectangle.Y; }
+            get { return Bounds.Y; }
             set { Location = new Point(X, value); }
         }
 
@@ -884,7 +933,7 @@ namespace OpenTK.Platform.MacOS
             get { return clientRectangle.Size; }
             set
             {
-                API.SizeWindow(window.WindowRef, (short)value.Width, (short)value.Height, true);
+                API.SizeWindow(window.Handle, (short)value.Width, (short)value.Height, true);
                 LoadSize();
                 Resize(this, EventArgs.Empty);
             }
@@ -918,8 +967,6 @@ namespace OpenTK.Platform.MacOS
                 return;
             
             OnClosed();
-            
-            Dispose();
         }
 
         public WindowState WindowState
@@ -929,10 +976,10 @@ namespace OpenTK.Platform.MacOS
                 if (windowState == WindowState.Fullscreen)
                     return WindowState.Fullscreen;
                 
-                if (Carbon.API.IsWindowCollapsed(window.WindowRef))
+                if (Carbon.API.IsWindowCollapsed(window.Handle))
                     return WindowState.Minimized;
                 
-                if (Carbon.API.IsWindowInStandardState(window.WindowRef))
+                if (Carbon.API.IsWindowInStandardState(window.Handle))
                 {
                     return WindowState.Maximized;
                 }
@@ -960,7 +1007,7 @@ namespace OpenTK.Platform.MacOS
                 
                 if (oldState == WindowState.Minimized)
                 {
-                    API.CollapseWindow(window.WindowRef, false);
+                    API.CollapseWindow(window.Handle, false);
                 }
                 
                 SetCarbonWindowState();
@@ -983,20 +1030,20 @@ namespace OpenTK.Platform.MacOS
                 // meaning they are maximized up to their reported ideal size.  So we report a 
                 // large ideal size.
                 idealSize = new CarbonPoint(9000, 9000);
-                API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomOut, ref idealSize);
+                API.ZoomWindowIdeal(window.Handle, WindowPartCode.inZoomOut, ref idealSize);
                 break;
             
             case WindowState.Normal:
                 if (WindowState == WindowState.Maximized)
                 {
                     idealSize = new CarbonPoint();
-                    API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomIn, ref idealSize);
+                    API.ZoomWindowIdeal(window.Handle, WindowPartCode.inZoomIn, ref idealSize);
                 }
 
                 break;
             
             case WindowState.Minimized:
-                API.CollapseWindow(window.WindowRef, true);
+                API.CollapseWindow(window.Handle, true);
                 
                 break;
             }
@@ -1019,12 +1066,12 @@ namespace OpenTK.Platform.MacOS
                 
                 if (windowBorder == WindowBorder.Resizable)
                 {
-                    API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.Resizable | WindowAttributes.FullZoom, WindowAttributes.NoAttributes);
+                    API.ChangeWindowAttributes(window.Handle, WindowAttributes.Resizable | WindowAttributes.FullZoom, WindowAttributes.NoAttributes);
                 }
 
                 else if (windowBorder == WindowBorder.Fixed)
                 {
-                    API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.NoAttributes, WindowAttributes.Resizable | WindowAttributes.FullZoom);
+                    API.ChangeWindowAttributes(window.Handle, WindowAttributes.NoAttributes, WindowAttributes.Resizable | WindowAttributes.FullZoom);
                 }
                 
                 WindowBorderChanged(this, EventArgs.Empty);

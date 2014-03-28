@@ -39,7 +39,7 @@ namespace Examples.Shapes
             default: throw new ArgumentOutOfRangeException( "Subdivisions other than contained in the enum cause overflows and are not allowed." );
             }
 
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = OpenTK.Graphics.OpenGL.PrimitiveType.Triangles;
 
             #region Get Array Dimensions
             uint

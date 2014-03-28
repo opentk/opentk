@@ -110,9 +110,26 @@ namespace OpenTK.Platform.Windows
                         // This is a mouse or a USB mouse device. In the latter case, discover if it really is a
                         // mouse device by qeurying the registry.
                         RegistryKey regkey = FindRegistryKey(name);
+                        if (regkey == null)
+                            continue;
+
                         string deviceDesc = (string)regkey.GetValue("DeviceDesc");
-                        string deviceClass = (string)regkey.GetValue("Class");
-                        deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
+                        string deviceClass = (string)regkey.GetValue("Class") as string;
+                        if(deviceClass == null)
+                        {
+                            // Added to address OpenTK issue 3198 with mouse on Windows 8
+                            string deviceClassGUID = (string)regkey.GetValue("ClassGUID");
+                            RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
+                            deviceClass = classGUIDKey != null ? (string) classGUIDKey.GetValue("Class") : string.Empty;
+                        }
+
+                        // deviceDesc remained null on a new Win7 system - not sure why.
+                        // Since the description is not vital information, use a dummy description
+                        // when that happens.
+                        if (String.IsNullOrEmpty(deviceDesc))
+                            deviceDesc = "Windows Mouse " + mice.Count;
+                        else
+                            deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
 
                         if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("mouse"))
                         {
@@ -158,16 +175,56 @@ namespace OpenTK.Platform.Windows
             int mouse_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
             mouse = mice[mouse_handle];
 
-            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0) mouse.EnableBit((int)MouseButton.Left);
-            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0) mouse.DisableBit((int)MouseButton.Left);
-            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0) mouse.EnableBit((int)MouseButton.Right);
-            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0) mouse.DisableBit((int)MouseButton.Right);
-            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0) mouse.EnableBit((int)MouseButton.Middle);
-            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0) mouse.DisableBit((int)MouseButton.Middle);
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0) mouse.EnableBit((int)MouseButton.Button1);
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0) mouse.DisableBit((int)MouseButton.Button1);
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0) mouse.EnableBit((int)MouseButton.Button2);
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0) mouse.DisableBit((int)MouseButton.Button2);
+            // Set and release capture of the mouse to fix http://www.opentk.com/node/2133, Patch by Artfunkel
+            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0){
+                mouse.EnableBit((int)MouseButton.Left);
+                Functions.SetCapture(Window);
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0)
+            {
+                mouse.DisableBit((int)MouseButton.Left);
+                Functions.ReleaseCapture();
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0)
+            {
+                mouse.EnableBit((int)MouseButton.Right);
+                Functions.SetCapture(Window);
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0)
+            {
+                mouse.DisableBit((int)MouseButton.Right);
+                Functions.ReleaseCapture();
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0)
+            {
+                mouse.EnableBit((int)MouseButton.Middle);
+                Functions.SetCapture(Window);
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0)
+            {
+                mouse.DisableBit((int)MouseButton.Middle);
+                Functions.ReleaseCapture();
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0)
+            {
+                mouse.EnableBit((int)MouseButton.Button1);
+                Functions.SetCapture(Window);
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0)
+            {
+            	mouse.DisableBit((int)MouseButton.Button1);
+            	Functions.ReleaseCapture();
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0)
+            {
+                mouse.EnableBit((int)MouseButton.Button2);
+                Functions.SetCapture(Window);
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0)
+            {
+                mouse.DisableBit((int)MouseButton.Button2);
+                Functions.ReleaseCapture();
+            }
 
             if ((raw.ButtonFlags & RawInputMouseState.WHEEL) != 0)
                 mouse.WheelPrecise += (short)raw.ButtonData / 120.0f;
@@ -211,10 +268,15 @@ namespace OpenTK.Platform.Windows
 
         static RegistryKey FindRegistryKey(string name)
         {
+            if (name.Length < 4)
+                return null;
+
             // remove the \??\
             name = name.Substring(4);
 
             string[] split = name.Split('#');
+            if (split.Length < 3)
+                return null;
 
             string id_01 = split[0];    // ACPI (Class code)
             string id_02 = split[1];    // PNP0303 (SubClass code)

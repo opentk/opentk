@@ -1,4 +1,4 @@
-﻿#region --- OpenTK.OpenAL License ---
+#region --- OpenTK.OpenAL License ---
 /* AlcFunctions.cs
  * C header: \OpenAL 1.1 SDK\include\Alc.h
  * Spec: http://www.openal.org/openal_webstf/specs/OpenAL11Specification.pdf
@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -262,7 +263,13 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>A string containing the name of the Device.</returns>
         public static string GetString(IntPtr device, AlcGetString param)
         {
-            return Marshal.PtrToStringAnsi(GetStringPrivate(device, param));
+            IntPtr pstr = GetStringPrivate(device, param);
+            string str = String.Empty;
+            if (pstr != IntPtr.Zero)
+            {
+                str = Marshal.PtrToStringAnsi(pstr);
+            }
+            return str;
         }
 
         /// <summary>This function returns a List of strings related to the context.</summary>
@@ -277,26 +284,54 @@ namespace OpenTK.Audio.OpenAL
         public static IList<string> GetString(IntPtr device, AlcGetStringList param)
         {
             List<string> result = new List<string>();
-            IntPtr t = GetStringPrivate(IntPtr.Zero, (AlcGetString)param);
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            byte b;
-            int offset = 0;
-            do
-            {
-                b = Marshal.ReadByte(t, offset++);
-                if (b != 0)
-                    sb.Append((char)b);
-                if (b == 0)
-                {
-                    result.Add(sb.ToString());
-                    if (Marshal.ReadByte(t, offset) == 0) // offset already properly increased through ++
-                        break; // 2x null
-                    else
-                        sb.Remove(0, sb.Length); // 1x null
-                }
-            } while (true);
 
-            return (IList<string>)result;
+            // We cannot use Marshal.PtrToStringAnsi(),
+            //  because alcGetString is defined to return either a nul-terminated string,
+            //  or an array of nul-terminated strings terminated by an extra nul.
+            // Marshal.PtrToStringAnsi() will fail in the latter case (it will only
+            // return the very first string in the array.)
+            // We'll have to marshal this ourselves.
+            IntPtr t = GetStringPrivate(device, (AlcGetString)param);
+            if (t != IntPtr.Zero)
+            {
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                byte b;
+                int offset = 0;
+                do
+                {
+                    b = Marshal.ReadByte(t, offset++);
+                    if (b != 0)
+                    {
+                        sb.Append((char)b);
+                    }
+                    else
+                    {
+                        // One string from the array is complete
+                        result.Add(sb.ToString());
+
+                        // Check whether the array has finished
+                        // Note: offset already been increased through offset++ above
+                        if (Marshal.ReadByte(t, offset) == 0)
+                        {
+                            // 2x consecutive nuls, we've read the whole array
+                            break;
+                        }
+                        else
+                        {
+                            // Another string is starting, clear the StringBuilder
+                            sb.Remove(0, sb.Length);
+                        }
+                    }
+                }
+                while (true);
+            }
+            else
+            {
+                Debug.Print("[Audio] Alc.GetString({0}, {1}) returned null.",
+                    device, param);
+            }
+
+            return result;
         }
 
         [DllImport(Alc.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
@@ -409,6 +444,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
+        [CLSCompliant(false)]
         public static void CaptureSamples<T>(IntPtr device, T[] buffer, int samples)
             where T : struct
         {
@@ -419,6 +455,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
+        [CLSCompliant(false)]
         public static void CaptureSamples<T>(IntPtr device, T[,] buffer, int samples)
             where T : struct
         {
@@ -429,6 +466,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
+        [CLSCompliant(false)]
         public static void CaptureSamples<T>(IntPtr device, T[, ,] buffer, int samples)
             where T : struct
         {

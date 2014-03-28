@@ -6,7 +6,7 @@ GLintptr,           IntPtr
 GLboolean,          bool        # Boolean # Int32
 GLbitfield,         UInt32
 # GLvoid*,            IntPtr
-# GLvoid,             Void    #Object
+GLvoid,             Void    #Object
 GLchar,             Char
 GLbyte,             SByte
 GLubyte,            Byte
@@ -19,6 +19,8 @@ GLclampf,           Single
 GLdouble,           Double
 GLclampd,           Double
 GLstring,           String
+int,                Int32
+uint,               UInt32
 
 PixelInternalFormat,    PixelInternalFormat
 
@@ -30,6 +32,9 @@ GLhalfARB,          Half
 GLhalfNV,           Half
 GLcharARB,          Char
 
+# ARB_texture_compression (introduced in 1.3)
+CompressedTextureARB, IntPtr
+
 # 64 bit types (introduced in 2.1)
 GLint64EXT,         Int64
 GLuint64EXT,        UInt64
@@ -39,6 +44,15 @@ GLuint64,           UInt64
 # ARB_sync (introduced in 3.2)
 sync,           IntPtr
 GLsync,		IntPtr
+
+# Debug callbacks
+GLDEBUGPROC, DebugProc
+GLDEBUGPROCAMD, DebugProcAmd
+GLDEBUGPROCARB, DebugProcArb
+GLDEBUGPROCKHR, DebugProcKhr
+
+# NV_vdpau
+GLvdpauSurfaceNV, IntPtr
 
 # Wgl types.
 PROC,           IntPtr
@@ -60,12 +74,8 @@ UINT,           UInt32
 USHORT,         UInt16
 VOID,           void
 VoidPointer,    void*
-float,          float
-int,            int
+float,          Single
 #void,           *
-GLDEBUGPROCARB, DebugProcArb
-GLDEBUGPROCAMD , DebugProcAmd
-GLvdpauSurfaceNV, IntPtr
 
 # Glu types.
 Float64         double

@@ -27,33 +27,26 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace Bind.GL2
 {
-    class GL4Generator : ES.ESGenerator
+    class GL4Generator : Generator
     {
-        public GL4Generator(string name, string dirname)
-			: base(name, dirname)
+        public GL4Generator(Settings settings, string dirname)
+            : base(settings, dirname)
         {
-            glTypemap = "GL2/gl.tm";
-            csTypemap = Settings.LanguageTypeMapFile;
+            Settings.DefaultOutputPath = Path.Combine(
+                Settings.DefaultOutputPath, "../OpenGL4");
+            Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL4";
+            Settings.DefaultImportsFile = "GL4Core.cs";
+            Settings.DefaultDelegatesFile = "GL4Delegates.cs";
+            Settings.DefaultEnumsFile = "GL4Enums.cs";
+            Settings.DefaultWrappersFile = "GL4.cs";
 
-            enumSpec = "GL2/signatures.xml";
-            enumSpecExt = String.Empty;
-            glSpec = "GL2/signatures.xml";
-            glSpecExt = String.Empty;
-            Settings.OverridesFile = "GL2/gloverrides.xml";
-
-            Settings.ImportsFile = "GLCore.cs";
-            Settings.DelegatesFile = "GLDelegates.cs";
-            Settings.EnumsFile = "GLEnums.cs";
-            Settings.WrappersFile = "GL.cs";
-            Settings.ImportsClass = "Core";
-            Settings.DelegatesClass = "Delegates";
-
-            Settings.OutputClass = "GL";
+            Profile = "glcore";
         }
     }
 }

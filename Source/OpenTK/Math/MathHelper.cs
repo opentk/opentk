@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
@@ -284,6 +284,46 @@ namespace OpenTK
             float temp = a;
             a = b;
             b = temp;
+        }
+
+        #endregion
+
+        #region Clamp
+
+        /// <summary>
+        /// Clamps a number between a minimum and a maximum.
+        /// </summary>
+        /// <param name="n">The number to clamp.</param>
+        /// <param name="min">The minimum allowed value.</param>
+        /// <param name="max">The maximum allowed value.</param>
+        /// <returns>min, if n is lower than min; max, if n is higher than max; n otherwise.</returns>
+        public static int Clamp(int n, int min, int max)
+        {
+            return Math.Max(Math.Min(n, max), min);
+        }
+
+        /// <summary>
+        /// Clamps a number between a minimum and a maximum.
+        /// </summary>
+        /// <param name="n">The number to clamp.</param>
+        /// <param name="min">The minimum allowed value.</param>
+        /// <param name="max">The maximum allowed value.</param>
+        /// <returns>min, if n is lower than min; max, if n is higher than max; n otherwise.</returns>
+        public static float Clamp(float n, float min, float max)
+        {
+            return Math.Max(Math.Min(n, max), min);
+        }
+
+        /// <summary>
+        /// Clamps a number between a minimum and a maximum.
+        /// </summary>
+        /// <param name="n">The number to clamp.</param>
+        /// <param name="min">The minimum allowed value.</param>
+        /// <param name="max">The maximum allowed value.</param>
+        /// <returns>min, if n is lower than min; max, if n is higher than max; n otherwise.</returns>
+        public static double Clamp(double n, double min, double max)
+        {
+            return Math.Max(Math.Min(n, max), min);
         }
 
         #endregion

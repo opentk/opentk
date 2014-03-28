@@ -2,13 +2,17 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glBeginQuery">
+    <refentryinfo>
+        <copyright>
+            <year>2005</year>
+            <holder>Sams Publishing</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2005</year>
-                <holder>Sams Publishing</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glBeginQuery</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -24,9 +28,14 @@
                 <paramdef>GLuint <parameter>id</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glEndQuery</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
-    <refsect1 id="parameters"><title>Parameters</title>
+    <refsect1 id="parameters"><title>Parameters for <function>glBeginQuery</function></title>
         <variablelist>
         <varlistentry>
             <term><parameter>target</parameter></term>
@@ -35,6 +44,7 @@
                     Specifies the target type of query object established between
                     <function>glBeginQuery</function> and the subsequent <citerefentry><refentrytitle>glEndQuery</refentrytitle></citerefentry>.
                     The symbolic constant must be one of <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>,
+                    <constant>GL_ANY_SAMPLES_PASSED_CONSERVATIVE</constant>,
                     <constant>GL_PRIMITIVES_GENERATED</constant>, <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, or
                     <constant>GL_TIME_ELAPSED</constant>.
                 </para>
@@ -50,16 +60,7 @@
         </varlistentry>
         </variablelist>
     </refsect1>
-    <refsynopsisdiv><title>C Specification</title>
-        <funcsynopsis>
-            <funcprototype>
-                <funcdef>void <function>glEndQuery</function></funcdef>
-                <paramdef>GLenum <parameter>target</parameter></paramdef>
-            </funcprototype>
-        </funcsynopsis>
-    </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
-    <refsect1 id="parameters2"><title>Parameters</title>
+    <refsect1 id="parameters2"><title>Parameters for <function>glEndQuery</function></title>
         <variablelist>
         <varlistentry>
             <term><parameter>target</parameter></term>
@@ -67,6 +68,7 @@
                 <para>
                     Specifies the target type of query object to be concluded.
                     The symbolic constant must be one of <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>,
+                    <constant>GL_ANY_SAMPLES_PASSED_CONSERVATIVE</constant>,
                     <constant>GL_PRIMITIVES_GENERATED</constant>, <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, or
                     <constant>GL_TIME_ELAPSED</constant>.
                 </para>
@@ -85,7 +87,7 @@
             object depends on its type and is as follows.
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_SAMPLES_PASSED</constant>, <parameter>target</parameter> must be an unused name,
+            If <parameter>target</parameter> is <constant>GL_SAMPLES_PASSED</constant>, <parameter>id</parameter> must be an unused name,
             or the name of an existing occlusion query object.
             When <function>glBeginQuery</function> is executed, the query object's samples-passed counter is reset to 0.  Subsequent
             rendering will increment the counter for every sample that passes the depth test.  If the value of <constant>GL_SAMPLE_BUFFERS</constant>
@@ -98,16 +100,19 @@
             <constant>GL_QUERY_RESULT</constant>.
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_ANY_SAMPLES_PASSED</constant>, <parameter>target</parameter> must be an unused name,
-            or the name of an existing boolean occlusion query object.
+            If <parameter>target</parameter> is <constant>GL_ANY_SAMPLES_PASSED</constant> or <constant>GL_ANY_SAMPLES_PASSED_CONSERVATIVE</constant>,
+            <parameter>id</parameter> must be an unused name, or the name of an existing boolean occlusion query object.
             When <function>glBeginQuery</function> is executed, the query object's samples-passed flag is reset to <constant>GL_FALSE</constant>.
-            Subsequent rendering causes the flag to be set to <constant>GL_TRUE</constant> if any sample passes the depth test.  When
+            Subsequent rendering causes the flag to be set to <constant>GL_TRUE</constant> if any sample passes the depth test in the case of <constant>GL_ANY_SAMPLES_PASSED</constant>,
+            or if the implementation determines that any sample might pass the depth test in the case of <constant>GL_ANY_SAMPLES_PASSED_CONSERVATIVE</constant>.
+            The implementation may be able to provide a more efficient test in the case of <constant>GL_ANY_SAMPLES_PASSED_CONSERVATIVE</constant>
+            if some false positives are acceptable to the application.  When
             <function>glEndQuery</function> is executed, the samples-passed flag is assigned to the query object's result value.  This value can
             be queried by calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> with <parameter>pname</parameter>
             <constant>GL_QUERY_RESULT</constant>.
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_PRIMITIVES_GENERATED</constant>, <parameter>target</parameter> must be an unused
+            If <parameter>target</parameter> is <constant>GL_PRIMITIVES_GENERATED</constant>, <parameter>id</parameter> must be an unused
             name, or the name of an existing primitive query object previously bound to the <constant>GL_PRIMITIVES_GENERATED</constant> query binding.
             When <function>glBeginQuery</function> is executed, the query object's primitives-generated counter is reset to 0.  Subsequent
             rendering will increment the counter once for every vertex that is emitted from the geometry shader, or from the vertex shader if
@@ -116,7 +121,7 @@
             <constant>GL_QUERY_RESULT</constant>.
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, <parameter>target</parameter> must be
+            If <parameter>target</parameter> is <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, <parameter>id</parameter> must be
             an unused name, or the name of an existing primitive query object previously bound to the <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>
             query binding. When <function>glBeginQuery</function> is executed, the query object's primitives-written counter is reset to 0.  Subsequent
             rendering will increment the counter once for every vertex that is written into the bound transform feedback buffer(s).  If transform feedback
@@ -126,7 +131,7 @@
             <constant>GL_QUERY_RESULT</constant>.
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_TIME_ELAPSED</constant>, <parameter>target</parameter> must be
+            If <parameter>target</parameter> is <constant>GL_TIME_ELAPSED</constant>, <parameter>id</parameter> must be
             an unused name, or the name of an existing timer query object previously bound to the <constant>GL_TIME_ELAPSED</constant>
             query binding. When <function>glBeginQuery</function> is executed, the query object's time counter is reset to 0.  When <function>glEndQuery</function>
             is executed, the elapsed server time that has passed since the call to <function>glBeginQuery</function> is written into the query object's
@@ -159,6 +164,9 @@
         <para>
             The query targets <constant>GL_ANY_SAMPLES_PASSED</constant>, and <constant>GL_TIME_ELAPSED</constant> are availale only if
             the GL version is 3.3 or higher.
+        </para>
+        <para>
+            The query target <constant>GL_ANY_SAMPLES_PASSED_CONSERVATIVE</constant> is available only of the GL version is 4.3 or higher.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -195,8 +203,9 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2005 Addison-Wesley. 
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2005 Addison-Wesley.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

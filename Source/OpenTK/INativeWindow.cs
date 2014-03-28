@@ -1,9 +1,8 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
-// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +27,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
-using OpenTK.Platform;
 using System.ComponentModel;
+using System.Drawing;
+using System.Text;
+using OpenTK.Platform;
 
 namespace OpenTK
 {
@@ -40,12 +39,10 @@ namespace OpenTK
     /// </summary>
     public interface INativeWindow : IDisposable
     {
-#if !IPHONE && !MOBILE
         /// <summary>
         /// Gets or sets the <see cref="System.Drawing.Icon"/> of the window.
         /// </summary>
         Icon Icon { get; set; }
-#endif
 
         /// <summary>
         /// Gets or sets the title of the window.
@@ -129,19 +126,16 @@ namespace OpenTK
         /// </summary>
         Size ClientSize { get; set; }
 
-#if !IPHONE
         /// <summary>
         /// This property is deprecated and should not be used.
         /// </summary>
-        [Obsolete]
+        [Obsolete("Use OpenTK.Input.Mouse/Keybord/Joystick/GamePad instead.")]
         OpenTK.Input.IInputDriver InputDriver { get; }
-#if !MOBILE
+
         /// <summary>
         /// Gets or sets a value, indicating whether the mouse cursor is visible.
         /// </summary>
         bool CursorVisible { get; set; }
-#endif
-#endif
 
 //        /// <summary>
 //        /// Gets or sets a value, indicating whether the mouse cursor is confined inside the window size.
@@ -205,12 +199,10 @@ namespace OpenTK
         /// </summary>
         event EventHandler<EventArgs> Disposed;
 
-#if !IPHONE && !MOBILE
         /// <summary>
         /// Occurs when the <see cref="Icon"/> property of the window changes. 
         /// </summary>
         event EventHandler<EventArgs> IconChanged;
-#endif
 
         /// <summary>
         /// Occurs when the <see cref="Title"/> property of the window changes.
@@ -238,24 +230,19 @@ namespace OpenTK
         event EventHandler<EventArgs> WindowStateChanged;
 
         /// <summary>
+        /// Occurs whenever a keybord key is pressed.
+        /// </summary>
+        event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown;
+
+        /// <summary>
         /// Occurs whenever a character is typed.
         /// </summary>
         event EventHandler<KeyPressEventArgs> KeyPress;
-
-#if !IPHONE && !MOBILE
         
         /// <summary>
         /// Occurs whenever a keyboard key is released.
         /// </summary>
         event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp;
-
-        /// <summary>
-        /// Occurs whenever a keybord key is pressed.
-        /// </summary>
-        event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown;
-
-#endif
-#if !IPHONE
 
         /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds"/>.
@@ -266,6 +253,17 @@ namespace OpenTK
         /// Occurs whenever the mouse cursor enters the window <see cref="Bounds"/>.
         /// </summary>
         event EventHandler<EventArgs> MouseEnter;
-#endif
+
+        //event EventHandler<MouseEventArgs> MouseMove;
+        //event EventHandler<MouseEventArgs> MouseWheel; 
+        //event EventHandler<MouseEventArgs> MouseDown;
+        //event EventHandler<MouseEventArgs> MouseUp;
+        //event EventHandler<MouseEventArgs> MouseClick;
+        //event EventHandler<MouseEventArgs> MouseDoubleClick;
+
+        //event EventHandler<DragEventArgs> DragDrop;
+        //event EventHandler<DragEventArgs> DragEnter;
+        //event EventHandler<DragEventArgs> DragOver;
+        //event EventHandler<EventArgs> DragLeave;
     }
 }

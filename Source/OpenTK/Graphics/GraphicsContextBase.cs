@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -93,6 +93,8 @@ namespace OpenTK.Graphics
         public ContextHandle Context { get { return Handle; } }
 
         public abstract IntPtr GetAddress(string function);
+
+        public abstract IntPtr GetAddress(IntPtr function);
 
         #endregion
 

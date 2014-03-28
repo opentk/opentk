@@ -1,28 +1,30 @@
 #region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
-// Copyright 2013 Xamarin Inc
  * See license.txt for license info
  */
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security;
+using System.Text.RegularExpressions;
 using Bind.CL;
 using Bind.ES;
 using Bind.GL2;
-using System.Text.RegularExpressions;
 
 namespace Bind
 {
     enum GeneratorMode
     {
-        Unknown,
+        All = 0,
+        Default = All,
         GL2,
         GL3,
+        GL4,
         ES10,
         ES11,
         ES20,
@@ -39,8 +41,9 @@ namespace Bind
 
     static class MainClass
     {
-        static GeneratorMode mode = GeneratorMode.GL2;
-        static internal IBind Generator;
+        static GeneratorMode mode = GeneratorMode.Default;
+        static internal List<IBind> Generators = new List<IBind>();
+        static Settings Settings = new Settings();
 
         static void Main(string[] arguments)
         {
@@ -56,7 +59,7 @@ namespace Bind
             Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
             Console.WriteLine();
 
-            string dirName =  null;
+            string dirName =  "GL2";
 
             try
             {
@@ -112,11 +115,8 @@ namespace Bind
                                 }
                             case "mode":
                                 {
-                                    string[] parts = val.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                                    if (parts.Length < 1)
-                                       throw new NotImplementedException();
-                                    dirName = parts.Length > 1 ? parts[1] : "";
-                                    SetGeneratorMode(dirName, parts[0]);
+                                    string arg = val.ToLower();
+                                    SetGeneratorMode(dirName, arg);
                                     break;
                                 }
                             case "namespace":
@@ -132,15 +132,35 @@ namespace Bind
                             case "legacy":
                             case "o":
                             case "option":
-                                Settings.Compatibility |= val.ToLower() == "tao" ? Settings.Legacy.Tao : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "simple_enums" ? Settings.Legacy.NoAdvancedEnumProcessing : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "safe" ? Settings.Legacy.NoPublicUnsafeFunctions : Settings.Legacy.None;
-                                //Settings.Compatibility |= b[1].ToLower().Contains("novoid") ? Settings.Legacy.TurnVoidPointersToIntPtr : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "permutations" ? Settings.Legacy.GenerateAllPermutations : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "enums_in_class" ? Settings.Legacy.NestedEnums : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "nodocs" ? Settings.Legacy.NoDocumentation : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "keep_untyped_enums" ? Settings.Legacy.KeepUntypedEnums : Settings.Legacy.None;
+                            {
+                                val = val.ToLower();
+                                bool enable = !opt.StartsWith("-");
+                                if (val.StartsWith("+") || val.StartsWith("-"))
+                                    val = val.Substring(1);
+
+                                var settings = Settings.Legacy.None;
+                                switch (val)
+                                {
+                                    case "tao": settings |= Settings.Legacy.Tao; break;
+                                    case "simple_enums": settings |= Settings.Legacy.NoAdvancedEnumProcessing; break;
+                                    case "safe": settings |= Settings.Legacy.NoPublicUnsafeFunctions; break;
+                                    case "permutations": settings |= Settings.Legacy.GenerateAllPermutations; break;
+                                    case "enums_in_class": settings |= Settings.Legacy.NestedEnums; break;
+                                    case "nodocs": settings |= Settings.Legacy.NoDocumentation; break;
+                                    case "keep_untyped_enums": settings |= Settings.Legacy.KeepUntypedEnums; break;
+                                }
+
+                                if (enable)
+                                {
+                                    Settings.Compatibility |= settings;
+                                }
+                                else
+                                {
+                                    Settings.Compatibility &= ~settings;
+                                }
+
                                 break;
+                            }
                             default:
                                 throw new ArgumentException(
                                     String.Format("Argument {0} not recognized. Use the '/?' switch for help.", a)
@@ -162,64 +182,82 @@ namespace Bind
 
             try
             {
-                long ticks = DateTime.Now.Ticks;
-
                 switch (mode)
                 {
-                    case GeneratorMode.GL3:
+                    case GeneratorMode.All:
+                        Console.WriteLine("Using 'all' generator mode.");
+                        Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30' to select a specific mode.");
+                        Generators.Add(new Generator(Settings, dirName));
+                        Generators.Add(new GL4Generator(Settings, dirName));
+                        Generators.Add(new ESGenerator(Settings, dirName));
+                        Generators.Add(new ES2Generator(Settings, dirName));
+                        Generators.Add(new ES3Generator(Settings, dirName));
+                        break;
+
                     case GeneratorMode.GL2:
-                        Generator = new GL4Generator("OpenGL", dirName);
+                        Generators.Add(new Generator(Settings, dirName));
+                        break;
+
+                    case GeneratorMode.GL3:
+                    case GeneratorMode.GL4:
+                        Generators.Add(new GL4Generator(Settings, dirName));
                         break;
 
                     case GeneratorMode.ES10:
-                        Generator = new ESGenerator("ES10", dirName);
+                        Generators.Add(new ESGenerator(Settings, dirName));
                         break;
                     
                     case GeneratorMode.ES11:
-                        Generator = new ESGenerator("ES11", dirName);
+                        Generators.Add(new ESGenerator(Settings, dirName));
                         break;
                     
                     case GeneratorMode.ES20:
-                        Generator = new ESGenerator("ES20", dirName);
+                        Generators.Add(new ES2Generator(Settings, dirName));
                         break;
 
                     case GeneratorMode.ES30:
-                        Generator = new ESGenerator("ES30", dirName);
+                        Generators.Add(new ES3Generator(Settings, dirName));
                         break;
 
                     case GeneratorMode.CL10:
-                        Generator = new CLGenerator("CL10", dirName);
+                        Generators.Add(new CLGenerator(Settings, dirName));
                         break;
                     
-                    case GeneratorMode.Unknown:
                     default:
-                        Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl3/glu/wgl/glx])'");
+                        Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl4/es10/es11/es20/es30')");
                         return;
                 }
 
-                Generator.Process();
-                ISpecWriter writer = null;
-                switch (Settings.Language)
+                foreach (var generator in Generators)
                 {
-                    case GeneratorLanguage.Cpp:
-                        writer = new CppSpecWriter();
-                        break;
+                    long ticks = DateTime.Now.Ticks;
 
-                    case GeneratorLanguage.Java:
-                        writer = new JavaSpecWriter();
-                        break;
+                    generator.Process();
 
-                    case GeneratorLanguage.CSharp:
-                    default:
-                        writer = new CSharpSpecWriter();
-                        break;
+                    ISpecWriter writer = null;
+                    switch (generator.Settings.Language)
+                    {
+                        case GeneratorLanguage.Cpp:
+                            writer = new CppSpecWriter();
+                            break;
+
+                        case GeneratorLanguage.Java:
+                            writer = new JavaSpecWriter();
+                            break;
+
+                        case GeneratorLanguage.CSharp:
+                        default:
+                            writer = new CSharpSpecWriter();
+                            break;
+                    }
+                    writer.WriteBindings(generator);
+
+                    ticks = DateTime.Now.Ticks - ticks;
+
+                    Console.WriteLine();
+                    Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
                 }
-                writer.WriteBindings(Generator);
-
-                ticks = DateTime.Now.Ticks - ticks;
-
-                Console.WriteLine();
-                Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
+                
                 Console.WriteLine();
                 if (Debugger.IsAttached)
                 {
@@ -241,50 +279,50 @@ namespace Bind
 
         private static void SetGeneratorMode(string dirName, string arg)
         {
-            if (arg == "gl" || arg == "gl2" || arg == "gl3" || arg == "gl4")
+            switch (arg)
             {
-                mode = GeneratorMode.GL2;
-                Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-            }
-            else if (arg == "es10")
-            {
-                mode = GeneratorMode.ES10;
-                Settings.DefaultOutputPath = Path.Combine(
-                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
-                    dirName);
-                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES10";
-            }
-            else if (arg == "es11")
-            {
-                mode = GeneratorMode.ES11;
-                Settings.DefaultOutputPath = Path.Combine(
-                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
-                    dirName);
-                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
-            }
-            else if (arg == "es20")
-            {
-                mode = GeneratorMode.ES20;
-                Settings.DefaultOutputPath = Path.Combine(
-                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
-                    dirName);
-                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
-            }
-            else if (arg == "es30")
-            {
-                mode = GeneratorMode.ES30;
-                Settings.DefaultOutputPath = Path.Combine(
-                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
-                    dirName);
-                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
-            }
-            else if (arg == "cl" || arg == "cl10")
-            {
-                mode = GeneratorMode.CL10;
-            }
-            else
-            {
-                throw new NotSupportedException();
+                case "gl":
+                case "gl2":
+                    mode = GeneratorMode.GL2;
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
+                    break;
+
+                case "gl3":
+                case "gl4":
+					mode = GeneratorMode.GL4;
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL4";
+                    break;
+
+                case "es10":
+                    mode = GeneratorMode.ES10;
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES10";
+                    break;
+
+                case "es11":
+                    mode = GeneratorMode.ES11;
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
+                    break;
+
+                case "es2":
+                case "es20":
+                    mode = GeneratorMode.ES20;
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
+                    break;
+
+                case "es3":
+                case "es30":
+                    mode = GeneratorMode.ES30;
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
+                    break;
+
+                case "cl":
+                case "cl10":
+                    mode = GeneratorMode.CL10;
+                    Settings.DefaultOutputNamespace = "OpenTK.Compute.OpenCL";
+                    break;
+
+                default:
+                    throw new NotSupportedException();
             }
         }
 
@@ -300,6 +338,9 @@ Available switches:
 -namespace:  Same as -ns
 -class:      Output class (e.g. -class:GL3).
              Default: GL/Wgl/Glu/Glx (depends on -mode)
+-mode:       Generator mode (e.g. -mode:gl4).
+             Default: all
+             Accepted: all/gl2/gl4/es10/es11/es20
 -o/-option:  Set advanced option. Available options:
     -o:tao   Tao compatibility mode.
     -o:enums Follow OpenGL instead .Net naming conventions.

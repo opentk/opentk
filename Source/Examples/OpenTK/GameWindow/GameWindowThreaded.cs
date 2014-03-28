@@ -287,7 +287,7 @@ namespace Examples.Tutorial
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.Begin(BeginMode.Points);
+            GL.Begin(PrimitiveType.Points);
             foreach (Particle p in Particles)
             {
                 GL.Color4(p.Color);

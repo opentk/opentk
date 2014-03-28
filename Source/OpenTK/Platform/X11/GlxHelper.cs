@@ -20,17 +20,28 @@ namespace OpenTK.Platform.X11
         const string Library = "libGL.so.1";
         static readonly object sync_root = new object();
 
-        // Disable BeforeFieldInit optimization.
-        static Glx() { }
+        static Glx()
+        {
+            // GLX entry points are not bound to a context.
+            // This means we can load them without creating
+            // a context first! (unlike WGL)
+            // See
+            // for more details.
+            Debug.WriteLine("Loading GLX entry points.");
+            new Glx().LoadEntryPoints();
+        }
 
         protected override object SyncRoot
         {
             get { return sync_root; }
         }
 
-        protected override IntPtr GetAddress (string funcname)
+        protected override IntPtr GetAddress(string funcname)
         {
-            return Glx.GetProcAddress(funcname);
+            // We must use glXGetProcAddressARB, *not*
+            // glXGetProcAddress. See comment on function
+            // signature.
+            return Glx.Arb.GetProcAddress(funcname);
         }
 
 #if false

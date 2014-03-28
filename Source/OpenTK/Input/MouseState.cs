@@ -180,6 +180,10 @@ namespace OpenTK.Input
             get { return Wheel; }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is connected.
+        /// </summary>
+        /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
         public bool IsConnected
         {
             get { return is_connected; }
@@ -323,6 +327,11 @@ namespace OpenTK.Input
                 Y += other.Y;
                 IsConnected |= other.IsConnected;
             }
+        }
+
+        internal void SetIsConnected(bool value)
+        {
+            IsConnected = value;
         }
 
         #endregion

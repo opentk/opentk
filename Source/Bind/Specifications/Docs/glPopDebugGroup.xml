@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glPopDebugGroup">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>glPopDebugGroup</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPopDebugGroup</refname>
+        <refpurpose>pop the active debug group</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPopDebugGroup</function></funcdef>
+                <paramdef>void</paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glPopDebugGroup</function> pops the active debug group.
+            After popping a debug group, the GL will also generate a debug
+            output message describing its cause based on the <parameter>message</parameter>
+            string, the source <parameter>source</parameter>, and an ID <parameter>id</parameter>
+            submitted to the corresponding <citerefentry><refentrytitle>glPushDebugGroup</refentrytitle></citerefentry>
+            command. <constant>GL_DEBUG_TYPE_PUSH_GROUP</constant> and <constant>GL_DEBUG_TYPE_POP_GROUP</constant>
+            share a single namespace for message <parameter>id</parameter>.
+            <parameter>severity</parameter> has the value <constant>GL_DEBUG_SEVERITY_NOTIFICATION</constant>. The <parameter>type</parameter>
+            has the value <constant>GL_DEBUG_TYPE_POP_GROUP</constant>. Popping a debug group restores
+            the debug output volume control of the parent debug group.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_STACK_UNDERFLOW</constant> is generated if an attempt is made to pop the default debug
+            group from the stack.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_DEBUG_MESSAGE_LENGTH</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glPushDebugGroup</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glObjectLabel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glObjectPtrLabel</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

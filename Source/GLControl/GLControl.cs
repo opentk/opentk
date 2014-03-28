@@ -92,6 +92,18 @@ namespace OpenTK
         {
             if (mode == null)
                 throw new ArgumentNullException("mode");
+
+            // SDL does not currently support embedding
+            // on external windows. If Open.Toolkit is not yet
+            // initialized, we'll try to request a native backend
+            // that supports embedding.
+            // Most people are using GLControl through the
+            // WinForms designer in Visual Studio. This approach
+            // works perfectly in that case.
+            Toolkit.Init(new ToolkitOptions
+            {
+                Backend = PlatformBackend.PreferNative
+            });
             
             SetStyle(ControlStyles.Opaque, true);
             SetStyle(ControlStyles.UserPaint, true);
@@ -127,6 +139,15 @@ namespace OpenTK
             }
         }
 
+        [Conditional("DEBUG")]
+        void ValidateContext(string message)
+        {
+            if (!Context.IsCurrent)
+            {
+                Debug.Print("[GLControl] Attempted to access {0} on a non-current context. Results undefined.", message);
+            }
+        }
+
         void ValidateState()
         {
             if (IsDisposed)
@@ -142,6 +163,27 @@ namespace OpenTK
         #endregion
 
         #region --- Protected Methods ---
+
+        /// <summary>
+        /// Gets the <c>CreateParams</c> instance for this <c>GLControl</c>
+        /// </summary>
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int CS_VREDRAW = 0x1;
+                const int CS_HREDRAW = 0x2;
+                const int CS_OWNDC = 0x20;
+
+                CreateParams cp = base.CreateParams;
+                if (Configuration.RunningOnWindows)
+                {
+                    // Setup necessary class style for OpenGL on windows
+                    cp.ClassStyle |= CS_VREDRAW | CS_HREDRAW | CS_OWNDC;
+                }
+                return cp;
+            }
+        }
 
         /// <summary>Raises the HandleCreated event.</summary>
         /// <param name="e">Not used.</param>
@@ -228,10 +270,28 @@ namespace OpenTK
                 return;
             }
 
-            if (context != null)
-                context.Update(Implementation.WindowInfo);
+            if (Configuration.RunningOnMacOS) 
+            {
+                DelayUpdate delay = PerformContextUpdate;
+                BeginInvoke(delay); //Need the native window to resize first otherwise our control will be in the wrong place.
+            }
+            else if (context != null)
+                context.Update (Implementation.WindowInfo);
 
             base.OnResize(e);
+        }
+
+        /// <summary>
+        /// Needed to delay the invoke on OS X. Also needed because OpenTK is .NET 2, otherwise I'd use an inline Action.
+        /// </summary>
+        public delegate void DelayUpdate();
+        /// <summary>
+        /// Execute the delayed context update
+        /// </summary>
+        public void PerformContextUpdate()
+        {
+            if (context != null)
+                context.Update (Implementation.WindowInfo);
         }
 
         /// <summary>
@@ -254,6 +314,7 @@ namespace OpenTK
 
         /// <summary>
         /// Swaps the front and back buffers, presenting the rendered scene to the screen.
+        /// This method will have no effect on a single-buffered <c>GraphicsMode</c>.
         /// </summary>
         public void SwapBuffers()
         {
@@ -266,8 +327,19 @@ namespace OpenTK
         #region public void MakeCurrent()
 
         /// <summary>
-        /// Makes the underlying this GLControl current in the calling thread.
-        /// All OpenGL commands issued are hereafter interpreted by this GLControl.
+        /// <para>
+        /// Makes <see cref="GLControl.Context"/> current in the calling thread.
+        /// All OpenGL commands issued are hereafter interpreted by this context.
+        /// </para>
+        /// <para>
+        /// When using multiple <c>GLControl</c>s, calling <c>MakeCurrent</c> on
+        /// one control will make all other controls non-current in the calling thread.
+        /// </para>
+        /// <seealso cref="Context"/>
+        /// <para>
+        /// A <c>GLControl</c> can only be current in one thread at a time.
+        /// To make a control non-current, call <c>GLControl.Context.MakeCurrent(null)</c>.
+        /// </para>
         /// </summary>
         public void MakeCurrent()
         {
@@ -297,7 +369,12 @@ namespace OpenTK
         #region public IGraphicsContext Context
 
         /// <summary>
-        /// Gets an interface to the underlying GraphicsContext used by this GLControl.
+        /// Gets the <c>IGraphicsContext</c> instance that is associated with the <c>GLControl</c>.
+        /// The associated <c>IGraphicsContext</c> is updated whenever the <c>GLControl</c>
+        /// handle is created or recreated.
+        /// When using multiple <c>GLControl</c>s, ensure that <c>Context</c>
+        /// is current before performing any OpenGL operations.
+        /// <seealso cref="MakeCurrent"/>
         /// </summary>
         [Browsable(false)]
         public IGraphicsContext Context
@@ -332,7 +409,11 @@ namespace OpenTK
         #region public bool VSync
 
         /// <summary>
-        /// Gets or sets a value indicating whether vsync is active for this GLControl.
+        /// Gets or sets a value indicating whether vsync is active for this <c>GLControl</c>.
+        /// When using multiple <c>GLControl</c>s, ensure that <see cref="Context"/>
+        /// is current before accessing this property.
+        /// <seealso cref="Context"/>
+        /// <seealso cref="MakeCurrent"/>
         /// </summary>
         [Description("Indicates whether GLControl updates are synced to the monitor's refresh rate.")]
         public bool VSync
@@ -340,10 +421,14 @@ namespace OpenTK
             get
             {
                 if (!IsHandleCreated)
-                    return false;
+                {
+                    return initial_vsync_value.HasValue ?
+                        initial_vsync_value.Value : true;
+                }
 
                 ValidateState();
-                return Context.VSync;
+                ValidateContext("VSync");
+                return Context.SwapInterval != 0;
             }
             set
             {
@@ -358,7 +443,8 @@ namespace OpenTK
                 }
 
                 ValidateState();
-                Context.VSync = value;
+                ValidateContext("VSync");
+                Context.SwapInterval = value ? 1 : 0;
             }
         }
 
@@ -367,11 +453,10 @@ namespace OpenTK
         #region public GraphicsMode GraphicsMode
 
         /// <summary>
-        /// Gets the GraphicsMode of the GraphicsContext attached to this GLControl.
+        /// Gets the <c>GraphicsMode</c> of the <c>IGraphicsContext</c> associated with
+        /// this <c>GLControl</c>. If you wish to change <c>GraphicsMode</c>, you must
+        /// destroy and recreate the <c>GLControl</c>.
         /// </summary>
-        /// <remarks>
-        /// To change the GraphicsMode, you must destroy and recreate the GLControl.
-        /// </remarks>
         public GraphicsMode GraphicsMode
         {
             get
@@ -397,7 +482,13 @@ namespace OpenTK
 
         #region public Bitmap GrabScreenshot()
 
-        /// <summary>Grabs a screenshot of the frontbuffer contents.</summary>
+        /// <summary>
+        /// Grabs a screenshot of the frontbuffer contents.
+        /// When using multiple <c>GLControl</c>s, ensure that  <see cref="Context"/>
+        /// is current before accessing this property.
+        /// <seealso cref="Context"/>
+        /// <seealso cref="MakeCurrent"/>
+        /// </summary>
         /// <returns>A System.Drawing.Bitmap, containing the contents of the frontbuffer.</returns>
         /// <exception cref="OpenTK.Graphics.GraphicsContextException">
         /// Occurs when no OpenTK.Graphics.GraphicsContext is current in the calling thread.
@@ -406,6 +497,7 @@ namespace OpenTK
         public Bitmap GrabScreenshot()
         {
             ValidateState();
+            ValidateContext("GrabScreenshot()");
 
             Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
             System.Drawing.Imaging.BitmapData data =

@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glCopyTexSubImage2D">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glCopyTexSubImage2D</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -31,9 +31,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
-    <para>
-    </para>
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -46,8 +43,9 @@
                     <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
-                    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, or
-                    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>.
+                    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>, or
+                    <constant>GL_TEXTURE_1D_ARRAY</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -107,8 +105,9 @@
     </refsect1>
     <refsect1 id="description"><title>Description</title>
         <para>
-            <function>glCopyTexSubImage2D</function> replaces a rectangular portion of a two-dimensional texture image or
-            cube-map texture image with pixels from the current <constant>GL_READ_BUFFER</constant>
+            <function>glCopyTexSubImage2D</function> replaces a rectangular portion of a two-dimensional texture image,
+            cube-map texture image or a linear portion of a number of slices of a one-dimensional array texture
+            with pixels from the current <constant>GL_READ_BUFFER</constant>
             (rather than from main memory, as is the case for <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>).
         </para>
         <para>
@@ -122,7 +121,7 @@
             </mml:math></inlineequation>
             and with
             width <parameter>width</parameter> and height <parameter>height</parameter> replaces the portion of the
-            texture array with x indices <parameter>xoffset</parameter> through 
+            texture array with x indices <parameter>xoffset</parameter> through
             <inlineequation><mml:math>
                 <!-- eqn: xoffset  +  width  -  1: -->
                 <mml:mrow>
@@ -133,7 +132,7 @@
                     <mml:mn>1</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            inclusive, and y indices <parameter>yoffset</parameter> through 
+            inclusive, and y indices <parameter>yoffset</parameter> through
             <inlineequation><mml:math>
                 <!-- eqn: yoffset  +  height  -  1: -->
                 <mml:mrow>
@@ -150,7 +149,7 @@
             The pixels in the rectangle are processed exactly as if
             <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry> had been called, but the process stops just before
             final conversion.
-            At this point, all pixel component values are clamped to the range 
+            At this point, all pixel component values are clamped to the range
             <inlineequation><mml:math>
                 <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">
@@ -168,13 +167,18 @@
             such a specification has no effect.
         </para>
         <para>
+            When <parameter>target</parameter> is <constant>GL_TEXTURE_1D_ARRAY</constant>
+            then the y coordinate and height are treated as the start slice and number
+            of slices to modify.
+        </para>
+        <para>
             If any of the pixels within the specified rectangle of the current
             <constant>GL_READ_BUFFER</constant> are outside the read window associated with the current
             rendering context, then the values obtained for those pixels are undefined.
         </para>
         <para>
-            No change is made to the <emphasis>internalformat</emphasis>, <emphasis>width</emphasis>,
-            <emphasis>height</emphasis>, or <emphasis>border</emphasis> parameters of the specified texture
+            No change is made to the <emphasis>internalformat</emphasis>, <emphasis>width</emphasis>, or
+            <emphasis>height</emphasis>, parameters of the specified texture
             array or to texel values outside the specified subregion.
         </para>
     </refsect1>
@@ -190,8 +194,9 @@
             <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
             <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
             <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
-            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, or
-            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>.
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>, or
+            <constant>GL_TEXTURE_1D_ARRAY</constant>.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if the texture array has not been
@@ -201,7 +206,7 @@
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>level</parameter> is less than 0.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> may be generated if 
+            <constant>GL_INVALID_VALUE</constant> may be generated if
             <inlineequation><mml:math>
                 <!-- eqn: level  >  log sub 2(max): -->
                 <mml:mrow>
@@ -218,21 +223,18 @@
                     </mml:mrow>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">max</mml:mi></mml:math></inlineequation>
             is the returned value of <constant>GL_MAX_TEXTURE_SIZE</constant>.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if 
+            <constant>GL_INVALID_VALUE</constant> is generated if
             <inlineequation><mml:math>
                 <!-- eqn: xoffset  <  -b: -->
                 <mml:mrow>
                     <mml:mi mathvariant="italic">xoffset</mml:mi>
                     <mml:mo>&lt;</mml:mo>
-                    <mml:mrow>
-                        <mml:mo>-</mml:mo>
-                        <mml:mi mathvariant="italic">b</mml:mi>
-                    </mml:mrow>
+                    <mml:mn>0</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
@@ -246,13 +248,7 @@
                         </mml:mrow>
                     </mml:mfenced>
                     <mml:mo>&gt;</mml:mo>
-                    <mml:mfenced open="(" close=")">
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">w</mml:mi>
-                            <mml:mo>-</mml:mo>
-                            <mml:mi mathvariant="italic">b</mml:mi>
-                        </mml:mrow>
-                    </mml:mfenced>
+                    <mml:mi mathvariant="italic">w</mml:mi>
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
@@ -260,10 +256,7 @@
                 <mml:mrow>
                     <mml:mi mathvariant="italic">yoffset</mml:mi>
                     <mml:mo>&lt;</mml:mo>
-                    <mml:mrow>
-                        <mml:mo>-</mml:mo>
-                        <mml:mi mathvariant="italic">b</mml:mi>
-                    </mml:mrow>
+                    <mml:mn>0</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
             or
@@ -278,29 +271,15 @@
                         </mml:mrow>
                     </mml:mfenced>
                     <mml:mo>&gt;</mml:mo>
-                    <mml:mfenced open="(" close=")">
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">h</mml:mi>
-                            <mml:mo>-</mml:mo>
-                            <mml:mi mathvariant="italic">b</mml:mi>
-                        </mml:mrow>
-                    </mml:mfenced>
+                    <mml:mn>0</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
             is the <constant>GL_TEXTURE_WIDTH</constant>,
             <inlineequation><mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>
-            is the <constant>GL_TEXTURE_HEIGHT</constant>,
-            and 
-            <inlineequation><mml:math><mml:mi mathvariant="italic">b</mml:mi></mml:math></inlineequation>
-            is the <constant>GL_TEXTURE_BORDER</constant>
+            is the <constant>GL_TEXTURE_HEIGHT</constant> and
             of the texture image being modified.
-            Note that 
-            <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
-            and 
-            <inlineequation><mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>
-            include twice the border width.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
@@ -328,7 +307,8 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2012-2013 Khronos Group.
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

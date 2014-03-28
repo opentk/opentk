@@ -37,7 +37,7 @@ namespace Examples
         {
             ExampleAttribute info = GetExampleAttribute(window.GetType());
             window.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
-            window.Icon = OpenTK.Examples.Properties.Resources.App;
+            window.Icon = OpenTK.Examples.Properties.Resources.Game;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Examples
         {
             ExampleAttribute info = GetExampleAttribute(window.GetType());
             window.Text = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
-            window.Icon = OpenTK.Examples.Properties.Resources.App;
+            window.Icon = OpenTK.Examples.Properties.Resources.Game;
         }
 
         static ExampleAttribute GetExampleAttribute(Type type)

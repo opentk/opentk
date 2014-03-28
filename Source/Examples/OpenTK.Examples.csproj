@@ -44,16 +44,14 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Debug\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
@@ -62,39 +60,36 @@
     <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
     <FileAlignment>4096</FileAlignment>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
     <DebugType>none</DebugType>
     <WarningLevel>4</WarningLevel>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <DefineConstants>TRACE;</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
     <FileAlignment>4096</FileAlignment>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
@@ -103,31 +98,29 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>True</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\..\OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data">
       <Name>System.Data</Name>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
-      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +137,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DependencyLoader.cs" />
     <Compile Include="ExampleInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -152,6 +146,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="OpenGL\1.x\TextRendering.cs" />
+    <Compile Include="OpenTK\Test\TestShaderUtf8Support.cs" />
     <Compile Include="SamplesTreeViewSorter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -489,6 +484,7 @@
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
+    <None Include="app.manifest" />
     <None Include="Data\Poem.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -560,6 +556,17 @@
     <None Include="..\OpenTK\OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="OpenTK\Test\BasicMouseInput.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OpenTK\Test\MatrixTest.cs" />
+    <None Include="..\..\Dependencies\x86\libSDL2.dylib">
+      <Link>Dependencies\x86\libSDL2.dylib</Link>
+    </None>
+    <None Include="..\..\Dependencies\x64\libSDL2.dylib">
+      <Link>Dependencies\x64\libSDL2.dylib</Link>
+    </None>
+    <Compile Include="OpenTK\Test\ExternalContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -604,6 +611,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\v3x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Game.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Dependencies\openal.COPYING.txt">
+      <Link>Dependencies\openal.COPYING.txt</Link>
+    </Content>
+    <Content Include="..\..\Dependencies\SDL2.COPYING.txt">
+      <Link>Dependencies\SDL2.COPYING.txt</Link>
+    </Content>
+    <Content Include="..\..\Dependencies\x64\openal32.dll">
+      <Link>Dependencies\x64\openal32.dll</Link>
+      <DependentUpon>SDL2.dll</DependentUpon>
+    </Content>
+    <Content Include="..\..\Dependencies\x64\SDL2.dll">
+      <Link>Dependencies\x64\SDL2.dll</Link>
+    </Content>
+    <Content Include="..\..\Dependencies\x86\openal32.dll">
+      <Link>Dependencies\x86\openal32.dll</Link>
+    </Content>
+    <Content Include="..\..\Dependencies\x86\SDL2.dll">
+      <Link>Dependencies\x86\SDL2.dll</Link>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

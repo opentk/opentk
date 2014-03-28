@@ -2,13 +2,17 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glSampleCoverage">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glSampleCoverage</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -20,12 +24,11 @@
         <funcsynopsis>
             <funcprototype>
                 <funcdef>void <function>glSampleCoverage</function></funcdef>
-                <paramdef>GLclampf <parameter>value</parameter></paramdef>
+                <paramdef>GLfloat <parameter>value</parameter></paramdef>
                 <paramdef>GLboolean <parameter>invert</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -33,7 +36,7 @@
             <listitem>
                 <para>
                     Specify a single floating-point sample coverage value.  The value is
-                    clamped to the range 
+                    clamped to the range
                     <inlineequation><mml:math>
                         <!-- eqn: [0 ,1]: -->
                         <mml:mfenced open="[" close="]">
@@ -83,6 +86,15 @@
             information, allowing those operations to be performed on each sample.
         </para>
     </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The type of the <parameter>value</parameter> parameter was
+            changed from GLclampf to GLfloat. This change is transparent
+            to user code and is described in detail on the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
+    </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_SAMPLE_COVERAGE_VALUE</constant>
@@ -105,14 +117,16 @@
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
-            Free Software B License. For details, see
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>
     </refsect1>

@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
@@ -20,10 +20,10 @@ namespace OpenTK.Platform.Dummy
     /// An empty IGraphicsContext implementation to be used inside the Visual Studio designer.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class DummyGLContext : DesktopGraphicsContext
+    internal sealed class DummyGLContext : GraphicsContextBase
     {
-        // This mode is not real. To receive a real mode we'd have to create a temporary context, which is not desirable!
-        bool vsync;
+        readonly GraphicsContext.GetAddressDelegate Loader;
+
         int swap_interval;
         static int handle_count;
         Thread current_thread;
@@ -31,28 +31,26 @@ namespace OpenTK.Platform.Dummy
         #region --- Constructors ---
 
         public DummyGLContext()
-            : this(new ContextHandle(new IntPtr(++handle_count)))
         {
+            Handle = new ContextHandle(
+                new IntPtr(Interlocked.Increment(
+                    ref handle_count)));
         }
-        
-        public DummyGLContext(ContextHandle handle)
+
+        public DummyGLContext(ContextHandle handle, GraphicsContext.GetAddressDelegate loader)
+            : this()
         {
-            Handle = handle;
+            if (handle != ContextHandle.Zero)
+            {
+                Handle = handle;
+            }
+            Loader = loader;
             Mode = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         }
 
         #endregion
 
         #region --- IGraphicsContext Members ---
-
-        public void CreateContext(bool direct, IGraphicsContext source)
-        {
-            if (Handle == ContextHandle.Zero)
-            {
-                ++handle_count;
-                Handle = new ContextHandle((IntPtr)handle_count);
-            }
-        }
 
         public override void SwapBuffers() { }
 
@@ -81,7 +79,15 @@ namespace OpenTK.Platform.Dummy
             get { return current_thread != null && current_thread == Thread.CurrentThread; }
         }
 
-        public override IntPtr GetAddress(string function) { return IntPtr.Zero; }
+        public override IntPtr GetAddress(string function)
+        {
+            return Loader(function);
+        }
+
+        public override IntPtr GetAddress(IntPtr function)
+        {
+            return IntPtr.Zero;
+        }
 
         public override int SwapInterval
         {
@@ -99,7 +105,18 @@ namespace OpenTK.Platform.Dummy
         { }
 
         public override void LoadAll()
-        { }
+        {
+            #if OPENGL
+            new OpenTK.Graphics.OpenGL.GL().LoadEntryPoints();
+            new OpenTK.Graphics.OpenGL4.GL().LoadEntryPoints();
+            #endif
+            #if OPENGLES
+            new OpenTK.Graphics.ES10.GL().LoadEntryPoints();
+            new OpenTK.Graphics.ES11.GL().LoadEntryPoints();
+            new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
+            new OpenTK.Graphics.ES30.GL().LoadEntryPoints();
+            #endif
+        }
 
         #endregion
 

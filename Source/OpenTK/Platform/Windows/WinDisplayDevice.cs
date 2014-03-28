@@ -96,6 +96,10 @@ namespace OpenTK.Platform.Windows
         {
             lock (display_lock)
             {
+                // Store an array of the current available DisplayDevice objects.
+                // This is needed to preserve the original resolution.
+                DisplayDevice[] previousDevices = AvailableDevices.ToArray();
+
                 AvailableDevices.Clear();
 
                 // We save all necessary parameters in temporary variables
@@ -122,21 +126,28 @@ namespace OpenTK.Platform.Windows
                     if (Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), DisplayModeSettingsEnum.CurrentSettings, monitor_mode, 0) ||
                         Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), DisplayModeSettingsEnum.RegistrySettings, monitor_mode, 0))
                     {
+                        VerifyMode(dev1, monitor_mode);
+
+                        float scale = GetScale(ref monitor_mode);
                         opentk_dev_current_res = new DisplayResolution(
-                            monitor_mode.Position.X, monitor_mode.Position.Y,
-                            monitor_mode.PelsWidth, monitor_mode.PelsHeight,
+                            (int)(monitor_mode.Position.X / scale), (int)(monitor_mode.Position.Y / scale),
+                            (int)(monitor_mode.PelsWidth / scale), (int)(monitor_mode.PelsHeight / scale),
                             monitor_mode.BitsPerPel, monitor_mode.DisplayFrequency);
+
                         opentk_dev_primary =
                             (dev1.StateFlags & DisplayDeviceStateFlags.PrimaryDevice) != DisplayDeviceStateFlags.None;
                     }
 
                     opentk_dev_available_res.Clear();
                     mode_count = 0;
-                    while (Functions.EnumDisplaySettings(dev1.DeviceName.ToString(), mode_count++, monitor_mode))
+                    while (Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), mode_count++, monitor_mode, 0))
                     {
+                        VerifyMode(dev1, monitor_mode);
+
+                        float scale = GetScale(ref monitor_mode);
                         DisplayResolution res = new DisplayResolution(
-                            monitor_mode.Position.X, monitor_mode.Position.Y,
-                            monitor_mode.PelsWidth, monitor_mode.PelsHeight,
+                            (int)(monitor_mode.Position.X / scale), (int)(monitor_mode.Position.Y / scale),
+                            (int)(monitor_mode.PelsWidth / scale), (int)(monitor_mode.PelsHeight / scale),
                             monitor_mode.BitsPerPel, monitor_mode.DisplayFrequency);
 
                         opentk_dev_available_res.Add(res);
@@ -152,6 +163,11 @@ namespace OpenTK.Platform.Windows
                         opentk_dev_current_res.Bounds,
                         dev1.DeviceName);
 
+                    // Set the original resolution if the DisplayDevice was previously available.
+                    foreach (DisplayDevice existingDevice in previousDevices)
+                        if ((string)existingDevice.Id == (string)opentk_dev.Id)
+                            opentk_dev.OriginalResolution = existingDevice.OriginalResolution;
+
                     AvailableDevices.Add(opentk_dev);
 
                     if (opentk_dev_primary)
@@ -163,6 +179,26 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        private float GetScale(ref DeviceMode monitor_mode)
+        {
+            float scale = 1.0f;
+            if ((monitor_mode.Fields & Constants.DM_LOGPIXELS) != 0)
+            {
+                scale = monitor_mode.LogPixels / 96.0f;
+            }
+            return scale;
+        }
+
+        static void VerifyMode(WindowsDisplayDevice device, DeviceMode mode)
+        {
+            if (mode.BitsPerPel == 0)
+            {
+                Debug.Print(
+                    "[Warning] DisplayDevice '{0}' reported a mode with 0 bpp. Please create a bug report at http://www.opentk.com",
+                    device.DeviceName.ToString());
+                mode.BitsPerPel = 32;
+            }
+        }
         #endregion
 
         #region HandleDisplaySettingsChanged

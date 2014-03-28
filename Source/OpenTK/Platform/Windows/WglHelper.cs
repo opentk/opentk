@@ -8,196 +8,143 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Windows
 {
-    internal partial class Wgl
+    internal partial class Wgl : GraphicsBindingsBase
     {
-        #region --- Constructors ---
-
-        static Wgl()
-        {
-            assembly = Assembly.GetExecutingAssembly();
-            wglClass = assembly.GetType("OpenTK.Platform.Windows.Wgl");
-            delegatesClass = wglClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
-            importsClass = wglClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
-
-            //// Ensure core entry points are ready prior to accessing any method.
-            //// Resolves bug [#993]: "Possible bug in GraphicsContext.CreateDummyContext()" 
-            //LoadAll();
-        }
-
-        #endregion
-
-        #region --- Fields ---
+        static IntPtr[] EntryPoints;
+        static string[] EntryPointNames;
 
         internal const string Library = "OPENGL32.DLL";
 
-        private static Assembly assembly;
-        private static Type wglClass;
-        private static Type delegatesClass;
-        private static Type importsClass;
+        readonly static Dictionary<string, bool> extensions =
+            new Dictionary<string, bool>();
 
-        private static bool rebuildExtensionList = true;
+        static readonly object sync = new object();
 
-        static readonly object SyncRoot = new object();
+        public Wgl()
+        {
+            EntryPointsInstance = EntryPoints;
+            EntryPointNamesInstance = EntryPointNames;
+        }
 
-        #endregion
+        #region Public Members
 
-        #region static Delegate LoadDelegate(string name, Type signature)
+        public static bool SupportsExtension(string name)
+        {
+            return SupportsExtension(Wgl.GetCurrentDC(), name);
+        }
 
         /// <summary>
-        /// Creates a System.Delegate that can be used to call an OpenGL function, core or extension.
+        /// Checks if a Wgl extension is supported by the given context.
         /// </summary>
-        /// <param name="name">The name of the Wgl function (eg. "wglNewList")</param>
-        /// <param name="signature">The signature of the OpenGL function.</param>
-        /// <returns>
-        /// A System.Delegate that can be used to call this OpenGL function, or null if the specified
-        /// function name did not correspond to an OpenGL function.
-        /// </returns>
-        static Delegate LoadDelegate(string name, Type signature)
+        /// <param name="context">The device context.</param>
+        /// <param name="ext">The extension to check.</param>
+        /// <returns>True if the extension is supported by the given context, false otherwise</returns>
+        public static bool SupportsExtension(IntPtr dc, string name)
         {
-            Delegate d;
-            string realName = name.StartsWith("wgl") ? name.Substring(3) : name;
+            lock (sync)
+            {
+                if (extensions.Count == 0)
+                {
+                    // We cache this locally, as another thread might create a context which doesn't support  this method.
+                    // The design is far from ideal, but there's no good solution to this issue as long as we are using
+                    // static WGL/GL classes. Fortunately, this issue is extremely unlikely to arise in practice, as you'd
+                    // have to create one accelerated and one non-accelerated context in the same application, with the
+                    // non-accelerated context coming second.
+                    bool get_arb = SupportsFunction("wglGetExtensionsStringARB");
+                    bool get_ext = SupportsFunction("wglGetExtensionsStringEXT");
+                    string str =
+                        get_arb ? Arb.GetExtensionsString(dc) :
+                        get_ext ? Ext.GetExtensionsString() :
+                        String.Empty;
 
-            if (importsClass.GetMethod(realName,
-                BindingFlags.NonPublic | BindingFlags.Static) != null)
-                d = GetExtensionDelegate(name, signature) ??
-                    Delegate.CreateDelegate(signature, typeof(Imports), realName);
-            else
-                d = GetExtensionDelegate(name, signature);
+                    if (!String.IsNullOrEmpty(str))
+                    {
+                        foreach (string ext in str.Split(' '))
+                        {
+                            extensions.Add(ext, true);
+                        }
+                    }
+                }
+            }
 
-            return d;
+            if (extensions.Count > 0)
+            {
+                return extensions.ContainsKey(name);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks whether an extension function is supported.
+        /// Do not use with core WGL functions, as this function
+        /// will incorrectly return false.
+        /// </summary>
+        /// <param name="name">The extension function to check (e.g. "wglGetExtensionsStringARB"</param>
+        /// <returns>True if the extension function is supported; otherwise, false.</returns>
+        public static bool SupportsFunction(string name)
+        {
+            int index = Array.IndexOf(EntryPointNames, name);
+            if (index >= 0)
+            {
+                return EntryPoints[index] != IntPtr.Zero;
+            }
+            return false;
         }
 
         #endregion
 
-        #region private static Delegate GetExtensionDelegate(string name, Type signature)
+        #region Protected Members
 
-        /// <summary>
-        /// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
-        /// </summary>
-        /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
-        /// <param name="signature">The signature of the OpenGL function.</param>
-        /// <returns>
-        /// A System.Delegate that can be used to call this OpenGL function or null
-        /// if the function is not available in the current OpenGL context.
-        /// </returns>
-        private static Delegate GetExtensionDelegate(string name, Type signature)
+        protected override object SyncRoot
         {
-            IntPtr address = Imports.GetProcAddress(name);
+            get { return sync; }
+        }
 
-            if (address == IntPtr.Zero ||
-                address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
-                address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
+        protected override IntPtr GetAddress(string function_string)
+        {
+            IntPtr address = Wgl.GetProcAddress(function_string);
+            if (!IsValid(address))
             {
-                return null;
+                address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
-            else
-            {
-                return Marshal.GetDelegateForFunctionPointer(address, signature);
-            }
+            return address;
         }
 
         #endregion
 
-        #region public static void LoadAll()
+        #region Private Members
 
-        /// <summary>
-        /// Loads all Wgl entry points, core and extensions.
-        /// </summary>
-        public static void LoadAll()
+        static bool IsValid(IntPtr address)
+        {
+            // See https://www.opengl.org/wiki/Load_OpenGL_Functions
+            long a = address.ToInt64();
+            bool is_valid = (a < -1) || (a > 3);
+            return is_valid;
+        }
+
+        #endregion
+
+        #region Internal Members
+
+        internal override void LoadEntryPoints()
         {
             lock (SyncRoot)
             {
-                OpenTK.Platform.Utilities.LoadExtensions(typeof(Wgl));
-            }
-        }
-
-        #endregion
-
-        #region public static bool Load(string function)
-
-        /// <summary>
-        /// Loads the given Wgl entry point.
-        /// </summary>
-        /// <param name="function">The name of the function to load.</param>
-        /// <returns></returns>
-        public static bool Load(string function)
-        {
-            return OpenTK.Platform.Utilities.TryLoadExtension(typeof(Wgl), function);
-        }
-
-        #endregion
-
-        #region public static partial class Arb
-
-        /// <summary>Contains ARB extensions for WGL.</summary>
-        public static partial class Arb
-        {
-            /// <summary>
-            /// Checks if a Wgl extension is supported by the given context.
-            /// </summary>
-            /// <param name="context">The device context.</param>
-            /// <param name="ext">The extension to check.</param>
-            /// <returns>True if the extension is supported by the given context, false otherwise</returns>
-            public static bool SupportsExtension(WinGLContext context, string ext)
-            {
-                // We cache this locally, as another thread might create a context which doesn't support  this method.
-                // The design is far from ideal, but there's no good solution to this issue as long as we are using
-                // static WGL/GL classes. Fortunately, this issue is extremely unlikely to arise in practice, as you'd
-                // have to create one accelerated and one non-accelerated context in the same application, with the
-                // non-accelerated context coming second.
-                Wgl.Delegates.GetExtensionsStringARB get = Wgl.Delegates.wglGetExtensionsStringARB;
-
-                if (get != null)
+                if (Wgl.GetCurrentContext() != IntPtr.Zero)
                 {
-                    string[] extensions = null;
-                    unsafe
+                    for (int i = 0; i < EntryPointsInstance.Length; i++)
                     {
-                        extensions = new string((sbyte*)get(context.DeviceContext))
-                            .Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        EntryPointsInstance[i] = GetAddress(EntryPointNamesInstance[i]);
                     }
-                    if (extensions == null || extensions.Length == 0)
-                        return false;
-
-                    foreach (string s in extensions)
-                        if (s == ext)
-                            return true;
+                    extensions.Clear();
                 }
-                return false;
-            }
-        }
-
-        #endregion 
-
-        #region public static partial class Ext
-
-        /// <summary>Contains EXT extensions for WGL.</summary>
-        public static partial class Ext
-        {
-            private static string[] extensions;
-            /// <summary>
-            /// Checks if a Wgl extension is supported by the given context.
-            /// </summary>
-            /// <param name="ext">The extension to check.</param>
-            /// <returns>True if the extension is supported by the given context, false otherwise</returns>
-            public static bool SupportsExtension(string ext)
-            {
-                if (Wgl.Delegates.wglGetExtensionsStringEXT != null)
-                {
-                    if (extensions == null || rebuildExtensionList)
-                    {
-                        extensions = Wgl.Ext.GetExtensionsString().Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        Array.Sort(extensions);
-                        rebuildExtensionList = false;
-                    }
-
-                    return Array.BinarySearch(extensions, ext) != -1;
-                }
-                return false;
             }
         }
 

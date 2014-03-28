@@ -131,10 +131,11 @@ void main(void)
             GL.AttachShader(shaderProgramHandle, vertexShaderHandle);
             GL.AttachShader(shaderProgramHandle, fragmentShaderHandle);
 
+            GL.BindAttribLocation(shaderProgramHandle, 0, "in_position");
+            GL.BindAttribLocation(shaderProgramHandle, 1, "in_normal");
+
             GL.LinkProgram(shaderProgramHandle);
-
             Debug.WriteLine(GL.GetProgramInfoLog(shaderProgramHandle));
-
             GL.UseProgram(shaderProgramHandle);
 
             // Set uniforms
@@ -151,19 +152,19 @@ void main(void)
 
         void CreateVBOs()
         {
-            GL.GenBuffers(1, out positionVboHandle);
+            positionVboHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
             GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
                 new IntPtr(positionVboData.Length * Vector3.SizeInBytes),
                 positionVboData, BufferUsageHint.StaticDraw);
 
-            GL.GenBuffers(1, out normalVboHandle);
+            normalVboHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, normalVboHandle);
             GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
                 new IntPtr(positionVboData.Length * Vector3.SizeInBytes),
                 positionVboData, BufferUsageHint.StaticDraw);
 
-            GL.GenBuffers(1, out eboHandle);
+            eboHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
             GL.BufferData(BufferTarget.ElementArrayBuffer,
                 new IntPtr(sizeof(uint) * indicesVboData.Length),
@@ -179,18 +180,16 @@ void main(void)
             // This means we do not have to re-issue VertexAttribPointer calls
             // every time we try to use a different vertex layout - these calls are
             // stored in the VAO so we simply need to bind the correct VAO.
-            GL.GenVertexArrays(1, out vaoHandle);
+            vaoHandle = GL.GenVertexArray();
             GL.BindVertexArray(vaoHandle);
 
             GL.EnableVertexAttribArray(0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-            GL.BindAttribLocation(shaderProgramHandle, 0, "in_position");
 
             GL.EnableVertexAttribArray(1);
             GL.BindBuffer(BufferTarget.ArrayBuffer, normalVboHandle);
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-            GL.BindAttribLocation(shaderProgramHandle, 1, "in_normal");
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 
@@ -214,7 +213,7 @@ void main(void)
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.BindVertexArray(vaoHandle);
-            GL.DrawElements(BeginMode.Triangles, indicesVboData.Length,
+            GL.DrawElements(PrimitiveType.Triangles, indicesVboData.Length,
                 DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             SwapBuffers();

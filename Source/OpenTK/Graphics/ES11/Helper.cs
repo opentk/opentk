@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
@@ -12,8 +12,24 @@ namespace OpenTK.Graphics.ES11
 
     public sealed partial class GL : GraphicsBindingsBase
     {
-        const string Library = "libGLES.dll";
+        const string Library = "GLESv1_CM";
         static readonly object sync_root = new object();
+
+        static IntPtr[] EntryPoints;
+        static string[] EntryPointNames;
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        public GL()
+        {
+            EntryPointsInstance = EntryPoints;
+            EntryPointNamesInstance = EntryPointNames;
+        }
+
+        #endregion
 
         #region --- Protected Members ---
 

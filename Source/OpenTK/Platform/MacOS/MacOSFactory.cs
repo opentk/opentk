@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using OpenTK.Input;
 
@@ -34,59 +35,72 @@ namespace OpenTK.Platform.MacOS
 {
     using Graphics;
 
-    class MacOSFactory : IPlatformFactory
+    class MacOSFactory : PlatformFactoryBase
     {
-        #region Fields
-
         readonly IInputDriver2 InputDriver = new HIDInput();
-
-        #endregion
 
         #region IPlatformFactory Members
 
-        public virtual INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
         {
             return new CarbonGLNative(x, y, width, height, title, mode, options, device);
         }
 
-        public virtual IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new QuartzDisplayDeviceDriver();
         }
 
-        public virtual IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new AglContext(mode, window, shareContext);
         }
 
-        public virtual IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new AglContext(handle, window, shareContext);
         }
 
-        public virtual GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
-                return new ContextHandle(Agl.aglGetCurrentContext());
+                return new ContextHandle(Cgl.GetCurrentContext());
             };
         }
 
-        public virtual IGraphicsMode CreateGraphicsMode()
-        {
-            return new MacOSGraphicsMode();
-        }
-
-        public virtual OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+        public override IKeyboardDriver2 CreateKeyboardDriver()
         {
            return InputDriver.KeyboardDriver;
         }
 
-        public virtual OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        public override IMouseDriver2 CreateMouseDriver()
         {
             return InputDriver.MouseDriver;
         }
+
+        public override IJoystickDriver2 CreateJoystickDriver()
+        {
+            return InputDriver.JoystickDriver;
+        }
         
+        #endregion
+
+        #region IDisposable Members
+
+        protected override void Dispose(bool manual)
+        {
+            if (!IsDisposed)
+            {
+                if (manual)
+                {
+                    InputDriver.Dispose();
+                }
+
+                base.Dispose(manual);
+            }
+        }
+
         #endregion
     }
 }

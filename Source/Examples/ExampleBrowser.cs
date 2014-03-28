@@ -358,95 +358,42 @@ namespace Examples
             if (e == null)
                 return;
 
-            MethodInfo main =
-                e.Example.GetMethod("Main", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic) ??
-                e.Example.GetMethod("Main", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, null, new Type[] {
-                typeof(object),
-                typeof(object)
-            }, null);
-            if (main != null)
+            try
             {
-                try
+                if (parent != null)
                 {
-                    if (parent != null)
-                    {
-                        parent.Visible = false;
-                        Application.DoEvents();
-                    }
-                    Trace.WriteLine(String.Format("Launching sample: \"{0}\"", e.Attribute.Title));
-                    Trace.WriteLine(String.Empty);
-
-                    AppDomain sandbox = AppDomain.CreateDomain("Sandbox");
-                    sandbox.DomainUnload += HandleSandboxDomainUnload;
-
-                    SampleRunner runner = new SampleRunner(main);
-                    CrossAppDomainDelegate cross = new CrossAppDomainDelegate(runner.Invoke);
-                    sandbox.DoCallBack(cross);
-                    AppDomain.Unload(sandbox);
+                    parent.Visible = false;
+                    Application.DoEvents();
                 }
-                finally
+                Trace.WriteLine(String.Format("Launching sample: \"{0}\"", e.Attribute.Title));
+                Trace.WriteLine(String.Empty);
+
+                var info = new ProcessStartInfo
                 {
-                    if (parent != null)
+                    FileName = Application.ExecutablePath,//.Replace("vshost.exe", String.Empty),
+                    Arguments = e.Example.ToString()
+                };
+                var process = Process.Start(info);
+                process.WaitForExit();
+            }
+            finally
+            {
+                if (parent != null)
+                {
+                    try
                     {
                         textBoxOutput.Text = File.ReadAllText("debug.log");
-                        parent.Visible = true;
-                        Application.DoEvents();
                     }
-                }
-            }
-            else
-            {
-                MessageBox.Show("The selected example does not define a Main method", "Entry point not found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-        }
-
-        static void HandleSandboxDomainUnload(object sender, EventArgs e)
-        {
-            AppDomain sandbox = (AppDomain)sender;
-            sandbox.DomainUnload -= HandleSandboxDomainUnload;
-        }
-
-        [Serializable]
-        class SampleRunner
-        {
-            MethodInfo _main;
-
-            public SampleRunner(MethodInfo main)
-            {
-                _main = main;
-            }
-
-            public void Invoke()
-            {
-                try
-                {
-                    using (TextWriterTraceListener dbg = new TextWriterTraceListener("debug.log"))
+                    catch (Exception ex)
                     {
-                        Trace.Listeners.Add(dbg);
-                        Trace.Listeners.Add(new ConsoleTraceListener());
-
-                        _main.Invoke(null, null);
-
-                        dbg.Flush();
-                        dbg.Close();
+                        Debug.Print(ex.ToString());
                     }
-                }
-                catch (TargetInvocationException expt)
-                {
-                    string ex_info;
-                    if (expt.InnerException != null)
-                        ex_info = expt.InnerException.ToString();
-                    else
-                        ex_info = expt.ToString();
-                    //MessageBox.Show(ex_info, "An OpenTK example encountered an error.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                    Trace.WriteLine(ex_info.ToString());
-                }
-                catch (Exception expt)
-                {
-                    Trace.WriteLine(expt.ToString());
+                    parent.Visible = true;
+                    parent.Focus();
+                    Application.DoEvents();
                 }
             }
+
         }
 
         // Tries to detect the path that contains the source for the examples.

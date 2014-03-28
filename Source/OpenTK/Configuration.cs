@@ -3,7 +3,6 @@
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
-// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,33 +35,32 @@ using System.Reflection;
 
 namespace OpenTK
 {
-    /// <summary>Provides information about the underlying OS and runtime.</summary>
-    public static class Configuration
+    /// <summary>
+    /// Provides information about the underlying OS and runtime.
+    /// You must call <c>Toolkit.Init</c> before accessing members
+    /// of this class.
+    /// </summary>
+    public sealed class Configuration
     {
-        static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux, runningOnAndroid, runningOnMono;
+        static bool runningOnWindows;
+        static bool runningOnUnix;
+        static bool runningOnX11;
+        static bool runningOnMacOS;
+        static bool runningOnLinux;
+        static bool runningOnSdl2;
+        static bool runningOnMono;
         volatile static bool initialized;
         readonly static object InitLock = new object();
 
         #region Constructors
 
-        // Detects the underlying OS and runtime.
-        static Configuration()
-        {
-            Toolkit.Init();
-        }
+        Configuration() { }
 
         #endregion
 
         #region Public Methods
 
         #region public static bool RunningOnWindows
-
-        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.</summary>
-        public static bool RunningOnAndroid { get { return runningOnAndroid; } }
-
-        #endregion
-
-		#region public static bool RunningOnWindows
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.</summary>
         public static bool RunningOnWindows { get { return runningOnWindows; } }
@@ -83,6 +81,18 @@ namespace OpenTK
         public static bool RunningOnUnix
         {
             get { return runningOnUnix; }
+        }
+
+        #endregion
+
+        #region RunningOnSDL2
+
+        /// <summary>
+        /// Gets a System.Boolean indicating whether OpenTK is running on the SDL2 backend.
+        /// </summary>
+        public static bool RunningOnSdl2
+        {
+            get { return runningOnSdl2; }
         }
 
         #endregion
@@ -109,6 +119,26 @@ namespace OpenTK
         public static bool RunningOnMono { get { return runningOnMono; } }
 
         #endregion
+
+        #region public static bool RunningOnAndroid
+
+        /// <summary>
+        /// Gets a <c>System.Boolean</c> indicating whether
+        /// OpenTK is running on an Android device.
+        /// </summary>
+        public static bool RunningOnAndroid
+        {
+            get
+            {
+#if ANDROID
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
+        #endregion 
 
         #region --- Private Methods ---
 
@@ -163,6 +193,97 @@ namespace OpenTK
         [DllImport("libc")]
         private static extern void uname(out utsname uname_struct);
 
+        static bool DetectMono()
+        {
+            // Detect the Mono runtime (code taken from http://mono.wikia.com/wiki/Detecting_if_program_is_running_in_Mono).
+            Type t = Type.GetType("Mono.Runtime");
+            return t != null;
+        }
+
+        static bool DetectSdl2()
+        {
+            #if SDL2
+            bool supported = false;
+
+            // Detect whether SDL2 is supported
+            try
+            {
+                if (!OpenTK.Platform.SDL2.SDL.WasInit(0))
+                {
+                    var flags =
+                        OpenTK.Platform.SDL2.SystemFlags.VIDEO | Platform.SDL2.SystemFlags.TIMER;
+                    if (OpenTK.Platform.SDL2.SDL.Init(flags) == 0)
+                    {
+                        supported = true;
+                    }
+                    else
+                    {
+                        Debug.Print("SDL2 init failed with error: {0}", OpenTK.Platform.SDL2.SDL.GetError());
+                    }
+                }
+                else
+                {
+                    supported = true;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Print("SDL2 init failed with exception: {0}", e);
+            }
+            Debug.Print("SDL2 is {0}", supported ? "supported" : "not supported");
+
+            return supported;
+            #else
+            return false;
+            #endif
+        }
+
+        static void DetectUnix(out bool unix, out bool linux, out bool macos)
+        {
+            unix = linux = macos = false;
+
+            string kernel_name = DetectUnixKernel();
+            switch (kernel_name)
+            {
+                case null:
+                case "":
+                    throw new PlatformNotSupportedException(
+                        "Unknown platform. Please file a bug report at http://www.opentk.com");
+
+                case "Linux":
+                    linux = unix = true;
+                    break;
+
+                case "Darwin":
+                    macos = unix = true;
+                    break;
+
+                default:
+                    unix = true;
+                    break;
+            }
+        }
+
+        static bool DetectWindows()
+        {
+            return
+                System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
+                System.Environment.OSVersion.Platform == PlatformID.Win32S ||
+                System.Environment.OSVersion.Platform == PlatformID.Win32Windows ||
+                System.Environment.OSVersion.Platform == PlatformID.WinCE;
+        }
+
+        static bool DetectX11()
+        {
+            #if X11
+            // Detect whether X is present.
+            try { return OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
+            catch { return false; }
+            #else
+            return false;
+            #endif
+        }
+
         #endregion
 
         #endregion
@@ -171,77 +292,68 @@ namespace OpenTK
 
         #region Internal Methods
 
-        internal static void Init()
+        // Detects the underlying OS and runtime.
+        internal static void Init(ToolkitOptions options)
         {
             lock (InitLock)
             {
                 if (!initialized)
                 {
-                    initialized = true;
-
-                    if (System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                        System.Environment.OSVersion.Platform == PlatformID.Win32S ||
-                        System.Environment.OSVersion.Platform == PlatformID.Win32Windows ||
-                        System.Environment.OSVersion.Platform == PlatformID.WinCE)
+#if ANDROID
+                    runningOnMono = true;
+                    runningOnLinux = runningOnUnix = true;
+                    if (options.Backend == PlatformBackend.Default)
                     {
-                        runningOnWindows = true;
+                        runningOnSdl2 = DetectSdl2();
                     }
-                    else if (System.Environment.OSVersion.Platform == PlatformID.Unix ||
-                             System.Environment.OSVersion.Platform == (PlatformID)4)
+#elif IPHONE
+                    runningOnMono = true;
+                    runningOnIOS = true;
+                    if (options.Backend == PlatformBackend.Default)
                     {
-                        // Distinguish between Linux, Mac OS X and other Unix operating systems.
-                        string kernel_name = DetectUnixKernel();
-                        switch (kernel_name)
-                        {
-                            case null:
-                            case "":
-                                throw new PlatformNotSupportedException(
-                                    "Unknown platform. Please file a bug report at http://www.opentk.com/node/add/project-issue/opentk");
-
-                            case "Linux":
-                                runningOnLinux = runningOnUnix = true;
-#if MONODROID
-                                runningOnAndroid = true;
-#endif
-                           break;
-
-                            case "Darwin":
-                                runningOnMacOS = runningOnUnix = true;
-                                break;
-
-                            default:
-                                runningOnUnix = true;
-                                break;
-                        }
+                        runningOnSdl2 = DetectSdl2();
                     }
-                    else
-                        throw new PlatformNotSupportedException("Unknown platform. Please report this error at http://www.opentk.com.");
-#if !MOBILE
-                    // Detect whether X is present.
-                    // Hack: it seems that this check will cause X to initialize itself on Mac OS X Leopard and newer.
-                    // We don't want that (we'll be using the native interfaces anyway), so we'll avoid this check
-                    // when we detect Mac OS X.
-                    if (!RunningOnMacOS)
-                    {
-#if !IPHONE
-                        try { runningOnX11 = OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
-                        catch { }
 #else
-                runningOnX11 = false;
-#endif
+                    runningOnMono = DetectMono();
+                    runningOnWindows = DetectWindows();
+                    if (!runningOnWindows)
+                    {
+                        DetectUnix(out runningOnUnix, out runningOnLinux, out runningOnMacOS);
+                    }
+
+                    if (options.Backend == PlatformBackend.Default)
+                    {
+                        runningOnSdl2 = DetectSdl2();
+                    }
+                    
+					if (runningOnLinux || options.Backend == PlatformBackend.PreferX11)
+                    {
+                        runningOnX11 = DetectX11();
                     }
 #endif
-                    // Detect the Mono runtime (code taken from http://mono.wikia.com/wiki/Detecting_if_program_is_running_in_Mono).
-                    Type t = Type.GetType("Mono.Runtime");
-                    if (t != null)
-                        runningOnMono = true;
 
+                    initialized = true;
                     Debug.Print("Detected configuration: {0} / {1}",
-                        RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" :
-                        runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
-                        RunningOnMono ? "Mono" : ".Net");
+                        GetPlatformName(), GetRuntimeName());
                 }
             }
+        }
+
+        static string GetPlatformName()
+        {
+            return
+                RunningOnAndroid ? "Android" :
+                RunningOnWindows ? "Windows" :
+                RunningOnLinux ? "Linux" :
+                RunningOnMacOS ? "MacOS" :
+                runningOnUnix ? "Unix" :
+                RunningOnX11 ? "X11" :
+                "Unknown Platform";
+        }
+
+        static string GetRuntimeName()
+        {
+            return RunningOnMono ? "Mono" : ".Net";
         }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.XPath;
@@ -11,22 +11,26 @@ namespace Bind.CL
 {
     class CLGenerator : ES.ESGenerator
     {
-        public CLGenerator(string name, string dirname)
-			: base(name, dirname)
+        public CLGenerator(Settings settings, string dirname)
+            : base(settings, dirname)
         {
             glTypemap = null;
 
-			Settings.WrappersFile = "CL.cs";
+            Settings.WrappersFile = "CL.cs";
 
             Settings.FunctionPrefix = "cl";
             Settings.ConstantPrefix = "CL_";
             Settings.EnumPrefix = "Cl";
 
             Settings.OutputClass = "CL";
-            Settings.OutputNamespace = "OpenTK.Compute." + name;
 
             //Settings.Compatibility &= ~Settings.Legacy.TurnVoidPointersToIntPtr;
             Settings.Compatibility |= Settings.Legacy.NoDebugHelpers;
+
+            Settings.DefaultImportsFile = "CLCore.cs";
+            Settings.DefaultDelegatesFile = "CLDelegates.cs";
+            Settings.DefaultEnumsFile = "CLEnums.cs";
+            Settings.DefaultWrappersFile = "CL.cs";
         }
     }
 }

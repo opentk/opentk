@@ -37,9 +37,10 @@
             // redButton
             // 
             this.redButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.redButton.Location = new System.Drawing.Point(639, 13);
+            this.redButton.Location = new System.Drawing.Point(1278, 25);
+            this.redButton.Margin = new System.Windows.Forms.Padding(6);
             this.redButton.Name = "redButton";
-            this.redButton.Size = new System.Drawing.Size(133, 23);
+            this.redButton.Size = new System.Drawing.Size(266, 44);
             this.redButton.TabIndex = 1;
             this.redButton.Text = "Red";
             this.redButton.UseVisualStyleBackColor = true;
@@ -48,9 +49,10 @@
             // greenButton
             // 
             this.greenButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.greenButton.Location = new System.Drawing.Point(639, 43);
+            this.greenButton.Location = new System.Drawing.Point(1278, 83);
+            this.greenButton.Margin = new System.Windows.Forms.Padding(6);
             this.greenButton.Name = "greenButton";
-            this.greenButton.Size = new System.Drawing.Size(133, 23);
+            this.greenButton.Size = new System.Drawing.Size(266, 44);
             this.greenButton.TabIndex = 2;
             this.greenButton.Text = "Green";
             this.greenButton.UseVisualStyleBackColor = true;
@@ -59,9 +61,10 @@
             // blueButton
             // 
             this.blueButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.blueButton.Location = new System.Drawing.Point(639, 73);
+            this.blueButton.Location = new System.Drawing.Point(1278, 140);
+            this.blueButton.Margin = new System.Windows.Forms.Padding(6);
             this.blueButton.Name = "blueButton";
-            this.blueButton.Size = new System.Drawing.Size(133, 23);
+            this.blueButton.Size = new System.Drawing.Size(266, 44);
             this.blueButton.TabIndex = 3;
             this.blueButton.Text = "Blue";
             this.blueButton.UseVisualStyleBackColor = true;
@@ -69,27 +72,29 @@
             // 
             // glControl1
             // 
-			this.glControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glControl1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.glControl1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.glControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.glControl1.Location = new System.Drawing.Point(0, 0);
+            this.glControl1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.glControl1.Name = "glControl1";
-            this.glControl1.Size = new System.Drawing.Size(629, 565);
-            this.glControl1.TabIndex = 0;
+            this.glControl1.Size = new System.Drawing.Size(1562, 1085);
+            this.glControl1.TabIndex = 4;
             this.glControl1.VSync = false;
-            this.glControl1.Resize += new System.EventHandler(this.glControl1_Resize);
             this.glControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl1_Paint);
             this.glControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glControl1_KeyDown);
+            this.glControl1.Resize += new System.EventHandler(this.glControl1_Resize);
             // 
-            // W01_First_Window
+            // SimpleForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(781, 564);
+            this.ClientSize = new System.Drawing.Size(1562, 1085);
             this.Controls.Add(this.blueButton);
             this.Controls.Add(this.greenButton);
             this.Controls.Add(this.redButton);
             this.Controls.Add(this.glControl1);
-            this.Name = "W01_First_Window";
+            this.Margin = new System.Windows.Forms.Padding(6);
+            this.Name = "SimpleForm";
             this.Text = "OpenTK Windows Forms Tutorial 01 - Your first window";
             this.ResumeLayout(false);
 
@@ -97,9 +102,9 @@
 
         #endregion
 
-        private OpenTK.GLControl glControl1;
         private System.Windows.Forms.Button redButton;
         private System.Windows.Forms.Button greenButton;
         private System.Windows.Forms.Button blueButton;
+        private OpenTK.GLControl glControl1;
     }
 }

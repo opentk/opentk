@@ -1,12 +1,12 @@
 ﻿#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * Copyright 2013 Xamarin Inc
  * See license.txt for license info
  */
 #endregion
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -25,7 +25,7 @@ namespace Bind.Structures
         public Function(Delegate d)
             : base(d)
         {
-            Name = d.Name;
+            TrimmedName = Name = d.Name;
             Body = new FunctionBody();
             WrappedDelegate = d;
         }
@@ -35,6 +35,9 @@ namespace Bind.Structures
         {
             Parameters = new ParameterCollection(f.Parameters);
             ReturnType = new Type(f.ReturnType);
+            TrimmedName = f.TrimmedName;
+            Obsolete = f.Obsolete;
+            CLSCompliant = f.CLSCompliant;
             Body.AddRange(f.Body);
         }
 
@@ -72,9 +75,6 @@ namespace Bind.Structures
         {
             get
             {
-                if ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None)
-                    return false;
-
                 return base.Unsafe;
             }
         }
@@ -95,87 +95,18 @@ namespace Bind.Structures
 
         #region public string TrimmedName
 
-        public string TrimmedName;
+        public string TrimmedName { get; set; }
 
         #endregion
 
-        #region public override string Name
-
-        /// <summary>
-        /// Gets or sets the name of the opengl function.
-        /// If no Tao compatibility is set, set TrimmedName to Name, after removing
-        /// [u][bsifd][v].
-        /// </summary>
-        public override string Name
-        {
-            get { return base.Name; }
-            set
-            {
-                base.Name = value;
-
-                if ((Settings.Compatibility & Settings.Legacy.NoTrimFunctionEnding) != Settings.Legacy.None)
-                {
-                    // If we don't need compatibility with Tao,
-                    // remove the Extension and the overload information from the name
-                    // (Extension == "ARB", "EXT", etc, overload == [u][bsidf][v])
-                    // TODO: Use some regex's here, to reduce clutter.
-                    TrimmedName = value;
-                }
-                else
-                {
-                    TrimmedName = FuncProcessor.TrimName(Name, false);
-                }
-            }
-        }
-
-        #endregion
-
-        #region public override string ToString()
+        #region ToString
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(Unsafe ? "unsafe " : "");
-            sb.Append(ReturnType);
-            sb.Append(" ");
-            if ((Settings.Compatibility & Settings.Legacy.NoTrimFunctionEnding) != Settings.Legacy.None)
-            {
-                sb.Append(Settings.FunctionPrefix);
-            }
-            sb.Append(!String.IsNullOrEmpty(TrimmedName) ? TrimmedName : Name);
-            
-            if (Parameters.HasGenericParameters)
-            {
-                sb.Append("<");
-                foreach (Parameter p in Parameters)
-                {
-                    if (p.Generic)
-                    {
-                        sb.Append(p.CurrentType);
-                        sb.Append(",");
-                    }
-                }
-                sb.Remove(sb.Length - 1, 1);
-                sb.Append(">");
-            }
-            sb.AppendLine(Parameters.ToString(false));
-            if (Parameters.HasGenericParameters)
-            {
-                foreach (Parameter p in Parameters)
-                {
-                    if (p.Generic)
-                        sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
-                }
-                
-            }
-
-            if (Body.Count > 0)
-            {
-                sb.Append(Body.ToString());
-            }
-
-            return sb.ToString();
+            return String.Format("{0} {1}{2}",
+                ReturnType,
+                TrimmedName,
+                Parameters);
         }
 
         #endregion
@@ -184,10 +115,11 @@ namespace Bind.Structures
 
         public bool Equals(Function other)
         {
-            return
+            bool result =
                 !String.IsNullOrEmpty(TrimmedName) && !String.IsNullOrEmpty(other.TrimmedName) &&
-                TrimmedName == other.TrimmedName &&
-                Parameters.Signature == other.Parameters.Signature;
+                TrimmedName.Equals(other.TrimmedName) &&
+                Parameters.Equals(other.Parameters);
+            return result;
         }
 
         #endregion
@@ -232,13 +164,15 @@ namespace Bind.Structures
 
         public void Unindent()
         {
-            if (indent.Length >= 4)
+            if (indent.Length > 4)
                 indent = indent.Substring(4);
+            else
+                indent = String.Empty;
         }
 
         new public void Add(string s)
         {
-            base.Add(indent + s);
+            base.Add(indent + s.TrimEnd('\r', '\n'));
         }
 
         new public void AddRange(IEnumerable<string> collection)
@@ -275,7 +209,7 @@ namespace Bind.Structures
     {
         Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
-        public void Add(Function f)
+        void Add(Function f)
         {
             if (!ContainsKey(f.Extension))
             {
@@ -292,7 +226,7 @@ namespace Bind.Structures
         {
             foreach (Function f in functions)
             {
-                Add(f);
+                AddChecked(f);
             }
         }
 
@@ -304,19 +238,28 @@ namespace Bind.Structures
         {
             if (ContainsKey(f.Extension))
             {
-                int index = this[f.Extension].IndexOf(f);
+                var list = this[f.Extension];
+                int index = list.IndexOf(f);
                 if (index == -1)
                 {
                     Add(f);
                 }
                 else
                 {
-                    Function existing = this[f.Extension][index];
-                    if ((existing.Parameters.HasUnsignedParameters && !unsignedFunctions.IsMatch(existing.Name) && unsignedFunctions.IsMatch(f.Name)) ||
-                        (!existing.Parameters.HasUnsignedParameters && unsignedFunctions.IsMatch(existing.Name) && !unsignedFunctions.IsMatch(f.Name)))
+                    Function existing = list[index];
+                    bool replace = existing.Parameters.HasUnsignedParameters &&
+                        !unsignedFunctions.IsMatch(existing.Name) && unsignedFunctions.IsMatch(f.Name);
+                    replace |= !existing.Parameters.HasUnsignedParameters &&
+                        unsignedFunctions.IsMatch(existing.Name) && !unsignedFunctions.IsMatch(f.Name);
+                    replace |=
+                        (from p_old in existing.Parameters
+                                        join p_new in f.Parameters on p_old.Name equals p_new.Name
+                                        where p_new.ElementCount == 0 && p_old.ElementCount != 0
+                                        select true)
+                            .Count() != 0;
+                    if (replace)
                     {
-                        this[f.Extension].RemoveAt(index);
-                        this[f.Extension].Add(f);
+                        list[index] = f;
                     }
                 }
             }

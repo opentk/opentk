@@ -8,7 +8,9 @@
 #region --- Using Directives ---
 
 using System;
+#if !MINIMAL
 using System.Drawing;
+#endif
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Security;
@@ -32,6 +34,8 @@ namespace OpenTK.Platform.Windows
     using HICON = System.IntPtr;
     using HBRUSH = System.IntPtr;
     using HCURSOR = System.IntPtr;
+    using HKEY = System.IntPtr;
+    using PHKEY = System.IntPtr;
 
     using LRESULT = System.IntPtr;
     using LPVOID = System.IntPtr;
@@ -68,6 +72,8 @@ namespace OpenTK.Platform.Windows
     using UINT_PTR = System.UIntPtr;
 
     using TIMERPROC = Functions.TimerProc;
+
+    using REGSAM = System.UInt32;
 
     #endregion
 
@@ -145,7 +151,12 @@ namespace OpenTK.Platform.Windows
         internal static extern BOOL AdjustWindowRect([In, Out] ref Win32Rectangle lpRect, WindowStyle dwStyle, BOOL bMenu);
 
         [DllImport("user32.dll", EntryPoint = "AdjustWindowRectEx", CallingConvention = CallingConvention.StdCall, SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal static extern bool AdjustWindowRectEx(ref Win32Rectangle lpRect, WindowStyle dwStyle, bool bMenu, ExtendedWindowStyle dwExStyle);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool AdjustWindowRectEx(
+            ref Win32Rectangle lpRect,
+            WindowStyle dwStyle,
+            [MarshalAs(UnmanagedType.Bool)] bool bMenu,
+            ExtendedWindowStyle dwExStyle);
 
         #endregion
 
@@ -235,9 +246,7 @@ namespace OpenTK.Platform.Windows
 
         #region CallWindowProc
 
-#if RELEASE
         [SuppressUnmanagedCodeSecurity]
-#endif
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern LRESULT CallWindowProc(WNDPROC lpPrevWndFunc, HWND hWnd, WindowMessage Msg,
             WPARAM wParam, LPARAM lParam);
@@ -258,9 +267,9 @@ namespace OpenTK.Platform.Windows
             SetLastError(0);
 
             if (IntPtr.Size == 4)
-                retval = new IntPtr(SetWindowLong(handle, item, newValue.ToInt32()));
+                retval = new IntPtr(SetWindowLongInternal(handle, item, newValue.ToInt32()));
             else
-                retval = SetWindowLongPtr(handle, item, newValue);
+                retval = SetWindowLongPtrInternal(handle, item, newValue);
 
             if (retval == IntPtr.Zero)
             {
@@ -277,30 +286,22 @@ namespace OpenTK.Platform.Windows
             return SetWindowLong(handle, GetWindowLongOffsets.WNDPROC, Marshal.GetFunctionPointerForDelegate(newValue));
         }
 
-#if RELASE
         [SuppressUnmanagedCodeSecurity]
-#endif
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern LONG SetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex, LONG dwNewLong);
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
+        static extern LONG SetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex, LONG dwNewLong);
 
-#if RELASE
         [SuppressUnmanagedCodeSecurity]
-#endif
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern LONG_PTR SetWindowLongPtr(HWND hWnd, GetWindowLongOffsets nIndex, LONG_PTR dwNewLong);
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
+        static extern LONG_PTR SetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex, LONG_PTR dwNewLong);
 
-#if RELASE
         [SuppressUnmanagedCodeSecurity]
-#endif
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern LONG SetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex,
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
+        static extern LONG SetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex,
             [MarshalAs(UnmanagedType.FunctionPtr)]WindowProcedure dwNewLong);
 
-#if RELASE
         [SuppressUnmanagedCodeSecurity]
-#endif
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern LONG_PTR SetWindowLongPtr(HWND hWnd, GetWindowLongOffsets nIndex,
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
+        static extern LONG_PTR SetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex,
             [MarshalAs(UnmanagedType.FunctionPtr)]WindowProcedure dwNewLong);
 
         #endregion
@@ -343,7 +344,7 @@ namespace OpenTK.Platform.Windows
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll"), CLSCompliant(false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
+        internal static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, PeekMessageFlags flags);
 
         #endregion
 
@@ -401,9 +402,7 @@ namespace OpenTK.Platform.Windows
 
         #region DispatchMessage
 
-#if RELEASE
-        [System.Security.SuppressUnmanagedCodeSecurity]
-#endif
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll"), CLSCompliant(false)]
         internal static extern LRESULT DispatchMessage(ref MSG msg);
 
@@ -411,9 +410,7 @@ namespace OpenTK.Platform.Windows
 
         #region TranslateMessage
 
-#if RELEASE
-        [System.Security.SuppressUnmanagedCodeSecurity]
-#endif
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll"), CLSCompliant(false)]
         internal static extern BOOL TranslateMessage(ref MSG lpMsg);
 
@@ -575,14 +572,12 @@ namespace OpenTK.Platform.Windows
 
         #region GetProcAddress
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="handle"></param>
-        /// <param name="funcname"></param>
-        /// <returns></returns>
         [DllImport("kernel32.dll")]
         internal static extern IntPtr GetProcAddress(IntPtr handle, string funcname);
+
+        [DllImport("kernel32.dll")]
+        internal static extern IntPtr GetProcAddress(IntPtr handle, IntPtr funcname);
+
 
         #endregion
 
@@ -920,6 +915,10 @@ namespace OpenTK.Platform.Windows
         public static extern BOOL EnumDisplaySettingsEx([MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpszDeviceName, DisplayModeSettingsEnum iModeNum,
             [In, Out] DeviceMode lpDevMode, DWORD dwFlags);
 
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern BOOL EnumDisplaySettingsEx([MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpszDeviceName, DWORD iModeNum,
+            [In, Out] DeviceMode lpDevMode, DWORD dwFlags);
+
         #endregion
 
         #region GetMonitorInfo
@@ -940,6 +939,37 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern HMONITOR MonitorFromWindow(HWND hwnd, MonitorFrom dwFlags);
+
+        #endregion
+
+        #region SetProcessDPIAware
+
+        /// <summary>
+        /// Sets the current process as dots per inch (dpi) aware.
+        /// Note: SetProcessDPIAware is subject to a possible race condition
+        /// if a DLL caches dpi settings during initialization.
+        /// For this reason, it is recommended that dpi-aware be set through
+        /// the application (.exe) manifest rather than by calling SetProcessDPIAware.
+        /// </summary>
+        /// <returns>
+        /// If the function succeeds, the return value is true.
+        /// Otherwise, the return value is false.
+        /// </returns>
+        /// <remarks>
+        /// DLLs should accept the dpi setting of the host process
+        /// rather than call SetProcessDPIAware themselves.
+        /// To be set properly, dpiAware should be specified as part
+        /// of the application (.exe) manifest.
+        /// </remarks>
+        [DllImport("user32.dll")]
+        internal static extern BOOL SetProcessDPIAware();
+
+        #endregion
+
+        #region GetDeviceCaps
+
+        [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
+        public static extern int GetDeviceCaps(IntPtr hDC, DeviceCaps nIndex);
 
         #endregion
 
@@ -1485,6 +1515,28 @@ namespace OpenTK.Platform.Windows
         public static extern DWORD_PTR SHGetFileInfo(LPCTSTR pszPath, DWORD dwFileAttributes, ref SHFILEINFO psfi, UINT cbFileInfo, ShGetFileIconFlags uFlags);
 
         #endregion
+
+        #region Registry Functions
+
+        [DllImport("Advapi32.dll")]
+        internal static extern int RegOpenKeyEx(
+            HKEY hKey,
+            [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpSubKey,
+            DWORD ulOptions,
+            REGSAM samDesired,
+            out PHKEY phkResult);
+
+        [DllImport("Advapi32.dll")]
+        internal static extern int RegGetValue(
+            HKEY hkey,
+            [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpSubKey,
+            [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpValue,
+            DWORD dwFlags,
+            out DWORD pdwType,
+            StringBuilder pvData,
+            ref DWORD pcbData);
+
+        #endregion
     }
 
     #region --- Constants ---
@@ -1562,6 +1614,7 @@ namespace OpenTK.Platform.Windows
             internal const byte PFD_UNDERLAY_PLANE = unchecked((byte)-1);
 
             // Device mode types (found in wingdi.h)
+            internal const int DM_LOGPIXELS = 0x00020000;
             internal const int DM_BITSPERPEL = 0x00040000;
             internal const int DM_PELSWIDTH = 0x00080000;
             internal const int DM_PELSHEIGHT = 0x00100000;
@@ -1578,6 +1631,8 @@ namespace OpenTK.Platform.Windows
             internal const int ENUM_CURRENT_SETTINGS = -1;
 
             internal static readonly IntPtr MESSAGE_ONLY = new IntPtr(-3);
+
+            internal static readonly IntPtr HKEY_LOCAL_MACHINE = new IntPtr(unchecked((int)0x80000002));
         }
 
         #endregion
@@ -2822,6 +2877,46 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
+    #region Registry
+
+#if ANDROID || IPHONE || MINIMAL
+
+    internal class RegistryKey
+    {
+        IntPtr hkey;
+
+        internal RegistryKey(IntPtr hkey)
+        {
+            this.hkey = hkey;
+        }
+
+        internal string GetValue(string subkey)
+        {
+            int type;
+            int data_size = 255;
+            StringBuilder data = new StringBuilder(data_size);
+            Functions.RegGetValue(hkey, subkey, "", 0xffff, out type, data, ref data_size);
+            return data.ToString();
+        }
+
+        internal RegistryKey OpenSubKey(string subkey)
+        {
+            IntPtr result;
+            Functions.RegOpenKeyEx(hkey, subkey, 0, 1, out result);
+            return new RegistryKey(result);
+        }
+    }
+
+    internal static class Registry
+    {
+        internal static readonly RegistryKey LocalMachine =
+            new RegistryKey(Constants.HKEY_LOCAL_MACHINE);
+    }
+
+#endif
+
+    #endregion
+
     #endregion
 
     #region --- Enums ---
@@ -2869,6 +2964,16 @@ namespace OpenTK.Platform.Windows
         VREDRAW = 0x200,
         REDRAW = (HREDRAW | VREDRAW),
         VALIDRECTS = 0x400
+    }
+
+    #endregion
+
+    #region DeviceCaps
+
+    enum DeviceCaps
+    {
+        LogPixelsX = 88,
+        LogPixelsY = 90
     }
 
     #endregion
@@ -3638,7 +3743,7 @@ namespace OpenTK.Platform.Windows
 
     #region WindowMessage
 
-    internal enum WindowMessage : uint
+    internal enum WindowMessage : int
     {
         NULL = 0x0000,
         CREATE = 0x0001,
@@ -3911,6 +4016,18 @@ namespace OpenTK.Platform.Windows
         BALLOONTIMEOUT = USER + 0x0004,
         BALLOONUSERCLICK = USER + 0x0005
     }        
+
+    #endregion
+
+    #region PeekMessageFlags
+
+    [Flags]
+    enum PeekMessageFlags : uint
+    {
+        NoRemove = 0,
+        Remove = 1,
+        NoYield = 2
+    }
 
     #endregion
 
@@ -4187,6 +4304,8 @@ namespace OpenTK.Platform.Windows
 
     #region --- Callbacks ---
 
+    [SuppressUnmanagedCodeSecurity]
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     internal delegate IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam);
 
     #region Message

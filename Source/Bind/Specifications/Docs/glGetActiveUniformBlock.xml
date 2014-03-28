@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glGetActiveUniformBlock">
+    <refentryinfo>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2010</year>
-                <holder>Khronos Group</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glGetActiveUniformBlock</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -23,7 +23,7 @@
                 <paramdef>GLuint <parameter>program</parameter></paramdef>
                 <paramdef>GLuint <parameter>uniformBlockIndex</parameter></paramdef>
                 <paramdef>GLenum <parameter>pname</parameter></paramdef>
-                <paramdef>GLint <parameter>params</parameter></paramdef>
+                <paramdef>GLint *<parameter>params</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
@@ -108,9 +108,12 @@
             <parameter>params</parameter> is the value of <constant>GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS</constant> for <parameter>uniformBlockIndex</parameter>.
         </para>
         <para>
-            If <parameter>pname</parameter> is <constant>GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER</constant>, <constant>GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER</constant>,
-            or <constant>GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER</constant>, then a boolean value indicating whether the uniform block identified by
-            <parameter>uniformBlockIndex</parameter> is referenced by the vertex, geometry, or fragment programming stages of program, respectively, is returned.
+            If <parameter>pname</parameter> is <constant>GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER</constant>, <constant>GL_UNIFORM_BLOCK_REFERENCED_BY_TESS_CONTROL_SHADER</constant>,
+            <constant>GL_UNIFORM_BLOCK_REFERENCED_BY_TESS_EVALUATION_SHADER</constant>, <constant>GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER</constant>,
+            <constant>GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER</constant>, or <constant>GL_UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER</constant>
+            then a boolean value indicating whether the uniform block identified by
+            <parameter>uniformBlockIndex</parameter> is referenced by the vertex, tessellation control, tessellation evaluation, geometry, fragment or compute
+            programming stages of program, respectively, is returned.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -130,6 +133,10 @@
         <para>
             <function>glGetActiveUniformBlockiv</function> is available only if the GL version is 3.1 or greater.
         </para>
+        <para>
+            <constant>GL_UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER</constant> is accepted only if the GL version is 4.3
+            or greater.
+        </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
@@ -140,8 +147,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

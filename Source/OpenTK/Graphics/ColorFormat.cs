@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -36,7 +36,7 @@ namespace OpenTK.Graphics
     /// <para>A ColorFormat contains Red, Green, Blue and Alpha components that descibe
     /// the allocated bits per pixel for the corresponding color.</para>
     /// </remarks>
-    public struct ColorFormat : IComparable<ColorFormat>
+    public struct ColorFormat : IComparable<ColorFormat>, IEquatable<ColorFormat>
     {
         byte red, green, blue, alpha;
         bool isIndexed;
@@ -130,6 +130,9 @@ namespace OpenTK.Graphics
         /// <summary>Gets the sum of Red, Green, Blue and Alpha bits per pixel.</summary>
         public int BitsPerPixel { get { return bitsPerPixel; } private set { bitsPerPixel = value; } }
 
+        /// <summary>
+        /// Defines an empty ColorFormat, where all properties are set to zero.
+        /// </summary>
         public static readonly ColorFormat Empty = new ColorFormat(0);
 
         #endregion
@@ -178,6 +181,24 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region IEquatable<ColorFormat> Members
+
+        /// <summary>
+        /// Compares whether this ColorFormat structure is equal to the specified ColorFormat.
+        /// </summary>
+        /// <param name="other">The ColorFormat structure to compare to.</param>
+        /// <returns>True if both ColorFormat structures contain the same components; false otherwise.</returns>
+        public bool Equals(ColorFormat other)
+        {
+            return
+                Red == other.Red &&
+                Green == other.Green &&
+                Blue == other.Blue &&
+                Alpha == other.Alpha;
+        }
+
+        #endregion
+
         #region Overrides
 
         /// <summary>
@@ -187,7 +208,7 @@ namespace OpenTK.Graphics
         /// <returns>True if this instance is equal to obj; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return (obj is ColorFormat) ? (this == (ColorFormat)obj) : false;
+            return (obj is ColorFormat) ? this.Equals((ColorFormat)obj) : false;
         }
 
         /// <summary>
@@ -198,17 +219,7 @@ namespace OpenTK.Graphics
         /// <returns>True if both instances are equal; false otherwise.</returns>
         public static bool operator ==(ColorFormat left, ColorFormat right)
         {
-            if ((object)left == (object)null && (object)right != (object)null ||
-                (object)left != (object)null && (object)right == (object)null)
-                return false;
-
-            if ((object)left == (object)null && (object)right == (object)null)
-                return true;
-
-            return left.Red == right.Red &&
-                   left.Green == right.Green &&
-                   left.Blue == right.Blue &&
-                   left.Alpha == right.Alpha;
+            return left.Equals(right);
         }
 
         /// <summary>

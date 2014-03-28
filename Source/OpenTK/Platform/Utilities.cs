@@ -1,6 +1,5 @@
 #region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * Copyright 2013 Xamarin Inc
  * See license.txt for license info
  */
 #endregion
@@ -171,6 +170,40 @@ namespace OpenTK.Platform
 
         #endregion
 
+        #region CreateGetAddress
+
+        internal static GraphicsContext.GetAddressDelegate CreateGetAddress()
+        {
+            #if SDL2
+            if (Configuration.RunningOnSdl2)
+            {
+                return Platform.SDL2.SDL.GL.GetProcAddress;
+            }
+            #endif
+            #if WIN32
+            if (Configuration.RunningOnWindows)
+            {
+                return Platform.Windows.Wgl.GetProcAddress;
+            }
+            #endif
+            #if X11
+            if (Configuration.RunningOnX11)
+            {
+                return Platform.X11.Glx.GetProcAddress;
+            }
+            #endif
+            #if CARBON
+            if (Configuration.RunningOnMacOS)
+            {
+                return Platform.MacOS.NS.GetAddress;
+            }
+            #endif
+
+            throw new PlatformNotSupportedException();
+        }
+
+        #endregion
+
         #region --- Creating a Graphics Context ---
 
         /// <summary>
@@ -195,7 +228,6 @@ namespace OpenTK.Platform
             return context;
         }
 
-#if !MOBILE
         #region CreateX11WindowInfo
 
         /// <summary>
@@ -209,14 +241,21 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateX11WindowInfo(IntPtr display, int screen, IntPtr windowHandle, IntPtr rootWindow, IntPtr visualInfo)
         {
+            #if X11
             Platform.X11.X11WindowInfo window = new OpenTK.Platform.X11.X11WindowInfo();
             window.Display = display;
             window.Screen = screen;
-            window.WindowHandle = windowHandle;
+            window.Handle = windowHandle;
             window.RootWindow = rootWindow;
-            window.VisualInfo = (X11.XVisualInfo)Marshal.PtrToStructure(visualInfo, typeof(X11.XVisualInfo));
+            if (visualInfo != IntPtr.Zero)
+            {
+                window.VisualInfo = (X11.XVisualInfo)Marshal.PtrToStructure(visualInfo, typeof(X11.XVisualInfo));
+            }
 
             return window;
+            #else
+            return new Dummy.DummyWindowInfo();
+            #endif
         }
 
         #endregion
@@ -230,7 +269,11 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateWindowsWindowInfo(IntPtr windowHandle)
         {
+            #if WIN32
             return new OpenTK.Platform.Windows.WinWindowInfo(windowHandle, null);
+            #else
+            return new Dummy.DummyWindowInfo();
+            #endif
         }
 
         #endregion
@@ -246,11 +289,31 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr windowHandle, bool ownHandle, bool isControl)
         {
-            return new OpenTK.Platform.MacOS.CarbonWindowInfo(windowHandle, false, isControl);
+            #if CARBON
+            return CreateMacOSCarbonWindowInfo(windowHandle, ownHandle, isControl, null, null);
+            #else
+            return new Dummy.DummyWindowInfo();
+            #endif
         }
 
+        #if CARBON
+        /// <summary>
+        /// Creates an IWindowInfo instance for the Mac OS X platform with an X and Y offset for the GL viewport location.
+        /// </summary>
+        /// <param name="windowHandle">The handle of the window.</param>
+        /// <param name="ownHandle">Ignored. This is reserved for future use.</param>
+        /// <param name="isControl">Set to true if windowHandle corresponds to a System.Windows.Forms control.</param>
+        /// <param name="xOffset">The X offset for the GL viewport</param>
+        /// <param name="yOffset">The Y offset for the GL viewport</param>
+        /// <returns>A new IWindowInfo instance.</returns>
+        public static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr windowHandle, bool ownHandle, bool isControl, 
+            OpenTK.Platform.MacOS.GetInt xOffset, OpenTK.Platform.MacOS.GetInt yOffset)
+        {
+            return new OpenTK.Platform.MacOS.CarbonWindowInfo(windowHandle, false, isControl, xOffset, yOffset);
+        }
+        #endif
+
         #endregion
-#endif
 
         #region CreateDummyWindowInfo
 
@@ -265,8 +328,133 @@ namespace OpenTK.Platform
 
         #endregion
 
+        #region CreateSdl2WindowInfo
+
+        /// <summary>
+        /// Creates an IWindowInfo instance for the windows platform.
+        /// </summary>
+        /// <param name="windowHandle">The handle of the window.</param>
+        /// <returns>A new IWindowInfo instance.</returns>
+        public static IWindowInfo CreateSdl2WindowInfo(IntPtr windowHandle)
+        {
+            #if SDL2
+            return new OpenTK.Platform.SDL2.Sdl2WindowInfo(
+                windowHandle, null);
+            #else
+            return new Dummy.DummyWindowInfo();
+            #endif
+        }
+
         #endregion
 
+        #endregion
 
+        #region RelaxGraphicsMode
+
+        internal static bool RelaxGraphicsMode(ref GraphicsMode mode)
+        {
+            ColorFormat color = mode.ColorFormat;
+            int depth = mode.Depth;
+            int stencil = mode.Stencil;
+            int samples = mode.Samples;
+            ColorFormat accum = mode.AccumulatorFormat;
+            int buffers = mode.Buffers;
+            bool stereo = mode.Stereo;
+
+            bool success = RelaxGraphicsMode(
+                ref color, ref depth, ref stencil, ref samples,
+                ref accum, ref buffers, ref stereo);
+
+            mode = new GraphicsMode(
+                color, depth, stencil, samples,
+                accum, buffers, stereo);
+
+            return success;
+        }
+
+        /// \internal
+        /// <summary>
+        /// Relaxes graphics mode parameters. Use this function to increase compatibility
+        /// on systems that do not directly support a requested GraphicsMode. For example:
+        /// - user requested stereoscopic rendering, but GPU does not support stereo
+        /// - user requseted 16x antialiasing, but GPU only supports 4x
+        /// </summary>
+        /// <returns><c>true</c>, if a graphics mode parameter was relaxed, <c>false</c> otherwise.</returns>
+        /// <param name="color">Color bits.</param>
+        /// <param name="depth">Depth bits.</param>
+        /// <param name="stencil">Stencil bits.</param>
+        /// <param name="samples">Number of antialiasing samples.</param>
+        /// <param name="accum">Accumulator buffer bits.</param>
+        /// <param name="buffers">Number of rendering buffers (1 for single buffering, 2+ for double buffering, 0 for don't care).</param>
+        /// <param name="stereo">Stereoscopic rendering enabled/disabled.</param>
+        internal static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples, ref ColorFormat accum, ref int buffers, ref bool stereo)
+        {
+            // Parameters are relaxed in order of importance.
+            // - Accumulator buffers are way outdated as a concept,
+            // so they go first.
+            // - Triple+ buffering is generally not supported by the
+            // core WGL/GLX/AGL/CGL/EGL specs, so we clamp
+            // to double-buffering as a second step. (If this doesn't help
+            // we will also fall back to undefined single/double buffering
+            // as a last resort).
+            // - AA samples are an easy way to increase compatibility
+            // so they go next.
+            // - Stereoscopic is only supported on very few GPUs
+            // (Quadro/FirePro series) so it goes next.
+            // - The rest of the parameters then follow.
+
+            if (accum != 0)
+            {
+                accum = 0;
+                return true;
+            }
+
+            if (buffers > 2)
+            {
+                buffers = 2;
+                return true;
+            }
+
+            if (samples > 0)
+            {
+                samples = Math.Max(samples - 1, 0);
+                return true;
+            }
+
+            if (stereo)
+            {
+                stereo = false;
+                return true;
+            }
+
+            if (stencil != 0)
+            {
+                stencil = 0;
+                return true;
+            }
+
+            if (depth != 0)
+            {
+                depth = 0;
+                return true;
+            }
+
+            if (color != 24)
+            {
+                color = 24;
+                return true;
+            }
+
+            if (buffers != 0)
+            {
+                buffers = 0;
+                return true;
+            }
+
+            // no parameters left to relax, fail
+            return false;
+        }
+
+        #endregion
     }
 }

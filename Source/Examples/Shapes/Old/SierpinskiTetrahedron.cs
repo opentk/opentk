@@ -66,7 +66,7 @@ namespace Examples.Shapes
             default: throw new ArgumentOutOfRangeException( "Subdivisions other than contained in the enum cause overflows and are not allowed." );
             }
 
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = OpenTK.Graphics.OpenGL.PrimitiveType.Triangles;
             SierpinskiTetrahedron.GetVertexArray( ref Triangles, out VertexArray );
             IndexArray = null;
         }

@@ -29,7 +29,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+#if !(ANDROID || IPHONE || MINIMAL)
 using Microsoft.Win32;
+#endif
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
@@ -101,8 +103,18 @@ namespace OpenTK.Platform.Windows
                         // This is a keyboard or USB keyboard device. In the latter case, discover if it really is a
                         // keyboard device by qeurying the registry.
                         RegistryKey regkey = GetRegistryKey(name);
+                        if (regkey == null)
+                            continue;
+
                         string deviceDesc = (string)regkey.GetValue("DeviceDesc");
                         string deviceClass = (string)regkey.GetValue("Class");
+                        string deviceClassGUID = (string)regkey.GetValue("ClassGUID"); // for windows 8 support via OpenTK issue 3198
+
+                        // making a guess at backwards compatability. Not sure what older windows returns in these cases...
+                        if(deviceClass == null || deviceClass.Equals(string.Empty)){
+                            RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
+                            deviceClass = classGUIDKey != null ? (string) classGUIDKey.GetValue("Class") : string.Empty;
+                        }
 
                         if (String.IsNullOrEmpty(deviceDesc))
                         {
@@ -148,6 +160,13 @@ namespace OpenTK.Platform.Windows
             bool pressed =
                 rin.Data.Keyboard.Message == (int)WindowMessage.KEYDOWN ||
                 rin.Data.Keyboard.Message == (int)WindowMessage.SYSKEYDOWN;
+            var scancode = rin.Data.Keyboard.MakeCode;
+            var vkey = rin.Data.Keyboard.VKey;
+
+            bool extended0 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E0) != 0;
+            bool extended1 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E1) != 0;
+
+            bool is_valid = true;
 
             ContextHandle handle = new ContextHandle(rin.Header.Device);
             KeyboardState keyboard;
@@ -166,37 +185,12 @@ namespace OpenTK.Platform.Windows
             int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
             keyboard = keyboards[keyboard_handle];
 
-            // Generic control, shift, alt keys may be sent instead of left/right.
-            // It seems you have to explicitly register left/right events.
-            switch (rin.Data.Keyboard.VKey)
+            Key key = KeyMap.TranslateKey(scancode, vkey, extended0, extended1, out is_valid);
+
+            if (is_valid)
             {
-                case VirtualKeys.SHIFT:
-                    keyboard[Input.Key.ShiftLeft] = keyboard[Input.Key.ShiftRight] = pressed;
-                    processed = true;
-                    break;
-
-                case VirtualKeys.CONTROL:
-                    keyboard[Input.Key.ControlLeft] = keyboard[Input.Key.ControlRight] = pressed;
-                    processed = true;
-                    break;
-
-                case VirtualKeys.MENU:
-                    keyboard[Input.Key.AltLeft] = keyboard[Input.Key.AltRight] = pressed;
-                    processed = true;
-                    break;
-
-                default:
-                    if (!KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
-                    {
-                        Debug.Print("Virtual key {0} ({1}) not mapped.",
-                                    rin.Data.Keyboard.VKey, (int)rin.Data.Keyboard.VKey);
-                    }
-                    else
-                    {
-                        keyboard[KeyMap[rin.Data.Keyboard.VKey]] = pressed;
-                        processed = true;
-                    }
-                    break;
+                keyboard.SetKeyState(key, (byte)scancode, pressed);
+                processed = true;
             }
 
             lock (UpdateLock)
@@ -212,10 +206,15 @@ namespace OpenTK.Platform.Windows
 
         static RegistryKey GetRegistryKey(string name)
         {
+            if (name.Length < 4)
+                return null;
+
             // remove the \??\
             name = name.Substring(4);
 
             string[] split = name.Split('#');
+            if (split.Length < 3)
+                return null;
 
             string id_01 = split[0];    // ACPI (Class code)
             string id_02 = split[1];    // PNP0303 (SubClass code)

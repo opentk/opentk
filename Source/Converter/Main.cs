@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (C) 2009 the Open Toolkit (http://www.opentk.com)
 // Copyright 2013 Xamarin Inc
 //
@@ -35,19 +35,19 @@ namespace CHeaderToXML
 {
     class EnumTokenComparer : IEqualityComparer<XNode>
     {
-        public bool Equals (XNode a, XNode b)
+        public bool Equals(XNode a, XNode b)
         {
             var a_attr = ((XElement)a).Attribute("name") ?? ((XElement)a).Attribute("token");
             var b_attr = ((XElement)b).Attribute("name") ?? ((XElement)b).Attribute("token");
             return a_attr.Value == b_attr.Value;
         }
 
-        public int GetHashCode (XNode a)
+        public int GetHashCode(XNode a)
         {
             XElement e = (XElement)a;
-            if (e.Name == "enum" || e.Name == "token")
+            if (e.Name == "enum" || e.Name == "token" || e.Name == "function")
             {
-                return ((XElement)a).Attribute("name").Value.GetHashCode();
+                return ((XElement)a).Attribute("name").Value.GetHashCode() ^ e.Name.LocalName.GetHashCode();
             }
             else if (e.Name == "use")
             {
@@ -64,7 +64,8 @@ namespace CHeaderToXML
     enum HeaderType
     {
         Header,
-        Spec
+        Spec,
+        Xml
     }
 
     class EntryPoint
@@ -113,6 +114,7 @@ namespace CHeaderToXML
                 Parser parser =
                     type == HeaderType.Header ? new ESCLParser { Prefix = prefix, Version = version } :
                     type == HeaderType.Spec ? new GLParser { Prefix = prefix, Version = version } :
+                    type == HeaderType.Xml ? new GLXmlParser { Prefix = prefix, Version = version } :
                     (Parser)null;
 
                 var sigs = headers.Select(h => parser.Parse(h)).ToList();
@@ -130,7 +132,7 @@ namespace CHeaderToXML
                 if (path == null)
                 {
                     out_stream = Console.Out;
-                    Console.OutputEncoding = new System.Text.UTF8Encoding (false);
+                    Console.OutputEncoding = System.Text.Encoding.UTF8;
                 }
                 else
                 {
@@ -139,13 +141,23 @@ namespace CHeaderToXML
 
                 using (var writer = XmlWriter.Create(out_stream, settings))
                 {
-                    new XElement("signatures",
-                        new XElement("add",
-                            entries.Values.OrderBy(s => s.Attribute("name").Value),  // only enums
-                            sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "function")    // only functions
-                                 .OrderBy(s => s.Attribute("extension").Value)
-                                 .ThenBy(s => s.Attribute("name").Value)
-                    )).WriteTo(writer);
+                    var output = new XElement("signatures",
+                        new XAttribute("version", parser is GLXmlParser ? "2" : "1"));
+                    foreach (var api in sigs.SelectMany(s => s))
+                    {
+                        output.Add(
+                            new XElement("add",
+                                new XAttribute("name", api.Attribute("name").Value),
+                                api.Attribute("version") != null ? new XAttribute("version",  api.Attribute("version").Value) : null,
+                                api.Elements()
+                                    .OrderBy(s => s.Name.LocalName)
+                                    .ThenBy(s => (string)s.Attribute("value") ?? String.Empty)
+                                    .ThenBy(s => (string)s.Attribute("name") ?? String.Empty)
+                                    .ThenBy(s => (string)s.Attribute("version") ?? String.Empty)
+                                    .ThenBy(s => (string)s.Attribute("extension") ?? String.Empty)
+                                ));
+                    }
+                    output.WriteTo(writer);
                     writer.Flush();
                     writer.Close();
                 }
@@ -180,18 +192,22 @@ namespace CHeaderToXML
         private static Dictionary<string, XElement> MergeDuplicates(IEnumerable<IEnumerable<XElement>> sigs)
         {
             var entries = new Dictionary<string, XElement>();
-            foreach (var e in sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "enum"))
+            foreach (var e in sigs.SelectMany(s => s))
             {
-                var name = (string)e.Attribute("name");
-                if (entries.ContainsKey(name) && e.Name.LocalName == "enum")
+                var name = (string)e.Attribute("name") ?? "";
+                var version = (string)e.Attribute("version") ?? "";
+                var key = name + version;
+                if (entries.ContainsKey(key))
                 {
-                    var p = entries[name];
+                    var p = entries[key];
                     var curTokens = p.Nodes().ToList();
                     p.RemoveNodes();
                     p.Add(curTokens.Concat(e.Nodes()).Distinct(new EnumTokenComparer()));
                 }
                 else
-                    entries.Add(name, e);
+                {
+                    entries.Add(key, e);
+                }
             }
             return entries;
         }

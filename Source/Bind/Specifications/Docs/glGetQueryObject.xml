@@ -2,13 +2,17 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glGetQueryObject">
+    <refentryinfo>
+        <copyright>
+            <year>2005</year>
+            <holder>Sams Publishing</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2005</year>
-                <holder>Sams Publishing</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glGetQueryObject</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -73,7 +77,10 @@
             <term><parameter>params</parameter></term>
             <listitem>
                 <para>
-                    Returns the requested data.
+                    If a buffer is bound to the <constant>GL_QUERY_RESULT_BUFFER</constant> target, then <parameter>params</parameter>
+                    is treated as an offset to a location within that buffer's data store to receive the result of the query. If
+                    no buffer is bound to <constant>GL_QUERY_RESULT_BUFFER</constant>, then <parameter>params</parameter> is
+                    treated as an address in client memory of a variable to receive the resulting data.
                 </para>
             </listitem>
         </varlistentry>
@@ -92,7 +99,18 @@
                 <term><constant>GL_QUERY_RESULT</constant></term>
                 <listitem>
                     <para>
-                        <parameter>params</parameter> returns the value of the query object's passed samples counter.  
+                        <parameter>params</parameter> returns the value of the query object's passed samples counter.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_QUERY_RESULT_NO_WAIT</constant></term>
+                <listitem>
+                    <para>
+                        If the result of the query is available (that is, a query of <constant>GL_QUERY_RESULT_AVAILABLE</constant> would
+                        return non-zero), then <parameter>params</parameter> returns the value of the query object's passed samples counter,
+                        otherwise, the data referred to by <parameter>params</parameter> is not modified.
                         The initial value is 0.
                     </para>
                 </listitem>
@@ -102,7 +120,7 @@
                 <listitem>
                     <para>
                         <parameter>params</parameter> returns whether the passed samples counter is immediately available.
-                        If a delay would occur waiting for the query result, <constant>GL_FALSE</constant> is returned.  
+                        If a delay would occur waiting for the query result, <constant>GL_FALSE</constant> is returned.
                         Otherwise, <constant>GL_TRUE</constant> is returned, which also indicates that the results of all
                         previous queries are available as well.
                     </para>
@@ -120,13 +138,21 @@
             delimited by the occlusion query completes in finite time.
         </para>
         <para>
-            If multiple queries are issued using the same query object <parameter>id</parameter> before calling 
+            If multiple queries are issued using the same query object <parameter>id</parameter> before calling
             <function>glGetQueryObject</function>, the results of the most recent query will be returned.  In this case,
             when issuing a new query, the results of the previous query are discarded.
         </para>
         <para>
-            <function>glGetQueryObjecti64v</function> and <function>glGetQueryObjectui64v</function> are available only 
+            <function>glGetQueryObjecti64v</function> and <function>glGetQueryObjectui64v</function> are available only
             if the GL version is 3.3 or greater.
+        </para>
+        <para>
+            <constant>GL_QUERY_RESULT_NO_WAIT</constant> is accepted for <parameter>pname</parameter> only if the
+            GL version is 4.4 or greater.
+        </para>
+        <para>
+            The <constant>GL_QUERY_RESULT_BUFFER</constant> target is available only if the GL version is 4.4 or higher.
+            On earlier versions of the GL, <parameter>params</parameter> is always an address in client memory.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -137,8 +163,13 @@
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is not the name of a query object.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is the name of a currently active 
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is the name of a currently active
             query object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a buffer is currently bound to the
+            <constant>GL_QUERY_RESULT_BUFFER</constant> target and the command would cause data to be written beyond the bounds
+            of that buffer's data store.
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
@@ -152,8 +183,9 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2005 Addison-Wesley. 
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2005 Addison-Wesley.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

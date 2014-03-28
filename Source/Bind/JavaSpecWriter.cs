@@ -47,10 +47,14 @@ namespace Bind
 
         BindStreamWriter sw_h = new BindStreamWriter(Path.GetTempFileName());
 
+        IBind Generator { get; set; }
+        Settings Settings { get { return Generator.Settings; } }
+
         #region WriteBindings
 
         public void WriteBindings(IBind generator)
         {
+            Generator = generator;
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
         }
 
@@ -77,7 +81,7 @@ namespace Bind
                 sw.WriteLine("import java.nio.*;");
                 sw.WriteLine();
 
-                WriteDefinitions(sw, enums, wrappers, Type.CSTypes);
+                WriteDefinitions(sw, enums, wrappers, Generator.CSTypes);
 
                 sw.Flush();
                 sw.Close();
@@ -100,7 +104,7 @@ namespace Bind
 
         void WriteDefinitions(BindStreamWriter sw,
             EnumCollection enums, FunctionCollection wrappers,
-            Dictionary<string, string> CSTypes)
+            IDictionary<string, string> CSTypes)
         {
             sw.WriteLine("public class {0}", Settings.GLClass);
             sw.WriteLine("{");
@@ -215,9 +219,6 @@ namespace Bind
             valid = true;
             var sb = new StringBuilder();
 
-            if (f.TrimmedName == "ExtGetBufferPointer")
-                ;// Debugger.Break();
-
             if (f.Parameters.Count > 0)
             {
                 foreach (var p in f.Parameters)
@@ -315,8 +316,17 @@ namespace Bind
                 return f.ReturnType.CurrentType;
         }
 
-        static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
-        static Dictionary<string, string> docfiles;
+        DocProcessor processor_;
+        DocProcessor Processor
+        {
+            get
+            {
+                if (processor_ == null)
+                    processor_ = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
+                return processor_;
+            }
+        }
+        Dictionary<string, string> docfiles;
         void WriteDocumentation(BindStreamWriter sw, Function f)
         {
             if (docfiles == null)
@@ -337,29 +347,29 @@ namespace Bind
                 if (!docfiles.ContainsKey(docfile))
                     docfile = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
 
-                string doc = null;
+                var docs = new List<string>();
                 if (docfiles.ContainsKey(docfile))
                 {
-                    doc = processor.ProcessFile(docfiles[docfile]);
+                    docs.AddRange(Processor.ProcessFile(docfiles[docfile]));
                 }
-                if (doc == null)
+                if (docs.Count == 0)
                 {
-                    doc = "/// <summary></summary>";
+                    docs.Add("/// <summary></summary>");
                 }
 
-                int summary_start = doc.IndexOf("<summary>") + "<summary>".Length;
+                int summary_start = docs[0].IndexOf("<summary>") + "<summary>".Length;
                 string warning = "[deprecated: v{0}]";
                 string category = "[requires: {0}]";
                 if (f.Deprecated)
                 {
                     warning = String.Format(warning, f.DeprecatedVersion);
-                    doc = doc.Insert(summary_start, warning);
+                    docs[0] = docs[0].Insert(summary_start, warning);
                 }
 
                 if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
                 {
                     category = String.Format(category, f.Category);
-                    doc = doc.Insert(summary_start, category);
+                    docs[0] = docs[0].Insert(summary_start, category);
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
@@ -367,10 +377,13 @@ namespace Bind
                         category = String.Format(category, "v" + f.Version);
                     else
                         category = String.Format(category, "v" + f.Version + " and " + f.Category);
-                    doc = doc.Insert(summary_start, category);
+                    docs[0] = docs[0].Insert(summary_start, category);
                 }
 
-                sw.WriteLine(doc);
+                foreach (var doc in docs)
+                {
+                    sw.WriteLine(doc);
+                }
             }
             catch (Exception e)
             {

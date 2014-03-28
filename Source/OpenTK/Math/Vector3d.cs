@@ -1,7 +1,6 @@
 #region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
-Copyright 2013 Xamarin Inc
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -119,12 +118,30 @@ namespace OpenTK
 
         #region Public Members
 
+        /// <summary>
+        /// Gets or sets the value at the index of the Vector.
+        /// </summary>
+        public double this[int index] {
+            get{
+                if(index == 0) return X;
+                else if(index == 1) return Y;
+                else if(index == 2) return Z;
+                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
+            } set{
+                if(index == 0) X = value;
+                else if(index == 1) Y = value;
+                else if(index == 2) Z = value;
+                else throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+            }
+        }
+
         #region Instance
 
         #region public void Add()
 
         /// <summary>Add the Vector passed as parameter to this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
+        [CLSCompliant(false)]
         [Obsolete("Use static Add() method instead.")]
         public void Add(Vector3d right)
         {
@@ -150,6 +167,7 @@ namespace OpenTK
 
         /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
+        [CLSCompliant(false)]
         [Obsolete("Use static Subtract() method instead.")]
         public void Sub(Vector3d right)
         {
@@ -259,6 +277,17 @@ namespace OpenTK
 
         #endregion
 
+        /// <summary>
+        /// Returns a copy of the Vector3d scaled to unit length.
+        /// </summary>
+        /// <returns></returns>
+        public Vector3d Normalized()
+        {
+            Vector3d v = this;
+            v.Normalize();
+            return v;
+        }
+
         #region public void Normalize()
 
         /// <summary>
@@ -308,6 +337,7 @@ namespace OpenTK
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
         [Obsolete("Use static Multiply() method instead.")]
+        [CLSCompliant(false)]
         public void Scale(Vector3d scale)
         {
             this.X *= scale.X;
@@ -317,8 +347,8 @@ namespace OpenTK
 
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
-        [CLSCompliant(false)]
         [Obsolete("Use static Multiply() method instead.")]
+        [CLSCompliant(false)]
         public void Scale(ref Vector3d scale)
         {
             this.X *= scale.X;
@@ -1134,16 +1164,6 @@ namespace OpenTK
             Vector3d.Add(ref vec, ref temp, out result);
         }
 
-        /// <summary>Transform a Vector by the given Matrix</summary>
-        /// <param name="vec">The vector to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <param name="result">The transformed vector</param>
-        public static void Transform(ref Vector3d vec, ref Matrix4d mat, out Vector4d result)
-        {
-            Vector4d v4 = new Vector4d(vec.X, vec.Y, vec.Z, 1.0f);
-            Vector4d.Transform(ref v4, ref mat, out result);
-        }
-
         /// <summary>
         /// Transform a Vector3d by the given Matrix, and project the resulting Vector4 back to a Vector3
         /// </summary>
@@ -1204,11 +1224,79 @@ namespace OpenTK
 
         #region Swizzle
 
+        #region 2-component
+
         /// <summary>
         /// Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Xy { get { return new Vector2d(X, Y); } set { X = value.X; Y = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2d with the X and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2d Xz { get { return new Vector2d(X, Z); } set { X = value.X; Z = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2d Yx { get { return new Vector2d(Y, X); } set { Y = value.X; X = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2d with the Y and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2d Yz { get { return new Vector2d(Y, Z); } set { Y = value.X; Z = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2d with the Z and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2d Zx { get { return new Vector2d(Z, X); } set { Z = value.X; X = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2d with the Z and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2d Zy { get { return new Vector2d(Z, Y); } set { Z = value.X; Y = value.Y; } }
+
+        #endregion
+
+        #region 3-component
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3d with the X, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3d Xzy { get { return new Vector3d(X, Z, Y); } set { X = value.X; Z = value.Y; Y = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3d with the Y, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3d Yxz { get { return new Vector3d(Y, X, Z); } set { Y = value.X; X = value.Y; Z = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3d with the Y, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3d Yzx { get { return new Vector3d(Y, Z, X); } set { Y = value.X; Z = value.Y; X = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3d with the Z, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3d Zxy { get { return new Vector3d(Z, X, Y); } set { Z = value.X; X = value.Y; Y = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3d with the Z, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3d Zyx { get { return new Vector3d(Z, Y, X); } set { Z = value.X; Y = value.Y; X = value.Z; } }
+
+        #endregion
 
         #endregion
 
@@ -1342,13 +1430,14 @@ namespace OpenTK
 
         #region public override string ToString()
 
+        private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>
         /// Returns a System.String that represents the current Vector3.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("({0}, {1}, {2})", X, Y, Z);
+            return String.Format("({0}{3} {1}{3} {2})", X, Y, Z, listSeparator);
         }
 
         #endregion

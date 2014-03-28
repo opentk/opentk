@@ -31,7 +31,7 @@ void main()
   
   // build a usable normal vector
   normal.xy = temp.ag * 2.0 - 1.0; // swizzle alpha and green to x/y and scale to [-1..+1]
-  normal.z = sqrt( 1.0 - normal.x*normal.x - normal.y*normal.y ); // z = sqrt(1-x²-y²)
+  normal.z = sqrt( 1.0 - normal.x*normal.x - normal.y*normal.y ); // z = sqrt(1-x^2-y^2)
   
   // move other properties to be better readable
   float gloss = temp.r;

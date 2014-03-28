@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glTexImage3D">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glTexImage3D</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -33,9 +33,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
-    <para>
-    </para>
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -54,9 +51,9 @@
                 <para>
                     Specifies the level-of-detail number.
                     Level 0 is the base image level.
-                    Level 
+                    Level
                     <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
-                    is the 
+                    is the
                     <inlineequation><mml:math>
                         <!-- eqn: n sup th: -->
                         <mml:msup><mml:mi mathvariant="italic">n</mml:mi>
@@ -72,68 +69,9 @@
             <listitem>
                 <para>
                     Specifies the number of color components in the texture.
-                    Must be one of the following symbolic constants:
-                    <constant>GL_RGBA32F</constant>,
-                    <constant>GL_RGBA32I</constant>,
-                    <constant>GL_RGBA32UI</constant>,
-                    <constant>GL_RGBA16</constant>,
-                    <constant>GL_RGBA16F</constant>,
-                    <constant>GL_RGBA16I</constant>,
-                    <constant>GL_RGBA16UI</constant>,
-                    <constant>GL_RGBA8</constant>,
-                    <constant>GL_RGBA8UI</constant>,
-                    <constant>GL_SRGB8_ALPHA8</constant>,
-                    <constant>GL_RGB10_A2</constant>,
-                    <constant>GL_RGBA10_A2UI</constant>,
-                    <constant>GL_R11_G11_B10F</constant>,
-                    <constant>GL_RG32F</constant>,
-                    <constant>GL_RG32I</constant>,
-                    <constant>GL_RG32UI</constant>,
-                    <constant>GL_RG16</constant>,
-                    <constant>GL_RG16F</constant>,
-                    <constant>GL_RGB16I</constant>,
-                    <constant>GL_RGB16UI</constant>,
-                    <constant>GL_RG8</constant>,
-                    <constant>GL_RG8I</constant>,
-                    <constant>GL_RG8UI</constant>,
-                    <constant>GL_R23F</constant>,
-                    <constant>GL_R32I</constant>,
-                    <constant>GL_R32UI</constant>,
-                    <constant>GL_R16F</constant>,
-                    <constant>GL_R16I</constant>,
-                    <constant>GL_R16UI</constant>,
-                    <constant>GL_R8</constant>,
-                    <constant>GL_R8I</constant>,
-                    <constant>GL_R8UI</constant>,
-                    <constant>GL_RGBA16_UNORM</constant>,
-                    <constant>GL_RGBA8_SNORM</constant>,
-                    <constant>GL_RGB32F</constant>,
-                    <constant>GL_RGB32I</constant>,
-                    <constant>GL_RGB32UI</constant>,
-                    <constant>GL_RGB16_SNORM</constant>,
-                    <constant>GL_RGB16F</constant>,
-                    <constant>GL_RGB16I</constant>,
-                    <constant>GL_RGB16UI</constant>,
-                    <constant>GL_RGB16</constant>,
-                    <constant>GL_RGB8_SNORM</constant>,
-                    <constant>GL_RGB8</constant>,
-                    <constant>GL_RGB8I</constant>,
-                    <constant>GL_RGB8UI</constant>,
-                    <constant>GL_SRGB8</constant>,
-                    <constant>GL_RGB9_E5</constant>,
-                    <constant>GL_RG16_SNORM</constant>,
-                    <constant>GL_RG8_SNORM</constant>,
-                    <constant>GL_COMPRESSED_RG_RGTC2</constant>,
-                    <constant>GL_COMPRESSED_SIGNED_RG_RGTC2</constant>,
-                    <constant>GL_R16_SNORM</constant>,
-                    <constant>GL_R8_SNORM</constant>,
-                    <constant>GL_COMPRESSED_RED_RGTC1</constant>,
-                    <constant>GL_COMPRESSED_SIGNED_RED_RGTC1</constant>,
-                    <constant>GL_DEPTH_COMPONENT32F</constant>,
-                    <constant>GL_DEPTH_COMPONENT24</constant>,
-                    <constant>GL_DEPTH_COMPONENT16</constant>,
-                    <constant>GL_DEPTH32F_STENCIL8</constant>,
-                    <constant>GL_DEPTH24_STENCIL8</constant>.
+                    Must be one of base internal formats given in Table 1,
+                    one of the sized internal formats given in Table 2, or one
+                    of the compressed internal formats given in Table 3, below.
                 </para>
             </listitem>
         </varlistentry>
@@ -185,8 +123,17 @@
                     <constant>GL_RG</constant>,
                     <constant>GL_RGB</constant>,
                     <constant>GL_BGR</constant>,
-                    <constant>GL_RGBA</constant>, and
-                    <constant>GL_BGRA</constant>.
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_BGRA</constant>,
+                    <constant>GL_RED_INTEGER</constant>,
+                    <constant>GL_RG_INTEGER</constant>,
+                    <constant>GL_RGB_INTEGER</constant>,
+                    <constant>GL_BGR_INTEGER</constant>,
+                    <constant>GL_RGBA_INTEGER</constant>,
+                    <constant>GL_BGRA_INTEGER</constant>,
+                    <constant>GL_STENCIL_INDEX</constant>,
+                    <constant>GL_DEPTH_COMPONENT</constant>,
+                    <constant>GL_DEPTH_STENCIL</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -275,7 +222,7 @@
             (see <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>).
         </para>
         <para>
-            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target 
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target
             (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a texture image is
             specified, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
         </para>
@@ -300,9 +247,7 @@
                         Each element is a single red component.
                         The GL converts it to floating point and assembles it into an RGBA element
                         by attaching 0 for green and blue, and 1 for alpha.
-                        Each component is then multiplied by the signed scale factor <constant>GL_c_SCALE</constant>,
-                        added to the signed bias <constant>GL_c_BIAS</constant>,
-                        and clamped to the range [0,1].
+                        Each component is clamped to the range [0,1].
                     </para>
                 </listitem>
             </varlistentry>
@@ -313,43 +258,29 @@
                         Each element is a red and green pair.
                         The GL converts each to floating point and assembles it into an RGBA element
                         by attaching 0 for blue, and 1 for alpha.
-                        Each component is then multiplied by the signed scale factor <constant>GL_c_SCALE</constant>,
-                        added to the signed bias <constant>GL_c_BIAS</constant>,
-                        and clamped to the range [0,1].
+                        Each component is clamped to the range [0,1].
                     </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
                 <term><constant>GL_RGB</constant></term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
                 <term><constant>GL_BGR</constant></term>
                 <listitem>
                     <para>
                         Each element is an RGB triple.
                         The GL converts it to floating point and assembles it into an RGBA element
                         by attaching 1 for alpha.
-                        Each component is then multiplied by the signed scale factor <constant>GL_c_SCALE</constant>,
-                        added to the signed bias <constant>GL_c_BIAS</constant>,
-                        and clamped to the range [0,1].
+                        Each component is clamped to the range [0,1].
                     </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
                 <term><constant>GL_RGBA</constant></term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
                 <term><constant>GL_BGRA</constant></term>
                 <listitem>
                     <para>
                         Each element contains all four components.
-                        Each component is multiplied by the signed scale factor <constant>GL_c_SCALE</constant>,
-                        added to the signed bias <constant>GL_c_BIAS</constant>,
-                        and clamped to the range [0,1].
+                        Each component is clamped to the range [0,1].
                     </para>
                 </listitem>
             </varlistentry>
@@ -364,115 +295,136 @@
             and <constant>GL_RGBA</constant> must match exactly.)
         </para>
         <para>
-        	If the <parameter>internalFormat</parameter> parameter is one of the generic compressed formats,
-        	<constant>GL_COMPRESSED_RED</constant>, <constant>GL_COMPRESSED_RG</constant>,
-        	<constant>GL_COMPRESSED_RGB</constant>, or
-        	<constant>GL_COMPRESSED_RGBA</constant>, the GL will replace the internal format with the symbolic constant for a specific internal format and compress the texture before storage.  If no corresponding internal format is available, or the GL can not compress that image for any reason, the internal format is instead replaced with a corresponding base internal format.
+            <parameter>internalFormat</parameter> may be one of the base internal formats shown in
+            Table 1, below
         </para>
         <para>
-            If the <parameter>internalFormat</parameter> parameter is 			
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="baseformattable.xml" />
+        </para>
+        <para>
+            <parameter>internalFormat</parameter> may also be one of the sized internal formats
+            shown in Table 2, below
+        </para>
+        <para>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="internalformattable.xml" />
+        </para>
+        <para>
+            Finally, <parameter>internalFormat</parameter> may also be one of the generic or compressed
+            compressed texture formats shown in Table 3 below
+        </para>
+        <para>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="compressedformattable.xml" />
+        </para>
+        <para>
+                If the <parameter>internalFormat</parameter> parameter is one of the generic compressed formats,
+                <constant>GL_COMPRESSED_RED</constant>, <constant>GL_COMPRESSED_RG</constant>,
+                <constant>GL_COMPRESSED_RGB</constant>, or
+                <constant>GL_COMPRESSED_RGBA</constant>, the GL will replace the internal format with the symbolic constant for a specific internal format and compress the texture before storage.  If no corresponding internal format is available, or the GL can not compress that image for any reason, the internal format is instead replaced with a corresponding base internal format.
+        </para>
+        <para>
+            If the <parameter>internalFormat</parameter> parameter is
             <constant>GL_SRGB</constant>,
-			      <constant>GL_SRGB8</constant>,
-			      <constant>GL_SRGB_ALPHA</constant>, or
-			      <constant>GL_SRGB8_ALPHA8</constant>, the texture is treated as if the red, green, blue, or luminance components are encoded in the sRGB color space.    Any alpha component is left unchanged.  The conversion from the sRGB encoded component 
-			<inlineequation><mml:math>
+                              <constant>GL_SRGB8</constant>,
+                              <constant>GL_SRGB_ALPHA</constant>, or
+                              <constant>GL_SRGB8_ALPHA8</constant>, the texture is treated as if the red, green, blue, or luminance components are encoded in the sRGB color space.    Any alpha component is left unchanged.  The conversion from the sRGB encoded component
+                        <inlineequation><mml:math>
                     <mml:msub><mml:mi mathvariant="italic">c</mml:mi>
                     <mml:mi mathvariant="italic">s</mml:mi>
                     </mml:msub>
             </mml:math></inlineequation>
-			to a linear component 
-			<inlineequation><mml:math>
+                        to a linear component
+                        <inlineequation><mml:math>
                     <mml:msub><mml:mi mathvariant="italic">c</mml:mi>
                     <mml:mi mathvariant="italic">l</mml:mi>
                     </mml:msub>
             </mml:math></inlineequation>
             is:
-		</para>
-		<para>
-			<inlineequation><mml:math>
-			<mml:mrow>
-				<mml:msub>
-				  <mml:mi mathvariant="italic">c</mml:mi>
-				  <mml:mi mathvariant="italic">l</mml:mi>
-				</mml:msub>
-				<mml:mo>=</mml:mo>
-				<mml:mrow>
-				  <mml:mo>{</mml:mo>
-			
-				  <mml:mtable columnalign="left">
-					<mml:mtr>
-					  <mml:mtd columnalign="left">
-						<mml:mfrac>
-						  <mml:msub>
-							<mml:mi mathvariant="italic">c</mml:mi>
-							<mml:mi mathvariant="italic">s</mml:mi>
-						  </mml:msub>
-						  <mml:mn>12.92</mml:mn>
-						</mml:mfrac>
-					  </mml:mtd>
-					  <mml:mtd columnalign="left">
-						<mml:mrow>
-						  <mml:mspace width="1ex"/>
-						  <mml:mo>if</mml:mo>
-						  <mml:mspace width="1ex"/>
-						</mml:mrow>
-						<mml:msub>
-						  <mml:mi mathvariant="italic">c</mml:mi>
-						  <mml:mi mathvariant="italic">s</mml:mi>
-						</mml:msub>
-						<mml:mo>&le;</mml:mo>
-						<mml:mn>0.04045</mml:mn>
-					  </mml:mtd>
-					</mml:mtr>
-					<mml:mtr>
-					<mml:mtd columnalign="left">
-					<mml:msup>
-					  <mml:mrow>
-						<mml:mo>(</mml:mo>
-						<mml:mfrac>
-						  <mml:mrow>
-							<mml:msub>
-							  <mml:mi>c</mml:mi>
-							  <mml:mi>s</mml:mi>
-							</mml:msub>
-							<mml:mo>+</mml:mo>
-							<mml:mn>0.055</mml:mn>
-						  </mml:mrow>
-						  <mml:mn>1.055</mml:mn>
-						</mml:mfrac>
-						<mml:mo>)</mml:mo>
-					  </mml:mrow>
-					  <mml:mn>2.4</mml:mn>
-					</mml:msup>
-					</mml:mtd>
-          			  <mml:mtd columnalign="left">
-						<mml:mrow>
-						  <mml:mspace width="1ex"/>
-						  <mml:mo>if</mml:mo>
-						  <mml:mspace width="1ex"/>
-						</mml:mrow>
-						<mml:msub>
-						  <mml:mi mathvariant="italic">c</mml:mi>
-						  <mml:mi mathvariant="italic">s</mml:mi>
-						</mml:msub>
-						<mml:mo>&gt;</mml:mo>
-						<mml:mn>0.04045</mml:mn>
-					  </mml:mtd>
-					</mml:mtr>
-				  </mml:mtable>
-				</mml:mrow>
-				</mml:mrow>
-			</mml:math>
-			</inlineequation>
-		</para>
-		<para>
-			Assume 		
-			<inlineequation><mml:math>
-								<mml:msub><mml:mi mathvariant="italic">c</mml:mi>
-								<mml:mi mathvariant="italic">s</mml:mi>
-								</mml:msub>
-						</mml:math></inlineequation>
-			is the sRGB component in the range [0,1].
+                </para>
+                <para>
+                        <inlineequation><mml:math>
+                        <mml:mrow>
+                                <mml:msub>
+                                  <mml:mi mathvariant="italic">c</mml:mi>
+                                  <mml:mi mathvariant="italic">l</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                                <mml:mrow>
+                                  <mml:mo>{</mml:mo>
+
+                                  <mml:mtable columnalign="left">
+                                        <mml:mtr>
+                                          <mml:mtd columnalign="left">
+                                                <mml:mfrac>
+                                                  <mml:msub>
+                                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                                        <mml:mi mathvariant="italic">s</mml:mi>
+                                                  </mml:msub>
+                                                  <mml:mn>12.92</mml:mn>
+                                                </mml:mfrac>
+                                          </mml:mtd>
+                                          <mml:mtd columnalign="left">
+                                                <mml:mrow>
+                                                  <mml:mspace width="1ex"/>
+                                                  <mml:mo>if</mml:mo>
+                                                  <mml:mspace width="1ex"/>
+                                                </mml:mrow>
+                                                <mml:msub>
+                                                  <mml:mi mathvariant="italic">c</mml:mi>
+                                                  <mml:mi mathvariant="italic">s</mml:mi>
+                                                </mml:msub>
+                                                <mml:mo>&le;</mml:mo>
+                                                <mml:mn>0.04045</mml:mn>
+                                          </mml:mtd>
+                                        </mml:mtr>
+                                        <mml:mtr>
+                                        <mml:mtd columnalign="left">
+                                        <mml:msup>
+                                          <mml:mrow>
+                                                <mml:mo>(</mml:mo>
+                                                <mml:mfrac>
+                                                  <mml:mrow>
+                                                        <mml:msub>
+                                                          <mml:mi>c</mml:mi>
+                                                          <mml:mi>s</mml:mi>
+                                                        </mml:msub>
+                                                        <mml:mo>+</mml:mo>
+                                                        <mml:mn>0.055</mml:mn>
+                                                  </mml:mrow>
+                                                  <mml:mn>1.055</mml:mn>
+                                                </mml:mfrac>
+                                                <mml:mo>)</mml:mo>
+                                          </mml:mrow>
+                                          <mml:mn>2.4</mml:mn>
+                                        </mml:msup>
+                                        </mml:mtd>
+                                  <mml:mtd columnalign="left">
+                                                <mml:mrow>
+                                                  <mml:mspace width="1ex"/>
+                                                  <mml:mo>if</mml:mo>
+                                                  <mml:mspace width="1ex"/>
+                                                </mml:mrow>
+                                                <mml:msub>
+                                                  <mml:mi mathvariant="italic">c</mml:mi>
+                                                  <mml:mi mathvariant="italic">s</mml:mi>
+                                                </mml:msub>
+                                                <mml:mo>&gt;</mml:mo>
+                                                <mml:mn>0.04045</mml:mn>
+                                          </mml:mtd>
+                                        </mml:mtr>
+                                  </mml:mtable>
+                                </mml:mrow>
+                                </mml:mrow>
+                        </mml:math>
+                        </inlineequation>
+                </para>
+                <para>
+                        Assume
+                        <inlineequation><mml:math>
+                                                                <mml:msub><mml:mi mathvariant="italic">c</mml:mi>
+                                                                <mml:mi mathvariant="italic">s</mml:mi>
+                                                                </mml:msub>
+                                                </mml:math></inlineequation>
+                        is the sRGB component in the range [0,1].
        </para>
         <para>
             Use the <constant>GL_PROXY_TEXTURE_3D</constant> target to try out a resolution and
@@ -507,6 +459,10 @@
             <function>glTexImage3D</function> specifies the three-dimensional texture for the current texture unit,
             specified with <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
         </para>
+        <para>
+            <constant>GL_STENCIL_INDEX</constant> may be used for <parameter>format</parameter> only if the GL
+            version is 4.4 or higher.
+        </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
@@ -525,7 +481,7 @@
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>level</parameter> is less than 0.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater than 
+            <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater than
             <inlineequation><mml:math>
                 <!-- eqn: log sub 2 (max): -->
                 <mml:mrow>
@@ -548,28 +504,7 @@
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>width</parameter>, <parameter>height</parameter>, or <parameter>depth</parameter> is less than 0 or greater than <constant>GL_MAX_TEXTURE_SIZE</constant>.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if non-power-of-two textures are not supported and the <parameter>width</parameter>, <parameter>height</parameter>, or <parameter>depth</parameter> cannot be represented as 
-            <inlineequation><mml:math>
-                <!-- eqn: 2 sup k  +  2( border ): -->
-                <mml:mrow>
-                    <mml:msup><mml:mn>2</mml:mn>
-                    <mml:mi mathvariant="italic">k</mml:mi>
-                    </mml:msup>
-                    <mml:mo>+</mml:mo>
-                    <mml:mrow>
-                        <mml:mn>2</mml:mn>
-                        <mml:mo>&af;</mml:mo>
-                        <mml:mfenced open="(" close=")">
-                            <mml:mi mathvariant="italic">border</mml:mi>
-                        </mml:mfenced>
-                    </mml:mrow>
-                </mml:mrow>
-            </mml:math></inlineequation>
-            for some
-            integer value of <emphasis>k</emphasis>.
-        </para>
-        <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>border</parameter> is not 0 or 1.
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>border</parameter> is not 0.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is one of
@@ -602,12 +537,12 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer 
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer
             object such that the memory reads required would exceed the data store size.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible 
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible
             into the number of bytes needed to store in memory a datum indicated by <parameter>type</parameter>.
         </para>
     </refsect1>
@@ -645,8 +580,9 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2011-2013 Khronos Group.
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

@@ -34,7 +34,7 @@ namespace Examples.Tutorial
         #region --- Constructor ---
 
         public T03_Immediate_Mode_Cube()
-            : base(800, 600, new GraphicsMode(16, 16))
+            : base(800, 600)
         { }
 
         #endregion
@@ -127,7 +127,7 @@ namespace Examples.Tutorial
 
         private void DrawCube()
         {
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
 
             GL.Color3(Color.Silver);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);

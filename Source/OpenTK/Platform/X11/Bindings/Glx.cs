@@ -231,11 +231,14 @@ namespace OpenTK.Platform.X11
     {
         DebugBit = 0x0001,
         ForwardCompatibleBit = 0x0002,
+        CoreProfileBit = 0x00000001,
+        CompatibilityProfileBit = 0x00000002,
         MajorVersion = 0x2091,
         MinorVersion = 0x2092,
         LayerPlane = 0x2093,
         Flags = 0x2094,
         ErrorInvalidVersion = 0x2095,
+        ProfileMask = 0x9126
     }
 
     enum ErrorCode : int
@@ -305,6 +308,9 @@ namespace OpenTK.Platform.X11
         [DllImport(Library, EntryPoint = "glXGetProcAddress")]
         public static extern IntPtr GetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
 
+        [DllImport(Library, EntryPoint = "glXGetProcAddress")]
+        public static extern IntPtr GetProcAddress(IntPtr procName);
+
         [DllImport(Library, EntryPoint = "glXGetConfig")]
         public static extern int GetConfig(IntPtr dpy, ref XVisualInfo vis, GLXAttribute attrib, out int value);
 
@@ -349,7 +355,7 @@ namespace OpenTK.Platform.X11
 
         public partial class Arb
         {
-            #region CreateContextAttribs
+            #region CreateContextAttri
 
             unsafe public static IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int* attribs)
             {
@@ -367,6 +373,19 @@ namespace OpenTK.Platform.X11
                 }
             }
 
+            #endregion
+            
+            #region GetProcAddress
+            
+            // The linux OpenGL ABI 3.6 (1999) requires
+            // that glXGetProcAddressARB be available as
+            // a static export. The same is *not* true
+            // for glXGetProcAddress, so we should use
+            // glXGetProcAddressARB instead.
+            // See http://www.opengl.org/registry/ABI/
+            [DllImport(Library, EntryPoint = "glXGetProcAddressARB")]
+            public static extern IntPtr GetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
+            
             #endregion
         }
 

@@ -32,10 +32,11 @@ using System.Text;
 namespace OpenTK.Input
 {
     // Defines the interface for a 2nd generation input driver.
-    interface IInputDriver2
+    interface IInputDriver2 : IDisposable
     {
         IMouseDriver2 MouseDriver { get; }
         IKeyboardDriver2 KeyboardDriver { get; }
         IGamePadDriver GamePadDriver { get; }
+        IJoystickDriver2 JoystickDriver { get; }
     }
 }

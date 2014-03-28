@@ -32,6 +32,13 @@ using System.Text;
 
 namespace OpenTK.Platform.MacOS
 {
+    /// <summary>
+    /// This delegate represents any method that takes no arguments and returns an int.
+    /// I would have used Func but that requires .NET 4
+    /// </summary>
+    /// <returns>The int value that your method returns</returns>
+    public delegate int GetInt();
+
     /// \internal
     /// <summary>
     /// Describes a Carbon window.
@@ -44,6 +51,9 @@ namespace OpenTK.Platform.MacOS
         bool isControl = false;
         bool goFullScreenHack = false;
         bool goWindowedHack = false;
+
+        GetInt xOffset;
+        GetInt yOffset;
 
         #region Constructors
 
@@ -60,6 +70,12 @@ namespace OpenTK.Platform.MacOS
             this.isControl = isControl;
         }
 
+        public CarbonWindowInfo(IntPtr windowRef, bool ownHandle, bool isControl, GetInt getX, GetInt getY) : this(windowRef, ownHandle, isControl)
+        {
+            this.xOffset = getX;
+            this.yOffset = getY;
+        }
+
         #endregion
 
         #region Public Members
@@ -67,9 +83,10 @@ namespace OpenTK.Platform.MacOS
         /// <summary>
         /// Gets the window reference for this instance.
         /// </summary>
-        internal IntPtr WindowRef
+        public IntPtr Handle
         {
             get { return this.windowRef; }
+            set { this.windowRef = value; }
         }
 
         internal bool GoFullScreenHack
@@ -83,7 +100,6 @@ namespace OpenTK.Platform.MacOS
             set { goWindowedHack = value; }
         }
 
-
         /// <summary>
         /// Gets a value indicating whether this instance refers to a System.Windows.Forms.Control.
         /// </summary>
@@ -96,9 +112,24 @@ namespace OpenTK.Platform.MacOS
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("MacOS.CarbonWindowInfo: Handle {0}", this.WindowRef);
+            return String.Format("MacOS.CarbonWindowInfo: Handle {0}", this.Handle);
         }
 
+        // For compatibility with whoever thought it would be
+        // a good idea to access internal APIs through reflection
+        // (e.g. MonoGame)
+        public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
+
+        public GetInt XOffset
+        {
+            get { return xOffset; }
+            set { xOffset = value; }
+        }
+        public GetInt YOffset
+        {
+            get { return yOffset; }
+            set { yOffset = value; }
+        }
         #endregion
 
         #region IDisposable Members

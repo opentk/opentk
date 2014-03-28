@@ -42,65 +42,70 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>DEBUG;TRACE;</DefineConstants>
-    <DocumentationFile>OpenTK.xml</DocumentationFile>
-    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
+    <DocumentationFile>..\..\Binaries\OpenTK\Debug\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Debug\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <GenerateDocumentation>true</GenerateDocumentation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>OpenTK.xml</DocumentationFile>
+    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
+    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugType>none</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
-    <DebugType>none</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
     <WarningLevel>4</WarningLevel>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>True</Optimize>
+    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>OpenTK.xml</DocumentationFile>
+    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
+    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugType>none</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>True</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\..\OpenTK.snk</AssemblyOriginatorKeyFile>
@@ -108,19 +113,15 @@
   <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data">
       <Name>System.Data</Name>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
-      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -132,12 +133,41 @@
     </Compile>
     <Compile Include="DisplayIndex.cs" />
     <Compile Include="Graphics\GraphicsModeComparer.cs" />
+    <Compile Include="Input\GamePadThumbSticks.cs" />
+    <Compile Include="Input\GamePadTriggers.cs" />
+    <Compile Include="Input\GamePadType.cs" />
     <Compile Include="Input\IGamePadDriver.cs" />
     <Compile Include="Input\IInputDriver2.cs" />
+    <Compile Include="Input\IJoystickDriver2.cs" />
     <Compile Include="Input\IKeyboardDriver2.cs" />
     <Compile Include="Input\IMouseDriver2.cs" />
+    <Compile Include="Input\Joystick.cs" />
+    <Compile Include="Input\JoystickAxis.cs" />
+    <Compile Include="Input\JoystickButton.cs" />
+    <Compile Include="Input\JoystickCapabilities.cs" />
+    <Compile Include="Input\JoystickState.cs" />
+    <Compile Include="InteropHelper.cs" />
+    <Compile Include="Math\Matrix2.cs" />
+    <Compile Include="Math\Matrix2d.cs" />
+    <Compile Include="Math\Matrix2x3.cs" />
+    <Compile Include="Math\Matrix2x3d.cs" />
+    <Compile Include="Math\Matrix2x4.cs" />
+    <Compile Include="Math\Matrix2x4d.cs" />
+    <Compile Include="Math\Matrix3.cs" />
+    <Compile Include="Math\Matrix3x2.cs" />
+    <Compile Include="Math\Matrix3x2d.cs" />
+    <Compile Include="Math\Matrix3x4.cs" />
+    <Compile Include="Math\Matrix3x4d.cs" />
+    <Compile Include="Math\Matrix4x2.cs" />
+    <Compile Include="Math\Matrix4x2d.cs" />
+    <Compile Include="Math\Matrix4x3.cs" />
+    <Compile Include="Math\Matrix4x3d.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
+    <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
+    <Compile Include="Platform\Windows\XInputJoystick.cs" />
+    <Compile Include="Platform\X11\Bindings\INotify.cs" />
+    <Compile Include="ToolkitOptions.cs" />
     <Compile Include="WindowBorder.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -321,9 +351,6 @@
     <Compile Include="Platform\Windows\WinKeyMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\Windows\WMInput.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\Windows\WinGLNative.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -343,12 +370,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\Windows\Bindings\Wgl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\Windows\Bindings\WglDelegates.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\Windows\Bindings\WglCore.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\Windows\Bindings\WglEnums.cs">
@@ -441,19 +462,13 @@
     <Compile Include="Graphics\ColorFormat.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\OpenGL\GLDelegates.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\OpenGL\GLHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Graphics\OpenGL\GLEnums.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\OpenGL\GLCore.cs">
+    <Compile Include="Graphics\OpenGL\GL.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\OpenGL\GL.cs">
+    <Compile Include="Graphics\OpenGL\GLHelper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Graphics\OpenGL\ErrorHelper.cs">
@@ -471,16 +486,7 @@
     <Compile Include="Graphics\ES10\Helper.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\ES10\Delegates.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Graphics\ES10\Core.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES11\ES.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES11\Enums.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Graphics\ES11\ErrorHelper.cs">
@@ -489,28 +495,10 @@
     <Compile Include="Graphics\ES11\Helper.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\ES11\Delegates.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES11\Core.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES20\ES.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES20\Enums.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Graphics\ES20\ErrorHelper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Graphics\ES20\Helper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES20\Delegates.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES20\Core.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Input\Keyboard.cs">
@@ -598,9 +586,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Math\Box2.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Math\Matrix3.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Math\Matrix4.cs">
@@ -750,16 +735,6 @@
     <Compile Include="Audio\OpenAL\AL\ALEnums.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
@@ -772,6 +747,62 @@
     </EmbeddedResource>
     <Compile Include="Platform\MacOS\HIDInput.cs" />
     <Compile Include="IntPtrEqualityComparer.cs" />
+    <Compile Include="Input\GamePadAxes.cs" />
+    <Compile Include="Platform\SDL2\Sdl2DisplayDeviceDriver.cs" />
+    <Compile Include="Platform\SDL2\Sdl2Factory.cs" />
+    <Compile Include="Platform\SDL2\Sdl2GraphicsContext.cs" />
+    <Compile Include="Platform\SDL2\Sdl2GraphicsMode.cs" />
+    <Compile Include="Platform\SDL2\Sdl2InputDriver.cs" />
+    <Compile Include="Platform\SDL2\Sdl2KeyMap.cs" />
+    <Compile Include="Platform\SDL2\Sdl2Keyboard.cs" />
+    <Compile Include="Platform\SDL2\Sdl2Mouse.cs" />
+    <Compile Include="Platform\SDL2\Sdl2NativeWindow.cs" />
+    <Compile Include="Platform\SDL2\Sdl2WindowInfo.cs" />
+    <Compile Include="Platform\MacOS\Cgl.cs" />
+    <Compile Include="Platform\SDL2\Sdl2.cs" />
+    <Compile Include="Platform\Egl\EglSdl2PlatformFactory.cs" />
+    <Compile Include="Platform\SDL2\Sdl2JoystickDriver.cs" />
+    <Compile Include="Graphics\ES30\ErrorHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\ES30\Helper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\OpenGL4\Helper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\OpenGL4\ErrorHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\OpenGL4\GL4.cs" />
+    <Compile Include="Graphics\OpenGL4\GL4Enums.cs" />
+    <Compile Include="Graphics\ES30\ES30.cs" />
+    <Compile Include="Graphics\ES30\ES30Enums.cs" />
+    <Compile Include="Graphics\ES20\ES20.cs" />
+    <Compile Include="Graphics\ES20\ES20Enums.cs" />
+    <Compile Include="Graphics\ES11\ES11.cs" />
+    <Compile Include="Graphics\ES11\ES11Enums.cs" />
+    <Compile Include="Graphics\ES11\ES11Obsolete.cs" />
+    <Compile Include="SlotAttribute.cs" />
+    <Compile Include="RewrittenAttribute.cs" />
+    <Compile Include="Graphics\OpenGL\GLObsolete.cs" />
+    <Compile Include="Platform\MacOS\NS.cs" />
+    <Compile Include="Input\GamePadCapabilities.cs" />
+    <Compile Include="Input\GamePadDPad.cs" />
+    <Compile Include="Input\GamePadButtons.cs" />
+    <Compile Include="Input\Buttons.cs" />
+    <Compile Include="Input\GamePadConfigurationDatabase.cs" />
+    <Compile Include="Input\GamePadConfiguration.cs" />
+    <Compile Include="Input\GamePadConfigurationTarget.cs" />
+    <Compile Include="Input\ConfigurationType.cs" />
+    <Compile Include="Input\GamePadConfigurationSource.cs" />
+    <Compile Include="Input\GamePadConfigurationItem.cs" />
+    <Compile Include="Platform\LegacyJoystickDriver.cs" />
+    <Compile Include="Platform\PlatformFactoryBase.cs" />
+    <Compile Include="Input\JoystickHat.cs" />
+    <Compile Include="Input\HatPosition.cs" />
+    <Compile Include="Input\JoystickHatState.cs" />
+    <Compile Include="Input\KeyModifiers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -780,4 +811,25 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup />
+  <Target Name="AfterBuild">
+    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) != 'Debug'" />
+    <Exec Command="mono $(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="mono $(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) != 'Debug'" />
+  </Target>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
+          <CSharpFormattingPolicy IndentSwitchBody="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="NewLine" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" BeforeIndexerDeclarationBracket="False" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" SpacesBeforeBrackets="False" BlankLinesBeforeFirstDeclaration="1" AlignToFirstMethodDeclarationParameter="False" AlignToFirstIndexerDeclarationParameter="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
+          <TextStylePolicy FileWidth="120" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
+          <StandardHeader Text="#region License&#xA;&#xA;${FileName}&#xA; &#xA;Author:&#xA;      ${AuthorName} &lt;${AuthorEmail}&gt;&#xA;&#xA;Copyright (c) 2006-${Year} ${CopyrightHolder}&#xA;&#xA;Permission is hereby granted, free of charge, to any person obtaining a copy&#xA;of this software and associated documentation files (the &quot;Software&quot;), to deal&#xA;in the Software without restriction, including without limitation the rights&#xA;to use, copy, modify, merge, publish, distribute, sublicense, and/or sell&#xA;copies of the Software, and to permit persons to whom the Software is&#xA;furnished to do so, subject to the following conditions:&#xA;&#xA;The above copyright notice and this permission notice shall be included in&#xA;all copies or substantial portions of the Software.&#xA;&#xA;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR&#xA;IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,&#xA;FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE&#xA;AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER&#xA;LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,&#xA;OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN&#xA;THE SOFTWARE.&#xA;&#xA;#endregion" IncludeInNewFiles="True" />
+          <TextStylePolicy TabWidth="2" IndentWidth="2" NoTabsAfterNonTabs="True" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="application/xml" />
+          <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/xml" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

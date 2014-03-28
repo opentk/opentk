@@ -1,7 +1,17 @@
-﻿[Introduction]
+[Introduction]
 
 This is a simple tool to convert C headers to XML files. It works using simple pattern matching - it does not actually parse the header files. For this reason, it will work with only a few, specific header files: ES and CL at this point.
 
+
+[Examples]
+
+To download and convert the new XML API registry from Khronos:
+Convert.exe -p:gl -t:xml -o:../../../Source/Bind/Specifications/GL2/signatures.xml https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml
+
+To download and convert the old .spec files from Khronos:
+Convert.exe -p:gl -t:spec -o:../../../Source/Bind/Specifications/GL2/signatures.xml https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/oldspecs/gl.spec https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/oldspecs/enum.spec https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/oldspecs/enumext.spec
+
+The line above will download the latest .spec files from the public Khronos repository and update signatures.xml for the binding generator.
 
 [Usage]
 
@@ -15,13 +25,8 @@ Convert.exe -p:{PREFIX} -v:{VERSION} -t:{TYPE} -o:{OUT} {INPUT1} ... {INPUTn}
 Despite what the help says, all three parameters are necessary at the moment.
 
 
-[Known issues]
-
-OpenGL|ES 2.0: gl*Fence[s|iv]?NV fail to define parameters names. These have been added by hand (take care when updating the header file).
-
-
 [Support]
 
-If you encounter a bug, please file an issue report at http://www.opentk.com/issues
+If you encounter a bug, please file an issue report at http://github.com/opentk/opentk/issues
 
 We will only accept bug reports for supported header files. This is not a generic tool and will fail to parse unsupported files.

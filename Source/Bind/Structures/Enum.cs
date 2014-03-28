@@ -15,21 +15,14 @@ namespace Bind.Structures
 {
     #region class Enum
 
-    public class Enum
+    class Enum
     {
-        static StringBuilder translator = new StringBuilder();
         string _name, _type;
 
         // Returns true if the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...
         public bool IsFlagCollection
         {
-            get
-            {
-                // It seems that all flag collections contain "Mask" in their names.
-                // This looks like a heuristic, but it holds 100% in practice
-                // (checked all enums to make sure).
-                return Name.Contains("Mask");
-            }
+            get; set;
         }
 
         public string Name
@@ -37,15 +30,15 @@ namespace Bind.Structures
             get { return _name ?? ""; }
             set { _name = value; }
         }
-		
-		// Typically 'long' or 'int'. Default is 'int'.
-		public string Type
-		{
-			get { return String.IsNullOrEmpty(_type) ? "int" : _type; }
-			set { _type = value; }
-		}
 
-        Dictionary<string, Constant> _constant_collection = new Dictionary<string, Constant>();
+        // Typically 'long' or 'int'. Default is 'int'.
+        public string Type
+        {
+            get { return String.IsNullOrEmpty(_type) ? "int" : _type; }
+            set { _type = value; }
+        }
+
+        SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection
         {
@@ -63,37 +56,18 @@ namespace Bind.Structures
             }
         }
 
-        [Obsolete("This code belongs to the various language-specific ISpecWriter implementations")]
+        // Use only for debugging, not for code generation.
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            List<Constant> constants = new List<Constant>(ConstantCollection.Values);
-            constants.Sort(delegate(Constant c1, Constant c2)
-            {
-                int ret = String.Compare(c1.Value, c2.Value);
-                if (ret == 0)
-                    return String.Compare(c1.Name, c2.Name);
-                return ret;
-            });
+            return String.Format("enum {0} : {1} {{ {2} }}",
+                Name,
+                Type,
+                ConstantCollection);
+        }
 
-            if (IsFlagCollection)
-                sb.AppendLine("[Flags]");
-            sb.Append("public enum ");
-			sb.Append(Name);
-			sb.Append(" : ");
-			sb.AppendLine(Type);
-            sb.AppendLine("{");
-
-            foreach (Constant c in constants)
-            {
-                sb.Append("    ");
-                sb.Append(c.ToString());
-                if (!String.IsNullOrEmpty(c.ToString()))
-                    sb.AppendLine(",");
-            }
-            sb.Append("}");
-
-            return sb.ToString();
+        public void Add(Constant constant)
+        {
+            ConstantCollection.Add(constant.Name, constant);
         }
     }
 
@@ -101,13 +75,9 @@ namespace Bind.Structures
 
     #region class EnumCollection
 
-    public class EnumCollection : SortedDictionary<string, Enum>
+    class EnumCollection : IDictionary<string, Enum>
     {
-        internal void AddRange(EnumCollection enums)
-        {
-            foreach (Enum e in enums.Values)
-                Utilities.Merge(this, e);
-        }
+        SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
 
         // Return -1 for ext1, 1 for ext2 or 0 if no preference.
         int OrderOfPreference(string ext1, string ext2)
@@ -139,10 +109,124 @@ namespace Bind.Structures
                 return 0;
         }
 
-        new bool TryGetValue(string key, out Enum value)
+        #region Public Members
+
+        public void Add(Enum e)
         {
-            return base.TryGetValue(key, out value);
+            Add(e.Name, e);
         }
+
+        public void AddRange(EnumCollection enums)
+        {
+            foreach (Enum e in enums.Values)
+            {
+                Add(e);
+            }
+        }
+
+        #endregion
+
+        #region IDictionary<string, Enum> Members
+
+        public void Add(string key, Enum value)
+        {
+            if (ContainsKey(key))
+            {
+                var e = this[key];
+                foreach (var token in value.ConstantCollection.Values)
+                {
+                    Utilities.Merge(e, token);
+                }
+            }
+            else
+            {
+                Enumerations.Add(key, value);
+            }
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return Enumerations.ContainsKey(key);
+        }
+
+        public ICollection<string> Keys
+        {
+            get { return Enumerations.Keys; }
+        }
+
+        public bool Remove(string key)
+        {
+            return Enumerations.Remove(key);
+        }
+
+        public bool TryGetValue(string key, out Enum value)
+        {
+            return Enumerations.TryGetValue(key, out value);
+        }
+
+        public ICollection<Enum> Values
+        {
+            get { return Enumerations.Values; }
+        }
+
+        public Enum this[string key]
+        {
+            get
+            {
+                return Enumerations[key];
+            }
+            set
+            {
+                Enumerations[key] = value;
+            }
+        }
+
+        public void Add(KeyValuePair<string, Enum> item)
+        {
+            Enumerations.Add(item.Key, item.Value);
+        }
+
+        public void Clear()
+        {
+            Enumerations.Clear();
+        }
+
+        public bool Contains(KeyValuePair<string, Enum> item)
+        {
+            return Enumerations.Contains(item);
+        }
+
+        public void CopyTo(KeyValuePair<string, Enum>[] array, int arrayIndex)
+        {
+            Enumerations.CopyTo(array, arrayIndex);
+        }
+
+        public int Count
+        {
+            get { return Enumerations.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return (Enumerations as IDictionary<string, Enum>).IsReadOnly; }
+        }
+
+        public bool Remove(KeyValuePair<string, Enum> item)
+        {
+            return Enumerations.Remove(item.Key);
+        }
+
+        public IEnumerator<KeyValuePair<string, Enum>> GetEnumerator()
+        {
+            return Enumerations.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return Enumerations.GetEnumerator();
+        }
+
+        #endregion
     }
 
     #endregion

@@ -39,19 +39,27 @@ namespace OpenTK.Platform.X11
             // The actual GraphicsMode that will be selected.
             IntPtr visual = IntPtr.Zero;
             IntPtr display = API.DefaultDisplay;
-            
-            // Try to select a visual using Glx.ChooseFBConfig and Glx.GetVisualFromFBConfig.
-            // This is only supported on GLX 1.3 - if it fails, fall back to Glx.ChooseVisual.
-            visual = SelectVisualUsingFBConfig(color, depth, stencil, samples, accum, buffers, stereo);
-            
-            if (visual == IntPtr.Zero)
-                visual = SelectVisualUsingChooseVisual(color, depth, stencil, samples, accum, buffers, stereo);
-            
-            if (visual == IntPtr.Zero)
-                throw new GraphicsModeException("Requested GraphicsMode not available.");
-            
+
+            do
+            {
+                // Try to select a visual using Glx.ChooseFBConfig and Glx.GetVisualFromFBConfig.
+                // This is only supported on GLX 1.3 - if it fails, fall back to Glx.ChooseVisual.
+                visual = SelectVisualUsingFBConfig(color, depth, stencil, samples, accum, buffers, stereo);
+                
+                if (visual == IntPtr.Zero)
+                    visual = SelectVisualUsingChooseVisual(color, depth, stencil, samples, accum, buffers, stereo);
+                
+                if (visual == IntPtr.Zero)
+                {
+                    // Relax parameters and retry
+                    if (!Utilities.RelaxGraphicsMode(ref color, ref depth, ref stencil, ref samples, ref accum, ref buffers, ref stereo))
+                        throw new GraphicsModeException("Requested GraphicsMode not available.");
+                }
+            }
+            while (visual == IntPtr.Zero);
+
             XVisualInfo info = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
-            
+
             // See what we *really* got:
             int r, g, b, a;
             Glx.GetConfig(display, ref info, GLXAttribute.ALPHA_SIZE, out a);

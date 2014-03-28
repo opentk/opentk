@@ -27,46 +27,103 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.IO;
-using System.Drawing;
+
+using OpenTK;
 
 namespace Examples
 {
     static class Program
     {
-        [STAThread]
-        public static void Main()
+        static void LaunchExample(string type)
         {
             try
             {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-
-                using (Form browser = new ExampleBrowser())
-                {
-                    try
-                    {
-                        if (File.Exists("debug.log"))
-                            File.Delete("debug.log");
-                        if (File.Exists("trace.log"))
-                            File.Delete("trace.log");
-                    }
-                    catch (Exception expt)
-                    {
-                        MessageBox.Show("Could not access debug.log", expt.ToString());
-                    }
-
-                    Application.Run(browser);
-                }
+                if (File.Exists("debug.log"))
+                    File.Delete("debug.log");
+                if (File.Exists("trace.log"))
+                    File.Delete("trace.log");
             }
-            catch (System.Security.SecurityException e)
+            catch (Exception e)
             {
-                MessageBox.Show("The Example Launcher failed to start, due to insufficient permissions. This may happen if you execute the application from a network share.", "OpenTK Example Launcher failed to start.",
-                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                Trace.WriteLine(e.ToString());
+                Trace.WriteLine(String.Format("Could not access debug.log", e.ToString()));
+            }
+
+            ToolkitOptions options = ToolkitOptions.Default;
+            if (type.Contains("GLControl") || type.Contains("Form"))
+            {
+                // SDL does not currently support embedding in foreign windows
+                // such as GLControl. We need to use a native OpenTK.Platform
+                // backend in that case. This hack is specific to the example-browser
+                // architecture - you do not need to do anything like this in your
+                // own code (it will just work).
+                options = new ToolkitOptions
+                {
+                    Backend = PlatformBackend.PreferNative
+                };
+            }
+
+            using (TextWriterTraceListener dbg = new TextWriterTraceListener("debug.log"))
+            using (Toolkit.Init(options))
+            {
+                Trace.Listeners.Add(dbg);
+
+                try
+                {
+                    var example = Type.GetType(type);
+                    if (example != null)
+                    {
+                        example.InvokeMember("Main",
+                            BindingFlags.InvokeMethod | BindingFlags.Static |
+                            BindingFlags.Public | BindingFlags.NonPublic,
+                            null, null, null);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(String.Format("Exception occured in example {0}: {1}",
+                        type, e.ToString()));
+                }
+
+                Trace.Listeners.Remove(dbg);
+
+                dbg.Flush();
+                dbg.Close();
+            }
+        }
+
+        [STAThread]
+        public static void Main(string[] args)
+        {
+            Trace.Listeners.Add(new ConsoleTraceListener());
+
+            if (args.Length > 0)
+            {
+                LaunchExample(args[0]);
+            }
+            else
+            {
+                try
+                {
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+
+                    using (Form browser = new ExampleBrowser())
+                    {
+                        Application.Run(browser);
+                    }
+                }
+                catch (System.Security.SecurityException e)
+                {
+                    MessageBox.Show("The Example Launcher failed to start, due to insufficient permissions. This may happen if you execute the application from a network share.", "OpenTK Example Launcher failed to start.",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    Trace.WriteLine(e.ToString());
+                }
             }
         }
     }

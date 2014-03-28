@@ -2,15 +2,25 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
           "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glGetUniform">
+    <refentryinfo>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-    <refentrytitle>glGetUniform</refentrytitle>
-    <manvolnum>3G</manvolnum>
+        <refentrytitle>glGetUniform</refentrytitle>
+        <manvolnum>3G</manvolnum>
     </refmeta>
     <refnamediv>
     <refdescriptor>glGetUniform</refdescriptor>
-    <refname>glGetUniformfv</refname>
-    <refname>glGetUniformiv</refname>
-    <refpurpose>Returns the value of a uniform variable</refpurpose>
+        <refname>glGetUniformfv</refname>
+        <refname>glGetUniformiv</refname>
+        <refpurpose>Returns the value of a uniform variable</refpurpose>
     </refnamediv>
     <refsynopsisdiv><title>C Specification</title>
     <funcsynopsis>
@@ -25,6 +35,18 @@
         <paramdef>GLuint <parameter>program</parameter></paramdef>
         <paramdef>GLint <parameter>location</parameter></paramdef>
         <paramdef>GLint *<parameter>params</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glGetUniformuiv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLuint *<parameter>params</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glGetUniformdv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLdouble *<parameter>params</parameter></paramdef>
         </funcprototype>
     </funcsynopsis>
     </refsynopsisdiv>
@@ -127,8 +149,9 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2003-2005 3Dlabs Inc. Ltd. 
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

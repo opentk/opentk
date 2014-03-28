@@ -80,8 +80,8 @@ namespace Examples.Tutorial
             ShaderFilenames[0] = "Data/Shaders/JuliaSet_SM3_FS.glsl";
             ShaderFilenames[1] = "Data/Shaders/JuliaSet_SM2_FS.glsl";
 
-            byte CurrentOption = 0;
             string LogInfo;
+            int status = 0;
 
             #region Shaders
             // Load&Compile Vertex Shader
@@ -99,34 +99,31 @@ namespace Examples.Tutorial
                 Trace.WriteLine("Vertex Shader compiled without complaint.");
 
             // Load&Compile Fragment Shader
-
-
             FragmentShaderObject = GL.CreateShader(ShaderType.FragmentShader);
-            do
+            foreach (var shader in ShaderFilenames)
             {
-                using (StreamReader sr = new StreamReader(ShaderFilenames[CurrentOption]))
+                using (StreamReader sr = new StreamReader(shader))
                 {
-
                     GL.ShaderSource(FragmentShaderObject, sr.ReadToEnd());
                     GL.CompileShader(FragmentShaderObject);
                 }
-                GL.GetShaderInfoLog(FragmentShaderObject, out LogInfo);
-
-                if (LogInfo.Length > 0 && !LogInfo.Contains("hardware"))
-                    Trace.WriteLine("Compiling " + ShaderFilenames[CurrentOption] + " failed!\nLog:\n" + LogInfo);
+                GL.GetShader(FragmentShaderObject, ShaderParameter.CompileStatus, out status);
+                if (status != 1)
+                {
+                    GL.GetShaderInfoLog(FragmentShaderObject, out LogInfo);
+                    Trace.WriteLine("Compiling " + shader + " failed!\nLog:\n" + LogInfo);
+                }
                 else
                 {
                     Trace.WriteLine("Fragment Shader compiled without complaint.");
                     break;
                 }
-
-                if (++CurrentOption > 1)
-                {
-                    MessageBox.Show("Neither SM2 nor SM3 Fragment Shader compiled successfully. Aborting.",
-                                     "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Exit();
-                }
-            } while (true);
+            }
+            if (status != 1)
+            {
+                MessageBox.Show("Shader compilation failed");
+                Exit();
+            }
 
             // Link the Shaders to a usable Program
             ProgramObject = GL.CreateProgram();
@@ -161,11 +158,11 @@ namespace Examples.Tutorial
             }
             #endregion Textures
             
-            Keyboard.KeyUp += KeyUp;
+            Keyboard.KeyUp += Keyboard_KeyUp;
         }
 
         int i = 0;
-        void KeyUp(object sender, KeyboardKeyEventArgs e)
+        void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
         {
             if (e.Key == Key.F12)
             {
@@ -275,7 +272,7 @@ namespace Examples.Tutorial
             GL.Uniform1(GL.GetUniformLocation(ProgramObject, "OFFSETY"), UniformOffsetY);
 
             // Fullscreen quad. Using immediate mode, since this app is fragment shader limited anyways.
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             {
                 GL.Vertex2(-1.0f, -1.0f);
                 GL.Vertex2(1.0f, -1.0f);
