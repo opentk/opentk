@@ -1,0 +1,205 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glIsEnabled">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glIsEnabled</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glIsEnabled</refname>
+        <refpurpose>test whether a capability is enabled</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLboolean <function>glIsEnabled</function></funcdef>
+                <paramdef>GLenum <parameter>cap</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>cap</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a symbolic constant indicating a GL capability.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the capability.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glIsEnabled</function> returns <constant>GL_TRUE</constant> if <parameter>cap</parameter> is an enabled capability
+            and returns <constant>GL_FALSE</constant> otherwise. Initially all capabilities except <constant>GL_DITHER</constant> are disabled;
+            <constant>GL_DITHER</constant> is initially enabled.
+        </para>
+        <para>
+            The following capabilities are accepted for <parameter>cap</parameter>:
+        </para>
+        <para>
+        </para>
+        <informaltable>
+            <tgroup cols="2" align="left">
+                <colspec/>
+                <colspec/>
+                <thead>
+                    <row>
+                        <entry>
+                            <emphasis role="bold"> Constant </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> See </emphasis>
+                        </entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>
+                        <constant>GL_BLEND</constant>
+                        </entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_CULL_FACE</constant>
+                        </entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glCullFace</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_DEPTH_TEST</constant>
+                        </entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glDepthRangef</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_DITHER</constant>
+                        </entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_POLYGON_OFFSET_FILL</constant>
+                        </entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_PRIMITIVE_RESTART_FIXED_INDEX</constant>
+                        </entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_SAMPLE_ALPHA_TO_COVERAGE</constant>
+                        </entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_SAMPLE_COVERAGE</constant>
+                        </entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_SCISSOR_TEST</constant>
+                        </entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glScissor</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_STENCIL_TEST</constant>
+                        </entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            If an error is generated,
+            <function>glIsEnabled</function> returns <constant>GL_FALSE</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>cap</parameter> is not an accepted value.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions">
+        <title>API Version Support</title>
+        <informaltable>
+            <tgroup cols="3" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry>glIsEnabled</entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</link>.
+        </para>
+    </refsect1>
+</refentry>

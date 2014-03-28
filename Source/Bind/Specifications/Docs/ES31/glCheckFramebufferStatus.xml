@@ -1,0 +1,120 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCheckFramebufferStatus">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCheckFramebufferStatus</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCheckFramebufferStatus</refname>
+        <refpurpose>check the completeness status of a framebuffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLenum <function>glCheckFramebufferStatus</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specify the target of the framebuffer completeness check.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glCheckFramebufferStatus</function> queries the completeness status of the framebuffer object currently bound to <parameter>target</parameter>.
+            <parameter>target</parameter> must be <constant>GL_DRAW_FRAMEBUFFER</constant>, <constant>GL_READ_FRAMEBUFFER</constant> or <constant>GL_FRAMEBUFFER</constant>.
+            <constant>GL_FRAMEBUFFER</constant> is equivalent to <constant>GL_DRAW_FRAMEBUFFER</constant>.
+        </para>
+        <para>
+            The return value is <constant>GL_FRAMEBUFFER_COMPLETE</constant> if the framebuffer bound to <parameter>target</parameter> is complete. Otherwise,
+            the return value is determined as follows:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_UNDEFINED</constant> is returned if <parameter>target</parameter> is the default framebuffer, but the default framebuffer does not exist.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT</constant> is returned if any of the framebuffer attachment points are framebuffer incomplete.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT</constant> is returned if the framebuffer does not have at least one image attached to it.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_UNSUPPORTED</constant> is returned if depth and stencil attachments, if present, are not the same renderbuffer, or if
+                                                the combination of internal formats of the attached images violates an implementation-dependent set of restrictions.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE</constant> is returned if the value of <constant>GL_RENDERBUFFER_SAMPLES</constant> is not the same
+                        for all attached renderbuffers or, if the attached images are a mix of renderbuffers and textures, the value of <constant>GL_RENDERBUFFER_SAMPLES</constant>
+                                                is not zero.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            Additionally, if an error occurs, zero is returned.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant> or <constant>GL_FRAMEBUFFER</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions">
+        <title>API Version Support</title>
+        <informaltable>
+            <tgroup cols="4" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry>glCheckFramebufferStatus</entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteFramebuffers</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>
+            </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

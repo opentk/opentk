@@ -1,0 +1,107 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glVertexBindingDivisor">
+    <info>
+        <copyright>
+            <year>2012-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glVertexBindingDivisor</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glVertexBindingDivisor</refname>
+        <refpurpose>modify the rate at which generic vertex attributes advance</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glVertexBindingDivisor</function></funcdef>
+                <paramdef>GLuint <parameter>bindingindex</parameter></paramdef>
+                <paramdef>GLuint <parameter>divisor</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>bindingindex</parameter></term>
+            <listitem>
+                <para>
+                    The index of the binding whose divisor to modify.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>divisor</parameter></term>
+            <listitem>
+                <para>
+                    The new value for the instance step rate to apply.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glVertexBindingDivisor</function>, modifies the rate at which generic vertex attributes advance when
+            rendering multiple instances of primitives in a single draw command. If
+            <parameter>divisor</parameter> is zero, the attributes using the buffer bound to <parameter>bindingindex</parameter>
+            advance once per vertex. If <parameter>divisor</parameter> is non-zero, the attributes advance
+            once per <parameter>divisor</parameter> instances of the set(s) of vertices being rendered. An
+            attribute is referred to as <emphasis>instanced</emphasis> if the corresponding <parameter>divisor</parameter>
+            value is non-zero.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>bindingindex</parameter> is greater than
+            or equal to the value of <constant>GL_MAX_VERTEX_ATTRIB_BINDINGS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if no vertex array object is bound.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with arguments <constant>GL_MAX_VERTEX_ATTRIB_BINDINGS</constant>,
+            <constant>GL_VERTEX_BINDING_DIVISOR</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions">
+        <title>API Version Support</title>
+        <informaltable>
+            <tgroup cols="4" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glVertexBindingDivisor</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es31']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindVertexBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttribBinding</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexBindingDivisor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2012-2014 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>
