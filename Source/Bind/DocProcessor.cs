@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using System.Xml.Xsl;
 
 using Bind.Structures;
 
@@ -19,28 +18,11 @@ namespace Bind
         static readonly Regex remove_mathml = new Regex(
             @"<(mml:math|inlineequation)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
-
-        static readonly XslCompiledTransform xslt = new XslCompiledTransform();
-        static readonly XmlReaderSettings settings = new XmlReaderSettings();
+        static readonly Regex remove_doctype = new Regex(
+            @"<!DOCTYPE[^>\[]*(\[.*\])?>", RegexOptions.Compiled | RegexOptions.Multiline);
 
         Documentation Cached;
         string LastFile;
-
-        public DocProcessor(string transform_file)
-        {
-            if (!File.Exists(transform_file))
-            {
-                // If no specific transform file exists
-                // get the generic transform file from
-                // the parent directory
-                var dir = Directory.GetParent(Path.GetDirectoryName(transform_file)).FullName;
-                var file = Path.GetFileName(transform_file);
-                transform_file = Path.Combine(dir, file);
-            }
-            xslt.Load(transform_file);
-            settings.ProhibitDtd = false;
-            settings.XmlResolver = null;
-        }
 
         // Strips MathML tags from the source and replaces the equations with the content
         // found in the <!-- eqn: :--> comments in the docs.
@@ -57,10 +39,8 @@ namespace Bind
             text = File.ReadAllText(file);
 
             text = text
-                .Replace("xml:", String.Empty) // Remove namespaces
-                .Replace("&epsi;", "epsilon") // Fix unrecognized &epsi; entities
-                .Replace("<constant>", "<c>") // Improve output
-                .Replace("</constant>", "</c>");
+                .Replace("&epsi;", "epsilon");  // Fix unrecognized &epsi; entities
+            text = remove_doctype.Replace(text, String.Empty);
 
             Match m = remove_mathml.Match(text);
             while (m.Length > 0)
@@ -98,11 +78,12 @@ namespace Bind
             {
                 // The pure XmlReader is ~20x faster than the XmlTextReader.
                 //doc = XmlReader.Create(new StringReader(text), settings);
+                //XmlReader reader = 
                 doc = XDocument.Parse(text);
                 Cached = ToInlineDocs(doc);
                 return Cached;
             }
-            catch (XmlException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
                 Console.WriteLine(doc.ToString());
@@ -115,19 +96,31 @@ namespace Bind
             var inline = new Documentation
             {
                 Summary =
-                    ((IEnumerable)doc.XPathEvaluate("//*[name()='refentry']/*[name()='refnamediv']/*[name()='refpurpose']"))
-                    .Cast<XElement>().First().Value.Trim(),
+                    Cleanup(
+                        ((IEnumerable)doc.XPathEvaluate("//*[name()='refentry']/*[name()='refnamediv']/*[name()='refpurpose']"))
+                        .Cast<XElement>().First().Value),
                 Parameters =
                     ((IEnumerable)doc.XPathEvaluate("*[name()='refentry']/*[name()='refsect1'][@id='parameters']/*[name()='variablelist']/*[name()='varlistentry']"))
                     .Cast<XNode>()
-                    .Select(p => new KeyValuePair<string, string>(
+                    .Select(p =>
+                        new KeyValuePair<string, string>(
                             p.XPathSelectElement("*[name()='term']/*[name()='parameter']").Value.Trim(),
-                            p.XPathSelectElement("*[name()='listitem']").Value.Trim()))
+                            Cleanup(p.XPathSelectElement("*[name()='listitem']").Value)))
                     .ToList()
             };
 
             inline.Summary = Char.ToUpper(inline.Summary[0]) + inline.Summary.Substring(1);
             return inline;
+        }
+
+        static readonly char[] newline = new char[] { '\n' };
+        static string Cleanup(string text)
+        {
+            return
+                String.Join(" ", text
+                    .Replace("\r", "\n")
+                    .Split(newline, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(s => s.Trim()).ToArray());
         }
     }
 }

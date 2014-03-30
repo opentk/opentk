@@ -274,7 +274,7 @@ namespace Bind
             get
             {
                 if (processor_ == null)
-                    processor_ = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
+                    processor_ = new DocProcessor();
                 return processor_;
             }
         }
@@ -310,48 +310,68 @@ namespace Bind
                             new KeyValuePair<string, string>(p.Name, String.Empty)).ToList()
                     };
 
-                string warning = "[deprecated: v{0}]";
-                string category = "[requires: {0}]";
+                string warning = String.Empty;
+                string category = String.Empty;
                 if (f.Deprecated)
                 {
-                    warning = String.Format(warning, f.DeprecatedVersion);
-                    docs.Summary = docs.Summary.Insert(0, warning);
+                    warning = String.Format("[deprecated: v{0}]", f.DeprecatedVersion);
                 }
 
                 if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
                 {
-                    category = String.Format(category, f.Category);
-                    docs.Summary = docs.Summary.Insert(0, category);
+                    category = String.Format("[requires: {0}]", f.Category);
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
                     if (f.Category.StartsWith("VERSION"))
-                        category = String.Format(category, "v" + f.Version);
+                        category = String.Format("[requires: {0}]", "v" + f.Version);
                     else
-                        category = String.Format(category, "v" + f.Version + " and " + f.Category);
-                    docs.Summary = docs.Summary.Insert(0, category);
+                        category = String.Format("[requires: {0}]", "v" + f.Version + " or " + f.Category);
                 }
 
+                sw.WriteLine("/// <summary>{0}{1} {2}</summary>",
+                    category, warning, docs.Summary);
                 for (int i = 0; i < f.Parameters.Count; i++)
                 {
                     var param = f.Parameters[i];
+
+                    string length = String.Empty;
                     if (!String.IsNullOrEmpty(param.ComputeSize))
                     {
-                        docs.Parameters[i].Value.Insert(0,
-                            String.Format("[length: {0}]", param.ComputeSize));
+                        length = String.Format("[length: {0}]", param.ComputeSize);
                     }
-                }
 
-                sw.WriteLine("/// <summary>{0}</summary>", docs.Summary);
-                foreach (var p in docs.Parameters)
-                {
-                    sw.WriteLine("/// <param name=\"{0}\">{1}</param>", p.Key, p.Value);
+                    if (docs.Parameters.Count > i)
+                    {
+                        var doc = docs.Parameters[i];
+
+                        if (doc.Key != param.Name)
+                        {
+                            Console.Error.WriteLine(
+                                "[Warning] Parameter '{0}' in function '{1}' has incorrect doc name '{2}'",
+                                param.Name, f.Name, doc.Key);
+                        }
+
+
+                        // Note: we use param.Name, because the documentation sometimes
+                        // uses different names than the specification.
+                        sw.WriteLine("/// <param name=\"{0}\">{1} {2}</param>",
+                            param.Name, length, doc.Value);
+                    }
+                    else
+                    {
+                        Console.Error.WriteLine(
+                            "[Warning] Parameter '{0}' in function '{1}' not found in '{2}'",
+                            param.Name, f.Name, docfile);
+                        sw.WriteLine("/// <param name=\"{0}\">{1}</param>",
+                            param.Name, length);
+                    }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine("[Warning] Error processing file {0}: {1}", docfile, e.ToString());
-            }
+            }   
         }
 
         #endregion

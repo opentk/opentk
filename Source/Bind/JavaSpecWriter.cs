@@ -322,7 +322,7 @@ namespace Bind
             get
             {
                 if (processor_ == null)
-                    processor_ = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
+                    processor_ = new DocProcessor();
                 return processor_;
             }
         }
