@@ -410,15 +410,7 @@
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
         <para>
-            <function>glMultiTexCoord</function> is only supported if the GL version is 1.3 or greater, or if
-            <code>ARB_multitexture</code> is included in the string returned by
-            <citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry> when called with the argument <constant>GL_EXTENSIONS</constant>.
-        </para>
-        <para>
             The current texture coordinates can be updated at any time.
-            In particular,
-            <function>glMultiTexCoord</function> can be called between a call to <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
-            call to <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
         <para>
             It is always the case that <constant>GL_TEXTURE</constant>
@@ -439,9 +431,7 @@
     <refsect1 id="seealso"><title>See Also</title>
         <para>
             <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glClientActiveTexture</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexCoord</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glVertex</refentrytitle></citerefentry>
         </para>
     </refsect1>

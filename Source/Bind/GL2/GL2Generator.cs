@@ -54,7 +54,7 @@ namespace Bind.GL2
             Settings.DefaultEnumsFile = "GLEnums.cs";
             Settings.DefaultWrappersFile = "GL.cs";
             Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "GL2");
+                Settings.DefaultDocPath, "GL");
         }
     }
 }
