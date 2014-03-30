@@ -20,6 +20,8 @@ namespace Bind
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
         static readonly Regex remove_doctype = new Regex(
             @"<!DOCTYPE[^>\[]*(\[.*\])?>", RegexOptions.Compiled | RegexOptions.Multiline);
+        static readonly Regex remove_xmlns = new Regex(
+            "xmlns=\".+\"", RegexOptions.Compiled);
 
         Documentation Cached;
         string LastFile;
@@ -39,8 +41,10 @@ namespace Bind
             text = File.ReadAllText(file);
 
             text = text
-                .Replace("&epsi;", "epsilon");  // Fix unrecognized &epsi; entities
+                .Replace("&epsi;", "epsilon") // Fix unrecognized &epsi; entities
+                .Replace("xml:", String.Empty); // Remove namespaces
             text = remove_doctype.Replace(text, String.Empty);
+            text = remove_xmlns.Replace(text, string.Empty);
 
             Match m = remove_mathml.Match(text);
             while (m.Length > 0)
@@ -72,13 +76,9 @@ namespace Bind
                 m = remove_mathml.Match(text);
             }
 
-            //XmlReader doc = null;
             XDocument doc = null;
             try
             {
-                // The pure XmlReader is ~20x faster than the XmlTextReader.
-                //doc = XmlReader.Create(new StringReader(text), settings);
-                //XmlReader reader = 
                 doc = XDocument.Parse(text);
                 Cached = ToInlineDocs(doc);
                 return Cached;
@@ -97,15 +97,15 @@ namespace Bind
             {
                 Summary =
                     Cleanup(
-                        ((IEnumerable)doc.XPathEvaluate("//*[name()='refentry']/*[name()='refnamediv']/*[name()='refpurpose']"))
+                        ((IEnumerable)doc.XPathEvaluate("/refentry/refnamediv/refpurpose"))
                         .Cast<XElement>().First().Value),
                 Parameters =
-                    ((IEnumerable)doc.XPathEvaluate("*[name()='refentry']/*[name()='refsect1'][@id='parameters']/*[name()='variablelist']/*[name()='varlistentry']"))
+                    ((IEnumerable)doc.XPathEvaluate("/refentry/refsect1[@id='parameters']/variablelist/varlistentry"))
                     .Cast<XNode>()
                     .Select(p =>
                         new DocumentationParameter(
-                            p.XPathSelectElement("*[name()='term']/*[name()='parameter']").Value.Trim(),
-                            Cleanup(p.XPathSelectElement("*[name()='listitem']").Value)))
+                                p.XPathSelectElement("term/parameter").Value.Trim(),
+                            Cleanup(p.XPathSelectElement("listitem").Value)))
                     .ToList()
             };
 
