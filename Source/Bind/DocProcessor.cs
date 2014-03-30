@@ -100,12 +100,12 @@ namespace Bind
                         ((IEnumerable)doc.XPathEvaluate("/refentry/refnamediv/refpurpose"))
                         .Cast<XElement>().First().Value),
                 Parameters =
-                    ((IEnumerable)doc.XPathEvaluate("/refentry/refsect1[@id='parameters']/variablelist/varlistentry"))
-                    .Cast<XNode>()
-                    .Select(p =>
-                        new DocumentationParameter(
-                                p.XPathSelectElement("term/parameter").Value.Trim(),
-                            Cleanup(p.XPathSelectElement("listitem").Value)))
+                    ((IEnumerable)doc.XPathEvaluate("/refentry/refsect1[@id='parameters']/variablelist/varlistentry/term/parameter"))
+                        .Cast<XElement>()
+                        .Select(p =>
+                            new DocumentationParameter(
+                                p.Value.Trim(),
+                                Cleanup(p.XPathSelectElement("../../listitem").Value)))
                     .ToList()
             };
 
