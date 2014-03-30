@@ -107,7 +107,7 @@ namespace Examples.Tutorial
 
             // Set the input type of the primitives we are going to feed the geometry shader, this should be the same as
             // the primitive type given to GL.Begin. If the types do not match a GL error will occur (todo: verify GL_INVALID_ENUM, on glBegin)
-            GL.Ext.ProgramParameter(shaderProgram, ExtGeometryShader4.GeometryInputTypeExt, (int)BeginMode.Lines);
+			GL.Ext.ProgramParameter(shaderProgram, ExtGeometryShader4.GeometryInputTypeExt, (int)BeginMode.Lines);
             // Set the output type of the geometry shader. Becasue we input Lines we will output LineStrip(s).
             GL.Ext.ProgramParameter(shaderProgram, ExtGeometryShader4.GeometryOutputTypeExt, (int)BeginMode.LineStrip);
 
@@ -211,7 +211,7 @@ namespace Examples.Tutorial
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             // draw two vertical lines
-            GL.Begin(BeginMode.Lines);
+			GL.Begin(PrimitiveType.Lines);
             {
                 // line one
                 GL.Vertex2(-0.5f, -0.5f);

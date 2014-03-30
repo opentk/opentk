@@ -623,7 +623,7 @@ namespace Examples.Tutorial
 
             GL.PushMatrix();
             GL.LoadIdentity();
-            GL.Begin(BeginMode.Quads);
+			GL.Begin(PrimitiveType.Quads);
 
             // 0 -x
             GL.TexCoord3(-1.0f, +1.0f, -1.0f);
@@ -705,7 +705,7 @@ namespace Examples.Tutorial
             GL.TexCoordPointer(2, TexCoordPointerType.Float, vboCubeStride, new IntPtr(Vector3.SizeInBytes + Vector3.SizeInBytes));
 
             //GL.Arb.DrawArraysInstanced(BeginMode.Triangles, 0, cubeData.Length/8, 1);
-            GL.DrawArrays(BeginMode.Triangles, 0, cubeData.Length / (vboCubeStride / sizeof(float)));
+			GL.DrawArrays(PrimitiveType.Triangles, 0, cubeData.Length / (vboCubeStride / sizeof(float)));
 
             GL.DisableClientState(ArrayCap.VertexArray);
             GL.DisableClientState(ArrayCap.NormalArray);
@@ -725,7 +725,7 @@ namespace Examples.Tutorial
             GL.TexCoordPointer(2, TexCoordPointerType.Float, vboSphereStride, new IntPtr(Vector3.SizeInBytes + Vector3.SizeInBytes));
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboSphere);
-            GL.DrawElements(BeginMode.Triangles, 16 * 16 * 6, DrawElementsType.UnsignedShort, IntPtr.Zero);
+			GL.DrawElements(PrimitiveType.Triangles, 16 * 16 * 6, DrawElementsType.UnsignedShort, IntPtr.Zero);
 
             //GL.Arb.DrawArraysInstanced(BeginMode.Triangles, 0, cubeData.Length/8, 1);
             //GL.DrawArrays(BeginMode.Triangles, 0, sphereData.Length / (vboSphereStride / sizeof(float)));

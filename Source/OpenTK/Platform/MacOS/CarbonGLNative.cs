@@ -363,7 +363,6 @@ namespace OpenTK.Platform.MacOS
                     break;
             }
 
-            Key key;
             switch (evt.KeyboardEventKind)
             {
                 case KeyboardEventKind.RawKeyRepeat:

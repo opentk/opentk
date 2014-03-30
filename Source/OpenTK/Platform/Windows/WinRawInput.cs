@@ -144,7 +144,7 @@ namespace OpenTK.Platform.Windows
             {
                 gamepad_driver = new XInputJoystick();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Debug.Print("[Win] XInput driver not supported, falling back to WinMM");
                 gamepad_driver = new MappedGamePadDriver();

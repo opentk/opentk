@@ -315,7 +315,7 @@ namespace Examples.Tutorial
 
             GL.Color3( 1f, 1f, 1f );
 
-            GL.Begin( BeginMode.Quads );
+			GL.Begin(PrimitiveType.Quads);
             {
                 GL.Normal3( Normal );
                 GL.VertexAttrib3( AttribTangent, ref Tangent );
@@ -344,7 +344,7 @@ namespace Examples.Tutorial
             GL.UseProgram( 0 );
 
             // visualize the light position 'somehow'
-            GL.Begin( BeginMode.Points );
+			GL.Begin(PrimitiveType.Points);
             {
                 GL.Color3( LightSpecular );
                 GL.Vertex3( LightPosition );

@@ -70,6 +70,9 @@ namespace OpenTK.Audio.OpenAL
     /// </summary>
     public static partial class AL
     {
+		static AL(){
+			OpenTK.EmbeddedDLLs.ManagedWrapper.EnsureLoaded();
+		}
 
         #region Constants
 

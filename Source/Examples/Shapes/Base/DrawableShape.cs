@@ -22,7 +22,7 @@ namespace Examples.Shapes
 
     public abstract class DrawableShape: IDisposable
     {
-        protected BeginMode PrimitiveMode;
+		protected BeginMode PrimitiveMode;
         protected VertexT2dN3dV3d[] VertexArray;
         protected uint[] IndexArray;
 
