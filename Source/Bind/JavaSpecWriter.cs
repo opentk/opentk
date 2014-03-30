@@ -354,7 +354,7 @@ namespace Bind
                 {
                     Summary = String.Empty,
                     Parameters = f.Parameters.Select(p =>
-                        new KeyValuePair<string, string>(p.Name, String.Empty)).ToList()
+                        new DocumentationParameter(p.Name, String.Empty)).ToList()
                 };
 
                 string warning = "[deprecated: v{0}]";
@@ -384,7 +384,7 @@ namespace Bind
                     var param = f.WrappedDelegate.Parameters[i];
                     if (param.ComputeSize != String.Empty)
                     {
-                        docs.Parameters[i].Value.Insert(0,
+                        docs.Parameters[i].Documentation.Insert(0,
                             String.Format("[length: {0}]", param.ComputeSize));
                     }
                 }
@@ -392,7 +392,7 @@ namespace Bind
                 sw.WriteLine("/// <summary>{0}</summary>", docs.Summary);
                 foreach (var p in docs.Parameters)
                 {
-                    sw.WriteLine("/// <param name=\"{0}\">{1}</param>", p.Key, p.Value);
+                    sw.WriteLine("/// <param name=\"{0}\">{1}</param>", p.Name, p.Documentation);
                 }
             }
             catch (Exception e)

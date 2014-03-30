@@ -307,7 +307,7 @@ namespace Bind
                     {
                         Summary = String.Empty,
                         Parameters = f.Parameters.Select(p =>
-                            new KeyValuePair<string, string>(p.Name, String.Empty)).ToList()
+                            new DocumentationParameter(p.Name, String.Empty)).ToList()
                     };
 
                 string warning = String.Empty;
@@ -341,28 +341,37 @@ namespace Bind
                         length = String.Format("[length: {0}]", param.ComputeSize);
                     }
 
-                    if (docs.Parameters.Count > i)
-                    {
-                        var doc = docs.Parameters[i];
+                    // Try to match the correct parameter from documentation:
+                    // - first by name
+                    // - then by index
+                    var docparam =
+                        (docs.Parameters
+                            .Where(p => p.Name == param.RawName)
+                            .FirstOrDefault()) ??
+                        (docs.Parameters.Count > i ?
+                            docs.Parameters[i] : null);
 
-                        if (doc.Key != param.Name)
+                    if (docparam != null)
+                    {
+                        if (docparam.Name != param.RawName)
                         {
                             Console.Error.WriteLine(
                                 "[Warning] Parameter '{0}' in function '{1}' has incorrect doc name '{2}'",
-                                param.Name, f.Name, doc.Key);
+                                param.Name, f.Name, docparam.Name);
                         }
 
 
                         // Note: we use param.Name, because the documentation sometimes
                         // uses different names than the specification.
                         sw.WriteLine("/// <param name=\"{0}\">{1} {2}</param>",
-                            param.Name, length, doc.Value);
+                            param.Name, length, docparam.Documentation);
                     }
                     else
                     {
                         Console.Error.WriteLine(
-                            "[Warning] Parameter '{0}' in function '{1}' not found in '{2}'",
-                            param.Name, f.Name, docfile);
+                            "[Warning] Parameter '{0}' in function '{1}' not found in '{2}: {{{3}}}'",
+                            param.Name, f.Name, docfile,
+                            String.Join(",", docs.Parameters.Select(p => p.Name).ToArray()));
                         sw.WriteLine("/// <param name=\"{0}\">{1}</param>",
                             param.Name, length);
                     }

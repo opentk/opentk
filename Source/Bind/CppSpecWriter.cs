@@ -703,7 +703,7 @@ typedef const char* GLstring;
                     {
                         Summary = String.Empty,
                         Parameters = f.Parameters.Select(p =>
-                            new KeyValuePair<string, string>(p.Name, String.Empty)).ToList()
+                            new DocumentationParameter(p.Name, String.Empty)).ToList()
                     };
 
                 string warning = "[deprecated: v{0}]";
@@ -733,7 +733,7 @@ typedef const char* GLstring;
                     var param = f.WrappedDelegate.Parameters[i];
                     if (param.ComputeSize != String.Empty)
                     {
-                        docs.Parameters[i].Value.Insert(0,
+                        docs.Parameters[i].Documentation.Insert(0,
                             String.Format("[length: {0}]", param.ComputeSize));
                     }
                 }
@@ -743,8 +743,8 @@ typedef const char* GLstring;
                 foreach (var p in docs.Parameters)
                 {
                     sw.Write(@"/// \param ");
-                    sw.Write(p.Key);
-                    sw.WriteLine(p.Value);
+                    sw.Write(p.Name);
+                    sw.WriteLine(p.Documentation);
                 }
             }
             catch (Exception e)

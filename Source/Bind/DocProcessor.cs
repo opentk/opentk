@@ -103,7 +103,7 @@ namespace Bind
                     ((IEnumerable)doc.XPathEvaluate("*[name()='refentry']/*[name()='refsect1'][@id='parameters']/*[name()='variablelist']/*[name()='varlistentry']"))
                     .Cast<XNode>()
                     .Select(p =>
-                        new KeyValuePair<string, string>(
+                        new DocumentationParameter(
                             p.XPathSelectElement("*[name()='term']/*[name()='parameter']").Value.Trim(),
                             Cleanup(p.XPathSelectElement("*[name()='listitem']").Value)))
                     .ToList()

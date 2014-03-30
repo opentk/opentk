@@ -32,10 +32,22 @@ using System.Collections.Generic;
 
 namespace Bind.Structures
 {
-    public class Documentation
+    class Documentation
     {
         public string Summary { get; set; }
-        public List<KeyValuePair<string, string>> Parameters { get; set; }
+        public List<DocumentationParameter> Parameters { get; set; }
+    }
+
+    class DocumentationParameter
+    {
+        public string Name { get; set; }
+        public string Documentation { get; set; }
+
+        public DocumentationParameter(string name, string doc)
+        {
+            Name = name;
+            Documentation = doc;
+        }
     }
 }
 
