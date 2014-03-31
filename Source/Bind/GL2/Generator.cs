@@ -113,9 +113,11 @@ namespace Bind.GL2
 
             var enum_processor = new EnumProcessor(this, overrides);
             var func_processor = new FuncProcessor(this, overrides);
+            var doc_processor = new DocProcessor(this);
 
             Enums = enum_processor.Process(Enums, Profile);
-            Wrappers = func_processor.Process(enum_processor, Delegates, Enums, Profile, Version);
+            Wrappers = func_processor.Process(enum_processor, doc_processor,
+                Delegates, Enums, Profile, Version);
         }
 
         #endregion

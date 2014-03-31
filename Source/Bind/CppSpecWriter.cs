@@ -41,7 +41,6 @@ namespace Bind
 
     sealed class CppSpecWriter : ISpecWriter
     {
-        readonly char[] numbers = "0123456789".ToCharArray();
         const string AllowDeprecated = "GLPP_COMPATIBLE";
         const string DigitPrefix = "T"; // Prefix for identifiers that start with a digit
         const string OutputFileHeader = "gl++.h";
@@ -665,47 +664,12 @@ typedef const char* GLstring;
             return sb.ToString();
         }
 
-        DocProcessor processor_;
-        DocProcessor Processor
-        {
-            get
-            {
-                if (processor_ == null)
-                    processor_ = new DocProcessor();
-                return processor_;
-            }
-        }
-        Dictionary<string, string> docfiles;
         void WriteDocumentation(BindStreamWriter sw, Function f)
         {
-            if (docfiles == null)
-            {
-                docfiles = new Dictionary<string, string>();
-                foreach (string file in Directory.GetFiles(Settings.DocPath))
-                {
-                    docfiles.Add(Path.GetFileName(file), file);
-                }
-            }
+            var docs = f.Documentation;
 
-            string docfile = null;
             try
             {
-                docfile = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
-                if (!docfiles.ContainsKey(docfile))
-                    docfile = Settings.FunctionPrefix + f.TrimmedName + ".xml";
-                if (!docfiles.ContainsKey(docfile))
-                    docfile = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
-
-                Documentation docs = 
-                    (docfiles.ContainsKey(docfile) ?
-                        Processor.ProcessFile(docfiles[docfile]) : null) ?? 
-                    new Documentation
-                    {
-                        Summary = String.Empty,
-                        Parameters = f.Parameters.Select(p =>
-                            new DocumentationParameter(p.Name, String.Empty)).ToList()
-                    };
-
                 string warning = "[deprecated: v{0}]";
                 string category = "[requires: {0}]";
                 if (f.Deprecated)
@@ -749,7 +713,7 @@ typedef const char* GLstring;
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Warning] Error processing file {0}: {1}", docfile, e.ToString());
+            Console.WriteLine("[Warning] Error documenting function {0}: {1}", f.WrappedDelegate.Name, e.ToString());
             }
         }
 

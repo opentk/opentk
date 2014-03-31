@@ -15,6 +15,7 @@ namespace Bind
 {
     class DocProcessor
     {
+        static readonly char[] numbers = "0123456789".ToCharArray();
         static readonly Regex remove_mathml = new Regex(
             @"<(mml:math|inlineequation)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
@@ -23,14 +24,65 @@ namespace Bind
         static readonly Regex remove_xmlns = new Regex(
             "xmlns=\".+\"", RegexOptions.Compiled);
 
+        readonly Dictionary<string, string> DocumentationFiles =
+            new Dictionary<string, string>();
+        readonly Dictionary<string, Documentation> DocumentationCache =
+            new Dictionary<string, Documentation>();
+
         Documentation Cached;
         string LastFile;
+
+        IBind Generator { get; set; }
+        Settings Settings { get { return Generator.Settings; } }
+
+        public DocProcessor(IBind generator)
+        {
+            if (generator == null)
+                throw new ArgumentNullException();
+
+            Generator = generator;
+            foreach (string file in Directory.GetFiles(Settings.DocPath))
+            {
+                DocumentationFiles.Add(Path.GetFileName(file), file);
+            }
+        }
+
+        public Documentation Process(Function f, EnumProcessor processor)
+        {
+            Documentation docs = null;
+
+            if (DocumentationCache.ContainsKey(f.WrappedDelegate.Name))
+            {
+                return DocumentationCache[f.WrappedDelegate.Name];
+            }
+            else
+            {
+                var file = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
+                if (!DocumentationFiles.ContainsKey(file))
+                    file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
+                if (!DocumentationFiles.ContainsKey(file))
+                    file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
+
+                docs = 
+                    (DocumentationFiles.ContainsKey(file) ? ProcessFile(DocumentationFiles[file], processor) : null) ??
+                    new Documentation
+                    {
+                        Summary = String.Empty,
+                        Parameters = f.Parameters.Select(p =>
+                        new DocumentationParameter(p.Name, String.Empty)).ToList()
+                    };
+
+                DocumentationCache.Add(f.WrappedDelegate.Name, docs);
+            }
+
+            return docs;
+        }
 
         // Strips MathML tags from the source and replaces the equations with the content
         // found in the <!-- eqn: :--> comments in the docs.
         // Todo: Some simple MathML tags do not include comments, find a solution.
         // Todo: Some files include more than 1 function - find a way to map these extra functions.
-        public Documentation ProcessFile(string file)
+        Documentation ProcessFile(string file, EnumProcessor processor)
         {
             string text;
 
@@ -80,7 +132,7 @@ namespace Bind
             try
             {
                 doc = XDocument.Parse(text);
-                Cached = ToInlineDocs(doc);
+                Cached = ToInlineDocs(doc, processor);
                 return Cached;
             }
             catch (Exception e)
@@ -91,8 +143,28 @@ namespace Bind
             }
         }
 
-        Documentation ToInlineDocs(XDocument doc)
+        Documentation ToInlineDocs(XDocument doc, EnumProcessor enum_processor)
         {
+            if (doc == null || enum_processor == null)
+                throw new ArgumentNullException();
+
+            var no_const_processing = Settings.Legacy.NoAdvancedEnumProcessing | Settings.Legacy.ConstIntEnums;
+            if (!Generator.Settings.IsEnabled(no_const_processing))
+            {
+                // Translate all GL_FOO_BAR constants according to EnumProcessor
+                foreach (var e in doc.XPathSelectElements("//constant"))
+                {
+                    var c = e.Value;
+                    if (c.StartsWith(Settings.ConstantPrefix))
+                    {
+                        // Remove "GL_" from the beginning of the string
+                        c = c.Replace(Settings.ConstantPrefix, String.Empty);
+                    }
+                    e.Value = enum_processor.TranslateConstantName(c, false);
+                }
+            }
+
+            // Create inline documentation
             var inline = new Documentation
             {
                 Summary =

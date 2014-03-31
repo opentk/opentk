@@ -41,7 +41,6 @@ namespace Bind
 
     sealed class CSharpSpecWriter : ISpecWriter
     {
-        readonly char[] numbers = "0123456789".ToCharArray();
         IBind Generator { get; set; }
         Settings Settings { get { return Generator.Settings; } }
 
@@ -268,48 +267,12 @@ namespace Bind
             sw.WriteLine("public static {0} {{ throw new NotImplementedException(); }}", GetDeclarationString(f, Settings.Compatibility));
         }
 
-        DocProcessor processor_;
-        DocProcessor Processor
-        {
-            get
-            {
-                if (processor_ == null)
-                    processor_ = new DocProcessor();
-                return processor_;
-            }
-        }
-        Dictionary<string, string> docfiles;
         void WriteDocumentation(BindStreamWriter sw, Function f)
         {
-            if (docfiles == null)
-            {
-                docfiles = new Dictionary<string, string>();
-                foreach (string file in Directory.GetFiles(Settings.DocPath))
-                {
-                    docfiles.Add(Path.GetFileName(file), file);
-                }
-            }
+            var docs = f.Documentation;
 
-            string docfile = null;
             try
             {
-                docfile = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
-                if (!docfiles.ContainsKey(docfile))
-                    docfile = Settings.FunctionPrefix + f.TrimmedName + ".xml";
-                if (!docfiles.ContainsKey(docfile))
-                    docfile = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
-
-                Documentation docs = 
-                    (docfiles.ContainsKey(docfile) ?
-                        Processor.ProcessFile(docfiles[docfile]) :
-                        null) ?? 
-                    new Documentation
-                    {
-                        Summary = String.Empty,
-                        Parameters = f.Parameters.Select(p =>
-                            new DocumentationParameter(p.Name, String.Empty)).ToList()
-                    };
-
                 string warning = String.Empty;
                 string category = String.Empty;
                 if (f.Deprecated)
@@ -397,8 +360,8 @@ namespace Bind
                     else
                     {
                         Console.Error.WriteLine(
-                            "[Warning] Parameter '{0}' in function '{1}' not found in '{2}: {{{3}}}'",
-                            param.Name, f.Name, docfile,
+                            "[Warning] Parameter '{0}' in function '{1}' not found in documentation '{{{3}}}'",
+                            param.Name, f.Name,
                             String.Join(",", docs.Parameters.Select(p => p.Name).ToArray()));
                         sw.WriteLine("/// <param name=\"{0}\">{1}</param>",
                             param.Name, length);
@@ -407,7 +370,7 @@ namespace Bind
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Warning] Error processing file {0}: {1}", docfile, e.ToString());
+                Console.WriteLine("[Warning] Error documenting function {0}: {1}", f.WrappedDelegate.Name, e.ToString());
             }   
         }
 
