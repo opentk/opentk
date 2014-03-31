@@ -329,8 +329,24 @@ namespace Bind
                         category = String.Format("[requires: {0}]", "v" + f.Version + " or " + f.Category);
                 }
 
-                sw.WriteLine("/// <summary>{0}{1} {2}</summary>",
-                    category, warning, docs.Summary);
+                // Write function summary
+                sw.Write("/// <summary>");
+                if (!String.IsNullOrEmpty(category) || !String.IsNullOrEmpty(warning))
+                {
+                    sw.Write(WriteOptions.NoIndent, "{0}{1}", category, warning);
+                    if (!String.IsNullOrEmpty(docs.Summary))
+                    {
+                        sw.WriteLine();
+                        sw.WriteLine("/// {0}", docs.Summary);
+                        sw.WriteLine("/// </summary>");
+                    }
+                    else
+                    {
+                        sw.WriteLine(WriteOptions.NoIndent, "</summary>");
+                    }
+                }
+
+                // Write function parameters
                 for (int i = 0; i < f.Parameters.Count; i++)
                 {
                     var param = f.Parameters[i];
@@ -357,14 +373,26 @@ namespace Bind
                         {
                             Console.Error.WriteLine(
                                 "[Warning] Parameter '{0}' in function '{1}' has incorrect doc name '{2}'",
-                                param.Name, f.Name, docparam.Name);
+                                param.RawName, f.Name, docparam.Name);
                         }
-
 
                         // Note: we use param.Name, because the documentation sometimes
                         // uses different names than the specification.
-                        sw.WriteLine("/// <param name=\"{0}\">{1} {2}</param>",
-                            param.Name, length, docparam.Documentation);
+                        sw.Write("/// <param name=\"{0}\">", param.Name);
+                        if (!String.IsNullOrEmpty(length))
+                        {
+                            sw.Write(WriteOptions.NoIndent, "{0}", length);
+                        }
+                        if (!String.IsNullOrEmpty(docparam.Documentation))
+                        {
+                            sw.WriteLine(WriteOptions.NoIndent, " ");
+                            sw.WriteLine("/// {0}", docparam.Documentation);
+                            sw.WriteLine("/// </param>");
+                        }
+                        else
+                        {
+                            sw.WriteLine(WriteOptions.NoIndent, "</param>");
+                        }
                     }
                     else
                     {
