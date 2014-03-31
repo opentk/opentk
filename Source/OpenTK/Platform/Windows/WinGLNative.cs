@@ -70,6 +70,7 @@ namespace OpenTK.Platform.Windows
         bool borderless_maximized_window_state = false; // Hack to get maximized mode with hidden border (not normally possible).
         bool focused;
         bool mouse_outside_window = true;
+        int mouse_last_timestamp = 0;
         bool invisible_since_creation; // Set by WindowsMessage.CREATE and consumed by Visible = true (calls BringWindowToFront).
         int suppress_resize; // Used in WindowBorder and WindowState in order to avoid rapid, consecutive resize events.
         bool is_in_modal_loop; // set to true whenever we enter the modal resize/move event loop 
@@ -403,10 +404,86 @@ namespace OpenTK.Platform.Windows
 
         void HandleMouseMove(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            Point point = new Point(
-                (short)((uint)lParam.ToInt32() & 0x0000FFFF),
-                (short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16));
-            mouse.Position = point;
+            unsafe
+            {
+                Point point = new Point(
+                    (short)((uint)lParam.ToInt32() & 0x0000FFFF),
+                    (short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16));
+
+                // GetMouseMovePointsEx works with screen coordinates
+                Point screenPoint = point;
+                Functions.ClientToScreen(handle, ref screenPoint);
+                int timestamp = Functions.GetMessageTime();
+
+                // & 0xFFFF to handle multiple monitors http://support.microsoft.com/kb/269743 
+                MouseMovePoint movePoint = new MouseMovePoint()
+                {
+                    X = screenPoint.X & 0xFFFF,
+                    Y = screenPoint.Y & 0xFFFF,
+                    Time = timestamp,
+                };
+
+                // Max points GetMouseMovePointsEx can return is 64.
+                int numPoints = 64;
+
+                MouseMovePoint* movePoints = stackalloc MouseMovePoint[numPoints];
+
+                // GetMouseMovePointsEx fills in movePoints so that the most 
+                // recent events are at low indices in the array.
+                int points = Functions.GetMouseMovePointsEx(
+                    (uint)MouseMovePoint.SizeInBytes,
+                    &movePoint, movePoints, numPoints,
+                    Constants.GMMP_USE_DISPLAY_POINTS);
+
+                int lastError = Marshal.GetLastWin32Error();
+
+                // No points returned or search point not found
+                if (points == 0 || (points == -1 && lastError == Constants.ERROR_POINT_NOT_FOUND))
+                {
+                    // Just use the mouse move position
+                    mouse.Position = point;
+                }
+                else if (points == -1)
+                {
+                    throw new System.ComponentModel.Win32Exception(lastError);
+                }
+                else
+                {
+                    // Exclude the current position. 
+                    Point currentScreenPosition = new Point(mouse.X, mouse.Y);
+                    Functions.ClientToScreen(handle, ref currentScreenPosition);
+
+                    // Find the first move point we've already seen.
+                    int i = 0;
+                    for (i = 0; i < points; ++i)
+                    {
+                        if (movePoints[i].Time < mouse_last_timestamp)
+                            break;
+                        if (movePoints[i].Time == mouse_last_timestamp &&
+                            movePoints[i].X == currentScreenPosition.X &&
+                            movePoints[i].Y == currentScreenPosition.Y)
+                            break;
+                    }
+
+                    // Now move the mouse to each point before the one just found.
+                    while (--i >= 0)
+                    {
+                        Point position = new Point(movePoints[i].X, movePoints[i].Y);
+                        // Handle multiple monitors http://support.microsoft.com/kb/269743 
+                        if (position.X > 32767)
+                        {
+                            position.X -= 65536;
+                        }
+                        if (position.Y > 32767)
+                        {
+                            position.Y -= 65536;
+                        }
+                        Functions.ScreenToClient(handle, ref position);
+                        mouse.Position = position;
+                    }
+                }
+                mouse_last_timestamp = timestamp;
+            }
 
             if (mouse_outside_window)
             {
