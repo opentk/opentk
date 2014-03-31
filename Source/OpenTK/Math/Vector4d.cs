@@ -1505,7 +1505,7 @@ namespace OpenTK
             vec.X *= scale.X;
             vec.Y *= scale.Y;
             vec.Z *= scale.Z;
-			vec.W *= scale.W;
+            vec.W *= scale.W;
             return vec;
         }
 
