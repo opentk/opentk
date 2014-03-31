@@ -41,9 +41,14 @@ namespace Bind
                 throw new ArgumentNullException();
 
             Generator = generator;
-            foreach (string file in Directory.GetFiles(Settings.DocPath))
+            foreach (string file in Directory.GetFiles(Settings.DocPath).Concat(
+                Directory.GetFiles(Settings.FallbackDocPath)))
             {
-                DocumentationFiles.Add(Path.GetFileName(file), file);
+                var name = Path.GetFileName(file);
+                if (!DocumentationFiles.ContainsKey(name))
+                {
+                    DocumentationFiles.Add(name, file);
+                }
             }
         }
 

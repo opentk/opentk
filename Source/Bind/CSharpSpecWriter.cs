@@ -297,16 +297,16 @@ namespace Bind
                 if (!String.IsNullOrEmpty(category) || !String.IsNullOrEmpty(warning))
                 {
                     sw.Write(WriteOptions.NoIndent, "{0}{1}", category, warning);
-                    if (!String.IsNullOrEmpty(docs.Summary))
-                    {
-                        sw.WriteLine();
-                        sw.WriteLine("/// {0}", docs.Summary);
-                        sw.WriteLine("/// </summary>");
-                    }
-                    else
-                    {
-                        sw.WriteLine(WriteOptions.NoIndent, "</summary>");
-                    }
+                }
+                if (!String.IsNullOrEmpty(docs.Summary))
+                {
+                    sw.WriteLine();
+                    sw.WriteLine("/// {0}", docs.Summary);
+                    sw.WriteLine("/// </summary>");
+                }
+                else
+                {
+                    sw.WriteLine(WriteOptions.NoIndent, "</summary>");
                 }
 
                 // Write function parameters
@@ -332,7 +332,8 @@ namespace Bind
 
                     if (docparam != null)
                     {
-                        if (docparam.Name != param.RawName)
+                        if (docparam.Name != param.RawName &&
+                            docparam.Name != param.RawName.Substring(1)) // '@ref' -> 'ref' etc
                         {
                             Console.Error.WriteLine(
                                 "[Warning] Parameter '{0}' in function '{1}' has incorrect doc name '{2}'",
