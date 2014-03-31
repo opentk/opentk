@@ -1370,7 +1370,21 @@ namespace OpenTK
             vec.Z *= scale;
             return vec;
         }
-
+		
+        /// <summary>
+        /// Component-wise multiplication between the specified instance by a scale vector.
+        /// </summary>
+        /// <param name="scale">Left operand.</param>
+        /// <param name="vec">Right operand.</param>
+        /// <returns>Result of multiplication.</returns>
+        public static Vector3d operator *(Vector3d vec, Vector3d scale)
+        {
+            vec.X *= scale.X;
+            vec.Y *= scale.Y;
+            vec.Z *= scale.Z;
+            return vec;
+        }
+		
         /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>
