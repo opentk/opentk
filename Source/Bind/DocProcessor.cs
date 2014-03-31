@@ -120,7 +120,8 @@ namespace Bind
                 String.Join(" ", text
                     .Replace("\r", "\n")
                     .Split(newline, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(s => s.Trim()).ToArray());
+                    .Select(s => s.Trim()).ToArray())
+                    .Trim();
         }
     }
 }
