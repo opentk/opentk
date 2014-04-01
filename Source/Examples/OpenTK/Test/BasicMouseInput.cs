@@ -23,33 +23,43 @@ namespace Examples.Tests
     [Example("Basic Mouse Input", ExampleCategory.OpenTK,"Basic Mouse Input")]
     public class BasicMouseInput : GameWindow
     {
+        List<Vector2> lines = new List<Vector2>();
 
         public BasicMouseInput()
             : base(800, 600)
-        { }
+        {
+            Mouse.Move += (sender, e) =>
+            {
+                if (Mouse[MouseButton.Left])
+                {
+                    // Scale mouse coordinates from
+                    // (0, 0):(Width, Height) to
+                    // (-1, -1):(+1, +1)
+                    // Note, we must flip the y-coordinate
+                    // since mouse is reported with (0, 0)
+                    // at top-left and our projection uses
+                    // (-1, -1) at bottom left.
+                    float x = (e.X - Width) / (float)Width;
+                    float y = (Height- e.Y) / (float)Height;
+                    lines.Add(new Vector2(2 * x + 1, 2 * y - 1));
+                }
+            };
+        }
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
-          
             this.Mouse.ButtonUp += (object sender, MouseButtonEventArgs buttonEvent) => {
                 Console.WriteLine("Mouse button up: " + buttonEvent.Button + " at: " + buttonEvent.Position);
             };
-
-            GL.ClearColor(Color.MidnightBlue);
-            GL.Enable(EnableCap.DepthTest);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            base.OnUpdateFrame(e);
-
             // Here's the big test!
             if(OpenTK.Input.Mouse.GetState()[MouseButton.Left]){
                 Console.WriteLine("The left mouse button is down!");
             }
 
-         
             // While we are here, test keyboard.
             if(OpenTK.Input.Keyboard.GetState()[Key.A]){
                Console.WriteLine("The A key is down!");
@@ -65,11 +75,32 @@ namespace Examples.Tests
                     WindowState = WindowState.Normal;
         }
 
-     
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            GL.ClearColor(Color.MidnightBlue);
             GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            GL.Viewport(ClientRectangle);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(-1, 1, -1, 1, -1, 1);
+
+            GL.Begin(PrimitiveType.LineStrip);
+            foreach (var p in lines)
+            {
+                GL.Color4(Color.White);
+                GL.Vertex2(p);
+            }
+            GL.End();
+
             SwapBuffers();
+            
+            if (Keyboard[Key.Space])
+            {
+                // Simulate high load (4 fps) to check
+                // mouse input behavior
+                System.Threading.Thread.Sleep(250);
+            }
         }
 
         [STAThread]
