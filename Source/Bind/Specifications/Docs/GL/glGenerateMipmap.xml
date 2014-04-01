@@ -1,0 +1,144 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGenerateMipmap">
+    <info>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGenerateMipmap</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGenerateMipmap</refname>
+        <refpurpose>generate mipmaps for a specified texture target</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGenerateMipmap</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the texture whose mimaps to generate is bound. <parameter>target</parameter> must
+                    be <constant>GL_TEXTURE_1D</constant>, <constant>GL_TEXTURE_2D</constant>, <constant>GL_TEXTURE_3D</constant>,
+                    <constant>GL_TEXTURE_1D_ARRAY</constant>, <constant>GL_TEXTURE_2D_ARRAY</constant> or
+                    <constant>GL_TEXTURE_CUBE_MAP</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGenerateMipmap</function> generates mipmaps for the texture attached
+            to <parameter>target</parameter> of the active texture unit. For cube map textures,
+            a <constant>GL_INVALID_OPERATION</constant> error is generated if the texture
+            attached to <parameter>target</parameter> is not cube complete.
+        </para>
+        <para>
+            Mipmap generation replaces texel array levels
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: level sub base  +  1: -->
+                <mml:mrow>
+                    <mml:msub>
+                        <mml:mi mathvariant="italic">level</mml:mi>
+                        <mml:mi>base</mml:mi>
+                    </mml:msub>
+                    <mml:mo>+</mml:mo>
+                    <mml:mn>1</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            through
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">q</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            with arrays derived from the
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: level sub base  +  1: -->
+                <mml:mrow>
+                    <mml:msub>
+                        <mml:mi mathvariant="italic">level</mml:mi>
+                        <mml:mi>base</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            array, regardless of their previous contents. All other mimap arrays,
+            including the
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: level sub base  +  1: -->
+                <mml:mrow>
+                    <mml:msub>
+                        <mml:mi mathvariant="italic">level</mml:mi>
+                        <mml:mi>base</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            array, are left unchanged by this computation.
+        </para>
+        <para>
+            The internal formats of the derived mipmap arrays all match those of the
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: level sub base  +  1: -->
+                <mml:mrow>
+                    <mml:msub>
+                        <mml:mi mathvariant="italic">level</mml:mi>
+                        <mml:mi>base</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            array. The contents of the derived arrays are computed by repeated, filtered
+            reduction of the
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: level sub base  +  1: -->
+                <mml:mrow>
+                    <mml:msub>
+                        <mml:mi mathvariant="italic">level</mml:mi>
+                        <mml:mi>base</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            array. For one- and two-dimensional texture arrays, each layer is filtered
+            independently.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not
+            one of the accepted texture targets.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>target</parameter> is
+            <constant>GL_TEXTURE_CUBE_MAP</constant> and the texture bound to the <constant>GL_TEXTURE_CUBE_MAP</constant>
+            target of the active texture unit is not cube complete.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

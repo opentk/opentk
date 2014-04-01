@@ -70,8 +70,8 @@ namespace Bind
             Overrides = overrides;
         }
 
-        public FunctionCollection Process(EnumProcessor enum_processor, DelegateCollection delegates, EnumCollection enums,
-            string apiname, string apiversion)
+        public FunctionCollection Process(EnumProcessor enum_processor, DocProcessor doc_processor,
+            DelegateCollection delegates, EnumCollection enums, string apiname, string apiversion)
         {
             Console.WriteLine("Processing delegates.");
             var nav = new XPathDocument(Overrides).CreateNavigator();
@@ -131,10 +131,26 @@ namespace Bind
             Console.WriteLine("Generating address table.");
             GenerateAddressTable(delegates);
 
+            Console.WriteLine("Generating documentation.");
+            GenerateDocumentation(wrappers, enum_processor, doc_processor);
+
             return wrappers;
         }
 
         #region Private Members
+
+        void GenerateDocumentation(FunctionCollection wrappers,
+            EnumProcessor enum_processor, DocProcessor doc_processor)
+        {
+            foreach (var list in wrappers)
+            {
+                foreach (var f in list.Value)
+                {
+                    f.Documentation = doc_processor.Process(f,
+                        enum_processor);
+                }
+            }
+        }
 
         void GenerateAddressTable(DelegateCollection delegates)
         {

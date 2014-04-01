@@ -187,7 +187,7 @@ namespace Bind
                     case GeneratorMode.All:
                         Console.WriteLine("Using 'all' generator mode.");
                         Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30' to select a specific mode.");
-                        Generators.Add(new Generator(Settings, dirName));
+                        Generators.Add(new GL2Generator(Settings, dirName));
                         Generators.Add(new GL4Generator(Settings, dirName));
                         Generators.Add(new ESGenerator(Settings, dirName));
                         Generators.Add(new ES2Generator(Settings, dirName));
@@ -195,7 +195,7 @@ namespace Bind
                         break;
 
                     case GeneratorMode.GL2:
-                        Generators.Add(new Generator(Settings, dirName));
+                        Generators.Add(new GL2Generator(Settings, dirName));
                         break;
 
                     case GeneratorMode.GL3:

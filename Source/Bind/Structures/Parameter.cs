@@ -45,6 +45,7 @@ namespace Bind.Structures
             Generic = p.Generic;
             Flow = p.Flow;
             cache = p.cache;
+            ComputeSize = p.ComputeSize;
             //this.rebuild = false;
         }
 
