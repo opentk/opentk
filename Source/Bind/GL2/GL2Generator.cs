@@ -55,6 +55,9 @@ namespace Bind.GL2
             Settings.DefaultWrappersFile = "GL.cs";
             Settings.DefaultDocPath = Path.Combine(
                 Settings.DefaultDocPath, "GL");
+
+            Settings.DefaultCompatibility |=
+                Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
         }
     }
 }

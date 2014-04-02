@@ -49,6 +49,9 @@ namespace Bind.GL2
                 Settings.DefaultDocPath, "GL");
 
             Profile = "glcore";
+
+            Settings.DefaultCompatibility |=
+                Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
         }
     }
 }

@@ -173,7 +173,7 @@ namespace Bind
             sw.Indent();
             foreach (var d in delegates.Values.Select(d => d.First()))
             {
-                if (!Settings.IsEnabled(Settings.Legacy.UseDllImports) || d.Extension != "Core")
+                if (d.RequiresSlot(Settings))
                 {
                     sw.WriteLine("\"{0}{1}\",", Settings.FunctionPrefix, d.Name);
                 }
