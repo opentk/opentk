@@ -33,7 +33,6 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2Keyboard : IKeyboardDriver2, IKeyboardDriver
     {
-        static readonly Sdl2KeyMap KeyMap = new Sdl2KeyMap();
         KeyboardState state;
 
         readonly List<KeyboardDevice> keyboards =
@@ -84,10 +83,10 @@ namespace OpenTK.Platform.SDL2
 
         internal void ProcessKeyboardEvent(KeyboardEvent e)
         {
-            Key key;
             bool pressed = e.State != 0;
             var scancode = e.Keysym.Scancode;
-            if (KeyMap.TryGetValue(scancode, out key))
+            Key key = Sdl2KeyMap.GetKey(scancode);
+            if (key != Key.Unknown)
             {
                 state.SetKeyState(key, (byte)scancode, pressed);
                 keyboards[0].SetKey(key, (byte)scancode, pressed);

@@ -75,8 +75,6 @@ namespace OpenTK.Platform.SDL2
         static readonly Dictionary<uint, Sdl2NativeWindow> windows =
             new Dictionary<uint, Sdl2NativeWindow>();
 
-        static readonly Sdl2KeyMap map = new Sdl2KeyMap();
-
         public Sdl2NativeWindow(int x, int y, int width, int height,
             string title, GameWindowFlags options, DisplayDevice device,
             IInputDriver input_driver)
@@ -132,12 +130,7 @@ namespace OpenTK.Platform.SDL2
 
         static Key TranslateKey(Scancode scan)
         {
-            Key result = Key.Unknown;
-            if (map.ContainsKey(scan))
-            {
-                result = map[scan];
-            }
-            return result;
+            return Sdl2KeyMap.GetKey(scan);
         }
 
         static Key TranslateKey(Keycode key)
