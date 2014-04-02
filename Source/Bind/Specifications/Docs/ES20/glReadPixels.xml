@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glReadPixels">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glReadPixels</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glReadPixels</refname>
+        <refpurpose>read a block of pixels from the frame buffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glReadPixels</function></funcdef>
+                <paramdef>GLint <parameter>x</parameter></paramdef>
+                <paramdef>GLint <parameter>y</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>GLvoid * <parameter>data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>x</parameter></term>
+            <term><parameter>y</parameter></term>
+            <listitem>
+                <para>
+                    Specify the window coordinates of the first pixel
+                    that is read from the frame buffer.
+                    This location is the lower left corner of a rectangular block of pixels.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    Specify the dimensions of the pixel rectangle.
+                    <parameter>width</parameter> and <parameter>height</parameter> of one correspond to a single pixel.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>format</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the format of the pixel data.
+                    The following symbolic values are accepted:
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_RGB</constant>, and
+                    <constant>GL_RGBA</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the data type of the pixel data.
+                    Must be one of
+                    <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>, or
+                    <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>data</parameter></term>
+            <listitem>
+                <para>
+                    Returns the pixel data.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glReadPixels</function> returns pixel data from the frame buffer,
+            starting with the pixel whose lower left corner
+            is at location (<parameter>x</parameter>, <parameter>y</parameter>),
+            into client memory starting at location <parameter>data</parameter>.
+            The <constant>GL_PACK_ALIGNMENT</constant> parameter, set with the 
+            <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>
+            command, affects the processing of the pixel data before it is placed into 
+            client memory.
+        </para>
+        <para>
+            <function>glReadPixels</function> returns values from each pixel with lower left corner at
+            <inlineequation><mml:math>
+                <!-- eqn: (x + i, y + j):-->
+                <mml:mfenced open="(" close=")">
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">x</mml:mi>
+                        <mml:mo>+</mml:mo>
+                        <mml:mi mathvariant="italic">i</mml:mi>
+                    </mml:mrow>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">y</mml:mi>
+                        <mml:mo>+</mml:mo>
+                        <mml:mi mathvariant="italic">j</mml:mi>
+                    </mml:mrow>
+                </mml:mfenced>
+            </mml:math></inlineequation>
+            for 
+            <inlineequation><mml:math>
+                <!-- eqn: 0 <= i < width:-->
+                <mml:mrow>
+                    <mml:mn>0</mml:mn>
+                    <mml:mo>&lt;=</mml:mo>
+                    <mml:mi mathvariant="italic">i</mml:mi>
+                    <mml:mo>&lt;</mml:mo>
+                    <mml:mi mathvariant="italic">width</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            and
+            <inlineequation><mml:math>
+                <!-- eqn: 0 <= j < height:-->
+                <mml:mrow>
+                    <mml:mn>0</mml:mn>
+                    <mml:mo>&lt;=</mml:mo>
+                    <mml:mi mathvariant="italic">j</mml:mi>
+                    <mml:mo>&lt;</mml:mo>
+                    <mml:mi mathvariant="italic">height</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>.
+            This pixel is said to be the 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>th
+            pixel in the 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">j</mml:mi></mml:math></inlineequation>th
+            row.
+            Pixels are returned in row order from the lowest to the highest row,
+            left to right in each row.
+        </para>
+        <para>
+            <parameter>format</parameter> specifies the format for the returned pixel values;
+            accepted values are:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_ALPHA</constant></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RGB</constant></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RGBA</constant></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            RGBA color components are read from the color buffer.
+            Each color component is converted to floating point such that zero intensity
+            maps to 0.0 and full intensity maps to 1.0.
+        </para>
+        <para>
+            Unneeded data is then discarded.
+            For example,
+            <constant>GL_ALPHA</constant> discards the red, green, and blue components,
+            while <constant>GL_RGB</constant> discards only the alpha component.
+            The final values are clamped to the range 
+            <inlineequation><mml:math>
+                <!-- eqn: [0,1]:-->
+                <mml:mfenced open="[" close="]">
+                    <mml:mn>0</mml:mn>
+                    <mml:mn>1</mml:mn>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+        </para>
+        <para>
+            Finally, the components
+            are converted to the proper format,
+            as specified by <parameter>type</parameter>.
+            When <parameter>type</parameter> is <constant>GL_UNSIGNED_BYTE</constant>,
+            each component is multiplied by
+            <inlineequation><mml:math>
+                <!-- eqn: 2 sup 8 - 1:-->
+                <mml:mrow>
+                    <mml:msup><mml:mn>2</mml:mn>
+                    <mml:mn>8</mml:mn>
+                    </mml:msup>
+                    <mml:mo>-</mml:mo>
+                    <mml:mn>1</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>.
+            When <parameter>type</parameter> is <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>, or <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+            each component is multiplied by
+            <inlineequation><mml:math>
+                <!-- eqn: 2 sup N - 1:-->
+                <mml:mrow>
+                    <mml:msup><mml:mn>2</mml:mn>
+                    <mml:mi>N</mml:mi>
+                    </mml:msup>
+                    <mml:mo>-</mml:mo>
+                    <mml:mn>1</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            where <inlineequation><mml:math><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation> 
+            is the number of bits in the bitfield.
+        </para>
+        <para>
+            Return values are placed in memory as follows.
+            If <parameter>format</parameter> is
+            <constant>GL_ALPHA</constant>,
+            a single value is returned and the data for the 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>th
+            pixel in the 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">j</mml:mi></mml:math></inlineequation>th
+            row
+            is placed in location 
+            <inlineequation><mml:math>
+                <!-- eqn: (j) width + i:-->
+                <mml:mrow>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mi mathvariant="italic">j</mml:mi>
+                    </mml:mfenced>
+                    <mml:mo>&it;</mml:mo>
+                    <mml:mi mathvariant="italic">width</mml:mi>
+                    <mml:mo>+</mml:mo>
+                    <mml:mi mathvariant="italic">i</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>.
+            <constant>GL_RGB</constant> returns three values and
+            <constant>GL_RGBA</constant> returns four values for each pixel,
+            with all values corresponding to a single pixel occupying contiguous space
+            in <parameter>data</parameter>.
+            Storage parameter <constant>GL_PACK_ALIGNMENT</constant>, set by 
+            <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>,
+            affects the way that data is written into memory.
+            See <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry> for a description.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            If the currently bound framebuffer is not the default framebuffer object, color
+            components are read from the color image attached to the
+            <constant>GL_COLOR_ATTACHMENT0</constant> attachment point.
+        </para>
+        <para>
+            Only two <parameter>format</parameter>/<parameter>type</parameter> parameter pairs are
+            accepted.  <constant>GL_RGBA</constant>/<constant>GL_UNSIGNED_BYTE</constant> is
+            always accepted, and the other acceptable pair can be discovered by querying
+            <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT</constant> and
+            <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE</constant>.
+        </para>
+        <para>
+            Values for pixels that lie outside the window
+            connected to the current GL context are undefined.
+        </para>
+        <para>
+            If an error is generated,
+            no change is made to the contents of <parameter>data</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>format</parameter> or <parameter>type</parameter> is not an
+            accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if either <parameter>width</parameter> or <parameter>height</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is
+            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>
+            and <parameter>format</parameter> is not <constant>GL_RGB</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant> or
+            <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>
+            and <parameter>format</parameter> is not <constant>GL_RGBA</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>format</parameter>
+            and <parameter>type</parameter> are neither <constant>GL_RGBA</constant> and
+            <constant>GL_UNSIGNED_BYTE</constant>, respectively, nor the format/type pair
+            returned by querying <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT</constant>
+            and <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_FRAMEBUFFER_OPERATION</constant> is generated if 
+            the currently bound framebuffer is not framebuffer complete (i.e. the 
+            return value from <citerefentry><refentrytitle>glCheckFramebufferStatus</refentrytitle></citerefentry>
+            is not <constant>GL_FRAMEBUFFER_COMPLETE</constant>).
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument 
+            <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT</constant>
+            or <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PACK_ALIGNMENT</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCheckFramebufferStatus</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

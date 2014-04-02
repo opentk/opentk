@@ -57,7 +57,6 @@
     <NoWarn>0219, 0414, 0612, 0618, 1591, 3005, 3006</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>full</DebugType>
-    <DocumentationFile>..\..\Binaries\OpenTK\Debug\OpenTK.Compatibility.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -75,7 +74,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.Compatibility.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
@@ -84,7 +82,7 @@
     <NoWarn>0219, 0414, 0612, 0618, 1591, 3005, 3006</NoWarn>
     <Optimize>True</Optimize>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.Compatibility.xml</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -101,7 +99,6 @@
     <NoWarn>0219, 0414, 0612, 0618, 1591, 3005, 3006</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>none</DebugType>
-    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.Compatibility.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>True</SignAssembly>

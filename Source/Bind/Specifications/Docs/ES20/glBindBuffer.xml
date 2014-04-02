@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glBindBuffer">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2005</year>
+                <holder>Sams Publishing</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glBindBuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindBuffer</refname>
+        <refpurpose>bind a named buffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindBuffer</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the buffer object is bound.
+                    The symbolic constant must be
+                    <constant>GL_ARRAY_BUFFER</constant> or
+                    <constant>GL_ELEMENT_ARRAY_BUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a buffer object.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glBindBuffer</function> lets you create or use a named buffer object. Calling <function>glBindBuffer</function> with
+            <parameter>target</parameter> set to
+            <constant>GL_ARRAY_BUFFER</constant> or <constant>GL_ELEMENT_ARRAY_BUFFER</constant>
+            and <parameter>buffer</parameter> set to the name
+            of the new buffer object binds the buffer object name to the target.
+            When a buffer object is bound to a target, the previous binding for that
+            target is automatically broken.
+        </para>
+        <para>
+            Buffer object names are unsigned integers. The value zero is reserved, but
+            there is no default buffer object for each buffer object target. Instead, <parameter>buffer</parameter> set to zero
+            effectively unbinds any buffer object previously bound, and restores client memory usage for that buffer object target.
+            Buffer object names and the corresponding buffer object contents are local to
+            the shared object space of the current GL rendering context.
+        </para>
+        <para>
+            You may use <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry> to generate a set of new buffer object names.
+        </para>
+        <para>
+            The state of a buffer object immediately after it is first bound is a zero-sized memory buffer with
+            <constant>GL_STATIC_DRAW</constant> usage.
+        </para>
+        <para>
+            While a non-zero buffer object name is bound, GL operations on the target to which it is
+            bound affect the bound buffer object, and queries of the target to which it is bound return state 
+            from the bound buffer object. While buffer object name zero is bound, as in the initial state,
+            attempts to modify or query state on the target to which it is bound generates an 
+            <constant>GL_INVALID_OPERATION</constant> error.
+        </para>
+        <para>
+            When vertex array pointer state is changed by a call to 
+            <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry>, 
+            the current buffer object binding (<constant>GL_ARRAY_BUFFER_BINDING</constant>) is copied into the 
+            corresponding client state for the vertex attrib array being changed, one of the indexed 
+            <constant>GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING</constant>s. While a non-zero buffer object is bound to the 
+            <constant>GL_ARRAY_BUFFER</constant> target, the vertex array pointer parameter that is traditionally
+            interpreted as a pointer to client-side memory is instead interpreted as an offset within the
+            buffer object measured in basic machine units.
+        </para>
+        <para>
+            While a non-zero buffer object is bound to the <constant>GL_ELEMENT_ARRAY_BUFFER</constant> target, 
+            the indices parameter of <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry> that is traditionally
+            interpreted as a pointer to client-side memory is instead interpreted as an offset within the
+            buffer object measured in basic machine units.
+        </para>
+        <para>
+            A buffer object binding created with <function>glBindBuffer</function> remains active until a different
+            buffer object name is bound to the same target, or until the bound buffer object is
+            deleted with <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            Once created, a named buffer object may be re-bound to any target as often as needed. However,
+            the GL implementation may make choices about how to optimize the storage of a buffer object based
+            on its initial binding target.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of the allowable
+            values.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ARRAY_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ELEMENT_ARRAY_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2005 Addison-Wesley. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

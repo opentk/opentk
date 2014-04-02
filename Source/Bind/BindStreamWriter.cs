@@ -35,6 +35,12 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind
 {
+    enum WriteOptions
+    {
+        Default = 0,
+        NoIndent = 1
+    }
+
     class BindStreamWriter : IDisposable
     {
         static readonly char[] SplitCharacters = new char[] { '\r', '\n' };
@@ -60,7 +66,7 @@ namespace Bind
                 --indent_level;
         }
 
-        public void Write(string value)
+        public void Write(WriteOptions options, string value)
         {
             var lines = value.Split(SplitCharacters,
                 StringSplitOptions.RemoveEmptyEntries);
@@ -71,24 +77,34 @@ namespace Bind
                 for (int i = 0; i < lines.Length - 1; i++)
                 {
                     var line = lines[i];
-                    WriteIndentations();
+                    WriteIndentations(options);
                     sw.Write(line);
                     sw.Write(System.Environment.NewLine);
                 }
                 // Write the last line without appending a newline
-                WriteIndentations();
+                WriteIndentations(options);
                 sw.Write(lines[lines.Length - 1]);
             }
             else
             {
-                WriteIndentations();
+                WriteIndentations(options);
                 sw.Write(value);
             }
         }
 
+        public void Write(WriteOptions options, string format, params object[] args)
+        {
+            Write(options, String.Format(format, args));
+        }
+
+        public void Write(string value)
+        {
+            Write(WriteOptions.Default, value);
+        }
+
         public void Write(string format, params object[] args)
         {
-            Write(String.Format(format, args));
+            Write(WriteOptions.Default, format, args);
         }
 
         public void WriteLine()
@@ -96,15 +112,26 @@ namespace Bind
             sw.WriteLine();
         }
 
+        public void WriteLine(WriteOptions options, string value)
+        {
+            Write(options, value);
+            WriteLine();
+        }
+
+        public void WriteLine(WriteOptions options, string format, params object[] args)
+        {
+            WriteLine(options, String.Format(format, args));
+        }
+
+
         public void WriteLine(string value)
         {
-            Write(value);
-            WriteLine();
+            WriteLine(WriteOptions.Default, value);
         }
 
         public void WriteLine(string format, params object[] args)
         {
-            WriteLine(String.Format(format, args));
+            WriteLine(WriteOptions.Default, format, args);
         }
 
         public void Flush()
@@ -117,10 +144,13 @@ namespace Bind
             sw.Close();
         }
 
-        void WriteIndentations()
+        void WriteIndentations(WriteOptions options)
         {
-            for (int i = indent_level; i > 0; i--)
-                sw.Write("    ");
+            if (options != WriteOptions.NoIndent)
+            {
+                for (int i = indent_level; i > 0; i--)
+                    sw.Write("    ");
+            }
         }
 
         public void Dispose()
