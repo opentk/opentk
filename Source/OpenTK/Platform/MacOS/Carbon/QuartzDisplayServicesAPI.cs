@@ -69,8 +69,20 @@ namespace OpenTK.Platform.MacOS.Carbon
         [DllImport(appServices,EntryPoint="CGMainDisplayID")]
         internal static extern IntPtr MainDisplayID();
 
-		[DllImport(appServices, EntryPoint = "CGDisplayBounds")]
-		internal unsafe static extern HIRect DisplayBounds(IntPtr display);
+        // Note: sizeof(HIRect) == 16, which is larger than 8 bytes.
+        // The x86 and x64 Mac ABIs pass such structs as pointers in the
+        // first parameter slot. This is normally handled automatically
+        // by gcc/clang, but here we have to do it ourselves.
+        // See "Listing 4" on https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/LowLevelABI/130-IA-32_Function_Calling_Conventions/IA32.html#//apple_ref/doc/uid/TP40002492-SW3
+        internal unsafe static HIRect DisplayBounds(IntPtr display)
+        {
+            HIRect rect;
+            DisplayBounds(out rect, display);
+            return rect;
+        }
+
+        [DllImport(appServices, EntryPoint = "CGDisplayBounds")]
+        unsafe static extern void DisplayBounds(out HIRect rect, IntPtr display);
 
         [DllImport(appServices,EntryPoint="CGDisplayPixelsWide")]
         internal static extern int DisplayPixelsWide(IntPtr display);
