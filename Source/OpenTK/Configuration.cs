@@ -138,6 +138,18 @@ namespace OpenTK
             }
         }
 
+        public static bool RunningOniOS
+        {
+            get
+            {
+#if IPHONE
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
         #endregion 
 
         #region --- Private Methods ---
@@ -307,7 +319,6 @@ namespace OpenTK
                     }
 #elif IPHONE
                     runningOnMono = true;
-                    runningOnIOS = true;
                     if (options.Backend == PlatformBackend.Default)
                     {
                         runningOnSdl2 = DetectSdl2();
@@ -342,6 +353,7 @@ namespace OpenTK
         {
             return
                 RunningOnAndroid ? "Android" :
+                RunningOniOS ? "iOS" :
                 RunningOnWindows ? "Windows" :
                 RunningOnLinux ? "Linux" :
                 RunningOnMacOS ? "MacOS" :

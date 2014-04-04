@@ -2,5 +2,6 @@
   <Items>
     <Item>OpenTK.sln</Item>
     <Item>Projects/OpenTK.Android.SDL2/OpenTK.Android.SDL2.sln</Item>
+    <Item>Projects/OpenTK.iOS.SDL2/OpenTK.iOS.SDL2.sln</Item>
   </Items>
 </WorkspaceItem>
