@@ -87,7 +87,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static OpenTK.Graphics.ES11.All CheckFramebufferStatusOES(OpenTK.Graphics.ES11.All target);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClear", ExactSpelling = true)]
-            internal extern static void Clear(UInt32 mask);
+            internal extern static void Clear(OpenTK.Graphics.ES11.ClearBufferMask mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearColor", ExactSpelling = true)]
             internal extern static void ClearColor(Single red, Single green, Single blue, Single alpha);

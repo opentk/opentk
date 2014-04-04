@@ -1595,6 +1595,7 @@ namespace OpenTK.Graphics.ES30
         TransformFeedbackBuffer = ((int)0x8C8E),
         TransformFeedbackBufferBinding = ((int)0x8C8F),
         DrawFramebufferBinding = ((int)0x8CA6),
+        FramebufferBinding = ((int)0x8CA6),
         ReadFramebuffer = ((int)0x8CA8),
         DrawFramebuffer = ((int)0x8CA9),
         ReadFramebufferBinding = ((int)0x8CAA),

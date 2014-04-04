@@ -246,7 +246,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void DrawArrays(OpenTK.Graphics.ES30.BeginMode mode, Int32 first, Int32 count);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArraysInstanced", ExactSpelling = true)]
-            internal extern static void DrawArraysInstanced(OpenTK.Graphics.ES30.All mode, Int32 first, Int32 count, Int32 instancecount);
+            internal extern static void DrawArraysInstanced(OpenTK.Graphics.ES30.All mode, Int32 first, Int32 count, Int32 instanceCount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawBuffers", ExactSpelling = true)]
             internal extern static unsafe void DrawBuffers(Int32 n, OpenTK.Graphics.ES30.All* bufs);
@@ -255,7 +255,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void DrawElements(OpenTK.Graphics.ES30.BeginMode mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElementsInstanced", ExactSpelling = true)]
-            internal extern static void DrawElementsInstanced(OpenTK.Graphics.ES30.All mode, Int32 count, OpenTK.Graphics.ES30.All type, IntPtr indices, Int32 instancecount);
+            internal extern static void DrawElementsInstanced(OpenTK.Graphics.ES30.All mode, Int32 count, OpenTK.Graphics.ES30.All type, IntPtr indices, Int32 instanceCount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawRangeElements", ExactSpelling = true)]
             internal extern static void DrawRangeElements(OpenTK.Graphics.ES30.All mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.ES30.All type, IntPtr indices);
@@ -360,7 +360,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void GetBufferPointerv(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All pname, [OutAttribute] IntPtr @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetError", ExactSpelling = true)]
-            internal extern static OpenTK.Graphics.ES30.ErrorCode GetError();
+            internal extern static OpenTK.Graphics.ES30.All GetError();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFloatv", ExactSpelling = true)]
             internal extern static unsafe void GetFloatv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Single* @params);

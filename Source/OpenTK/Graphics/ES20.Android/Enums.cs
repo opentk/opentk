@@ -562,6 +562,7 @@ namespace OpenTK.Graphics.ES20
         True = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum Amdcompressed3Dctexture : int
     {
         GL_3DcXAmd = ((int)0x87F9),
@@ -576,6 +577,7 @@ namespace OpenTK.Graphics.ES20
         AmdCompressed3DcTexture = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum AmdcompressedAtctexture : int
     {
         AtcRgbaInterpolatedAlphaAmd = ((int)0x87EE),
@@ -592,6 +594,7 @@ namespace OpenTK.Graphics.ES20
         AmdCompressedAtcTexture = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum AmdperformanceMonitor : int
     {
         CounterTypeAmd = ((int)0x8BC0),
@@ -616,6 +619,7 @@ namespace OpenTK.Graphics.ES20
         AmdPerformanceMonitor = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum AmdprogramBinaryZ400 : int
     {
         Z400BinaryAmd = ((int)0x8740),
@@ -806,6 +810,7 @@ namespace OpenTK.Graphics.ES20
         InvalidFramebufferOperation = ((int)0X0506),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ExtblendMinmax : int
     {
         MinExt = ((int)0x8007),
@@ -820,6 +825,7 @@ namespace OpenTK.Graphics.ES20
         ExtBlendMinmax = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ExtdiscardFramebuffer : int
     {
         ColorExt = ((int)0x1800),
@@ -836,6 +842,7 @@ namespace OpenTK.Graphics.ES20
         ExtDiscardFramebuffer = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ExtreadFormatBgra : int
     {
         BgraExt = ((int)0x80E1),
@@ -852,6 +859,7 @@ namespace OpenTK.Graphics.ES20
         ExtReadFormatBgra = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ExttextureCompressionDxt1 : int
     {
         CompressedRgbS3tcDxt1Ext = ((int)0x83F0),
@@ -866,6 +874,7 @@ namespace OpenTK.Graphics.ES20
         ExtTextureCompressionDxt1 = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ExttextureFilterAnisotropic : int
     {
         TextureMaxAnisotropyExt = ((int)0x84FE),
@@ -880,6 +889,7 @@ namespace OpenTK.Graphics.ES20
         ExtTextureFilterAnisotropic = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ExttextureFormatBgra8888 : int
     {
         BgraExt = ((int)0x80E1),
@@ -892,6 +902,7 @@ namespace OpenTK.Graphics.ES20
         ExtTextureFormatBgra8888 = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ExttextureType2101010Rev : int
     {
         UnsignedInt2101010RevExt = ((int)0x8368),
@@ -1091,6 +1102,7 @@ namespace OpenTK.Graphics.ES20
         GenerateMipmapHint = ((int)0x8192),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ImgmultisampledRenderToTexture : int
     {
         RenderbufferSamplesImg = ((int)0x9133),
@@ -1109,6 +1121,7 @@ namespace OpenTK.Graphics.ES20
         ImgMultisampledRenderToTexture = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ImgprogramBinary : int
     {
         SgxProgramBinaryImg = ((int)0x9130),
@@ -1121,6 +1134,7 @@ namespace OpenTK.Graphics.ES20
         ImgProgramBinary = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ImgreadFormat : int
     {
         BgraImg = ((int)0x80E1),
@@ -1135,6 +1149,7 @@ namespace OpenTK.Graphics.ES20
         ImgReadFormat = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ImgshaderBinary : int
     {
         SgxBinaryImg = ((int)0x8C0A),
@@ -1147,6 +1162,7 @@ namespace OpenTK.Graphics.ES20
         ImgShaderBinary = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum ImgtextureCompressionPvrtc : int
     {
         CompressedRgbPvrtc4Bppv1Img = ((int)0x8C00),
@@ -1165,6 +1181,7 @@ namespace OpenTK.Graphics.ES20
         ImgTextureCompressionPvrtc = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum NvcoverageSample : int
     {
         CoverageBufferBitNv = ((int)0x8000),
@@ -1193,6 +1210,7 @@ namespace OpenTK.Graphics.ES20
         NvCoverageSample = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum NvdepthNonlinear : int
     {
         DepthComponent16NonlinearNv = ((int)0x8E2C),
@@ -1205,6 +1223,7 @@ namespace OpenTK.Graphics.ES20
         NvDepthNonlinear = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum Nvfence : int
     {
         AllCompletedNv = ((int)0x84F2),
@@ -1221,6 +1240,7 @@ namespace OpenTK.Graphics.ES20
         NvFence = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OescompressedEtc1Rgb8Texture : int
     {
         Etc1Rgb8Oes = ((int)0x8D64),
@@ -1233,6 +1253,7 @@ namespace OpenTK.Graphics.ES20
         OesCompressedEtc1Rgb8Texture = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OescompressedPalettedTexture : int
     {
         Palette4Rgb8Oes = ((int)0x8B90),
@@ -1263,6 +1284,7 @@ namespace OpenTK.Graphics.ES20
         OesCompressedPalettedTexture = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum Oesdepth24 : int
     {
         DepthComponent24Oes = ((int)0x81A6),
@@ -1275,6 +1297,7 @@ namespace OpenTK.Graphics.ES20
         OesDepth24 = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum Oesdepth32 : int
     {
         DepthComponent32Oes = ((int)0x81A7),
@@ -1287,6 +1310,7 @@ namespace OpenTK.Graphics.ES20
         OesDepth32 = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OesdepthTexture : int
     {
         OesDepthTexture = ((int)1),
@@ -1297,6 +1321,7 @@ namespace OpenTK.Graphics.ES20
         OesDepthTexture = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum Oeseglimage : int
     {
         OesEglImage = ((int)1),
@@ -1307,6 +1332,7 @@ namespace OpenTK.Graphics.ES20
         OesEglImage = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OeseglimageExternal : int
     {
         TextureExternalOes = ((int)0x8D65),
@@ -1325,6 +1351,7 @@ namespace OpenTK.Graphics.ES20
         OesEglImageExternal = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OeselementIndexUint : int
     {
         UnsignedInt = ((int)0x1405),
@@ -1337,6 +1364,7 @@ namespace OpenTK.Graphics.ES20
         OesElementIndexUint = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OesfboRenderMipmap : int
     {
         OesFboRenderMipmap = ((int)1),
@@ -1347,6 +1375,7 @@ namespace OpenTK.Graphics.ES20
         OesFboRenderMipmap = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OesfragmentPrecisionHigh : int
     {
         OesFragmentPrecisionHigh = ((int)1),
@@ -1357,6 +1386,7 @@ namespace OpenTK.Graphics.ES20
         OesFragmentPrecisionHigh = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OesgetProgramBinary : int
     {
         ProgramBinaryLengthOes = ((int)0x8741),
@@ -1373,6 +1403,7 @@ namespace OpenTK.Graphics.ES20
         OesGetProgramBinary = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum Oesmapbuffer : int
     {
         WriteOnlyOes = ((int)0x88B9),
@@ -1391,6 +1422,7 @@ namespace OpenTK.Graphics.ES20
         OesMapbuffer = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OespackedDepthStencil : int
     {
         DepthStencilOes = ((int)0x84F9),
@@ -1407,6 +1439,7 @@ namespace OpenTK.Graphics.ES20
         OesPackedDepthStencil = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum Oesrgb8Rgba8 : int
     {
         Rgb8Oes = ((int)0x8051),
@@ -1421,6 +1454,7 @@ namespace OpenTK.Graphics.ES20
         OesRgb8Rgba8 = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OesstandardDerivatives : int
     {
         FragmentShaderDerivativeHintOes = ((int)0x8B8B),
@@ -1433,6 +1467,7 @@ namespace OpenTK.Graphics.ES20
         OesStandardDerivatives = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum Oesstencil1 : int
     {
         StencilIndex1Oes = ((int)0x8D46),
@@ -1445,6 +1480,7 @@ namespace OpenTK.Graphics.ES20
         OesStencil1 = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum Oesstencil4 : int
     {
         StencilIndex4Oes = ((int)0x8D47),
@@ -1457,6 +1493,7 @@ namespace OpenTK.Graphics.ES20
         OesStencil4 = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum Oestexture3D : int
     {
         TextureBinding3DOes = ((int)0x806A),
@@ -1479,6 +1516,7 @@ namespace OpenTK.Graphics.ES20
         OesTexture3D = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OestextureFloat : int
     {
         OesTextureFloat = ((int)1),
@@ -1489,6 +1527,7 @@ namespace OpenTK.Graphics.ES20
         OesTextureFloat = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OestextureFloatLinear : int
     {
         OesTextureFloatLinear = ((int)1),
@@ -1499,6 +1538,7 @@ namespace OpenTK.Graphics.ES20
         OesTextureFloatLinear = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OestextureHalfFloat : int
     {
         HalfFloatOes = ((int)0x8D61),
@@ -1511,6 +1551,7 @@ namespace OpenTK.Graphics.ES20
         OesTextureHalfFloat = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OestextureHalfFloatLinear : int
     {
         OesTextureHalfFloatLinear = ((int)1),
@@ -1521,6 +1562,7 @@ namespace OpenTK.Graphics.ES20
         OesTextureHalfFloatLinear = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OestextureNpot : int
     {
         OesTextureNpot = ((int)1),
@@ -1531,6 +1573,7 @@ namespace OpenTK.Graphics.ES20
         OesTextureNpot = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OesvertexArrayObject : int
     {
         VertexArrayBindingOes = ((int)0x85B5),
@@ -1543,6 +1586,7 @@ namespace OpenTK.Graphics.ES20
         OesVertexArrayObject = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OesvertexHalfFloat : int
     {
         OesVertexHalfFloat = ((int)1),
@@ -1553,6 +1597,7 @@ namespace OpenTK.Graphics.ES20
         OesVertexHalfFloat = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OesvertexType1010102 : int
     {
         UnsignedInt1010102Oes = ((int)0x8DF6),
@@ -1567,6 +1612,7 @@ namespace OpenTK.Graphics.ES20
         OesVertexType1010102 = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum OpenGlescoreVersions : int
     {
         EsVersion20 = ((int)1),
@@ -1623,6 +1669,7 @@ namespace OpenTK.Graphics.ES20
         ActiveAttributeMaxLength = ((int)0X8b8a),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum QcomdriverControl : int
     {
         QcomDriverControl = ((int)1),
@@ -1633,6 +1680,7 @@ namespace OpenTK.Graphics.ES20
         QcomDriverControl = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum QcomextendedGet : int
     {
         TextureWidthQcom = ((int)0x8BD2),
@@ -1665,6 +1713,7 @@ namespace OpenTK.Graphics.ES20
         QcomExtendedGet = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum QcomextendedGet2 : int
     {
         QcomExtendedGet2 = ((int)1),
@@ -1675,6 +1724,7 @@ namespace OpenTK.Graphics.ES20
         QcomExtendedGet2 = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum QcomperfmonGlobalMode : int
     {
         PerfmonGlobalModeQcom = ((int)0x8FA0),
@@ -1687,6 +1737,7 @@ namespace OpenTK.Graphics.ES20
         QcomPerfmonGlobalMode = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum QcomtiledRendering : int
     {
         ColorBufferBit0Qcom = ((int)0x00000001),
@@ -1761,6 +1812,7 @@ namespace OpenTK.Graphics.ES20
         QcomTiledRendering = ((int)1),
     }
 
+    [Obsolete("Use an enum with a similar name and a capital letter at right places")]
     public enum QcomwriteonlyRendering : int
     {
         WriteonlyRenderingQcom = ((int)0x8823),
