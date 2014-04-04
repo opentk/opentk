@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Graphics;
 using OpenTK.Input;
@@ -179,7 +180,7 @@ namespace OpenTK.Platform.MacOS
         {
             Debug.Print("Creating window...");
             Debug.Indent();
-            
+
             IntPtr windowRef = API.CreateNewWindow(@class, attrib, r);
             API.SetWindowTitle(windowRef, title);
             
@@ -230,13 +231,13 @@ namespace OpenTK.Platform.MacOS
                 //new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyUp),
                 //new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyModifiersChanged),
             };
-            
+
             MacOSEventHandler handler = EventHandler;
-            uppHandler = API.NewEventHandlerUPP(handler);
-            
+            uppHandler = Marshal.GetFunctionPointerForDelegate(handler);
+
             API.InstallWindowEventHandler(window.Handle, uppHandler, eventTypes,
                 window.Handle, IntPtr.Zero);
-            
+
             Application.WindowEventHandler = this;
         }
 
