@@ -3,6 +3,10 @@
 
   <replace>
 
+    <function name="GetError" extension="Core" profile="" category="3.0" version="3.0" obsolete="Use the GetErrorCode method, for compatability with Xamarin Android's OpenTK-1.0">
+      <returns>GLenum</returns>
+    </function>
+
     <function name="GetString" extension="Core">
       <returns>String</returns>
        <param name="name"><type>StringName</type></param>
@@ -852,7 +856,7 @@
       <token name="StencilIndex" value="0x1901" />
     </enum>
     
-    <enum name="OpenGlescoreVersions" type="int">
+    <enum name="OpenGlescoreVersions" type="int" obsolete="Use OpenGlEsCoreVersions enum">
       <token name="ES_VERSION_2_0" value="1" />
       <token name="ES_VERSION_3_0" value="1" />
     </enum>

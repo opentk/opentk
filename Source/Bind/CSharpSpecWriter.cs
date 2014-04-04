@@ -189,6 +189,8 @@ namespace Bind
             foreach (Delegate d in delegates.Values)
             {
                 sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
+                if (!string.IsNullOrEmpty (d.Obsolete))
+                    sw.WriteLine("[Obsolete(\"{0}\")]", d.Obsolete);
                 sw.WriteLine("internal {0};", d.ToString());
                 sw.WriteLine("internal {0}static {1} {2}{1};",   //  = null
                     d.Unsafe ? "unsafe " : "",
@@ -316,6 +318,9 @@ namespace Bind
             {
                 sw.WriteLine("[Obsolete(\"Deprecated in OpenGL {0}\")]", f.DeprecatedVersion);
             }
+
+            if (!string.IsNullOrEmpty (f.Obsolete))
+                sw.WriteLine("[Obsolete(\"{0}\")]", f.Obsolete);
 
             if (!f.CLSCompliant)
             {
@@ -476,6 +481,9 @@ namespace Bind
                             ("Used in " + String.Join(", ", functions.ToArray())) : "Not used directly."));
                         sw.WriteLine("/// </summary>");
                     }
+
+                    if (!string.IsNullOrEmpty (@enum.Obsolete))
+                       sw.WriteLine("[Obsolete(\"{0}\")]", @enum.Obsolete);
 
                     if (@enum.IsFlagCollection)
                         sw.WriteLine("[Flags]");

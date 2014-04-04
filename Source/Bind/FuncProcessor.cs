@@ -62,6 +62,13 @@ namespace Bind
             var nav = new XPathDocument(Overrides).CreateNavigator();
             foreach (var d in delegates.Values)
             {
+                var function_override = GetFuncOverride(nav, d);
+		if (function_override != null) {
+                    string obsolete = function_override.GetAttribute ("obsolete", "");
+                    if (!string.IsNullOrEmpty (obsolete))
+                        d.Obsolete = obsolete;
+                }
+
                 TranslateReturnType(nav, d, enums);
                 TranslateParameters(nav, d, enums);
             }

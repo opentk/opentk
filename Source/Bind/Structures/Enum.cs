@@ -45,6 +45,8 @@ namespace Bind.Structures
 			set { _type = value; }
 		}
 
+        public string Obsolete { get; set; }
+
         Dictionary<string, Constant> _constant_collection = new Dictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection

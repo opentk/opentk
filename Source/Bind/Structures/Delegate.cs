@@ -51,6 +51,7 @@ namespace Bind.Structures
             //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
             Deprecated = d.Deprecated;
             DeprecatedVersion = d.DeprecatedVersion;
+            Obsolete = d.Obsolete;
         }
 
         #endregion
@@ -249,6 +250,7 @@ namespace Bind.Structures
 
         public bool Deprecated { get; set; }
         public string DeprecatedVersion { get; set; }
+        public string Obsolete { get; set; }
 
         #endregion
 

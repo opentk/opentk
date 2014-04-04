@@ -4,6 +4,10 @@
 
   <replace>
   
+    <function name="GetError" extension="Core" profile="" category="2.0" version="2.0" obsolete="Use the GetErrorCode method, for compatability with Xamarin Android's OpenTK-1.0">
+      <returns>GLenum</returns>
+    </function>
+
     <function name="GetString" extension="Core">
       <returns>String</returns>
       <param name="name"><type>StringName</type></param>
@@ -844,73 +848,73 @@
     </enum>
     
     <!-- obsolete enums -->
-    <enum name="Amdcompressed3Dctexture" type="int">
+    <enum name="Amdcompressed3Dctexture" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="##GL_3DcXAmd" value="0x87F9" />
       <token name="##GL_3DcXyAmd" value="0x87FA" />
       <token name="##AmdCompressed3DcTexture" value="1" />
     </enum>
-    <enum name="AmdcompressedAtctexture" type="int">
+    <enum name="AmdcompressedAtctexture" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="AMD_compressed_ATC_texture" value="1" />
       <token name="ATC_RGB_AMD" value="0x8C92" />
       <token name="ATC_RGBA_EXPLICIT_ALPHA_AMD" value="0x8C93" />
       <token name="ATC_RGBA_INTERPOLATED_ALPHA_AMD" value="0x87EE" />
     </enum>
-    <enum name="ExtblendMinmax" type="int">
+    <enum name="ExtblendMinmax" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="EXT_blend_minmax" value="1" />
       <token name="MAX_EXT" value="0x8008" />
       <token name="MIN_EXT" value="0x8007" />
     </enum>
-    <enum name="ExtdiscardFramebuffer" type="int">
+    <enum name="ExtdiscardFramebuffer" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="COLOR_EXT" value="0x1800" />
       <token name="DEPTH_EXT" value="0x1801" />
       <token name="EXT_discard_framebuffer" value="1" />
       <token name="STENCIL_EXT" value="0x1802" />
     </enum>
-    <enum name="ExtreadFormatBgra" type="int">
+    <enum name="ExtreadFormatBgra" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="BGRA_EXT" value="0x80E1" />
       <token name="EXT_read_format_bgra" value="1" />
       <token name="UNSIGNED_SHORT_1_5_5_5_REV_EXT" value="0x8366" />
       <token name="UNSIGNED_SHORT_4_4_4_4_REV_EXT" value="0x8365" />
     </enum>
-    <enum name="ExttextureFilterAnisotropic" type="int">
+    <enum name="ExttextureFilterAnisotropic" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="EXT_texture_filter_anisotropic" value="1" />
       <token name="MAX_TEXTURE_MAX_ANISOTROPY_EXT" value="0x84FF" />
       <token name="TEXTURE_MAX_ANISOTROPY_EXT" value="0x84FE" />
     </enum>
-    <enum name="ExttextureFormatBgra8888" type="int">
+    <enum name="ExttextureFormatBgra8888" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="BGRA_EXT" value="0x80E1" />
       <token name="EXT_texture_format_BGRA8888" value="1" />
     </enum>
-    <enum name="ImgmultisampledRenderToTexture" type="int">
+    <enum name="ImgmultisampledRenderToTexture" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_IMG" value="0x9134" />
       <token name="IMG_multisampled_render_to_texture" value="1" />
       <token name="MAX_SAMPLES_IMG" value="0x9135" />
       <token name="RENDERBUFFER_SAMPLES_IMG" value="0x9133" />
       <token name="TEXTURE_SAMPLES_IMG" value="0x9136" />
     </enum>
-    <enum name="ImgreadFormat" type="int">
+    <enum name="ImgreadFormat" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="BGRA_IMG" value="0x80E1" />
       <token name="IMG_read_format" value="1" />
       <token name="UNSIGNED_SHORT_4_4_4_4_REV_IMG" value="0x8365" />
     </enum>
-    <enum name="ImgtextureCompressionPvrtc" type="int">
+    <enum name="ImgtextureCompressionPvrtc" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="COMPRESSED_RGB_PVRTC_2BPPV1_IMG" value="0x8C01" />
       <token name="COMPRESSED_RGB_PVRTC_4BPPV1_IMG" value="0x8C00" />
       <token name="COMPRESSED_RGBA_PVRTC_2BPPV1_IMG" value="0x8C03" />
       <token name="COMPRESSED_RGBA_PVRTC_4BPPV1_IMG" value="0x8C02" />
       <token name="IMG_texture_compression_pvrtc" value="1" />
     </enum>
-    <enum name="Nvfence" type="int">
+    <enum name="Nvfence" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="ALL_COMPLETED_NV" value="0x84F2" />
       <token name="FENCE_CONDITION_NV" value="0x84F4" />
       <token name="FENCE_STATUS_NV" value="0x84F3" />
       <token name="NV_fence" value="1" />
     </enum>
-    <enum name="OescompressedEtc1Rgb8Texture" type="int">
+    <enum name="OescompressedEtc1Rgb8Texture" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="ETC1_RGB8_OES" value="0x8D64" />
       <token name="OES_compressed_ETC1_RGB8_texture" value="1" />
     </enum>
-    <enum name="OescompressedPalettedTexture" type="int">
+    <enum name="OescompressedPalettedTexture" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_compressed_paletted_texture" value="1" />
       <token name="PALETTE4_R5_G6_B5_OES" value="0x8B92" />
       <token name="PALETTE4_RGB5_A1_OES" value="0x8B94" />
@@ -923,68 +927,68 @@
       <token name="PALETTE8_RGBA4_OES" value="0x8B98" />
       <token name="PALETTE8_RGBA8_OES" value="0x8B96" />
     </enum>
-    <enum name="Oesdepth24" type="int">
+    <enum name="Oesdepth24" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="DEPTH_COMPONENT24_OES" value="0x81A6" />
       <token name="OES_depth24" value="1" />
     </enum>
-    <enum name="Oesdepth32" type="int">
+    <enum name="Oesdepth32" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="DEPTH_COMPONENT32_OES" value="0x81A7" />
       <token name="OES_depth32" value="1" />
     </enum>
-    <enum name="Oeseglimage" type="int">
+    <enum name="Oeseglimage" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_EGL_image" value="1" />
     </enum>
-    <enum name="OeseglimageExternal" type="int">
+    <enum name="OeseglimageExternal" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_EGL_image_external" value="1" />
       <token name="REQUIRED_TEXTURE_IMAGE_UNITS_OES" value="0x8D68" />
       <token name="SAMPLER_EXTERNAL_OES" value="0x8D66" />
       <token name="TEXTURE_BINDING_EXTERNAL_OES" value="0x8D67" />
       <token name="TEXTURE_EXTERNAL_OES" value="0x8D65" />
     </enum>
-    <enum name="OeselementIndexUint" type="int">
+    <enum name="OeselementIndexUint" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_element_index_uint" value="1" />
       <token name="UNSIGNED_INT" value="0x1405" />
     </enum>
-    <enum name="OesfboRenderMipmap" type="int">
+    <enum name="OesfboRenderMipmap" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_fbo_render_mipmap" value="1" />
     </enum>
-    <enum name="Oesmapbuffer" type="int">
+    <enum name="Oesmapbuffer" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="BUFFER_ACCESS_OES" value="0x88BB" />
       <token name="BUFFER_MAP_POINTER_OES" value="0x88BD" />
       <token name="BUFFER_MAPPED_OES" value="0x88BC" />
       <token name="OES_mapbuffer" value="1" />
       <token name="WRITE_ONLY_OES" value="0x88B9" />
     </enum>
-    <enum name="OespackedDepthStencil" type="int">
+    <enum name="OespackedDepthStencil" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="DEPTH_STENCIL_OES" value="0x84F9" />
       <token name="DEPTH24_STENCIL8_OES" value="0x88F0" />
       <token name="OES_packed_depth_stencil" value="1" />
       <token name="UNSIGNED_INT_24_8_OES" value="0x84FA" />
     </enum>
-    <enum name="Oesrgb8Rgba8" type="int">
+    <enum name="Oesrgb8Rgba8" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_rgb8_rgba8" value="1" />
       <token name="RGB8_OES" value="0x8051" />
       <token name="RGBA8_OES" value="0x8058" />
     </enum>
-    <enum name="Oesstencil1" type="int">
+    <enum name="Oesstencil1" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_stencil1" value="1" />
       <token name="STENCIL_INDEX1_OES" value="0x8D46" />
     </enum>
-    <enum name="Oesstencil4" type="int">
+    <enum name="Oesstencil4" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_stencil4" value="1" />
       <token name="STENCIL_INDEX4_OES" value="0x8D47" />
     </enum>
-    <enum name="OesvertexArrayObject" type="int">
+    <enum name="OesvertexArrayObject" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_vertex_array_object" value="1" />
       <token name="VERTEX_ARRAY_BINDING_OES" value="0x85B5" />
     </enum>
-    <enum name="OpenGlescoreVersions" type="int">
+    <enum name="OpenGlescoreVersions" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="ES_VERSION_2_0" value="1" />
     </enum>
-    <enum name="QcomdriverControl" type="int">
+    <enum name="QcomdriverControl" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="QCOM_driver_control" value="1" />
     </enum>
-    <enum name="QcomextendedGet" type="int">
+    <enum name="QcomextendedGet" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="QCOM_extended_get" value="1" />
       <token name="STATE_RESTORE" value="0x8BDC" />
       <token name="TEXTURE_DEPTH_QCOM" value="0x8BD4" />
@@ -998,14 +1002,14 @@
       <token name="TEXTURE_TYPE_QCOM" value="0x8BD7" />
       <token name="TEXTURE_WIDTH_QCOM" value="0x8BD2" />
     </enum>
-    <enum name="QcomextendedGet2" type="int">
+    <enum name="QcomextendedGet2" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="QCOM_extended_get2" value="1" />
     </enum>
-    <enum name="QcomperfmonGlobalMode" type="int">
+    <enum name="QcomperfmonGlobalMode" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="PERFMON_GLOBAL_MODE_QCOM" value="0x8FA0" />
       <token name="QCOM_perfmon_global_mode" value="1" />
     </enum>
-    <enum name="QcomtiledRendering" type="int">
+    <enum name="QcomtiledRendering" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="COLOR_BUFFER_BIT0_QCOM" value="0x00000001" />
       <token name="COLOR_BUFFER_BIT1_QCOM" value="0x00000002" />
       <token name="COLOR_BUFFER_BIT2_QCOM" value="0x00000004" />
@@ -1040,11 +1044,11 @@
       <token name="STENCIL_BUFFER_BIT6_QCOM" value="0x00400000" />
       <token name="STENCIL_BUFFER_BIT7_QCOM" value="0x00800000" />
     </enum>
-    <enum name="QcomwriteonlyRendering" type="int">
+    <enum name="QcomwriteonlyRendering" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="QCOM_writeonly_rendering" value="1" />
       <token name="WRITEONLY_RENDERING_QCOM" value="0x8823" />
     </enum>
-    <enum name="AmdperformanceMonitor" type="int">
+    <enum name="AmdperformanceMonitor" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="AMD_performance_monitor" value="1" />
       <token name="COUNTER_RANGE_AMD" value="0x8BC1" />
       <token name="COUNTER_TYPE_AMD" value="0x8BC0" />
@@ -1054,28 +1058,28 @@
       <token name="PERFMON_RESULT_SIZE_AMD" value="0x8BC5" />
       <token name="UNSIGNED_INT64_AMD" value="0x8BC2" />
     </enum>
-    <enum name="AmdprogramBinaryZ400" type="int">
+    <enum name="AmdprogramBinaryZ400" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="AMD_program_binary_Z400" value="1" />
       <token name="Z400_BINARY_AMD" value="0x8740" />
     </enum>
-    <enum name="ExttextureCompressionDxt1" type="int">
+    <enum name="ExttextureCompressionDxt1" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="COMPRESSED_RGB_S3TC_DXT1_EXT" value="0x83F0" />
       <token name="COMPRESSED_RGBA_S3TC_DXT1_EXT" value="0x83F1" />
       <token name="EXT_texture_compression_dxt1" value="1" />
     </enum>
-    <enum name="ExttextureType2101010Rev" type="int">
+    <enum name="ExttextureType2101010Rev" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="EXT_texture_type_2_10_10_10_REV" value="1" />
       <token name="UNSIGNED_INT_2_10_10_10_REV_EXT" value="0x8368" />
     </enum>
-    <enum name="ImgprogramBinary" type="int">
+    <enum name="ImgprogramBinary" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="IMG_program_binary" value="1" />
       <token name="SGX_PROGRAM_BINARY_IMG" value="0x9130" />
     </enum>
-    <enum name="ImgshaderBinary" type="int">
+    <enum name="ImgshaderBinary" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="IMG_shader_binary" value="1" />
       <token name="SGX_BINARY_IMG" value="0x8C0A" />
     </enum>
-    <enum name="NvcoverageSample" type="int">
+    <enum name="NvcoverageSample" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="COVERAGE_ALL_FRAGMENTS_NV" value="0x8ED5" />
       <token name="COVERAGE_ATTACHMENT_NV" value="0x8ED2" />
       <token name="COVERAGE_AUTOMATIC_NV" value="0x8ED7" />
@@ -1087,27 +1091,27 @@
       <token name="COVERAGE_SAMPLES_NV" value="0x8ED4" />
       <token name="NV_coverage_sample" value="1" />
     </enum>
-    <enum name="NvdepthNonlinear" type="int">
+    <enum name="NvdepthNonlinear" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="DEPTH_COMPONENT16_NONLINEAR_NV" value="0x8E2C" />
       <token name="NV_depth_nonlinear" value="1" />
     </enum>
-    <enum name="OesdepthTexture" type="int">
+    <enum name="OesdepthTexture" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_depth_texture" value="1" />
     </enum>
-    <enum name="OesfragmentPrecisionHigh" type="int">
+    <enum name="OesfragmentPrecisionHigh" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_fragment_precision_high" value="1" />
     </enum>
-    <enum name="OesgetProgramBinary" type="int">
+    <enum name="OesgetProgramBinary" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="NUM_PROGRAM_BINARY_FORMATS_OES" value="0x87FE" />
       <token name="OES_get_program_binary" value="1" />
       <token name="PROGRAM_BINARY_FORMATS_OES" value="0x87FF" />
       <token name="PROGRAM_BINARY_LENGTH_OES" value="0x8741" />
     </enum>
-    <enum name="OesstandardDerivatives" type="int">
+    <enum name="OesstandardDerivatives" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="FRAGMENT_SHADER_DERIVATIVE_HINT_OES" value="0x8B8B" />
       <token name="OES_standard_derivatives" value="1" />
     </enum>
-    <enum name="Oestexture3D" type="int">
+    <enum name="Oestexture3D" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_OES" value="0x8CD4" />
       <token name="MAX_3D_TEXTURE_SIZE_OES" value="0x8073" />
       <token name="OES_texture_3D" value="1" />
@@ -1116,26 +1120,26 @@
       <token name="TEXTURE_BINDING_3D_OES" value="0x806A" />
       <token name="TEXTURE_WRAP_R_OES" value="0x8072" />
     </enum>
-    <enum name="OestextureFloat" type="int">
+    <enum name="OestextureFloat" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_texture_float" value="1" />
     </enum>
-    <enum name="OestextureFloatLinear" type="int">
+    <enum name="OestextureFloatLinear" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_texture_float_linear" value="1" />
     </enum>
-    <enum name="OestextureHalfFloat" type="int">
+    <enum name="OestextureHalfFloat" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="HALF_FLOAT_OES" value="0x8D61" />
       <token name="OES_texture_half_float" value="1" />
     </enum>
-    <enum name="OestextureHalfFloatLinear" type="int">
+    <enum name="OestextureHalfFloatLinear" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_texture_half_float_linear" value="1" />
     </enum>
-    <enum name="OestextureNpot" type="int">
+    <enum name="OestextureNpot" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_texture_npot" value="1" />
     </enum>
-    <enum name="OesvertexHalfFloat" type="int">
+    <enum name="OesvertexHalfFloat" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="OES_vertex_half_float" value="1" />
     </enum>
-    <enum name="OesvertexType1010102" type="int">
+    <enum name="OesvertexType1010102" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
       <token name="INT_10_10_10_2_OES" value="0x8DF7" />
       <token name="OES_vertex_type_10_10_10_2" value="1" />
       <token name="UNSIGNED_INT_10_10_10_2_OES" value="0x8DF6" />

@@ -78,6 +78,7 @@ namespace Bind
                     d.Category = node.GetAttribute("category", String.Empty);
                     d.DeprecatedVersion = node.GetAttribute("deprecated", String.Empty);
                     d.Deprecated = !String.IsNullOrEmpty(d.DeprecatedVersion);
+                    d.Obsolete = node.GetAttribute("obsolete", String.Empty);
                 }
 
                 foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
@@ -142,7 +143,8 @@ namespace Bind
                     Enum e = new Enum()
                     {
                         Name = node.GetAttribute("name", String.Empty),
-                        Type = node.GetAttribute("type", String.Empty)
+                        Type = node.GetAttribute("type", String.Empty),
+                        Obsolete = node.GetAttribute("obsolete", String.Empty)
                     };
                     if (String.IsNullOrEmpty(e.Name))
                         throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
