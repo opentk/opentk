@@ -142,12 +142,12 @@ namespace OpenTK
         }
     }
 
-    #endif
-
     // System.Xml.XmlIgnoreAttribute
     class XmlIgnoreAttribute : Attribute
     {
     }
+
+    #endif
 
     // System.ComponentModel.EditorBrowrableAttribute
     class EditorBrowsableAttribute : Attribute
