@@ -653,7 +653,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ObjcBindingNativeLibrary Include="Resources\libSDL2.a" />
-    <ObjcBindingNativeLibrary Include="Resources\libSDL2main.a" />
+    <BundleResource Include="..\..\Dependencies\ios\libSDL2.a">
+      <Link>Resources\libSDL2.a</Link>
+    </BundleResource>
+    <BundleResource Include="..\..\Dependencies\ios\libSDL2main.a">
+      <Link>Resources\libSDL2main.a</Link>
+    </BundleResource>
   </ItemGroup>
 </Project>
