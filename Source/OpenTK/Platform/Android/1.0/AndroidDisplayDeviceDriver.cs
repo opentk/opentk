@@ -14,7 +14,7 @@ namespace OpenTK.Platform.Android
 {
 	class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
 	{
-		static DisplayDevice dev = null;
+		static DisplayDevice dev;
 		static AndroidDisplayDeviceDriver ()
 		{
 			dev = new DisplayDevice ();
@@ -24,7 +24,7 @@ namespace OpenTK.Platform.Android
 
 		public DisplayDevice GetDisplay(DisplayIndex displayIndex)
 		{
-			return dev;
+			return (displayIndex == DisplayIndex.First) ? dev : null;
 		}
 
 
