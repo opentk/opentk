@@ -24,7 +24,7 @@ namespace OpenTK.Platform.Android
 
 		public DisplayDevice GetDisplay(DisplayIndex displayIndex)
 		{
-			return (displayIndex == DisplayIndex.First) ? dev : null;
+			return (displayIndex == DisplayIndex.First || displayIndex == DisplayIndex.Primary) ? dev : null;
 		}
 
 
