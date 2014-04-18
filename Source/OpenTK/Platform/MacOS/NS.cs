@@ -48,6 +48,12 @@ namespace OpenTK.Platform.MacOS
         static extern IntPtr NSLookupAndBindSymbol(IntPtr s);
         [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
         static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
+        [DllImport(Library)]
+        private static extern IntPtr dlopen(String fileName, int flags);
+        [DllImport(Library)]
+        private static extern int dlclose(IntPtr handle);
+        [DllImport (Library)]
+        private static extern IntPtr dlsym (IntPtr handle, string symbol);
 
         public static IntPtr GetAddress(string function)
         {
@@ -86,6 +92,22 @@ namespace OpenTK.Platform.MacOS
                     symbol = NSAddressOfSymbol(symbol);
             }
             return symbol;
+        }
+
+        public static IntPtr GetSymbol(IntPtr handle, string symbol)
+        {
+            return dlsym(handle, symbol);
+        }
+
+        public static IntPtr LoadLibrary(string fileName)
+        {
+            const int RTLD_NOW = 2;
+            return dlopen(fileName, RTLD_NOW);
+        }
+
+        public static void FreeLibrary(IntPtr handle)
+        {
+            dlclose(handle);
         }
     }
 }
