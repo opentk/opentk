@@ -803,6 +803,18 @@
     <Compile Include="Input\HatPosition.cs" />
     <Compile Include="Input\JoystickHatState.cs" />
     <Compile Include="Input\KeyModifiers.cs" />
+    <Compile Include="Platform\MacOS\CocoaContext.cs" />
+    <Compile Include="Platform\MacOS\CocoaNativeWindow.cs" />
+    <Compile Include="Platform\MacOS\CocoaWindowInfo.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\Cocoa.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\Class.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\Selector.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSApplication.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSApplicationActivationPolicy.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSBackingStore.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSWindowStyle.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSOpenGLPixelFormatAttribute.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSOpenGLProfile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -832,4 +844,7 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Platform\MacOS\Cocoa\" />
+  </ItemGroup>
 </Project>
