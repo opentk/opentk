@@ -179,32 +179,29 @@ namespace OpenTK
             }
         }
 
-//        private unsafe void SetContextValue (int val, NSOpenGLContextParameter par)
-//        {
-//            int *p = &val;
-//            context.SetValues ((IntPtr)p, par);
-//        }
-//
-//        private unsafe int GetContextValue (NSOpenGLContextParameter par)
-//        {
-//            int ret;
-//            int *p = &ret;
-//            context.GetValues ((IntPtr)p, par);
-//
-//            return ret;
-//        }
+        private unsafe void SetContextValue (int val, NSOpenGLContextParameter par)
+        {
+            int* p = &val;
+            Cocoa.SendVoid(Handle.Handle, Selector.Get("setValues:forParameter:"), (IntPtr)p, (int)par);
+        }
+
+        private unsafe int GetContextValue (NSOpenGLContextParameter par)
+        {
+            int ret;
+            int* p = &ret;
+            Cocoa.SendVoid(Handle.Handle, Selector.Get("getValues:forParameter:"), (IntPtr)p, (int)par);
+            return ret;
+        }
 
         public override int SwapInterval
         { 
             get
             {
-                return 0;
-                //return GetContextValue(NSOpenGLContextParameter.SwapInterval);
+                return GetContextValue(NSOpenGLContextParameter.SwapInterval);
             }
             set
             {
-
-                //SetContextValue(value, NSOpenGLContextParameter.SwapInterval);
+                SetContextValue(value, NSOpenGLContextParameter.SwapInterval);
             }
         }
 
@@ -232,12 +229,10 @@ namespace OpenTK
 
             Debug.Print("Disposing of Cocoa context.");
 
-            Cocoa.SendIntPtr(NSOpenGLContext, Selector.Get("clearCurrentContext"));
+            Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
+            Cocoa.SendVoid(currentContext, Selector.Get("clearDrawable"));
+            Cocoa.SendVoid(currentContext, Selector.Get("release"));
 
-//            NSOpenGLContext.ClearCurrentContext();
-//            context.ClearDrawable();
-//            context.Dispose();
-//            context = null;
             Handle = ContextHandle.Zero;
 
             IsDisposed = true;

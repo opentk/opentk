@@ -815,6 +815,7 @@
     <Compile Include="Platform\MacOS\Cocoa\NSWindowStyle.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSOpenGLPixelFormatAttribute.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSOpenGLProfile.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSOpenGLContextParameter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
