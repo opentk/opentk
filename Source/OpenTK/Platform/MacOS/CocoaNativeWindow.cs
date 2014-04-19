@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenTK.Graphics;
+using System.Drawing;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -22,8 +23,6 @@ namespace OpenTK.Platform.MacOS
         public event System.EventHandler<System.EventArgs> MouseLeave;
         public event System.EventHandler<System.EventArgs> MouseEnter;
 
-        private CocoaWindowInfo windowInfo;
-
         static readonly IntPtr nextEventMatchingMask = Selector.Get("nextEventMatchingMask:untilDate:inMode:dequeue:");
         static readonly IntPtr sendEvent = Selector.Get("sendEvent:");
         static readonly IntPtr updateWindows = Selector.Get("updateWindows");
@@ -36,22 +35,40 @@ namespace OpenTK.Platform.MacOS
             NSDefaultRunLoopMode = Cocoa.GetStringConstant(Cocoa.FoundationLibrary, "NSDefaultRunLoopMode");
         }
 
+        private CocoaWindowInfo windowInfo;
+        private IntPtr windowClass;
+
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
+            // Create the window class
+            windowClass = Class.AllocateClass("OpenTKWindow", "NSWindow");
+            Class.RegisterMethod(windowClass, new WindowDidResizeDelegate(WindowDidResize), "windowDidResize:", "v@:@");
+            Class.RegisterClass(windowClass);
+
+            // Create window instance
             var contentRect = new System.Drawing.RectangleF(x, y, width, height);
             var style = NSWindowStyle.Titled | NSWindowStyle.Resizable;
             var bufferingType = NSBackingStore.Buffered;
 
             IntPtr windowPtr;
-            windowPtr = Cocoa.SendIntPtr(Class.Get("NSWindow"), Selector.Alloc);
+            windowPtr = Cocoa.SendIntPtr(windowClass, Selector.Alloc);
             windowPtr = Cocoa.SendIntPtr(windowPtr, Selector.Get("initWithContentRect:styleMask:backing:defer:"), contentRect, (int)style, (int)bufferingType, false);
             windowPtr = Cocoa.SendIntPtr(windowPtr, Selector.Autorelease);
 
+            // Set up behavior
+            Cocoa.SendIntPtr(windowPtr, Selector.Get("setDelegate:"), windowPtr); // The window class acts as its own delegate 
             Cocoa.SendVoid(windowPtr, Selector.Get("cascadeTopLeftFromPoint:"), new System.Drawing.PointF(20, 20));
             Cocoa.SendVoid(windowPtr, Selector.Get("setTitle:"), Cocoa.ToNative(title));
             Cocoa.SendVoid(windowPtr, Selector.Get("makeKeyAndOrderFront:"), IntPtr.Zero);
 
             windowInfo = new CocoaWindowInfo(windowPtr);
+        }
+
+        delegate void WindowDidResizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+
+        void WindowDidResize(IntPtr self, IntPtr cmd, IntPtr notification)
+        {
+            GraphicsContext.CurrentContext.Update(windowInfo);
         }
 
         public static IntPtr GetView(IntPtr windowHandle)
