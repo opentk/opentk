@@ -1,6 +1,6 @@
 ﻿namespace OpenTK.Platform.MacOS
 {
-    public enum NSApplicationPresentationOptions
+    enum NSApplicationPresentationOptions
     {
         Default = 0,
         AutoHideDock = 1,
