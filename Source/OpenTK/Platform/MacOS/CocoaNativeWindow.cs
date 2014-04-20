@@ -32,7 +32,7 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selContentView = Selector.Get("contentView");
         static readonly IntPtr selConvertRectFromScreen = Selector.Get("convertRectFromScreen:");
         static readonly IntPtr selConvertRectToScreen = Selector.Get("convertRectToScreen:");
-        //static readonly IntPtr selPerformClose = Selector.Get("performClose:");
+        static readonly IntPtr selPerformClose = Selector.Get("performClose:");
         static readonly IntPtr selClose = Selector.Get("close");
         static readonly IntPtr selTitle = Selector.Get("title");
         static readonly IntPtr selSetTitle = Selector.Get("setTitle:");
@@ -63,6 +63,7 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selScrollingDeltaY = Selector.Get("scrollingDeltaY");
         static readonly IntPtr selButtonNumber = Selector.Get("buttonNumber");
         static readonly IntPtr selSetStyleMask = Selector.Get("setStyleMask:");
+        static readonly IntPtr selStyleMask = Selector.Get("styleMask");
         static readonly IntPtr selIsMiniaturized = Selector.Get("isMiniaturized");
         static readonly IntPtr selIsZoomed = Selector.Get("isZoomed");
         static readonly IntPtr selMiniaturize = Selector.Get("miniaturize:");
@@ -98,12 +99,12 @@ namespace OpenTK.Platform.MacOS
         private MacOSKeyMap keyMap = new MacOSKeyMap();
         private OpenTK.Input.KeyboardKeyEventArgs keyArgs = new OpenTK.Input.KeyboardKeyEventArgs();
         private KeyPressEventArgs keyPressArgs = new KeyPressEventArgs((char)0);
+        string title;
 
         bool exclusiveFullscreen = true;
         bool fullscreenMode;
-        Rectangle preFullscreenSize;
+        RectangleF preFullscreenBounds;
         int preFullscreenLevel;
-        string preFullscreenTitle;
 
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
@@ -113,6 +114,10 @@ namespace OpenTK.Platform.MacOS
             Class.RegisterMethod(windowClass, new WindowDidMoveDelegate(WindowDidMove), "windowDidMove:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidBecomeKeyDelegate(WindowDidBecomeKey), "windowDidBecomeKey:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidResignKeyDelegate(WindowDidResignKey), "windowDidResignKey:", "v@:@");
+            Class.RegisterMethod(windowClass, new WindowDidMiniaturizeDelegate(WindowDidMiniaturize), "windowDidMiniaturize:", "v@:@");
+            Class.RegisterMethod(windowClass, new WindowDidDeminiaturizeDelegate(WindowDidDeminiaturize), "windowDidDeminiaturize:", "v@:@");
+            Class.RegisterMethod(windowClass, new WindowShouldZoomToFrameDelegate(WindowShouldZoomToFrame), "windowShouldZoom:toFrame:", "b@:@{NSRect={NSPoint=ff}{NSSize=ff}}");
+           
             Class.RegisterMethod(windowClass, new WindowShouldCloseDelegate(WindowShouldClose), "windowShouldClose:", "b@:@");
             Class.RegisterMethod(windowClass, new AcceptsFirstResponderDelegate(AcceptsFirstResponder), "acceptsFirstResponder", "b@:");
             Class.RegisterMethod(windowClass, new CanBecomeKeyWindowDelegate(CanBecomeKeyWindow), "canBecomeKeyWindow", "b@:");
@@ -143,6 +148,9 @@ namespace OpenTK.Platform.MacOS
         delegate void WindowDidMoveDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidBecomeKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidResignKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        delegate void WindowDidMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        delegate void WindowDidDeminiaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        delegate bool WindowShouldZoomToFrameDelegate(IntPtr self, IntPtr cmd, IntPtr nsWindow, RectangleF toFrame);
         delegate bool WindowShouldCloseDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
         delegate bool AcceptsFirstResponderDelegate(IntPtr self, IntPtr cmd);
         delegate bool CanBecomeKeyWindowDelegate(IntPtr self, IntPtr cmd);
@@ -157,6 +165,8 @@ namespace OpenTK.Platform.MacOS
 
         private void WindowDidMove(IntPtr self, IntPtr cmd, IntPtr notification)
         {
+            // Problem: Called only when you stop moving for a brief moment,
+            // not each frame as it is on PC.
             Move(this, EventArgs.Empty);
         }
 
@@ -168,6 +178,23 @@ namespace OpenTK.Platform.MacOS
         private void WindowDidResignKey(IntPtr self, IntPtr cmd, IntPtr notification)
         {
             FocusedChanged(this, EventArgs.Empty);
+        }
+
+        private void WindowDidMiniaturize(IntPtr self, IntPtr cmd, IntPtr notification)
+        {
+            WindowStateChanged(this, EventArgs.Empty);
+        }
+
+        private void WindowDidDeminiaturize(IntPtr self, IntPtr cmd, IntPtr notification)
+        {
+            WindowStateChanged(this, EventArgs.Empty);
+        }
+
+        private bool WindowShouldZoomToFrame(IntPtr self, IntPtr cmd, IntPtr nsWindow, RectangleF toFrame)
+        {
+            // Problem: This is called before the zoom/unzoom event animation begins rather than afterwards.
+            WindowStateChanged(this, EventArgs.Empty);
+            return true;
         }
 
         private bool WindowShouldClose(IntPtr self, IntPtr cmd, IntPtr sender)
@@ -220,17 +247,17 @@ namespace OpenTK.Platform.MacOS
         {
             // PerformClose is equivalent to pressing the close-button, which
             // does not work in a borderless window. Handle this special case.
-            //if (WindowBorder == WindowBorder.Hidden)
+            if (GetStyleMask() == NSWindowStyle.Borderless)
             {
                 if (WindowShouldClose(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero))
                 {
                     Cocoa.SendVoid(windowInfo.Handle, selClose);
                 }
             }
-//            else
-//            {
-//                Cocoa.SendVoid(windowInfo.Handle, selPerformClose, windowInfo.Handle);
-//            }
+            else
+            {
+                Cocoa.SendVoid(windowInfo.Handle, selPerformClose, windowInfo.Handle);
+            }
         }
 
         private KeyModifiers GetModifiers(NSEventModifierMask mask)
@@ -482,9 +509,8 @@ namespace OpenTK.Platform.MacOS
                     Cocoa.SendVoid(windowInfo.Handle, selSetLevel, preFullscreenLevel);
                 }
 
-                Cocoa.SendVoid(windowInfo.Handle, selSetStyleMask, (uint)GetStyleMask(windowBorder));
-                Bounds = preFullscreenSize;
-                SetTitle(preFullscreenTitle, false); // For some reason, the title is lost
+                UpdateWindowBorder();
+                InternalBounds = preFullscreenBounds;
                 fullscreenMode = false;
             }
             else if (ws == WindowState.Maximized)
@@ -519,6 +545,7 @@ namespace OpenTK.Platform.MacOS
                     return;
 
                 RestoreWindowState();
+                bool sendEvent = true;
 
                 if (value == WindowState.Fullscreen)
                 {
@@ -540,8 +567,8 @@ namespace OpenTK.Platform.MacOS
 //                    Cocoa.SendVoid(windowInfo.ViewHandle, selEnterFullScreenModeWithOptions, GetCurrentScreen(), nsDictionary);
 
                     fullscreenMode = true;
-                    preFullscreenSize = Bounds;
-                    preFullscreenTitle = Title;
+
+                    preFullscreenBounds = InternalBounds;
                     var screenFrame = GetCurrentScreenFrame();
 
                     if (exclusiveFullscreen)
@@ -554,7 +581,7 @@ namespace OpenTK.Platform.MacOS
                     }
 
                     Cocoa.SendVoid(windowInfo.Handle, selSetStyleMask, (uint)NSWindowStyle.Borderless);
-                    Bounds = new Rectangle((int)screenFrame.X, (int)screenFrame.Y, (int)screenFrame.Width, (int)screenFrame.Height);
+                    InternalBounds = screenFrame;
                     SetMenuVisible(false);
                 }
                 else if (value == WindowState.Maximized)
@@ -564,9 +591,14 @@ namespace OpenTK.Platform.MacOS
                 else if (value == WindowState.Minimized)
                 {
                     Cocoa.SendVoid(windowInfo.Handle, selMiniaturize, windowInfo.Handle);
+                    sendEvent = false; // Event sent by listener
                 }
 
-                WindowStateChanged(this, EventArgs.Empty);
+                if (sendEvent)
+                {
+                    WindowStateChanged(this, EventArgs.Empty);
+                }
+
                 WindowDidResize(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
             }
         }
@@ -580,7 +612,7 @@ namespace OpenTK.Platform.MacOS
             set
             {
                 windowBorder = value;
-                Cocoa.SendVoid(windowInfo.Handle, selSetStyleMask, (uint)GetStyleMask(windowBorder));
+                UpdateWindowBorder();
                 WindowBorderChanged(this, EventArgs.Empty);
             }
         }
@@ -602,11 +634,23 @@ namespace OpenTK.Platform.MacOS
             get
             {
                 var r = Cocoa.SendRect(windowInfo.Handle, selFrame);
-                return new Rectangle((int)r.X, (int)r.Y, (int)r.Width, (int)r.Height);
+                return new Rectangle((int)r.X, (int)(GetCurrentScreenFrame().Height - r.Y), (int)r.Width, (int)r.Height);
             }
             set
             {
-                Cocoa.SendVoid(windowInfo.Handle, selSetFrame, new RectangleF(value.X, value.Y, value.Width, value.Height), true);
+                Cocoa.SendVoid(windowInfo.Handle, selSetFrame, new RectangleF(value.X, GetCurrentScreenFrame().Height - value.Y, value.Width, value.Height), true);
+            }
+        }
+
+        private System.Drawing.RectangleF InternalBounds
+        {
+            get
+            {
+                return Cocoa.SendRect(windowInfo.Handle, selFrame);
+            }
+            set
+            {
+                Cocoa.SendVoid(windowInfo.Handle, selSetFrame, value, true);
             }
         }
 
@@ -673,7 +717,7 @@ namespace OpenTK.Platform.MacOS
             get { return ClientRectangle.Width; }
             set
             {
-                var s = Size;
+                var s = ClientSize;
                 s.Width = value;
                 ClientSize = s;
             }
@@ -684,7 +728,7 @@ namespace OpenTK.Platform.MacOS
             get { return ClientRectangle.Height; }
             set
             {
-                var s = Size;
+                var s = ClientSize;
                 s.Height = value;
                 ClientSize = s;
             }
@@ -802,6 +846,8 @@ namespace OpenTK.Platform.MacOS
 
         private void SetCursorVisible(bool visible)
         {
+            // Problem: Unlike the PC version, you can move the mouse out of the window.
+            // Perhaps use CG.WarpMouseCursorPosition to clamp mouse?
             Cocoa.SendVoid(NSCursor, visible ? selUnhide : selHide);
         }
 
@@ -824,11 +870,24 @@ namespace OpenTK.Platform.MacOS
 
         private void SetTitle(string newTitle, bool callEvent)
         {
-            Cocoa.SendIntPtr(windowInfo.Handle, selSetTitle, Cocoa.ToNSString(newTitle));
+            title = newTitle ?? "";
+
+            Cocoa.SendIntPtr(windowInfo.Handle, selSetTitle, Cocoa.ToNSString(title));
             if (callEvent)
             {
                 TitleChanged(this, EventArgs.Empty);
             }
+        }
+
+        private void UpdateWindowBorder()
+        {
+            Cocoa.SendVoid(windowInfo.Handle, selSetStyleMask, (uint)GetStyleMask(windowBorder));
+            SetTitle(title, false); // Title gets lost after going borderless
+        }
+
+        private NSWindowStyle GetStyleMask()
+        {
+            return (NSWindowStyle)Cocoa.SendUint(windowInfo.Handle, selStyleMask);
         }
     }
 }
