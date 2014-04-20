@@ -816,6 +816,11 @@
     <Compile Include="Platform\MacOS\Cocoa\NSOpenGLPixelFormatAttribute.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSOpenGLProfile.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSOpenGLContextParameter.cs" />
+    <Compile Include="Platform\LegacyInputDriver.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSEventType.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSEventModifierMask.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSTrackingAreaOptions.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSApplicationPresentationOptions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

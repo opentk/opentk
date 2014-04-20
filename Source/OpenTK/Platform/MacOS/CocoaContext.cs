@@ -14,10 +14,10 @@ namespace OpenTK
         private IntPtr shareContextRef;
 
         static readonly IntPtr NSOpenGLContext = Class.Get("NSOpenGLContext");
-        static readonly IntPtr currentContext = Selector.Get("currentContext");
-        static readonly IntPtr flushBuffer = Selector.Get("flushBuffer");
-        static readonly IntPtr makeCurrentContext = Selector.Get("makeCurrentContext");
-        static readonly IntPtr update = Selector.Get("update");
+        static readonly IntPtr selCurrentContext = Selector.Get("currentContext");
+        static readonly IntPtr selFlushBuffer = Selector.Get("flushBuffer");
+        static readonly IntPtr selMakeCurrentContext = Selector.Get("makeCurrentContext");
+        static readonly IntPtr selUpdate = Selector.Get("update");
 
         static CocoaContext()
         {
@@ -155,12 +155,12 @@ namespace OpenTK
 
         public override void SwapBuffers()
         {
-            Cocoa.SendVoid(Handle.Handle, flushBuffer);
+            Cocoa.SendVoid(Handle.Handle, selFlushBuffer);
         }
 
         public override void MakeCurrent(IWindowInfo window)
         {
-            Cocoa.SendVoid(Handle.Handle, makeCurrentContext);
+            Cocoa.SendVoid(Handle.Handle, selMakeCurrentContext);
         }
 
         public override bool IsCurrent
@@ -175,7 +175,7 @@ namespace OpenTK
         {
             get
             {
-                return Cocoa.SendIntPtr(NSOpenGLContext, currentContext);
+                return Cocoa.SendIntPtr(NSOpenGLContext, selCurrentContext);
             }
         }
 
@@ -207,7 +207,7 @@ namespace OpenTK
 
         public override void Update(IWindowInfo window)
         {
-            Cocoa.SendVoid(Handle.Handle, update);
+            Cocoa.SendVoid(Handle.Handle, selUpdate);
         }
 
         #region IDisposable Members
@@ -230,8 +230,8 @@ namespace OpenTK
             Debug.Print("Disposing of Cocoa context.");
 
             Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
-            Cocoa.SendVoid(currentContext, Selector.Get("clearDrawable"));
-            Cocoa.SendVoid(currentContext, Selector.Get("release"));
+            Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
+            Cocoa.SendVoid(Handle.Handle, Selector.Get("release"));
 
             Handle = ContextHandle.Zero;
 
