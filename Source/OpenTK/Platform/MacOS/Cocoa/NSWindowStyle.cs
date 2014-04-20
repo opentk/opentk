@@ -3,7 +3,7 @@
 namespace OpenTK.Platform.MacOS
 {
     [Flags]
-    public enum NSWindowStyle
+    enum NSWindowStyle
     {
         Borderless = 0,
         Titled = 1,
