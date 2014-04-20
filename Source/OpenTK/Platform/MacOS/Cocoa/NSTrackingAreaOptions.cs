@@ -3,7 +3,7 @@
 namespace OpenTK.Platform.MacOS
 {
     [Flags]
-    public enum NSTrackingAreaOptions
+    enum NSTrackingAreaOptions
     {
         MouseEnteredAndExited = 1,
         MouseMoved = 2,

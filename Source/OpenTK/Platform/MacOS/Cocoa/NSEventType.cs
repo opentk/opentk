@@ -1,6 +1,6 @@
 ﻿namespace OpenTK.Platform.MacOS
 {
-    public enum NSEventType
+    enum NSEventType
     {
         LeftMouseDown = 1,
         LeftMouseUp = 2,
