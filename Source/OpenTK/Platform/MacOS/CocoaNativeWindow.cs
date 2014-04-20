@@ -64,8 +64,8 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selButtonNumber = Selector.Get("buttonNumber");
         static readonly IntPtr selSetStyleMask = Selector.Get("setStyleMask:");
         static readonly IntPtr selStyleMask = Selector.Get("styleMask");
-        static readonly IntPtr selIsMiniaturized = Selector.Get("isMiniaturized");
-        static readonly IntPtr selIsZoomed = Selector.Get("isZoomed");
+//        static readonly IntPtr selIsMiniaturized = Selector.Get("isMiniaturized");
+//        static readonly IntPtr selIsZoomed = Selector.Get("isZoomed");
         static readonly IntPtr selMiniaturize = Selector.Get("miniaturize:");
         static readonly IntPtr selDeminiaturize = Selector.Get("deminiaturize:");
         static readonly IntPtr selZoom = Selector.Get("zoom:");
@@ -96,15 +96,15 @@ namespace OpenTK.Platform.MacOS
         private System.Drawing.Icon icon;
         private LegacyInputDriver inputDriver = new LegacyInputDriver();
         private WindowBorder windowBorder = WindowBorder.Resizable;
+        private WindowState windowState = WindowState.Normal;
         private MacOSKeyMap keyMap = new MacOSKeyMap();
         private OpenTK.Input.KeyboardKeyEventArgs keyArgs = new OpenTK.Input.KeyboardKeyEventArgs();
         private KeyPressEventArgs keyPressArgs = new KeyPressEventArgs((char)0);
         string title;
+        RectangleF normalBounds;
+        int normalLevel;
 
-        bool exclusiveFullscreen = true;
-        bool fullscreenMode;
-        RectangleF preFullscreenBounds;
-        int preFullscreenLevel;
+        const bool exclusiveFullscreen = true;
 
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
@@ -114,10 +114,11 @@ namespace OpenTK.Platform.MacOS
             Class.RegisterMethod(windowClass, new WindowDidMoveDelegate(WindowDidMove), "windowDidMove:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidBecomeKeyDelegate(WindowDidBecomeKey), "windowDidBecomeKey:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidResignKeyDelegate(WindowDidResignKey), "windowDidResignKey:", "v@:@");
+            Class.RegisterMethod(windowClass, new WindowWillMiniaturizeDelegate(WindowWillMiniaturize), "windowWillMiniaturize:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidMiniaturizeDelegate(WindowDidMiniaturize), "windowDidMiniaturize:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidDeminiaturizeDelegate(WindowDidDeminiaturize), "windowDidDeminiaturize:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowShouldZoomToFrameDelegate(WindowShouldZoomToFrame), "windowShouldZoom:toFrame:", "b@:@{NSRect={NSPoint=ff}{NSSize=ff}}");
-           
+
             Class.RegisterMethod(windowClass, new WindowShouldCloseDelegate(WindowShouldClose), "windowShouldClose:", "b@:@");
             Class.RegisterMethod(windowClass, new AcceptsFirstResponderDelegate(AcceptsFirstResponder), "acceptsFirstResponder", "b@:");
             Class.RegisterMethod(windowClass, new CanBecomeKeyWindowDelegate(CanBecomeKeyWindow), "canBecomeKeyWindow", "b@:");
@@ -148,6 +149,7 @@ namespace OpenTK.Platform.MacOS
         delegate void WindowDidMoveDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidBecomeKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidResignKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        delegate void WindowWillMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidDeminiaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate bool WindowShouldZoomToFrameDelegate(IntPtr self, IntPtr cmd, IntPtr nsWindow, RectangleF toFrame);
@@ -158,7 +160,15 @@ namespace OpenTK.Platform.MacOS
 
         private void WindowDidResize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
-            ResetTrackingArea();
+            OnResize(true);
+        }
+
+        private void OnResize(bool resetTracking)
+        {
+            if (resetTracking)
+            {
+                ResetTrackingArea();
+            }
             GraphicsContext.CurrentContext.Update(windowInfo);
             Resize(this, EventArgs.Empty);
         }
@@ -180,21 +190,45 @@ namespace OpenTK.Platform.MacOS
             FocusedChanged(this, EventArgs.Empty);
         }
 
+        private void WindowWillMiniaturize(IntPtr self, IntPtr cmd, IntPtr notification)
+        {
+            // Can get stuck in weird states if we maximize, then minimize; 
+            // restoring to the old state would override the normalBounds.
+            // To avoid this without adding complexity, just restore state here.
+            RestoreWindowState(); // Avoid getting in weird states
+        }
+
         private void WindowDidMiniaturize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
+            windowState = WindowState.Minimized;
             WindowStateChanged(this, EventArgs.Empty);
+            OnResize(false); // Don't set tracking area when we minimize
         }
 
         private void WindowDidDeminiaturize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
+            windowState = WindowState.Normal;
             WindowStateChanged(this, EventArgs.Empty);
+            OnResize(true);
         }
 
         private bool WindowShouldZoomToFrame(IntPtr self, IntPtr cmd, IntPtr nsWindow, RectangleF toFrame)
         {
-            // Problem: This is called before the zoom/unzoom event animation begins rather than afterwards.
-            WindowStateChanged(this, EventArgs.Empty);
-            return true;
+            if (windowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+            }
+            else
+            {
+                normalBounds = InternalBounds;
+                Cocoa.SendVoid(windowInfo.Handle, selSetStyleMask, (uint)GetStyleMask(WindowBorder.Fixed));
+
+                InternalBounds = toFrame;
+                windowState = WindowState.Maximized;
+
+                WindowStateChanged(this, EventArgs.Empty);
+            }
+            return false;
         }
 
         private bool WindowShouldClose(IntPtr self, IntPtr cmd, IntPtr sender)
@@ -497,8 +531,7 @@ namespace OpenTK.Platform.MacOS
 
         private void RestoreWindowState()
         {
-            var ws = WindowState;
-            if (ws == WindowState.Fullscreen)
+            if (windowState == WindowState.Fullscreen)
             {
                 //Cocoa.SendVoid(windowInfo.ViewHandle, selExitFullScreenModeWithOptions, IntPtr.Zero);
 
@@ -506,74 +539,63 @@ namespace OpenTK.Platform.MacOS
                 if (exclusiveFullscreen)
                 {
                     OpenTK.Platform.MacOS.Carbon.CG.DisplayReleaseAll();
-                    Cocoa.SendVoid(windowInfo.Handle, selSetLevel, preFullscreenLevel);
+                    Cocoa.SendVoid(windowInfo.Handle, selSetLevel, normalLevel);
                 }
 
                 UpdateWindowBorder();
-                InternalBounds = preFullscreenBounds;
-                fullscreenMode = false;
+                InternalBounds = normalBounds;
             }
-            else if (ws == WindowState.Maximized)
+            else if (windowState == WindowState.Maximized)
             {
-                Cocoa.SendVoid(windowInfo.Handle, selZoom, windowInfo.Handle);
+                UpdateWindowBorder();
+                InternalBounds = normalBounds;
             }
-            else if (ws == WindowState.Minimized)
+            else if (windowState == WindowState.Minimized)
             {
                 Cocoa.SendVoid(windowInfo.Handle, selDeminiaturize, windowInfo.Handle);
             }
+
+            windowState = WindowState.Normal;
         }
 
         public WindowState WindowState
         {
             get
             {
-                if (fullscreenMode)
-                    return WindowState.Fullscreen;
-
-                if (Cocoa.SendBool(windowInfo.Handle, selIsMiniaturized))
-                    return WindowState.Minimized;
-
-                if (Cocoa.SendBool(windowInfo.Handle, selIsZoomed))
-                    return WindowState.Maximized;
-
-                return WindowState.Normal;
+                return windowState;
             }
             set
             {
-                var oldState = WindowState;
+                var oldState = windowState;
                 if (oldState == value)
                     return;
 
                 RestoreWindowState();
-                bool sendEvent = true;
 
                 if (value == WindowState.Fullscreen)
                 {
-//                    NSApplicationPresentationOptions options = 
-//                        NSApplicationPresentationOptions.DisableAppleMenu |
-//                        NSApplicationPresentationOptions.HideMenuBar |
-//                        NSApplicationPresentationOptions.HideDock;
-//
-//                    // "Exclusive fullscreen"?
-//                    //NSApplicationPresentationOptions.DisableProcessSwitching;
-//
-//                    var obj = Cocoa.SendIntPtr(Class.Get("NSNumber"), Selector.Get("numberWithUnsignedLong:"), (ulong)options);
-//                    var key = Cocoa.ToNSString("NSFullScreenModeApplicationPresentationOptions");
-//                    
-//                    var nsDictionary = Cocoa.SendIntPtr(Class.Get("NSDictionary"), Selector.Alloc);
-//                    nsDictionary = Cocoa.SendIntPtr(nsDictionary, Selector.Get("initWithObjectsAndKeys:"), obj, key, IntPtr.Zero);
-//                    nsDictionary = Cocoa.SendIntPtr(nsDictionary, Selector.Autorelease);
-//
-//                    Cocoa.SendVoid(windowInfo.ViewHandle, selEnterFullScreenModeWithOptions, GetCurrentScreen(), nsDictionary);
+                    //                    NSApplicationPresentationOptions options = 
+                    //                        NSApplicationPresentationOptions.DisableAppleMenu |
+                    //                        NSApplicationPresentationOptions.HideMenuBar |
+                    //                        NSApplicationPresentationOptions.HideDock;
+                    //
+                    //                    // "Exclusive fullscreen"?
+                    //                    //NSApplicationPresentationOptions.DisableProcessSwitching;
+                    //
+                    //                    var obj = Cocoa.SendIntPtr(Class.Get("NSNumber"), Selector.Get("numberWithUnsignedLong:"), (ulong)options);
+                    //                    var key = Cocoa.ToNSString("NSFullScreenModeApplicationPresentationOptions");
+                    //                    
+                    //                    var nsDictionary = Cocoa.SendIntPtr(Class.Get("NSDictionary"), Selector.Alloc);
+                    //                    nsDictionary = Cocoa.SendIntPtr(nsDictionary, Selector.Get("initWithObjectsAndKeys:"), obj, key, IntPtr.Zero);
+                    //                    nsDictionary = Cocoa.SendIntPtr(nsDictionary, Selector.Autorelease);
+                    //
+                    //                    Cocoa.SendVoid(windowInfo.ViewHandle, selEnterFullScreenModeWithOptions, GetCurrentScreen(), nsDictionary);
 
-                    fullscreenMode = true;
-
-                    preFullscreenBounds = InternalBounds;
-                    var screenFrame = GetCurrentScreenFrame();
+                    normalBounds = InternalBounds;
 
                     if (exclusiveFullscreen)
                     {
-                        preFullscreenLevel = Cocoa.SendInt(windowInfo.Handle, selLevel);
+                        normalLevel = Cocoa.SendInt(windowInfo.Handle, selLevel);
                         var windowLevel = OpenTK.Platform.MacOS.Carbon.CG.ShieldingWindowLevel();
 
                         OpenTK.Platform.MacOS.Carbon.CG.CaptureAllDisplays();
@@ -581,8 +603,11 @@ namespace OpenTK.Platform.MacOS
                     }
 
                     Cocoa.SendVoid(windowInfo.Handle, selSetStyleMask, (uint)NSWindowStyle.Borderless);
-                    InternalBounds = screenFrame;
+                    InternalBounds = GetCurrentScreenFrame();
                     SetMenuVisible(false);
+
+                    windowState = value;
+                    WindowStateChanged(this, EventArgs.Empty);
                 }
                 else if (value == WindowState.Maximized)
                 {
@@ -591,15 +616,12 @@ namespace OpenTK.Platform.MacOS
                 else if (value == WindowState.Minimized)
                 {
                     Cocoa.SendVoid(windowInfo.Handle, selMiniaturize, windowInfo.Handle);
-                    sendEvent = false; // Event sent by listener
                 }
-
-                if (sendEvent)
+                else if (value == WindowState.Normal)
                 {
+                    windowState = value;
                     WindowStateChanged(this, EventArgs.Empty);
                 }
-
-                WindowDidResize(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
             }
         }
 
@@ -833,7 +855,7 @@ namespace OpenTK.Platform.MacOS
         {
             return Cocoa.SendRect(windowInfo.ViewHandle, selFrame);
         }
-        
+
         private IntPtr GetCurrentScreen()
         {
             return Cocoa.SendIntPtr(windowInfo.Handle, selScreen);
