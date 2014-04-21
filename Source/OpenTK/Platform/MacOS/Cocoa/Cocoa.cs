@@ -82,14 +82,14 @@ namespace OpenTK.Platform.MacOS
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
         public extern static float SendFloat(IntPtr receiver, IntPtr selector);
 
+        [DllImport (LibObjC, EntryPoint="objc_msgSend")] // Not the _stret version, perhaps because a PointF fits in one register?
+        public extern static PointF SendPoint(IntPtr receiver, IntPtr selector);
+
         [DllImport (LibObjC, EntryPoint="objc_msgSend_stret")]
         extern static void SendRect(out System.Drawing.RectangleF retval, IntPtr receiver, IntPtr selector);
 
         [DllImport (LibObjC, EntryPoint="objc_msgSend_stret")]
         extern static void SendRect(out System.Drawing.RectangleF retval, IntPtr receiver, IntPtr selector, RectangleF rect1);
-
-        [DllImport (LibObjC, EntryPoint="objc_msgSend_stret")]
-        extern static void SendPoint(out System.Drawing.PointF retval, IntPtr receiver, IntPtr selector);
 
         public static RectangleF SendRect(IntPtr receiver, IntPtr selector)
         {
@@ -102,13 +102,6 @@ namespace OpenTK.Platform.MacOS
         {
             RectangleF r;
             SendRect(out r, receiver, selector, rect1);
-            return r;
-        }
-
-        public static PointF SendPoint(IntPtr receiver, IntPtr selector)
-        {
-            PointF r;
-            SendPoint(out r, receiver, selector);
             return r;
         }
 
