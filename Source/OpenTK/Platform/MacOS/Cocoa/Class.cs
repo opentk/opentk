@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System;
+using System.Collections.Generic;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -40,6 +41,8 @@ namespace OpenTK.Platform.MacOS
             objc_registerClassPair(handle);
         }
 
+        static List<Delegate> storedDelegates = new List<Delegate>();
+
         public static void RegisterMethod(IntPtr handle, Delegate d, string selector, string typeString)
         {
             // TypeString info:
@@ -52,6 +55,8 @@ namespace OpenTK.Platform.MacOS
             {
                 throw new ArgumentException("Could not register method " + d + " in class + " + class_getName(handle));
             }
+
+            storedDelegates.Add(d); // Don't let the garbage collector eat our delegates.
         }
     }
 }
