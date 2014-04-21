@@ -100,11 +100,12 @@ namespace OpenTK.Platform.MacOS
         private MacOSKeyMap keyMap = new MacOSKeyMap();
         private OpenTK.Input.KeyboardKeyEventArgs keyArgs = new OpenTK.Input.KeyboardKeyEventArgs();
         private KeyPressEventArgs keyPressArgs = new KeyPressEventArgs((char)0);
-        string title;
-        RectangleF normalBounds;
-        int normalLevel;
+        private string title;
+        private RectangleF normalBounds;
+        private int normalLevel;
+        private bool shouldClose;
 
-        const bool exclusiveFullscreen = true;
+        private const bool exclusiveFullscreen = false;
 
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
@@ -280,19 +281,7 @@ namespace OpenTK.Platform.MacOS
 
         public void Close()
         {
-            // PerformClose is equivalent to pressing the close-button, which
-            // does not work in a borderless window. Handle this special case.
-            if (GetStyleMask() == NSWindowStyle.Borderless)
-            {
-                if (WindowShouldClose(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero))
-                {
-                    Cocoa.SendVoid(windowInfo.Handle, selClose);
-                }
-            }
-            else
-            {
-                Cocoa.SendVoid(windowInfo.Handle, selPerformClose, windowInfo.Handle);
-            }
+            shouldClose = true;
         }
 
         private KeyModifiers GetModifiers(NSEventModifierMask mask)
@@ -461,6 +450,26 @@ namespace OpenTK.Platform.MacOS
                 }
 
                 Cocoa.SendVoid(NSApplication.Handle, selSendEvent, e);
+            }
+
+            // Handle closing
+            if (shouldClose)
+            {
+                shouldClose = false;
+
+                // PerformClose is equivalent to pressing the close-button, which
+                // does not work in a borderless window. Handle this special case.
+                if (GetStyleMask() == NSWindowStyle.Borderless)
+                {
+                    if (WindowShouldClose(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero))
+                    {
+                        Cocoa.SendVoid(windowInfo.Handle, selClose);
+                    }
+                }
+                else
+                {
+                    Cocoa.SendVoid(windowInfo.Handle, selPerformClose, windowInfo.Handle);
+                }
             }
         }
 
