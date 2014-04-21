@@ -266,6 +266,7 @@ namespace OpenTK.Platform.MacOS
             if (trackingArea != IntPtr.Zero)
             {
                 Cocoa.SendVoid(owner, selRemoveTrackingArea, trackingArea);
+                Cocoa.SendVoid(trackingArea, Selector.Release);
             }
 
             var ownerBounds = Cocoa.SendRect(owner, selBounds);
@@ -329,132 +330,138 @@ namespace OpenTK.Platform.MacOS
 
         public void ProcessEvents()
         {
-            var e = Cocoa.SendIntPtr(NSApplication.Handle, selNextEventMatchingMask, uint.MaxValue, IntPtr.Zero, NSDefaultRunLoopMode, true);
-
-            if (e == IntPtr.Zero)
-                return;
-
-            var type = (NSEventType)Cocoa.SendInt(e, selType);
-            switch (type)
+            while (true)
             {
-                case NSEventType.KeyDown:
-                    {
-                        var keyCode = Cocoa.SendUshort(e, selKeyCode);
-                        var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
-                        var isARepeat = Cocoa.SendBool(e, selIsARepeat);
-                        GetKey(keyCode, modifierFlags, keyArgs);
-                        InputDriver.Keyboard[0].SetKey(keyArgs.Key, keyArgs.ScanCode, true);
+                var e = Cocoa.SendIntPtr(NSApplication.Handle, selNextEventMatchingMask, uint.MaxValue, IntPtr.Zero, NSDefaultRunLoopMode, true);
 
-                        if (!isARepeat || InputDriver.Keyboard[0].KeyRepeat)
-                        {
-                            KeyDown(this, keyArgs);
-                        }
-
-                        var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
-                        foreach (var c in s)
-                        {
-                            int intVal = (int)c;
-                            if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
-                            {
-                                // For some reason, arrow keys (mapped 63232-63235) are seen as non-control characters, so get rid of those.
-
-                                keyPressArgs.KeyChar = c;
-                                KeyPress(this, keyPressArgs);
-                            }
-                        }
-
-                        // Steal all keydown events to avoid the annoying "bleep" sound.
-                        return;
-                    }
-
-                case NSEventType.KeyUp:
-                    {
-                        var keyCode = Cocoa.SendUshort(e, selKeyCode);
-                        var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
-
-                        GetKey(keyCode, modifierFlags, keyArgs);
-                        InputDriver.Keyboard[0].SetKey(keyArgs.Key, keyArgs.ScanCode, false);
-
-                        KeyUp(this, keyArgs);
-                    }
+                if (e == IntPtr.Zero)
                     break;
 
-                case NSEventType.MouseEntered:
-                    {
-                        var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
-                        var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
-                        if (trackingAreaOwner == windowInfo.ViewHandle)
+                var type = (NSEventType)Cocoa.SendInt(e, selType);
+                switch (type)
+                {
+                    case NSEventType.KeyDown:
                         {
-                            if (!cursorVisible)
+                            var keyCode = Cocoa.SendUshort(e, selKeyCode);
+                            var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
+                            var isARepeat = Cocoa.SendBool(e, selIsARepeat);
+                            GetKey(keyCode, modifierFlags, keyArgs);
+                            InputDriver.Keyboard[0].SetKey(keyArgs.Key, keyArgs.ScanCode, true);
+
+                            if (!isARepeat || InputDriver.Keyboard[0].KeyRepeat)
                             {
-                                SetCursorVisible(false);
+                                KeyDown(this, keyArgs);
                             }
 
-                            MouseEnter(this, EventArgs.Empty);
-                        }
-                    }
-                    break;
-
-                case NSEventType.MouseExited:
-                    {
-                        var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
-                        var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
-                        if (trackingAreaOwner == windowInfo.ViewHandle)
-                        {
-                            if (!cursorVisible)
+                            var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
+                            foreach (var c in s)
                             {
-                                SetCursorVisible(true);
+                                int intVal = (int)c;
+                                if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
+                                {
+                                    // For some reason, arrow keys (mapped 63232-63235) are seen as non-control characters, so get rid of those.
+
+                                    keyPressArgs.KeyChar = c;
+                                    KeyPress(this, keyPressArgs);
+                                }
                             }
 
-                            MouseLeave(this, EventArgs.Empty);
+                            // Steal all keydown events to avoid the annoying "bleep" sound.
+                            return;
                         }
-                    }
-                    break;
 
-                case NSEventType.MouseMoved:
-                    {
-                        var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
-                        var p = new Point((int)pf.X, (int)pf.Y);
+                    case NSEventType.KeyUp:
+                        {
+                            var keyCode = Cocoa.SendUshort(e, selKeyCode);
+                            var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
 
-                        var s = ClientSize;
-                        if (p.X < 0) p.X = 0; 
-                        if (p.Y < 0) p.Y = 0;
-                        if (p.X > s.Width) p.X = s.Width;
-                        if (p.Y > s.Height) p.Y = s.Height;
-                        p.Y = s.Height - p.Y;
+                            GetKey(keyCode, modifierFlags, keyArgs);
+                            InputDriver.Keyboard[0].SetKey(keyArgs.Key, keyArgs.ScanCode, false);
 
-                        InputDriver.Mouse[0].Position = p;
-                    }
-                    break;
+                            KeyUp(this, keyArgs);
+                        }
+                        break;
 
-                case NSEventType.ScrollWheel:
-                    {
-                        var scrollingDelta = Cocoa.SendFloat(e, selScrollingDeltaY);
-                        InputDriver.Mouse[0].WheelPrecise += scrollingDelta;
-                    }
-                    break;
+                    case NSEventType.MouseEntered:
+                        {
+                            var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
+                            var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
+                            if (trackingAreaOwner == windowInfo.ViewHandle)
+                            {
+                                if (!cursorVisible)
+                                {
+                                    SetCursorVisible(false);
+                                }
 
-                case NSEventType.LeftMouseDown:
-                case NSEventType.RightMouseDown:
-                case NSEventType.OtherMouseDown:
-                    {
-                        var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
-                        InputDriver.Mouse[0][GetMouseButton(buttonNumber)] = true;
-                    }
-                    break;
+                                MouseEnter(this, EventArgs.Empty);
+                            }
+                        }
+                        break;
 
-                case NSEventType.LeftMouseUp:
-                case NSEventType.RightMouseUp:
-                case NSEventType.OtherMouseUp:
-                    {
-                        var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
-                        InputDriver.Mouse[0][GetMouseButton(buttonNumber)] = false;
-                    }
-                    break;
+                    case NSEventType.MouseExited:
+                        {
+                            var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
+                            var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
+                            if (trackingAreaOwner == windowInfo.ViewHandle)
+                            {
+                                if (!cursorVisible)
+                                {
+                                    SetCursorVisible(true);
+                                }
+
+                                MouseLeave(this, EventArgs.Empty);
+                            }
+                        }
+                        break;
+
+                    case NSEventType.MouseMoved:
+                        {
+                            var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
+                            var p = new Point((int)pf.X, (int)pf.Y);
+
+                            var s = ClientSize;
+                            if (p.X < 0)
+                                p.X = 0; 
+                            if (p.Y < 0)
+                                p.Y = 0;
+                            if (p.X > s.Width)
+                                p.X = s.Width;
+                            if (p.Y > s.Height)
+                                p.Y = s.Height;
+                            p.Y = s.Height - p.Y;
+
+                            InputDriver.Mouse[0].Position = p;
+                        }
+                        break;
+
+                    case NSEventType.ScrollWheel:
+                        {
+                            var scrollingDelta = Cocoa.SendFloat(e, selScrollingDeltaY);
+                            InputDriver.Mouse[0].WheelPrecise += scrollingDelta;
+                        }
+                        break;
+
+                    case NSEventType.LeftMouseDown:
+                    case NSEventType.RightMouseDown:
+                    case NSEventType.OtherMouseDown:
+                        {
+                            var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
+                            InputDriver.Mouse[0][GetMouseButton(buttonNumber)] = true;
+                        }
+                        break;
+
+                    case NSEventType.LeftMouseUp:
+                    case NSEventType.RightMouseUp:
+                    case NSEventType.OtherMouseUp:
+                        {
+                            var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
+                            InputDriver.Mouse[0][GetMouseButton(buttonNumber)] = false;
+                        }
+                        break;
+                }
+
+                Cocoa.SendVoid(NSApplication.Handle, selSendEvent, e);
             }
-
-            Cocoa.SendVoid(NSApplication.Handle, selSendEvent, e);
-            Cocoa.SendVoid(NSApplication.Handle, selUpdateWindows);
         }
 
         public System.Drawing.Point PointToClient(System.Drawing.Point point)
