@@ -403,6 +403,9 @@ namespace OpenTK.Platform.MacOS
                         }
                         break;
 
+                    case NSEventType.LeftMouseDragged:
+                    case NSEventType.RightMouseDragged:
+                    case NSEventType.OtherMouseDragged:
                     case NSEventType.MouseMoved:
                         {
                             var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
