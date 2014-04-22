@@ -65,13 +65,14 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selButtonNumber = Selector.Get("buttonNumber");
         static readonly IntPtr selSetStyleMask = Selector.Get("setStyleMask:");
         static readonly IntPtr selStyleMask = Selector.Get("styleMask");
+        static readonly IntPtr selHasPreciseScrollingDeltas = Selector.Get("hasPreciseScrollingDeltas");
         //static readonly IntPtr selIsMiniaturized = Selector.Get("isMiniaturized");
         //static readonly IntPtr selIsZoomed = Selector.Get("isZoomed");
-        static readonly IntPtr selPerformMiniaturize = Selector.Get("performMiniaturize:");
+        //static readonly IntPtr selPerformMiniaturize = Selector.Get("performMiniaturize:");
         static readonly IntPtr selMiniaturize = Selector.Get("miniaturize:");
         static readonly IntPtr selDeminiaturize = Selector.Get("deminiaturize:");
         //static readonly IntPtr selPerformZoom = Selector.Get("performZoom:");
-        static readonly IntPtr selZoom = Selector.Get("zoom:");
+        //static readonly IntPtr selZoom = Selector.Get("zoom:");
         static readonly IntPtr selLevel = Selector.Get("level");
         static readonly IntPtr selSetLevel = Selector.Get("setLevel:");
         static readonly IntPtr selPresentationOptions = Selector.Get("presentationOptions");
@@ -110,6 +111,7 @@ namespace OpenTK.Platform.MacOS
         private int normalLevel;
         private bool shouldClose;
         private int suppressResize;
+        private float scrollFactor = 1.0f;
 
         private const bool exclusiveFullscreen = false;
 
@@ -436,7 +438,14 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.ScrollWheel:
                         {
                             var scrollingDelta = Cocoa.SendFloat(e, selScrollingDeltaY);
-                            InputDriver.Mouse[0].WheelPrecise += scrollingDelta;
+                            var factor = 1.0f;
+
+                            if (Cocoa.SendBool(e, selHasPreciseScrollingDeltas))
+                            {
+                                factor = 1.0f / 120.0f; // Problem: Don't know what factor to use here, but this seems to work.
+                            }
+
+                            InputDriver.Mouse[0].WheelPrecise += scrollingDelta * factor;
                         }
                         break;
 
