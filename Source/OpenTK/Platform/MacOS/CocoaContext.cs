@@ -149,6 +149,7 @@ namespace OpenTK
 
             // Finalize
             Handle = new ContextHandle(context);
+            Mode = mode;
             Update(cocoaWindow);
             MakeCurrent(cocoaWindow);
         }
