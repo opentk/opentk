@@ -16,7 +16,7 @@ namespace Examples.Tutorial
     public class HelloGL3 : GameWindow
     {
         string vertexShaderSource = @"
-#version 130
+#version 140
 
 precision highp float;
 
@@ -37,7 +37,7 @@ void main(void)
 }";
         
         string fragmentShaderSource = @"
-#version 130
+#version 140
 
 precision highp float;
 
@@ -94,7 +94,7 @@ void main(void)
         public HelloGL3()
             : base(640, 480,
             new GraphicsMode(), "OpenGL 3 Example", 0,
-            DisplayDevice.Default, 3, 0,
+			DisplayDevice.Default, 3, 2,
             GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
         
