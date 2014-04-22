@@ -758,7 +758,6 @@
     <Compile Include="Platform\SDL2\Sdl2Mouse.cs" />
     <Compile Include="Platform\SDL2\Sdl2NativeWindow.cs" />
     <Compile Include="Platform\SDL2\Sdl2WindowInfo.cs" />
-    <Compile Include="Platform\MacOS\Cgl.cs" />
     <Compile Include="Platform\SDL2\Sdl2.cs" />
     <Compile Include="Platform\Egl\EglSdl2PlatformFactory.cs" />
     <Compile Include="Platform\SDL2\Sdl2JoystickDriver.cs" />
@@ -821,6 +820,7 @@
     <Compile Include="Platform\MacOS\Cocoa\NSEventModifierMask.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSTrackingAreaOptions.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSApplicationPresentationOptions.cs" />
+    <Compile Include="Platform\MacOS\CarbonBindings\Cgl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

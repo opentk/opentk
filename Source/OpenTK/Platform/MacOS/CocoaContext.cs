@@ -149,9 +149,29 @@ namespace OpenTK
 
             // Finalize
             Handle = new ContextHandle(context);
-            Mode = mode;
+            Mode = GetGraphicsMode(context);
+
             Update(cocoaWindow);
             MakeCurrent(cocoaWindow);
+        }
+
+        private GraphicsMode GetGraphicsMode(IntPtr context)
+        {
+            IntPtr cgl_context = Cocoa.SendIntPtr(context, Selector.Get("CGLContextObj"));
+            IntPtr cgl_format = Cgl.GetPixelFormat(cgl_context);
+
+            int id = 0; // CGL does not support the concept of a pixel format id
+            int color, depth, stencil, samples, accum;
+            bool doublebuffer, stereo;
+            Cgl.DescribePixelFormat(cgl_format, 0, Cgl.PixelFormatInt.ColorSize, out color);
+            Cgl.DescribePixelFormat(cgl_format, 0, Cgl.PixelFormatInt.DepthSize, out depth);
+            Cgl.DescribePixelFormat(cgl_format, 0, Cgl.PixelFormatInt.StencilSize, out stencil);
+            Cgl.DescribePixelFormat(cgl_format, 0, Cgl.PixelFormatInt.Samples, out samples);
+            Cgl.DescribePixelFormat(cgl_format, 0, Cgl.PixelFormatInt.AccumSize, out accum);
+            Cgl.DescribePixelFormat(cgl_format, 0, Cgl.PixelFormatBool.Doublebuffer, out doublebuffer);
+            Cgl.DescribePixelFormat(cgl_format, 0, Cgl.PixelFormatBool.Stereo, out stereo);
+
+            return new GraphicsMode((IntPtr)id, color, depth, stencil, samples, accum, doublebuffer ? 2 : 1, stereo);
         }
 
         public override void SwapBuffers()
