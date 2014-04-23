@@ -84,8 +84,17 @@ namespace OpenTK.Platform.MacOS.Carbon
         [DllImport(appServices,EntryPoint="CGDisplayCapture")]
         internal static extern CGDisplayErr DisplayCapture(IntPtr display);
 
+        [DllImport(appServices,EntryPoint="CGCaptureAllDisplays")]
+        internal static extern CGDisplayErr CaptureAllDisplays();
+
+        [DllImport(appServices,EntryPoint="CGShieldingWindowLevel")]
+        internal static extern uint ShieldingWindowLevel();
+
         [DllImport(appServices,EntryPoint="CGDisplayRelease")]
         internal static extern CGDisplayErr DisplayRelease(IntPtr display);
+
+        [DllImport(appServices,EntryPoint="CGReleaseAllDisplays")]
+        internal static extern CGDisplayErr DisplayReleaseAll();
 
         [DllImport(appServices, EntryPoint = "CGDisplayAvailableModes")]
         internal static extern IntPtr DisplayAvailableModes(IntPtr display);

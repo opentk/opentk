@@ -293,6 +293,20 @@ namespace OpenTK.Platform
 
         #endregion
 
+        #region CreateMacOSWindowInfo
+
+        /// <summary>
+        /// Creates an IWindowInfo instance for the Mac OS X platform.
+        /// </summary>
+        /// <param name="windowHandle">The handle of the NSWindow.</param>
+        /// <returns>A new IWindowInfo instance.</returns>
+        public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle)
+        {
+            return new OpenTK.Platform.MacOS.CocoaWindowInfo(windowHandle);
+        }
+
+        #endregion
+
         #region CreateDummyWindowInfo
 
         /// <summary>
