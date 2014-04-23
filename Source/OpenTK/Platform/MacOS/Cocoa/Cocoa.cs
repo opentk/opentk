@@ -108,10 +108,31 @@ namespace OpenTK.Platform.MacOS
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
         public extern static ushort SendUshort(IntPtr receiver, IntPtr selector);
 
-        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
-        public extern static float SendFloat(IntPtr receiver, IntPtr selector);
+        [DllImport(LibObjC, EntryPoint="objc_msgSend_fpret")]
+        extern static float SendFloat_i386(IntPtr receiver, IntPtr selector);
 
-        [DllImport (LibObjC, EntryPoint="objc_msgSend")] // Not the _stret version, perhaps because a PointF fits in one register?
+        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
+        extern static float SendFloat_normal(IntPtr receiver, IntPtr selector);
+
+        public static float SendFloat(IntPtr receiver, IntPtr selector)
+        {
+            #if IOS
+            return SendFloat_normal(receiver, selector);
+            #else
+            if (IntPtr.Size == 4)
+            {
+                return SendFloat_i386(receiver, selector);
+            }
+            else
+            {
+                return SendFloat_normal(receiver, selector);
+            }
+            #endif
+        }
+
+        // Not the _stret version, perhaps because a PointF fits in one register?
+        // thefiddler: gcc is indeed using objc_msgSend for NSPoint on i386
+        [DllImport (LibObjC, EntryPoint="objc_msgSend")]
         public extern static PointF SendPoint(IntPtr receiver, IntPtr selector);
 
         [DllImport (LibObjC, EntryPoint="objc_msgSend_stret")]
