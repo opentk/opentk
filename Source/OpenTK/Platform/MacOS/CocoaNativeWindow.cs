@@ -143,7 +143,7 @@ namespace OpenTK.Platform.MacOS
         private int normalLevel;
         private bool shouldClose;
         private int suppressResize;
-        private float scrollFactor = 1.0f;
+        private const float scrollFactor = 120.0f;
 
         private const bool exclusiveFullscreen = false;
 
@@ -475,7 +475,7 @@ namespace OpenTK.Platform.MacOS
 
                             if (Cocoa.SendBool(e, selHasPreciseScrollingDeltas))
                             {
-                                factor = 1.0f / 120.0f; // Problem: Don't know what factor to use here, but this seems to work.
+                                factor = 1.0f / scrollFactor; // Problem: Don't know what factor to use here, but this seems to work.
                             }
 
                             InputDriver.Mouse[0].WheelPrecise += scrollingDelta * factor;
