@@ -1,68 +1,13 @@
-#region License
-//
-// The Open Toolkit Library License
-//
-// Copyright (c) 2006 - 2010 the Open Toolkit library.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to
-// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-// the Software, and to permit persons to whom the Software is furnished to do
-// so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-// OTHER DEALINGS IN THE SOFTWARE.
-//
-#endregion
+﻿using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
-//  Created by Erik Ylvisaker on 3/17/08.
-
-using System;
-
-namespace OpenTK.Platform.MacOS
+namespace OpenTK.Platform.MacOS.Carbon
 {
-    internal class MacOSException : Exception
-    {
-        OSStatus errorCode;
-
-        public MacOSException()
-        {}
-        public MacOSException(OSStatus errorCode)
-            : base("Error Code " + ((int)errorCode).ToString() + ": " + errorCode.ToString())
-        {
-            this.errorCode = errorCode;
-        }
-        public MacOSException(OSStatus errorCode, string message)
-            : base(message)
-        {
-            this.errorCode = errorCode;
-        }
-        internal MacOSException(int errorCode, string message)
-            : base(message)
-        {
-            this.errorCode = (OSStatus)errorCode;
-        }
-
-        public OSStatus ErrorCode
-        {
-            get { return errorCode; }
-        }
-    }
-
     internal enum OSStatus
     {
         NoError = 0,
-        
+
         ParameterError               = -50,                          /*error in user parameter list*/
         NoHardwareError             = -200,                         /*Sound Manager Error Returns*/
         NotEnoughHardwareError      = -201,                         /*Sound Manager Error Returns*/
@@ -118,7 +63,98 @@ namespace OpenTK.Platform.MacOS
         EventNotInQueue = -9877,
         HotKeyExists = -9878,
         EventPassToNextTarget = -9880
-
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct Rect
+    {
+        short top;
+        short left;
+        short bottom;
+        short right;
+
+        internal Rect(int left, int top, int width, int height)
+            : this((short)left, (short)top, (short)width, (short)height)
+        {
+        }
+
+        internal Rect(short _left, short _top, short _width, short _height)
+        {
+            top = _top;
+            left = _left;
+            bottom = (short)(_top + _height);
+            right = (short)(_left + _width);
+        }
+
+        internal short X
+        {
+            get { return left; }
+            set
+            {
+                short width = Width;
+                left = value;
+                right = (short)(left + width);
+            }
+        }
+
+        internal short Y
+        {
+            get { return top; }
+            set
+            {
+                short height = Height;
+                top = value;
+                bottom = (short)(top + height);
+            }
+        }
+
+        internal short Width 
+        { 
+            get { return (short)(right - left); } 
+            set { right = (short)(left + value); }
+        }
+
+        internal short Height 
+        { 
+            get { return (short)(bottom - top); } 
+            set { bottom = (short)(top + value); }
+        }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "Rect: [{0}, {1}, {2}, {3}]", X, Y, Width, Height);
+        }
+
+        public Rectangle ToRectangle()
+        {
+            return new Rectangle(X, Y, Width, Height);
+        }
+    }
+
+    class API
+    {
+        const string carbon = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
+
+        [DllImport(carbon)]
+        internal unsafe static extern OSStatus DMGetGDeviceByDisplayID(
+            IntPtr displayID, out IntPtr displayDevice, Boolean failToMain);
+
+        [DllImport(carbon)]
+        static extern IntPtr GetControlBounds(IntPtr control, out Rect bounds);
+
+        internal static Rect GetControlBounds(IntPtr control)
+        {
+            Rect retval;
+            GetControlBounds(control, out retval);
+            return retval;
+        }
+
+        [DllImport(carbon)]
+        internal static extern IntPtr GetControlOwner(IntPtr control);
+
+        [DllImport(carbon)]
+        internal static extern IntPtr GetWindowPort(IntPtr windowRef);
+    }
 }
+

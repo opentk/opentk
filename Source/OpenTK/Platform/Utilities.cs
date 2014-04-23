@@ -18,6 +18,16 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform
 {
+    namespace MacOS
+    {
+        /// <summary>
+        /// This delegate represents any method that takes no arguments and returns an int.
+        /// I would have used Func but that requires .NET 4
+        /// </summary>
+        /// <returns>The int value that your method returns</returns>
+        public delegate int GetInt();
+    }
+
     /// <summary>
     /// Provides cross-platform utilities to help interact with the underlying platform.
     /// </summary>

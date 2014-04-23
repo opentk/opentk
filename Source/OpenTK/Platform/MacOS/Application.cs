@@ -39,7 +39,6 @@ namespace OpenTK.Platform.MacOS.Carbon
     {
         static bool mInitialized = false;
         static IntPtr uppHandler;
-        static CarbonGLNative eventHandler;
         static int osMajor, osMinor, osBugfix;
 
         static Application()
@@ -74,12 +73,6 @@ namespace OpenTK.Platform.MacOS.Carbon
             API.GetCurrentProcess(ref psn);
             API.TransformProcessType(ref psn, ProcessApplicationTransformState.kProcessTransformToForegroundApplication);
             API.SetFrontProcess(ref psn);
-        }
-
-        static internal CarbonGLNative WindowEventHandler
-        {
-            get { return eventHandler; }
-            set { eventHandler = value; }
         }
 
         static void ConnectEvents()
@@ -131,34 +124,14 @@ namespace OpenTK.Platform.MacOS.Carbon
                             return OSStatus.EventNotHandled;
                     }
 
-            
                 case EventClass.AppleEvent:
                 // only event here is the apple event.
                     Debug.Print("Processing apple event.");
                     API.ProcessAppleEvent(inEvent);
                     break;
-            
-                case EventClass.Keyboard:
-                case EventClass.Mouse:
-                    if (WindowEventHandler != null)
-                    {
-                        return WindowEventHandler.DispatchEvent(inCaller, inEvent, evt, userData);
-                    }
-
-                    break;
             }
             
             return OSStatus.EventNotHandled;
-        }
-
-        public static void Run(CarbonGLNative window)
-        {
-            window.Closed += MainWindowClosed;
-            window.Visible = true;
-            
-            API.RunApplicationEventLoop();
-            
-            window.Closed -= MainWindowClosed;
         }
 
         static void MainWindowClosed(object sender, EventArgs e)

@@ -377,8 +377,7 @@ namespace OpenTK.Platform.MacOS
             if (retval == 0)
             {
                 AglError err = GetError();
-
-                throw new MacOSException(err, ErrorString(err));
+                throw new Exception(ErrorString(err));
             }
         }
         [DllImport(agl)] static extern byte aglSetOffScreen(AGLContext ctx, int width, int height, int rowbytes, IntPtr baseaddr);
@@ -398,7 +397,7 @@ namespace OpenTK.Platform.MacOS
                 Debug.Print(ErrorString(err));
                 Debug.Unindent();
 
-                throw new MacOSException(err, ErrorString(err));
+                throw new Exception(ErrorString(err));
             }
         }
         /*

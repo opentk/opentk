@@ -282,9 +282,6 @@
     <Compile Include="Platform\MacOS\EventInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\MacOS\MacOSGraphicsMode.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\MacOS\MacOSFactory.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -294,40 +291,10 @@
     <Compile Include="Platform\MacOS\MacOSKeyMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\MacOS\CarbonGLNative.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\MacOS\Application.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\MacOS\AglContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\MacOS\QuartzDisplayDeviceDriver.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonInput.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonWindowInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\CarbonAPI.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\SpeechChannel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\QuartzDisplayServicesAPI.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\MacOSKeys.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\Agl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\CoreFoundation.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\Windows\WinRawKeyboard.cs">
@@ -820,7 +787,25 @@
     <Compile Include="Platform\MacOS\Cocoa\NSEventModifierMask.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSTrackingAreaOptions.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSApplicationPresentationOptions.cs" />
-    <Compile Include="Platform\MacOS\CarbonBindings\Cgl.cs" />
+    <Compile Include="Platform\MacOS\CarbonWindowInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\MacOS\Carbon\CarbonAPI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\MacOS\Carbon\SpeechChannel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\MacOS\Carbon\QuartzDisplayServicesAPI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\MacOS\Carbon\MacOSKeys.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\MacOS\Carbon\CoreFoundation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\MacOS\Carbon\Cgl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
