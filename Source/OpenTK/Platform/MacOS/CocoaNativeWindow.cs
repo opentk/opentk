@@ -1,14 +1,17 @@
 ﻿using System;
-using OpenTK.Graphics;
-using System.Drawing;
 using System.ComponentModel;
-using OpenTK.Input;
 using System.Diagnostics;
+using System.Drawing;
+using System.Threading;
+using OpenTK.Graphics;
+using OpenTK.Input;
 
 namespace OpenTK.Platform.MacOS
 {
     class CocoaNativeWindow : INativeWindow
     {
+        static volatile int UniqueId;
+
         public event EventHandler<EventArgs> Move = delegate { };
         public event EventHandler<EventArgs> Resize = delegate { };
         public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
@@ -118,7 +121,8 @@ namespace OpenTK.Platform.MacOS
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             // Create the window class
-            windowClass = Class.AllocateClass("OpenTKWindow", "NSWindow");
+            Interlocked.Increment(ref UniqueId);
+            windowClass = Class.AllocateClass("OpenTKWindow" + UniqueId, "NSWindow");
             Class.RegisterMethod(windowClass, new WindowDidResizeDelegate(WindowDidResize), "windowDidResize:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidMoveDelegate(WindowDidMove), "windowDidMove:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidBecomeKeyDelegate(WindowDidBecomeKey), "windowDidBecomeKey:", "v@:@");
@@ -510,7 +514,11 @@ namespace OpenTK.Platform.MacOS
             set
             {
                 icon = value;
-                Cocoa.SendVoid(NSApplication.Handle, selSetApplicationIconImage, Cocoa.ToNSImage(icon.ToBitmap()));
+                using (Image img = icon.ToBitmap())
+                {
+                    IntPtr nsimg = Cocoa.ToNSImage(img);
+                    Cocoa.SendVoid(NSApplication.Handle, selSetApplicationIconImage, nsimg);
+                }
                 IconChanged(this, EventArgs.Empty);
             }
         }
