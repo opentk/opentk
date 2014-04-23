@@ -451,18 +451,24 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.MouseMoved:
                         {
                             var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
-                            var p = new Point((int)pf.X, (int)pf.Y);
 
-                            var s = ClientSize;
+                            // Convert from points to pixel coordinates
+                            var rf = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking,
+                                new RectangleF(pf.X, pf.Y, 0, 0));
+
+                            // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
+                            var p = new Point(
+                                MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
+                                MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
+
                             if (p.X < 0)
                                 p.X = 0; 
                             if (p.Y < 0)
                                 p.Y = 0;
-                            if (p.X > s.Width)
-                                p.X = s.Width;
-                            if (p.Y > s.Height)
-                                p.Y = s.Height;
-                            p.Y = s.Height - p.Y;
+                            if (p.X > Width)
+                                p.X = Width;
+                            if (p.Y > Height)
+                                p.Y = Height;
 
                             InputDriver.Mouse[0].Position = p;
                         }
