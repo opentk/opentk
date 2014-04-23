@@ -39,7 +39,7 @@ namespace OpenTK.Platform.MacOS
 {
     class CocoaNativeWindow : INativeWindow
     {
-        static volatile int UniqueId;
+        static int UniqueId;
 
         public event EventHandler<EventArgs> Move = delegate { };
         public event EventHandler<EventArgs> Resize = delegate { };
@@ -151,7 +151,7 @@ namespace OpenTK.Platform.MacOS
         {
             // Create the window class
             Interlocked.Increment(ref UniqueId);
-            windowClass = Class.AllocateClass("OpenTKWindow" + UniqueId, "NSWindow");
+            windowClass = Class.AllocateClass("OpenTK_GameWindow" + UniqueId, "NSWindow");
             Class.RegisterMethod(windowClass, new WindowDidResizeDelegate(WindowDidResize), "windowDidResize:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidMoveDelegate(WindowDidMove), "windowDidMove:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidBecomeKeyDelegate(WindowDidBecomeKey), "windowDidBecomeKey:", "v@:@");
