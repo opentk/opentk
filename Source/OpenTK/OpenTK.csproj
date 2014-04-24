@@ -279,9 +279,6 @@
     <Compile Include="Platform\Egl\EglMacPlatformFactory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\MacOS\EventInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\MacOS\MacOSFactory.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -289,9 +286,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\MacOS\MacOSKeyMap.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\Application.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\MacOS\QuartzDisplayDeviceDriver.cs">
