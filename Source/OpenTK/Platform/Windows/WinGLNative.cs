@@ -51,7 +51,6 @@ namespace OpenTK.Platform.Windows
         const ExtendedWindowStyle ParentStyleEx = ExtendedWindowStyle.WindowEdge | ExtendedWindowStyle.ApplicationWindow;
         const ExtendedWindowStyle ChildStyleEx = 0;
 
-        static readonly WinKeyMap KeyMap = new WinKeyMap();
         readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
         readonly IntPtr ClassName = Marshal.StringToHGlobalAuto(Guid.NewGuid().ToString());
         readonly WindowProcedure WindowProcedureDelegate;
@@ -578,7 +577,7 @@ namespace OpenTK.Platform.Windows
             short scancode = (short)((lParam.ToInt64() >> 16) & 0xFF);
             VirtualKeys vkey = (VirtualKeys)wParam;
             bool is_valid;
-            Key key = KeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
+            Key key = WinKeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
 
             if (is_valid)
             {
