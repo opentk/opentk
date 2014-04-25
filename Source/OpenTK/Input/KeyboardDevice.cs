@@ -21,7 +21,7 @@ namespace OpenTK.Input
     public sealed class KeyboardDevice : IInputDevice
     {
         //private IKeyboard keyboard;
-        private bool[] keys = new bool[Enum.GetValues(typeof(Key)).Length];
+        private bool[] keys = new bool[(int)Key.LastKey];
         private bool[] scancodes = new bool[256];
         private string description;
         private int numKeys, numFKeys, numLeds;
