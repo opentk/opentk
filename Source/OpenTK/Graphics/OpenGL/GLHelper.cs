@@ -79,7 +79,8 @@ namespace OpenTK.Graphics.OpenGL
         static readonly object sync_root = new object();
 
         static IntPtr[] EntryPoints;
-        static string[] EntryPointNames;
+        static byte[] EntryPointNames;
+        static int[] EntryPointNameOffsets;
 
         #endregion
 
@@ -92,6 +93,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             EntryPointsInstance = EntryPoints;
             EntryPointNamesInstance = EntryPointNames;
+            EntryPointNameOffsetsInstance = EntryPointNameOffsets;
         }
 
         #endregion

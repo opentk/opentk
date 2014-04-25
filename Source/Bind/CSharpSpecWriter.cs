@@ -168,19 +168,42 @@ namespace Bind
             sw.WriteLine("static {0}()", Settings.OutputClass);
             sw.WriteLine("{");
             sw.Indent();
-            sw.WriteLine("EntryPointNames = new string[]", delegates.Count);
+            // Write entry point names.
+            // Instead of strings, which are costly to construct,
+            // we use a 1d array of ASCII bytes. Names are laid out
+            // sequentially, with a nul-terminator between them.
+            sw.WriteLine("EntryPointNames = new byte[]", delegates.Count);
             sw.WriteLine("{");
             sw.Indent();
             foreach (var d in delegates.Values.Select(d => d.First()))
             {
                 if (d.RequiresSlot(Settings))
                 {
-                    sw.WriteLine("\"{0}{1}\",", Settings.FunctionPrefix, d.Name);
+                    var name = Settings.FunctionPrefix + d.Name;
+                    sw.WriteLine("{0}, 0,", String.Join(", ",
+                        System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
                 }
             }
             sw.Unindent();
             sw.WriteLine("};");
-            sw.WriteLine("EntryPoints = new IntPtr[EntryPointNames.Length];");
+            // Write entry point name offsets.
+            // This is an array of offsets into the EntryPointNames[] array above.
+            sw.WriteLine("EntryPointNameOffsets = new int[]", delegates.Count);
+            sw.WriteLine("{");
+            sw.Indent();
+            int offset = 0;
+            foreach (var d in delegates.Values.Select(d => d.First()))
+            {
+                if (d.RequiresSlot(Settings))
+                {
+                    sw.WriteLine("{0},", offset);
+                    var name = Settings.FunctionPrefix + d.Name;
+                    offset += name.Length + 1;
+                }
+            }
+            sw.Unindent();
+            sw.WriteLine("};");
+            sw.WriteLine("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
             sw.Unindent();
             sw.WriteLine("}");
             sw.WriteLine();

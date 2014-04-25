@@ -45,7 +45,9 @@ namespace OpenTK.Graphics
         /// Contains the list of API entry point names.
         /// This field must be set by an inheriting class.
         /// </summary>
-        protected string[] EntryPointNamesInstance;
+        protected byte[] EntryPointNamesInstance;
+
+        protected int[] EntryPointNameOffsetsInstance;
 
         /// <summary>
         /// Retrieves an unmanaged function pointer to the specified function.
@@ -81,9 +83,16 @@ namespace OpenTK.Graphics
                 throw new GraphicsContextMissingException();
 
             IGraphicsContextInternal context_internal = context as IGraphicsContextInternal;
-            for (int i = 0; i < EntryPointsInstance.Length; i++)
+            unsafe
             {
-                EntryPointsInstance[i] = context_internal.GetAddress(EntryPointNamesInstance[i]);
+                fixed (byte* name = EntryPointNamesInstance)
+                {
+                    for (int i = 0; i < EntryPointsInstance.Length; i++)
+                    {
+                        EntryPointsInstance[i] = context_internal.GetAddress(
+                            new IntPtr(name + EntryPointNameOffsetsInstance[i]));
+                    }
+                }
             }
         }
     }
