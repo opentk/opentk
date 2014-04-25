@@ -38113,6 +38113,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         PatchDefaultOuterLevel = ((int)0x8E74)        ,
         /// <summary>
+        /// Original was GL_MAX_PATCH_VERTICES = 0x8E7D
+        /// </summary>
+        MaxPatchVertices = ((int)0x8E7D)        ,
+        /// <summary>
         /// Original was GL_MAX_TESS_GEN_LEVEL = 0x8E7E
         /// </summary>
         MaxTessGenLevel = ((int)0x8E7E)        ,
