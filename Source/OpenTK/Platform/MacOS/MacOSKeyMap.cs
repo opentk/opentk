@@ -36,7 +36,7 @@ namespace OpenTK.Platform.MacOS
     using Carbon;
     using Input;
 
-    class MacOSKeyMap
+    static class MacOSKeyMap
     {
         public static Key GetKey(MacOSKeyCode code)
         {
