@@ -748,6 +748,14 @@ namespace OpenTK.Platform.X11
         public IntPtr nitems;
     }
 
+    internal struct XClassHint
+    {
+        [MarshalAs(UnmanagedType.LPStr)]
+        public string Name;
+        [MarshalAs(UnmanagedType.LPStr)]
+        public string Class;
+    }
+
     internal enum XWindowClass
     {
         InputOutput = 1,

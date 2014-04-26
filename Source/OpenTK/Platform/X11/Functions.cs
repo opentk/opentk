@@ -513,6 +513,9 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11")]
         public static extern void XFreeEventData(IntPtr display, ref XGenericEventCookie cookie);
 
+        [DllImport("libX11")]
+        public static extern void XSetClassHint(IntPtr display, IntPtr window, ref XClassHint hint);
+
         [DllImport("libXi")]
         static extern int XISelectEvents(IntPtr dpy, Window win, [In] XIEventMask[] masks, int num_masks);
         [DllImport("libXi")]

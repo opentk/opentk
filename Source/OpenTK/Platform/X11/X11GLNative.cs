@@ -89,6 +89,8 @@ namespace OpenTK.Platform.X11
 
         IntPtr _atom_net_frame_extents;
 
+        IntPtr _atom_wm_class;
+
         readonly IntPtr _atom_xa_cardinal = new IntPtr(6);
         
         //IntPtr _atom_motif_wm_hints;
@@ -194,12 +196,20 @@ namespace OpenTK.Platform.X11
             hints.base_width = width;
             hints.base_height = height;
             hints.flags = (IntPtr)(XSizeHintsFlags.PSize | XSizeHintsFlags.PPosition);
+
+            XClassHint class_hint = new XClassHint();
+            class_hint.Name = Assembly.GetEntryAssembly().GetName().Name.ToLower();
+            class_hint.Class = Assembly.GetEntryAssembly().GetName().Name;
+
             using (new XLock(window.Display))
             {
                 Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
 
                 // Register for window destroy notification
                 Functions.XSetWMProtocols(window.Display, window.Handle, new IntPtr[] { _atom_wm_destroy }, 1);
+
+                // Set the window class hints
+                Functions.XSetClassHint(window.Display, window.Handle, ref class_hint);
             }
 
             // Set the initial window size to ensure X, Y, Width, Height and the rest
@@ -296,7 +306,7 @@ namespace OpenTK.Platform.X11
 
                 _atom_net_frame_extents =
                     Functions.XInternAtom(window.Display, "_NET_FRAME_EXTENTS", false);
-            
+
 //            string[] atom_names = new string[]
 //            {
 //                //"WM_TITLE",
