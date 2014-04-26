@@ -395,14 +395,6 @@ namespace OpenTK.Platform.X11
 
         #region GetAddress
 
-        public override IntPtr GetAddress(string function)
-        {
-            using (new XLock(Display))
-            {
-                return Glx.GetProcAddress(function);
-            }
-        }
-
         public override IntPtr GetAddress(IntPtr function)
         {
             using (new XLock(Display))

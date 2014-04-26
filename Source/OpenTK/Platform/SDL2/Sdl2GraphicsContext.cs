@@ -344,11 +344,6 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public override IntPtr GetAddress(string function)
-        {
-            return SDL.GL.GetProcAddress(function);
-        }
-
         public override IntPtr GetAddress(IntPtr function)
         {
             return SDL.GL.GetProcAddress(function);
