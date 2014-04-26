@@ -29,7 +29,6 @@ namespace OpenTK.Platform.X11
         List<KeyboardDevice> dummy_keyboard_list = new List<KeyboardDevice>(1);
         List<MouseDevice> dummy_mice_list = new List<MouseDevice>(1);
 
-        X11KeyMap keymap = new X11KeyMap();
         int firstKeyCode, lastKeyCode; // The smallest and largest KeyCode supported by the X server.
         int keysyms_per_keycode;    // The number of KeySyms for each KeyCode.
         IntPtr[] keysyms;
@@ -100,17 +99,12 @@ namespace OpenTK.Platform.X11
         {
             XKey keysym = (XKey)API.LookupKeysym(ref e, 0);
             XKey keysym2 = (XKey)API.LookupKeysym(ref e, 1);
-            key = Key.Unknown;
-
-            if (keymap.ContainsKey(keysym))
+            key = X11KeyMap.GetKey(keysym);
+            if (key == Key.Unknown)
             {
-                key = keymap[keysym];
+                key = X11KeyMap.GetKey(keysym2);
             }
-            else if (keymap.ContainsKey(keysym2))
-            {
-                key = keymap[keysym2];
-            }
-            else
+            if (key == Key.Unknown)
             {
                 Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
             }

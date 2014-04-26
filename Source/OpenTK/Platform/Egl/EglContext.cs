@@ -136,11 +136,6 @@ namespace OpenTK.Platform.Egl
 
         #region IGraphicsContextInternal Members
 
-        public override IntPtr GetAddress(string function)
-        {
-            return Egl.GetProcAddress(function);
-        }
-
         public override IntPtr GetAddress(IntPtr function)
         {
             return Egl.GetProcAddress(function);

@@ -154,10 +154,20 @@ namespace Bind
 
         void GenerateAddressTable(DelegateCollection delegates)
         {
+            // We allocate one slot per entry point. Rules:
+            // - All extensions get a slot
+            // - Core functions get a slot, unless UseDllImports is enabled
+            // - On Windows, core functions with version > 1.1 must be treated as extensions.
+            //   This is controlled via the UseWindowsCompatibleGL setting.
+            // Entry points without a slot are assigned the magic slot index -1. 
+            // Generator.Rewrite detects this and generates a static DllImport call
+            // instead of a calli instruction for these functions.
+
             int slot = -1;
             foreach (var list in delegates.Values)
             {
-                if (!Settings.IsEnabled(Settings.Legacy.UseDllImports) || list.First().Extension != "Core")
+                var func = list.First();
+                if (func.RequiresSlot(Settings))
                 {
                     slot++;
                     foreach (var d in list)

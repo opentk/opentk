@@ -156,6 +156,13 @@ namespace Bind
             AddDeprecationWarnings = 0x2000,
             /// <summary>Use DllImport declaration for core functions (do not generate entry point slots)</summary>
             UseDllImports = 0x4000,
+            /// <summary>
+            /// Use in conjuction with UseDllImports, to create
+            /// bindings that are compatible with opengl32.dll on Windows.
+            /// This uses DllImports up to GL 1.1 and function pointers
+            /// for higher versions.
+            /// </summary>
+            UseWindowsCompatibleGL = 0x8000,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |

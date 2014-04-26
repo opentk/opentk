@@ -135,7 +135,6 @@ namespace OpenTK.Platform.MacOS
         private Nullable<WindowBorder> deferredWindowBorder;
         private Nullable<WindowBorder> previousWindowBorder;
         private WindowState windowState = WindowState.Normal;
-        private MacOSKeyMap keyMap = new MacOSKeyMap();
         private OpenTK.Input.KeyboardKeyEventArgs keyArgs = new OpenTK.Input.KeyboardKeyEventArgs();
         private KeyPressEventArgs keyPressArgs = new KeyPressEventArgs((char)0);
         private string title;
@@ -337,13 +336,7 @@ namespace OpenTK.Platform.MacOS
 
         private void GetKey(ushort keyCode, NSEventModifierMask modifierFlags, OpenTK.Input.KeyboardKeyEventArgs args)
         {
-            OpenTK.Input.Key key;
-            if (!keyMap.TryGetValue((OpenTK.Platform.MacOS.Carbon.MacOSKeyCode)keyCode, out key))
-            {
-                key = OpenTK.Input.Key.Unknown;
-            }
-
-            args.Key = key;
+            args.Key = MacOSKeyMap.GetKey((Carbon.MacOSKeyCode)keyCode);
             args.Modifiers = GetModifiers(modifierFlags);
             args.ScanCode = (uint)keyCode;
         }

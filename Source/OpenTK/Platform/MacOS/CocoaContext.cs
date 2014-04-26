@@ -47,6 +47,12 @@ namespace OpenTK
         static readonly IntPtr selFlushBuffer = Selector.Get("flushBuffer");
         static readonly IntPtr selMakeCurrentContext = Selector.Get("makeCurrentContext");
         static readonly IntPtr selUpdate = Selector.Get("update");
+        static readonly IntPtr opengl = NS.AddImage(
+            "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+            AddImageFlags.ReturnOnError);
+        static readonly IntPtr opengles = NS.AddImage(
+            "/System/Library/Frameworks/OpenGL.framework/OpenGLES",
+            AddImageFlags.ReturnOnError);
 
         static CocoaContext()
         {
@@ -292,14 +298,49 @@ namespace OpenTK
 
         #region IGraphicsContextInternal Members
 
-        public override IntPtr GetAddress(string function)
-        {
-            return NS.GetAddress(function);
-        }
-
         public override IntPtr GetAddress(IntPtr function)
         {
-            return NS.GetAddress(function);
+            unsafe
+            {
+                // Add a leading underscore to the function name
+                // As of OpenGL 4.4, all functions are < 64 bytes
+                // in length. Double that just to be sure.
+                const int max = 128;
+                byte* fun = stackalloc byte[max];
+                byte* ptr = fun;
+                byte* cur = (byte*)function.ToPointer();
+                int i = 0;
+
+                *ptr++ = (byte)'_';
+                while (*cur != 0 && ++i < max)
+                {
+                    *ptr++ = *cur++;
+                }
+
+                if (i >= max - 1)
+                {
+                    Debug.Print("Function {0} too long. Loading will fail.",
+                        Marshal.PtrToStringAnsi(function));
+                }
+
+                IntPtr address = IntPtr.Zero;
+                IntPtr symbol = IntPtr.Zero;
+                if (opengl != IntPtr.Zero)
+                {
+                    symbol = NS.LookupSymbolInImage(opengl, new IntPtr(fun),
+                        SymbolLookupFlags.Bind | SymbolLookupFlags.ReturnOnError);
+                }
+                if (symbol == IntPtr.Zero && opengles != IntPtr.Zero)
+                {
+                    symbol = NS.LookupSymbolInImage(opengles, new IntPtr(fun),
+                        SymbolLookupFlags.Bind | SymbolLookupFlags.ReturnOnError);
+                }
+                if (symbol != IntPtr.Zero)
+                {
+                    address = NS.AddressOfSymbol(symbol);
+                }
+                return address;
+            }
         }
 
         #endregion

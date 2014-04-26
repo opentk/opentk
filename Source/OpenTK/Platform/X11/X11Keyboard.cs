@@ -1,29 +1,29 @@
- #region License
- //
- // The Open Toolkit Library License
- //
- // Copyright (c) 2006 - 2010 the Open Toolkit library.
- //
- // Permission is hereby granted, free of charge, to any person obtaining a copy
- // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to
- // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- // the Software, and to permit persons to whom the Software is furnished to do
- // so, subject to the following conditions:
- //
- // The above copyright notice and this permission notice shall be included in all
- // copies or substantial portions of the Software.
- //
- // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- // OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- // NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- // HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- // OTHER DEALINGS IN THE SOFTWARE.
- //
- #endregion
+#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -36,7 +36,6 @@ namespace OpenTK.Platform.X11
     // Only one keyboard supported.
     sealed class X11Keyboard : IKeyboardDriver2
     {
-        readonly static X11KeyMap keymap = new X11KeyMap();
         readonly static string name = "Core X11 keyboard";
         readonly byte[] keys = new byte[32];
         readonly int KeysymsPerKeycode;
@@ -53,8 +52,11 @@ namespace OpenTK.Platform.X11
                 // Find the number of keysyms per keycode.
                 int first = 0, last = 0;
                 API.DisplayKeycodes(display, ref first, ref last);
-                IntPtr keysym_ptr = API.GetKeyboardMapping(display, (byte)first, last - first + 1,
-                    ref KeysymsPerKeycode);
+                IntPtr keysym_ptr =
+                    API.GetKeyboardMapping(display,
+                        (byte)first,
+                        last - first + 1,
+                        ref KeysymsPerKeycode);
                 Functions.XFree(keysym_ptr);
 
                 try
@@ -66,7 +68,9 @@ namespace OpenTK.Platform.X11
                     bool supported;
                     Functions.XkbSetDetectableAutoRepeat(display, true, out supported);
                 }
-                catch { }
+                catch
+                {
+                }
             }
         }
 
@@ -108,8 +112,9 @@ namespace OpenTK.Platform.X11
                     for (int mod = 0; mod < KeysymsPerKeycode; mod++)
                     {
                         IntPtr keysym = Functions.XKeycodeToKeysym(display, (byte)keycode, mod);
-                        if (keysym != IntPtr.Zero && keymap.TryGetValue((XKey)keysym, out key))
+                        if (keysym != IntPtr.Zero)
                         {
+                            key = X11KeyMap.GetKey((XKey)keysym);
                             if (pressed)
                                 state.EnableBit((int)key);
                             else

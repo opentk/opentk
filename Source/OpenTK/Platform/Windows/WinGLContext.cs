@@ -374,16 +374,6 @@ namespace OpenTK.Platform.Windows
 
         #region GetAddress
 
-        public override IntPtr GetAddress(string function_string)
-        {
-            IntPtr address = Wgl.GetProcAddress(function_string);
-            if (!IsValid(address))
-            {
-                address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
-            }
-            return address;
-        }
-
         public override IntPtr GetAddress(IntPtr function_string)
         {
             IntPtr address = Wgl.GetProcAddress(function_string);

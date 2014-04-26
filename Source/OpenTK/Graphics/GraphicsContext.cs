@@ -601,7 +601,10 @@ namespace OpenTK.Graphics
         /// </returns>
         IntPtr IGraphicsContextInternal.GetAddress(string function)
         {
-            return (implementation as IGraphicsContextInternal).GetAddress(function);
+            IntPtr name = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(function);
+            IntPtr address = (implementation as IGraphicsContextInternal).GetAddress(name);
+            System.Runtime.InteropServices.Marshal.FreeHGlobal(name);
+            return address;
         }
 
         /// <summary>
