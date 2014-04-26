@@ -253,7 +253,7 @@ namespace OpenTK.Platform.X11
             return
                 SupportsExtension(display, window, "GLX_ARB_create_context") &&
                 SupportsExtension(display, window, "GLX_ARB_create_context_profile") &&
-                Glx.Delegates.glXCreateContextAttribsARB != null;
+                Glx.SupportsFunction("glXCreateContextAttribsARB");
         }
 
         #endregion
@@ -380,8 +380,7 @@ namespace OpenTK.Platform.X11
 
         public override void LoadAll()
         {
-            new Glx().LoadEntryPoints();
-            vsync_supported = this.GetAddress("glXSwapIntervalSGI") != IntPtr.Zero;
+            vsync_supported = Glx.SupportsFunction("glXSwapIntervalSGI");
             Debug.Print("Context supports vsync: {0}.", vsync_supported);
 
             base.LoadAll();

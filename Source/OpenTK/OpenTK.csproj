@@ -345,9 +345,6 @@
     <Compile Include="Platform\X11\Functions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\X11\GlxHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\X11\API.cs">
       <SubType>Code</SubType>
     </Compile>
