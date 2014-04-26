@@ -75,7 +75,6 @@ namespace OpenTK.Graphics.OpenGL
 
         internal const string Library = "opengl32.dll";
 
-        static SortedList<string, bool> AvailableExtensions = new SortedList<string, bool>();
         static readonly object sync_root = new object();
 
         static IntPtr[] EntryPoints;
