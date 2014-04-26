@@ -91,9 +91,9 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         public GL()
         {
-            EntryPointsInstance = EntryPoints;
-            EntryPointNamesInstance = EntryPointNames;
-            EntryPointNameOffsetsInstance = EntryPointNameOffsets;
+            _EntryPointsInstance = EntryPoints;
+            _EntryPointNamesInstance = EntryPointNames;
+            _EntryPointNameOffsetsInstance = EntryPointNameOffsets;
         }
 
         #endregion
