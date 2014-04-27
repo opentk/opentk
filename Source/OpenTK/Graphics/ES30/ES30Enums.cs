@@ -383,7 +383,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 194 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 195 other functions
     /// </summary>
     public enum All : int
     {
@@ -2415,6 +2415,10 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_STENCIL_INDEX = 0x1901
         /// </summary>
         StencilIndex = ((int)0x1901)        ,
+        /// <summary>
+        /// Original was GL_STENCIL_INDEX_OES = 0x1901
+        /// </summary>
+        StencilIndexOes = ((int)0x1901)        ,
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT = 0x1902
         /// </summary>
@@ -6964,6 +6968,14 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         AnySamplesPassedExt = ((int)0x8C2F)        ,
         /// <summary>
+        /// Original was GL_SAMPLE_SHADING_OES = 0x8C36
+        /// </summary>
+        SampleShadingOes = ((int)0x8C36)        ,
+        /// <summary>
+        /// Original was GL_MIN_SAMPLE_SHADING_VALUE_OES = 0x8C37
+        /// </summary>
+        MinSampleShadingValueOes = ((int)0x8C37)        ,
+        /// <summary>
         /// Original was GL_R11F_G11F_B10F = 0x8C3A
         /// </summary>
         R11fG11fB10f = ((int)0x8C3A)        ,
@@ -7504,6 +7516,10 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         StencilIndex8 = ((int)0x8D48)        ,
         /// <summary>
+        /// Original was GL_STENCIL_INDEX8_OES = 0x8D48
+        /// </summary>
+        StencilIndex8Oes = ((int)0x8D48)        ,
+        /// <summary>
         /// Original was GL_RENDERBUFFER_RED_SIZE = 0x8D50
         /// </summary>
         RenderbufferRedSize = ((int)0x8D50)        ,
@@ -7852,6 +7868,18 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         TextureSwizzleA = ((int)0x8E45)        ,
         /// <summary>
+        /// Original was GL_MIN_FRAGMENT_INTERPOLATION_OFFSET_OES = 0x8E5B
+        /// </summary>
+        MinFragmentInterpolationOffsetOes = ((int)0x8E5B)        ,
+        /// <summary>
+        /// Original was GL_MAX_FRAGMENT_INTERPOLATION_OFFSET_OES = 0x8E5C
+        /// </summary>
+        MaxFragmentInterpolationOffsetOes = ((int)0x8E5C)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_INTERPOLATION_OFFSET_BITS_OES = 0x8E5D
+        /// </summary>
+        FragmentInterpolationOffsetBitsOes = ((int)0x8E5D)        ,
+        /// <summary>
         /// Original was GL_COVERAGE_COMPONENT_NV = 0x8ED0
         /// </summary>
         CoverageComponentNv = ((int)0x8ED0)        ,
@@ -7915,6 +7943,26 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_MALI_PROGRAM_BINARY_ARM = 0x8F61
         /// </summary>
         MaliProgramBinaryArm = ((int)0x8F61)        ,
+        /// <summary>
+        /// Original was GL_MAX_SHADER_PIXEL_LOCAL_STORAGE_FAST_SIZE_EXT = 0x8F63
+        /// </summary>
+        MaxShaderPixelLocalStorageFastSizeExt = ((int)0x8F63)        ,
+        /// <summary>
+        /// Original was GL_SHADER_PIXEL_LOCAL_STORAGE_EXT = 0x8F64
+        /// </summary>
+        ShaderPixelLocalStorageExt = ((int)0x8F64)        ,
+        /// <summary>
+        /// Original was GL_FETCH_PER_SAMPLE_ARM = 0x8F65
+        /// </summary>
+        FetchPerSampleArm = ((int)0x8F65)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_SHADER_FRAMEBUFFER_FETCH_MRT_ARM = 0x8F66
+        /// </summary>
+        FragmentShaderFramebufferFetchMrtArm = ((int)0x8F66)        ,
+        /// <summary>
+        /// Original was GL_MAX_SHADER_PIXEL_LOCAL_STORAGE_SIZE_EXT = 0x8F67
+        /// </summary>
+        MaxShaderPixelLocalStorageSizeExt = ((int)0x8F67)        ,
         /// <summary>
         /// Original was GL_R8_SNORM = 0x8F94
         /// </summary>
@@ -7983,6 +8031,26 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_CONTEXT_ROBUST_ACCESS_EXT = 0x90F3
         /// </summary>
         ContextRobustAccessExt = ((int)0x90F3)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY_OES = 0x9102
+        /// </summary>
+        Texture2DMultisampleArrayOes = ((int)0x9102)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY_OES = 0x9105
+        /// </summary>
+        TextureBinding2DMultisampleArrayOes = ((int)0x9105)        ,
+        /// <summary>
+        /// Original was GL_SAMPLER_2D_MULTISAMPLE_ARRAY_OES = 0x910B
+        /// </summary>
+        Sampler2DMultisampleArrayOes = ((int)0x910B)        ,
+        /// <summary>
+        /// Original was GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY_OES = 0x910C
+        /// </summary>
+        IntSampler2DMultisampleArrayOes = ((int)0x910C)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY_OES = 0x910D
+        /// </summary>
+        UnsignedIntSampler2DMultisampleArrayOes = ((int)0x910D)        ,
         /// <summary>
         /// Original was GL_MAX_SERVER_WAIT_TIMEOUT = 0x9111
         /// </summary>
@@ -8272,6 +8340,10 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         ConjointNv = ((int)0x9284)        ,
         /// <summary>
+        /// Original was GL_BLEND_ADVANCED_COHERENT_KHR = 0x9285
+        /// </summary>
+        BlendAdvancedCoherentKhr = ((int)0x9285)        ,
+        /// <summary>
         /// Original was GL_BLEND_ADVANCED_COHERENT_NV = 0x9285
         /// </summary>
         BlendAdvancedCoherentNv = ((int)0x9285)        ,
@@ -8324,41 +8396,81 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         PlusDarkerNv = ((int)0x9292)        ,
         /// <summary>
+        /// Original was GL_MULTIPLY_KHR = 0x9294
+        /// </summary>
+        MultiplyKhr = ((int)0x9294)        ,
+        /// <summary>
         /// Original was GL_MULTIPLY_NV = 0x9294
         /// </summary>
         MultiplyNv = ((int)0x9294)        ,
+        /// <summary>
+        /// Original was GL_SCREEN_KHR = 0x9295
+        /// </summary>
+        ScreenKhr = ((int)0x9295)        ,
         /// <summary>
         /// Original was GL_SCREEN_NV = 0x9295
         /// </summary>
         ScreenNv = ((int)0x9295)        ,
         /// <summary>
+        /// Original was GL_OVERLAY_KHR = 0x9296
+        /// </summary>
+        OverlayKhr = ((int)0x9296)        ,
+        /// <summary>
         /// Original was GL_OVERLAY_NV = 0x9296
         /// </summary>
         OverlayNv = ((int)0x9296)        ,
+        /// <summary>
+        /// Original was GL_DARKEN_KHR = 0x9297
+        /// </summary>
+        DarkenKhr = ((int)0x9297)        ,
         /// <summary>
         /// Original was GL_DARKEN_NV = 0x9297
         /// </summary>
         DarkenNv = ((int)0x9297)        ,
         /// <summary>
+        /// Original was GL_LIGHTEN_KHR = 0x9298
+        /// </summary>
+        LightenKhr = ((int)0x9298)        ,
+        /// <summary>
         /// Original was GL_LIGHTEN_NV = 0x9298
         /// </summary>
         LightenNv = ((int)0x9298)        ,
+        /// <summary>
+        /// Original was GL_COLORDODGE_KHR = 0x9299
+        /// </summary>
+        ColordodgeKhr = ((int)0x9299)        ,
         /// <summary>
         /// Original was GL_COLORDODGE_NV = 0x9299
         /// </summary>
         ColordodgeNv = ((int)0x9299)        ,
         /// <summary>
+        /// Original was GL_COLORBURN_KHR = 0x929A
+        /// </summary>
+        ColorburnKhr = ((int)0x929A)        ,
+        /// <summary>
         /// Original was GL_COLORBURN_NV = 0x929A
         /// </summary>
         ColorburnNv = ((int)0x929A)        ,
+        /// <summary>
+        /// Original was GL_HARDLIGHT_KHR = 0x929B
+        /// </summary>
+        HardlightKhr = ((int)0x929B)        ,
         /// <summary>
         /// Original was GL_HARDLIGHT_NV = 0x929B
         /// </summary>
         HardlightNv = ((int)0x929B)        ,
         /// <summary>
+        /// Original was GL_SOFTLIGHT_KHR = 0x929C
+        /// </summary>
+        SoftlightKhr = ((int)0x929C)        ,
+        /// <summary>
         /// Original was GL_SOFTLIGHT_NV = 0x929C
         /// </summary>
         SoftlightNv = ((int)0x929C)        ,
+        /// <summary>
+        /// Original was GL_DIFFERENCE_KHR = 0x929E
+        /// </summary>
+        DifferenceKhr = ((int)0x929E)        ,
         /// <summary>
         /// Original was GL_DIFFERENCE_NV = 0x929E
         /// </summary>
@@ -8367,6 +8479,10 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_MINUS_NV = 0x929F
         /// </summary>
         MinusNv = ((int)0x929F)        ,
+        /// <summary>
+        /// Original was GL_EXCLUSION_KHR = 0x92A0
+        /// </summary>
+        ExclusionKhr = ((int)0x92A0)        ,
         /// <summary>
         /// Original was GL_EXCLUSION_NV = 0x92A0
         /// </summary>
@@ -8404,17 +8520,33 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         HardmixNv = ((int)0x92A9)        ,
         /// <summary>
+        /// Original was GL_HSL_HUE_KHR = 0x92AD
+        /// </summary>
+        HslHueKhr = ((int)0x92AD)        ,
+        /// <summary>
         /// Original was GL_HSL_HUE_NV = 0x92AD
         /// </summary>
         HslHueNv = ((int)0x92AD)        ,
+        /// <summary>
+        /// Original was GL_HSL_SATURATION_KHR = 0x92AE
+        /// </summary>
+        HslSaturationKhr = ((int)0x92AE)        ,
         /// <summary>
         /// Original was GL_HSL_SATURATION_NV = 0x92AE
         /// </summary>
         HslSaturationNv = ((int)0x92AE)        ,
         /// <summary>
+        /// Original was GL_HSL_COLOR_KHR = 0x92AF
+        /// </summary>
+        HslColorKhr = ((int)0x92AF)        ,
+        /// <summary>
         /// Original was GL_HSL_COLOR_NV = 0x92AF
         /// </summary>
         HslColorNv = ((int)0x92AF)        ,
+        /// <summary>
+        /// Original was GL_HSL_LUMINOSITY_KHR = 0x92B0
+        /// </summary>
+        HslLuminosityKhr = ((int)0x92B0)        ,
         /// <summary>
         /// Original was GL_HSL_LUMINOSITY_NV = 0x92B0
         /// </summary>
@@ -9250,6 +9382,28 @@ namespace OpenTK.Graphics.ES30
     /// Not used directly.
     /// </summary>
     public enum ArmRgba8 : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ArmShaderFramebufferFetch : int
+    {
+        /// <summary>
+        /// Original was GL_FETCH_PER_SAMPLE_ARM = 0x8F65
+        /// </summary>
+        FetchPerSampleArm = ((int)0x8F65)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_SHADER_FRAMEBUFFER_FETCH_MRT_ARM = 0x8F66
+        /// </summary>
+        FragmentShaderFramebufferFetchMrtArm = ((int)0x8F66)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ArmShaderFramebufferFetchDepthStencil : int
     {
     }
 
@@ -14301,6 +14455,25 @@ namespace OpenTK.Graphics.ES30
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum ExtShaderPixelLocalStorage : int
+    {
+        /// <summary>
+        /// Original was GL_MAX_SHADER_PIXEL_LOCAL_STORAGE_FAST_SIZE_EXT = 0x8F63
+        /// </summary>
+        MaxShaderPixelLocalStorageFastSizeExt = ((int)0x8F63)        ,
+        /// <summary>
+        /// Original was GL_SHADER_PIXEL_LOCAL_STORAGE_EXT = 0x8F64
+        /// </summary>
+        ShaderPixelLocalStorageExt = ((int)0x8F64)        ,
+        /// <summary>
+        /// Original was GL_MAX_SHADER_PIXEL_LOCAL_STORAGE_SIZE_EXT = 0x8F67
+        /// </summary>
+        MaxShaderPixelLocalStorageSizeExt = ((int)0x8F67)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum ExtShaderTextureLod : int
     {
     }
@@ -18647,6 +18820,77 @@ namespace OpenTK.Graphics.ES30
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum KhrBlendEquationAdvanced : int
+    {
+        /// <summary>
+        /// Original was GL_BLEND_ADVANCED_COHERENT_KHR = 0x9285
+        /// </summary>
+        BlendAdvancedCoherentKhr = ((int)0x9285)        ,
+        /// <summary>
+        /// Original was GL_MULTIPLY_KHR = 0x9294
+        /// </summary>
+        MultiplyKhr = ((int)0x9294)        ,
+        /// <summary>
+        /// Original was GL_SCREEN_KHR = 0x9295
+        /// </summary>
+        ScreenKhr = ((int)0x9295)        ,
+        /// <summary>
+        /// Original was GL_OVERLAY_KHR = 0x9296
+        /// </summary>
+        OverlayKhr = ((int)0x9296)        ,
+        /// <summary>
+        /// Original was GL_DARKEN_KHR = 0x9297
+        /// </summary>
+        DarkenKhr = ((int)0x9297)        ,
+        /// <summary>
+        /// Original was GL_LIGHTEN_KHR = 0x9298
+        /// </summary>
+        LightenKhr = ((int)0x9298)        ,
+        /// <summary>
+        /// Original was GL_COLORDODGE_KHR = 0x9299
+        /// </summary>
+        ColordodgeKhr = ((int)0x9299)        ,
+        /// <summary>
+        /// Original was GL_COLORBURN_KHR = 0x929A
+        /// </summary>
+        ColorburnKhr = ((int)0x929A)        ,
+        /// <summary>
+        /// Original was GL_HARDLIGHT_KHR = 0x929B
+        /// </summary>
+        HardlightKhr = ((int)0x929B)        ,
+        /// <summary>
+        /// Original was GL_SOFTLIGHT_KHR = 0x929C
+        /// </summary>
+        SoftlightKhr = ((int)0x929C)        ,
+        /// <summary>
+        /// Original was GL_DIFFERENCE_KHR = 0x929E
+        /// </summary>
+        DifferenceKhr = ((int)0x929E)        ,
+        /// <summary>
+        /// Original was GL_EXCLUSION_KHR = 0x92A0
+        /// </summary>
+        ExclusionKhr = ((int)0x92A0)        ,
+        /// <summary>
+        /// Original was GL_HSL_HUE_KHR = 0x92AD
+        /// </summary>
+        HslHueKhr = ((int)0x92AD)        ,
+        /// <summary>
+        /// Original was GL_HSL_SATURATION_KHR = 0x92AE
+        /// </summary>
+        HslSaturationKhr = ((int)0x92AE)        ,
+        /// <summary>
+        /// Original was GL_HSL_COLOR_KHR = 0x92AF
+        /// </summary>
+        HslColorKhr = ((int)0x92AF)        ,
+        /// <summary>
+        /// Original was GL_HSL_LUMINOSITY_KHR = 0x92B0
+        /// </summary>
+        HslLuminosityKhr = ((int)0x92B0)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum KhrDebug : int
     {
         /// <summary>
@@ -21155,6 +21399,54 @@ namespace OpenTK.Graphics.ES30
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum OesSampleShading : int
+    {
+        /// <summary>
+        /// Original was GL_SAMPLE_SHADING_OES = 0x8C36
+        /// </summary>
+        SampleShadingOes = ((int)0x8C36)        ,
+        /// <summary>
+        /// Original was GL_MIN_SAMPLE_SHADING_VALUE_OES = 0x8C37
+        /// </summary>
+        MinSampleShadingValueOes = ((int)0x8C37)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum OesSampleVariables : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum OesShaderImageAtomic : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum OesShaderMultisampleInterpolation : int
+    {
+        /// <summary>
+        /// Original was GL_MIN_FRAGMENT_INTERPOLATION_OFFSET_OES = 0x8E5B
+        /// </summary>
+        MinFragmentInterpolationOffsetOes = ((int)0x8E5B)        ,
+        /// <summary>
+        /// Original was GL_MAX_FRAGMENT_INTERPOLATION_OFFSET_OES = 0x8E5C
+        /// </summary>
+        MaxFragmentInterpolationOffsetOes = ((int)0x8E5C)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_INTERPOLATION_OFFSET_BITS_OES = 0x8E5D
+        /// </summary>
+        FragmentInterpolationOffsetBitsOes = ((int)0x8E5D)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum OesStandardDerivatives : int
     {
         /// <summary>
@@ -21467,6 +21759,48 @@ namespace OpenTK.Graphics.ES30
     /// </summary>
     public enum OesTextureNpot : int
     {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum OesTextureStencil8 : int
+    {
+        /// <summary>
+        /// Original was GL_STENCIL_INDEX_OES = 0x1901
+        /// </summary>
+        StencilIndexOes = ((int)0x1901)        ,
+        /// <summary>
+        /// Original was GL_STENCIL_INDEX8_OES = 0x8D48
+        /// </summary>
+        StencilIndex8Oes = ((int)0x8D48)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum OesTextureStorageMultisample2dArray : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY_OES = 0x9102
+        /// </summary>
+        Texture2DMultisampleArrayOes = ((int)0x9102)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY_OES = 0x9105
+        /// </summary>
+        TextureBinding2DMultisampleArrayOes = ((int)0x9105)        ,
+        /// <summary>
+        /// Original was GL_SAMPLER_2D_MULTISAMPLE_ARRAY_OES = 0x910B
+        /// </summary>
+        Sampler2DMultisampleArrayOes = ((int)0x910B)        ,
+        /// <summary>
+        /// Original was GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY_OES = 0x910C
+        /// </summary>
+        IntSampler2DMultisampleArrayOes = ((int)0x910C)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY_OES = 0x910D
+        /// </summary>
+        UnsignedIntSampler2DMultisampleArrayOes = ((int)0x910D)        ,
     }
 
     /// <summary>

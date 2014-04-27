@@ -8619,6 +8619,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         DoubleMat4x3 = ((int)0x8F4E)        ,
         /// <summary>
+        /// Original was GL_VERTEX_BINDING_BUFFER = 0x8F4F
+        /// </summary>
+        VertexBindingBuffer = ((int)0x8F4F)        ,
+        /// <summary>
         /// Original was GL_R8_SNORM = 0x8F94
         /// </summary>
         R8Snorm = ((int)0x8F94)        ,
@@ -32664,6 +32668,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES = 0x8F39
         /// </summary>
         MaxCombinedShaderOutputResources = ((int)0x8F39)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_BINDING_BUFFER = 0x8F4F
+        /// </summary>
+        VertexBindingBuffer = ((int)0x8F4F)        ,
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BUFFER = 0x90D2
         /// </summary>
