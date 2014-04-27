@@ -151,6 +151,7 @@ namespace OpenTK.Platform.MacOS
             // Create the window class
             Interlocked.Increment(ref UniqueId);
             windowClass = Class.AllocateClass("OpenTK_GameWindow" + UniqueId, "NSWindow");
+            Class.RegisterMethod(windowClass, new WindowKeyDownDelegate(WindowKeyDown), "keyDown:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidResizeDelegate(WindowDidResize), "windowDidResize:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidMoveDelegate(WindowDidMove), "windowDidMove:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidBecomeKeyDelegate(WindowDidBecomeKey), "windowDidBecomeKey:", "v@:@");
@@ -185,6 +186,7 @@ namespace OpenTK.Platform.MacOS
             ResetTrackingArea();
         }
 
+        delegate void WindowKeyDownDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidResizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidMoveDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidBecomeKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
@@ -197,6 +199,11 @@ namespace OpenTK.Platform.MacOS
         delegate bool AcceptsFirstResponderDelegate(IntPtr self, IntPtr cmd);
         delegate bool CanBecomeKeyWindowDelegate(IntPtr self, IntPtr cmd);
         delegate bool CanBecomeMainWindowDelegate(IntPtr self, IntPtr cmd);
+
+        private void WindowKeyDown(IntPtr self, IntPtr cmd, IntPtr notification)
+        {
+            // Steal the event to remove the "beep" sound that is normally played for unhandled key events.
+        }
 
         private void WindowDidResize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
@@ -389,10 +396,8 @@ namespace OpenTK.Platform.MacOS
                                     KeyPress(this, keyPressArgs);
                                 }
                             }
-
-                            // Steal all keydown events to avoid the annoying "bleep" sound.
-                            return;
                         }
+                        break;
 
                     case NSEventType.KeyUp:
                         {
