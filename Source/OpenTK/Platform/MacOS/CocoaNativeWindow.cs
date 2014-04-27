@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // CocoaNativeWindow.cs
 //
@@ -38,26 +38,9 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.MacOS
 {
-    class CocoaNativeWindow : INativeWindow
+    class CocoaNativeWindow : NativeWindowBase
     {
         static int UniqueId;
-
-        public event EventHandler<EventArgs> Move = delegate { };
-        public event EventHandler<EventArgs> Resize = delegate { };
-        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
-        public event EventHandler<EventArgs> Closed = delegate { };
-        public event EventHandler<EventArgs> Disposed = delegate { };
-        public event EventHandler<EventArgs> IconChanged = delegate { };
-        public event EventHandler<EventArgs> TitleChanged = delegate { };
-        public event EventHandler<EventArgs> VisibleChanged = delegate { };
-        public event EventHandler<EventArgs> FocusedChanged = delegate { };
-        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
-        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown = delegate { };
-        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp = delegate { };
-        public event EventHandler<EventArgs> MouseLeave = delegate { };
-        public event EventHandler<EventArgs> MouseEnter = delegate { };
 
         static readonly IntPtr selNextEventMatchingMask = Selector.Get("nextEventMatchingMask:untilDate:inMode:dequeue:");
         static readonly IntPtr selSendEvent = Selector.Get("sendEvent:");
@@ -95,6 +78,8 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selHide = Selector.Get("hide");
         static readonly IntPtr selUnhide = Selector.Get("unhide");
         static readonly IntPtr selScrollingDeltaY = Selector.Get("scrollingDeltaY");
+        static readonly IntPtr selDeltaX = Selector.Get("deltaX");
+        static readonly IntPtr selDeltaY = Selector.Get("deltaY");
         static readonly IntPtr selButtonNumber = Selector.Get("buttonNumber");
         static readonly IntPtr selSetStyleMask = Selector.Get("setStyleMask:");
         static readonly IntPtr selStyleMask = Selector.Get("styleMask");
@@ -145,7 +130,6 @@ namespace OpenTK.Platform.MacOS
         private bool exists;
         private bool cursorVisible = true;
         private System.Drawing.Icon icon;
-        private LegacyInputDriver inputDriver = new LegacyInputDriver();
         private WindowBorder windowBorder = WindowBorder.Resizable;
         private Nullable<WindowBorder> deferredWindowBorder;
         private Nullable<WindowBorder> previousWindowBorder;
@@ -377,7 +361,7 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendVoid(owner, selAddTrackingArea, trackingArea);
         }
 
-        public void Close()
+        public override void Close()
         {
             shouldClose = true;
         }
@@ -409,7 +393,7 @@ namespace OpenTK.Platform.MacOS
             return (MouseButton)cocoaButtonIndex;
         }
 
-        public void ProcessEvents()
+        public override void ProcessEvents()
         {
             while (true)
             {
@@ -500,16 +484,32 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.OtherMouseDragged:
                     case NSEventType.MouseMoved:
                         {
-                            var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
+                            Point p = InputDriver.Mouse[0].Position;
+                            if (CursorVisible)
+                            {
+                                // Use absolute coordinates
+                                var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
 
-                            // Convert from points to pixel coordinates
-                            var rf = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking,
-                                new RectangleF(pf.X, pf.Y, 0, 0));
+                                // Convert from points to pixel coordinates
+                                var rf = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking,
+                                    new RectangleF(pf.X, pf.Y, 0, 0));
 
-                            // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
-                            var p = new Point(
-                                MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
-                                MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
+                                // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
+                                p = new Point(
+                                    MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
+                                    MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
+                            }
+                            else
+                            {
+                                // Mouse has been disassociated,
+                                // use relative coordinates
+                                var dx = Cocoa.SendFloat(e, selDeltaX);
+                                var dy = Cocoa.SendFloat(e, selDeltaY);
+
+                                p = new Point(
+                                    MathHelper.Clamp((int)Math.Round(p.X + dx)),
+                                    MathHelper.Clamp((int)Math.Round(p.Y - dy)));
+                            }
 
                             InputDriver.Mouse[0].Position = p;
                         }
@@ -575,19 +575,19 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public System.Drawing.Point PointToClient(System.Drawing.Point point)
+        public override System.Drawing.Point PointToClient(System.Drawing.Point point)
         {
             var r = Cocoa.SendRect(windowInfo.Handle, selConvertRectFromScreen, new RectangleF(point.X, point.Y, 0, 0));
             return new Point((int)r.X, (int)(GetContentViewFrame().Height - GetCurrentScreenFrame().Height - r.Y));
         }
 
-        public System.Drawing.Point PointToScreen(System.Drawing.Point point)
+        public override System.Drawing.Point PointToScreen(System.Drawing.Point point)
         {
             var r = Cocoa.SendRect(windowInfo.Handle, selConvertRectToScreen, new RectangleF(point.X, point.Y, 0, 0));
             return new Point((int)r.X, (int)(-GetContentViewFrame().Height + GetCurrentScreenFrame().Height - r.Y));
         }
 
-        public System.Drawing.Icon Icon
+        public override System.Drawing.Icon Icon
         {
             get { return icon; }
             set
@@ -602,7 +602,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public string Title
+        public override string Title
         {
             get
             {
@@ -614,7 +614,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public bool Focused
+        public override bool Focused
         {
             get
             {
@@ -622,7 +622,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public bool Visible
+        public override bool Visible
         {
             get
             {
@@ -635,7 +635,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public bool Exists
+        public override bool Exists
         {
             get
             {
@@ -643,7 +643,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public IWindowInfo WindowInfo
+        public override IWindowInfo WindowInfo
         {
             get
             {
@@ -702,7 +702,7 @@ namespace OpenTK.Platform.MacOS
             previousWindowBorder = null;
         }
 
-        public WindowState WindowState
+        public override WindowState WindowState
         {
             get
             {
@@ -754,7 +754,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public WindowBorder WindowBorder
+        public override WindowBorder WindowBorder
         {
             get 
             { 
@@ -795,7 +795,7 @@ namespace OpenTK.Platform.MacOS
             return (NSWindowStyle)0;
         }
 
-        public System.Drawing.Rectangle Bounds
+        public override System.Drawing.Rectangle Bounds
         {
             get
             {
@@ -820,119 +820,19 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public System.Drawing.Point Location
+        public override System.Drawing.Size ClientSize
         {
             get 
-            { 
-                return Bounds.Location;
-            }
-            set
-            {
-                var b = Bounds;
-                b.Location = value;
-                Bounds = b;
-            }
-        }
-
-        public System.Drawing.Size Size
-        {
-            get 
-            { 
-                return Bounds.Size;
-            }
-            set
-            {
-                var b = Bounds;
-                b.Y -= Bounds.Height;
-                b.Y += value.Height;
-                b.Size = value;
-                Bounds = b;
-            }
-        }
-
-        public int X
-        {
-            get 
-            {
-                return Bounds.X;
-            }
-            set
-            {
-                var b = Bounds;
-                b.X = value;
-                Bounds = b;
-            }
-        }
-
-        public int Y
-        {
-            get
-            {
-                return Bounds.Y;
-            }
-            set
-            {
-                var b = Bounds;
-                b.Y = value;
-                Bounds = b;
-            }
-        }
-
-        public int Width
-        {
-            get { return ClientRectangle.Width; }
-            set
-            {
-                var s = ClientSize;
-                s.Width = value;
-                ClientSize = s;
-            }
-        }
-
-        public int Height
-        {
-            get { return ClientRectangle.Height; }
-            set
-            {
-                var s = ClientSize;
-                s.Height = value;
-                ClientSize = s;
-            }
-        }
-
-        public System.Drawing.Rectangle ClientRectangle
-        {
-            get
             {
                 var contentViewBounds = Cocoa.SendRect(windowInfo.ViewHandle, selBounds);
                 var bounds = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking, contentViewBounds);
-                return new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height); 
-            }
-            set 
-            {
-                ClientSize = value.Size; // Just set size, to be consistent with WinGLNative.
-            }
-        }
-
-        public System.Drawing.Size ClientSize
-        {
-            get 
-            {
-                return ClientRectangle.Size;
+                return new Size(0, 0, (int)bounds.Width, (int)bounds.Height); 
             }
             set
             {
                 var r_scaled = Cocoa.SendRect(windowInfo.Handle, selConvertRectFromBacking, new RectangleF(PointF.Empty, value));
                 var r = Cocoa.SendRect(windowInfo.Handle, selFrameRectForContentRect, r_scaled);
                 Size = new Size((int)r.Width, (int)r.Height);
-            }
-        }
-
-        public OpenTK.Input.IInputDriver InputDriver
-        {
-            get
-            {
-                return inputDriver;
             }
         }
 
@@ -1075,13 +975,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposed)
                 return;
@@ -1108,9 +1002,9 @@ namespace OpenTK.Platform.MacOS
             Disposed(this, EventArgs.Empty);
         }
 
-        ~CocoaNativeWindow()
+        public static IntPtr GetView(IntPtr windowHandle)
         {
-            Dispose(false);
+            return Cocoa.SendIntPtr(windowHandle, selContentView);
         }
 
         private RectangleF GetContentViewFrame()
