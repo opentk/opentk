@@ -1477,24 +1477,25 @@ namespace OpenTK.Platform.X11
                 {
                     using (new XLock(window.Display))
                     {
-                      if (value == MouseCursor.Default)
-                      {
-                        Functions.XUndefineCursor(window.Display, window.Handle);
-                      }
-                      else
-                      {
-                        fixed(byte* pixels = value.Rgba)
+                        if (value == MouseCursor.Default)
                         {
-                            var xcursorimage = Functions.XcursorImageCreate(32, 32);
-                            xcursorimage->xhot = (uint)value.X;
-                            xcursorimage->yhot = (uint)value.Y;
-                            xcursorimage->pixels = (uint*)pixels;
-                            xcursorimage->delay = 0;
-                            cursorHandle = Functions.XcursorImageLoadCursor(window.Display, xcursorimage);
-                            Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
-                            Functions.XcursorImageDestroy(xcursorimage);
+                            Functions.XUndefineCursor(window.Display, window.Handle);
                         }
-                      }
+                        else
+                        {
+                            fixed(byte* pixels = value.Rgba)
+                            {
+                                var xcursorimage = Functions.XcursorImageCreate(value.Width, value.Height);
+                                xcursorimage->xhot = (uint)value.X;
+                                xcursorimage->yhot = (uint)value.Y;
+                                xcursorimage->pixels = (uint*)pixels;
+                                xcursorimage->delay = 0;
+                                cursorHandle = Functions.XcursorImageLoadCursor(window.Display, xcursorimage);
+                                Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
+                                Functions.XcursorImageDestroy(xcursorimage);
+                            }
+                        }
+                        cursor = value;
                     }
                 }
             }
