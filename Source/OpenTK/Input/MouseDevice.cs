@@ -232,6 +232,10 @@ namespace OpenTK.Input
         /// </summary>
         internal Point Position
         {
+            get
+            {
+                return pos;
+            }
             set
             {
                 pos = value;
