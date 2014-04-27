@@ -19864,6 +19864,30 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         DrawIndirectBufferBinding = ((int)0x8F43)        ,
         /// <summary>
+        /// Original was GL_MAX_VERTEX_IMAGE_UNIFORMS = 0x90CA
+        /// </summary>
+        MaxVertexImageUniforms = ((int)0x90CA)        ,
+        /// <summary>
+        /// Original was GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS = 0x90CB
+        /// </summary>
+        MaxTessControlImageUniforms = ((int)0x90CB)        ,
+        /// <summary>
+        /// Original was GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS = 0x90CC
+        /// </summary>
+        MaxTessEvaluationImageUniforms = ((int)0x90CC)        ,
+        /// <summary>
+        /// Original was GL_MAX_GEOMETRY_IMAGE_UNIFORMS = 0x90CD
+        /// </summary>
+        MaxGeometryImageUniforms = ((int)0x90CD)        ,
+        /// <summary>
+        /// Original was GL_MAX_FRAGMENT_IMAGE_UNIFORMS = 0x90CE
+        /// </summary>
+        MaxFragmentImageUniforms = ((int)0x90CE)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMBINED_IMAGE_UNIFORMS = 0x90CF
+        /// </summary>
+        MaxCombinedImageUniforms = ((int)0x90CF)        ,
+        /// <summary>
         /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE = 0x9104
         /// </summary>
         TextureBinding2DMultisample = ((int)0x9104)        ,
@@ -19899,6 +19923,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_MAX_FRAGMENT_INPUT_COMPONENTS = 0x9125
         /// </summary>
         MaxFragmentInputComponents = ((int)0x9125)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMPUTE_IMAGE_UNIFORMS = 0x91BD
+        /// </summary>
+        MaxComputeImageUniforms = ((int)0x91BD)        ,
     }
 
     /// <summary>

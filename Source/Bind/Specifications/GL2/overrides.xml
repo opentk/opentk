@@ -3561,6 +3561,13 @@
       <use enum="VERSION_4_1" token="VIEWPORT_BOUNDS_RANGE" />
       <use enum="VERSION_4_1" token="LAYER_PROVOKING_VERTEX" />
       <use enum="VERSION_4_1" token="VIEWPORT_INDEX_PROVOKING_VERTEX" />
+      <use enum="VERSION_4_2" token="MAX_VERTEX_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_2" token="MAX_TESS_CONTROL_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_2" token="MAX_TESS_EVALUATION_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_2" token="MAX_GEOMETRY_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_2" token="MAX_FRAGMENT_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_2" token="MAX_COMBINED_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_3" token="MAX_COMPUTE_IMAGE_UNIFORMS" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
