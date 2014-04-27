@@ -380,7 +380,9 @@ namespace OpenTK.Platform.X11
 
         public override void LoadAll()
         {
-            vsync_supported = Glx.SupportsFunction("glXSwapIntervalSGI");
+            vsync_supported =
+                SupportsExtension(display, currentWindow, "SupportsExtension") &&
+                Glx.SupportsFunction("glXSwapIntervalSGI");
             Debug.Print("Context supports vsync: {0}.", vsync_supported);
 
             base.LoadAll();
