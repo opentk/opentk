@@ -498,21 +498,29 @@ namespace OpenTK.Platform.SDL2
                                     IntPtr cursor_surface =
                                         SDL.CreateRGBSurfaceFrom(
                                             new IntPtr(pixels),
-                                            cursor.Width,
-                                            cursor.Height,
+                                            value.Width,
+                                            value.Height,
                                             32,
-                                            cursor.Width * 4,
+                                            value.Width * 4,
                                             0xff000000,
                                             0x00ff0000,
                                             0x0000ff00,
                                             0x000000ff);
 
-                                    sdl_cursor = SDL.CreateColorCursor(
-                                        cursor_surface,
-                                        cursor.Width,
-                                        cursor.Height,
-                                        cursor.X,
-                                        cursor.Y);
+                                    if (cursor_surface == IntPtr.Zero)
+                                    {
+                                        Debug.Print("[SDL2] Failed to create cursor surface. Error: {0}",
+                                            SDL.GetError());
+                                        return;
+                                    }
+
+                                    sdl_cursor = SDL.CreateColorCursor(cursor_surface, value.X, value.Y);
+                                    if (sdl_cursor == IntPtr.Zero)
+                                    {
+                                        Debug.Print("[SDL2] Failed to create cursor. Error: {0}",
+                                            SDL.GetError());
+                                        return;
+                                    }
 
                                     if (sdl_cursor != IntPtr.Zero)
                                     {
