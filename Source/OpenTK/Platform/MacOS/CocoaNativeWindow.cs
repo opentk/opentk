@@ -112,6 +112,7 @@ namespace OpenTK.Platform.MacOS
         //static readonly IntPtr selIsInFullScreenMode = Selector.Get("isInFullScreenMode");
         //static readonly IntPtr selExitFullScreenModeWithOptions = Selector.Get("exitFullScreenModeWithOptions:");
         //static readonly IntPtr selEnterFullScreenModeWithOptions = Selector.Get("enterFullScreenMode:withOptions:");
+        static readonly IntPtr selArrowCursor = Selector.Get("arrowCursor");
 
         static readonly IntPtr NSDefaultRunLoopMode;
         static readonly IntPtr NSCursor;
@@ -142,8 +143,10 @@ namespace OpenTK.Platform.MacOS
         private int normalLevel;
         private bool shouldClose;
         private int suppressResize;
-        private const float scrollFactor = 120.0f;
+        private bool cursorInsideWindow = true;
+        private MouseCursor selectedCursor = MouseCursor.Default; // user-selected cursor
 
+        private const float scrollFactor = 120.0f;
         private const bool exclusiveFullscreen = false;
 
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
@@ -412,11 +415,12 @@ namespace OpenTK.Platform.MacOS
                             var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
                             if (trackingAreaOwner == windowInfo.ViewHandle)
                             {
-                                if (!cursorVisible)
+                                if (selectedCursor != MouseCursor.Default)
                                 {
-                                    SetCursorVisible(false);
+                                    SetCursor(selectedCursor);
                                 }
 
+                                cursorInsideWindow = true;
                                 MouseEnter(this, EventArgs.Empty);
                             }
                         }
@@ -428,11 +432,12 @@ namespace OpenTK.Platform.MacOS
                             var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
                             if (trackingAreaOwner == windowInfo.ViewHandle)
                             {
-                                if (!cursorVisible)
+                                if (selectedCursor != MouseCursor.Default)
                                 {
-                                    SetCursorVisible(true);
+                                    SetCursor(MouseCursor.Default);
                                 }
 
+                                cursorInsideWindow = false;
                                 MouseLeave(this, EventArgs.Empty);
                             }
                         }
@@ -889,10 +894,20 @@ namespace OpenTK.Platform.MacOS
         {
             get
             {
-                return MouseCursor.Default;
+                return selectedCursor;
             }
             set
             {
+                // We only modify the cursor when it is
+                // inside the window and visible.
+                // If it is outside the window or invisible,
+                // we store the selected cursor and change it
+                // in the MouseEnter event.
+                if (CursorVisible && cursorInsideWindow)
+                {
+                    SetCursor(value);
+                }
+                selectedCursor = value;
             }
         }
 
@@ -977,9 +992,24 @@ namespace OpenTK.Platform.MacOS
 
         private void SetCursorVisible(bool visible)
         {
-            // Problem: Unlike the PC version, you can move the mouse out of the window.
-            // Perhaps use CG.WarpMouseCursorPosition to clamp mouse?
+            Carbon.CG.AssociateMouseAndMouseCursorPosition(visible);
             Cocoa.SendVoid(NSCursor, visible ? selUnhide : selHide);
+        }
+
+        private void SetCursor(MouseCursor cursor)
+        {
+            if (cursor == MouseCursor.Default)
+            {
+                Cocoa.SendVoid(NSCursor, selUnhide);
+            }
+            else if (cursor == MouseCursor.Empty)
+            {
+                Cocoa.SendVoid(NSCursor, selHide);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private void SetMenuVisible(bool visible)
