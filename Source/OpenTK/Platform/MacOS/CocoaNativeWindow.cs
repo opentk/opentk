@@ -61,7 +61,6 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selNextEventMatchingMask = Selector.Get("nextEventMatchingMask:untilDate:inMode:dequeue:");
         static readonly IntPtr selSendEvent = Selector.Get("sendEvent:");
         //static readonly IntPtr selUpdateWindows = Selector.Get("updateWindows");
-        static readonly IntPtr selContentView = Selector.Get("contentView");
         static readonly IntPtr selConvertRectFromScreen = Selector.Get("convertRectFromScreen:");
         static readonly IntPtr selConvertRectToScreen = Selector.Get("convertRectToScreen:");
         static readonly IntPtr selPerformClose = Selector.Get("performClose:");
@@ -119,6 +118,7 @@ namespace OpenTK.Platform.MacOS
         static CocoaNativeWindow()
         {
             Cocoa.Initialize();
+            NSApplication.Initialize(); // Problem: This does not allow creating a separate app and using CocoaNativeWindow.
             NSDefaultRunLoopMode = Cocoa.GetStringConstant(Cocoa.FoundationLibrary, "NSDefaultRunLoopMode");
             NSCursor = Class.Get("NSCursor");
         }
@@ -937,11 +937,6 @@ namespace OpenTK.Platform.MacOS
         ~CocoaNativeWindow()
         {
             Dispose(false);
-        }
-
-        public static IntPtr GetView(IntPtr windowHandle)
-        {
-            return Cocoa.SendIntPtr(windowHandle, selContentView);
         }
 
         private RectangleF GetContentViewFrame()
