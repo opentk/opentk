@@ -28,6 +28,7 @@
 #endregion
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using OpenTK.Input;
@@ -39,6 +40,92 @@ namespace OpenTK.Platform
     {
         readonly LegacyInputDriver LegacyInputDriver =
             new LegacyInputDriver();
+
+        #region Protected Members
+
+        protected void OnMove(EventArgs e)
+        {
+            Move(this, e);
+        }
+
+        protected void OnResize(EventArgs e)
+        {
+            Resize(this, e);
+        }
+
+        protected void OnClosing(CancelEventArgs e)
+        {
+            Closing(this, e);
+        }
+
+        protected void OnClosed(EventArgs e)
+        {
+            Closed(this, e);
+        }
+
+        protected void OnDisposed(EventArgs e)
+        {
+            Disposed(this, e);
+        }
+
+        protected void OnIconChanged(EventArgs e)
+        {
+            IconChanged(this, e);
+        }
+
+        protected void OnTitleChanged(EventArgs e)
+        {
+            TitleChanged(this, e);
+        }
+
+        protected void OnVisibleChanged(EventArgs e)
+        {
+            VisibleChanged(this, e);
+        }
+
+        protected void OnFocusedChanged(EventArgs e)
+        {
+            FocusedChanged(this, e);
+        }
+
+        protected void OnWindowBorderChanged(EventArgs e)
+        {
+            WindowBorderChanged(this, e);
+        }
+
+        protected void OnWindowStateChanged(EventArgs e)
+        {
+            WindowStateChanged(this, e);
+        }
+
+        protected void OnKeyDown(KeyboardKeyEventArgs e)
+        {
+            KeyDown(this, e);
+        }
+
+        protected void OnKeyPress(KeyPressEventArgs e)
+        {
+            KeyPress(this, e);
+        }
+
+        protected void OnKeyUp(KeyboardKeyEventArgs e)
+        {
+            KeyUp(this, e);
+        }
+
+        protected void OnMouseLeave(EventArgs e)
+        {
+            MouseLeave(this, e);
+        }
+
+        protected void OnMouseEnter(EventArgs e)
+        {
+            MouseEnter(this, e);
+        }
+
+        #endregion
+
+        #region INativeWindow Members
 
         public event EventHandler<EventArgs> Move = delegate { };
         public event EventHandler<EventArgs> Resize = delegate { };
@@ -73,7 +160,7 @@ namespace OpenTK.Platform
 
         public abstract bool Visible { get; set; }
 
-        public abstract bool Exists { get; set; }
+        public abstract bool Exists { get; }
 
         public abstract IWindowInfo WindowInfo { get; }
 
@@ -183,20 +270,25 @@ namespace OpenTK.Platform
 
         public abstract bool CursorVisible { get; set; }
 
+        #endregion
+
+        #region IDisposable Members
+
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize();
+            GC.SuppressFinalize(this);
         }
 
         protected abstract void Dispose(bool disposing);
 
-        [Conditional("DEBUG")]
         ~NativeWindowBase()
         {
             Debug.Print("NativeWindowBase leaked, did you forget to call Dispose()?");
             Dispose(false);
         }
+
+        #endregion
     }
 }
 
