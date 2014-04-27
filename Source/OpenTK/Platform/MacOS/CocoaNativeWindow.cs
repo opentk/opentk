@@ -45,6 +45,7 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selNextEventMatchingMask = Selector.Get("nextEventMatchingMask:untilDate:inMode:dequeue:");
         static readonly IntPtr selSendEvent = Selector.Get("sendEvent:");
         //static readonly IntPtr selUpdateWindows = Selector.Get("updateWindows");
+        static readonly IntPtr selContentView = Selector.Get("contentView");
         static readonly IntPtr selConvertRectFromScreen = Selector.Get("convertRectFromScreen:");
         static readonly IntPtr selConvertRectToScreen = Selector.Get("convertRectToScreen:");
         static readonly IntPtr selPerformClose = Selector.Get("performClose:");
@@ -243,7 +244,7 @@ namespace OpenTK.Platform.MacOS
             GraphicsContext.CurrentContext.Update(windowInfo);
 
             if (suppressResize == 0)
-                Resize(this, EventArgs.Empty);
+                OnResize(EventArgs.Empty);
         }
 
         private void ApplicationQuit(object sender, CancelEventArgs e)
@@ -256,17 +257,17 @@ namespace OpenTK.Platform.MacOS
         {
             // Problem: Called only when you stop moving for a brief moment,
             // not each frame as it is on PC.
-            Move(this, EventArgs.Empty);
+            OnMove(EventArgs.Empty);
         }
 
         private void WindowDidBecomeKey(IntPtr self, IntPtr cmd, IntPtr notification)
         {
-            FocusedChanged(this, EventArgs.Empty);
+            OnFocusedChanged(EventArgs.Empty);
         }
 
         private void WindowDidResignKey(IntPtr self, IntPtr cmd, IntPtr notification)
         {
-            FocusedChanged(this, EventArgs.Empty);
+            OnFocusedChanged(EventArgs.Empty);
         }
 
         private void WindowWillMiniaturize(IntPtr self, IntPtr cmd, IntPtr notification)
@@ -280,14 +281,14 @@ namespace OpenTK.Platform.MacOS
         private void WindowDidMiniaturize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
             windowState = WindowState.Minimized;
-            WindowStateChanged(this, EventArgs.Empty);
+            OnWindowStateChanged(EventArgs.Empty);
             OnResize(false); // Don't set tracking area when we minimize
         }
 
         private void WindowDidDeminiaturize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
             windowState = WindowState.Normal;
-            WindowStateChanged(this, EventArgs.Empty);
+            OnWindowStateChanged(EventArgs.Empty);
             OnResize(true);
         }
 
@@ -305,7 +306,7 @@ namespace OpenTK.Platform.MacOS
                 InternalBounds = toFrame;
                 windowState = WindowState.Maximized;
 
-                WindowStateChanged(this, EventArgs.Empty);
+                OnWindowStateChanged(EventArgs.Empty);
             }
             return false;
         }
@@ -313,11 +314,11 @@ namespace OpenTK.Platform.MacOS
         private bool WindowShouldClose(IntPtr self, IntPtr cmd, IntPtr sender)
         {
             var cancelArgs = new CancelEventArgs();
-            Closing(this, cancelArgs);
+            OnClosing(cancelArgs);
 
             if (!cancelArgs.Cancel)
             {
-                Closed(this, EventArgs.Empty);
+                OnClosed(EventArgs.Empty);
                 return true;
             }
 
@@ -415,7 +416,7 @@ namespace OpenTK.Platform.MacOS
 
                             if (!isARepeat || InputDriver.Keyboard[0].KeyRepeat)
                             {
-                                KeyDown(this, keyArgs);
+                                OnKeyDown(keyArgs);
                             }
 
                             var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
@@ -427,7 +428,7 @@ namespace OpenTK.Platform.MacOS
                                     // For some reason, arrow keys (mapped 63232-63235) are seen as non-control characters, so get rid of those.
 
                                     keyPressArgs.KeyChar = c;
-                                    KeyPress(this, keyPressArgs);
+                                    OnKeyPress(keyPressArgs);
                                 }
                             }
                         }
@@ -441,7 +442,7 @@ namespace OpenTK.Platform.MacOS
                             GetKey(keyCode, modifierFlags, keyArgs);
                             InputDriver.Keyboard[0].SetKey(keyArgs.Key, keyArgs.ScanCode, false);
 
-                            KeyUp(this, keyArgs);
+                            OnKeyUp(keyArgs);
                         }
                         break;
 
@@ -456,8 +457,7 @@ namespace OpenTK.Platform.MacOS
                                     //SetCursor(selectedCursor);
                                 }
 
-                                cursorInsideWindow = true;
-                                MouseEnter(this, EventArgs.Empty);
+                                OnMouseEnter(EventArgs.Empty);
                             }
                         }
                         break;
@@ -473,8 +473,7 @@ namespace OpenTK.Platform.MacOS
                                     SetCursor(MouseCursor.Default);
                                 }
 
-                                cursorInsideWindow = false;
-                                MouseLeave(this, EventArgs.Empty);
+                                OnMouseLeave(EventArgs.Empty);
                             }
                         }
                         break;
@@ -507,8 +506,8 @@ namespace OpenTK.Platform.MacOS
                                 var dy = Cocoa.SendFloat(e, selDeltaY);
 
                                 p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(p.X + dx)),
-                                    MathHelper.Clamp((int)Math.Round(p.Y - dy)));
+                                    MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
+                                    MathHelper.Clamp((int)Math.Round(p.Y - dy), 0, Height));
                             }
 
                             InputDriver.Mouse[0].Position = p;
@@ -598,7 +597,7 @@ namespace OpenTK.Platform.MacOS
                     IntPtr nsimg = Cocoa.ToNSImage(img);
                     Cocoa.SendVoid(NSApplication.Handle, selSetApplicationIconImage, nsimg);
                 }
-                IconChanged(this, EventArgs.Empty);
+                OnIconChanged(EventArgs.Empty);
             }
         }
 
@@ -631,7 +630,7 @@ namespace OpenTK.Platform.MacOS
             set
             {
                 Cocoa.SendVoid(windowInfo.Handle, selSetIsVisible, value);
-                VisibleChanged(this, EventArgs.Empty);
+                OnVisibleChanged(EventArgs.Empty);
             }
         }
 
@@ -735,7 +734,7 @@ namespace OpenTK.Platform.MacOS
                     InternalBounds = GetCurrentScreenFrame();
 
                     windowState = value;
-                    WindowStateChanged(this, EventArgs.Empty);
+                    OnWindowStateChanged(EventArgs.Empty);
                 }
                 else if (value == WindowState.Maximized)
                 {
@@ -748,8 +747,8 @@ namespace OpenTK.Platform.MacOS
                 else if (value == WindowState.Normal)
                 {
                     windowState = value;
-                    WindowStateChanged(this, EventArgs.Empty);
-                    Resize(this, EventArgs.Empty);
+                    OnWindowStateChanged(EventArgs.Empty);
+                    OnResize(EventArgs.Empty);
                 }
             }
         }
@@ -773,7 +772,7 @@ namespace OpenTK.Platform.MacOS
                     return;
 
                 SetWindowBorder(value);
-                WindowBorderChanged(this, EventArgs.Empty);
+                OnWindowBorderChanged(EventArgs.Empty);
             }
         }
 
@@ -826,7 +825,7 @@ namespace OpenTK.Platform.MacOS
             {
                 var contentViewBounds = Cocoa.SendRect(windowInfo.ViewHandle, selBounds);
                 var bounds = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking, contentViewBounds);
-                return new Size(0, 0, (int)bounds.Width, (int)bounds.Height); 
+                return new Size((int)bounds.Width, (int)bounds.Height); 
             }
             set
             {
@@ -999,7 +998,7 @@ namespace OpenTK.Platform.MacOS
                 Cocoa.SendVoid(windowInfo.Handle, Selector.Release);
             }
 
-            Disposed(this, EventArgs.Empty);
+            OnDisposed(EventArgs.Empty);
         }
 
         public static IntPtr GetView(IntPtr windowHandle)
@@ -1072,7 +1071,7 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendIntPtr(windowInfo.Handle, selSetTitle, Cocoa.ToNSString(title));
             if (callEvent)
             {
-                TitleChanged(this, EventArgs.Empty);
+                OnTitleChanged(EventArgs.Empty);
             }
         }
 
