@@ -275,8 +275,9 @@ namespace OpenTK
             {
                 EnsureUndisposed();
                 if (value == null)
-                    throw new ArgumentNullException();
-
+                {
+                    value = MouseCursor.Empty;
+                }
                 implementation.Cursor = value;
             }
         }
