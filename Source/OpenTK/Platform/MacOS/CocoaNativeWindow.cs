@@ -885,6 +885,17 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
+        public MouseCursor Cursor
+        {
+            get
+            {
+                return MouseCursor.Default;
+            }
+            set
+            {
+            }
+        }
+
         public bool CursorVisible
         {
             get { return cursorVisible; }
