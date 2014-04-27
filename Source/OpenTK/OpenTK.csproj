@@ -795,6 +795,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\MacOS\Carbon\Cgl.cs" />
+    <Compile Include="WindowIcon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

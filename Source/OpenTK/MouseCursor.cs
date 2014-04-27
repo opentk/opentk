@@ -31,10 +31,14 @@ using System;
 
 namespace OpenTK
 {
-
-    public class MouseCursor
+    /// <summary>
+    /// Represents a predefined or custom mouse cursor.
+    /// </summary>
+    public sealed class MouseCursor : WindowIcon
     {
         static readonly MouseCursor default_cursor = new MouseCursor();
+        static readonly MouseCursor empty_cursor = new MouseCursor(
+            new byte[16 * 16 * 4], 16, 16, 0, 0);
 
         byte[] rgba;
         int width;
@@ -46,7 +50,8 @@ namespace OpenTK
         {
         }
 
-        public MouseCursor(byte[] rgba, int width, int height, int x, int y)
+        // Todo: make public when byte-order issues are resolved
+        internal MouseCursor(byte[] rgba, int width, int height, int x, int y)
         {
             if (rgba == null)
                 throw new ArgumentNullException();
@@ -70,11 +75,25 @@ namespace OpenTK
         internal int X { get { return x; } }
         internal int Y { get { return y; } }
 
+        /// <summary>
+        /// Gets the default mouse cursor for this platform.
+        /// </summary>
         public static MouseCursor Default
         {
             get
             {
                 return default_cursor;
+            }
+        }
+
+        /// <summary>
+        /// Gets an empty (invisible) mouse cursor.
+        /// </summary>
+        public static MouseCursor Empty
+        {
+            get
+            {
+                return empty_cursor;
             }
         }
     }
