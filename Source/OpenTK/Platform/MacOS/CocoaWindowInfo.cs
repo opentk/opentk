@@ -40,7 +40,10 @@ namespace OpenTK.Platform.MacOS
     /// </summary>
     sealed class CocoaWindowInfo : IWindowInfo
     {
+        static readonly IntPtr selContentView = Selector.Get("contentView");
+
         IntPtr nsWindowRef;
+        IntPtr nsViewRef;
 
         bool disposed = false;
 
@@ -49,10 +52,22 @@ namespace OpenTK.Platform.MacOS
         /// <summary>
         /// Constructs a new instance with the specified parameters.
         /// </summary>
-        /// <param name="nsWindowRef">A valid NSView reference.</param>
-        public CocoaWindowInfo(IntPtr nsWindowRef)
+        /// <remarks>This constructor assumes that the NSWindow's contentView is the NSView we want to attach to our context.</remarks>
+        /// <param name="nsWindowRef">A valid NSWindow reference.</param>
+        public CocoaWindowInfo(IntPtr nsWindowRef) : this(nsWindowRef, Cocoa.SendIntPtr(nsWindowRef, selContentView))
+        {
+
+        }
+
+        /// <summary>
+        /// Constructs a new instance with the specified parameters.
+        /// </summary>
+        /// <param name="nsWindowRef">A valid NSWindow reference.</param>
+        /// <param name="nsViewRef">A valid NSView reference.</param>
+        public CocoaWindowInfo(IntPtr nsWindowRef, IntPtr nsViewRef)
         {
             this.nsWindowRef = nsWindowRef;
+            this.nsViewRef = nsViewRef;
         }
 
         #endregion
@@ -67,19 +82,13 @@ namespace OpenTK.Platform.MacOS
         /// <summary>
         /// Gets the view reference for this instance.
         /// </summary>
-        public IntPtr ViewHandle
-        {
-            get
-            {
-                return CocoaNativeWindow.GetView(nsWindowRef);
-            }
-        }
+        public IntPtr ViewHandle { get { return nsViewRef; } }
 
         /// <summary>Returns a System.String that represents the current window.</summary>
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("MacOS.CocoaWindowInfo: NSWindow {0}", nsWindowRef);
+            return String.Format("MacOS.CocoaWindowInfo: NSWindow {0}, NSView {1}", nsWindowRef, nsViewRef);
         }
 
         #endregion

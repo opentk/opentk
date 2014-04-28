@@ -61,7 +61,6 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selNextEventMatchingMask = Selector.Get("nextEventMatchingMask:untilDate:inMode:dequeue:");
         static readonly IntPtr selSendEvent = Selector.Get("sendEvent:");
         //static readonly IntPtr selUpdateWindows = Selector.Get("updateWindows");
-        static readonly IntPtr selContentView = Selector.Get("contentView");
         static readonly IntPtr selConvertRectFromScreen = Selector.Get("convertRectFromScreen:");
         static readonly IntPtr selConvertRectToScreen = Selector.Get("convertRectToScreen:");
         static readonly IntPtr selPerformClose = Selector.Get("performClose:");
@@ -120,6 +119,7 @@ namespace OpenTK.Platform.MacOS
         static CocoaNativeWindow()
         {
             Cocoa.Initialize();
+            NSApplication.Initialize(); // Problem: This does not allow creating a separate app and using CocoaNativeWindow.
             NSDefaultRunLoopMode = Cocoa.GetStringConstant(Cocoa.FoundationLibrary, "NSDefaultRunLoopMode");
             NSCursor = Class.Get("NSCursor");
         }
@@ -154,6 +154,7 @@ namespace OpenTK.Platform.MacOS
             // Create the window class
             Interlocked.Increment(ref UniqueId);
             windowClass = Class.AllocateClass("OpenTK_GameWindow" + UniqueId, "NSWindow");
+            Class.RegisterMethod(windowClass, new WindowKeyDownDelegate(WindowKeyDown), "keyDown:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidResizeDelegate(WindowDidResize), "windowDidResize:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidMoveDelegate(WindowDidMove), "windowDidMove:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidBecomeKeyDelegate(WindowDidBecomeKey), "windowDidBecomeKey:", "v@:@");
@@ -188,6 +189,7 @@ namespace OpenTK.Platform.MacOS
             ResetTrackingArea();
         }
 
+        delegate void WindowKeyDownDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidResizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidMoveDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         delegate void WindowDidBecomeKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
@@ -200,6 +202,11 @@ namespace OpenTK.Platform.MacOS
         delegate bool AcceptsFirstResponderDelegate(IntPtr self, IntPtr cmd);
         delegate bool CanBecomeKeyWindowDelegate(IntPtr self, IntPtr cmd);
         delegate bool CanBecomeMainWindowDelegate(IntPtr self, IntPtr cmd);
+
+        private void WindowKeyDown(IntPtr self, IntPtr cmd, IntPtr notification)
+        {
+            // Steal the event to remove the "beep" sound that is normally played for unhandled key events.
+        }
 
         private void WindowDidResize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
@@ -392,10 +399,8 @@ namespace OpenTK.Platform.MacOS
                                     KeyPress(this, keyPressArgs);
                                 }
                             }
-
-                            // Steal all keydown events to avoid the annoying "bleep" sound.
-                            return;
                         }
+                        break;
 
                     case NSEventType.KeyUp:
                         {
@@ -963,11 +968,6 @@ namespace OpenTK.Platform.MacOS
         ~CocoaNativeWindow()
         {
             Dispose(false);
-        }
-
-        public static IntPtr GetView(IntPtr windowHandle)
-        {
-            return Cocoa.SendIntPtr(windowHandle, selContentView);
         }
 
         private RectangleF GetContentViewFrame()

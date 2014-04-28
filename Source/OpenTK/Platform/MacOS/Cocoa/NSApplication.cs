@@ -61,6 +61,16 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendIntPtr(menubar, Selector.Get("addItem:"), menuItem);
             Cocoa.SendIntPtr(Handle, Selector.Get("setMainMenu:"), menubar);
 
+            // Add a "Quit" menu item and bind the button.
+            var appMenu = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc),
+                Selector.Autorelease);
+            var quitMenuItem = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc),
+                Selector.Get("initWithTitle:action:keyEquivalent:"), Cocoa.ToNSString("Quit"), Selector.Get("terminate:"), Cocoa.ToNSString("q")),
+                Selector.Autorelease);
+
+            Cocoa.SendIntPtr(appMenu, Selector.Get("addItem:"), quitMenuItem);
+            Cocoa.SendIntPtr(menuItem, Selector.Get("setSubmenu:"), appMenu);
+
             // Tell cocoa we're ready to run the application (usually called by [NSApp run]). 
             Cocoa.SendVoid(Handle, Selector.Get("finishLaunching"));
         }

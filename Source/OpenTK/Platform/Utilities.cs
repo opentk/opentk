@@ -309,10 +309,22 @@ namespace OpenTK.Platform
         /// Creates an IWindowInfo instance for the Mac OS X platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the NSWindow.</param>
+        /// <remarks>Assumes that the NSWindow's contentView is the NSView we want to attach to our context.</remarks>
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle)
         {
             return new OpenTK.Platform.MacOS.CocoaWindowInfo(windowHandle);
+        }
+
+        /// <summary>
+        /// Creates an IWindowInfo instance for the Mac OS X platform.
+        /// </summary>
+        /// <param name="windowHandle">The handle of the NSWindow.</param>
+        /// <param name="viewHandle">The handle of the NSView.</param>
+        /// <returns>A new IWindowInfo instance.</returns>
+        public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle, IntPtr viewHandle)
+        {
+            return new OpenTK.Platform.MacOS.CocoaWindowInfo(windowHandle, viewHandle);
         }
 
         #endregion
