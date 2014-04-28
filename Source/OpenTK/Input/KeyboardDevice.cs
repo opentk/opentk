@@ -211,12 +211,14 @@ namespace OpenTK.Input
                 {
                     args.Key = key;
                     args.ScanCode = scancode;
+                    args.Modifiers = GetModifiers();
                     KeyDown(this, args);
                 }
                 else if (!state && KeyUp != null)
                 {
                     args.Key = key;
                     args.ScanCode = scancode;
+                    args.Modifiers = GetModifiers();
                     KeyUp(this, args);
                 }
             }

@@ -146,6 +146,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="OpenGL\1.x\TextRendering.cs" />
+    <Compile Include="OpenTK\GameWindow\MouseCursorSimple.cs" />
     <Compile Include="OpenTK\Test\TestShaderUtf8Support.cs" />
     <Compile Include="SamplesTreeViewSorter.cs">
       <SubType>Code</SubType>
@@ -548,9 +549,13 @@
     <None Include="Data\Audio\the_ring_that_fell.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+	<None Include="Data\Textures\cursor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <EmbeddedResource Include="OpenGL\1.x\OpenGLDiagnostics.rtf" />
     <EmbeddedResource Include="OpenGL\1.x\Anaglyph.rtf" />
     <EmbeddedResource Include="OpenGL\1.x\TextRendering.rtf" />
+    <EmbeddedResource Include="OpenTK\GameWindow\MouseCursorSimple.rtf" />
     <None Include="Resources\App.ico">
     </None>
     <None Include="..\OpenTK\OpenTK.dll.config">

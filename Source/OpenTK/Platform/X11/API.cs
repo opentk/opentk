@@ -38,6 +38,11 @@ namespace OpenTK.Platform.X11
     using Display = System.IntPtr;
     using XPointer = System.IntPtr;
 
+    using XcursorBool = System.Int32;
+    using XcursorUInt = System.UInt32;
+    using XcursorDim = System.UInt32;
+    using XcursorPixel = System.UInt32;
+
     // Randr and Xrandr
     using Bool = System.Boolean;
     using XRRScreenConfiguration = System.IntPtr; // opaque datatype
@@ -578,6 +583,47 @@ XF86VidModeGetGammaRampSize(
     #endregion
 
     #region X11 Structures
+
+    #region Xcursor
+
+    [StructLayout(LayoutKind.Sequential)]
+    unsafe struct XcursorImage
+    {
+        public XcursorUInt version;
+        public XcursorDim size;
+        public XcursorDim width;
+        public XcursorDim height;
+        public XcursorDim xhot;
+        public XcursorDim yhot;
+        public XcursorUInt delay;
+        public XcursorPixel* pixels;
+    }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    unsafe struct XcursorImages 
+    {
+        public int nimage;
+        public XcursorImage **images;
+        public char *name;
+    }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    unsafe struct XcursorCursors 
+    {
+        public Display dpy;
+        public int refcount;
+        public int ncursor;
+        public Cursor *cursors;
+    }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    unsafe struct XcursorAnimate 
+    {
+        public XcursorCursors *cursors;
+        public int sequence;
+    }
+
+    #endregion
 
     #region internal class XVisualInfo
 
@@ -1388,6 +1434,7 @@ XF86VidModeGetGammaRampSize(
     internal static partial class Functions
     {
         internal const string X11Library = "libX11";
+        internal const string XcursorLibrary = "libXcursor.so.1";
 
         #region XCreateWindow
 
@@ -1431,6 +1478,19 @@ XF86VidModeGetGammaRampSize(
         {
             XChangeWindowAttributes(display, w, (UIntPtr)valuemask, ref attributes);
         }
+
+        #endregion
+
+        #region Xcursor
+
+        [DllImport(XcursorLibrary)]
+        internal static unsafe extern XcursorImage* XcursorImageCreate(int width, int height);
+
+        [DllImport(XcursorLibrary)]
+        internal static unsafe extern void XcursorImageDestroy(XcursorImage* image);
+
+        [DllImport(XcursorLibrary)]
+        internal static unsafe extern Cursor XcursorImageLoadCursor(Display dpy, XcursorImage* image); 
 
         #endregion
 
