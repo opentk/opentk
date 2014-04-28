@@ -223,8 +223,6 @@ namespace OpenTK.Platform.MacOS
 
             AppKitLibrary = NS.LoadLibrary("/System/Library/Frameworks/AppKit.framework/AppKit");
             FoundationLibrary = NS.LoadLibrary("/System/Library/Frameworks/Foundation.framework/Foundation");
-
-            NSApplication.Initialize();
         }
     }
 }

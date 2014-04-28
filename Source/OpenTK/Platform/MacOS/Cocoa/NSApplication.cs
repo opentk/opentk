@@ -28,6 +28,7 @@
 #endregion
 
 using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using OpenTK.Platform.MacOS;
 
@@ -38,13 +39,19 @@ namespace OpenTK.Platform.MacOS
         internal static IntPtr Handle;
         internal static IntPtr AutoreleasePool;
 
+        static readonly IntPtr selQuit = Selector.Get("quit");
+
         internal static void Initialize()
         {
             // Create the NSAutoreleasePool
             AutoreleasePool = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSAutoreleasePool"), Selector.Alloc), Selector.Init);
 
+            // Register a Quit method to be called on cmd-q
+            IntPtr nsapp = Class.Get("NSApplication");
+            Class.RegisterMethod(nsapp, new OnQuitDelegate(OnQuit), "quit", "v@:");
+
             // Fetch the application handle
-            Handle = Cocoa.SendIntPtr(Class.Get("NSApplication"), Selector.Get("sharedApplication"));
+            Handle = Cocoa.SendIntPtr(nsapp, Selector.Get("sharedApplication"));
 
             // Setup the application
             Cocoa.SendBool(Handle, Selector.Get("setActivationPolicy:"), (int)NSApplicationActivationPolicy.Regular);
@@ -61,8 +68,31 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendIntPtr(menubar, Selector.Get("addItem:"), menuItem);
             Cocoa.SendIntPtr(Handle, Selector.Get("setMainMenu:"), menubar);
 
+            // Add a "Quit" menu item and bind the button.
+            var appMenu = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc),
+                Selector.Autorelease);
+            var quitMenuItem = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc),
+                Selector.Get("initWithTitle:action:keyEquivalent:"), Cocoa.ToNSString("Quit"), selQuit, Cocoa.ToNSString("q")),
+                Selector.Autorelease);
+
+            Cocoa.SendIntPtr(appMenu, Selector.Get("addItem:"), quitMenuItem);
+            Cocoa.SendIntPtr(menuItem, Selector.Get("setSubmenu:"), appMenu);
+
             // Tell cocoa we're ready to run the application (usually called by [NSApp run]). 
             Cocoa.SendVoid(Handle, Selector.Get("finishLaunching"));
+        }
+
+        internal static event EventHandler<CancelEventArgs> Quit = delegate { };
+
+        delegate void OnQuitDelegate(IntPtr self, IntPtr cmd);
+        static void OnQuit(IntPtr self, IntPtr cmd)
+        {
+            var e = new CancelEventArgs();
+            Quit(null, e);
+            if (!e.Cancel)
+            {
+                Cocoa.SendVoid(Handle, Selector.Get("terminate:"), Handle);
+            }
         }
     }
 }
