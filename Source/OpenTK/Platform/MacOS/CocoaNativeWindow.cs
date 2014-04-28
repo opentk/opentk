@@ -127,7 +127,7 @@ namespace OpenTK.Platform.MacOS
         private IntPtr windowClass;
         private IntPtr trackingArea;
         private bool disposed = false;
-        private bool exists = true;
+        private bool exists;
         private bool cursorVisible = true;
         private System.Drawing.Icon icon;
         private LegacyInputDriver inputDriver = new LegacyInputDriver();
@@ -184,6 +184,9 @@ namespace OpenTK.Platform.MacOS
             SetTitle(title, false);
 
             ResetTrackingArea();
+
+            exists = true;
+            NSApplication.Quit += ApplicationQuit;
         }
 
         delegate void WindowKeyDownDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
@@ -220,6 +223,12 @@ namespace OpenTK.Platform.MacOS
 
             if (suppressResize == 0)
                 Resize(this, EventArgs.Empty);
+        }
+
+        private void ApplicationQuit(object sender, CancelEventArgs e)
+        {
+            bool close = WindowShouldClose(windowInfo.Handle, IntPtr.Zero, IntPtr.Zero);
+            e.Cancel |= !close;
         }
 
         private void WindowDidMove(IntPtr self, IntPtr cmd, IntPtr notification)
@@ -919,6 +928,7 @@ namespace OpenTK.Platform.MacOS
                 return;
 
             Debug.Print("Disposing of CocoaNativeWindow.");
+            NSApplication.Quit -= ApplicationQuit;
 
             CursorVisible = true;
             disposed = true;
