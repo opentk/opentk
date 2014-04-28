@@ -1203,47 +1203,58 @@ namespace OpenTK.Platform.Windows
             {
                 if (value != cursor)
                 {
-                    var stride = value.Width *
-                        (Bitmap.GetPixelFormatSize(System.Drawing.Imaging.PixelFormat.Format32bppArgb) / 8);
+                    bool destoryOld = cursor != MouseCursor.Default;
+                    IntPtr oldCursor = IntPtr.Zero;
 
-                    Bitmap bmp;
-                    unsafe
+                    if (value == MouseCursor.Default)
                     {
-                        fixed (byte* pixels = value.Rgba)
+                        oldCursor = Functions.SetCursor(Functions.LoadCursor(CursorName.Arrow));
+                        cursor = value;
+                    }
+                    else
+                    {
+                        var stride = value.Width *
+                            (Bitmap.GetPixelFormatSize(System.Drawing.Imaging.PixelFormat.Format32bppArgb) / 8);
+
+                        Bitmap bmp;
+                        unsafe
                         {
-                            bmp = new Bitmap(value.Width, value.Height, stride, 
-                                System.Drawing.Imaging.PixelFormat.Format32bppArgb,
-                                new IntPtr(pixels));
+                            fixed (byte* pixels = value.Rgba)
+                            {
+                                bmp = new Bitmap(value.Width, value.Height, stride,
+                                    System.Drawing.Imaging.PixelFormat.Format32bppArgb,
+                                    new IntPtr(pixels));
+                            }
+                        }
+                        using (bmp)
+                        {
+                            var iconInfo = new IconInfo();
+                            var bmpIcon = bmp.GetHicon();
+                            var success = Functions.GetIconInfo(bmpIcon, out iconInfo);
+
+                            if (success)
+                            {
+                                iconInfo.xHotspot = value.X;
+                                iconInfo.yHotspot = value.Y;
+                                iconInfo.fIcon = false;
+
+                                var icon = Functions.CreateIconIndirect(ref iconInfo);
+
+                                if (icon != IntPtr.Zero)
+                                {
+                                    // Currently using a custom cursor so destroy it 
+                                    // once replaced
+                                    cursor = value;
+                                    curson_handle = icon;
+                                    oldCursor = Functions.SetCursor(icon);
+                                }
+                            }
                         }
                     }
 
-                    var iconInfo = new IconInfo();
-                    var bmpIcon = bmp.GetHicon();
-                    var success = Functions.GetIconInfo(bmpIcon, out iconInfo);
-
-                    if (success)
+                    if (destoryOld && oldCursor != IntPtr.Zero)
                     {
-                        iconInfo.xHotspot = value.X;
-                        iconInfo.yHotspot = value.Y;
-                        iconInfo.fIcon = false;
-
-                        var icon = Functions.CreateIconIndirect(ref iconInfo);
-
-                        if (icon != IntPtr.Zero)
-                        {
-                            // Currently using a custom cursor so destroy it 
-                            // once replaced
-                            bool destoryOld = cursor != MouseCursor.Default;
-
-                            cursor = value;
-                            curson_handle = icon;
-                            var oldCursor = Functions.SetCursor(icon);
-
-                            if (destoryOld)
-                            {
-                                Functions.DestroyIcon(oldCursor);
-                            }
-                        }
+                        Functions.DestroyIcon(oldCursor);
                     }
                 }
             }
