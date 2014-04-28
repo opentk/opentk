@@ -58,6 +58,8 @@ namespace OpenTK.Platform.SDL2
         WindowState previous_window_state = WindowState.Normal;
         WindowBorder window_border = WindowBorder.Resizable;
         Icon icon;
+        MouseCursor cursor = MouseCursor.Default;
+        IntPtr sdl_cursor = IntPtr.Zero;
         string window_title;
 
         // Used in KeyPress event to decode SDL UTF8 text strings
@@ -457,6 +459,86 @@ namespace OpenTK.Platform.SDL2
         public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { }; 
         public event EventHandler<EventArgs> MouseEnter = delegate { };
         public event EventHandler<EventArgs> MouseLeave = delegate { };
+
+        public MouseCursor Cursor
+        {
+            get
+            {
+                return cursor;
+            }
+            set
+            {
+                lock (sync)
+                {
+                    if (value != MouseCursor.Default)
+                    {
+                        // Free the previous cursor,
+                        // if one has been set.
+                        if (sdl_cursor != IntPtr.Zero)
+                        {
+                            SDL.FreeCursor(sdl_cursor);
+                            sdl_cursor = IntPtr.Zero;
+                            cursor = MouseCursor.Default;
+                        }
+
+                        // Set the new cursor
+                        if (value == MouseCursor.Default)
+                        {
+                            // Reset to default cursor
+                            SDL.SetCursor(SDL.GetDefaultCursor());
+                        }
+                        else
+                        {
+                            // Create and set a new cursor using
+                            // the rgba values supplied by the user
+                            unsafe
+                            {
+                                fixed (byte* pixels = value.Rgba)
+                                {
+                                    IntPtr cursor_surface =
+                                        SDL.CreateRGBSurfaceFrom(
+                                            new IntPtr(pixels),
+                                            value.Width,
+                                            value.Height,
+                                            32,
+                                            value.Width * 4,
+                                            0xff000000,
+                                            0x00ff0000,
+                                            0x0000ff00,
+                                            0x000000ff);
+
+                                    if (cursor_surface == IntPtr.Zero)
+                                    {
+                                        Debug.Print("[SDL2] Failed to create cursor surface. Error: {0}",
+                                            SDL.GetError());
+                                        return;
+                                    }
+
+                                    sdl_cursor = SDL.CreateColorCursor(cursor_surface, value.X, value.Y);
+                                    if (sdl_cursor == IntPtr.Zero)
+                                    {
+                                        Debug.Print("[SDL2] Failed to create cursor. Error: {0}",
+                                            SDL.GetError());
+                                        return;
+                                    }
+
+                                    if (sdl_cursor != IntPtr.Zero)
+                                    {
+                                        SDL.SetCursor(sdl_cursor);
+                                        cursor = value;
+                                    }
+
+                                    if (cursor_surface != IntPtr.Zero)
+                                    {
+                                        SDL.FreeSurface(cursor_surface);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         public void Close()
         {
