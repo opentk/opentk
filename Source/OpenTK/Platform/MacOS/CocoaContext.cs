@@ -257,6 +257,11 @@ namespace OpenTK
             }
             set
             {
+                if (value < 0)
+                {
+                    // NSOpenGL does not offer EXT_swap_control_tear yet
+                    value = 1;
+                }
                 SetContextValue(value, NSOpenGLContextParameter.SwapInterval);
             }
         }

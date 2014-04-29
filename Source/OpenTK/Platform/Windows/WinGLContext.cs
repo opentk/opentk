@@ -351,7 +351,7 @@ namespace OpenTK.Platform.Windows
                     Wgl.SupportsFunction("wglGetSwapIntervalEXT") &&
                     Wgl.SupportsFunction("wglSwapIntervalEXT");
                 vsync_tear_supported =
-                    Wgl.SupportsExtension(DeviceContext, "WGL_EXT_swap_tear");
+                    Wgl.SupportsExtension(DeviceContext, "WGL_EXT_swap_control_tear");
             }
 
             base.LoadAll();

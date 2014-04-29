@@ -30,6 +30,7 @@ namespace OpenTK.Platform.X11
         IntPtr display;
         X11WindowInfo currentWindow;
         bool vsync_supported;
+        bool vsync_tear_supported;
         int swap_interval = 1; // As defined in GLX_SGI_swap_control
         readonly X11GraphicsMode ModeSelector = new X11GraphicsMode();
 
@@ -362,6 +363,11 @@ namespace OpenTK.Platform.X11
             {
                 if (vsync_supported)
                 {
+                    if (value < 0 && !vsync_tear_supported)
+                    {
+                        value = 1;
+                    }
+
                     ErrorCode error_code = 0;
                     using (new XLock(Display))
                         error_code = Glx.Sgi.SwapInterval(value);
@@ -381,8 +387,10 @@ namespace OpenTK.Platform.X11
         public override void LoadAll()
         {
             vsync_supported =
-                SupportsExtension(display, currentWindow, "SupportsExtension") &&
+                SupportsExtension(display, currentWindow, "GLX_SGI_swap_control") &&
                 Glx.SupportsFunction("glXSwapIntervalSGI");
+            vsync_tear_supported =
+                SupportsExtension(display, currentWindow, "GLX_EXT_swap_control_tear");
             Debug.Print("Context supports vsync: {0}.", vsync_supported);
 
             base.LoadAll();

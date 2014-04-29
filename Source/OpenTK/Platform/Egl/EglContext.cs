@@ -125,6 +125,12 @@ namespace OpenTK.Platform.Egl
             }
             set
             {
+                if (value < 0)
+                {
+                    // EGL does not offer EXT_swap_control_tear yet
+                    value = 1;
+                }
+
                 if (Egl.SwapInterval(WindowInfo.Display, value))
                     swap_interval = value;
                 else
