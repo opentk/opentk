@@ -331,7 +331,10 @@ namespace OpenTK.Platform.Windows
                         {
                             value = 1;
                         }
-                        Wgl.Ext.SwapInterval(value);
+                        if (!Wgl.Ext.SwapInterval(value))
+                        {
+                            Debug.Print("wglSwapIntervalEXT call failed.");
+                        }
                     }
                 }
             }
