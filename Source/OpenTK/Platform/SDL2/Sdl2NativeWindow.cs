@@ -502,10 +502,10 @@ namespace OpenTK.Platform.SDL2
                                             value.Height,
                                             32,
                                             value.Width * 4,
-                                            0xff000000,
                                             0x00ff0000,
                                             0x0000ff00,
-                                            0x000000ff);
+                                            0x000000ff,
+                                            0xff000000);
 
                                     if (cursor_surface == IntPtr.Zero)
                                     {
