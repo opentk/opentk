@@ -54,7 +54,7 @@ namespace OpenTK
             if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
                 throw new ArgumentOutOfRangeException();
 
-            x = xhot;
+            x = hotx;
             y = hoty;
         }
 
@@ -64,7 +64,7 @@ namespace OpenTK
             if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
                 throw new ArgumentOutOfRangeException();
 
-            x = xhot;
+            x = hotx;
             y = hoty;
         }
 
