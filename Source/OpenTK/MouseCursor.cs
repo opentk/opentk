@@ -38,7 +38,7 @@ namespace OpenTK
     {
         static readonly MouseCursor default_cursor = new MouseCursor();
         static readonly MouseCursor empty_cursor = new MouseCursor(
-            new byte[16 * 16 * 4], 16, 16, 0, 0);
+            0, 0, 16, 16, new byte[16 * 16 * 4]);
 
         int x;
         int y;
@@ -47,9 +47,28 @@ namespace OpenTK
         {
         }
 
-        // Todo: make public when byte-order issues are resolved
-        public MouseCursor(byte[] argb, int width, int height, int hotx, int hoty)
-            : base(argb, width, height)
+        /// <summary>
+        /// Initializes a new <see cref="MouseCursor"/> instance from a
+        /// contiguous array of BGRA pixels.
+        /// Each pixel is composed of 4 bytes, representing B, G, R and A values,
+        /// respectively. For correct antialiasing of translucent cursors,
+        /// the B, G and R components should be premultiplied with the A component:
+        /// <code>
+        /// B = (byte)((B * A) / 255)
+        /// G = (byte)((G * A) / 255)
+        /// R = (byte)((R * A) / 255)
+        /// </code>
+        /// </summary>
+        /// <param name="hotx">The x-coordinate of the cursor hotspot, in the range [0, width]</param>
+        /// <param name="hoty">The y-coordinate of the cursor hotspot, in the range [0, height]</param>
+        /// <param name="width">The width of the cursor data, in pixels.</param>
+        /// <param name="height">The height of the cursor data, in pixels.</param>
+        /// <param name="data">
+        /// A byte array representing the cursor image,
+        /// laid out as a contiguous array of BGRA pixels.
+        /// </param>
+        public MouseCursor(int hotx, int hoty, int width, int height, byte[] data)
+            : base(width, height, data)
         {
             if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
                 throw new ArgumentOutOfRangeException();
@@ -58,8 +77,27 @@ namespace OpenTK
             y = hoty;
         }
 
-        public MouseCursor(IntPtr argb, int width, int height, int hotx, int hoty)
-            : base(argb, width, height)
+        /// <summary>
+        /// Initializes a new <see cref="MouseCursor"/> instance from a
+        /// contiguous array of BGRA pixels.
+        /// Each pixel is composed of 4 bytes, representing B, G, R and A values,
+        /// respectively. For correct antialiasing of translucent cursors,
+        /// the B, G and R components should be premultiplied with the A component:
+        /// <code>
+        /// B = (byte)((B * A) / 255)
+        /// G = (byte)((G * A) / 255)
+        /// R = (byte)((R * A) / 255)
+        /// </code>
+        /// </summary>
+        /// <param name="hotx">The x-coordinate of the cursor hotspot, in the range [0, width]</param>
+        /// <param name="hoty">The y-coordinate of the cursor hotspot, in the range [0, height]</param>
+        /// <param name="width">The width of the cursor data, in pixels.</param>
+        /// <param name="height">The height of the cursor data, in pixels.</param>
+        /// <param name="data">
+        /// A pointer to the cursor image, laid out as a contiguous array of BGRA pixels.
+        /// </param>
+        public MouseCursor(int hotx, int hoty, int width, int height, IntPtr data)
+            : base(width, height, data)
         {
             if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
                 throw new ArgumentOutOfRangeException();

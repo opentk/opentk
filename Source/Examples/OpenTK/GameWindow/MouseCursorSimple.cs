@@ -13,7 +13,7 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates the MouseCursor class.
     /// </summary>
-    [Example("MouseCursor Simple", ExampleCategory.OpenTK, "GameWindow", 1, Documentation = "MouseCursorSimple")]
+    [Example("Custom MouseCursor", ExampleCategory.OpenTK, "GameWindow", 1, Documentation = "MouseCursorSimple")]
     public class MouseCursorSimple : GameWindow
     {
         readonly MouseCursor MyCursor;
@@ -31,7 +31,7 @@ namespace Examples.Tutorial
                     System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
                 MyCursor = new OpenTK.MouseCursor(
-                    data.Scan0, bitmap.Width, bitmap.Height, 0, 0);
+                    0, 0, data.Width, data.Height, data.Scan0);
                 Cursor = MyCursor;
             }
         }

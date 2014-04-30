@@ -1219,7 +1219,7 @@ namespace OpenTK.Platform.Windows
                         Bitmap bmp;
                         unsafe
                         {
-                            fixed (byte* pixels = value.Argb)
+                            fixed (byte* pixels = value.Data)
                             {
                                 bmp = new Bitmap(value.Width, value.Height, stride,
                                     System.Drawing.Imaging.PixelFormat.Format32bppArgb,

@@ -38,10 +38,14 @@ namespace OpenTK
     /// </summary>
     public class WindowIcon
     {
-        byte[] argb;
+        byte[] data;
         int width;
         int height;
 
+        /// \internal
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenTK.WindowIcon"/> class.
+        /// </summary>
         internal protected WindowIcon()
         {
         }
@@ -55,36 +59,31 @@ namespace OpenTK
             this.height = height;
         }
 
-        internal WindowIcon(byte[] argb, int width, int height)
+        internal WindowIcon(int width, int height, byte[] data)
             : this(width, height)
         {
-            if (argb == null)
+            if (data == null)
                 throw new ArgumentNullException();
-            if (argb.Length < Width * Height * 4)
+            if (data.Length < Width * Height * 4)
                 throw new ArgumentOutOfRangeException();
 
-            this.argb = argb;
+            this.data = data;
         }
 
-        internal WindowIcon(IntPtr argb, int width, int height)
+        internal WindowIcon(int width, int height, IntPtr data)
             : this(width, height)
         {
-            if (argb == IntPtr.Zero)
+            if (data == IntPtr.Zero)
                 throw new ArgumentNullException();
 
             // We assume that width and height are correctly set.
             // If they are not, we will read garbage and probably
             // crash.
-            this.argb = new byte[width * height * 4];
-            for (int y = 0; y < height; y++)
-            {
-                var stride = width * 4;
-                var offset = new IntPtr(argb.ToInt64() + y * stride);
-                Marshal.Copy(offset, Argb, y * stride, stride);
-            }
+            this.data = new byte[width * height * 4];
+            Marshal.Copy(data, this.data, 0, this.data.Length);
         }
 
-        internal byte[] Argb { get { return argb; } }
+        internal byte[] Data { get { return data; } }
         internal int Width { get { return width; } }
         internal int Height { get { return height; } }
     }

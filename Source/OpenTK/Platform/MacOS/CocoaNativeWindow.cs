@@ -987,7 +987,7 @@ namespace OpenTK.Platform.MacOS
             {
                 for (int x = 0; x < cursor.Width; x++)
                 {
-                    uint argb = unchecked((uint)BitConverter.ToInt32(cursor.Argb, i));
+                    uint argb = unchecked((uint)BitConverter.ToInt32(cursor.Data, i));
                     if (BitConverter.IsLittleEndian)
                     {
                         argb =
