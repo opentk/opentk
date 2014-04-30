@@ -1483,7 +1483,7 @@ namespace OpenTK.Platform.X11
                         }
                         else
                         {
-                            fixed(byte* pixels = value.Rgba)
+                            fixed(byte* pixels = value.Argb)
                             {
                                 var xcursorimage = Functions.XcursorImageCreate(value.Width, value.Height);
                                 xcursorimage->xhot = (uint)value.X;

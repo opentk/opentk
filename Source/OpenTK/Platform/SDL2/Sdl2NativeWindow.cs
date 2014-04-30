@@ -493,7 +493,7 @@ namespace OpenTK.Platform.SDL2
                             // the rgba values supplied by the user
                             unsafe
                             {
-                                fixed (byte* pixels = value.Rgba)
+                                fixed (byte* pixels = value.Argb)
                                 {
                                     IntPtr cursor_surface =
                                         SDL.CreateRGBSurfaceFrom(
