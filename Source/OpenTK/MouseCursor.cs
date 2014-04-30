@@ -48,24 +48,24 @@ namespace OpenTK
         }
 
         // Todo: make public when byte-order issues are resolved
-        public MouseCursor(byte[] argb, int width, int height, int x, int y)
+        public MouseCursor(byte[] argb, int width, int height, int hotx, int hoty)
             : base(argb, width, height)
         {
-            if (x < 0 || x >= Width || y < 0 || y >= Height)
+            if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
                 throw new ArgumentOutOfRangeException();
 
-            this.x = x;
-            this.y = y;
+            x = xhot;
+            y = hoty;
         }
 
-        public MouseCursor(IntPtr argb, int width, int height, int x, int y)
+        public MouseCursor(IntPtr argb, int width, int height, int hotx, int hoty)
             : base(argb, width, height)
         {
-            if (x < 0 || x >= Width || y < 0 || y >= Height)
+            if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
                 throw new ArgumentOutOfRangeException();
 
-            this.x = x;
-            this.y = y;
+            x = xhot;
+            y = hoty;
         }
 
         internal int X { get { return x; } }
