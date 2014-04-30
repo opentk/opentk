@@ -117,7 +117,7 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selAddCursorRect = Selector.Get("addCursorRect:cursor:");
         static readonly IntPtr selInvalidateCursorRectsForView = Selector.Get("invalidateCursorRectsForView:");
         static readonly IntPtr selInitWithBitmapDataPlanes =
-            Selector.Get("initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:");
+            Selector.Get("initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:");
         static readonly IntPtr selBitmapData = Selector.Get("bitmapData");
         static readonly IntPtr selAddRepresentation = Selector.Get("addRepresentation:");
         static readonly IntPtr selInitWithImageHotSpot = Selector.Get("initWithImage:hotSpot:");
@@ -969,6 +969,7 @@ namespace OpenTK.Platform.MacOS
                         1,
                         0,
                         NSDeviceRGBColorSpace,
+                        NSBitmapFormat.AlphaFirst,
                         4 * cursor.Width,
                         32),
                     Selector.Autorelease);
@@ -979,21 +980,24 @@ namespace OpenTK.Platform.MacOS
                 return IntPtr.Zero;
             }
 
-            // Premultiply and copy the cursor data
+            // Copy the cursor data
             int i = 0;
             IntPtr data = Cocoa.SendIntPtr(imgdata, selBitmapData);
             for (int y = 0; y < cursor.Height; y++)
             {
                 for (int x = 0; x < cursor.Width; x++)
                 {
-                    byte a = cursor.Argb[i];
-                    byte r = (byte)((cursor.Argb[i + 1] * a) / 255);
-                    byte g = (byte)((cursor.Argb[i + 2] * a) / 255);
-                    byte b = (byte)((cursor.Argb[i + 3] * a) / 255);
-                    Marshal.WriteByte(data, i++, a);
-                    Marshal.WriteByte(data, i++, r);
-                    Marshal.WriteByte(data, i++, g);
-                    Marshal.WriteByte(data, i++, b);
+                    uint argb = unchecked((uint)BitConverter.ToInt32(cursor.Argb, i));
+                    if (BitConverter.IsLittleEndian)
+                    {
+                        argb =
+                            (argb & 0x000000FFu) << 24 |
+                            (argb & 0x0000FF00u) << 8 |
+                            (argb & 0x00FF0000u) >> 8 |
+                            (argb & 0xFF000000u) >> 24;
+                    }
+                    Marshal.WriteInt32(data, i, unchecked((int)argb));
+                    i += 4;
                 }
             }
 
