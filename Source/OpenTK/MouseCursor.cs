@@ -40,9 +40,6 @@ namespace OpenTK
         static readonly MouseCursor empty_cursor = new MouseCursor(
             new byte[16 * 16 * 4], 16, 16, 0, 0);
 
-        byte[] rgba;
-        int width;
-        int height;
         int x;
         int y;
 
@@ -51,27 +48,26 @@ namespace OpenTK
         }
 
         // Todo: make public when byte-order issues are resolved
-        internal MouseCursor(byte[] rgba, int width, int height, int x, int y)
+        public MouseCursor(byte[] argb, int width, int height, int x, int y)
+            : base(argb, width, height)
         {
-            if (rgba == null)
-                throw new ArgumentNullException();
-            if (width < 0 || width > 256 || height < 0 || height > 256)
-                throw new ArgumentOutOfRangeException();
-            if (rgba.Length < width * height * 4)
-                throw new ArgumentOutOfRangeException();
-            if (x < 0 || x >= width || y < 0 || y >= height)
+            if (x < 0 || x >= Width || y < 0 || y >= Height)
                 throw new ArgumentOutOfRangeException();
 
-            this.rgba = rgba;
-            this.width = width;
-            this.height = height;
             this.x = x;
             this.y = y;
         }
 
-        internal byte[] Rgba { get { return rgba; } }
-        internal int Width { get { return width; } }
-        internal int Height { get { return height; } }
+        public MouseCursor(IntPtr argb, int width, int height, int x, int y)
+            : base(argb, width, height)
+        {
+            if (x < 0 || x >= Width || y < 0 || y >= Height)
+                throw new ArgumentOutOfRangeException();
+
+            this.x = x;
+            this.y = y;
+        }
+
         internal int X { get { return x; } }
         internal int Y { get { return y; } }
 
