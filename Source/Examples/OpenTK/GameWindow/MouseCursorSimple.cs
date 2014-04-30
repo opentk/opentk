@@ -16,29 +16,24 @@ namespace Examples.Tutorial
     [Example("MouseCursor Simple", ExampleCategory.OpenTK, "GameWindow", 1, Documentation = "MouseCursorSimple")]
     public class MouseCursorSimple : GameWindow
     {
+        readonly MouseCursor MyCursor;
+
         public MouseCursorSimple()
             : base(800, 600)
         {
             Keyboard.KeyDown += Keyboard_KeyDown;
 
-            Bitmap bitmap = new Bitmap("Data/Textures/cursor.png");
-
-            var rgba = new byte[bitmap.Width * bitmap.Height * 4];
-            var data = bitmap.LockBits(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height), 
-                System.Drawing.Imaging.ImageLockMode.ReadOnly, 
-                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-            for (int y = 0; y < bitmap.Height; ++y)
+            using (Bitmap bitmap = new Bitmap("Data/Textures/cursor.png"))
             {
-                var offset = new IntPtr(data.Scan0.ToInt64() + (data.Stride * y));
-                var stride = bitmap.Width * 4;
-                System.Runtime.InteropServices.Marshal.Copy(
-                    offset, rgba, y * stride, stride);
+                var data = bitmap.LockBits(
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height), 
+                    System.Drawing.Imaging.ImageLockMode.ReadOnly, 
+                    System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
+                MyCursor = new OpenTK.MouseCursor(
+                    data.Scan0, bitmap.Width, bitmap.Height, 0, 0);
+                Cursor = MyCursor;
             }
-            
-            //this.Cursor = new OpenTK.MouseCursor(rgba, bitmap.Width, bitmap.Height, 0, 0);
-            this.Cursor = MouseCursor.Default;
         }
 
         #region Keyboard_KeyDown
@@ -66,6 +61,10 @@ namespace Examples.Tutorial
             if (e.Key == Key.Space)
             {
                 if (Cursor == MouseCursor.Default)
+                {
+                    Cursor = MyCursor;
+                }
+                else if (Cursor == MyCursor)
                 {
                     Cursor = MouseCursor.Empty;
                 }
