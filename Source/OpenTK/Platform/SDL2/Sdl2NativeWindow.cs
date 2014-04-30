@@ -470,7 +470,7 @@ namespace OpenTK.Platform.SDL2
             {
                 lock (sync)
                 {
-                    if (value != MouseCursor.Default)
+                    if (cursor != value)
                     {
                         // Free the previous cursor,
                         // if one has been set.
@@ -478,7 +478,6 @@ namespace OpenTK.Platform.SDL2
                         {
                             SDL.FreeCursor(sdl_cursor);
                             sdl_cursor = IntPtr.Zero;
-                            cursor = MouseCursor.Default;
                         }
 
                         // Set the new cursor
@@ -486,6 +485,7 @@ namespace OpenTK.Platform.SDL2
                         {
                             // Reset to default cursor
                             SDL.SetCursor(SDL.GetDefaultCursor());
+                            cursor = value;
                         }
                         else
                         {
