@@ -31,6 +31,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Graphics;
 using OpenTK.Input;
@@ -87,6 +88,7 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selAddTrackingArea = Selector.Get("addTrackingArea:");
         static readonly IntPtr selRemoveTrackingArea = Selector.Get("removeTrackingArea:");
         static readonly IntPtr selTrackingArea = Selector.Get("trackingArea");
+        static readonly IntPtr selInitWithSize = Selector.Get("initWithSize:");
         static readonly IntPtr selInitWithRect = Selector.Get("initWithRect:options:owner:userInfo:");
         static readonly IntPtr selOwner = Selector.Get("owner");
         static readonly IntPtr selLocationInWindowOwner = Selector.Get("locationInWindow");
@@ -112,9 +114,19 @@ namespace OpenTK.Platform.MacOS
         //static readonly IntPtr selExitFullScreenModeWithOptions = Selector.Get("exitFullScreenModeWithOptions:");
         //static readonly IntPtr selEnterFullScreenModeWithOptions = Selector.Get("enterFullScreenMode:withOptions:");
         static readonly IntPtr selArrowCursor = Selector.Get("arrowCursor");
+        static readonly IntPtr selAddCursorRect = Selector.Get("addCursorRect:cursor:");
+        static readonly IntPtr selInvalidateCursorRectsForView = Selector.Get("invalidateCursorRectsForView:");
+        static readonly IntPtr selInitWithBitmapDataPlanes =
+            Selector.Get("initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:");
+        static readonly IntPtr selBitmapData = Selector.Get("bitmapData");
+        static readonly IntPtr selAddRepresentation = Selector.Get("addRepresentation:");
+        static readonly IntPtr selInitWithImageHotSpot = Selector.Get("initWithImage:hotSpot:");
 
         static readonly IntPtr NSDefaultRunLoopMode;
         static readonly IntPtr NSCursor;
+        static readonly IntPtr NSImage;
+        static readonly IntPtr NSBitmapImageRep;
+        static readonly IntPtr NSDeviceRGBColorSpace = Cocoa.ToNSString("NSDeviceRGBColorSpace");
 
         static CocoaNativeWindow()
         {
@@ -122,6 +134,8 @@ namespace OpenTK.Platform.MacOS
             NSApplication.Initialize(); // Problem: This does not allow creating a separate app and using CocoaNativeWindow.
             NSDefaultRunLoopMode = Cocoa.GetStringConstant(Cocoa.FoundationLibrary, "NSDefaultRunLoopMode");
             NSCursor = Class.Get("NSCursor");
+            NSImage = Class.Get("NSImage");
+            NSBitmapImageRep = Class.Get("NSBitmapImageRep");
         }
 
         private CocoaWindowInfo windowInfo;
@@ -167,8 +181,11 @@ namespace OpenTK.Platform.MacOS
             Class.RegisterMethod(windowClass, new AcceptsFirstResponderDelegate(AcceptsFirstResponder), "acceptsFirstResponder", "b@:");
             Class.RegisterMethod(windowClass, new CanBecomeKeyWindowDelegate(CanBecomeKeyWindow), "canBecomeKeyWindow", "b@:");
             Class.RegisterMethod(windowClass, new CanBecomeMainWindowDelegate(CanBecomeMainWindow), "canBecomeMainWindow", "b@:");
-
             Class.RegisterClass(windowClass);
+
+            IntPtr viewClass = Class.AllocateClass("OpenTK_NSView" + UniqueId, "NSView");
+            Class.RegisterMethod(viewClass, new ResetCursorRectsDelegate(ResetCursorRects), "resetCursorRects", "v@:");
+            Class.RegisterClass(viewClass);
 
             // Create window instance
             var contentRect = new System.Drawing.RectangleF(x, y, width, height);
@@ -178,6 +195,22 @@ namespace OpenTK.Platform.MacOS
             IntPtr windowPtr;
             windowPtr = Cocoa.SendIntPtr(windowClass, Selector.Alloc);
             windowPtr = Cocoa.SendIntPtr(windowPtr, Selector.Get("initWithContentRect:styleMask:backing:defer:"), contentRect, (int)style, (int)bufferingType, false);
+
+            // Replace view with our custom implementation
+            // that overrides resetCursorRects (maybe there is
+            // a better way to implement this override?)
+            // Existing view:
+            IntPtr viewPtr = Cocoa.SendIntPtr(windowPtr, Selector.Get("contentView"));
+            // Our custom view with the same bounds:
+            viewPtr = Cocoa.SendIntPtr(
+                Cocoa.SendIntPtr(viewClass, Selector.Alloc),
+                Selector.Get("initWithFrame:"),
+                Cocoa.SendRect(viewPtr, selBounds));
+            if (viewPtr != IntPtr.Zero)
+            {
+                Cocoa.SendVoid(windowPtr, Selector.Get("setContentView:"), viewPtr);
+            }
+
             windowInfo = new CocoaWindowInfo(windowPtr);
 
             // Set up behavior
@@ -205,6 +238,7 @@ namespace OpenTK.Platform.MacOS
         delegate bool AcceptsFirstResponderDelegate(IntPtr self, IntPtr cmd);
         delegate bool CanBecomeKeyWindowDelegate(IntPtr self, IntPtr cmd);
         delegate bool CanBecomeMainWindowDelegate(IntPtr self, IntPtr cmd);
+        delegate void ResetCursorRectsDelegate(IntPtr self, IntPtr cmd);
 
         private void WindowKeyDown(IntPtr self, IntPtr cmd, IntPtr notification)
         {
@@ -331,7 +365,11 @@ namespace OpenTK.Platform.MacOS
             }
 
             var ownerBounds = Cocoa.SendRect(owner, selBounds);
-            var options = (int)(NSTrackingAreaOptions.MouseEnteredAndExited | NSTrackingAreaOptions.ActiveInKeyWindow | NSTrackingAreaOptions.MouseMoved);
+            var options = (int)(
+                NSTrackingAreaOptions.MouseEnteredAndExited |
+                NSTrackingAreaOptions.ActiveInKeyWindow |
+                NSTrackingAreaOptions.MouseMoved |
+                NSTrackingAreaOptions.CursorUpdate);
 
             trackingArea = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSTrackingArea"), Selector.Alloc),
                 selInitWithRect, ownerBounds, options, owner, IntPtr.Zero);
@@ -431,7 +469,7 @@ namespace OpenTK.Platform.MacOS
                             {
                                 if (selectedCursor != MouseCursor.Default)
                                 {
-                                    SetCursor(selectedCursor);
+                                    //SetCursor(selectedCursor);
                                 }
 
                                 cursorInsideWindow = true;
@@ -473,17 +511,11 @@ namespace OpenTK.Platform.MacOS
                                 MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
                                 MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
 
-                            if (p.X < 0)
-                                p.X = 0; 
-                            if (p.Y < 0)
-                                p.Y = 0;
-                            if (p.X > Width)
-                                p.X = Width;
-                            if (p.Y > Height)
-                                p.Y = Height;
-
                             InputDriver.Mouse[0].Position = p;
                         }
+                        break;
+
+                    case NSEventType.CursorUpdate:
                         break;
 
                     case NSEventType.ScrollWheel:
@@ -912,17 +944,114 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
-                // We only modify the cursor when it is
-                // inside the window and visible.
-                // If it is outside the window or invisible,
-                // we store the selected cursor and change it
-                // in the MouseEnter event.
-                if (CursorVisible && cursorInsideWindow)
-                {
-                    SetCursor(value);
-                }
                 selectedCursor = value;
+                InvalidateCursorRects();
             }
+        }
+
+        static IntPtr ToNSCursor(MouseCursor cursor)
+        {
+            // We need to allocate a NSBitmapImageRep, fill it with pixels
+            // and then convert it to a NSImage.
+            // According to the documentation, alpha-enabled formats should
+            // premultiply alpha, even though that "generally has negligible
+            // effect on output quality."
+            IntPtr imgdata =
+                Cocoa.SendIntPtr(
+                    Cocoa.SendIntPtr(
+                        Cocoa.SendIntPtr(NSBitmapImageRep, Selector.Alloc),
+                        selInitWithBitmapDataPlanes,
+                        IntPtr.Zero,
+                        cursor.Width,
+                        cursor.Height,
+                        8,
+                        4,
+                        1,
+                        0,
+                        NSDeviceRGBColorSpace,
+                        4 * cursor.Width,
+                        32),
+                    Selector.Autorelease);
+            if (imgdata == IntPtr.Zero)
+            {
+                Debug.Print("Failed to create NSBitmapImageRep with size ({0},{1]})",
+                    cursor.Width, cursor.Height);
+                return IntPtr.Zero;
+            }
+
+            // Premultiply and copy the cursor data
+            int i = 0;
+            IntPtr data = Cocoa.SendIntPtr(imgdata, selBitmapData);
+            for (int y = 0; y < cursor.Height; y++)
+            {
+                for (int x = 0; x < cursor.Width; x++)
+                {
+                    byte a = cursor.Argb[i];
+                    byte r = (byte)((cursor.Argb[i + 1] * a) / 255);
+                    byte g = (byte)((cursor.Argb[i + 2] * a) / 255);
+                    byte b = (byte)((cursor.Argb[i + 3] * a) / 255);
+                    Marshal.WriteByte(data, i++, a);
+                    Marshal.WriteByte(data, i++, r);
+                    Marshal.WriteByte(data, i++, g);
+                    Marshal.WriteByte(data, i++, b);
+                }
+            }
+
+            // Construct the actual NSImage
+            IntPtr img = 
+                Cocoa.SendIntPtr(
+                    Cocoa.SendIntPtr(
+                        Cocoa.SendIntPtr(NSImage, Selector.Alloc),
+                        selInitWithSize,
+                        new SizeF(cursor.Width, cursor.Height)),
+                    Selector.Autorelease);
+            if (img == IntPtr.Zero)
+            {
+                Debug.Print("Failed to construct NSImage from NSBitmapImageRep");
+                return IntPtr.Zero;
+            }
+            Cocoa.SendVoid(img, selAddRepresentation, imgdata);
+
+            // Convert the NSImage to a NSCursor
+            IntPtr nscursor =
+                Cocoa.SendIntPtr(
+                    Cocoa.SendIntPtr(
+                        Cocoa.SendIntPtr(NSCursor, Selector.Alloc),
+                        selInitWithImageHotSpot,
+                        img,
+                        new PointF(cursor.X, cursor.Y)
+                    ),
+                    Selector.Autorelease);
+
+            return nscursor;
+        }
+
+        void ResetCursorRects(IntPtr sender, IntPtr cmd)
+        {
+            // We will add a new cursor rectangle that covers the complete view
+            var rect = Cocoa.SendRect(windowInfo.ViewHandle, selBounds);
+
+            // Inside this rectangle, the following NSCursor will be used
+            var cursor = IntPtr.Zero;
+            if (selectedCursor == MouseCursor.Default)
+            {
+                cursor = Cocoa.SendIntPtr(NSCursor, selArrowCursor);
+            }
+            else
+            {
+                cursor = ToNSCursor(selectedCursor);
+            }
+
+            // Setup the cursor rectangle
+            if (cursor != IntPtr.Zero)
+            {
+                Cocoa.SendVoid(sender, selAddCursorRect, rect, cursor);
+            }
+        }
+
+        void InvalidateCursorRects()
+        {
+            Cocoa.SendVoid(windowInfo.Handle, selInvalidateCursorRectsForView, windowInfo.ViewHandle);
         }
 
         public bool CursorVisible
@@ -1018,7 +1147,6 @@ namespace OpenTK.Platform.MacOS
             }
             else
             {
-                throw new NotImplementedException();
             }
         }
 

@@ -58,6 +58,15 @@ namespace OpenTK.Platform.MacOS
         public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, IntPtr intPtr1, IntPtr intPtr2, IntPtr intPtr3);
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
+        public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, IntPtr p1, PointF p2);
+
+        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
+        public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, SizeF p1);
+
+        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
+        public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, RectangleF rectangle1);
+
+        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
         public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, RectangleF rectangle1, int int1, int int2, bool bool1);
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
@@ -65,6 +74,9 @@ namespace OpenTK.Platform.MacOS
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
         public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, RectangleF rectangle1, int int1, IntPtr intPtr1, IntPtr intPtr2);
+
+        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
+        public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, IntPtr p1, int p2, int p3, int p4, int p5, int p6, int p7, IntPtr p8, int p9, int p10);
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
         public extern static bool SendBool(IntPtr receiver, IntPtr selector);
@@ -98,6 +110,9 @@ namespace OpenTK.Platform.MacOS
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
         public extern static void SendVoid(IntPtr receiver, IntPtr selector, RectangleF rect1, bool bool1);
+
+        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
+        public extern static void SendVoid(IntPtr receiver, IntPtr selector, RectangleF rect1, IntPtr intPtr1);
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
         public extern static int SendInt(IntPtr receiver, IntPtr selector);
