@@ -28,12 +28,12 @@ namespace Examples.Tutorial
             using (Bitmap bitmap = new Bitmap("Data/Textures/cursor.png"))
             {
                 var data = bitmap.LockBits(
-                    new Rectangle(2, 21, bitmap.Width, bitmap.Height), 
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height), 
                     System.Drawing.Imaging.ImageLockMode.ReadOnly, 
                     System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
                 MyCursor = new OpenTK.MouseCursor(
-                    0, 0, data.Width, data.Height, data.Scan0);
+                    2, 21, data.Width, data.Height, data.Scan0);
                 Cursor = MyCursor;
             }
 
@@ -73,7 +73,7 @@ namespace Examples.Tutorial
         {
             if (Mouse[MouseButton.Left])
             {
-                AddLine(e.X, i.Y);
+                AddLine(e.X, e.Y);
             }
         }
 
