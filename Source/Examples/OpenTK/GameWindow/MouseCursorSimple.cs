@@ -100,6 +100,10 @@ namespace Examples.Tutorial
                 else
                     this.WindowState = WindowState.Fullscreen;
             }
+            else if (e.Key == Key.Enter)
+            {
+                CursorVisible = !CursorVisible;
+            }
 
             if (e.Key == Key.Space)
             {
@@ -160,7 +164,6 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            // Nothing to do!
         }
 
         #endregion
