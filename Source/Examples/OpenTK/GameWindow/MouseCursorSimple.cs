@@ -3,6 +3,7 @@
 // It is provided "as is" without express or implied warranty of any kind.
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -17,6 +18,7 @@ namespace Examples.Tutorial
     public class MouseCursorSimple : GameWindow
     {
         readonly MouseCursor MyCursor;
+        List<Vector2> lines = new List<Vector2>();
 
         public MouseCursorSimple()
             : base(800, 600)
@@ -26,7 +28,7 @@ namespace Examples.Tutorial
             using (Bitmap bitmap = new Bitmap("Data/Textures/cursor.png"))
             {
                 var data = bitmap.LockBits(
-                    new Rectangle(0, 0, bitmap.Width, bitmap.Height), 
+                    new Rectangle(2, 21, bitmap.Width, bitmap.Height), 
                     System.Drawing.Imaging.ImageLockMode.ReadOnly, 
                     System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
@@ -34,7 +36,48 @@ namespace Examples.Tutorial
                     0, 0, data.Width, data.Height, data.Scan0);
                 Cursor = MyCursor;
             }
+
+            Mouse.Move += Mouse_Move;
+            Mouse.ButtonDown += Mouse_ButtonDown;
         }
+
+        void AddLine(float x, float y)
+        {
+            // Scale mouse coordinates from
+            // (0, 0):(Width, Height) to
+            // (-1, -1):(+1, +1)
+            // Note, we must flip the y-coordinate
+            // since mouse is reported with (0, 0)
+            // at top-left and our projection uses
+            // (-1, -1) at bottom left.
+            x = (x- Width) / (float)Width;
+            y = (Height - y) / (float)Height;
+            lines.Add(new Vector2(2 * x + 1, 2 * y - 1));
+        }
+
+        #region Mouse_ButtonDown
+
+        void Mouse_ButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Button == MouseButton.Left)
+            {
+                AddLine(e.X, e.Y);
+            }
+        }
+
+        #endregion
+
+        #region Mouse_Move
+
+        void Mouse_Move(object sender, MouseMoveEventArgs e)
+        {
+            if (Mouse[MouseButton.Left])
+            {
+                AddLine(e.X, i.Y);
+            }
+        }
+
+        #endregion
 
         #region Keyboard_KeyDown
 
@@ -142,6 +185,14 @@ namespace Examples.Tutorial
             GL.Color3(Color.Ivory);
             GL.Vertex2(1.0f, 1.0f);
 
+            GL.End();
+
+            GL.Begin(PrimitiveType.LineStrip);
+            foreach (var p in lines)
+            {
+                GL.Color4(Color.White);
+                GL.Vertex2(p);
+            }
             GL.End();
 
             this.SwapBuffers();
