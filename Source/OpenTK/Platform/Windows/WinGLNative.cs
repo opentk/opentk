@@ -102,7 +102,7 @@ namespace OpenTK.Platform.Windows
         KeyPressEventArgs key_press = new KeyPressEventArgs((char)0);
 
         MouseCursor cursor = MouseCursor.Default;
-        IntPtr curson_handle = IntPtr.Zero;
+        IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
         int cursor_visible_count = 0;
 
         static readonly object SyncRoot = new object();
@@ -392,8 +392,14 @@ namespace OpenTK.Platform.Windows
         {
             if (cursor != MouseCursor.Default)
             {
-                Functions.SetCursor(curson_handle);
-                return new IntPtr(1);
+                // Only set the mouse cursor inside the client rectangle
+                // See MSDN "Setting the Cursor Image"
+                const int ht_client = 1;
+                if ((lParam.ToInt64() & 0xffff) == ht_client)
+                {
+                    Functions.SetCursor(cursor_handle);
+                    return new IntPtr(1);
+                }
             }
 
             return null;
@@ -1208,7 +1214,8 @@ namespace OpenTK.Platform.Windows
 
                     if (value == MouseCursor.Default)
                     {
-                        oldCursor = Functions.SetCursor(Functions.LoadCursor(CursorName.Arrow));
+                        cursor_handle = Functions.LoadCursor(CursorName.Arrow);
+                        oldCursor = Functions.SetCursor(cursor_handle);
                         cursor = value;
                     }
                     else
@@ -1245,7 +1252,7 @@ namespace OpenTK.Platform.Windows
                                     // Currently using a custom cursor so destroy it 
                                     // once replaced
                                     cursor = value;
-                                    curson_handle = icon;
+                                    cursor_handle = icon;
                                     oldCursor = Functions.SetCursor(icon);
                                 }
                             }
@@ -1639,10 +1646,10 @@ namespace OpenTK.Platform.Windows
             {
                 if (calledManually)
                 {
-                    if (Cursor != MouseCursor.Default && curson_handle != IntPtr.Zero)
+                    if (Cursor != MouseCursor.Default && cursor_handle != IntPtr.Zero)
                     {
-                        Functions.DestroyIcon(curson_handle);
-                        curson_handle = IntPtr.Zero;
+                        Functions.DestroyIcon(cursor_handle);
+                        cursor_handle = IntPtr.Zero;
                     }
 
                     // Safe to clean managed resources
