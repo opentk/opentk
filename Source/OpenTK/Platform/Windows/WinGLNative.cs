@@ -1639,6 +1639,12 @@ namespace OpenTK.Platform.Windows
             {
                 if (calledManually)
                 {
+                    if (Cursor != MouseCursor.Default && curson_handle != IntPtr.Zero)
+                    {
+                        Functions.DestroyIcon(curson_handle);
+                        curson_handle = IntPtr.Zero;
+                    }
+
                     // Safe to clean managed resources
                     DestroyWindow();
                     if (Icon != null)

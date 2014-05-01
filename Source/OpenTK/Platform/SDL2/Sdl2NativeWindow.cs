@@ -1057,6 +1057,12 @@ namespace OpenTK.Platform.SDL2
                         {
                             DestroyWindow();
                         }
+
+                        if (sdl_cursor != IntPtr.Zero)
+                        {
+                            SDL.FreeCursor(sdl_cursor);
+                            sdl_cursor = IntPtr.Zero;
+                        }
                     }
                     else
                     {
