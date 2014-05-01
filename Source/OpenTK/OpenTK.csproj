@@ -796,6 +796,7 @@
     </Compile>
     <Compile Include="Platform\MacOS\Carbon\Cgl.cs" />
     <Compile Include="WindowIcon.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSBitmapFormat.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -38,11 +38,8 @@ namespace OpenTK
     {
         static readonly MouseCursor default_cursor = new MouseCursor();
         static readonly MouseCursor empty_cursor = new MouseCursor(
-            new byte[16 * 16 * 4], 16, 16, 0, 0);
+            0, 0, 16, 16, new byte[16 * 16 * 4]);
 
-        byte[] rgba;
-        int width;
-        int height;
         int x;
         int y;
 
@@ -50,28 +47,65 @@ namespace OpenTK
         {
         }
 
-        // Todo: make public when byte-order issues are resolved
-        internal MouseCursor(byte[] rgba, int width, int height, int x, int y)
+        /// <summary>
+        /// Initializes a new <see cref="MouseCursor"/> instance from a
+        /// contiguous array of BGRA pixels.
+        /// Each pixel is composed of 4 bytes, representing B, G, R and A values,
+        /// respectively. For correct antialiasing of translucent cursors,
+        /// the B, G and R components should be premultiplied with the A component:
+        /// <code>
+        /// B = (byte)((B * A) / 255)
+        /// G = (byte)((G * A) / 255)
+        /// R = (byte)((R * A) / 255)
+        /// </code>
+        /// </summary>
+        /// <param name="hotx">The x-coordinate of the cursor hotspot, in the range [0, width]</param>
+        /// <param name="hoty">The y-coordinate of the cursor hotspot, in the range [0, height]</param>
+        /// <param name="width">The width of the cursor data, in pixels.</param>
+        /// <param name="height">The height of the cursor data, in pixels.</param>
+        /// <param name="data">
+        /// A byte array representing the cursor image,
+        /// laid out as a contiguous array of BGRA pixels.
+        /// </param>
+        public MouseCursor(int hotx, int hoty, int width, int height, byte[] data)
+            : base(width, height, data)
         {
-            if (rgba == null)
-                throw new ArgumentNullException();
-            if (width < 0 || width > 256 || height < 0 || height > 256)
-                throw new ArgumentOutOfRangeException();
-            if (rgba.Length < width * height * 4)
-                throw new ArgumentOutOfRangeException();
-            if (x < 0 || x >= width || y < 0 || y >= height)
+            if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
                 throw new ArgumentOutOfRangeException();
 
-            this.rgba = rgba;
-            this.width = width;
-            this.height = height;
-            this.x = x;
-            this.y = y;
+            x = hotx;
+            y = hoty;
         }
 
-        internal byte[] Rgba { get { return rgba; } }
-        internal int Width { get { return width; } }
-        internal int Height { get { return height; } }
+        /// <summary>
+        /// Initializes a new <see cref="MouseCursor"/> instance from a
+        /// contiguous array of BGRA pixels.
+        /// Each pixel is composed of 4 bytes, representing B, G, R and A values,
+        /// respectively. For correct antialiasing of translucent cursors,
+        /// the B, G and R components should be premultiplied with the A component:
+        /// <code>
+        /// B = (byte)((B * A) / 255)
+        /// G = (byte)((G * A) / 255)
+        /// R = (byte)((R * A) / 255)
+        /// </code>
+        /// </summary>
+        /// <param name="hotx">The x-coordinate of the cursor hotspot, in the range [0, width]</param>
+        /// <param name="hoty">The y-coordinate of the cursor hotspot, in the range [0, height]</param>
+        /// <param name="width">The width of the cursor data, in pixels.</param>
+        /// <param name="height">The height of the cursor data, in pixels.</param>
+        /// <param name="data">
+        /// A pointer to the cursor image, laid out as a contiguous array of BGRA pixels.
+        /// </param>
+        public MouseCursor(int hotx, int hoty, int width, int height, IntPtr data)
+            : base(width, height, data)
+        {
+            if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
+                throw new ArgumentOutOfRangeException();
+
+            x = hotx;
+            y = hoty;
+        }
+
         internal int X { get { return x; } }
         internal int Y { get { return y; } }
 

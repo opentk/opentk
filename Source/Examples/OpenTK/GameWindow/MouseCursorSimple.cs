@@ -3,6 +3,7 @@
 // It is provided "as is" without express or implied warranty of any kind.
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -13,33 +14,70 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates the MouseCursor class.
     /// </summary>
-    [Example("MouseCursor Simple", ExampleCategory.OpenTK, "GameWindow", 1, Documentation = "MouseCursorSimple")]
+    [Example("Custom MouseCursor", ExampleCategory.OpenTK, "GameWindow", 1, Documentation = "MouseCursorSimple")]
     public class MouseCursorSimple : GameWindow
     {
+        readonly MouseCursor MyCursor;
+        List<Vector2> lines = new List<Vector2>();
+
         public MouseCursorSimple()
             : base(800, 600)
         {
             Keyboard.KeyDown += Keyboard_KeyDown;
 
-            Bitmap bitmap = new Bitmap("Data/Textures/cursor.png");
-
-            var rgba = new byte[bitmap.Width * bitmap.Height * 4];
-            var data = bitmap.LockBits(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height), 
-                System.Drawing.Imaging.ImageLockMode.ReadOnly, 
-                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-            for (int y = 0; y < bitmap.Height; ++y)
+            using (Bitmap bitmap = new Bitmap("Data/Textures/cursor.png"))
             {
-                var offset = new IntPtr(data.Scan0.ToInt64() + (data.Stride * y));
-                var stride = bitmap.Width * 4;
-                System.Runtime.InteropServices.Marshal.Copy(
-                    offset, rgba, y * stride, stride);
+                var data = bitmap.LockBits(
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height), 
+                    System.Drawing.Imaging.ImageLockMode.ReadOnly, 
+                    System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
+                MyCursor = new OpenTK.MouseCursor(
+                    2, 21, data.Width, data.Height, data.Scan0);
+                Cursor = MyCursor;
             }
-            
-            //this.Cursor = new OpenTK.MouseCursor(rgba, bitmap.Width, bitmap.Height, 0, 0);
-            this.Cursor = MouseCursor.Default;
+
+            Mouse.Move += Mouse_Move;
+            Mouse.ButtonDown += Mouse_ButtonDown;
         }
+
+        void AddLine(float x, float y)
+        {
+            // Scale mouse coordinates from
+            // (0, 0):(Width, Height) to
+            // (-1, -1):(+1, +1)
+            // Note, we must flip the y-coordinate
+            // since mouse is reported with (0, 0)
+            // at top-left and our projection uses
+            // (-1, -1) at bottom left.
+            x = (x- Width) / (float)Width;
+            y = (Height - y) / (float)Height;
+            lines.Add(new Vector2(2 * x + 1, 2 * y - 1));
+        }
+
+        #region Mouse_ButtonDown
+
+        void Mouse_ButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Button == MouseButton.Left)
+            {
+                AddLine(e.X, e.Y);
+            }
+        }
+
+        #endregion
+
+        #region Mouse_Move
+
+        void Mouse_Move(object sender, MouseMoveEventArgs e)
+        {
+            if (Mouse[MouseButton.Left])
+            {
+                AddLine(e.X, e.Y);
+            }
+        }
+
+        #endregion
 
         #region Keyboard_KeyDown
 
@@ -62,10 +100,18 @@ namespace Examples.Tutorial
                 else
                     this.WindowState = WindowState.Fullscreen;
             }
+            else if (e.Key == Key.Enter)
+            {
+                CursorVisible = !CursorVisible;
+            }
 
             if (e.Key == Key.Space)
             {
                 if (Cursor == MouseCursor.Default)
+                {
+                    Cursor = MyCursor;
+                }
+                else if (Cursor == MyCursor)
                 {
                     Cursor = MouseCursor.Empty;
                 }
@@ -118,7 +164,6 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            // Nothing to do!
         }
 
         #endregion
@@ -143,6 +188,14 @@ namespace Examples.Tutorial
             GL.Color3(Color.Ivory);
             GL.Vertex2(1.0f, 1.0f);
 
+            GL.End();
+
+            GL.Begin(PrimitiveType.LineStrip);
+            foreach (var p in lines)
+            {
+                GL.Color4(Color.White);
+                GL.Vertex2(p);
+            }
             GL.End();
 
             this.SwapBuffers();

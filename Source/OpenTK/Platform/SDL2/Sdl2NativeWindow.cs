@@ -470,7 +470,7 @@ namespace OpenTK.Platform.SDL2
             {
                 lock (sync)
                 {
-                    if (value != MouseCursor.Default)
+                    if (cursor != value)
                     {
                         // Free the previous cursor,
                         // if one has been set.
@@ -478,7 +478,6 @@ namespace OpenTK.Platform.SDL2
                         {
                             SDL.FreeCursor(sdl_cursor);
                             sdl_cursor = IntPtr.Zero;
-                            cursor = MouseCursor.Default;
                         }
 
                         // Set the new cursor
@@ -486,6 +485,7 @@ namespace OpenTK.Platform.SDL2
                         {
                             // Reset to default cursor
                             SDL.SetCursor(SDL.GetDefaultCursor());
+                            cursor = value;
                         }
                         else
                         {
@@ -493,7 +493,7 @@ namespace OpenTK.Platform.SDL2
                             // the rgba values supplied by the user
                             unsafe
                             {
-                                fixed (byte* pixels = value.Rgba)
+                                fixed (byte* pixels = value.Data)
                                 {
                                     IntPtr cursor_surface =
                                         SDL.CreateRGBSurfaceFrom(
@@ -502,10 +502,10 @@ namespace OpenTK.Platform.SDL2
                                             value.Height,
                                             32,
                                             value.Width * 4,
-                                            0xff000000,
                                             0x00ff0000,
                                             0x0000ff00,
-                                            0x000000ff);
+                                            0x000000ff,
+                                            0xff000000);
 
                                     if (cursor_surface == IntPtr.Zero)
                                     {
@@ -1056,6 +1056,12 @@ namespace OpenTK.Platform.SDL2
                         if (Exists)
                         {
                             DestroyWindow();
+                        }
+
+                        if (sdl_cursor != IntPtr.Zero)
+                        {
+                            SDL.FreeCursor(sdl_cursor);
+                            sdl_cursor = IntPtr.Zero;
                         }
                     }
                     else
