@@ -379,7 +379,7 @@ namespace OpenTK.Input
         #region Fields
 
         int x, y;
-        float wheel_x, wheel_y;
+        int buttons;
 
         #endregion
 
@@ -412,12 +412,35 @@ namespace OpenTK.Input
         {
         }
 
-        internal MouseEventArgs(float x, float y, float wx, float wy)
+        #endregion
+
+        #region Protected Members
+
+        protected internal void SetButton(MouseButton button, ButtonState state)
         {
-            X = (int)Math.Round(x);
-            Y = (int)Math.Round(y);
-            WheelX = wx;
-            WheelY = wy;
+            if (button < 0 || button > MouseButton.LastButton)
+                throw new ArgumentOutOfRangeException();
+
+            switch (state)
+            {
+                case ButtonState.Pressed:
+                    buttons |= 1 << (int)button;
+                    break;
+
+                case ButtonState.Released:
+                    buttons &= ~(1 << (int)button);
+                    break;
+            }
+        }
+
+        protected internal ButtonState GetButton(MouseButton button)
+        {
+            if (button < 0 || button > MouseButton.LastButton)
+                throw new ArgumentOutOfRangeException();
+
+            return
+                (buttons & (1 << (int)button)) != 0 ?
+                ButtonState.Pressed : ButtonState.Released;
         }
 
         #endregion
@@ -449,37 +472,65 @@ namespace OpenTK.Input
         /// This is an alias to <see cref="MouseEventArgs.WheelY"/>
         /// </summary>
         /// <value>The wheel.</value>
-        public float Wheel { get { return WheelY; } }
+        public float Wheel { get { return WheelY; } internal set { WheelY = value; } }
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> of the left mouse button.
         /// </summary>
-        public ButtonState LeftButton { get; internal set; }
+        public ButtonState LeftButton
+        {
+            get { return GetButton(MouseButton.Left); }
+            internal set { SetButton(MouseButton.Left, value); }
+        }
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> of the right mouse button.
         /// </summary>
-        public ButtonState RightButton { get; internal set; }
+        public ButtonState RightButton
+        {
+            get { return GetButton(MouseButton.Right); }
+            internal set { SetButton(MouseButton.Right, value); } 
+        }
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> of the middle mouse button.
         /// </summary>
-        public ButtonState MiddleButton { get; internal set; }
+        public ButtonState MiddleButton
+        {
+            get { return GetButton(MouseButton.Middle); }
+            internal set { SetButton(MouseButton.Middle, value); } 
+        }
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> of the first extra mouse button.
         /// </summary>
-        public ButtonState X1Button { get; internal set; }
+        public ButtonState X1Button
+        {
+            get { return GetButton(MouseButton.Button1); }
+            internal set { SetButton(MouseButton.Button1, value); } 
+        }
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> of the second extra mouse button.
         /// </summary>
-        public ButtonState X2Button { get; internal set; }
+        public ButtonState X2Button
+        {
+            get { return GetButton(MouseButton.Button2); }
+            internal set { SetButton(MouseButton.Button2, value); } 
+        }
 
         /// <summary>
-        /// Gets a System.Drawing.Points representing the location of the mouse for the event.
+        /// Gets a <see cref="System.Drawing.Point"/> representing the location of the mouse for the event.
         /// </summary>
-        public Point Position { get { return new Point(x, y); } }
+        public Point Position
+        {
+            get { return new Point(x, y); }
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+            }
+        }
 
         #endregion
     }
@@ -603,14 +654,18 @@ namespace OpenTK.Input
         #region Public Members
 
         /// <summary>
-        /// The mouse button for the event.
+        /// Gets the <see cref="MouseButton"/> that triggered this event.
         /// </summary>
         public MouseButton Button { get { return button; } internal set { button = value; } }
 
         /// <summary>
         /// Gets a System.Boolean representing the state of the mouse button for the event.
         /// </summary>
-        public bool IsPressed { get { return pressed; } internal set { pressed = value; } }
+        public bool IsPressed
+        {
+            get { return GetButton(Button) == ButtonState.Pressed; }
+            internal set { SetButton(Button, value ? ButtonState.Pressed : ButtonState.Released); }
+        }
 
         #endregion
     }
@@ -629,7 +684,6 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        float value;
         float delta;
 
         #endregion
@@ -651,7 +705,7 @@ namespace OpenTK.Input
         public MouseWheelEventArgs(int x, int y, int value, int delta)
             : base(x, y)
         {
-            this.value = value;
+            WheelY = value;
             this.delta = delta;
         }
 
@@ -672,7 +726,7 @@ namespace OpenTK.Input
         /// Gets the value of the wheel in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="ValuePrecise"/> instead.
         /// </summary>
-        public int Value { get { return (int)Math.Round(value, MidpointRounding.AwayFromZero); } }
+        public int Value { get { return (int)Math.Round(WheelY, MidpointRounding.AwayFromZero); } }
 
         /// <summary>
         /// Gets the change in value of the wheel for this event in integer units.
@@ -683,7 +737,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the precise value of the wheel in floating-point units.
         /// </summary>
-        public float ValuePrecise { get { return value; } internal set { this.value = value; } }
+        public float ValuePrecise { get { return WheelY; } internal set { WheelY = value; } }
 
         /// <summary>
         /// Gets the precise change in value of the wheel for this event in floating-point units.

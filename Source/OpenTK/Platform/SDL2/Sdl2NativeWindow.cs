@@ -41,7 +41,7 @@ using System.Text;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2NativeWindow : NativeWindowBase, IInputDriver
+    class Sdl2NativeWindow : NativeWindowBase
     {
         readonly object sync = new object();
 
@@ -72,19 +72,14 @@ namespace OpenTK.Platform.SDL2
         // Argument for KeyDown and KeyUp events (allocated once to avoid runtime allocations)
         readonly KeyboardKeyEventArgs key_args = new KeyboardKeyEventArgs();
 
-        readonly IInputDriver input_driver;
-
         static readonly Dictionary<uint, Sdl2NativeWindow> windows =
             new Dictionary<uint, Sdl2NativeWindow>();
 
         public Sdl2NativeWindow(int x, int y, int width, int height,
-            string title, GameWindowFlags options, DisplayDevice device,
-            IInputDriver input_driver)
+            string title, GameWindowFlags options, DisplayDevice device)
         {
             lock (sync)
             {
-                this.input_driver = input_driver;
-
                 var bounds = device.Bounds;
                 var flags = TranslateFlags(options);
                 flags |= WindowFlags.OPENGL;
@@ -233,7 +228,7 @@ namespace OpenTK.Platform.SDL2
             var key = ev.Key.Keysym;
             window.key_args.Key = TranslateKey(key.Scancode);
             window.key_args.ScanCode = (uint)key.Scancode;
-            window.key_args.Modifiers = window.input_driver.Keyboard[0].GetModifiers();
+            window.key_args.Modifiers = Sdl2KeyMap.GetModifiers(key.Mod);
             if (key_pressed)
             {
                 window.OnKeyDown(window.key_args);
@@ -890,14 +885,6 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public override IInputDriver InputDriver
-        {
-            get
-            {
-                return input_driver;
-            }
-        }
-
         public override bool CursorVisible
         {
             get
@@ -914,51 +901,6 @@ namespace OpenTK.Platform.SDL2
                         is_cursor_visible = value;
                     }
                 }
-            }
-        }
-
-        #endregion
-
-        #region IInputDriver Members
-
-        public void Poll()
-        {
-            InputDriver.Poll();
-        }
-
-        #endregion
-
-        #region IJoystickDriver Members
-
-        public IList<JoystickDevice> Joysticks
-        {
-            get
-            {
-                return InputDriver.Joysticks;
-            }
-        }
-
-        #endregion
-
-        #region IMouseDriver Members
-
-        public IList<MouseDevice> Mouse
-        {
-            get
-            {
-                return InputDriver.Mouse;
-            }
-        }
-
-        #endregion
-
-        #region IKeyboardDriver Members
-
-        public IList<KeyboardDevice> Keyboard
-        {
-            get
-            {
-                return InputDriver.Keyboard;
             }
         }
 

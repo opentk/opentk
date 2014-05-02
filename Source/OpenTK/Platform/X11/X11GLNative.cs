@@ -862,9 +862,6 @@ namespace OpenTK.Platform.X11
                         Key key;
                         if (driver.TranslateKey(ref e.KeyEvent, out key))
                         {
-                            // Update legacy GameWindow.Keyboard API:
-                            keyboard.SetKey(key, (uint)e.KeyEvent.keycode, pressed);
-
                             if (pressed)
                             {
                                 // Raise KeyDown event

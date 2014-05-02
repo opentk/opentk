@@ -422,7 +422,6 @@ namespace OpenTK.Platform.MacOS
                             var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
                             var isARepeat = Cocoa.SendBool(e, selIsARepeat);
                             GetKey(keyCode, modifierFlags, keyArgs);
-                            InputDriver.Keyboard[0].SetKey(keyArgs.Key, keyArgs.ScanCode, true);
 
                             if (!isARepeat || InputDriver.Keyboard[0].KeyRepeat)
                             {
@@ -450,8 +449,6 @@ namespace OpenTK.Platform.MacOS
                             var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
 
                             GetKey(keyCode, modifierFlags, keyArgs);
-                            InputDriver.Keyboard[0].SetKey(keyArgs.Key, keyArgs.ScanCode, false);
-
                             OnKeyUp(keyArgs);
                         }
                         break;

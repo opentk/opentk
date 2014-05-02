@@ -42,18 +42,63 @@ namespace OpenTK.Platform
 
         readonly LegacyJoystickDriver JoystickDriver = new LegacyJoystickDriver();
 
-        internal LegacyInputDriver()
+        internal LegacyInputDriver(INativeWindow window)
         {
-            dummy_mice_list.Add(new MouseDevice());
-            Mouse[0].Description = "Standard Mouse";
-            Mouse[0].NumberOfButtons = 3;
-            Mouse[0].NumberOfWheels = 1;
+            if (window == null)
+                throw new ArgumentNullException();
 
-            dummy_keyboard_list.Add(new KeyboardDevice());
-            Keyboard[0].Description = "Standard Keyboard";
-            Keyboard[0].NumberOfKeys = 101;
-            Keyboard[0].NumberOfLeds = 3;
-            Keyboard[0].NumberOfFunctionKeys = 12;
+            var mouse = new MouseDevice();
+            mouse.Description = "Standard Mouse";
+            mouse.NumberOfButtons = 3;
+            mouse.NumberOfWheels = 1;
+            dummy_mice_list.Add(mouse);
+
+            var keyboard = new KeyboardDevice();
+            keyboard.Description = "Standard Keyboard";
+            keyboard.NumberOfKeys = 101;
+            keyboard.NumberOfLeds = 3;
+            keyboard.NumberOfFunctionKeys = 12;
+            dummy_keyboard_list.Add(keyboard);
+
+            // Hook mouse events
+            window.MouseDown += (sender, e) =>
+            {
+                mouse[e.Button] = true;
+            };
+
+            window.MouseUp += (sender, e) =>
+            {
+                mouse[e.Button] = false;
+            };
+
+            window.MouseMove += (sender, e) =>
+            {
+                mouse.Position = e.Position;
+            };
+
+            window.MouseWheel += (sender, e) =>
+            {
+                mouse.WheelPrecise = e.WheelY;
+            };
+
+            // Hook keyboard events
+            window.KeyDown += (sender, e) =>
+            {
+                keyboard.SetKey(e.Key, e.ScanCode, e.Modifiers, true);
+            };
+
+            window.KeyUp += (sender, e) =>
+            {
+                keyboard.SetKey(e.Key, e.ScanCode, e.Modifiers, false);
+            };
+
+            window.FocusedChanged += (sender, e) =>
+            {
+                if (!window.Focused)
+                {
+                    keyboard.ClearKeys();
+                }
+            };
         }
 
         #region IInputDriver Members

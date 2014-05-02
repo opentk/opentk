@@ -38,8 +38,21 @@ namespace OpenTK.Platform
     // Common base class for all INativeWindow implementations
     abstract class NativeWindowBase : INativeWindow
     {
-        readonly LegacyInputDriver LegacyInputDriver =
-            new LegacyInputDriver();
+        readonly LegacyInputDriver LegacyInputDriver;
+
+        readonly protected MouseButtonEventArgs MouseDownArgs = new MouseButtonEventArgs();
+        readonly protected MouseButtonEventArgs MouseUpArgs = new MouseButtonEventArgs();
+        readonly protected MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
+        readonly protected MouseWheelEventArgs MouseWheelArgs = new MouseWheelEventArgs();
+
+        readonly protected KeyboardKeyEventArgs KeyDownArgs = new KeyboardKeyEventArgs();
+        readonly protected KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
+        readonly protected KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
+
+        internal NativeWindowBase()
+        {
+            LegacyInputDriver = new LegacyInputDriver(this);
+        }
 
         #region Protected Members
 
@@ -133,7 +146,7 @@ namespace OpenTK.Platform
             MouseUp(this, e);
         }
 
-        protected void OnMouseDown(MouseMoveEventArgs e)
+        protected void OnMouseMove(MouseMoveEventArgs e)
         {
             MouseMove(this, e);
         }

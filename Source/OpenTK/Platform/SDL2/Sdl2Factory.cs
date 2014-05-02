@@ -57,7 +57,7 @@ namespace OpenTK.Platform.SDL2
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            return new Sdl2NativeWindow(x, y, width, height, title, options, device, InputDriver);
+            return new Sdl2NativeWindow(x, y, width, height, title, options, device);
         }
 
         public override IDisplayDeviceDriver CreateDisplayDeviceDriver()

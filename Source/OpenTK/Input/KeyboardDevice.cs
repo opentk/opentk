@@ -197,7 +197,7 @@ namespace OpenTK.Input
 
         #endregion
 
-        internal void SetKey(Key key, uint scancode, bool state)
+        internal void SetKey(Key key, uint scancode, KeyModifiers mods, bool state)
         {
             if (keys[(int)key] != state || KeyRepeat)
             {
@@ -211,14 +211,14 @@ namespace OpenTK.Input
                 {
                     args.Key = key;
                     args.ScanCode = scancode;
-                    args.Modifiers = GetModifiers();
+                    args.Modifiers = mods;
                     KeyDown(this, args);
                 }
                 else if (!state && KeyUp != null)
                 {
                     args.Key = key;
                     args.ScanCode = scancode;
-                    args.Modifiers = GetModifiers();
+                    args.Modifiers = mods;
                     KeyUp(this, args);
                 }
             }
