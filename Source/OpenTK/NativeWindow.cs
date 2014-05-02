@@ -680,6 +680,26 @@ namespace OpenTK
         /// </summary>
         public event EventHandler<EventArgs> WindowStateChanged = delegate { };
 
+        /// <summary>
+        /// Occurs when a <see cref="MouseButton"/> is pressed.
+        /// </summary>
+        public event EventHandler<MouseButtonEventArgs> MouseDown = delegate { };
+
+        /// <summary>
+        /// Occurs when a <see cref="MouseButton"/> is released.
+        /// </summary>
+        public event EventHandler<MouseButtonEventArgs> MouseUp = delegate { };
+
+        /// <summary>
+        /// Occurs whenever the mouse is moved.
+        /// </summary>
+        public event EventHandler<MouseMoveEventArgs> MouseMove = delegate { };
+
+        /// <summary>
+        /// Occurs whenever a mouse wheel is moved;
+        /// </summary>
+        public event EventHandler<MouseWheelEventArgs> MouseWheel = delegate { };
+
         #endregion
 
         #endregion

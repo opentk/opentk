@@ -45,7 +45,7 @@ namespace OpenTK.Platform.X11
     /// Drives GameWindow on X11.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class X11GLNative : INativeWindow, IDisposable
+    internal sealed class X11GLNative : NativeWindowBase
     {
         // TODO: Disable screensaver.
         // TODO: What happens if we can't disable decorations through motif?
@@ -785,7 +785,7 @@ namespace OpenTK.Platform.X11
 
         #region ProcessEvents
 
-        public void ProcessEvents()
+        public override void ProcessEvents()
         {
             // Process all pending events
             while (Exists && window != null)
@@ -1015,7 +1015,7 @@ namespace OpenTK.Platform.X11
 
         #region Bounds
 
-        public Rectangle Bounds
+        public override Rectangle Bounds
         {
             get
             {
@@ -1116,7 +1116,7 @@ namespace OpenTK.Platform.X11
 
         #region ClientSize
 
-        public Size ClientSize
+        public override Size ClientSize
         {
             get
             {
@@ -1172,7 +1172,7 @@ namespace OpenTK.Platform.X11
 
         #region Icon
 
-        public Icon Icon
+        public override Icon Icon
         {
             get
             {
@@ -1246,7 +1246,7 @@ namespace OpenTK.Platform.X11
 
         #region Focused
 
-        public bool Focused
+        public override bool Focused
         {
             get
             {
@@ -1258,7 +1258,7 @@ namespace OpenTK.Platform.X11
 
         #region WindowState
 
-        public OpenTK.WindowState WindowState
+        public override OpenTK.WindowState WindowState
         {
             get
             {
@@ -1395,7 +1395,7 @@ namespace OpenTK.Platform.X11
 
         #region WindowBorder
 
-        public OpenTK.WindowBorder WindowBorder
+        public override OpenTK.WindowBorder WindowBorder
         {
             get
             {
@@ -1465,7 +1465,7 @@ namespace OpenTK.Platform.X11
 
         #region Cursor
 
-        public MouseCursor Cursor
+        public override MouseCursor Cursor
         {
             get
             {
@@ -1505,7 +1505,7 @@ namespace OpenTK.Platform.X11
 
         #region CursorVisible
 
-        public bool CursorVisible
+        public override bool CursorVisible
         {
             get { return cursor_visible; }
             set
@@ -1552,7 +1552,7 @@ namespace OpenTK.Platform.X11
         /// <summary>
         /// Returns true if a render window/context exists.
         /// </summary>
-        public bool Exists
+        public override bool Exists
         {
             get { return exists; }
         }
@@ -1586,7 +1586,7 @@ namespace OpenTK.Platform.X11
         /// TODO: Use atoms for this property.
         /// Gets or sets the GameWindow title.
         /// </summary>
-        public string Title
+        public override string Title
         {
             get
             {
@@ -1618,7 +1618,7 @@ namespace OpenTK.Platform.X11
 
         #region public bool Visible
 
-        public bool Visible
+        public override bool Visible
         {
             get
             {
@@ -1647,14 +1647,14 @@ namespace OpenTK.Platform.X11
 
         #region public IWindowInfo WindowInfo
 
-        public IWindowInfo WindowInfo
+        public override IWindowInfo WindowInfo
         {
             get { return window; }
         }
 
         #endregion
 
-        public void Close() { Exit(); }
+        public override void Close() { Exit(); }
 
         #region public void Exit()
 
@@ -1691,7 +1691,7 @@ namespace OpenTK.Platform.X11
 
         #region PointToClient
 
-        public Point PointToClient(Point point)
+        public override Point PointToClient(Point point)
         {
             int ox, oy;
             IntPtr child;
@@ -1711,7 +1711,7 @@ namespace OpenTK.Platform.X11
 
         #region PointToScreen
 
-        public Point PointToScreen(Point point)
+        public override Point PointToScreen(Point point)
         {
             int ox, oy;
             IntPtr child;
@@ -1733,13 +1733,7 @@ namespace OpenTK.Platform.X11
 
         #region IDisposable Members
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool manuallyCalled)
+        protected override void Dispose(bool manuallyCalled)
         {
             if (!disposed)
             {
@@ -1773,11 +1767,6 @@ namespace OpenTK.Platform.X11
                 }
                 disposed = true;
             }
-        }
-
-        ~X11GLNative()
-        {
-            this.Dispose(false);
         }
 
         #endregion

@@ -41,7 +41,7 @@ using System.Text;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2NativeWindow : INativeWindow, IInputDriver
+    class Sdl2NativeWindow : NativeWindowBase, IInputDriver
     {
         readonly object sync = new object();
 
@@ -236,11 +236,11 @@ namespace OpenTK.Platform.SDL2
             window.key_args.Modifiers = window.input_driver.Keyboard[0].GetModifiers();
             if (key_pressed)
             {
-                window.KeyDown(window, window.key_args);
+                window.OnKeyDown(window.key_args);
             }
             else
             {
-                window.KeyUp(window, window.key_args);
+                window.OnKeyUp(window.key_args);
             }
             //window.keyboard.SetKey(TranslateKey(key.scancode), (uint)key.scancode, key_pressed);
         }
@@ -274,7 +274,7 @@ namespace OpenTK.Platform.SDL2
             for (int i = 0; i < decoded_length; i++)
             {
                 window.keypress_args.KeyChar = window.DecodeTextBuffer[i];
-                window.KeyPress(window, window.keypress_args);
+                window.OnKeyPress(window.keypress_args);
             }
         }
 
@@ -299,7 +299,7 @@ namespace OpenTK.Platform.SDL2
                     try
                     {
                         window.is_in_closing_event = true;
-                        window.Closing(window, close_args);
+                        window.OnClosing(close_args);
                     }
                     finally
                     {
@@ -308,17 +308,17 @@ namespace OpenTK.Platform.SDL2
 
                     if (!close_args.Cancel)
                     {
-                        window.Closed(window, EventArgs.Empty);
+                        window.OnClosed(EventArgs.Empty);
                         window.must_destroy = true;
                     }
                     break;
 
                 case WindowEventID.ENTER:
-                    window.MouseEnter(window, EventArgs.Empty);
+                    window.OnMouseEnter(EventArgs.Empty);
                     break;
 
                 case WindowEventID.LEAVE:
-                    window.MouseLeave(window, EventArgs.Empty);
+                    window.OnMouseLeave(EventArgs.Empty);
                     break;
 
                 case WindowEventID.EXPOSED:
@@ -327,47 +327,47 @@ namespace OpenTK.Platform.SDL2
 
                 case WindowEventID.FOCUS_GAINED:
                     window.is_focused = true;
-                    window.FocusedChanged(window, EventArgs.Empty);
+                    window.OnFocusedChanged(EventArgs.Empty);
                     break;
 
                 case WindowEventID.FOCUS_LOST:
                     window.is_focused = false;
-                    window.FocusedChanged(window, EventArgs.Empty);
+                    window.OnFocusedChanged(EventArgs.Empty);
                     break;
 
                 case WindowEventID.HIDDEN:
                     window.is_visible = false;
-                    window.VisibleChanged(window, EventArgs.Empty);
+                    window.OnVisibleChanged(EventArgs.Empty);
                     break;
 
                 case WindowEventID.SHOWN:
                     window.is_visible = true;
-                    window.VisibleChanged(window, EventArgs.Empty);
+                    window.OnVisibleChanged(EventArgs.Empty);
                     break;
 
                 case WindowEventID.MAXIMIZED:
                     window.window_state = WindowState.Maximized;
-                    window.WindowStateChanged(window, EventArgs.Empty);
+                    window.OnWindowStateChanged(EventArgs.Empty);
                     break;
 
                 case WindowEventID.MINIMIZED:
                     window.previous_window_state = window.window_state;
                     window.window_state = WindowState.Minimized;
-                    window.WindowStateChanged(window, EventArgs.Empty);
+                    window.OnWindowStateChanged(EventArgs.Empty);
                     break;
 
                 case WindowEventID.RESTORED:
                     window.window_state = window.previous_window_state;
-                    window.WindowStateChanged(window, EventArgs.Empty);
+                    window.OnWindowStateChanged(EventArgs.Empty);
                     break;
 
                 case WindowEventID.MOVED:
-                    window.Move(window, EventArgs.Empty);
+                    window.OnMove(EventArgs.Empty);
                     break;
 
                 case WindowEventID.RESIZED:
                 case WindowEventID.SIZE_CHANGED:
-                    window.Resize(window, EventArgs.Empty);
+                    window.OnResize(EventArgs.Empty);
                     break;
 
                 default:
@@ -443,24 +443,7 @@ namespace OpenTK.Platform.SDL2
 
         #region INativeWindow Members
 
-        public event EventHandler<EventArgs> Move = delegate { };
-        public event EventHandler<EventArgs> Resize = delegate { };
-        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
-        public event EventHandler<EventArgs> Closed = delegate { };
-        public event EventHandler<EventArgs> Disposed = delegate { };
-        public event EventHandler<EventArgs> IconChanged = delegate { };
-        public event EventHandler<EventArgs> TitleChanged = delegate { };
-        public event EventHandler<EventArgs> VisibleChanged = delegate { };
-        public event EventHandler<EventArgs> FocusedChanged = delegate { };
-        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
-        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
-        public event EventHandler<KeyboardKeyEventArgs> KeyDown = delegate { };
-        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
-        public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { }; 
-        public event EventHandler<EventArgs> MouseEnter = delegate { };
-        public event EventHandler<EventArgs> MouseLeave = delegate { };
-
-        public MouseCursor Cursor
+        public override MouseCursor Cursor
         {
             get
             {
@@ -540,7 +523,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public void Close()
+        public override void Close()
         {
             lock (sync)
             {
@@ -560,7 +543,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public void ProcessEvents()
+        public override void ProcessEvents()
         {
             lock (sync)
             {
@@ -581,21 +564,21 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public Point PointToClient(Point point)
+        public override Point PointToClient(Point point)
         {
             var origin = DisplayDevice.Default.Bounds.Location;
             var client = Location;
             return new Point(point.X + client.X - origin.X, point.Y + client.Y - origin.Y);
         }
 
-        public Point PointToScreen(Point point)
+        public override Point PointToScreen(Point point)
         {
             var origin = DisplayDevice.Default.Bounds.Location;
             var client = Location;
             return new Point(point.X + origin.X - client.X, point.Y + origin.Y - client.Y);
         }
 
-        public Icon Icon
+        public override Icon Icon
         {
             get
             {
@@ -639,13 +622,13 @@ namespace OpenTK.Platform.SDL2
                         }
 
                         icon = value;
-                        IconChanged(this, EventArgs.Empty);
+                        OnIconChanged(EventArgs.Empty);
                     }
                 }
             }
         }
 
-        public string Title
+        public override string Title
         {
             get
             {
@@ -671,7 +654,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public bool Focused
+        public override bool Focused
         {
             get
             {
@@ -679,7 +662,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public bool Visible
+        public override bool Visible
         {
             get
             {
@@ -700,7 +683,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public bool Exists
+        public override bool Exists
         {
             get
             {
@@ -708,7 +691,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public IWindowInfo WindowInfo
+        public override IWindowInfo WindowInfo
         {
             get
             {
@@ -716,7 +699,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public WindowState WindowState
+        public override WindowState WindowState
         {
             get
             {
@@ -774,7 +757,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public WindowBorder WindowBorder
+        public override WindowBorder WindowBorder
         {
             get
             {
@@ -810,13 +793,13 @@ namespace OpenTK.Platform.SDL2
 
                     if (Exists)
                     {
-                        WindowBorderChanged(this, EventArgs.Empty);
+                        OnWindowBorderChanged(EventArgs.Empty);
                     }
                 }
             }
         }
 
-        public Rectangle Bounds
+        public override Rectangle Bounds
         {
             get
             {
@@ -829,7 +812,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public Point Location
+        public override Point Location
         {
             get
             {
@@ -856,7 +839,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public Size Size
+        public override Size Size
         {
             get
             {
@@ -883,67 +866,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public int X
-        {
-            get
-            {
-                return Location.X;
-            }
-            set
-            {
-                Location = new Point(value, Y);
-            }
-        }
-
-        public int Y
-        {
-            get
-            {
-                return Location.Y;
-            }
-            set
-            {
-                Location = new Point(X, value);
-            }
-        }
-
-        public int Width
-        {
-            get
-            {
-                return ClientSize.Width;
-            }
-            set
-            {
-                ClientSize = new Size(value, Height);
-            }
-        }
-
-        public int Height
-        {
-            get
-            {
-                return ClientSize.Height;
-            }
-            set
-            {
-                ClientSize = new Size(Width, value);
-            }
-        }
-
-        public Rectangle ClientRectangle
-        {
-            get
-            {
-                return new Rectangle(new Point(), ClientSize);
-            }
-            set
-            {
-                ClientSize = value.Size;
-            }
-        }
-
-        public Size ClientSize
+        public override Size ClientSize
         {
             get
             {
@@ -967,7 +890,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public IInputDriver InputDriver
+        public override IInputDriver InputDriver
         {
             get
             {
@@ -975,7 +898,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public bool CursorVisible
+        public override bool CursorVisible
         {
             get
             {
@@ -1043,7 +966,7 @@ namespace OpenTK.Platform.SDL2
 
         #region IDisposable implementation
 
-        void Dispose(bool manual)
+        protected override void Dispose(bool manual)
         {
             if (!disposed)
             {
@@ -1080,17 +1003,6 @@ namespace OpenTK.Platform.SDL2
                     disposed = true;
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~Sdl2NativeWindow()
-        {
-            Dispose(true);
         }
 
         #endregion

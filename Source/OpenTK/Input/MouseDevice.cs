@@ -379,6 +379,7 @@ namespace OpenTK.Input
         #region Fields
 
         int x, y;
+        float wheel_x, wheel_y;
 
         #endregion
 
@@ -411,6 +412,14 @@ namespace OpenTK.Input
         {
         }
 
+        internal MouseEventArgs(float x, float y, float wx, float wy)
+        {
+            X = (int)Math.Round(x);
+            Y = (int)Math.Round(y);
+            WheelX = wx;
+            WheelY = wy;
+        }
+
         #endregion
 
         #region Public Members
@@ -424,6 +433,48 @@ namespace OpenTK.Input
         /// Gets the Y position of the mouse for the event.
         /// </summary>
         public int Y { get { return y; } internal set { y = value; } }
+
+        /// <summary>
+        /// Gets the offset of the horizontal wheel, if one exists.
+        /// </summary>
+        public float WheelX { get; internal set; }
+
+        /// <summary>
+        /// Gets the offset of the vertical wheel, if one exists.
+        /// </summary>
+        public float WheelY { get; internal set; }
+
+        /// <summary>
+        /// Gets the offset of the vertical wheel, if one exists.
+        /// This is an alias to <see cref="MouseEventArgs.WheelY"/>
+        /// </summary>
+        /// <value>The wheel.</value>
+        public float Wheel { get { return WheelY; } }
+
+        /// <summary>
+        /// Gets the <see cref="ButtonState"/> of the left mouse button.
+        /// </summary>
+        public ButtonState LeftButton { get; internal set; }
+
+        /// <summary>
+        /// Gets the <see cref="ButtonState"/> of the right mouse button.
+        /// </summary>
+        public ButtonState RightButton { get; internal set; }
+
+        /// <summary>
+        /// Gets the <see cref="ButtonState"/> of the middle mouse button.
+        /// </summary>
+        public ButtonState MiddleButton { get; internal set; }
+
+        /// <summary>
+        /// Gets the <see cref="ButtonState"/> of the first extra mouse button.
+        /// </summary>
+        public ButtonState X1Button { get; internal set; }
+
+        /// <summary>
+        /// Gets the <see cref="ButtonState"/> of the second extra mouse button.
+        /// </summary>
+        public ButtonState X2Button { get; internal set; }
 
         /// <summary>
         /// Gets a System.Drawing.Points representing the location of the mouse for the event.

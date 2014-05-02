@@ -44,7 +44,7 @@ namespace OpenTK.Platform.Windows
     /// Drives GameWindow on Windows.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class WinGLNative : INativeWindow, IInputDriver
+    internal sealed class WinGLNative : NativeWindowBase, IInputDriver
     {
         #region Fields
 
@@ -977,7 +977,7 @@ namespace OpenTK.Platform.Windows
 
         #region Bounds
 
-        public Rectangle Bounds
+        public override Rectangle Bounds
         {
             get { return bounds; }
             set
@@ -1042,7 +1042,7 @@ namespace OpenTK.Platform.Windows
 
         #region ClientSize
 
-        public Size ClientSize
+        public override Size ClientSize
         {
             get
             {
@@ -1101,7 +1101,7 @@ namespace OpenTK.Platform.Windows
 
         #region Icon
 
-        public Icon Icon
+        public override Icon Icon
         {
             get
             {
@@ -1126,7 +1126,7 @@ namespace OpenTK.Platform.Windows
 
         #region Focused
 
-        public bool Focused
+        public override bool Focused
         {
             get { return focused; }
         }
@@ -1136,7 +1136,7 @@ namespace OpenTK.Platform.Windows
         #region Title
 
         StringBuilder sb_title = new StringBuilder(256);
-        public string Title
+        public override string Title
         {
             get
             {
@@ -1160,7 +1160,7 @@ namespace OpenTK.Platform.Windows
 
         #region Visible
 
-        public bool Visible
+        public override bool Visible
         {
             get
             {
@@ -1193,13 +1193,13 @@ namespace OpenTK.Platform.Windows
 
         #region Exists
 
-        public bool Exists { get { return exists; } }
+        public override  bool Exists { get { return exists; } }
 
         #endregion
 
         #region Cursor
 
-        public MouseCursor Cursor
+        public override MouseCursor Cursor
         {
             get
             {
@@ -1270,8 +1270,8 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region CursorVisible
-        
-        public bool CursorVisible
+
+        public override bool CursorVisible
         {
             get { return cursor_visible_count >= 0; } // Not used
             set
@@ -1303,7 +1303,7 @@ namespace OpenTK.Platform.Windows
 
         #region Close
 
-        public void Close()
+        public override void Close()
         {
             Functions.PostMessage(window.Handle, WindowMessage.CLOSE, IntPtr.Zero, IntPtr.Zero);
         }
@@ -1312,7 +1312,7 @@ namespace OpenTK.Platform.Windows
 
         #region public WindowState WindowState
 
-        public WindowState WindowState
+        public override WindowState WindowState
         {
             get
             {
@@ -1406,7 +1406,7 @@ namespace OpenTK.Platform.Windows
 
         #region public WindowBorder WindowBorder
 
-        public WindowBorder WindowBorder
+        public override WindowBorder WindowBorder
         {
             get
             {
@@ -1500,7 +1500,7 @@ namespace OpenTK.Platform.Windows
 
         #region PointToClient
 
-        public Point PointToClient(Point point)
+        public override Point PointToClient(Point point)
         {
             if (!Functions.ScreenToClient(window.Handle, ref point))
                 throw new InvalidOperationException(String.Format(
@@ -1514,7 +1514,7 @@ namespace OpenTK.Platform.Windows
 
         #region PointToScreen
 
-        public Point PointToScreen(Point point)
+        public override Point PointToScreen(Point point)
         {
             if (!Functions.ClientToScreen(window.Handle, ref point))
                 throw new InvalidOperationException(String.Format(
@@ -1554,7 +1554,7 @@ namespace OpenTK.Platform.Windows
         #region public void ProcessEvents()
 
         MSG msg;
-        public void ProcessEvents()
+        public override void ProcessEvents()
         {
             while (Functions.PeekMessage(ref msg, IntPtr.Zero, 0, 0, PeekMessageFlags.Remove))
             {
@@ -1576,7 +1576,7 @@ namespace OpenTK.Platform.Windows
 
         #region public IWindowInfo WindowInfo
 
-        public IWindowInfo WindowInfo
+        public override IWindowInfo WindowInfo
         {
             get { return child_window; }
         }
@@ -1640,7 +1640,7 @@ namespace OpenTK.Platform.Windows
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool calledManually)
+        protected override void Dispose(bool calledManually)
         {
             if (!disposed)
             {
@@ -1665,11 +1665,6 @@ namespace OpenTK.Platform.Windows
                 Disposed(this, EventArgs.Empty);
                 disposed = true;
             }
-        }
-
-        ~WinGLNative()
-        {
-            Dispose(false);
         }
 
         #endregion

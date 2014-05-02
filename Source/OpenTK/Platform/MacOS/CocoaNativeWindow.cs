@@ -835,7 +835,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public MouseCursor Cursor
+        public override MouseCursor Cursor
         {
             get
             {
@@ -957,7 +957,7 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendVoid(windowInfo.Handle, selInvalidateCursorRectsForView, windowInfo.ViewHandle);
         }
 
-        public bool CursorVisible
+        public override bool CursorVisible
         {
             get { return cursorVisible; }
             set

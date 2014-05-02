@@ -35,7 +35,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform
 {
-
+    // Common base class for all INativeWindow implementations
     abstract class NativeWindowBase : INativeWindow
     {
         readonly LegacyInputDriver LegacyInputDriver =
@@ -123,6 +123,26 @@ namespace OpenTK.Platform
             MouseEnter(this, e);
         }
 
+        protected void OnMouseDown(MouseButtonEventArgs e)
+        {
+            MouseDown(this, e);
+        }
+
+        protected void OnMouseUp(MouseButtonEventArgs e)
+        {
+            MouseUp(this, e);
+        }
+
+        protected void OnMouseDown(MouseMoveEventArgs e)
+        {
+            MouseMove(this, e);
+        }
+
+        protected void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            MouseWheel(this, e);
+        }
+
         #endregion
 
         #region INativeWindow Members
@@ -143,6 +163,10 @@ namespace OpenTK.Platform
         public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
         public event EventHandler<EventArgs> MouseLeave = delegate { };
         public event EventHandler<EventArgs> MouseEnter = delegate { };
+        public event EventHandler<MouseButtonEventArgs> MouseDown = delegate { };
+        public event EventHandler<MouseButtonEventArgs> MouseUp = delegate { };
+        public event EventHandler<MouseMoveEventArgs> MouseMove = delegate { };
+        public event EventHandler<MouseWheelEventArgs> MouseWheel = delegate { };
 
         public abstract void Close();
 
@@ -182,7 +206,7 @@ namespace OpenTK.Platform
             }
         }
 
-        public Size Size
+        public virtual Size Size
         {
             get
             {
@@ -269,6 +293,8 @@ namespace OpenTK.Platform
         }
 
         public abstract bool CursorVisible { get; set; }
+
+        public abstract MouseCursor Cursor { get; set; }
 
         #endregion
 
