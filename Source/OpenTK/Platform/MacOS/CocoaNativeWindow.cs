@@ -507,7 +507,7 @@ namespace OpenTK.Platform.MacOS
 
                                 p = new Point(
                                     MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(p.Y - dy), 0, Height));
+                                    MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height));
                             }
 
                             InputDriver.Mouse[0].Position = p;
