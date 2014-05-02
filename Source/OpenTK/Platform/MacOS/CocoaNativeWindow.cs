@@ -173,7 +173,17 @@ namespace OpenTK.Platform.MacOS
             Class.RegisterClass(viewClass);
 
             // Create window instance
-            var contentRect = new System.Drawing.RectangleF(x, y, width, height);
+            // Note: The coordinate system of Cocoa places (0,0) at the bottom left.
+            // We need to get the height of the main screen and flip that in order
+            // to place the window at the correct position.
+            // Note: NSWindows are laid out relative to the main screen.
+            var screenRect =
+                Cocoa.SendRect(
+                    Cocoa.SendIntPtr(
+                        Cocoa.SendIntPtr(Class.Get("NSScreen"), Selector.Get("screens")),
+                        Selector.Get("objectAtIndex:"), 0),
+                    Selector.Get("frame"));
+            var contentRect = new System.Drawing.RectangleF(x, screenRect.Height - height - y, width, height);
             var style = GetStyleMask(windowBorder);
             var bufferingType = NSBackingStore.Buffered;
 
