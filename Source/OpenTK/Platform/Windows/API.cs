@@ -3591,7 +3591,8 @@ namespace OpenTK.Platform.Windows
         BUTTON_5_DOWN    = 0x0100,
         BUTTON_5_UP      = 0x0200,
 
-        WHEEL            = 0x0400
+        WHEEL            = 0x0400,
+        HWHEEL            = 0x0800,
     }
 
     #endregion

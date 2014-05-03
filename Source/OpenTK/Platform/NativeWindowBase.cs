@@ -40,22 +40,25 @@ namespace OpenTK.Platform
     {
         readonly LegacyInputDriver LegacyInputDriver;
 
-        readonly protected MouseButtonEventArgs MouseDownArgs = new MouseButtonEventArgs();
-        readonly protected MouseButtonEventArgs MouseUpArgs = new MouseButtonEventArgs();
-        readonly protected MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
-        readonly protected MouseWheelEventArgs MouseWheelArgs = new MouseWheelEventArgs();
+        readonly MouseButtonEventArgs MouseDownArgs = new MouseButtonEventArgs();
+        readonly MouseButtonEventArgs MouseUpArgs = new MouseButtonEventArgs();
+        readonly MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
+        readonly MouseWheelEventArgs MouseWheelArgs = new MouseWheelEventArgs();
 
-        readonly protected KeyboardKeyEventArgs KeyDownArgs = new KeyboardKeyEventArgs();
-        readonly protected KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
-        readonly protected KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
+        protected readonly KeyboardKeyEventArgs KeyDownArgs = new KeyboardKeyEventArgs();
+        protected readonly KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
+        protected readonly KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
 
         // In order to simplify mouse event implementation,
         // we can store the current mouse state here.
         protected MouseState MouseState = new MouseState();
+        MouseState PreviousMouseState = new MouseState();
 
         internal NativeWindowBase()
         {
             LegacyInputDriver = new LegacyInputDriver(this);
+            MouseState.SetIsConnected(true);
+            PreviousMouseState.SetIsConnected(true);
         }
 
         #region Protected Members
@@ -140,23 +143,75 @@ namespace OpenTK.Platform
             MouseEnter(this, e);
         }
 
-        protected void OnMouseDown(MouseButtonEventArgs e)
+        protected void OnMouseDown()
         {
-            MouseDown(this, e);
+            var e = MouseDownArgs;
+            e.Mouse = MouseState;
+
+            // Find which button caused this event
+            for (MouseButton b = MouseButton.Left; b < MouseButton.LastButton; b++)
+            {
+                if (!PreviousMouseState[b] && MouseState[b])
+                {
+                    e.Button = b;
+                    PreviousMouseState = MouseState;
+                    MouseDown(this, e);
+                    return;
+                }
+            }
+
+            Debug.WriteLine("OnMouseDown called without pressing a button");
         }
 
-        protected void OnMouseUp(MouseButtonEventArgs e)
+        protected void OnMouseUp()
         {
-            MouseUp(this, e);
+            var e = MouseUpArgs;
+            e.Mouse = MouseState;
+
+            // Find which button caused this event
+            for (MouseButton b = MouseButton.Left; b < MouseButton.LastButton; b++)
+            {
+                if (PreviousMouseState[b] && !MouseState[b])
+                {
+                    e.Button = b;
+                    PreviousMouseState = MouseState;
+                    MouseUp(this, e);
+                    return;
+                }
+            }
+
+            Debug.WriteLine("OnMouseUp called without pressing a button");
         }
 
-        protected void OnMouseMove(MouseMoveEventArgs e)
+        protected void OnMouseMove()
         {
+            var e = MouseMoveArgs;
+            e.Mouse = MouseState;
+            e.XDelta = MouseState.X - PreviousMouseState.X;
+            e.YDelta = MouseState.Y - PreviousMouseState.Y;
+
+            if (e.XDelta == 0 && e.YDelta == 0)
+            {
+                Debug.WriteLine("OnMouseMove called without moving the mouse");
+            }
+
+            PreviousMouseState = MouseState;
             MouseMove(this, e);
         }
 
-        protected void OnMouseWheel(MouseWheelEventArgs e)
+        protected void OnMouseWheel()
         {
+            var e = MouseWheelArgs;
+            e.Mouse = MouseState;
+            e.ValuePrecise = MouseState.Scroll.Y;
+            e.DeltaPrecise = MouseState.Scroll.Y - PreviousMouseState.Scroll.Y;
+
+            if (e.DeltaPrecise == 0)
+            {
+                Debug.WriteLine("OnMouseWheel called without moving the mouse wheel.");
+            }
+
+            PreviousMouseState = MouseState;
             MouseWheel(this, e);
         }
 

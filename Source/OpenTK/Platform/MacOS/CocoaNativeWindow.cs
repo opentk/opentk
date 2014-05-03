@@ -517,7 +517,9 @@ namespace OpenTK.Platform.MacOS
                                     MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height));
                             }
 
-                            InputDriver.Mouse[0].Position = p;
+                            MouseState.X = p.X;
+                            MouseState.Y = p.Y;
+                            OnMouseMove();
                         }
                         break;
 
@@ -534,7 +536,8 @@ namespace OpenTK.Platform.MacOS
                                 factor = 1.0f / scrollFactor; // Problem: Don't know what factor to use here, but this seems to work.
                             }
 
-                            InputDriver.Mouse[0].WheelPrecise += scrollingDelta * factor;
+                            MouseState.SetScrollRelative(0, scrollingDelta * factor);
+                            OnMouseWheel();
                         }
                         break;
 
@@ -543,7 +546,8 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.OtherMouseDown:
                         {
                             var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
-                            InputDriver.Mouse[0][GetMouseButton(buttonNumber)] = true;
+                            MouseState[GetMouseButton(buttonNumber)] = true;
+                            OnMouseDown();
                         }
                         break;
 
@@ -552,7 +556,8 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.OtherMouseUp:
                         {
                             var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
-                            InputDriver.Mouse[0][GetMouseButton(buttonNumber)] = false;
+                            MouseState[GetMouseButton(buttonNumber)] = false;
+                            OnMouseUp();
                         }
                         break;
                 }

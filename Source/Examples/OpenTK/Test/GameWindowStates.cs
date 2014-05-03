@@ -126,8 +126,8 @@ namespace Examples.Tests
         {
             mouse_pos.X = e.X;
             mouse_pos.Y = e.Y;
-            mouse_pos.Z = e.Wheel.X;
-            mouse_pos.W = e.Wheel.Y;
+            mouse_pos.Z = e.Mouse.Scroll.X;
+            mouse_pos.W = e.Mouse.Scroll.Y;
         }
 
         void MouseButtonHandler(object sender, MouseButtonEventArgs e)
@@ -149,8 +149,8 @@ namespace Examples.Tests
 
         void MouseWheelHandler(object sender, MouseWheelEventArgs e)
         {
-            mouse_pos.Z += e.Wheel.Y;
-            mouse_pos.W += e.Wheel.X;
+            mouse_pos.Z += e.Mouse.Scroll.Y;
+            mouse_pos.W += e.Mouse.Scroll.X;
         }
 
         static int Clamp(int val, int min, int max)

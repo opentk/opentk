@@ -227,7 +227,10 @@ namespace OpenTK.Platform.Windows
             }
 
             if ((raw.ButtonFlags & RawInputMouseState.WHEEL) != 0)
-                mouse.WheelPrecise += (short)raw.ButtonData / 120.0f;
+                mouse.SetScrollRelative(0, (short)raw.ButtonData / 120.0f);
+
+            if ((raw.ButtonFlags & RawInputMouseState.HWHEEL) != 0)
+                mouse.SetScrollRelative((short)raw.ButtonData / 120.0f, 0);
 
             if ((raw.Flags & RawMouseFlags.MOUSE_MOVE_ABSOLUTE) != 0)
             {

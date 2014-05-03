@@ -798,6 +798,8 @@
     <Compile Include="WindowIcon.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSBitmapFormat.cs" />
     <Compile Include="Platform\NativeWindowBase.cs" />
+    <Compile Include="Input\MouseScrollWheel.cs" />
+    <Compile Include="Input\MouseEventArgs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

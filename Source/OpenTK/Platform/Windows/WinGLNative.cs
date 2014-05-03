@@ -437,8 +437,9 @@ namespace OpenTK.Platform.Windows
                 if (points == 0 || (points == -1 && lastError == Constants.ERROR_POINT_NOT_FOUND))
                 {
                     // Just use the mouse move position
-                    MouseMoveArgs.Position = point;
-                    OnMouseMove(MouseMoveArgs);
+                    MouseState.X = point.X;
+                    MouseState.Y = point.Y;
+                    OnMouseMove();
                 }
                 else if (points == -1)
                 {
@@ -476,8 +477,9 @@ namespace OpenTK.Platform.Windows
                             position.Y -= 65536;
                         }
                         Functions.ScreenToClient(handle, ref position);
-                        MouseMoveArgs.Position = position;
-                        OnMouseMove(MouseMoveArgs);
+                        MouseState.X = position.X;
+                        MouseState.Y = position.Y;
+                        OnMouseMove();
                     }
                 }
                 mouse_last_timestamp = timestamp;
@@ -506,40 +508,37 @@ namespace OpenTK.Platform.Windows
         {
             // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
             // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
-            MouseWheelArgs.Wheel.Y += ((long)wParam << 32 >> 48) / 120.0f;
-            OnMouseWheel(MouseWheelArgs);
+            MouseState.SetScrollRelative(0, ((long)wParam << 32 >> 48) / 120.0f);
+            OnMouseWheel();
         }
 
         void HandleMouseHWheel(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
             // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
-            MouseWheelArgs.Wheel.X += ((long)wParam << 32 >> 48) / 120.0f;
-            OnMouseWheel(MouseWheelArgs);
+            MouseState.SetScrollRelative(((long)wParam << 32 >> 48) / 120.0f, 0);
+            OnMouseWheel();
         }
 
         void HandleLButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.SetCapture(window.Handle);
-            MouseDownArgs.Button = MouseButton.Left;
-            MouseDownArgs.IsPressed = true;
-            OnMouseDown(MouseDownArgs);
+            MouseState[MouseButton.Left] = true;
+            OnMouseDown();
         }
 
         void HandleMButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.SetCapture(window.Handle);
-            MouseDownArgs.Button = MouseButton.Middle;
-            MouseDownArgs.IsPressed = true;
-            OnMouseDown(MouseDownArgs);
+            MouseState[MouseButton.Middle] = true;
+            OnMouseDown();
         }
 
         void HandleRButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.SetCapture(window.Handle);
-            MouseDownArgs.Button = MouseButton.Right;
-            MouseDownArgs.IsPressed = true;
-            OnMouseDown(MouseDownArgs);
+            MouseState[MouseButton.Right] = true;
+            OnMouseDown();
         }
 
         void HandleXButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -548,33 +547,29 @@ namespace OpenTK.Platform.Windows
             MouseButton button =
                 ((wParam.ToInt32() & 0xFFFF0000) >> 16) == 1 ?
                 MouseButton.Button1 : MouseButton.Button2;
-            MouseDownArgs.Button = button;
-            MouseDownArgs.IsPressed = true;
-            OnMouseDown(MouseDownArgs);
+            MouseState[button] = true;
+            OnMouseDown();
         }
 
         void HandleLButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.ReleaseCapture();
-            MouseDownArgs.Button = MouseButton.Left;
-            MouseDownArgs.IsPressed = false;
-            OnMouseUp(MouseUpArgs);
+            MouseState[MouseButton.Left] = false;
+            OnMouseUp();
         }
 
         void HandleMButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.ReleaseCapture();
-            MouseDownArgs.Button = MouseButton.Middle;
-            MouseDownArgs.IsPressed = false;
-            OnMouseUp(MouseUpArgs);
+            MouseState[MouseButton.Middle] = false;
+            OnMouseUp();
         }
 
         void HandleRButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.ReleaseCapture();
-            MouseDownArgs.Button = MouseButton.Right;
-            MouseDownArgs.IsPressed = false;
-            OnMouseUp(MouseUpArgs);
+            MouseState[MouseButton.Right] = false;
+            OnMouseUp();
         }
 
         void HandleXButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -583,9 +578,8 @@ namespace OpenTK.Platform.Windows
             MouseButton button =
                 ((wParam.ToInt32() & 0xFFFF0000) >> 16) == 1 ?
                 MouseButton.Button1 : MouseButton.Button2;
-            MouseDownArgs.Button = button;
-            MouseDownArgs.IsPressed = false;
-            OnMouseUp(MouseUpArgs);
+            MouseState[button] = false;
+            OnMouseUp();
         }
 
         void HandleKeyboard(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
