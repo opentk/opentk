@@ -506,7 +506,15 @@ namespace OpenTK.Platform.Windows
         {
             // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
             // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
-            MouseWheelArgs.Wheel += ((long)wParam << 32 >> 48) / 120.0f;
+            MouseWheelArgs.Wheel.Y += ((long)wParam << 32 >> 48) / 120.0f;
+            OnMouseWheel(MouseWheelArgs);
+        }
+
+        void HandleMouseHWheel(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
+            // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
+            MouseWheelArgs.Wheel.X += ((long)wParam << 32 >> 48) / 120.0f;
             OnMouseWheel(MouseWheelArgs);
         }
 
@@ -727,6 +735,10 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.MOUSEWHEEL:
                     HandleMouseWheel(handle, message, wParam, lParam);
+                    break;
+
+                case WindowMessage.MOUSEHWHEEL:
+                    HandleMouseHWheel(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.LBUTTONDOWN:

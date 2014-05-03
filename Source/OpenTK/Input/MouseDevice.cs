@@ -362,6 +362,24 @@ namespace OpenTK.Input
         #endregion
     }
 
+    /// <summary>
+    /// Represents a mouse wheel.
+    /// </summary>
+    public sealed class MouseWheel
+    {
+        /// <summary>
+        /// Gets the X offset of the wheel.
+        /// </summary>
+        /// <value>The x.</value>
+        public float X { get; internal set; }
+
+        /// <summary>
+        /// Gets the Y offset of the wheel.
+        /// </summary>
+        /// <value>The y.</value>
+        public float Y { get; internal set; }
+    }
+
     #region Event Arguments
 
     /// <summary>
@@ -390,6 +408,7 @@ namespace OpenTK.Input
         /// </summary>
         public MouseEventArgs()
         {
+            Wheel = new MouseWheel();
         }
 
         /// <summary>
@@ -416,7 +435,7 @@ namespace OpenTK.Input
 
         #region Protected Members
 
-        protected internal void SetButton(MouseButton button, ButtonState state)
+        internal void SetButton(MouseButton button, ButtonState state)
         {
             if (button < 0 || button > MouseButton.LastButton)
                 throw new ArgumentOutOfRangeException();
@@ -433,7 +452,7 @@ namespace OpenTK.Input
             }
         }
 
-        protected internal ButtonState GetButton(MouseButton button)
+        internal ButtonState GetButton(MouseButton button)
         {
             if (button < 0 || button > MouseButton.LastButton)
                 throw new ArgumentOutOfRangeException();
@@ -458,21 +477,9 @@ namespace OpenTK.Input
         public int Y { get { return y; } internal set { y = value; } }
 
         /// <summary>
-        /// Gets the offset of the horizontal wheel, if one exists.
+        /// Gets the status of the mouse wheel.
         /// </summary>
-        public float WheelX { get; internal set; }
-
-        /// <summary>
-        /// Gets the offset of the vertical wheel, if one exists.
-        /// </summary>
-        public float WheelY { get; internal set; }
-
-        /// <summary>
-        /// Gets the offset of the vertical wheel, if one exists.
-        /// This is an alias to <see cref="MouseEventArgs.WheelY"/>
-        /// </summary>
-        /// <value>The wheel.</value>
-        public float Wheel { get { return WheelY; } internal set { WheelY = value; } }
+        public MouseWheel Wheel { get; private set; }
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> of the left mouse button.
@@ -705,7 +712,7 @@ namespace OpenTK.Input
         public MouseWheelEventArgs(int x, int y, int value, int delta)
             : base(x, y)
         {
-            WheelY = value;
+            Wheel.Y = value;
             this.delta = delta;
         }
 
@@ -726,7 +733,7 @@ namespace OpenTK.Input
         /// Gets the value of the wheel in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="ValuePrecise"/> instead.
         /// </summary>
-        public int Value { get { return (int)Math.Round(WheelY, MidpointRounding.AwayFromZero); } }
+        public int Value { get { return (int)Math.Round(Wheel.Y, MidpointRounding.AwayFromZero); } }
 
         /// <summary>
         /// Gets the change in value of the wheel for this event in integer units.
@@ -737,7 +744,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the precise value of the wheel in floating-point units.
         /// </summary>
-        public float ValuePrecise { get { return WheelY; } internal set { WheelY = value; } }
+        public float ValuePrecise { get { return Wheel.Y; } internal set { Wheel.Y = value; } }
 
         /// <summary>
         /// Gets the precise change in value of the wheel for this event in floating-point units.

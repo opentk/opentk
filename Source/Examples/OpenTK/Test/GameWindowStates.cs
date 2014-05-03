@@ -26,6 +26,10 @@ namespace Examples.Tests
         bool mouse_in_window = false;
         bool viewport_changed = true;
 
+        // mouse information
+        Vector4 mouse_pos;
+        int mouse_buttons;
+
         // time drift
         Stopwatch watch = new Stopwatch();
         double update_time, render_time;
@@ -57,6 +61,7 @@ namespace Examples.Tests
             MouseLeave += delegate { mouse_in_window = false; };
 
             Mouse.Move += MouseMoveHandler;
+            Mouse.WheelChanged += MouseWheelHandler;
             Mouse.ButtonDown += MouseButtonHandler;
             Mouse.ButtonUp += MouseButtonHandler;
         }
@@ -119,6 +124,10 @@ namespace Examples.Tests
 
         void MouseMoveHandler(object sender, MouseMoveEventArgs e)
         {
+            mouse_pos.X = e.X;
+            mouse_pos.Y = e.Y;
+            mouse_pos.Z = e.Wheel.X;
+            mouse_pos.W = e.Wheel.Y;
         }
 
         void MouseButtonHandler(object sender, MouseButtonEventArgs e)
@@ -127,6 +136,21 @@ namespace Examples.Tests
             {
                 CursorVisible = false;
             }
+
+            if (e.IsPressed)
+            {
+                mouse_buttons |= 1 << (int)e.Button;
+            }
+            else
+            {
+                mouse_buttons &= ~(1 << (int)e.Button);
+            }
+        }
+
+        void MouseWheelHandler(object sender, MouseWheelEventArgs e)
+        {
+            mouse_pos.Z += e.Wheel.Y;
+            mouse_pos.W += e.Wheel.X;
         }
 
         static int Clamp(int val, int min, int max)
@@ -201,6 +225,40 @@ namespace Examples.Tests
             return line;
         }
 
+        int DrawMouseDevice(Graphics gfx, int line)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("MouseDevice: ");
+            sb.Append(new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel));
+            sb.Append(" ");
+            for (var i = MouseButton.Left; i < MouseButton.LastButton; i++)
+            {
+                if (Mouse[i])
+                {
+                    sb.Append(i);
+                    sb.Append(" ");
+                }
+            }
+            sb.AppendLine();
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("Mouse events: ");
+            sb.Append(mouse_pos);
+            sb.Append(" ");
+            for (var i = MouseButton.Left; i < MouseButton.LastButton; i++)
+            {
+                if ((mouse_buttons & (1 << (int)i)) != 0)
+                {
+                    sb.Append(i);
+                    sb.Append(" ");
+                }
+            }
+            sb.AppendLine();
+            DrawString(gfx, sb.ToString(), line++);
+            return line;
+        }
+
         static int DrawLegacyJoysticks(Graphics gfx, IList<JoystickDevice> joysticks, int line)
         {
             line++;
@@ -267,7 +325,8 @@ namespace Examples.Tests
                     mouse_in_window ? "inside" : "outside",
                     CursorVisible ? "visible" : "hidden",
                     Focused ? "Focused" : "Not focused"), line++);
-                DrawString(gfx, String.Format("Mouse coordinates: {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.WheelPrecise)), line++);
+
+                line = DrawMouseDevice(gfx, line);
 
                 // Timing information
                 line++;

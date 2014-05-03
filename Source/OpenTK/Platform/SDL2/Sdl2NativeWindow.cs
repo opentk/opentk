@@ -175,7 +175,7 @@ namespace OpenTK.Platform.SDL2
                     case EventType.MOUSEBUTTONUP:
                         if (windows.TryGetValue(ev.Button.WindowID, out window))
                         {
-                            ProcessButtonEvent(window, ev);
+                            ProcessMouseButtonEvent(window, ev.Button);
                             processed = true;
                         }
                         break;
@@ -183,7 +183,7 @@ namespace OpenTK.Platform.SDL2
                     case EventType.MOUSEMOTION:
                         if (windows.TryGetValue(ev.Motion.WindowID, out window))
                         {
-                            ProcessMotionEvent(window, ev);
+                            ProcessMouseMotionEvent(window, ev.Motion);
                             processed = true;
                         }
                         break;
@@ -191,7 +191,7 @@ namespace OpenTK.Platform.SDL2
                     case EventType.MOUSEWHEEL:
                         if (windows.TryGetValue(ev.Wheel.WindowID, out window))
                         {
-                            ProcessWheelEvent(window, ev);
+                            ProcessMouseWheelEvent(window, ev.Wheel);
                             processed = true;
                         }
                         break;
@@ -209,9 +209,9 @@ namespace OpenTK.Platform.SDL2
             return processed ? 0 : 1;
         }
 
-        static void ProcessButtonEvent(Sdl2NativeWindow window, Event ev)
+        static void ProcessMouseButtonEvent(Sdl2NativeWindow window, MouseButtonEvent ev)
         {
-            bool button_pressed = ev.Button.State == State.Pressed;
+            bool button_pressed = ev.State == State.Pressed;
 
             // We need MouseUp events to be reported even if they occur
             // outside the window. SetWindowGrab ensures we get them.
@@ -219,6 +219,23 @@ namespace OpenTK.Platform.SDL2
             {
                 SDL.SetWindowGrab(window.window.Handle,
                     button_pressed ? true : false);
+            }
+
+            var e = button_pressed ? window.MouseDownArgs : window.MouseUpArgs;
+            e.Button = Sdl2Mouse.TranslateButton(ev.Button);
+            e.IsPressed = button_pressed;
+            e.X = ev.X;
+            e.Y = ev.Y;
+            e.Wheel.X = window.MouseWheelArgs.Wheel.X;
+            e.Wheel.Y = window.MouseWheelArgs.Wheel.Y;
+
+            if (button_pressed)
+            {
+                window.OnMouseDown(e);
+            }
+            else
+            {
+                window.OnMouseUp(e);
             }
         }
 
@@ -273,16 +290,32 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        static void ProcessMotionEvent(Sdl2NativeWindow window, Event ev)
+        static void ProcessMouseMotionEvent(Sdl2NativeWindow window, MouseMotionEvent ev)
         {
-            float scale = window.ClientSize.Width / (float)window.Size.Width;
-            //window.mouse.Position = new Point(
-            //    (int)(ev.motion.x * scale), (int)(ev.motion.y * scale));
+            //float scale = window.ClientSize.Width / (float)window.Size.Width;
+            var e = window.MouseMoveArgs;
+            e.X = ev.X;
+            e.Y = ev.Y;
+            SetMouseButtons(e, ev.State);
+            window.OnMouseMove(e);
         }
 
-        static void ProcessWheelEvent(Sdl2NativeWindow window, Event ev)
+        static void SetMouseButtons(MouseEventArgs e, ButtonFlags buttons)
         {
-            //window.mouse.Wheel += ev.wheel.y;
+            for (int i = 0; i < 5; i++)
+            {
+                // Note: OpenTK MouseButton is identical to SDL2 Button
+                bool pressed = ((int)buttons & (1 << i)) != 0;
+                e.SetButton((MouseButton)i, pressed ? ButtonState.Pressed : ButtonState.Released);
+            }
+        }
+
+        static void ProcessMouseWheelEvent(Sdl2NativeWindow window, MouseWheelEvent ev)
+        {
+            var e = window.MouseWheelArgs;
+            e.Wheel.Y = ev.Y;
+            e.Wheel.X = ev.X;
+            window.OnMouseWheel(e);
         }
 
         static void ProcessWindowEvent(Sdl2NativeWindow window, WindowEvent e)

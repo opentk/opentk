@@ -78,7 +78,7 @@ namespace OpenTK.Platform
 
             window.MouseWheel += (sender, e) =>
             {
-                mouse.WheelPrecise = e.WheelY;
+                mouse.WheelPrecise = e.Wheel.Y;
             };
 
             // Hook keyboard events
