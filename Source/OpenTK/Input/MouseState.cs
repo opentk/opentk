@@ -257,6 +257,17 @@ namespace OpenTK.Input
             return buttons.GetHashCode() ^ X.GetHashCode() ^ Y.GetHashCode() ^ scroll.GetHashCode();
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.MouseState"/>.
+        /// </summary>
+        /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.MouseState"/>.</returns>
+        public override string ToString()
+        {
+            string b = Convert.ToString(buttons, 2).PadLeft(10, '0');
+            return String.Format("[MouseState: X={0}, Y={1}, Scroll={2}, Buttons={3}, IsConnected={4}]",
+                X, Y, Scroll, b, IsConnected);
+        }
+
         #endregion
 
         #region Internal Members

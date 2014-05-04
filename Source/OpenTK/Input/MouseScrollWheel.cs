@@ -72,7 +72,7 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.MouseScrollWheel"/>.</returns>
         public override string ToString()
         {
-            return string.Format("[MouseScrollWheel: X={0}, Y={1}]", X, Y);
+            return string.Format("[X={0:0.00}, Y={1:0.00}]", X, Y);
         }
 
         /// <summary>
