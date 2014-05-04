@@ -57,11 +57,6 @@ namespace OpenTK.Platform.X11
 
         X11WindowInfo window = new X11WindowInfo();
 
-        // Legacy input support
-        X11Input driver;
-        KeyboardDevice keyboard;
-        MouseDevice mouse;
-
         // Window manager hints for fullscreen windows.
         // Not used right now (the code is written, but is not 64bit-correct), but could be useful for older WMs which
         // are not ICCM compliant, but may support MOTIF hints.
@@ -124,9 +119,6 @@ namespace OpenTK.Platform.X11
          // Keyboard input
         readonly byte[] ascii = new byte[16];
         readonly char[] chars = new char[16];
-        readonly KeyPressEventArgs KPEventArgs = new KeyPressEventArgs('\0');
-        readonly KeyboardKeyEventArgs KeyDownEventArgs = new KeyboardKeyEventArgs();
-        readonly KeyboardKeyEventArgs KeyUpEventArgs = new KeyboardKeyEventArgs();
 
         readonly IntPtr EmptyCursor;
 
@@ -224,14 +216,17 @@ namespace OpenTK.Platform.X11
             e.ConfigureEvent.height = height;
             RefreshWindowBounds(ref e);
 
-            driver = new X11Input(window);
-            keyboard = driver.Keyboard[0];
-            mouse = driver.Mouse[0];
-
             EmptyCursor = CreateEmptyCursor(window);
 
             Debug.WriteLine(String.Format("X11GLNative window created successfully (id: {0}).", Handle));
             Debug.Unindent();
+
+            // Request that auto-repeat is only set on devices that support it physically.
+            // This typically means that it's turned off for keyboards (which is what we want).
+            // We prefer this method over XAutoRepeatOff/On, because the latter needs to
+            // be reset before the program exits.
+            bool supported;
+            Functions.XkbSetDetectableAutoRepeat(window.Display, true, out supported);
 
             exists = true;
         }
@@ -768,7 +763,7 @@ namespace OpenTK.Platform.X11
             return cursor;
         }
 
-        static void SetMouseClamped(MouseDevice mouse, int x, int y,
+        void SetMouseClamped(int x, int y,
             int left, int top, int width, int height)
         {
             // Clamp mouse to the specified rectangle.
@@ -776,7 +771,8 @@ namespace OpenTK.Platform.X11
             x = Math.Min(x, width);
             y = Math.Max(y, top);
             y = Math.Min(y, height);
-            mouse.Position = new Point(x, y);
+            MouseState.X = x;
+            MouseState.Y = y;
         }
 
         #endregion
@@ -860,23 +856,23 @@ namespace OpenTK.Platform.X11
                     case XEventName.KeyRelease:
                         bool pressed = e.type == XEventName.KeyPress;
                         Key key;
-                        if (driver.TranslateKey(ref e.KeyEvent, out key))
+                        if (X11KeyMap.TranslateKey(ref e.KeyEvent, out key))
                         {
                             if (pressed)
                             {
                                 // Raise KeyDown event
-                                KeyDownEventArgs.Key = key;
-                                KeyDownEventArgs.ScanCode = (uint)e.KeyEvent.keycode;
-                                KeyDownEventArgs.Modifiers = keyboard.GetModifiers();
-                                KeyDown(this, KeyDownEventArgs);
+                                KeyDownArgs.Key = key;
+                                KeyDownArgs.ScanCode = (uint)e.KeyEvent.keycode;
+                                //KeyDownArgs.Modifiers = keyboard.GetModifiers();
+                                OnKeyDown(KeyDownArgs);
                             }
                             else
                             {
                                 // Raise KeyUp event
-                                KeyUpEventArgs.Key = key;
-                                KeyUpEventArgs.ScanCode = (uint)e.KeyEvent.keycode;
-                                KeyUpEventArgs.Modifiers = keyboard.GetModifiers();
-                                KeyUp(this, KeyUpEventArgs);
+                                KeyUpArgs.Key = key;
+                                KeyUpArgs.ScanCode = (uint)e.KeyEvent.keycode;
+                                //KeyUpArgs.Modifiers = keyboard.GetModifiers();
+                                OnKeyUp(KeyUpArgs);
                             }
 
                             if (pressed)
@@ -892,8 +888,8 @@ namespace OpenTK.Platform.X11
                                 {
                                     if (!Char.IsControl(chars[i]))
                                     {
-                                        KPEventArgs.KeyChar = chars[i];
-                                        KeyPress(this, KPEventArgs);
+                                        KeyPressArgs.KeyChar = chars[i];
+                                        OnKeyPress(KeyPressArgs);
                                     }
                                 }
                             }
@@ -907,7 +903,7 @@ namespace OpenTK.Platform.X11
                         // to the dead center of the window. Fortunately, this situation
                         // is very very uncommon. Todo: Can this be remedied?
                         int x = e.MotionEvent.x;
-                        int y =e.MotionEvent.y;
+                        int y = e.MotionEvent.y;
                         // TODO: Have offset as a stored field, only update it when the window moves
                         // The middle point cannot be the average of the Bounds.left/right/top/bottom,
                         // because these fields take into account window decoration (borders, etc),
@@ -926,9 +922,9 @@ namespace OpenTK.Platform.X11
                         }
                         else if (!CursorVisible)
                         {
-                            SetMouseClamped(mouse,
-                                mouse.X + x - mouse_rel_x,
-                                mouse.Y + y - mouse_rel_y,
+                            SetMouseClamped(
+                                MouseState.X + x - mouse_rel_x,
+                                MouseState.Y + y - mouse_rel_y,
                                 0, 0, Width, Height);
                             mouse_rel_x = x;
                             mouse_rel_y = y;
@@ -939,16 +935,53 @@ namespace OpenTK.Platform.X11
                         }
                         else
                         {
-                            SetMouseClamped(mouse, x, y, 0, 0, Width, Height);
+                            SetMouseClamped(x, y, 0, 0, Width, Height);
                             mouse_rel_x = x;
                             mouse_rel_y = y;
                         }
+
+                        OnMouseMove();
                         break;
                     }
 
                     case XEventName.ButtonPress:
+                        switch (e.ButtonEvent.button)
+                        {
+                            case 1: MouseState.EnableBit((int)MouseButton.Left); break;
+                            case 2: MouseState.EnableBit((int)MouseButton.Middle); break;
+                            case 3: MouseState.EnableBit((int)MouseButton.Right); break;
+                            case 4: MouseState.SetScrollRelative(0, 1); break;
+                            case 5: MouseState.SetScrollRelative(0, -1); break;
+                            case 6: MouseState.EnableBit((int)MouseButton.Button1); break;
+                            case 7: MouseState.EnableBit((int)MouseButton.Button2); break;
+                            case 8: MouseState.EnableBit((int)MouseButton.Button3); break;
+                            case 9: MouseState.EnableBit((int)MouseButton.Button4); break;
+                            case 10: MouseState.EnableBit((int)MouseButton.Button5); break;
+                            case 11: MouseState.EnableBit((int)MouseButton.Button6); break;
+                            case 12: MouseState.EnableBit((int)MouseButton.Button7); break;
+                            case 13: MouseState.EnableBit((int)MouseButton.Button8); break;
+                            case 14: MouseState.EnableBit((int)MouseButton.Button9); break;
+                        }
+                        OnMouseDown();
+                        break;
+
                     case XEventName.ButtonRelease:
-                        driver.ProcessEvent(ref e);
+                        switch (e.ButtonEvent.button)
+                        {
+                            case 1: MouseState.DisableBit((int)MouseButton.Left); break;
+                            case 2: MouseState.DisableBit((int)MouseButton.Middle); break;
+                            case 3: MouseState.DisableBit((int)MouseButton.Right); break;
+                            case 6: MouseState.DisableBit((int)MouseButton.Button1); break;
+                            case 7: MouseState.DisableBit((int)MouseButton.Button2); break;
+                            case 8: MouseState.DisableBit((int)MouseButton.Button3); break;
+                            case 9: MouseState.DisableBit((int)MouseButton.Button4); break;
+                            case 10: MouseState.DisableBit((int)MouseButton.Button5); break;
+                            case 11: MouseState.DisableBit((int)MouseButton.Button6); break;
+                            case 12: MouseState.DisableBit((int)MouseButton.Button7); break;
+                            case 13: MouseState.DisableBit((int)MouseButton.Button8); break;
+                            case 14: MouseState.DisableBit((int)MouseButton.Button9); break;
+                        }
+                        OnMouseUp();
                         break;
 
                     case XEventName.FocusIn:
@@ -1531,18 +1564,6 @@ namespace OpenTK.Platform.X11
         #endregion
 
         #region --- INativeGLWindow Members ---
-
-        #region public IInputDriver InputDriver
-
-        public IInputDriver InputDriver
-        {
-            get
-            {
-                return driver;
-            }
-        }
-
-        #endregion 
 
         #region public bool Exists
 

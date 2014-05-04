@@ -370,5 +370,22 @@ namespace OpenTK.Platform.X11
                     return Key.Unknown;
             }
         }
+
+        internal static bool TranslateKey(ref XKeyEvent e, out Key key)
+        {
+            XKey keysym = (XKey)API.LookupKeysym(ref e, 0);
+            XKey keysym2 = (XKey)API.LookupKeysym(ref e, 1);
+            key = X11KeyMap.GetKey(keysym);
+            if (key == Key.Unknown)
+            {
+                key = X11KeyMap.GetKey(keysym2);
+            }
+            if (key == Key.Unknown)
+            {
+                Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
+            }
+
+            return key != Key.Unknown;
+        }
     }
 }

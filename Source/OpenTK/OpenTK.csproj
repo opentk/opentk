@@ -366,9 +366,6 @@
     <Compile Include="Platform\X11\Structs.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\X11\X11Input.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\X11\X11Factory.cs">
       <SubType>Code</SubType>
     </Compile>
