@@ -46,8 +46,8 @@ namespace OpenTK.Input
         #region Fields
 
         Key key;
+        bool repeat;
         KeyboardState state;
-        uint scancode;
 
         #endregion
 
@@ -65,7 +65,6 @@ namespace OpenTK.Input
         public KeyboardKeyEventArgs(KeyboardKeyEventArgs args)
         {
             Key = args.Key;
-            ScanCode = args.ScanCode;
         }
 
         #endregion
@@ -87,8 +86,7 @@ namespace OpenTK.Input
         [CLSCompliant(false)]
         public uint ScanCode
         {
-            get { return scancode; }
-            internal set { scancode = value; }
+            get { return (uint)Key; }
         }
 
         /// <summary>
@@ -143,6 +141,21 @@ namespace OpenTK.Input
         {
             get { return state; }
             internal set { state = value; }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean"/> indicating whether
+        /// this key event is a repeat.
+        /// </summary>
+        /// <value>
+        /// true, if this event was caused by the user holding down
+        /// a key; false, if this was caused by the user pressing a
+        /// key for the first time.
+        /// </value>
+        public bool IsRepeat
+        {
+            get { return repeat; }
+            internal set { repeat = value; }
         }
 
         #endregion

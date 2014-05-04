@@ -40,7 +40,8 @@ namespace OpenTK.Platform.X11
         List<MouseState> mice = new List<MouseState>();
         Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps raw ids to mouse ids
         internal readonly X11WindowInfo window;
-        static int XIOpCode;
+        internal static int XIOpCode { get; private set; }
+        static bool supported;
 
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
         readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);

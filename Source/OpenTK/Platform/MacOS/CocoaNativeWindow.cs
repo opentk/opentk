@@ -416,10 +416,7 @@ namespace OpenTK.Platform.MacOS
                             //GetKey(keyCode, modifierFlags, keyArgs);
                             Key key = MacOSKeyMap.GetKey(keyCode);
 
-                            if (!isARepeat || InputDriver.Keyboard[0].KeyRepeat)
-                            {
-                                OnKeyDown(key);
-                            }
+                            OnKeyDown(key, isARepeat);
 
                             var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
                             foreach (var c in s)

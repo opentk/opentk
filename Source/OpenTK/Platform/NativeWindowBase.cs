@@ -121,13 +121,14 @@ namespace OpenTK.Platform
             WindowStateChanged(this, e);
         }
 
-        protected void OnKeyDown(Key key)
+        protected void OnKeyDown(Key key, bool repeat)
         {
             KeyboardState.SetKeyState(key, true);
 
             var e = KeyDownArgs;
             e.Keyboard = KeyboardState;
             e.Key = key;
+            e.IsRepeat = repeat;
             KeyDown(this, e);
         }
 
@@ -145,6 +146,7 @@ namespace OpenTK.Platform
             var e = KeyUpArgs;
             e.Keyboard = KeyboardState;
             e.Key = key;
+            e.IsRepeat = false;
             KeyUp(this, e);
         }
 

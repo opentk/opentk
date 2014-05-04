@@ -124,6 +124,9 @@ namespace OpenTK.Platform.X11
 
         public static bool MouseWarpActive = false;
 
+        readonly bool xi2_supported;
+        readonly int xi2_opcode;
+
         #endregion
 
         #region Constructors
@@ -227,6 +230,14 @@ namespace OpenTK.Platform.X11
             // be reset before the program exits.
             bool supported;
             Functions.XkbSetDetectableAutoRepeat(window.Display, true, out supported);
+
+            // The XInput2 extension makes keyboard and mouse handling much easier.
+            // Check whether it is available.
+            xi2_supported = XI2Mouse.IsSupported(window.Display);
+            if (xi2_supported)
+            {
+                xi2_opcode = XI2Mouse.XIOpCode;
+            }
 
             exists = true;
         }
@@ -848,8 +859,41 @@ namespace OpenTK.Platform.X11
                         {
                             if (pressed)
                             {
+                                // Check if this is a key repeat event.
+                                // X11 does not provide this information,
+                                // so we rely on the XInput2 extension for that.
+                                // Todo: hack this when XInput2 is not available
+                                // by checking if another KeyPress event is enqueued.
+                                bool is_repeat = false;
+                                if (xi2_supported && e.GenericEventCookie.extension == xi2_opcode)
+                                {
+                                    if (e.GenericEventCookie.evtype == (int)XIEventType.KeyPress)
+                                    {
+                                        unsafe
+                                        {
+                                            XIDeviceEvent* xi = (XIDeviceEvent*)e.GenericEventCookie.data;
+                                            is_repeat = (xi->flags & XIEventFlags.KeyRepeat) != 0;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (API.Pending(window.Display) > 0)
+                                    {
+                                        unsafe
+                                        {
+                                            XEvent dummy = new XEvent();
+                                            KeyRepeatTestData arg = new KeyRepeatTestData();
+                                            arg.Event = e;
+                                            API.CheckIfEvent(window.Display, ref dummy, IsKeyRepeatPredicate,
+                                                new IntPtr(&arg));
+                                            is_repeat = arg.IsRepeat;
+                                        }
+                                    }
+                                }
+
                                 // Raise KeyDown event
-                                OnKeyDown(key);
+                                OnKeyDown(key, is_repeat);
                             }
                             else
                             {
@@ -1008,6 +1052,24 @@ namespace OpenTK.Platform.X11
                         break;
                 }
             }
+        }
+
+        struct KeyRepeatTestData
+        {
+            public XEvent Event;
+            public bool IsRepeat;
+        }
+
+        unsafe static bool IsKeyRepeatPredicate(IntPtr display, ref XEvent e, IntPtr arg)
+        {
+            // IsRepeat is true when the event queue contains an identical
+            // KeyPress event at later time no greater than 2.
+            KeyRepeatTestData* data = (KeyRepeatTestData*)arg;
+            data->IsRepeat =
+                e.type == XEventName.KeyPress &&
+                e.KeyEvent.keycode == data->Event.KeyEvent.keycode &&
+                e.KeyEvent.time.ToInt64() - data->Event.KeyEvent.time.ToInt64() < 2;
+            return false; // keep the event in the queue
         }
 
         #endregion

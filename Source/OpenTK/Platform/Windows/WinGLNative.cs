@@ -581,7 +581,8 @@ namespace OpenTK.Platform.Windows
             // In this case, both keys will be reported as pressed.
 
             bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
-            short scancode = (short)((lParam.ToInt64() >> 16) & 0xFF);
+            short scancode = (short)((lParam.ToInt64() >> 16) & 0xff);
+            ushort repeat_count = unchecked((ushort)((ulong)lParam.ToInt64() & 0xffffu));
             VirtualKeys vkey = (VirtualKeys)wParam;
             bool is_valid;
             Key key = WinKeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
@@ -590,7 +591,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (pressed)
                 {
-                    OnKeyDown(key);
+                    OnKeyDown(key, repeat_count > 0);
                 }
                 else
                 {

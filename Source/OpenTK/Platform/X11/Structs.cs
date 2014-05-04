@@ -1707,7 +1707,7 @@ namespace OpenTK.Platform.X11
         public double        root_y;
         public double        event_x;
         public double        event_y;
-        public int           flags;
+        public XIEventFlags        flags;
         public XIButtonState       buttons;
         public XIValuatorState     valuators;
         public XIModifierState     mods;
@@ -1827,5 +1827,33 @@ namespace OpenTK.Platform.X11
         RawButtonPressMask =           (1 << (int)XIEventType.RawButtonPress),
         RawButtonReleaseMask =         (1 << (int)XIEventType.RawButtonRelease),
         RawMotionMask =                (1 << (int)XIEventType.RawMotion),
+    }
+
+    [Flags]
+    enum XIKeyEventFlags
+    {
+        Repeat = (1 << 16),
+    }
+
+    [Flags]
+    enum XIPointerEventFlags
+    {
+        Emulated = (1 << 16),
+    }
+
+    [Flags]
+    enum XITouchEventFlags
+    {
+        PendingEnd = (1 << 16),
+        EmulatingPointer = (1 << 17),
+    }
+
+    [Flags]
+    enum XIEventFlags
+    {
+        KeyRepeat = XIKeyEventFlags.Repeat,
+        PointerEmulated = XIPointerEventFlags.Emulated,
+        TouchPendingEnd = XITouchEventFlags.PendingEnd,
+        TouchEmulatingPointer = XITouchEventFlags.EmulatingPointer
     }
 }

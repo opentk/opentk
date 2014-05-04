@@ -232,7 +232,7 @@ namespace OpenTK.Platform.SDL2
             Key key = TranslateKey(ev.Key.Keysym.Scancode);
             if (key_pressed)
             {
-                window.OnKeyDown(key);
+                window.OnKeyDown(key, ev.Key.Repeat > 0);
             }
             else
             {
