@@ -387,5 +387,30 @@ namespace OpenTK.Platform.X11
 
             return key != Key.Unknown;
         }
+
+        internal static MouseButton TranslateButton(int button, out int wheelx, out int wheely)
+        {
+            wheelx = 0;
+            wheely = 0;
+
+            switch (button)
+            {
+                case 1: return MouseButton.Left;
+                case 2: return MouseButton.Middle;
+                case 3: return MouseButton.Right;
+                case 4: wheely = +1; return MouseButton.LastButton;
+                case 5: wheely = -1; return MouseButton.LastButton;
+                case 6: wheelx = +1; return MouseButton.LastButton;
+                case 7: wheelx = -1; return MouseButton.LastButton;
+                case 8: return MouseButton.Button1;
+                case 9: return MouseButton.Button2;
+                case 10: return MouseButton.Button3;
+                case 11: return MouseButton.Button4;
+                case 12: return MouseButton.Button5;
+                case 13: return MouseButton.Button6;
+                case 14: return MouseButton.Button7;
+                default: return MouseButton.LastButton;
+            }
+        }
     }
 }
