@@ -356,7 +356,6 @@ namespace OpenTK.Input
         public float ValuePrecise
         {
             get { return Mouse.Scroll.Y; }
-            internal set { Mouse.SetScrollAbsolute(Mouse.Scroll.X, value); }
         }
 
         /// <summary>
