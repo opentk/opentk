@@ -268,6 +268,19 @@ namespace Examples.Tests
             return offset + gfx.MeasureString(str, TextFont).Width;
         }
 
+        static void KeyboardStateToString(KeyboardState state, StringBuilder sb)
+        {
+            for (int key_index = 0; key_index < (int)Key.LastKey; key_index++)
+            {
+                Key k = (Key)key_index;
+                if (state[k])
+                {
+                    sb.Append(k);
+                    sb.Append(" ");
+                }
+            }
+        }
+
         int DrawKeyboards(Graphics gfx, int line)
         {
             line++;
@@ -280,15 +293,7 @@ namespace Examples.Tests
                     StringBuilder sb = new StringBuilder();
                     sb.Append(i);
                     sb.Append(": ");
-                    for (int key_index = 0; key_index < (int)Key.LastKey; key_index++)
-                    {
-                        Key k = (Key)key_index;
-                        if (state[k])
-                        {
-                            sb.Append(k);
-                            sb.Append(" ");
-                        }
-                    }
+                    KeyboardStateToString(state, sb);
                     DrawString(gfx, sb.ToString(), line++);
                 }
             }
@@ -353,7 +358,7 @@ namespace Examples.Tests
 
             sb.Remove(0, sb.Length);
             sb.Append("KeyboardDevice state: ");
-            sb.Append(legacy_keyboard_state);
+            KeyboardStateToString(legacy_keyboard_state, sb);
             DrawString(gfx, sb.ToString(), line++);
 
             sb.Remove(0, sb.Length);
@@ -371,7 +376,7 @@ namespace Examples.Tests
 
             sb.Remove(0, sb.Length);
             sb.Append("Keyboard state: ");
-            sb.Append(keyboard_state);
+            KeyboardStateToString(keyboard_state, sb);
             DrawString(gfx, sb.ToString(), line++);
 
             return line;
