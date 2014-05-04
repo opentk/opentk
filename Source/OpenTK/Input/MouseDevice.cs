@@ -197,32 +197,27 @@ namespace OpenTK.Input
 
         #region --- Internal Members ---
 
-        internal void SetState(MouseState state)
-        {
-            this.state = state;
-        }
-
         internal void HandleMouseDown(object sender, MouseButtonEventArgs e)
         {
-            SetState(e.Mouse);
+            state = e.Mouse;
             ButtonDown(this, e);
         }
 
         internal void HandleMouseUp(object sender, MouseButtonEventArgs e)
         {
-            SetState(e.Mouse);
+            state = e.Mouse;
             ButtonUp(this, e);
         }
 
         internal void HandleMouseMove(object sender, MouseMoveEventArgs e)
         {
-            SetState(e.Mouse);
+            state = e.Mouse;
             Move(this, e);
         }
 
         internal void HandleMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            SetState(e.Mouse);
+            state = e.Mouse;
             WheelChanged(this, e);
         }
 
