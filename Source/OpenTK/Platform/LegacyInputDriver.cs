@@ -61,25 +61,10 @@ namespace OpenTK.Platform
             dummy_keyboard_list.Add(keyboard);
 
             // Hook mouse events
-            window.MouseDown += (sender, e) =>
-            {
-                mouse[e.Button] = true;
-            };
-
-            window.MouseUp += (sender, e) =>
-            {
-                mouse[e.Button] = false;
-            };
-
-            window.MouseMove += (sender, e) =>
-            {
-                mouse.Position = e.Position;
-            };
-
-            window.MouseWheel += (sender, e) =>
-            {
-                mouse.WheelPrecise = e.Mouse.Scroll.Y;
-            };
+            window.MouseDown += mouse.HandleMouseDown;
+            window.MouseUp += mouse.HandleMouseUp;
+            window.MouseMove += mouse.HandleMouseMove;
+            window.MouseWheel += mouse.HandleMouseWheel;
 
             // Hook keyboard events
             window.KeyDown += (sender, e) =>
