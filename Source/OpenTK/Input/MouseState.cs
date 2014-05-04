@@ -292,14 +292,11 @@ namespace OpenTK.Input
 
         internal void MergeBits(MouseState other)
         {
-            unsafe
-            {
-                buttons |= other.buttons;
-                SetScrollRelative(other.scroll.X, other.scroll.Y);
-                X += other.X;
-                Y += other.Y;
-                IsConnected |= other.IsConnected;
-            }
+            buttons |= other.buttons;
+            SetScrollRelative(other.scroll.X, other.scroll.Y);
+            X += other.X;
+            Y += other.Y;
+            IsConnected |= other.IsConnected;
         }
 
         internal void SetIsConnected(bool value)
