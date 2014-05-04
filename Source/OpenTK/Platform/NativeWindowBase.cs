@@ -45,19 +45,22 @@ namespace OpenTK.Platform
         readonly MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
         readonly MouseWheelEventArgs MouseWheelArgs = new MouseWheelEventArgs();
 
-        protected readonly KeyboardKeyEventArgs KeyDownArgs = new KeyboardKeyEventArgs();
-        protected readonly KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
-        protected readonly KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
+        readonly KeyboardKeyEventArgs KeyDownArgs = new KeyboardKeyEventArgs();
+        readonly KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
+        readonly KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
 
         // In order to simplify mouse event implementation,
         // we can store the current mouse state here.
         protected MouseState MouseState = new MouseState();
+        protected KeyboardState KeyboardState = new KeyboardState();
+
         MouseState PreviousMouseState = new MouseState();
 
         internal NativeWindowBase()
         {
             LegacyInputDriver = new LegacyInputDriver(this);
             MouseState.SetIsConnected(true);
+            KeyboardState.SetIsConnected(true);
             PreviousMouseState.SetIsConnected(true);
         }
 
@@ -118,18 +121,30 @@ namespace OpenTK.Platform
             WindowStateChanged(this, e);
         }
 
-        protected void OnKeyDown(KeyboardKeyEventArgs e)
+        protected void OnKeyDown(Key key)
         {
+            KeyboardState.SetKeyState(key, true);
+
+            var e = KeyDownArgs;
+            e.Keyboard = KeyboardState;
+            e.Key = key;
             KeyDown(this, e);
         }
 
-        protected void OnKeyPress(KeyPressEventArgs e)
+        protected void OnKeyPress(char c)
         {
+            var e = KeyPressArgs;
+            e.KeyChar = c;
             KeyPress(this, e);
         }
 
-        protected void OnKeyUp(KeyboardKeyEventArgs e)
+        protected void OnKeyUp(Key key)
         {
+            KeyboardState.SetKeyState(key, false);
+
+            var e = KeyUpArgs;
+            e.Keyboard = KeyboardState;
+            e.Key = key;
             KeyUp(this, e);
         }
 
@@ -143,48 +158,31 @@ namespace OpenTK.Platform
             MouseEnter(this, e);
         }
 
-        protected void OnMouseDown()
+        protected void OnMouseDown(MouseButton button)
         {
+            MouseState[button] = true;
+
             var e = MouseDownArgs;
             e.Mouse = MouseState;
 
-            // Find which button caused this event
-            for (MouseButton b = MouseButton.Left; b < MouseButton.LastButton; b++)
-            {
-                if (!PreviousMouseState[b] && MouseState[b])
-                {
-                    e.Button = b;
-                    PreviousMouseState = MouseState;
-                    MouseDown(this, e);
-                    return;
-                }
-            }
-
-            Debug.WriteLine("OnMouseDown called without pressing a button");
+            MouseDown(this, e);
         }
 
-        protected void OnMouseUp()
+        protected void OnMouseUp(MouseButton button)
         {
+            MouseState[button] = false;
+
             var e = MouseUpArgs;
             e.Mouse = MouseState;
 
-            // Find which button caused this event
-            for (MouseButton b = MouseButton.Left; b < MouseButton.LastButton; b++)
-            {
-                if (PreviousMouseState[b] && !MouseState[b])
-                {
-                    e.Button = b;
-                    PreviousMouseState = MouseState;
-                    MouseUp(this, e);
-                    return;
-                }
-            }
-
-            Debug.WriteLine("OnMouseUp called without pressing a button");
+            MouseUp(this, e);
         }
 
-        protected void OnMouseMove()
+        protected void OnMouseMove(int x, int y)
         {
+            MouseState.X = x;
+            MouseState.Y = y;
+
             var e = MouseMoveArgs;
             e.Mouse = MouseState;
             e.XDelta = MouseState.X - PreviousMouseState.X;
@@ -199,14 +197,15 @@ namespace OpenTK.Platform
             MouseMove(this, e);
         }
 
-        protected void OnMouseWheel()
+        protected void OnMouseWheel(float dx, float dy)
         {
+            MouseState.SetScrollRelative(dx, dy);
+
             var e = MouseWheelArgs;
             e.Mouse = MouseState;
-            e.ValuePrecise = MouseState.Scroll.Y;
             e.DeltaPrecise = MouseState.Scroll.Y - PreviousMouseState.Scroll.Y;
 
-            if (e.DeltaPrecise == 0)
+            if (dx == 0 && dy == 0)
             {
                 Debug.WriteLine("OnMouseWheel called without moving the mouse wheel.");
             }

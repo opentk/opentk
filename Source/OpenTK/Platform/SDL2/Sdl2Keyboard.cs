@@ -58,16 +58,16 @@ namespace OpenTK.Platform.SDL2
         {
             Keymod mod = SDL.GetModState();
 
-            state.SetKeyState(Key.LAlt, (byte)Scancode.LALT, (mod & Keymod.LALT) != 0);
-            state.SetKeyState(Key.RAlt, (byte)Scancode.RALT, (mod & Keymod.RALT) != 0);
-            state.SetKeyState(Key.LControl, (byte)Scancode.LCTRL, (mod & Keymod.LCTRL) != 0);
-            state.SetKeyState(Key.RControl, (byte)Scancode.RCTRL, (mod & Keymod.CTRL) != 0);
-            state.SetKeyState(Key.LShift, (byte)Scancode.LSHIFT, (mod & Keymod.LSHIFT) != 0);
-            state.SetKeyState(Key.RShift, (byte)Scancode.RSHIFT, (mod & Keymod.RSHIFT) != 0);
-            state.SetKeyState(Key.Menu, (byte)Scancode.APPLICATION, (mod & Keymod.GUI) != 0);
-            state.SetKeyState(Key.CapsLock, (byte)Scancode.CAPSLOCK, (mod & Keymod.CAPS) != 0);
-            state.SetKeyState(Key.NumLock, (byte)Scancode.NUMLOCKCLEAR, (mod & Keymod.NUM) != 0);
-            //state.SetKeyState(Key., (byte)Scancode.MODE, (mod & Keymod.MODE) != 0);
+            state[Key.LAlt] = (mod & Keymod.LALT) != 0;
+            state[Key.RAlt] = (mod & Keymod.RALT) != 0;
+            state[Key.LControl] = (mod & Keymod.LCTRL) != 0;
+            state[Key.RControl] = (mod & Keymod.RCTRL) != 0;
+            state[Key.LShift] = (mod & Keymod.LSHIFT) != 0;
+            state[Key.RShift] = (mod & Keymod.RSHIFT) != 0;
+            state[Key.Menu] = (mod & Keymod.GUI) != 0;
+            state[Key.CapsLock] = (mod & Keymod.CAPS) != 0;
+            state[Key.NumLock] = (mod & Keymod.NUM) != 0;
+            //state[Key.] = (mod & Keymod.MODE) != 0;
         }
 
         #endregion
@@ -83,7 +83,7 @@ namespace OpenTK.Platform.SDL2
 
             if (key != Key.Unknown)
             {
-                state.SetKeyState(key, (byte)scancode, pressed);
+                state[key] = pressed;
             }
         }
 

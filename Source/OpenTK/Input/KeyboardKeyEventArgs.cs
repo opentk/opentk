@@ -46,7 +46,7 @@ namespace OpenTK.Input
         #region Fields
 
         Key key;
-        KeyModifiers mods;
+        KeyboardState state;
         uint scancode;
 
         #endregion
@@ -97,7 +97,7 @@ namespace OpenTK.Input
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Alt
         {
-            get { return (mods & KeyModifiers.Alt) != 0; }
+            get { return state[Key.AltLeft] || state[Key.AltRight]; }
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace OpenTK.Input
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Control
         {
-            get { return (mods & KeyModifiers.Control) != 0; }
+            get { return state[Key.ControlLeft] || state[Key.ControlRight]; }
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace OpenTK.Input
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Shift
         {
-            get { return (mods & KeyModifiers.Shift) != 0; }
+            get { return state[Key.ShiftLeft] || state[Key.ShiftRight]; }
         }
 
         /// <summary>
@@ -125,8 +125,24 @@ namespace OpenTK.Input
         /// <value>The modifiers.</value>
         public KeyModifiers Modifiers
         {
-            get { return mods; }
-            internal set { mods = value; }
+            get
+            {
+                KeyModifiers mods = 0;
+                mods |= Alt ? KeyModifiers.Alt : 0;
+                mods |= Control ? KeyModifiers.Control : 0;
+                mods |= Shift ? KeyModifiers.Shift : 0;
+                return mods;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current <see cref="OpenTK.Input.KeyboardState"/>.
+        /// </summary>
+        /// <value>The keyboard.</value>
+        public KeyboardState Keyboard
+        {
+            get { return state; }
+            internal set { state = value; }
         }
 
         #endregion

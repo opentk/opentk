@@ -763,18 +763,6 @@ namespace OpenTK.Platform.X11
             return cursor;
         }
 
-        void SetMouseClamped(int x, int y,
-            int left, int top, int width, int height)
-        {
-            // Clamp mouse to the specified rectangle.
-            x = Math.Max(x, left);
-            x = Math.Min(x, width);
-            y = Math.Max(y, top);
-            y = Math.Min(y, height);
-            MouseState.X = x;
-            MouseState.Y = y;
-        }
-
         #endregion
 
         #region INativeWindow Members
@@ -861,18 +849,12 @@ namespace OpenTK.Platform.X11
                             if (pressed)
                             {
                                 // Raise KeyDown event
-                                KeyDownArgs.Key = key;
-                                KeyDownArgs.ScanCode = (uint)e.KeyEvent.keycode;
-                                //KeyDownArgs.Modifiers = keyboard.GetModifiers();
-                                OnKeyDown(KeyDownArgs);
+                                OnKeyDown(key);
                             }
                             else
                             {
                                 // Raise KeyUp event
-                                KeyUpArgs.Key = key;
-                                KeyUpArgs.ScanCode = (uint)e.KeyEvent.keycode;
-                                //KeyUpArgs.Modifiers = keyboard.GetModifiers();
-                                OnKeyUp(KeyUpArgs);
+                                OnKeyUp(key);
                             }
 
                             if (pressed)
@@ -888,8 +870,7 @@ namespace OpenTK.Platform.X11
                                 {
                                     if (!Char.IsControl(chars[i]))
                                     {
-                                        KeyPressArgs.KeyChar = chars[i];
-                                        OnKeyPress(KeyPressArgs);
+                                        OnKeyPress(chars[i]);
                                     }
                                 }
                             }
@@ -922,10 +903,9 @@ namespace OpenTK.Platform.X11
                         }
                         else if (!CursorVisible)
                         {
-                            SetMouseClamped(
-                                MouseState.X + x - mouse_rel_x,
-                                MouseState.Y + y - mouse_rel_y,
-                                0, 0, Width, Height);
+                            OnMouseMove(
+                                MathHelper.Clamp(MouseState.X + x - mouse_rel_x, 0, Width),
+                                MathHelper.Clamp(MouseState.Y + y - mouse_rel_y, 0, Height));
                             mouse_rel_x = x;
                             mouse_rel_y = y;
 
@@ -935,53 +915,42 @@ namespace OpenTK.Platform.X11
                         }
                         else
                         {
-                            SetMouseClamped(x, y, 0, 0, Width, Height);
+                            OnMouseMove(
+                                MathHelper.Clamp(x, 0, Width),
+                                MathHelper.Clamp(y, 0, Height));
                             mouse_rel_x = x;
                             mouse_rel_y = y;
                         }
 
-                        OnMouseMove();
                         break;
                     }
 
                     case XEventName.ButtonPress:
-                        switch (e.ButtonEvent.button)
                         {
-                            case 1: MouseState.EnableBit((int)MouseButton.Left); break;
-                            case 2: MouseState.EnableBit((int)MouseButton.Middle); break;
-                            case 3: MouseState.EnableBit((int)MouseButton.Right); break;
-                            case 4: MouseState.SetScrollRelative(0, 1); break;
-                            case 5: MouseState.SetScrollRelative(0, -1); break;
-                            case 6: MouseState.EnableBit((int)MouseButton.Button1); break;
-                            case 7: MouseState.EnableBit((int)MouseButton.Button2); break;
-                            case 8: MouseState.EnableBit((int)MouseButton.Button3); break;
-                            case 9: MouseState.EnableBit((int)MouseButton.Button4); break;
-                            case 10: MouseState.EnableBit((int)MouseButton.Button5); break;
-                            case 11: MouseState.EnableBit((int)MouseButton.Button6); break;
-                            case 12: MouseState.EnableBit((int)MouseButton.Button7); break;
-                            case 13: MouseState.EnableBit((int)MouseButton.Button8); break;
-                            case 14: MouseState.EnableBit((int)MouseButton.Button9); break;
+                            int dx, dy;
+                            MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
+
+                            if (button != MouseButton.LastButton)
+                            {
+                                OnMouseDown(button);
+                            }
+                            else if (dx != 0 || dy != 0)
+                            {
+                                OnMouseWheel(dx, dy);
+                            }
                         }
-                        OnMouseDown();
                         break;
 
                     case XEventName.ButtonRelease:
-                        switch (e.ButtonEvent.button)
                         {
-                            case 1: MouseState.DisableBit((int)MouseButton.Left); break;
-                            case 2: MouseState.DisableBit((int)MouseButton.Middle); break;
-                            case 3: MouseState.DisableBit((int)MouseButton.Right); break;
-                            case 6: MouseState.DisableBit((int)MouseButton.Button1); break;
-                            case 7: MouseState.DisableBit((int)MouseButton.Button2); break;
-                            case 8: MouseState.DisableBit((int)MouseButton.Button3); break;
-                            case 9: MouseState.DisableBit((int)MouseButton.Button4); break;
-                            case 10: MouseState.DisableBit((int)MouseButton.Button5); break;
-                            case 11: MouseState.DisableBit((int)MouseButton.Button6); break;
-                            case 12: MouseState.DisableBit((int)MouseButton.Button7); break;
-                            case 13: MouseState.DisableBit((int)MouseButton.Button8); break;
-                            case 14: MouseState.DisableBit((int)MouseButton.Button9); break;
+                            int dx, dy;
+                            MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
+
+                            if (button != MouseButton.LastButton)
+                            {
+                                OnMouseUp(button);
+                            }
                         }
-                        OnMouseUp();
                         break;
 
                     case XEventName.FocusIn:

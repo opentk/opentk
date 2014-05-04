@@ -136,8 +136,6 @@ namespace OpenTK.Platform.MacOS
         private Nullable<WindowBorder> deferredWindowBorder;
         private Nullable<WindowBorder> previousWindowBorder;
         private WindowState windowState = WindowState.Normal;
-        private OpenTK.Input.KeyboardKeyEventArgs keyArgs = new OpenTK.Input.KeyboardKeyEventArgs();
-        private KeyPressEventArgs keyPressArgs = new KeyPressEventArgs((char)0);
         private string title;
         private RectangleF previousBounds;
         private int normalLevel;
@@ -387,13 +385,6 @@ namespace OpenTK.Platform.MacOS
             return modifiers;
         }
 
-        private void GetKey(ushort keyCode, NSEventModifierMask modifierFlags, OpenTK.Input.KeyboardKeyEventArgs args)
-        {
-            args.Key = MacOSKeyMap.GetKey((Carbon.MacOSKeyCode)keyCode);
-            args.Modifiers = GetModifiers(modifierFlags);
-            args.ScanCode = (uint)keyCode;
-        }
-
         private MouseButton GetMouseButton(int cocoaButtonIndex)
         {
             if (cocoaButtonIndex == 0) return MouseButton.Left;
@@ -419,14 +410,15 @@ namespace OpenTK.Platform.MacOS
                 {
                     case NSEventType.KeyDown:
                         {
-                            var keyCode = Cocoa.SendUshort(e, selKeyCode);
-                            var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
+                            MacOSKeyCode keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
+                            //var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
                             var isARepeat = Cocoa.SendBool(e, selIsARepeat);
-                            GetKey(keyCode, modifierFlags, keyArgs);
+                            //GetKey(keyCode, modifierFlags, keyArgs);
+                            Key key = MacOSKeyMap.GetKey(keyCode);
 
                             if (!isARepeat || InputDriver.Keyboard[0].KeyRepeat)
                             {
-                                OnKeyDown(keyArgs);
+                                OnKeyDown(key);
                             }
 
                             var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
@@ -435,10 +427,9 @@ namespace OpenTK.Platform.MacOS
                                 int intVal = (int)c;
                                 if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
                                 {
-                                    // For some reason, arrow keys (mapped 63232-63235) are seen as non-control characters, so get rid of those.
-
-                                    keyPressArgs.KeyChar = c;
-                                    OnKeyPress(keyPressArgs);
+                                    // For some reason, arrow keys (mapped 63232-63235)
+                                    // are seen as non-control characters, so get rid of those.
+                                    OnKeyPress(c);
                                 }
                             }
                         }
@@ -446,11 +437,11 @@ namespace OpenTK.Platform.MacOS
 
                     case NSEventType.KeyUp:
                         {
-                            var keyCode = Cocoa.SendUshort(e, selKeyCode);
-                            var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
-
-                            GetKey(keyCode, modifierFlags, keyArgs);
-                            OnKeyUp(keyArgs);
+                            MacOSKeyCode keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
+                            //var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
+                            //GetKey(keyCode, modifierFlags, keyArgs);
+                            Key key = MacOSKeyMap.GetKey(keyCode);
+                            OnKeyUp(key);
                         }
                         break;
 
@@ -521,9 +512,7 @@ namespace OpenTK.Platform.MacOS
                             // Only raise events when the mouse has actually moved
                             if (MouseState.X != p.X || MouseState.Y != p.Y)
                             {
-                                MouseState.X = p.X;
-                                MouseState.Y = p.Y;
-                                OnMouseMove();
+                                OnMouseMove(p.X, p.Y);
                             }
                         }
                         break;
@@ -548,8 +537,7 @@ namespace OpenTK.Platform.MacOS
                             // Only raise wheel events when the user has actually scrolled
                             if (dx != 0 || dy != 0)
                             {
-                                MouseState.SetScrollRelative(dx, dy);
-                                OnMouseWheel();
+                                OnMouseWheel(dx, dy);
                             }
                         }
                         break;
@@ -559,8 +547,7 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.OtherMouseDown:
                         {
                             var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
-                            MouseState[GetMouseButton(buttonNumber)] = true;
-                            OnMouseDown();
+                            OnMouseDown(GetMouseButton(buttonNumber));
                         }
                         break;
 
@@ -569,8 +556,7 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.OtherMouseUp:
                         {
                             var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
-                            MouseState[GetMouseButton(buttonNumber)] = false;
-                            OnMouseUp();
+                            OnMouseUp(GetMouseButton(buttonNumber));
                         }
                         break;
                 }

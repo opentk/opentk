@@ -390,7 +390,8 @@ namespace OpenTK.Platform.MacOS
                         {
                             Debug.Print("[Warning] Key {0} not mapped.", usage);
                         }
-                        keyboard.State.SetKeyState(RawKeyMap[usage], (byte)usage, v_int != 0);
+
+                        keyboard.State[RawKeyMap[usage]] = v_int != 0;
                         break;
                 }
             }

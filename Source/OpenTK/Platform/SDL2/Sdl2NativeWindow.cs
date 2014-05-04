@@ -66,12 +66,6 @@ namespace OpenTK.Platform.SDL2
         // to .Net UTF16 strings 
         char[] DecodeTextBuffer = new char[32];
 
-        // Argument for KeyPress event (allocated once to avoid runtime allocations)
-        readonly KeyPressEventArgs keypress_args = new KeyPressEventArgs('\0');
-
-        // Argument for KeyDown and KeyUp events (allocated once to avoid runtime allocations)
-        readonly KeyboardKeyEventArgs key_args = new KeyboardKeyEventArgs();
-
         static readonly Dictionary<uint, Sdl2NativeWindow> windows =
             new Dictionary<uint, Sdl2NativeWindow>();
 
@@ -221,36 +215,29 @@ namespace OpenTK.Platform.SDL2
                     button_pressed ? true : false);
             }
 
-            window.MouseState[Sdl2Mouse.TranslateButton(ev.Button)] = button_pressed;
-            window.MouseState.X = ev.X;
-            window.MouseState.Y = ev.Y;
-
+            MouseButton button = Sdl2Mouse.TranslateButton(ev.Button);
             if (button_pressed)
             {
-                window.OnMouseDown();
+                window.OnMouseDown(button);
             }
             else
             {
-                window.OnMouseUp();
+                window.OnMouseUp(button);
             }
         }
 
         static void ProcessKeyEvent(Sdl2NativeWindow window, Event ev)
         {
             bool key_pressed = ev.Key.State == State.Pressed;
-            var key = ev.Key.Keysym;
-            window.key_args.Key = TranslateKey(key.Scancode);
-            window.key_args.ScanCode = (uint)key.Scancode;
-            window.key_args.Modifiers = Sdl2KeyMap.GetModifiers(key.Mod);
+            Key key = TranslateKey(ev.Key.Keysym.Scancode);
             if (key_pressed)
             {
-                window.OnKeyDown(window.key_args);
+                window.OnKeyDown(key);
             }
             else
             {
-                window.OnKeyUp(window.key_args);
+                window.OnKeyUp(key);
             }
-            //window.keyboard.SetKey(TranslateKey(key.scancode), (uint)key.scancode, key_pressed);
         }
 
         static unsafe void ProcessTextInputEvent(Sdl2NativeWindow window, TextInputEvent ev)
@@ -281,23 +268,19 @@ namespace OpenTK.Platform.SDL2
 
             for (int i = 0; i < decoded_length; i++)
             {
-                window.keypress_args.KeyChar = window.DecodeTextBuffer[i];
-                window.OnKeyPress(window.keypress_args);
+                window.OnKeyPress(window.DecodeTextBuffer[i]);
             }
         }
 
         static void ProcessMouseMotionEvent(Sdl2NativeWindow window, MouseMotionEvent ev)
         {
             //float scale = window.ClientSize.Width / (float)window.Size.Width;
-            window.MouseState.X = ev.X;
-            window.MouseState.Y = ev.Y;
-            window.OnMouseMove();
+            window.OnMouseMove(ev.X, ev.Y);
         }
 
         static void ProcessMouseWheelEvent(Sdl2NativeWindow window, MouseWheelEvent ev)
         {
-            window.MouseState.SetScrollRelative(ev.X, ev.Y);
-            window.OnMouseWheel();
+            window.OnMouseWheel(ev.X, ev.Y);
         }
 
         static void ProcessWindowEvent(Sdl2NativeWindow window, WindowEvent e)
