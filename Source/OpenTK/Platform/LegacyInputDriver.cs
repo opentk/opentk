@@ -67,15 +67,8 @@ namespace OpenTK.Platform
             window.MouseWheel += mouse.HandleMouseWheel;
 
             // Hook keyboard events
-            window.KeyDown += (sender, e) =>
-            {
-                keyboard.SetKey(e.Key, e.ScanCode, e.Modifiers, true);
-            };
-
-            window.KeyUp += (sender, e) =>
-            {
-                keyboard.SetKey(e.Key, e.ScanCode, e.Modifiers, false);
-            };
+            window.KeyDown += keyboard.HandleKeyDown;
+            window.KeyUp += keyboard.HandleKeyUp;
 
             window.FocusedChanged += (sender, e) =>
             {
