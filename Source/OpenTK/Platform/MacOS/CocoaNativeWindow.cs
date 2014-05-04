@@ -490,7 +490,7 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.OtherMouseDragged:
                     case NSEventType.MouseMoved:
                         {
-                            Point p = InputDriver.Mouse[0].Position;
+                            Point p = new Point(MouseState.X, MouseState.Y);
                             if (CursorVisible)
                             {
                                 // Use absolute coordinates
