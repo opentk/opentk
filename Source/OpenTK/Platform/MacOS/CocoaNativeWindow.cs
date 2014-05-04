@@ -78,6 +78,7 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr selLocationInWindowOwner = Selector.Get("locationInWindow");
         static readonly IntPtr selHide = Selector.Get("hide");
         static readonly IntPtr selUnhide = Selector.Get("unhide");
+        static readonly IntPtr selScrollingDeltaX = Selector.Get("scrollingDeltaX");
         static readonly IntPtr selScrollingDeltaY = Selector.Get("scrollingDeltaY");
         static readonly IntPtr selDeltaX = Selector.Get("deltaX");
         static readonly IntPtr selDeltaY = Selector.Get("deltaY");
@@ -145,7 +146,7 @@ namespace OpenTK.Platform.MacOS
         private bool cursorInsideWindow = true;
         private MouseCursor selectedCursor = MouseCursor.Default; // user-selected cursor
 
-        private const float scrollFactor = 120.0f;
+        private const float scrollFactor = 10.0f;
         private const bool exclusiveFullscreen = false;
 
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
@@ -517,9 +518,13 @@ namespace OpenTK.Platform.MacOS
                                     MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height));
                             }
 
-                            MouseState.X = p.X;
-                            MouseState.Y = p.Y;
-                            OnMouseMove();
+                            // Only raise events when the mouse has actually moved
+                            if (MouseState.X != p.X || MouseState.Y != p.Y)
+                            {
+                                MouseState.X = p.X;
+                                MouseState.Y = p.Y;
+                                OnMouseMove();
+                            }
                         }
                         break;
 
@@ -528,16 +533,24 @@ namespace OpenTK.Platform.MacOS
 
                     case NSEventType.ScrollWheel:
                         {
-                            var scrollingDelta = Cocoa.SendFloat(e, selScrollingDeltaY);
-                            var factor = 1.0f;
-
+                            float dx, dy;
                             if (Cocoa.SendBool(e, selHasPreciseScrollingDeltas))
                             {
-                                factor = 1.0f / scrollFactor; // Problem: Don't know what factor to use here, but this seems to work.
+                                dx = Cocoa.SendFloat(e, selScrollingDeltaX) / scrollFactor;
+                                dy = Cocoa.SendFloat(e, selScrollingDeltaY) / scrollFactor;
+                            }
+                            else
+                            {
+                                dx = Cocoa.SendFloat(e, selDeltaX);
+                                dy = Cocoa.SendFloat(e, selDeltaY);
                             }
 
-                            MouseState.SetScrollRelative(0, scrollingDelta * factor);
-                            OnMouseWheel();
+                            // Only raise wheel events when the user has actually scrolled
+                            if (dx != 0 || dy != 0)
+                            {
+                                MouseState.SetScrollRelative(dx, dy);
+                                OnMouseWheel();
+                            }
                         }
                         break;
 
