@@ -26,15 +26,25 @@ namespace Examples.Tests
         bool mouse_in_window = false;
         bool viewport_changed = true;
 
-        // legacy NativeWindow.MouseDevice events
+        // legacy GameWindow.Mouse.* events
         Vector4 mousedevice_pos;
         int mousedevice_buttons;
         MouseState mousedevice_state;
 
-        // new NativeWindow.Mouse* events
+        // new GameWindow.Mouse* events
         Vector4 mouse_pos;
         int mouse_buttons;
         MouseState mouse_state;
+
+        // legacy GameWindow.Keyboard.Key* events
+        Dictionary<Key, int> legacy_keyboard_keys = new Dictionary<Key, int>();
+        KeyboardState legacy_keyboard_state;
+        KeyModifiers legacy_keyboard_modifiers;
+
+        //new GameWindow.Key* events
+        Dictionary<Key, int> keyboard_keys = new Dictionary<Key, int>();
+        KeyboardState keyboard_state;
+        KeyModifiers keyboard_modifiers;
 
         // time drift
         Stopwatch watch = new Stopwatch();
@@ -52,8 +62,6 @@ namespace Examples.Tests
         double variable_refresh_timestep_pos = -1;
         double fixed_update_timestep_pos = -1;
 
-        KeyModifiers modifiers;
-
         public GameWindowStates()
             : base(800, 600, GraphicsMode.Default)
         {
@@ -62,6 +70,8 @@ namespace Examples.Tests
             KeyDown += KeyDownHandler;
             KeyUp += KeyUpHandler;
             KeyPress += KeyPressHandler;
+            Keyboard.KeyDown += KeyboardDeviceDownHandler;
+            Keyboard.KeyUp += KeyboardDeviceUpHandler;
 
             MouseEnter += delegate { mouse_in_window = true; };
             MouseLeave += delegate { mouse_in_window = false; };
@@ -77,7 +87,9 @@ namespace Examples.Tests
             MouseUp += MouseButtonHandler;
         }
 
-        private void KeyPressHandler(object sender, KeyPressEventArgs e)
+        #region Keyboard Events
+
+        void KeyPressHandler(object sender, KeyPressEventArgs e)
         {
             if (TypedText.Length > 32)
                 TypedText.Remove(0, 1);
@@ -125,13 +137,42 @@ namespace Examples.Tests
                 case Key.Comma: TargetRenderFrequency--; break;
                 case Key.Period: TargetRenderFrequency++; break;
             }
-            modifiers = e.Modifiers;
+
+            if (!keyboard_keys.ContainsKey(e.Key))
+            {
+                keyboard_keys.Add(e.Key, 0);
+            }
+            keyboard_keys[e.Key] = e.IsRepeat ? 1 : 0;
+            keyboard_modifiers = e.Modifiers;
+            keyboard_state = e.Keyboard;
         }
 
         void KeyUpHandler(object sender, KeyboardKeyEventArgs e)
         {
-            modifiers = e.Modifiers;
+            keyboard_keys.Remove(e.Key);
+            keyboard_modifiers = e.Modifiers;
+            keyboard_state = e.Keyboard;
         }
+
+        void KeyboardDeviceDownHandler(object sender, KeyboardKeyEventArgs e)
+        {
+            if (!legacy_keyboard_keys.ContainsKey(e.Key))
+            {
+                legacy_keyboard_keys.Add(e.Key, 0);
+            }
+            legacy_keyboard_keys[e.Key] = e.IsRepeat ? 1 : 0;
+            legacy_keyboard_modifiers = e.Modifiers;
+            legacy_keyboard_state = e.Keyboard;
+        }
+
+        void KeyboardDeviceUpHandler(object sender, KeyboardKeyEventArgs e)
+        {
+            legacy_keyboard_keys.Remove(e.Key);
+            legacy_keyboard_modifiers = e.Modifiers;
+            legacy_keyboard_state = e.Keyboard;
+        }
+
+        #endregion
 
         #region MouseDevice events
 
@@ -209,6 +250,8 @@ namespace Examples.Tests
 
         #endregion
 
+        #region Private Members
+
         static int Clamp(int val, int min, int max)
         {
             return val > max ? max : val < min ? min : val;
@@ -228,7 +271,7 @@ namespace Examples.Tests
         int DrawKeyboards(Graphics gfx, int line)
         {
             line++;
-            DrawString(gfx, String.Format("Keyboard ({0}):", modifiers), line++);
+            DrawString(gfx, "Keyboard:", line++);
             for (int i = 0; i < 4; i++)
             {
                 var state = OpenTK.Input.Keyboard.GetState(i);
@@ -278,6 +321,59 @@ namespace Examples.Tests
                     DrawString(gfx, sb.ToString(), line++);
                 }
             }
+            return line;
+        }
+
+        int DrawKeyboardDevice(Graphics gfx, int line)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("KeyboardDevice: ");
+            for (Key key = 0; key < Key.LastKey; key++)
+            {
+                if (Keyboard[key])
+                {
+                    sb.Append(key);
+                    sb.Append(" ");
+                }
+            }
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("KeyboardDevice events: [");
+            sb.Append(legacy_keyboard_modifiers);
+            sb.Append("] ");
+            foreach (var pair in legacy_keyboard_keys)
+            {
+                sb.Append(pair.Key);
+                sb.Append(":");
+                sb.Append(pair.Value);
+                sb.Append(" ");
+            }
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("KeyboardDevice state: ");
+            sb.Append(legacy_keyboard_state);
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("Keyboard events: [");
+            sb.Append(keyboard_modifiers);
+            sb.Append("] ");
+            foreach (var pair in keyboard_keys)
+            {
+                sb.Append(pair.Key);
+                sb.Append(":");
+                sb.Append(pair.Value);
+                sb.Append(" ");
+            }
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("Keyboard state: ");
+            sb.Append(keyboard_state);
+            DrawString(gfx, sb.ToString(), line++);
+
             return line;
         }
 
@@ -369,6 +465,8 @@ namespace Examples.Tests
             return line;
         }
 
+        #endregion
+
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             double clock_time = watch.Elapsed.TotalSeconds;
@@ -401,6 +499,7 @@ namespace Examples.Tests
                     CursorVisible ? "visible" : "hidden",
                     Focused ? "Focused" : "Not focused"), line++);
 
+                line = DrawKeyboardDevice(gfx, line);
                 line = DrawMouseDevice(gfx, line);
 
                 // Timing information
