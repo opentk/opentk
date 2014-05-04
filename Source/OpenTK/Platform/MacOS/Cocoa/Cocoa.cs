@@ -58,7 +58,13 @@ namespace OpenTK.Platform.MacOS
         public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, IntPtr intPtr1, IntPtr intPtr2, IntPtr intPtr3);
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
+        public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, IntPtr intPtr1, IntPtr intPtr2, IntPtr intPtr3, IntPtr intPtr4, IntPtr intPtr5);
+
+        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
         public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, IntPtr p1, PointF p2);
+
+        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
+        public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, bool p1);
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
         public extern static IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, SizeF p1);

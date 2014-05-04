@@ -44,7 +44,7 @@ namespace OpenTK.Platform.MacOS
         internal static void Initialize()
         {
             // Create the NSAutoreleasePool
-            AutoreleasePool = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSAutoreleasePool"), Selector.Alloc), Selector.Init);
+            AutoreleasePool = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.NSAutoreleasePool, Selector.Alloc), Selector.Init);
 
             // Register a Quit method to be called on cmd-q
             IntPtr nsapp = Class.Get("NSApplication");
@@ -80,6 +80,23 @@ namespace OpenTK.Platform.MacOS
 
             // Tell cocoa we're ready to run the application (usually called by [NSApp run]). 
             Cocoa.SendVoid(Handle, Selector.Get("finishLaunching"));
+
+            // Disable momentum scrolling and long-press key pop-ups
+            IntPtr settings = Cocoa.SendIntPtr(Class.NSDictionary, Selector.Alloc);
+            IntPtr momentum_scrolling = Cocoa.SendIntPtr(Class.NSNumber, Selector.Get("numberWithBool:"), false);
+            IntPtr press_and_hold = Cocoa.SendIntPtr(Class.NSNumber, Selector.Get("numberWithBool:"), false);
+
+            // Initialize and register the settings dictionary
+            settings = 
+                Cocoa.SendIntPtr(settings, Selector.Get("initWithObjectsAndKeys:"),
+                    momentum_scrolling, Cocoa.ToNSString("AppleMomentumScrollSupported"),
+                    press_and_hold, Cocoa.ToNSString("ApplePressAndHoldEnabled"),
+                    IntPtr.Zero);
+            Cocoa.SendVoid(
+                Cocoa.SendIntPtr(Class.NSUserDefaults, Selector.Get("standardUserDefaults")),
+                Selector.Get("registerDefaults:"),
+                settings);
+            Cocoa.SendVoid(settings, Selector.Release);
         }
 
         internal static event EventHandler<CancelEventArgs> Quit = delegate { };
