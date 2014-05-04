@@ -922,6 +922,54 @@ namespace OpenTK
 
         #endregion
 
+        /// <summary>
+        /// Raises the <see cref="MouseDown"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="MouseButtonEventArgs"/> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
+        /// </param>
+        protected virtual void OnMouseDown(MouseButtonEventArgs e)
+        {
+            MouseDown(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MouseUp"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="MouseButtonEventArgs"/> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
+        /// </param>
+        protected virtual void OnMouseUp(MouseButtonEventArgs e)
+        {
+            MouseUp(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MouseMove"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="MouseMoveEventArgs"/> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
+        /// </param>
+        protected virtual void OnMouseMove(MouseMoveEventArgs e)
+        {
+            MouseMove(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MouseWheel"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="MouseWheelEventArgs"/> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
+        /// </param>
+        protected virtual void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            MouseWheel(this, e);
+        }
+
         #region OnResize
 
         /// <summary>
@@ -1074,6 +1122,11 @@ namespace OpenTK
 
         #endregion
 
+        private void OnMouseDownInternal(object sender, MouseButtonEventArgs e) { OnMouseDown(e); }
+        private void OnMouseUpInternal(object sender, MouseButtonEventArgs e) { OnMouseUp(e); }
+        private void OnMouseMoveInternal(object sender, MouseMoveEventArgs e) { OnMouseMove(e); }
+        private void OnMouseWheelInternal(object sender, MouseWheelEventArgs e) { OnMouseWheel(e); }
+
         #region OnMoveInternal
 
         private void OnMoveInternal(object sender, EventArgs e) { OnMove(e); }
@@ -1136,6 +1189,10 @@ namespace OpenTK
                     implementation.KeyUp += OnKeyUpInternal;
                     implementation.MouseEnter += OnMouseEnterInternal;
                     implementation.MouseLeave += OnMouseLeaveInternal;
+                    implementation.MouseDown += OnMouseDownInternal;
+                    implementation.MouseUp += OnMouseUpInternal;
+                    implementation.MouseMove += OnMouseMoveInternal;
+                    implementation.MouseWheel += OnMouseWheelInternal;
                     implementation.Move += OnMoveInternal;
                     implementation.Resize += OnResizeInternal;
                     implementation.TitleChanged += OnTitleChangedInternal;
@@ -1156,6 +1213,10 @@ namespace OpenTK
                     implementation.KeyUp -= OnKeyUpInternal;
                     implementation.MouseEnter -= OnMouseEnterInternal;
                     implementation.MouseLeave -= OnMouseLeaveInternal;
+                    implementation.MouseDown -= OnMouseDownInternal;
+                    implementation.MouseUp -= OnMouseUpInternal;
+                    implementation.MouseMove -= OnMouseMoveInternal;
+                    implementation.MouseWheel -= OnMouseWheelInternal;
                     implementation.Move -= OnMoveInternal;
                     implementation.Resize -= OnResizeInternal;
                     implementation.TitleChanged -= OnTitleChangedInternal;
