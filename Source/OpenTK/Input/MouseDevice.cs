@@ -48,12 +48,8 @@ namespace OpenTK.Input
         string description;
         IntPtr id;
         int numButtons, numWheels;
-        readonly bool[] button_state = new bool[Enum.GetValues(typeof(MouseButton)).Length];
-        float wheel, last_wheel;
-        Point pos = new Point(), last_pos = new Point();
-        MouseMoveEventArgs move_args = new MouseMoveEventArgs();
-        MouseButtonEventArgs button_args = new MouseButtonEventArgs();
-        MouseWheelEventArgs wheel_args = new MouseWheelEventArgs();
+
+        MouseState state;
 #if COMPAT_REV1519
         int wheel_last_accessed = 0;
         Point pos_last_accessed = new Point();
@@ -139,8 +135,7 @@ namespace OpenTK.Input
         /// </summary>
         public int Wheel
         {
-            get { return (int)Math.Round(wheel, MidpointRounding.AwayFromZero); }
-            internal set { WheelPrecise = value; }
+            get { return state.Wheel; }
         }
 
         /// <summary>
@@ -148,20 +143,7 @@ namespace OpenTK.Input
         /// </summary>
         public float WheelPrecise
         {
-            get { return wheel; }
-            internal set
-            {
-                wheel = value;
-
-                wheel_args.X = pos.X;
-                wheel_args.Y = pos.Y;
-                wheel_args.ValuePrecise = wheel;
-                wheel_args.DeltaPrecise = wheel - last_wheel;
-
-                WheelChanged(this, wheel_args);
-
-                last_wheel = wheel;
-            }
+            get { return state.WheelPrecise; }
         }
 
         #endregion
@@ -173,7 +155,7 @@ namespace OpenTK.Input
         /// </summary>
         public int X
         {
-            get { return pos.X; }
+            get { return state.X; }
         }
 
         #endregion
@@ -185,7 +167,7 @@ namespace OpenTK.Input
         /// </summary>
         public int Y
         {
-            get { return pos.Y; }
+            get { return state.Y; }
         }
 
         #endregion
@@ -201,21 +183,11 @@ namespace OpenTK.Input
         {
             get
             {
-                return button_state[(int)button];
+                return state[button];
             }
             internal set
             {
-                bool previous_state = button_state[(int)button];
-                button_state[(int)button] = value;
-
-                button_args.X = pos.X;
-                button_args.Y = pos.Y;
-                button_args.Button = button;
-                button_args.IsPressed = value;
-                if (value && !previous_state)
-                    ButtonDown(this, button_args);
-                else if (!value && previous_state)
-                    ButtonUp(this, button_args);
+                state[button] = value;
             }
         }
 
@@ -225,30 +197,34 @@ namespace OpenTK.Input
 
         #region --- Internal Members ---
 
-        #region internal Point Position
-
-        /// <summary>
-        /// Sets a System.Drawing.Point representing the absolute position of the pointer, in window pixel coordinates.
-        /// </summary>
-        internal Point Position
+        internal void SetState(MouseState state)
         {
-            get
-            {
-                return pos;
-            }
-            set
-            {
-                pos = value;
-                move_args.X = pos.X;
-                move_args.Y = pos.Y;
-                move_args.XDelta = pos.X - last_pos.X;
-                move_args.YDelta = pos.Y - last_pos.Y;
-                Move(this, move_args);
-                last_pos = pos;
-            }
+            this.state = state;
         }
 
-        #endregion
+        internal void HandleMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SetState(e.Mouse);
+            ButtonDown(this, e);
+        }
+
+        internal void HandleMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            SetState(e.Mouse);
+            ButtonUp(this, e);
+        }
+
+        internal void HandleMouseMove(object sender, MouseMoveEventArgs e)
+        {
+            SetState(e.Mouse);
+            Move(this, e);
+        }
+
+        internal void HandleMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            SetState(e.Mouse);
+            WheelChanged(this, e);
+        }
 
         #endregion
 
@@ -313,8 +289,8 @@ namespace OpenTK.Input
         {
             get
             {
-                int result = (int)Math.Round(wheel - wheel_last_accessed, MidpointRounding.AwayFromZero);
-                wheel_last_accessed = (int)wheel;
+                int result = (int)Math.Round(state.WheelPrecise - wheel_last_accessed, MidpointRounding.AwayFromZero);
+                wheel_last_accessed = state.Wheel;
                 return result;
             }
         }
@@ -331,8 +307,8 @@ namespace OpenTK.Input
         {
             get
             {
-                int result = pos.X - pos_last_accessed.X;
-                pos_last_accessed.X = pos.X;
+                int result = state.X - pos_last_accessed.X;
+                pos_last_accessed.X = state.X;
                 return result;
             }
         }
@@ -349,8 +325,8 @@ namespace OpenTK.Input
         {
             get
             {
-                int result = pos.Y - pos_last_accessed.Y;
-                pos_last_accessed.Y = pos.Y;
+                int result = state.Y - pos_last_accessed.Y;
+                pos_last_accessed.Y = state.Y;
                 return result;
             }
         }
