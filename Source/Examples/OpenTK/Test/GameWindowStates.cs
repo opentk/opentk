@@ -26,9 +26,15 @@ namespace Examples.Tests
         bool mouse_in_window = false;
         bool viewport_changed = true;
 
-        // mouse information
+        // legacy NativeWindow.MouseDevice events
+        Vector4 mousedevice_pos;
+        int mousedevice_buttons;
+        MouseState mousedevice_state;
+
+        // new NativeWindow.Mouse* events
         Vector4 mouse_pos;
         int mouse_buttons;
+        MouseState mouse_state;
 
         // time drift
         Stopwatch watch = new Stopwatch();
@@ -60,10 +66,15 @@ namespace Examples.Tests
             MouseEnter += delegate { mouse_in_window = true; };
             MouseLeave += delegate { mouse_in_window = false; };
 
-            Mouse.Move += MouseMoveHandler;
-            Mouse.WheelChanged += MouseWheelHandler;
-            Mouse.ButtonDown += MouseButtonHandler;
-            Mouse.ButtonUp += MouseButtonHandler;
+            Mouse.Move += MouseDeviceMoveHandler;
+            Mouse.WheelChanged += MouseDeviceWheelHandler;
+            Mouse.ButtonDown += MouseDeviceButtonHandler;
+            Mouse.ButtonUp += MouseDeviceButtonHandler;
+
+            MouseMove += MouseMoveHandler;
+            MouseWheel += MouseWheelHandler;
+            MouseDown += MouseButtonHandler;
+            MouseUp += MouseButtonHandler;
         }
 
         private void KeyPressHandler(object sender, KeyPressEventArgs e)
@@ -122,12 +133,53 @@ namespace Examples.Tests
             modifiers = e.Modifiers;
         }
 
+        #region MouseDevice events
+
+        void MouseDeviceMoveHandler(object sender, MouseMoveEventArgs e)
+        {
+            mousedevice_pos.X = e.X;
+            mousedevice_pos.Y = e.Y;
+            mousedevice_pos.Z = e.Mouse.Scroll.X;
+            mousedevice_pos.W = e.Mouse.Scroll.Y;
+            mousedevice_state = e.Mouse;
+        }
+
+        void MouseDeviceButtonHandler(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Button == MouseButton.Left && e.IsPressed)
+            {
+                CursorVisible = false;
+            }
+
+            if (e.IsPressed)
+            {
+                mousedevice_buttons |= 1 << (int)e.Button;
+            }
+            else
+            {
+                mousedevice_buttons &= ~(1 << (int)e.Button);
+            }
+            mousedevice_state = e.Mouse;
+        }
+
+        void MouseDeviceWheelHandler(object sender, MouseWheelEventArgs e)
+        {
+            mousedevice_pos.Z = e.Mouse.Scroll.Y;
+            mousedevice_pos.W = e.Mouse.Scroll.X;
+            mousedevice_state = e.Mouse;
+        }
+
+        #endregion
+
+        #region Mouse events
+
         void MouseMoveHandler(object sender, MouseMoveEventArgs e)
         {
             mouse_pos.X = e.X;
             mouse_pos.Y = e.Y;
             mouse_pos.Z = e.Mouse.Scroll.X;
             mouse_pos.W = e.Mouse.Scroll.Y;
+            mouse_state = e.Mouse;
         }
 
         void MouseButtonHandler(object sender, MouseButtonEventArgs e)
@@ -145,13 +197,17 @@ namespace Examples.Tests
             {
                 mouse_buttons &= ~(1 << (int)e.Button);
             }
+            mouse_state = e.Mouse;
         }
 
         void MouseWheelHandler(object sender, MouseWheelEventArgs e)
         {
-            mouse_pos.Z += e.Mouse.Scroll.Y;
-            mouse_pos.W += e.Mouse.Scroll.X;
+            mouse_pos.Z = e.Mouse.Scroll.Y;
+            mouse_pos.W = e.Mouse.Scroll.X;
+            mouse_state = e.Mouse;
         }
+
+        #endregion
 
         static int Clamp(int val, int min, int max)
         {
@@ -229,8 +285,8 @@ namespace Examples.Tests
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("MouseDevice: ");
-            sb.Append(new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel));
-            sb.Append(" ");
+            sb.AppendFormat("[{0}, {1}, {2:0.00}] ",
+                Mouse.X, Mouse.Y, Mouse.WheelPrecise);
             for (var i = MouseButton.Left; i < MouseButton.LastButton; i++)
             {
                 if (Mouse[i])
@@ -243,9 +299,27 @@ namespace Examples.Tests
             DrawString(gfx, sb.ToString(), line++);
 
             sb.Remove(0, sb.Length);
-            sb.Append("Mouse events: ");
-            sb.Append(mouse_pos);
+            sb.Append("MouseDevice events: ");
+            sb.AppendFormat("[{0}, {1}, {2:0.00}, {3:0.00}] ",
+                mousedevice_pos.X, mousedevice_pos.Y,
+                mousedevice_pos.Z, mousedevice_pos.W);
+            for (var i = MouseButton.Left; i < MouseButton.LastButton; i++)
+            {
+                if ((mousedevice_buttons & (1 << (int)i)) != 0)
+                {
+                    sb.Append(i);
+                    sb.Append(" ");
+                }
+            }
             sb.Append(" ");
+            sb.AppendLine(mousedevice_state.ToString());
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("Mouse events: ");
+            sb.AppendFormat("[{0}, {1}, {2:0.00}, {3:0.00}] ",
+                mouse_pos.X, mouse_pos.Y,
+                mouse_pos.Z, mouse_pos.W);
             for (var i = MouseButton.Left; i < MouseButton.LastButton; i++)
             {
                 if ((mouse_buttons & (1 << (int)i)) != 0)
@@ -254,7 +328,8 @@ namespace Examples.Tests
                     sb.Append(" ");
                 }
             }
-            sb.AppendLine();
+            sb.Append(" ");
+            sb.AppendLine(mouse_state.ToString());
             DrawString(gfx, sb.ToString(), line++);
             return line;
         }
