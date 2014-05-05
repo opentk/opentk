@@ -1444,6 +1444,12 @@ namespace OpenTK.Platform.SDL2
         [FieldOffset(0)]
         public DropEvent drop;
 #endif
+
+        // Ensure the structure is big enough
+        // This hack is necessary, because until we
+        // map all possible events (see above)s
+        [FieldOffset(0)]
+        private unsafe fixed byte reserved[128];
     }
 
     [StructLayout(LayoutKind.Explicit)]
