@@ -411,9 +411,7 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.KeyDown:
                         {
                             MacOSKeyCode keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
-                            //var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
                             var isARepeat = Cocoa.SendBool(e, selIsARepeat);
-                            //GetKey(keyCode, modifierFlags, keyArgs);
                             Key key = MacOSKeyMap.GetKey(keyCode);
 
                             OnKeyDown(key, isARepeat);
@@ -435,10 +433,15 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.KeyUp:
                         {
                             MacOSKeyCode keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
-                            //var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
-                            //GetKey(keyCode, modifierFlags, keyArgs);
                             Key key = MacOSKeyMap.GetKey(keyCode);
                             OnKeyUp(key);
+                        }
+                        break;
+
+                    case NSEventType.FlagsChanged:
+                        {
+                            var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
+                            UpdateModifierFlags(GetModifiers(modifierFlags));
                         }
                         break;
 

@@ -150,6 +150,73 @@ namespace OpenTK.Platform
             KeyUp(this, e);
         }
 
+        /// \internal
+        /// <summary>
+        /// Call this method to simulate KeyDown/KeyUp events
+        /// on platforms that do not generate key events for
+        /// modifier flags (e.g. Mac/Cocoa).
+        /// Note: this method does not distinguish between the
+        /// left and right variants of modifier keys.
+        /// </summary>
+        /// <param name="mods">Mods.</param>
+        protected void UpdateModifierFlags(KeyModifiers mods)
+        {
+            bool alt = (mods & KeyModifiers.Alt) != 0;
+            bool control = (mods & KeyModifiers.Control) != 0;
+            bool shift = (mods & KeyModifiers.Shift) != 0;
+
+            if (alt)
+            {
+                OnKeyDown(Key.AltLeft, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.AltRight, KeyboardState[Key.AltLeft]);
+            }
+            else
+            {
+                if (KeyboardState[Key.AltLeft])
+                {
+                    OnKeyUp(Key.AltLeft);
+                }
+                if (KeyboardState[Key.AltRight])
+                {
+                    OnKeyUp(Key.AltRight);
+                }
+            }
+
+            if (control)
+            {
+                OnKeyDown(Key.ControlLeft, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.ControlRight, KeyboardState[Key.AltLeft]);
+            }
+            else
+            {
+                if (KeyboardState[Key.ControlLeft])
+                {
+                    OnKeyUp(Key.ControlLeft);
+                }
+                if (KeyboardState[Key.ControlRight])
+                {
+                    OnKeyUp(Key.ControlRight);
+                }
+            }
+
+            if (shift)
+            {
+                OnKeyDown(Key.ShiftLeft, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.ShiftRight, KeyboardState[Key.AltLeft]);
+            }
+            else
+            {
+                if (KeyboardState[Key.ShiftLeft])
+                {
+                    OnKeyUp(Key.ShiftLeft);
+                }
+                if (KeyboardState[Key.ShiftRight])
+                {
+                    OnKeyUp(Key.ShiftRight);
+                }
+            }
+        }
+
         protected void OnMouseLeave(EventArgs e)
         {
             MouseLeave(this, e);
