@@ -469,7 +469,7 @@ namespace OpenTK.Platform.MacOS
                             {
                                 if (selectedCursor != MouseCursor.Default)
                                 {
-                                    SetCursor(MouseCursor.Default);
+                                    //SetCursor(MouseCursor.Default);
                                 }
 
                                 OnMouseLeave(EventArgs.Empty);
@@ -587,14 +587,20 @@ namespace OpenTK.Platform.MacOS
 
         public override System.Drawing.Point PointToClient(System.Drawing.Point point)
         {
-            var r = Cocoa.SendRect(windowInfo.Handle, selConvertRectFromScreen, new RectangleF(point.X, point.Y, 0, 0));
-            return new Point((int)r.X, (int)(GetContentViewFrame().Height - GetCurrentScreenFrame().Height - r.Y));
+            var r =
+                Cocoa.SendRect(windowInfo.ViewHandle, selConvertRectToBacking,
+                    Cocoa.SendRect(windowInfo.Handle, selConvertRectFromScreen,
+                        new RectangleF(point.X, GetCurrentScreenFrame().Height - point.Y, 0, 0)));
+            return new Point((int)r.X, (int)(Height - r.Y));
         }
 
         public override System.Drawing.Point PointToScreen(System.Drawing.Point point)
         {
-            var r = Cocoa.SendRect(windowInfo.Handle, selConvertRectToScreen, new RectangleF(point.X, point.Y, 0, 0));
-            return new Point((int)r.X, (int)(-GetContentViewFrame().Height + GetCurrentScreenFrame().Height - r.Y));
+            var r =
+                Cocoa.SendRect(windowInfo.Handle, selConvertRectToScreen,
+                    Cocoa.SendRect(windowInfo.ViewHandle, selConvertRectFromBacking,
+                        new RectangleF(point.X, Height - point.Y, 0, 0)));
+            return new Point((int)r.X, (int)(GetCurrentScreenFrame().Height - r.Y));
         }
 
         public override System.Drawing.Icon Icon
@@ -810,11 +816,21 @@ namespace OpenTK.Platform.MacOS
             get
             {
                 var r = Cocoa.SendRect(windowInfo.Handle, selFrame);
-                return new Rectangle((int)r.X, (int)(GetCurrentScreenFrame().Height - r.Y), (int)r.Width, (int)r.Height);
+                return new Rectangle(
+                    (int)r.X,
+                    (int)(GetCurrentScreenFrame().Height - r.Y - r.Height),
+                    (int)r.Width,
+                    (int)r.Height);
             }
             set
             {
-                Cocoa.SendVoid(windowInfo.Handle, selSetFrame, new RectangleF(value.X, GetCurrentScreenFrame().Height - value.Y, value.Width, value.Height), true);
+                Cocoa.SendVoid(windowInfo.Handle, selSetFrame,
+                    new RectangleF(
+                        value.X,
+                        GetCurrentScreenFrame().Height - value.Y - value.Height,
+                        value.Width,
+                        value.Height),
+                    true);
             }
         }
 
@@ -1039,23 +1055,25 @@ namespace OpenTK.Platform.MacOS
 
         private void SetCursorVisible(bool visible)
         {
+            // If the mouse is outside the window and we want to hide it,
+            // move it inside the window first.
+            // Otherwise, if we are making the cursor visible again,
+            // we place it in the same spot as reported in the current
+            // MouseState to avoid sudden jumps.
+            if (!visible && !Bounds.Contains(new Point(MouseState.X, MouseState.Y)))
+            {
+                Mouse.SetPosition(
+                    (Bounds.Left + Bounds.Right) / 2,
+                    (Bounds.Top + Bounds.Bottom) / 2);
+            }
+            else if (visible)
+            {
+                var p = PointToScreen(new Point(MouseState.X, MouseState.Y));
+                Mouse.SetPosition((int)p.X, (int)p.Y);
+            }
+
             Carbon.CG.AssociateMouseAndMouseCursorPosition(visible);
             Cocoa.SendVoid(NSCursor, visible ? selUnhide : selHide);
-        }
-
-        private void SetCursor(MouseCursor cursor)
-        {
-            if (cursor == MouseCursor.Default)
-            {
-                Cocoa.SendVoid(NSCursor, selUnhide);
-            }
-            else if (cursor == MouseCursor.Empty)
-            {
-                Cocoa.SendVoid(NSCursor, selHide);
-            }
-            else
-            {
-            }
         }
 
         private void SetMenuVisible(bool visible)
