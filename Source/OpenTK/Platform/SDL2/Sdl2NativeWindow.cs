@@ -274,8 +274,10 @@ namespace OpenTK.Platform.SDL2
 
         static void ProcessMouseMotionEvent(Sdl2NativeWindow window, MouseMotionEvent ev)
         {
-            //float scale = window.ClientSize.Width / (float)window.Size.Width;
-            window.OnMouseMove(ev.X, ev.Y);
+            float scale = window.ClientSize.Width / (float)window.Size.Width;
+            window.OnMouseMove(
+                (int)Math.Round(ev.X * scale),
+                (int)Math.Round(ev.Y * scale));
         }
 
         static void ProcessMouseWheelEvent(Sdl2NativeWindow window, MouseWheelEvent ev)
