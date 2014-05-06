@@ -26,6 +26,8 @@ namespace Examples.Tests
         bool mouse_in_window = false;
         bool viewport_changed = true;
 
+        MouseCursor Pencil;
+
         // legacy GameWindow.Mouse.* events
         Vector4 mousedevice_pos;
         int mousedevice_buttons;
@@ -136,6 +138,10 @@ namespace Examples.Tests
                 case Key.BracketRight: TargetUpdateFrequency++; break;
                 case Key.Comma: TargetRenderFrequency--; break;
                 case Key.Period: TargetRenderFrequency++; break;
+
+                case Key.Space:
+                    CursorVisible = !CursorVisible;
+                    break;
             }
 
             if (!keyboard_keys.ContainsKey(e.Key))
@@ -187,18 +193,15 @@ namespace Examples.Tests
 
         void MouseDeviceButtonHandler(object sender, MouseButtonEventArgs e)
         {
-            if (e.Button == MouseButton.Left && e.IsPressed)
-            {
-                CursorVisible = false;
-            }
-
             if (e.IsPressed)
             {
                 mousedevice_buttons |= 1 << (int)e.Button;
+                Cursor = Pencil;
             }
             else
             {
                 mousedevice_buttons &= ~(1 << (int)e.Button);
+                Cursor = MouseCursor.Default;
             }
             mousedevice_state = e.Mouse;
         }
@@ -225,11 +228,6 @@ namespace Examples.Tests
 
         void MouseButtonHandler(object sender, MouseButtonEventArgs e)
         {
-            if (e.Button == MouseButton.Left && e.IsPressed)
-            {
-                CursorVisible = false;
-            }
-
             if (e.IsPressed)
             {
                 mouse_buttons |= 1 << (int)e.Button;
@@ -587,6 +585,17 @@ namespace Examples.Tests
         protected override void OnLoad(EventArgs e)
         {
             watch.Start();
+
+            using (var bitmap = new Bitmap("Data/Textures/cursor.png"))
+            {
+                var data = bitmap.LockBits(
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height), 
+                    System.Drawing.Imaging.ImageLockMode.ReadOnly, 
+                    System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
+                Pencil = new OpenTK.MouseCursor(
+                    2, 21, data.Width, data.Height, data.Scan0);
+            }
 
             GL.ClearColor(Color.MidnightBlue);
 
