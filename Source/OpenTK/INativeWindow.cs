@@ -129,7 +129,7 @@ namespace OpenTK
         /// <summary>
         /// This property is deprecated and should not be used.
         /// </summary>
-        [Obsolete("Use OpenTK.Input.Mouse/Keybord/Joystick/GamePad instead.")]
+        [Obsolete("Use OpenTK.Input.Mouse/Keyboard/Joystick/GamePad instead.")]
         OpenTK.Input.IInputDriver InputDriver { get; }
 
         /// <summary>
