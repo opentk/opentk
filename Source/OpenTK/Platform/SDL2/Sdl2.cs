@@ -1444,6 +1444,13 @@ namespace OpenTK.Platform.SDL2
         [FieldOffset(0)]
         public DropEvent drop;
 #endif
+
+        // Ensure the structure is big enough
+        // This hack is necessary to ensure compatibility
+        // with different SDL versions, which might have
+        // different sizeof(SDL_Event).
+        [FieldOffset(0)]
+        private unsafe fixed byte reserved[128];
     }
 
     [StructLayout(LayoutKind.Explicit)]
