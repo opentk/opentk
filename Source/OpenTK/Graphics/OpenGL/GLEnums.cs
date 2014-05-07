@@ -48574,6 +48574,10 @@ namespace OpenTK.Graphics.OpenGL
     public enum RenderbufferStorage : int
     {
         /// <summary>
+        /// Original was GL_DEPTH_COMPONENT = 0x1902
+        /// </summary>
+        DepthComponent = ((int)0x1902)        ,
+        /// <summary>
         /// Original was GL_R3_G3_B2 = 0x2A10
         /// </summary>
         R3G3B2 = ((int)0x2A10)        ,
@@ -48733,6 +48737,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_RG32UI = 0x823C
         /// </summary>
         Rg32ui = ((int)0x823C)        ,
+        /// <summary>
+        /// Original was GL_DEPTH_STENCIL = 0x84F9
+        /// </summary>
+        DepthStencil = ((int)0x84F9)        ,
         /// <summary>
         /// Original was GL_RGBA32F = 0x8814
         /// </summary>

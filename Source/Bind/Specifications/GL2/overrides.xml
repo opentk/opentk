@@ -4339,10 +4339,12 @@
       <use enum="PixelInternalFormat" token="RGBA16UI" />
       <use enum="PixelInternalFormat" token="RGBA32I" />
       <use enum="PixelInternalFormat" token="RGBA32UI" />
+      <use enum="PixelFormat" token="DEPTH_COMPONENT" />
       <use enum="PixelInternalFormat" token="DEPTH_COMPONENT16" />
       <use enum="PixelInternalFormat" token="DEPTH_COMPONENT24" />
       <use enum="PixelInternalFormat" token="DEPTH_COMPONENT32" />
       <use enum="PixelInternalFormat" token="DEPTH_COMPONENT32F" />
+      <use enum="PixelFormat" token="DEPTH_STENCIL" />
       <use enum="PixelInternalFormat" token="DEPTH24_STENCIL8" />
       <use enum="PixelInternalFormat" token="DEPTH32F_STENCIL8" />
       <use enum="ARB_framebuffer_object" token="STENCIL_INDEX1" />
