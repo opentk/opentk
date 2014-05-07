@@ -48646,6 +48646,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Rgba16 = ((int)0x805B)        ,
         /// <summary>
+        /// Original was GL_DEPTH_COMPONENT = 0x1902
+        /// </summary>
+        DepthComponent = ((int)0x1902)        ,
+        /// <summary>
         /// Original was GL_DEPTH_COMPONENT16 = 0x81a5
         /// </summary>
         DepthComponent16 = ((int)0x81a5)        ,
