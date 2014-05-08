@@ -109,6 +109,20 @@ namespace OpenTK.Platform
         protected void OnFocusedChanged(EventArgs e)
         {
             FocusedChanged(this, e);
+
+            if (!Focused)
+            {
+                // Clear keyboard state, otherwise KeyUp
+                // events may be missed resulting in stuck
+                // keys.
+                for (Key key = 0; key < Key.LastKey; key++)
+                {
+                    if (KeyboardState[key])
+                    {
+                        OnKeyUp(key);
+                    }
+                }
+            }
         }
 
         protected void OnWindowBorderChanged(EventArgs e)
