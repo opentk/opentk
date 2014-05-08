@@ -739,7 +739,7 @@ namespace OpenTK.Platform.X11
             if (Location != new_location)
             {
                 bounds.Location = new_location;
-                Move(this, EventArgs.Empty);
+                OnMove(EventArgs.Empty);
             }
 
             // Note: width and height denote the internal (client) size.
@@ -750,9 +750,15 @@ namespace OpenTK.Platform.X11
             if (Bounds.Size != new_size)
             {
                 bounds.Size = new_size;
-                client_rectangle.Size = new Size(e.ConfigureEvent.width, e.ConfigureEvent.height);
 
-                Resize(this, EventArgs.Empty);
+                // X11 sets the client width/height to 0
+                // when the window is minimized. Many apps
+                // do not expect this and crash, so clamp
+                // minimum width/height to 1 instead.
+                client_rectangle.Size = new Size(
+                    Math.Max(e.ConfigureEvent.width, 1),
+                    Math.Max(e.ConfigureEvent.height, 1));
+                OnResize(EventArgs.Empty);
             }
 
             //Debug.Print("[X11] Window bounds changed: {0}", bounds);
@@ -800,7 +806,7 @@ namespace OpenTK.Platform.X11
                             bool previous_visible = visible;
                             visible = true;
                             if (visible != previous_visible)
-                                VisibleChanged(this, EventArgs.Empty);
+                                OnVisibleChanged(EventArgs.Empty);
                         }
                         return;
 
@@ -809,7 +815,7 @@ namespace OpenTK.Platform.X11
                             bool previous_visible = visible;
                             visible = false;
                             if (visible != previous_visible)
-                                VisibleChanged(this, EventArgs.Empty);
+                                OnVisibleChanged(EventArgs.Empty);
                         }
                         break;
 
@@ -822,7 +828,7 @@ namespace OpenTK.Platform.X11
                         {
                             Debug.WriteLine("Exit message received.");
                             CancelEventArgs ce = new CancelEventArgs();
-                            Closing(this, ce);
+                            OnClosing(ce);
 
                             if (!ce.Cancel)
                             {
@@ -843,7 +849,7 @@ namespace OpenTK.Platform.X11
                         Debug.WriteLine("Window destroyed");
                         exists = false;
 
-                        Closed(this, EventArgs.Empty);
+                        OnClosed(EventArgs.Empty);
 
                         return;
 
@@ -1002,7 +1008,7 @@ namespace OpenTK.Platform.X11
                             bool previous_focus = has_focus;
                             has_focus = true;
                             if (has_focus != previous_focus)
-                                FocusedChanged(this, EventArgs.Empty);
+                                OnFocusedChanged(EventArgs.Empty);
                         }
                         break;
 
@@ -1011,19 +1017,19 @@ namespace OpenTK.Platform.X11
                             bool previous_focus = has_focus;
                             has_focus = false;
                             if (has_focus != previous_focus)
-                                FocusedChanged(this, EventArgs.Empty);
+                                OnFocusedChanged(EventArgs.Empty);
                         }
                         break;
 
                     case XEventName.LeaveNotify:
                         if (CursorVisible)
                         {
-                            MouseLeave(this, EventArgs.Empty);
+                            OnMouseLeave(EventArgs.Empty);
                         }
                         break;
 
                     case XEventName.EnterNotify:
-                        MouseEnter(this, EventArgs.Empty);
+                        OnMouseEnter(EventArgs.Empty);
                         break;
 
                     case XEventName.MappingNotify:
@@ -1038,7 +1044,7 @@ namespace OpenTK.Platform.X11
                    case XEventName.PropertyNotify:
                         if (e.PropertyEvent.atom == _atom_net_wm_state)
                         {
-                            WindowStateChanged(this, EventArgs.Empty);
+                            OnWindowStateChanged(EventArgs.Empty);
                         }
 
                         //if (e.PropertyEvent.atom == _atom_net_frame_extents)
@@ -1122,111 +1128,23 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region Location
-
-        public Point Location
-        {
-            get { return Bounds.Location; }
-            set
-            {
-                Bounds = new Rectangle(value, Bounds.Size);
-            }
-        }
-
-        #endregion
-
-        #region Size
-
-        public Size Size
-        {
-            get { return Bounds.Size; }
-            set
-            {
-                Bounds = new Rectangle(Bounds.Location, value);
-            }
-        }
-
-        #endregion
-
-        #region ClientRectangle
-
-        public Rectangle ClientRectangle
-        {
-            get
-            {
-                if (client_rectangle.Width == 0)
-                    client_rectangle.Width = 1;
-                if (client_rectangle.Height == 0)
-                    client_rectangle.Height = 1;
-                return client_rectangle;
-            }
-            set
-            {
-                using (new XLock(window.Display))
-                {
-                    Functions.XMoveWindow(window.Display, window.Handle,
-                        value.X, value.Y);
-                    Functions.XResizeWindow(window.Display, window.Handle,
-                        value.Width, value.Height);
-                }
-                ProcessEvents();
-            }
-        }
-
-        #endregion
-
         #region ClientSize
 
         public override Size ClientSize
         {
             get
             {
-                return ClientRectangle.Size;
+                return client_rectangle.Size;
             }
             set
             {
-                ClientRectangle = new Rectangle(Point.Empty, value);
+                using (new XLock(window.Display))
+                {
+                    Functions.XResizeWindow(window.Display, window.Handle,
+                        value.Width, value.Height);
+                }
+                ProcessEvents();
             }
-        }
-
-        #endregion
-
-        #region Width
-
-        public int Width
-        {
-            get { return ClientSize.Width; }
-            set { ClientSize = new Size(value, Height); }
-        }
-
-        #endregion
-
-        #region Height
-
-        public int Height
-        {
-            get { return ClientSize.Height; }
-            set { ClientSize = new Size(Width, value); }
-        }
-
-        #endregion
-
-        #region X
-
-        public int X
-        {
-            get { return Location.X; }
-            set { Location = new Point(value, Y); }
-        }
-
-        #endregion
-
-        #region Y
-
-        public int Y
-        {
-            get { return Location.Y; }
-            set { Location = new Point(X, value); }
         }
 
         #endregion
@@ -1299,7 +1217,7 @@ namespace OpenTK.Platform.X11
                 }
 
                 icon = value;
-                IconChanged(this, EventArgs.Empty);
+                OnIconChanged(EventArgs.Empty);
             }
         }
 
@@ -1497,31 +1415,10 @@ namespace OpenTK.Platform.X11
                         break;
                 }
 
-                WindowBorderChanged(this, EventArgs.Empty);
+                OnWindowBorderChanged(EventArgs.Empty);
             }
         }
 
-        #endregion
-
-        #region Events
-
-        public event EventHandler<EventArgs> Move = delegate { };
-        public event EventHandler<EventArgs> Resize = delegate { };
-        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
-        public event EventHandler<EventArgs> Closed = delegate { };
-        public event EventHandler<EventArgs> Disposed = delegate { };
-        public event EventHandler<EventArgs> IconChanged = delegate { };
-        public event EventHandler<EventArgs> TitleChanged = delegate { };
-        public event EventHandler<EventArgs> VisibleChanged = delegate { };
-        public event EventHandler<EventArgs> FocusedChanged = delegate { };
-        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
-        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
-        public event EventHandler<KeyboardKeyEventArgs> KeyDown = delegate { };
-        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
-        public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
-        public event EventHandler<EventArgs> MouseEnter = delegate { };
-        public event EventHandler<EventArgs> MouseLeave = delegate { };
-        
         #endregion
 
         #region Cursor
@@ -1659,7 +1556,7 @@ namespace OpenTK.Platform.X11
                     }
                 }
 
-                TitleChanged(this, EventArgs.Empty);
+                OnTitleChanged(EventArgs.Empty);
             }
         }
 
