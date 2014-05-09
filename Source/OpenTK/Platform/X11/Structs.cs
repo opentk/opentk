@@ -1671,6 +1671,13 @@ namespace OpenTK.Platform.X11
 
     // XInput2 structures
 
+    enum XIClassType
+    {
+        Button = 1,
+        Valuator = 2,
+        Scroll = 3,
+    }
+
     struct XIDeviceInfo
     {
         public int deviceid;
@@ -1684,8 +1691,31 @@ namespace OpenTK.Platform.X11
 
     struct XIAnyClassInfo
     {
-        public int type;
+        public XIClassType type;
         public int sourceid;
+    }
+
+    struct XIButtonClassInfo
+    {
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct XIValuatorClassInfo
+    {
+        public Atom label;
+        public double max;
+        public double min;
+        public int mode;
+        public int number;
+        public int resolution;
+        public int sourceid;
+        public int type;
+        public double value;
+    }
+
+    struct XIScrollClassInfo
+    {
+
     }
 
     struct XIDeviceEvent

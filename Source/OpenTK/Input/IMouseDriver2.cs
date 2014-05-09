@@ -36,5 +36,6 @@ namespace OpenTK.Input
         MouseState GetState();
         MouseState GetState(int index);
         void SetPosition(double x, double y);
+        MouseState GetCursorState();
     }
 }

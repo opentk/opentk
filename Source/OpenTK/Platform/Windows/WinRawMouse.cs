@@ -348,6 +348,30 @@ namespace OpenTK.Platform.Windows
             Functions.SetCursorPos((int)x, (int)y);
         }
 
+        public MouseState GetCursorState()
+        {
+            var state = new MouseState();
+            state.SetIsConnected(true);
+
+            POINT p = new POINT();
+            Functions.GetCursorPos(ref p);
+            bool left = Functions.GetKeyState(VirtualKeys.LBUTTON) != 0;
+            bool right = Functions.GetKeyState(VirtualKeys.RBUTTON) != 0;
+            bool middle = Functions.GetKeyState(VirtualKeys.MBUTTON) != 0;
+            bool x1 = Functions.GetKeyState(VirtualKeys.XBUTTON1) != 0;
+            bool x2 = Functions.GetKeyState(VirtualKeys.XBUTTON2) != 0;
+
+            state.X = p.X;
+            state.Y = p.Y;
+            state[MouseButton.Left] = left;
+            state[MouseButton.Right] = right;
+            state[MouseButton.Middle] = middle;
+            state[MouseButton.Button1] = x1;
+            state[MouseButton.Button2] = x2;
+
+            return state;
+        }
+
         #endregion
     }
 }

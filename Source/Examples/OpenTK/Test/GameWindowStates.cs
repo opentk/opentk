@@ -301,6 +301,7 @@ namespace Examples.Tests
         static int DrawMice(Graphics gfx, int line)
         {
             line++;
+            DrawString(gfx, String.Format("Cursor: {0}", OpenTK.Input.Mouse.GetCursorState()), line++);
             DrawString(gfx, "Mouse:", line++);
             for (int i = 0; i < 4; i++)
             {

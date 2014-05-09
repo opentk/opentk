@@ -834,6 +834,14 @@ namespace OpenTK.Platform.MacOS
             return new MouseState();
         }
 
+        MouseState IMouseDriver2.GetCursorState()
+        {
+            var state = new MouseState();
+            state.SetIsConnected(true);
+
+            return state;
+        }
+
         void IMouseDriver2.SetPosition(double x, double y)
         {
             CG.SetLocalEventsSuppressionInterval(0.0);

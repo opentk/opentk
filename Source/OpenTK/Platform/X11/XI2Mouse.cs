@@ -37,8 +37,15 @@ namespace OpenTK.Platform.X11
     // This should be easy: just read the device id and route the data to the correct device.
     sealed class XI2Mouse : IMouseDriver2
     {
-        List<MouseState> mice = new List<MouseState>();
-        Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps raw ids to mouse ids
+        class XIMouse
+        {
+            public MouseState State;
+            public XIDeviceInfo Info;
+        }
+        XIMouse master; // XIMouse for the mouse cursor
+        List<XIMouse> devices = new List<XIMouse>(); // List of connected mice
+        Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps hardware device ids to XIMouse ids
+
         internal readonly X11WindowInfo window;
         internal static int XIOpCode { get; private set; }
         static bool supported;
@@ -72,12 +79,20 @@ namespace OpenTK.Platform.X11
             if (!IsSupported(window.Display))
                 throw new NotSupportedException("XInput2 not supported.");
 
-            using (XIEventMask mask = new XIEventMask(1, XIEventMasks.RawButtonPressMask |
-                    XIEventMasks.RawButtonReleaseMask | XIEventMasks.RawMotionMask))
+            using (new XLock(API.DefaultDisplay))
+            using (XIEventMask mask = new XIEventMask(1,
+                XIEventMasks.RawButtonPressMask |
+                XIEventMasks.RawButtonReleaseMask |
+                XIEventMasks.RawMotionMask |
+                XIEventMasks.MotionMask |
+                XIEventMasks.ButtonPressMask |
+                XIEventMasks.ButtonReleaseMask |
+                XIEventMasks.DeviceChangedMask))
             {
-                Functions.XISelectEvents(window.Display, window.Handle, mask);
-                Functions.XISelectEvents(window.Display, window.RootWindow, mask);
+                XI.SelectEvents(window.Display, window.Handle, mask);
             }
+
+            UpdateDevices();
         }
 
         // Checks whether XInput2 is supported on the specified display.
@@ -90,14 +105,51 @@ namespace OpenTK.Platform.X11
             using (new XLock(display))
             {
                 int major, ev, error;
-                if (Functions.XQueryExtension(display, "XInputExtension", out major, out ev, out error) == 0)
+                if (Functions.XQueryExtension(display, "XInputExtension", out major, out ev, out error) != 0)
                 {
-                    return false;
+                    XIOpCode = major;
+
+                    int minor = 2;
+                    while (minor >= 0)
+                    {
+                        if (XI.QueryVersion(display, ref major, ref minor) == ErrorCodes.Success)
+                        {
+                            return true;
+                        }
+                        minor--;
+                    }
                 }
-                XIOpCode = major;
             }
 
-            return true;
+            return false;
+        }
+
+        void UpdateDevices()
+        {
+            int count;
+            unsafe
+            {
+                XIDeviceInfo* list = (XIDeviceInfo*)XI.QueryDevice(window.Display, 1, out count);
+                for (int i = 0; i < count; i++)
+                {
+                    if (devices.Count < i)
+                    {
+                        devices.Add(new XIMouse());
+                    }
+                    XIMouse d = devices[i];
+                    d.State.SetIsConnected(true);
+                    d.Info = *(list + i);
+
+                    // Map the hardware device id to the current XIMouse id
+                    if (!rawids.ContainsKey(d.Info.deviceid))
+                    {
+                        rawids.Add(d.Info.deviceid, 0);
+                    }
+                    rawids[d.Info.deviceid] = i;
+                }
+                XI.FreeDeviceInfo((IntPtr)list);
+            }
+
         }
 
         #region IMouseDriver2 Members
@@ -106,9 +158,9 @@ namespace OpenTK.Platform.X11
         {
             ProcessEvents();
             MouseState master = new MouseState();
-            foreach (MouseState ms in mice)
+            foreach (var d in devices)
             {
-                master.MergeBits(ms);
+                master.MergeBits(d.State);
             }
             return master;
         }
@@ -116,10 +168,15 @@ namespace OpenTK.Platform.X11
         public MouseState GetState(int index)
         {
             ProcessEvents();
-            if (mice.Count > index)
-                return mice[index];
+            if (devices.Count > index)
+                return devices[index].State;
             else
                 return new MouseState();
+        }
+
+        public MouseState GetCursorState()
+        {
+            return master.State;
         }
 
         public void SetPosition(double x, double y)
@@ -169,79 +226,133 @@ namespace OpenTK.Platform.X11
                     cookie = e.GenericEventCookie;
                     if (Functions.XGetEventData(window.Display, ref cookie) != 0)
                     {
-                        XIRawEvent raw = (XIRawEvent)
-                            Marshal.PtrToStructure(cookie.data, typeof(XIRawEvent));
-
-                        if (!rawids.ContainsKey(raw.deviceid))
-                        {
-                            mice.Add(new MouseState());
-                            rawids.Add(raw.deviceid, mice.Count - 1);
-                        }
-                        MouseState state = mice[rawids[raw.deviceid]];
-
-                        switch (raw.evtype)
+                        switch ((XIEventType)cookie.evtype)
                         {
                             case XIEventType.RawMotion:
-                                double x = 0, y = 0;
-                                if (IsBitSet(raw.valuators.mask, 0))
-                                {
-                                    x = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(raw.raw_values, 0));
-                                }
-                                if (IsBitSet(raw.valuators.mask, 1))
-                                {
-                                    y = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(raw.raw_values, 8));
-                                }
-
-                                if (!CheckMouseWarp(x, y))
-                                {
-                                    state.X += (int)x;
-                                    state.Y += (int)y;
-                                }
-                                break;
-
                             case XIEventType.RawButtonPress:
-                                switch (raw.detail)
-                                {
-                                    case 1: state.EnableBit((int)MouseButton.Left); break;
-                                    case 2: state.EnableBit((int)MouseButton.Middle); break;
-                                    case 3: state.EnableBit((int)MouseButton.Right); break;
-                                    case 4: state.SetScrollRelative(0, 1); break;
-                                    case 5: state.SetScrollRelative(0, -1); break;
-                                    case 6: state.EnableBit((int)MouseButton.Button1); break;
-                                    case 7: state.EnableBit((int)MouseButton.Button2); break;
-                                    case 8: state.EnableBit((int)MouseButton.Button3); break;
-                                    case 9: state.EnableBit((int)MouseButton.Button4); break;
-                                    case 10: state.EnableBit((int)MouseButton.Button5); break;
-                                    case 11: state.EnableBit((int)MouseButton.Button6); break;
-                                    case 12: state.EnableBit((int)MouseButton.Button7); break;
-                                    case 13: state.EnableBit((int)MouseButton.Button8); break;
-                                    case 14: state.EnableBit((int)MouseButton.Button9); break;
-                                }
+                            case XIEventType.RawButtonRelease:
+                                // Delivered to all XIMouse instances
+                                ProcessRawEvent(ref cookie);
                                 break;
 
-                            case XIEventType.RawButtonRelease:
-                                switch (raw.detail)
-                                {
-                                    case 1: state.DisableBit((int)MouseButton.Left); break;
-                                    case 2: state.DisableBit((int)MouseButton.Middle); break;
-                                    case 3: state.DisableBit((int)MouseButton.Right); break;
-                                    case 6: state.DisableBit((int)MouseButton.Button1); break;
-                                    case 7: state.DisableBit((int)MouseButton.Button2); break;
-                                    case 8: state.DisableBit((int)MouseButton.Button3); break;
-                                    case 9: state.DisableBit((int)MouseButton.Button4); break;
-                                    case 10: state.DisableBit((int)MouseButton.Button5); break;
-                                    case 11: state.DisableBit((int)MouseButton.Button6); break;
-                                    case 12: state.DisableBit((int)MouseButton.Button7); break;
-                                    case 13: state.DisableBit((int)MouseButton.Button8); break;
-                                    case 14: state.DisableBit((int)MouseButton.Button9); break;
-                                }
+                            case XIEventType.Motion:
+                            case XIEventType.ButtonPress:
+                            case XIEventType.ButtonRelease:
+                                // Delivered only to the actual mouse cursor XIMouse instance
+                                ProcessEvent(ref cookie);
+                                break;
+
+                            case XIEventType.DeviceChanged:
+                                UpdateDevices();
                                 break;
                         }
-                        mice[rawids[raw.deviceid]] = state;
                     }
                     Functions.XFreeEventData(window.Display, ref cookie);
                 }
-             }
+            }
+        }
+
+        void ProcessEvent(ref XGenericEventCookie cookie)
+        {
+            XIDeviceEvent e = (XIDeviceEvent)
+                Marshal.PtrToStructure(cookie.data, typeof(XIDeviceEvent));
+
+            master.State.SetIsConnected(true);
+            master.State.X = (int)Math.Round(e.root_x);
+            master.State.Y = (int)Math.Round(e.root_y);
+
+        }
+
+        void ProcessRawEvent(ref XGenericEventCookie cookie)
+        {
+            XIRawEvent raw = (XIRawEvent)
+                Marshal.PtrToStructure(cookie.data, typeof(XIRawEvent));
+
+            if (!rawids.ContainsKey(raw.deviceid))
+            {
+                Debug.Print("Unknown mouse device {0} encountered, ignoring.", raw.deviceid);
+                return;
+            }
+
+            var d = devices[rawids[raw.deviceid]];
+
+            switch (raw.evtype)
+            {
+                case XIEventType.RawMotion:
+                    double x = 0, y = 0;
+                    double h = 0, v = 0;
+                    for (int i = 0; i < d.Info.num_classes; i++)
+                    {
+                        unsafe
+                        {
+                            XIAnyClassInfo* info = (XIAnyClassInfo*)d.Info.classes + i;
+                            switch (info->type)
+                            {
+                                case XIClassType.Valuator:
+                                    {
+                                        XIValuatorClassInfo* n = (XIValuatorClassInfo*)info;
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+
+                    if (IsBitSet(raw.valuators.mask, 0))
+                    {
+                        x = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(raw.raw_values, 0));
+                    }
+                    if (IsBitSet(raw.valuators.mask, 1))
+                    {
+                        y = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(raw.raw_values, 8));
+                    }
+                    break;
+                    /*
+                    if (!CheckMouseWarp(x, y))
+                    {
+                        state.X += (int)x;
+                        state.Y += (int)y;
+                    }
+                    break;
+
+                case XIEventType.RawButtonPress:
+                    switch (raw.detail)
+                    {
+                        case 1: state.EnableBit((int)MouseButton.Left); break;
+                        case 2: state.EnableBit((int)MouseButton.Middle); break;
+                        case 3: state.EnableBit((int)MouseButton.Right); break;
+                        case 4: state.SetScrollRelative(0, 1); break;
+                        case 5: state.SetScrollRelative(0, -1); break;
+                        case 6: state.EnableBit((int)MouseButton.Button1); break;
+                        case 7: state.EnableBit((int)MouseButton.Button2); break;
+                        case 8: state.EnableBit((int)MouseButton.Button3); break;
+                        case 9: state.EnableBit((int)MouseButton.Button4); break;
+                        case 10: state.EnableBit((int)MouseButton.Button5); break;
+                        case 11: state.EnableBit((int)MouseButton.Button6); break;
+                        case 12: state.EnableBit((int)MouseButton.Button7); break;
+                        case 13: state.EnableBit((int)MouseButton.Button8); break;
+                        case 14: state.EnableBit((int)MouseButton.Button9); break;
+                    }
+                    break;
+
+                case XIEventType.RawButtonRelease:
+                    switch (raw.detail)
+                    {
+                        case 1: state.DisableBit((int)MouseButton.Left); break;
+                        case 2: state.DisableBit((int)MouseButton.Middle); break;
+                        case 3: state.DisableBit((int)MouseButton.Right); break;
+                        case 6: state.DisableBit((int)MouseButton.Button1); break;
+                        case 7: state.DisableBit((int)MouseButton.Button2); break;
+                        case 8: state.DisableBit((int)MouseButton.Button3); break;
+                        case 9: state.DisableBit((int)MouseButton.Button4); break;
+                        case 10: state.DisableBit((int)MouseButton.Button5); break;
+                        case 11: state.DisableBit((int)MouseButton.Button6); break;
+                        case 12: state.DisableBit((int)MouseButton.Button7); break;
+                        case 13: state.DisableBit((int)MouseButton.Button8); break;
+                        case 14: state.DisableBit((int)MouseButton.Button9); break;
+                    }
+                    break;*/
+            }
+            //mice[rawids[raw.deviceid]] = state;
         }
 
         static bool IsEventValid(IntPtr display, ref XEvent e, IntPtr arg)
@@ -249,7 +360,10 @@ namespace OpenTK.Platform.X11
             return e.GenericEventCookie.extension == arg.ToInt32() &&
                 (e.GenericEventCookie.evtype == (int)XIEventType.RawMotion ||
                 e.GenericEventCookie.evtype == (int)XIEventType.RawButtonPress ||
-                e.GenericEventCookie.evtype == (int)XIEventType.RawButtonRelease);
+                e.GenericEventCookie.evtype == (int)XIEventType.RawButtonRelease ||
+                e.GenericEventCookie.evtype == (int)XIEventType.Motion ||
+                e.GenericEventCookie.evtype == (int)XIEventType.ButtonPress ||
+                e.GenericEventCookie.evtype == (int)XIEventType.ButtonRelease);
         }
 
         static bool IsBitSet(IntPtr mask, int bit)
