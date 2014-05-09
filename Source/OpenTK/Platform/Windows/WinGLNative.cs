@@ -1008,7 +1008,7 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return ClientRectangle.Size;
+                return client_rectangle.Size;
             }
             set
             {
