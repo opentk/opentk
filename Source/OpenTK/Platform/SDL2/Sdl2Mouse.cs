@@ -123,16 +123,17 @@ namespace OpenTK.Platform.SDL2
         {
             int x, y;
             var buttons = SDL.GetMouseState(out x, out y);
-            
-            var state = new MouseState();
-            state.SetIsConnected(true);
-            state.X = x;
-            state.Y = y;
-            state[MouseButton.Left] = (buttons & ButtonFlags.Left) != 0;
-            state[MouseButton.Middle] = (buttons & ButtonFlags.Middle) != 0;
-            state[MouseButton.Right] = (buttons & ButtonFlags.Right) != 0;
-            state[MouseButton.Button1] = (buttons & ButtonFlags.X1) != 0;
-            state[MouseButton.Button2] = (buttons & ButtonFlags.X2) != 0;
+
+            var c = new MouseState();
+            c.SetIsConnected(true);
+            c.X = x;
+            c.Y = y;
+            c.SetScrollAbsolute(state.Scroll.X, state.Scroll.Y); // we cannot query the scrollwheel directly
+            c[MouseButton.Left] = (buttons & ButtonFlags.Left) != 0;
+            c[MouseButton.Middle] = (buttons & ButtonFlags.Middle) != 0;
+            c[MouseButton.Right] = (buttons & ButtonFlags.Right) != 0;
+            c[MouseButton.Button1] = (buttons & ButtonFlags.X1) != 0;
+            c[MouseButton.Button2] = (buttons & ButtonFlags.X2) != 0;
 
             return state;
         }
