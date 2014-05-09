@@ -69,14 +69,6 @@ namespace OpenTK.Platform
             // Hook keyboard events
             window.KeyDown += keyboard.HandleKeyDown;
             window.KeyUp += keyboard.HandleKeyUp;
-
-            window.FocusedChanged += (sender, e) =>
-            {
-                if (!window.Focused)
-                {
-                    keyboard.ClearKeys();
-                }
-            };
         }
 
         #region IInputDriver Members

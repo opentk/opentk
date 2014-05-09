@@ -196,12 +196,6 @@ namespace OpenTK.Input
             KeyUp(this, e);
         }
 
-        internal void ClearKeys()
-        {
-            for (Key i = 0; i < Key.LastKey; i++)
-                state[i] = false;
-        }
-
         #if false
         internal void SetKey(Key key, uint scancode, KeyModifiers mods, bool pressed)
         {
