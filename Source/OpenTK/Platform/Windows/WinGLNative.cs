@@ -419,8 +419,7 @@ namespace OpenTK.Platform.Windows
                 };
 
                 // Max points GetMouseMovePointsEx can return is 64.
-                int numPoints = 64;
-
+                const int numPoints = 64;
                 MouseMovePoint* movePoints = stackalloc MouseMovePoint[numPoints];
 
                 // GetMouseMovePointsEx fills in movePoints so that the most 
@@ -977,7 +976,7 @@ namespace OpenTK.Platform.Windows
 
         #region Location
 
-        public Point Location
+        public override Point Location
         {
             get { return Bounds.Location; }
             set
@@ -991,36 +990,13 @@ namespace OpenTK.Platform.Windows
 
         #region Size
 
-        public Size Size
+        public override Size Size
         {
             get { return Bounds.Size; }
             set
             {
                 // Note: the bounds variable is updated when the resize/move message arrives.
                 Functions.SetWindowPos(window.Handle, IntPtr.Zero, 0, 0, value.Width, value.Height, SetWindowPosFlags.NOMOVE);
-            }
-        }
-
-        #endregion
-
-        #region ClientRectangle
-
-        public Rectangle ClientRectangle
-        {
-            get
-            {
-                if (client_rectangle.Width == 0)
-                    client_rectangle.Width = 1;
-                if (client_rectangle.Height == 0)
-                    client_rectangle.Height = 1;
-                return client_rectangle;
-            }
-            set
-            {
-                WindowStyle style = (WindowStyle)Functions.GetWindowLong(window.Handle, GetWindowLongOffsets.STYLE);
-                Win32Rectangle rect = Win32Rectangle.From(value);
-                Functions.AdjustWindowRect(ref rect, style, false);
-                Size = new Size(rect.Width, rect.Height);
             }
         }
 
@@ -1041,46 +1017,6 @@ namespace OpenTK.Platform.Windows
                 Functions.AdjustWindowRect(ref rect, style, false);
                 Size = new Size(rect.Width, rect.Height);
             }
-        }
-
-        #endregion
-
-        #region Width
-
-        public int Width
-        {
-            get { return ClientRectangle.Width; }
-            set { ClientRectangle = new Rectangle(0, 0, value, Height); }
-        }
-
-        #endregion
-
-        #region Height
-
-        public int Height
-        {
-            get { return ClientRectangle.Height; }
-            set { ClientRectangle = new Rectangle(0, 0, Width, value); }
-        }
-
-        #endregion
-
-        #region X
-
-        public int X
-        {
-            get { return Location.X; }
-            set { Location = new Point(value, Y); }
-        }
-
-        #endregion
-
-        #region Y
-
-        public int Y
-        {
-            get { return Location.Y; }
-            set { Location = new Point(X, value); }
         }
 
         #endregion
