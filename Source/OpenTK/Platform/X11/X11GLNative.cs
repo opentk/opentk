@@ -795,6 +795,7 @@ namespace OpenTK.Platform.X11
 
         public override void ProcessEvents()
         {
+            base.ProcessEvents();
             // Process all pending events
             while (Exists && window != null)
             {

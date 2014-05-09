@@ -550,6 +550,7 @@ namespace OpenTK.Platform.SDL2
 
         public override void ProcessEvents()
         {
+            base.ProcessEvents();
             lock (sync)
             {
                 if (Exists)

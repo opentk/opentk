@@ -398,6 +398,8 @@ namespace OpenTK.Platform.MacOS
 
         public override void ProcessEvents()
         {
+            base.ProcessEvents();
+
             while (true)
             {
                 var e = Cocoa.SendIntPtr(NSApplication.Handle, selNextEventMatchingMask, uint.MaxValue, IntPtr.Zero, NSDefaultRunLoopMode, true);

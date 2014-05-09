@@ -581,7 +581,7 @@ namespace OpenTK.Platform.Windows
 
             bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
             short scancode = (short)((lParam.ToInt64() >> 16) & 0xff);
-            ushort repeat_count = unchecked((ushort)((ulong)lParam.ToInt64() & 0xffffu));
+            //ushort repeat_count = unchecked((ushort)((ulong)lParam.ToInt64() & 0xffffu));
             VirtualKeys vkey = (VirtualKeys)wParam;
             bool is_valid;
             Key key = WinKeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
@@ -590,7 +590,8 @@ namespace OpenTK.Platform.Windows
             {
                 if (pressed)
                 {
-                    OnKeyDown(key, repeat_count > 0);
+                    //OnKeyDown(key, repeat_count > 0);
+                    OnKeyDown(key, KeyboardState[key]);
                 }
                 else
                 {
@@ -912,7 +913,6 @@ namespace OpenTK.Platform.Windows
         {
             suppress_resize++;
             WindowBorder = WindowBorder.Hidden;
-            ProcessEvents();
             suppress_resize--;
         }
 
@@ -923,7 +923,6 @@ namespace OpenTK.Platform.Windows
                 deferred_window_border.HasValue ? deferred_window_border.Value :
                 previous_window_border.HasValue ? previous_window_border.Value :
                 WindowBorder;
-            ProcessEvents();
             suppress_resize--;
             deferred_window_border = previous_window_border = null;
         }
@@ -932,7 +931,6 @@ namespace OpenTK.Platform.Windows
         {
             suppress_resize++;
             WindowState = WindowState.Normal;
-            ProcessEvents();
             suppress_resize--;
         }
 
@@ -1247,12 +1245,12 @@ namespace OpenTK.Platform.Windows
 
                 ShowWindowCommand command = 0;
                 bool exiting_fullscreen = false;
-                borderless_maximized_window_state = false;
 
                 switch (value)
                 {
                     case WindowState.Normal:
                         command = ShowWindowCommand.RESTORE;
+                        borderless_maximized_window_state = false;
 
                         // If we are leaving fullscreen mode we need to restore the border.
                         if (WindowState == WindowState.Fullscreen)
@@ -1280,6 +1278,7 @@ namespace OpenTK.Platform.Windows
                         }
                         else
                         {
+                            borderless_maximized_window_state = false;
                             command = ShowWindowCommand.MAXIMIZE;
                         }
                         break;
@@ -1457,6 +1456,7 @@ namespace OpenTK.Platform.Windows
         MSG msg;
         public override void ProcessEvents()
         {
+            base.ProcessEvents();
             while (Functions.PeekMessage(ref msg, IntPtr.Zero, 0, 0, PeekMessageFlags.Remove))
             {
                 Functions.TranslateMessage(ref msg);

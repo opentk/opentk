@@ -109,20 +109,6 @@ namespace OpenTK.Platform
         protected void OnFocusedChanged(EventArgs e)
         {
             FocusedChanged(this, e);
-
-            if (!Focused)
-            {
-                // Clear keyboard state, otherwise KeyUp
-                // events may be missed resulting in stuck
-                // keys.
-                for (Key key = 0; key < Key.LastKey; key++)
-                {
-                    if (KeyboardState[key])
-                    {
-                        OnKeyUp(key);
-                    }
-                }
-            }
         }
 
         protected void OnWindowBorderChanged(EventArgs e)
@@ -326,7 +312,22 @@ namespace OpenTK.Platform
 
         public abstract void Close();
 
-        public abstract void ProcessEvents();
+        public virtual void ProcessEvents()
+        {
+            if (!Focused)
+            {
+                // Clear keyboard state, otherwise KeyUp
+                // events may be missed resulting in stuck
+                // keys.
+                for (Key key = 0; key < Key.LastKey; key++)
+                {
+                    if (KeyboardState[key])
+                    {
+                        OnKeyUp(key);
+                    }
+                }
+            }
+        }
 
         public abstract Point PointToClient(Point point);
 
