@@ -208,8 +208,8 @@ namespace Examples.Tests
 
         void MouseDeviceWheelHandler(object sender, MouseWheelEventArgs e)
         {
-            mousedevice_pos.Z = e.Mouse.Scroll.Y;
-            mousedevice_pos.W = e.Mouse.Scroll.X;
+            mousedevice_pos.Z = e.Mouse.Scroll.X;
+            mousedevice_pos.W = e.Mouse.Scroll.Y;
             mousedevice_state = e.Mouse;
         }
 
@@ -241,8 +241,8 @@ namespace Examples.Tests
 
         void MouseWheelHandler(object sender, MouseWheelEventArgs e)
         {
-            mouse_pos.Z = e.Mouse.Scroll.Y;
-            mouse_pos.W = e.Mouse.Scroll.X;
+            mouse_pos.Z = e.Mouse.Scroll.X;
+            mouse_pos.W = e.Mouse.Scroll.Y;
             mouse_state = e.Mouse;
         }
 
