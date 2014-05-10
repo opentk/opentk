@@ -139,8 +139,23 @@ namespace Examples.Tests
                 case Key.Comma: TargetRenderFrequency--; break;
                 case Key.Period: TargetRenderFrequency++; break;
 
-                case Key.Space:
+                case Key.Enter:
                     CursorVisible = !CursorVisible;
+                    break;
+
+                case Key.C:
+                    if (Cursor == MouseCursor.Default)
+                        Cursor = Pencil;
+                    else if (Cursor == Pencil)
+                        Cursor = MouseCursor.Empty;
+                    else
+                        Cursor = MouseCursor.Default;
+                    break;
+
+                case Key.Space:
+                    Point p = new Point(Width / 2, Height / 2);
+                    p = PointToScreen(p);
+                    OpenTK.Input.Mouse.SetPosition(p.X, p.Y);
                     break;
             }
 
