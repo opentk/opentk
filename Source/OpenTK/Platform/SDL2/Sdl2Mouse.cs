@@ -87,7 +87,7 @@ namespace OpenTK.Platform.SDL2
 
         public void ProcessWheelEvent(MouseWheelEvent wheel)
         {
-            state.SetScrollRelative(0, wheel.Y);
+            state.SetScrollRelative(wheel.X, wheel.Y);
         }
 
         public void ProcessMouseEvent(MouseMotionEvent motion)
