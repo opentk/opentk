@@ -323,21 +323,7 @@ namespace Examples.Tests
                 var state = OpenTK.Input.Mouse.GetState(i);
                 if (state.IsConnected)
                 {
-                    StringBuilder sb = new StringBuilder();
-                    Vector3 pos = new Vector3(state.X, state.Y, state.WheelPrecise);
-                    sb.Append(i);
-                    sb.Append(": ");
-                    sb.Append(pos);
-                    for (int button_index = 0; button_index < (int)MouseButton.LastButton; button_index++)
-                    {
-                        MouseButton b = (MouseButton)button_index;
-                        if (state[b])
-                        {
-                            sb.Append(b);
-                            sb.Append(" ");
-                        }
-                    }
-                    DrawString(gfx, sb.ToString(), line++);
+                    DrawString(gfx, state.ToString(), line++);
                 }
             }
             return line;
