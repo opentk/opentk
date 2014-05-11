@@ -1678,6 +1678,12 @@ namespace OpenTK.Platform.X11
         Scroll = 3,
     }
 
+    enum XIScrollType
+    {
+        Vertical = 1,
+        Horizontal = 2
+    }
+
     struct XIDeviceInfo
     {
         public int deviceid;
@@ -1686,7 +1692,7 @@ namespace OpenTK.Platform.X11
         public int attachment;
         public Bool enabled;
         public int num_classes;
-        public IntPtr classes; // XIAnyClassInfo **
+        public IntPtr classes; // XIAnyClassInfo**
     }
 
     struct XIAnyClassInfo
@@ -1697,25 +1703,36 @@ namespace OpenTK.Platform.X11
 
     struct XIButtonClassInfo
     {
+        public XIClassType type;
+        public int sourceid;
+        public int num_buttons;
+        public IntPtr labels; // Atom*
+        public XIButtonState state;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct XIScrollClassInfo
+    {
+        public XIClassType type;
+        public int sourceid;
+        public int number;
+        public XIScrollType scroll_type;
+        public double increment;
+        public int flags;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     struct XIValuatorClassInfo
     {
-        public Atom label;
-        public double max;
-        public double min;
-        public int mode;
-        public int number;
-        public int resolution;
+        public XIClassType type;
         public int sourceid;
-        public int type;
+        public int number;
+        public IntPtr label;
+        public double min;
+        public double max;
         public double value;
-    }
-
-    struct XIScrollClassInfo
-    {
-
+        public int resolution;
+        public int mode;
     }
 
     struct XIDeviceEvent
@@ -1751,14 +1768,14 @@ namespace OpenTK.Platform.X11
         public Bool          send_event;   /* true if this came from a SendEvent request */
         public IntPtr display;     /* Display the event was read from */
         public int           extension;    /* XI extension offset */
-        public XIEventType           evtype;       /* XI_RawKeyPress, XI_RawKeyRelease, etc. */
+        public XIEventType   evtype;       /* XI_RawKeyPress, XI_RawKeyRelease, etc. */
         public Time          time;
         public int           deviceid;
         public int           sourceid;
         public int           detail;
-        public int           flags;
+        public XIEventFlags  flags;
         public XIValuatorState valuators;
-        public IntPtr raw_values; // double        *
+        public IntPtr raw_values; // FP3232*
     }
 
     struct XIButtonState
