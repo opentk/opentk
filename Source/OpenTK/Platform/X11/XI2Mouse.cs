@@ -29,14 +29,19 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
     // Todo: multi-mouse support. Right now we aggregate all data into a single mouse device.
     // This should be easy: just read the device id and route the data to the correct device.
-    sealed class XI2Mouse : IMouseDriver2
+    sealed class XI2Mouse : IMouseDriver2, IDisposable
     {
+        const XEventName ExitEvent = XEventName.LASTEvent + 1;
+        readonly Thread ProcessingThread;
+        bool disposed;
+
         class XIMouse
         {
             public MouseState State;
@@ -62,6 +67,7 @@ namespace OpenTK.Platform.X11
         //static readonly IntPtr RelHorizWheel;
         //static readonly IntPtr RelVertWheel;
 
+        long cursor_x, cursor_y; // For GetCursorState()
         List<XIMouse> devices = new List<XIMouse>(); // List of connected mice
         Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps hardware device ids to XIMouse ids
 
@@ -114,11 +120,11 @@ namespace OpenTK.Platform.X11
         public XI2Mouse()
         {
             Debug.WriteLine("Using XI2Mouse.");
+            window = new X11WindowInfo();
 
-            using (new XLock(API.DefaultDisplay))
+            window.Display = Functions.XOpenDisplay(IntPtr.Zero);
+            using (new XLock(window.Display))
             {
-                window = new X11WindowInfo();
-                window.Display = API.DefaultDisplay;
                 window.Screen = Functions.XDefaultScreen(window.Display);
                 window.RootWindow = Functions.XRootWindow(window.Display, window.Screen);
                 window.Handle = window.RootWindow;
@@ -127,17 +133,22 @@ namespace OpenTK.Platform.X11
             if (!IsSupported(window.Display))
                 throw new NotSupportedException("XInput2 not supported.");
 
-            using (new XLock(API.DefaultDisplay))
+            using (new XLock(window.Display))
             using (XIEventMask mask = new XIEventMask(1,
                 XIEventMasks.RawButtonPressMask |
                 XIEventMasks.RawButtonReleaseMask |
                 XIEventMasks.RawMotionMask |
-                XIEventMasks.DeviceChangedMask))
+                XIEventMasks.DeviceChangedMask |
+                (XIEventMasks)(1 << (int)ExitEvent)))
             {
                 XI.SelectEvents(window.Display, window.Handle, mask);
             }
 
             UpdateDevices();
+
+            ProcessingThread = new Thread(ProcessEvents);
+            ProcessingThread.IsBackground = true;
+            ProcessingThread.Start();
         }
 
         // Checks whether XInput2 is supported on the specified display.
@@ -145,7 +156,9 @@ namespace OpenTK.Platform.X11
         internal static bool IsSupported(IntPtr display)
         {
             if (display == IntPtr.Zero)
+            {
                 display = API.DefaultDisplay;
+            }
 
             using (new XLock(display))
             {
@@ -260,7 +273,6 @@ namespace OpenTK.Platform.X11
 
         public MouseState GetState()
         {
-            ProcessEvents();
             MouseState master = new MouseState();
             foreach (var d in devices)
             {
@@ -271,7 +283,6 @@ namespace OpenTK.Platform.X11
 
         public MouseState GetState(int index)
         {
-            ProcessEvents();
             if (devices.Count > index)
                 return devices[index].State;
             else
@@ -280,26 +291,17 @@ namespace OpenTK.Platform.X11
 
         public MouseState GetCursorState()
         {
-            IntPtr dummy;
-            int x, y, dummy2;
-            using (new XLock(window.Display))
-            {
-                Functions.XQueryPointer(window.Display, window.RootWindow,
-                    out dummy, out dummy, out x, out y,
-                    out dummy2, out dummy2, out dummy2);
-            }
-
             MouseState master = GetState();
-            master.X = x;
-            master.Y = y;
+            master.X = (int)Interlocked.Read(ref cursor_x);
+            master.Y = (int)Interlocked.Read(ref cursor_y);
             return master;
         }
 
         public void SetPosition(double x, double y)
         {
-            using (new XLock(window.Display))
+            using (new XLock(API.DefaultDisplay))
             {
-                Functions.XWarpPointer(window.Display,
+                Functions.XWarpPointer(API.DefaultDisplay,
                     IntPtr.Zero, window.RootWindow, 0, 0, 0, 0, (int)x, (int)y);
 
                 // Mark the expected warp-event so it can be ignored.
@@ -308,36 +310,32 @@ namespace OpenTK.Platform.X11
                 mouse_warp_event_count++;
                 mouse_warp_event = new MouseWarp((int)x, (int)y);
             }
-
-            ProcessEvents();
         }
 
         #endregion
 
-        bool CheckMouseWarp(double x, double y)
-        {
-            // Check if a mouse warp with the specified destination exists.
-            bool is_warp =
-                mouse_warp_event.HasValue &&
-                mouse_warp_event.Value.Equals(new MouseWarp((int)x, (int)y));
-
-            if (is_warp && --mouse_warp_event_count <= 0)
-                    mouse_warp_event = null;
-
-            return is_warp;
-        }
-
         void ProcessEvents()
         {
-            while (true)
+            while (!disposed)
             {
                 XEvent e = new XEvent();
                 XGenericEventCookie cookie;
 
                 using (new XLock(window.Display))
                 {
-                    if (!Functions.XCheckIfEvent(window.Display, ref e, Predicate, new IntPtr(XIOpCode)))
+                    Functions.XIfEvent(window.Display, ref e, Predicate, new IntPtr(XIOpCode));
+                    if (e.type == ExitEvent)
+                    {
                         return;
+                    }
+
+                    IntPtr dummy;
+                    int x, y, dummy2;
+                    Functions.XQueryPointer(window.Display, window.RootWindow,
+                        out dummy, out dummy, out x, out y,
+                        out dummy2, out dummy2, out dummy2);
+                    Interlocked.Exchange(ref cursor_x, (long)x);
+                    Interlocked.Exchange(ref cursor_y, (long)y);
 
                     cookie = e.GenericEventCookie;
                     if (Functions.XGetEventData(window.Display, ref cookie) != 0)
@@ -365,66 +363,24 @@ namespace OpenTK.Platform.X11
         {
             unsafe
             {
-                XIRawEvent* raw = (XIRawEvent*)cookie.data;
+                XIRawEvent raw = *(XIRawEvent*)cookie.data;
 
-                if (!rawids.ContainsKey(raw->deviceid))
+                if (!rawids.ContainsKey(raw.deviceid))
                 {
-                    Debug.Print("Unknown mouse device {0} encountered, ignoring.", raw->deviceid);
+                    Debug.Print("Unknown mouse device {0} encountered, ignoring.", raw.deviceid);
                     return;
                 }
 
-                var d = devices[rawids[raw->deviceid]];
+                var d = devices[rawids[raw.deviceid]];
 
-                switch (raw->evtype)
+                switch (raw.evtype)
                 {
                     case XIEventType.RawMotion:
-                        {
-                            // Check if this event contains position information
-                            // Note: we use the raw values here, without pointer
-                            // ballistics and any other modification.
-                            double x = 0, y = 0;
-                            if (IsBitSet(raw->valuators.mask, d.MotionX.number))
-                            {
-                                x = *((double*)raw->raw_values + d.MotionX.number);
-                            }
-                            if (IsBitSet(raw->valuators.mask, d.MotionY.number))
-                            {
-                                y = *((double*)raw->raw_values + d.MotionY.number);
-                            }
-                            d.State.X += (int)Math.Round(x);
-                            d.State.Y += (int)Math.Round(y);
-
-                            // Check if this event contains scrolling information
-                            // Note: we use transformed (valuator) values here,
-                            // because they seem to make more sense compared to
-                            // the raw values (the XI2 docs are pretty scarce on
-                            // how to use the raw values for scrolling.)
-                            double h = 0, v = 0;
-                            bool is_emulated = (raw->flags & XIEventFlags.PointerEmulated) != 0;
-                            if (!is_emulated && IsBitSet(raw->valuators.mask, d.ScrollX.number))
-                            {
-                                h = *((double*)raw->valuators.values + d.ScrollX.number) / d.ScrollX.increment;
-                                if (Double.IsInfinity(h))
-                                {
-                                    Debug.WriteLine("[XI2] Mouse horizontal scroll was infinity.");
-                                    h = 0;
-                                }
-                            }
-                            if (!is_emulated && IsBitSet(raw->valuators.mask, d.ScrollY.number))
-                            {
-                                v = *((double*)raw->valuators.values + d.ScrollY.number) / d.ScrollY.increment;
-                                if (Double.IsInfinity(v))
-                                {
-                                    Debug.WriteLine("[XI2] Mouse horizontal scroll was infinity.");
-                                    v = 0;
-                                }
-                            }
-                            d.State.SetScrollRelative((float)h, (float)v);
-                        }
+                        ProcessRawMotion(d, ref raw);
                         break;
 
                     case XIEventType.RawButtonPress:
-                        switch (raw->detail)
+                        switch (raw.detail)
                         {
                             case 1: d.State.EnableBit((int)MouseButton.Left); break;
                             case 2: d.State.EnableBit((int)MouseButton.Middle); break;
@@ -442,7 +398,7 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XIEventType.RawButtonRelease:
-                        switch (raw->detail)
+                        switch (raw.detail)
                         {
                             case 1: d.State.DisableBit((int)MouseButton.Left); break;
                             case 2: d.State.DisableBit((int)MouseButton.Middle); break;
@@ -462,14 +418,53 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        unsafe static void ProcessRawMotion(XIMouse d, ref XIRawEvent raw)
+        {
+            // Note: we use the raw values here, without pointer
+            // ballistics and any other modification.
+            double x = ReadRawValue(ref raw, d.MotionX.number);
+            double y = ReadRawValue(ref raw, d.MotionY.number);
+            double h = ReadRawValue(ref raw, d.ScrollX.number) / d.ScrollX.increment;
+            double v = ReadRawValue(ref raw, d.ScrollY.number) / d.ScrollY.increment;
+
+            d.State.X += (int)Math.Round(x);
+            d.State.Y += (int)Math.Round(y);
+            d.State.SetScrollRelative((float)h, (float)v);
+        }
+
+        unsafe static double ReadRawValue(ref XIRawEvent raw, int bit)
+        {
+            double value = 0;
+            if (IsBitSet(raw.valuators.mask, bit))
+            {
+                // Find the offset where this value is stored.
+                // The offset is equal to the number of bits
+                // set in raw.valuators.mask between [0, bit)
+                int offset = 0;
+                for (int i = 0; i < bit; i++)
+                {
+                    if (IsBitSet(raw.valuators.mask, i))
+                    {
+                        offset++;
+                    }
+                }
+                value = *((double*)raw.raw_values + offset);
+            }
+            return value;
+        }
+
         static bool IsEventValid(IntPtr display, ref XEvent e, IntPtr arg)
         {
-            return
-                (long)e.GenericEventCookie.extension == arg.ToInt64() &&
-                e.GenericEventCookie.evtype == (int)XIEventType.RawMotion ||
-                e.GenericEventCookie.evtype == (int)XIEventType.RawButtonPress ||
-                e.GenericEventCookie.evtype == (int)XIEventType.RawButtonRelease ||
-                e.GenericEventCookie.evtype == (int)XIEventType.DeviceChanged;
+            bool valid = false;
+            if ((long)e.GenericEventCookie.extension == arg.ToInt64())
+            {
+                valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawMotion;
+                valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawButtonPress;
+                valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawButtonRelease;
+                valid |= e.GenericEventCookie.evtype == (int)XIEventType.DeviceChanged;
+            }
+            valid |= e.AnyEvent.type == ExitEvent;
+            return valid;
         }
 
         static bool IsBitSet(IntPtr mask, int bit)
@@ -479,6 +474,38 @@ namespace OpenTK.Platform.X11
                 return bit >= 0 && (*((byte*)mask + (bit >> 3)) & (1 << (bit & 7))) != 0;
             }
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    using (new XLock(API.DefaultDisplay))
+                    {
+                        XEvent e = new XEvent();
+                        e.type = ExitEvent;
+                        Functions.XSendEvent(API.DefaultDisplay, window.Handle, false, IntPtr.Zero, ref e);
+                    }
+                }
+                disposed = true;
+            }
+        }
+
+        ~XI2Mouse()
+        {
+            Dispose(false);
+        }
+
+        #endregion
     }
 }
 
