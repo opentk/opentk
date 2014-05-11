@@ -494,6 +494,7 @@ namespace OpenTK.Platform.X11
                         XEvent e = new XEvent();
                         e.type = ExitEvent;
                         Functions.XSendEvent(API.DefaultDisplay, window.Handle, false, IntPtr.Zero, ref e);
+                        Functions.XFlush(API.DefaultDisplay);
                     }
                 }
                 disposed = true;
