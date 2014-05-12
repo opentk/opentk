@@ -814,9 +814,7 @@ namespace OpenTK.Rewrite
                         {
                             // 2d-3d array, address must be taken as follows:
                             // call instance T& T[0..., 0..., 0...]::Address(int, int, int)
-                            ByReferenceType t_ref = array.IsGenericParameter ?
-                                array.ElementType.MakeByReferenceType() :
-                                array.ElementType.MakeByReferenceType();
+                            ByReferenceType t_ref = array.ElementType.MakeByReferenceType();
                             MethodReference get_address = new MethodReference("Address", t_ref, array);
                             for (int r = 0; r < array.Rank; r++)
                             {
