@@ -363,20 +363,40 @@ namespace OpenTK.Platform.X11
         {
             get
             {
+                if (currentWindow == null)
+                {
+                    Debug.Print("Context must be current");
+                    throw new InvalidOperationException();
+                }
+
                 using (new XLock(display))
                 {
                     if (vsync_ext_supported)
-                        return Glx.Ext.GetSwapInterval();
+                    {
+                        int value;
+                        Glx.QueryDrawable(Display, currentWindow.Handle, GLXAttribute.SWAP_INTERVAL_EXT, out value);
+                        return value;
+                    }
                     else if (vsync_mesa_supported)
+                    {
                         return Glx.Mesa.GetSwapInterval();
+                    }
                     else if (vsync_sgi_supported)
+                    {
                         return sgi_swap_interval;
-                    else
-                        return 0;
+                    }
+
+                    return 0;
                 }
             }
             set
             {
+                if (currentWindow == null)
+                {
+                    Debug.Print("Context must be current");
+                    throw new InvalidOperationException();
+                }
+
                 if (value < 0 && !vsync_tear_supported)
                 {
                     value = 1;
@@ -386,11 +406,17 @@ namespace OpenTK.Platform.X11
                 using (new XLock(Display))
                 {
                     if (vsync_ext_supported)
-                        error_code = Glx.Ext.SwapInterval(value);
+                    {
+                        Glx.Ext.SwapInterval(Display, currentWindow.Handle, value);
+                    }
                     else if (vsync_mesa_supported)
+                    {
                         error_code = Glx.Mesa.SwapInterval(value);
+                    }
                     else if (vsync_sgi_supported)
+                    {
                         error_code = Glx.Sgi.SwapInterval(value);
+                    }
                 }
 
                 if (error_code == X11.ErrorCode.NO_ERROR)
