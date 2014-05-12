@@ -74,8 +74,8 @@ namespace OpenTK
         /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
         public NativeWindow(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
-            : this(device.Bounds.Left + (device.Bounds.Width - width) / 2,
-                   device.Bounds.Top + (device.Bounds.Height - height) / 2,
+            : this(device != null ? device.Bounds.Left + (device.Bounds.Width - width) / 2 : 0,
+                   device != null ? device.Bounds.Top + (device.Bounds.Height - height) / 2 : 0,
                    width, height, title, options, mode, device) { }
 
         /// <summary>Constructs a new NativeWindow with the specified attributes.</summary>
@@ -98,8 +98,6 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
             if (mode == null)
                 throw new ArgumentNullException("mode");
-            if (device == null)
-                throw new ArgumentNullException("device");
 
             this.options = options;
             this.device = device;
@@ -108,7 +106,10 @@ namespace OpenTK
 
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {
-                this.device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
+                if (this.device != null)
+                {
+                    this.device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
+                }
                 WindowState = WindowState.Fullscreen;
             }
         }
@@ -712,8 +713,10 @@ namespace OpenTK
             {
                 if ((options & GameWindowFlags.Fullscreen) != 0)
                 {
-                    //if (WindowState == WindowState.Fullscreen) WindowState = WindowState.Normal; // TODO: Revise.
-                    device.RestoreResolution();
+                    if (device != null)
+                    {
+                        device.RestoreResolution();
+                    }
                 }
                 implementation.Dispose();
                 GC.SuppressFinalize(this);
