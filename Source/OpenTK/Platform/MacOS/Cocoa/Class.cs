@@ -35,6 +35,11 @@ namespace OpenTK.Platform.MacOS
 {
     static class Class
     {
+        public static readonly IntPtr NSAutoreleasePool = Get("NSAutoreleasePool");
+        public static readonly IntPtr NSDictionary = Get("NSDictionary");
+        public static readonly IntPtr NSNumber = Get("NSNumber");
+        public static readonly IntPtr NSUserDefaults = Get("NSUserDefaults");
+
         [DllImport (Cocoa.LibObjC)]
         extern static IntPtr class_getName(IntPtr handle);
 

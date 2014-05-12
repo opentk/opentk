@@ -324,13 +324,22 @@ namespace OpenTK.Platform.MacOS
                             break;
 
                         case HIDUsageGD.Wheel:
-                            mouse.State.WheelPrecise += v_int;
+                            mouse.State.SetScrollRelative(0, v_int);
                             break;
                     }
                     break;
 
                 case HIDPage.Button:
                     mouse.State[OpenTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
+                    break;
+
+                case HIDPage.Consumer:
+                    switch ((HIDUsageCD)usage)
+                    {
+                        case HIDUsageCD.ACPan:
+                            mouse.State.SetScrollRelative(v_int, 0);
+                            break;
+                    }
                     break;
             }
         }
@@ -381,7 +390,8 @@ namespace OpenTK.Platform.MacOS
                         {
                             Debug.Print("[Warning] Key {0} not mapped.", usage);
                         }
-                        keyboard.State.SetKeyState(RawKeyMap[usage], (byte)usage, v_int != 0);
+
+                        keyboard.State[RawKeyMap[usage]] = v_int != 0;
                         break;
                 }
             }
@@ -1105,6 +1115,12 @@ namespace OpenTK.Platform.MacOS
             /* Reserved 0x92 - 0xFEFF */
             /* VendorDefined 0xFF00 - 0xFFFF */
             VendorDefinedStart = 0xFF00
+        }
+
+        // Consumer electronic devices
+        enum HIDUsageCD
+        {
+            ACPan = 0x0238
         }
 
         // Generic desktop usage

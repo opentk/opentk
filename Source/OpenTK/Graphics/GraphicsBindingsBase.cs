@@ -51,9 +51,9 @@ namespace OpenTK.Graphics
         protected string[] EntryPointNamesInstance;
 
 
-        internal protected IntPtr[] _EntryPointsInstance;
-        internal protected byte[] _EntryPointNamesInstance;
-        internal protected int[] _EntryPointNameOffsetsInstance;
+        internal IntPtr[] _EntryPointsInstance;
+        internal byte[] _EntryPointNamesInstance;
+        internal int[] _EntryPointNameOffsetsInstance;
 
         /// <summary>
         /// Retrieves an unmanaged function pointer to the specified function.

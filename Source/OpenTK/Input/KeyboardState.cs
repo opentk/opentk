@@ -43,9 +43,6 @@ namespace OpenTK.Input
         const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         unsafe fixed int Keys[NumInts];
-
-		const int CodesSize = 256;
-		unsafe fixed int Codes[CodesSize];
         bool is_connected;
 
         #endregion
@@ -61,6 +58,7 @@ namespace OpenTK.Input
         public bool this[Key key]
         {
             get { return IsKeyDown(key); }
+            internal set { SetKeyState(key, value); }
         }
 
         /// <summary>
@@ -71,7 +69,7 @@ namespace OpenTK.Input
         /// <returns>True if code is pressed; false otherwise.</returns>
         public bool this[short code]
         {
-            get { return IsKeyDown(code); }
+            get { return IsKeyDown((Key)code); }
         }
 
         /// <summary>
@@ -89,7 +87,7 @@ namespace OpenTK.Input
         /// <param name="code">The scan code to check.</param>
         public bool IsKeyDown(short code)
         {
-            return ReadBit(code,true);
+            return code >= 0 && code < (short)Key.LastKey && ReadBit(code);
         }
 
         /// <summary>
@@ -107,7 +105,7 @@ namespace OpenTK.Input
         /// <param name="code">The scan code to check.</param>
         public bool IsKeyUp(short code)
         {
-            return !ReadBit(code,true);
+            return !IsKeyDown(code);
         }
 
         /// <summary>
@@ -212,62 +210,51 @@ namespace OpenTK.Input
 
         #region Internal Members
 
-        internal void SetKeyState(Key key, byte code, bool down)
+        internal void SetKeyState(Key key, bool down)
         {
             if (down)
             {
                 EnableBit((int)key);
-                EnableBit(code,true);
             }
             else
             {
                 DisableBit((int)key);
-                DisableBit(code, true);
             }
         }
 
-        internal bool ReadBit(int offset, bool ScanCode = false)
+        internal bool ReadBit(int offset)
         {
-            ValidateOffset(offset, ScanCode);
+            ValidateOffset(offset);
 
             int int_offset = offset / 32;
             int bit_offset = offset % 32;
             unsafe
             {
-                if (ScanCode)
-                    fixed (int* c = Codes) { return (*(c + int_offset) & (1 << bit_offset)) != 0u; }
-                else
-                    fixed (int* k = Keys) { return (*(k + int_offset) & (1 << bit_offset)) != 0u; }
+                fixed (int* k = Keys) { return (*(k + int_offset) & (1 << bit_offset)) != 0u; }
             }
         }
 
-        internal void EnableBit(int offset, bool ScanCode = false)
+        internal void EnableBit(int offset)
         {
-            ValidateOffset(offset, ScanCode);
+            ValidateOffset(offset);
 
             int int_offset = offset / 32;
             int bit_offset = offset % 32;
             unsafe
             {
-                if (ScanCode)
-                    fixed (int* c = Codes) { *(c + int_offset) |= 1 << bit_offset; }
-                else
-                    fixed (int* k = Keys) { *(k + int_offset) |= 1 << bit_offset; }
+                fixed (int* k = Keys) { *(k + int_offset) |= 1 << bit_offset; }
             }
         }
 
-        internal void DisableBit(int offset, bool ScanCode = false)
+        internal void DisableBit(int offset)
         {
-            ValidateOffset(offset, ScanCode);
+            ValidateOffset(offset);
 
             int int_offset = offset / 32;
             int bit_offset = offset % 32;
             unsafe
             {
-                if (ScanCode)
-                    fixed (int* c = Codes) { *(c + int_offset) &= ~(1 << bit_offset); }
-                else
-                    fixed (int* k = Keys) { *(k + int_offset) &= ~(1 << bit_offset); }
+                fixed (int* k = Keys) { *(k + int_offset) &= ~(1 << bit_offset); }
             }
         }
 
@@ -280,12 +267,6 @@ namespace OpenTK.Input
                 {
                     for (int i = 0; i < NumInts; i++)
                         *(k1 + i) |= *(k2 + i);
-                }
-                int* c2 = other.Codes;
-                fixed (int* c1 = Codes)
-                {
-                    for (int i = 0; i < CodesSize; i++)
-                        *(c1 + i) |= *(c2 + i);
                 }
             }
             IsConnected |= other.IsConnected;
@@ -300,10 +281,10 @@ namespace OpenTK.Input
 
         #region Private Members
 
-        static void ValidateOffset(int offset, bool ScanCode)
+        static void ValidateOffset(int offset)
         {
-            if (offset < 0 || offset >= (ScanCode ? 256 : NumInts * IntSize))
-                throw new ArgumentOutOfRangeException("offset");
+            if (offset < 0 || offset >= NumInts * IntSize)
+                throw new ArgumentOutOfRangeException();
         }
 
         #endregion

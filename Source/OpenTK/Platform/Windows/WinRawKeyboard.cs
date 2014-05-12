@@ -188,7 +188,7 @@ namespace OpenTK.Platform.Windows
 
             if (is_valid)
             {
-                keyboard.SetKeyState(key, (byte)scancode, pressed);
+                keyboard.SetKeyState(key, pressed);
                 processed = true;
             }
 

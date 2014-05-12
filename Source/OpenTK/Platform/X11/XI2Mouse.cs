@@ -40,7 +40,8 @@ namespace OpenTK.Platform.X11
         List<MouseState> mice = new List<MouseState>();
         Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps raw ids to mouse ids
         internal readonly X11WindowInfo window;
-        static int XIOpCode;
+        internal static int XIOpCode { get; private set; }
+        static bool supported;
 
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
         readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
@@ -204,8 +205,8 @@ namespace OpenTK.Platform.X11
                                     case 1: state.EnableBit((int)MouseButton.Left); break;
                                     case 2: state.EnableBit((int)MouseButton.Middle); break;
                                     case 3: state.EnableBit((int)MouseButton.Right); break;
-                                    case 4: state.WheelPrecise++; break;
-                                    case 5: state.WheelPrecise--; break;
+                                    case 4: state.SetScrollRelative(0, 1); break;
+                                    case 5: state.SetScrollRelative(0, -1); break;
                                     case 6: state.EnableBit((int)MouseButton.Button1); break;
                                     case 7: state.EnableBit((int)MouseButton.Button2); break;
                                     case 8: state.EnableBit((int)MouseButton.Button3); break;

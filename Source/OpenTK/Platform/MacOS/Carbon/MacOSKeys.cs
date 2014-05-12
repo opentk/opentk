@@ -29,7 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Platform.MacOS.Carbon
+namespace OpenTK.Platform.MacOS
 {
 	// 
 	// http://web.archive.org/web/20100501161453/http://www.classicteck.com/rbarticles/mackeyboard.php

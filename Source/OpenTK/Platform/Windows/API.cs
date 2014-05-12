@@ -3591,7 +3591,8 @@ namespace OpenTK.Platform.Windows
         BUTTON_5_DOWN    = 0x0100,
         BUTTON_5_UP      = 0x0200,
 
-        WHEEL            = 0x0400
+        WHEEL            = 0x0400,
+        HWHEEL            = 0x0800,
     }
 
     #endregion
@@ -4197,7 +4198,6 @@ namespace OpenTK.Platform.Windows
         MBUTTONUP = 0x0208,
         MBUTTONDBLCLK = 0x0209,
         MOUSEWHEEL = 0x020A,
-        MOUSELAST = 0x020D,
         /// <summary>
         /// Windows 2000 and higher only.
         /// </summary>
@@ -4210,6 +4210,10 @@ namespace OpenTK.Platform.Windows
         /// Windows 2000 and higher only.
         /// </summary>
         XBUTTONDBLCLK    = 0x020D,
+        /// <summary>
+        /// Windows Vista and higher only.
+        /// </summary>
+        MOUSEHWHEEL = 0x020E,
         PARENTNOTIFY = 0x0210,
         ENTERMENULOOP = 0x0211,
         EXITMENULOOP = 0x0212,

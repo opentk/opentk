@@ -42,18 +42,33 @@ namespace OpenTK.Platform
 
         readonly LegacyJoystickDriver JoystickDriver = new LegacyJoystickDriver();
 
-        internal LegacyInputDriver()
+        internal LegacyInputDriver(INativeWindow window)
         {
-            dummy_mice_list.Add(new MouseDevice());
-            Mouse[0].Description = "Standard Mouse";
-            Mouse[0].NumberOfButtons = 3;
-            Mouse[0].NumberOfWheels = 1;
+            if (window == null)
+                throw new ArgumentNullException();
 
-            dummy_keyboard_list.Add(new KeyboardDevice());
-            Keyboard[0].Description = "Standard Keyboard";
-            Keyboard[0].NumberOfKeys = 101;
-            Keyboard[0].NumberOfLeds = 3;
-            Keyboard[0].NumberOfFunctionKeys = 12;
+            var mouse = new MouseDevice();
+            mouse.Description = "Standard Mouse";
+            mouse.NumberOfButtons = 3;
+            mouse.NumberOfWheels = 1;
+            dummy_mice_list.Add(mouse);
+
+            var keyboard = new KeyboardDevice();
+            keyboard.Description = "Standard Keyboard";
+            keyboard.NumberOfKeys = 101;
+            keyboard.NumberOfLeds = 3;
+            keyboard.NumberOfFunctionKeys = 12;
+            dummy_keyboard_list.Add(keyboard);
+
+            // Hook mouse events
+            window.MouseDown += mouse.HandleMouseDown;
+            window.MouseUp += mouse.HandleMouseUp;
+            window.MouseMove += mouse.HandleMouseMove;
+            window.MouseWheel += mouse.HandleMouseWheel;
+
+            // Hook keyboard events
+            window.KeyDown += keyboard.HandleKeyDown;
+            window.KeyUp += keyboard.HandleKeyUp;
         }
 
         #region IInputDriver Members

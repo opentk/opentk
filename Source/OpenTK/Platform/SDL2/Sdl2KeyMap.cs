@@ -298,6 +298,15 @@ namespace OpenTK.Platform.SDL2
                     return Key.Unknown;
             }
         }
+
+        public static KeyModifiers GetModifiers(Keymod mod)
+        {
+            KeyModifiers result = 0;
+            result |= (mod & Keymod.ALT) != 0 ? KeyModifiers.Alt : 0;
+            result |= (mod & Keymod.CTRL) != 0 ? KeyModifiers.Control : 0;
+            result |= (mod & Keymod.SHIFT) != 0 ? KeyModifiers.Shift : 0;
+            return result;
+        }
     }
 }
 

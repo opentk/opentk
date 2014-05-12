@@ -29,10 +29,13 @@ namespace OpenTK.Platform.X11
         // current on window originating from a different display.
         IntPtr display;
         X11WindowInfo currentWindow;
-        bool vsync_supported;
+        bool vsync_ext_supported;
+        bool vsync_mesa_supported;
+        bool vsync_sgi_supported;
         bool vsync_tear_supported;
-        int swap_interval = 1; // As defined in GLX_SGI_swap_control
+        int sgi_swap_interval = 1; // As defined in GLX_SGI_swap_control
         readonly X11GraphicsMode ModeSelector = new X11GraphicsMode();
+        string extensions = null;
 
         #endregion
 
@@ -232,7 +235,7 @@ namespace OpenTK.Platform.X11
             return result;
         }
 
-        static bool SupportsExtension(IntPtr display, X11WindowInfo window, string e)
+        bool SupportsExtension(IntPtr display, X11WindowInfo window, string e)
         {
             if (window == null)
                 throw new ArgumentNullException("window");
@@ -241,15 +244,17 @@ namespace OpenTK.Platform.X11
             if (window.Display != display)
                 throw new InvalidOperationException();
 
-            string extensions = null;
-            using (new XLock(display))
+            if (String.IsNullOrEmpty(extensions))
             {
-                extensions = Glx.QueryExtensionsString(display, window.Screen);
+                using (new XLock(display))
+                {
+                    extensions = Glx.QueryExtensionsString(display, window.Screen);
+                }
             }
             return !String.IsNullOrEmpty(extensions) && extensions.Contains(e);
         }
 
-        static bool SupportsCreateContextAttribs(IntPtr display, X11WindowInfo window)
+        bool SupportsCreateContextAttribs(IntPtr display, X11WindowInfo window)
         {
             return
                 SupportsExtension(display, window, "GLX_ARB_create_context") &&
@@ -354,29 +359,40 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                if (vsync_supported)
-                    return swap_interval;
-                else
-                    return 0;
+                using (new XLock(display))
+                {
+                    if (vsync_ext_supported)
+                        return Glx.Ext.GetSwapInterval();
+                    else if (vsync_mesa_supported)
+                        return Glx.Mesa.GetSwapInterval();
+                    else if (vsync_sgi_supported)
+                        return sgi_swap_interval;
+                    else
+                        return 0;
+                }
             }
             set
             {
-                if (vsync_supported)
+                if (value < 0 && !vsync_tear_supported)
                 {
-                    if (value < 0 && !vsync_tear_supported)
-                    {
-                        value = 1;
-                    }
-
-                    ErrorCode error_code = 0;
-                    using (new XLock(Display))
-                        error_code = Glx.Sgi.SwapInterval(value);
-
-                    if (error_code == X11.ErrorCode.NO_ERROR)
-                        swap_interval = value;
-                    else
-                        Debug.Print("VSync = {0} failed, error code: {1}.", value, error_code);
+                    value = 1;
                 }
+
+                ErrorCode error_code = 0;
+                using (new XLock(Display))
+                {
+                    if (vsync_ext_supported)
+                        error_code = Glx.Ext.SwapInterval(value);
+                    else if (vsync_mesa_supported)
+                        error_code = Glx.Mesa.SwapInterval(value);
+                    else if (vsync_sgi_supported)
+                        error_code = Glx.Sgi.SwapInterval(value);
+                }
+
+                if (error_code == X11.ErrorCode.NO_ERROR)
+                    sgi_swap_interval = value;
+                else
+                    Debug.Print("VSync = {0} failed, error code: {1}.", value, error_code);
             }
         }
 
@@ -386,12 +402,23 @@ namespace OpenTK.Platform.X11
 
         public override void LoadAll()
         {
-            vsync_supported =
+            vsync_ext_supported =
+                SupportsExtension(display, currentWindow, "GLX_EXT_swap_control") &&
+                Glx.SupportsFunction("glXSwapIntervalEXT") &&
+                Glx.SupportsFunction("glXGetSwapIntervalEXT");
+            vsync_mesa_supported =
+                SupportsExtension(display, currentWindow, "GLX_MESA_swap_control") &&
+                Glx.SupportsFunction("glXSwapIntervalMESA") &&
+                Glx.SupportsFunction("glXGetSwapIntervalMESA");
+            vsync_sgi_supported =
                 SupportsExtension(display, currentWindow, "GLX_SGI_swap_control") &&
                 Glx.SupportsFunction("glXSwapIntervalSGI");
+            Debug.Print("Context supports vsync: {0}.",
+                vsync_ext_supported || vsync_mesa_supported || vsync_ext_supported);
+
             vsync_tear_supported =
                 SupportsExtension(display, currentWindow, "GLX_EXT_swap_control_tear");
-            Debug.Print("Context supports vsync: {0}.", vsync_supported);
+            Debug.Print("Context supports vsync tear: {0}.", vsync_tear_supported);
 
             base.LoadAll();
         }

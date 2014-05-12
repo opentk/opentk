@@ -1572,8 +1572,8 @@ namespace OpenTK.Platform.SDL2
         public UInt32 Which;
         public Button Button;
         public State State;
+        public byte Clicks;
         byte padding1;
-        byte padding2;
         public Int32 X;
         public Int32 Y;
     }
@@ -1584,10 +1584,7 @@ namespace OpenTK.Platform.SDL2
         public uint Timestamp;
         public uint WindowID;
         public uint Which;
-        public State State;
-        byte padding1;
-        byte padding2;
-        byte padding3;
+        public ButtonFlags State;
         public Int32 X;
         public Int32 Y;
         public Int32 Xrel;
@@ -1617,10 +1614,6 @@ namespace OpenTK.Platform.SDL2
         }
 
         public const uint TouchMouseID = 0xffffffff;
-
-        public static class GL
-        {
-        }
     }
 
     struct Rect
