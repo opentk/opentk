@@ -54,6 +54,7 @@ namespace OpenTK.Rewrite
         static TypeDefinition TypeStringBuilder;
         static TypeDefinition TypeVoid;
         static TypeDefinition TypeIntPtr;
+        static TypeDefinition TypeInt32;
 
         // OpenTK.BindingsBase
         static TypeDefinition TypeBindingsBase;
@@ -119,6 +120,7 @@ namespace OpenTK.Rewrite
                 TypeStringBuilder = mscorlib.MainModule.GetType("System.Text.StringBuilder");
                 TypeVoid = mscorlib.MainModule.GetType("System.Void");
                 TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
+                TypeInt32 = mscorlib.MainModule.GetType("System.Int32");
 
                 TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenTK.BindingsBase")).First();
 
@@ -747,8 +749,28 @@ namespace OpenTK.Rewrite
                 {
                     if (p.Name != method.Module.Import(typeof(string[])).Name)
                     {
+                        // .Net treats 1d arrays differently than higher rank arrays.
+                        // 1d arrays are directly supported by instructions such as ldlen and ldelema.
+                        // Higher rank arrays must be accessed through System.Array methods such as get_Length.
+                        // 1d array:
+                        //    check array is not null
+                        //    check ldlen array > 0
+                        //    ldc.i4.0
+                        //    ldelema
+                        // 2d array:
+                        //    check array is not null
+                        //    check array.get_Length() > 0
+                        //    ldc.i4.0
+                        //    ldc.i4.0
+                        //    call instance T& T[0..., 0...]::Address(int32, int32)
+                        // Mono treats everything as a 1d array.
+                        // Interestingly, the .Net approach works on both Mono and .Net.
+                        // The Mono approach fails when using high-rank arrays on .Net.
+                        // We should report a bug to http://bugzilla.xamarin.com
+
                         // Pin the array and pass the address
                         // of its first element.
+                        var array = (ArrayType)p;
                         var element_type = p.GetElementType();
                         body.Variables.Add(new VariableDefinition(new PinnedType(new ByReferenceType(element_type))));
                         int pinned_index = body.Variables.Count - 1;
@@ -756,14 +778,23 @@ namespace OpenTK.Rewrite
                         var empty = il.Create(OpCodes.Ldc_I4, 0);
                         var pin = il.Create(OpCodes.Ldarg, i);
                         var end = il.Create(OpCodes.Stloc, pinned_index);
-                        
+
                         // if (array == null) goto empty
                         il.Emit(OpCodes.Brfalse, empty);
 
                         // else if (array.Length != 0) goto pin
                         il.Emit(OpCodes.Ldarg, i);
-                        il.Emit(OpCodes.Ldlen);
-                        il.Emit(OpCodes.Conv_I4);
+                        if (array.Rank == 1)
+                        {
+                            il.Emit(OpCodes.Ldlen);
+                            il.Emit(OpCodes.Conv_I4);
+                        }
+                        else
+                        {
+                            var get_length = method.Module.Import(
+                                mscorlib.MainModule.GetType("System.Array").Methods.First(m => m.Name == "get_Length"));
+                            il.Emit(OpCodes.Callvirt, get_length);
+                        }
                         il.Emit(OpCodes.Brtrue, pin);
 
                         // empty: IntPtr ptr = IntPtr.Zero
@@ -773,8 +804,31 @@ namespace OpenTK.Rewrite
 
                         // pin: &array[0]
                         il.Append(pin);
-                        il.Emit(OpCodes.Ldc_I4, 0);
-                        il.Emit(OpCodes.Ldelema, element_type);
+                        if (array.Rank == 1)
+                        {
+                            // 1d array (vector), address is taken by ldelema
+                            il.Emit(OpCodes.Ldc_I4, 0);
+                            il.Emit(OpCodes.Ldelema, element_type);
+                        }
+                        else
+                        {
+                            // 2d-3d array, address must be taken as follows:
+                            // call instance T& T[0..., 0..., 0...]::Address(int, int, int)
+                            ByReferenceType t_ref = array.ElementType.MakeByReferenceType();
+                            MethodReference get_address = new MethodReference("Address", t_ref, array);
+                            for (int r = 0; r < array.Rank; r++)
+                            {
+                                get_address.Parameters.Add(new ParameterDefinition(TypeInt32));
+                            }
+                            get_address.HasThis = true;
+
+                            // emit the get_address call
+                            for (int r = 0; r < array.Rank; r++)
+                            {
+                                il.Emit(OpCodes.Ldc_I4, 0);
+                            }
+                            il.Emit(OpCodes.Call, get_address);
+                        }
 
                         // end: fixed (IntPtr ptr = &array[0])
                         il.Append(end);
