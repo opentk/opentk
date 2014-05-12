@@ -144,9 +144,6 @@ namespace OpenTK.Platform.MacOS
         private bool cursorInsideWindow = true;
         private MouseCursor selectedCursor = MouseCursor.Default; // user-selected cursor
 
-        private const float scrollFactor = 10.0f;
-        private const bool exclusiveFullscreen = false;
-
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             // Create the window class
@@ -527,8 +524,8 @@ namespace OpenTK.Platform.MacOS
                             float dx, dy;
                             if (Cocoa.SendBool(e, selHasPreciseScrollingDeltas))
                             {
-                                dx = Cocoa.SendFloat(e, selScrollingDeltaX) / scrollFactor;
-                                dy = Cocoa.SendFloat(e, selScrollingDeltaY) / scrollFactor;
+                                dx = Cocoa.SendFloat(e, selScrollingDeltaX) * MacOSFactory.ScrollFactor;
+                                dy = Cocoa.SendFloat(e, selScrollingDeltaY) * MacOSFactory.ScrollFactor;
                             }
                             else
                             {
@@ -675,9 +672,9 @@ namespace OpenTK.Platform.MacOS
             if (windowState == WindowState.Fullscreen)
             {
                 SetMenuVisible(true);
-                if (exclusiveFullscreen)
+                if (MacOSFactory.ExclusiveFullscreen)
                 {
-                    OpenTK.Platform.MacOS.Carbon.CG.DisplayReleaseAll();
+                    CG.DisplayReleaseAll();
                     Cocoa.SendVoid(windowInfo.Handle, selSetLevel, normalLevel);
                 }
 
@@ -736,12 +733,12 @@ namespace OpenTK.Platform.MacOS
 
                 if (value == WindowState.Fullscreen)
                 {
-                    if (exclusiveFullscreen)
+                    if (MacOSFactory.ExclusiveFullscreen)
                     {
                         normalLevel = Cocoa.SendInt(windowInfo.Handle, selLevel);
-                        var windowLevel = OpenTK.Platform.MacOS.Carbon.CG.ShieldingWindowLevel();
+                        var windowLevel = CG.ShieldingWindowLevel();
 
-                        OpenTK.Platform.MacOS.Carbon.CG.CaptureAllDisplays();
+                        CG.CaptureAllDisplays();
                         Cocoa.SendVoid(windowInfo.Handle, selSetLevel, windowLevel);
                     }
 
@@ -1074,7 +1071,7 @@ namespace OpenTK.Platform.MacOS
                 Mouse.SetPosition((int)p.X, (int)p.Y);
             }
 
-            Carbon.CG.AssociateMouseAndMouseCursorPosition(visible);
+            CG.AssociateMouseAndMouseCursorPosition(visible);
             Cocoa.SendVoid(NSCursor, visible ? selUnhide : selHide);
         }
 

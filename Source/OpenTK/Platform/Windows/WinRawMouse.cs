@@ -348,6 +348,19 @@ namespace OpenTK.Platform.Windows
             Functions.SetCursorPos((int)x, (int)y);
         }
 
+        public MouseState GetCursorState()
+        {
+            // For simplicity, get hardware state
+            // and simply overwrite its x and y location
+            POINT p = new POINT();
+            Functions.GetCursorPos(ref p);
+
+            var state = GetState();
+            state.X = p.X;
+            state.Y = p.Y;
+            return state;
+        }
+
         #endregion
     }
 }

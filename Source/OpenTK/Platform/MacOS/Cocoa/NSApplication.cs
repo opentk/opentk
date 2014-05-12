@@ -89,7 +89,7 @@ namespace OpenTK.Platform.MacOS
             // Initialize and register the settings dictionary
             settings = 
                 Cocoa.SendIntPtr(settings, Selector.Get("initWithObjectsAndKeys:"),
-                    momentum_scrolling, Cocoa.ToNSString("AppleMomentumScrollSupported"),
+                    //momentum_scrolling, Cocoa.ToNSString("AppleMomentumScrollSupported"),
                     press_and_hold, Cocoa.ToNSString("ApplePressAndHoldEnabled"),
                     IntPtr.Zero);
             Cocoa.SendVoid(

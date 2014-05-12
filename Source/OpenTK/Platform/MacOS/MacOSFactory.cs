@@ -37,6 +37,9 @@ namespace OpenTK.Platform.MacOS
 
     class MacOSFactory : PlatformFactoryBase
     {
+        internal const float ScrollFactor = 0.1f;
+        internal static bool ExclusiveFullscreen = false;
+
         readonly IInputDriver2 InputDriver = new HIDInput();
 
         #region IPlatformFactory Members

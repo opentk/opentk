@@ -139,8 +139,23 @@ namespace Examples.Tests
                 case Key.Comma: TargetRenderFrequency--; break;
                 case Key.Period: TargetRenderFrequency++; break;
 
-                case Key.Space:
+                case Key.Enter:
                     CursorVisible = !CursorVisible;
+                    break;
+
+                case Key.C:
+                    if (Cursor == MouseCursor.Default)
+                        Cursor = Pencil;
+                    else if (Cursor == Pencil)
+                        Cursor = MouseCursor.Empty;
+                    else
+                        Cursor = MouseCursor.Default;
+                    break;
+
+                case Key.Space:
+                    Point p = new Point(Width / 2, Height / 2);
+                    p = PointToScreen(p);
+                    OpenTK.Input.Mouse.SetPosition(p.X, p.Y);
                     break;
             }
 
@@ -301,27 +316,14 @@ namespace Examples.Tests
         static int DrawMice(Graphics gfx, int line)
         {
             line++;
+            DrawString(gfx, String.Format("Cursor: {0}", OpenTK.Input.Mouse.GetCursorState()), line++);
             DrawString(gfx, "Mouse:", line++);
             for (int i = 0; i < 4; i++)
             {
                 var state = OpenTK.Input.Mouse.GetState(i);
                 if (state.IsConnected)
                 {
-                    StringBuilder sb = new StringBuilder();
-                    Vector3 pos = new Vector3(state.X, state.Y, state.WheelPrecise);
-                    sb.Append(i);
-                    sb.Append(": ");
-                    sb.Append(pos);
-                    for (int button_index = 0; button_index < (int)MouseButton.LastButton; button_index++)
-                    {
-                        MouseButton b = (MouseButton)button_index;
-                        if (state[b])
-                        {
-                            sb.Append(b);
-                            sb.Append(" ");
-                        }
-                    }
-                    DrawString(gfx, sb.ToString(), line++);
+                    DrawString(gfx, state.ToString(), line++);
                 }
             }
             return line;

@@ -34,6 +34,8 @@ namespace OpenTK.Platform.X11
 {
     class X11Factory : PlatformFactoryBase
     {
+        static IMouseDriver2 MouseDriver;
+
         #region Constructors
 
         public X11Factory()
@@ -86,10 +88,15 @@ namespace OpenTK.Platform.X11
 
         public override IMouseDriver2 CreateMouseDriver()
         {
-            if (XI2Mouse.IsSupported(IntPtr.Zero))
-                return new XI2Mouse(); // Requires xorg 1.7 or higher.
-            else
-                return new X11Mouse(); // Always supported.
+            lock (this)
+            {
+                MouseDriver =
+                    MouseDriver ??
+                    (XI2Mouse.IsSupported(IntPtr.Zero) ?
+                        (IMouseDriver2)new XI2Mouse() : // Requires xorg 1.7 or higher.
+                        (IMouseDriver2)new X11Mouse()); // Always supported.
+                return MouseDriver;
+            }
         }
 
         public override IJoystickDriver2 CreateJoystickDriver()
@@ -98,5 +105,18 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+        protected override void Dispose(bool manual)
+        {
+            base.Dispose(manual);
+            if (manual && MouseDriver != null)
+            {
+                if (MouseDriver is IDisposable)
+                {
+                    (MouseDriver as IDisposable).Dispose();
+                    MouseDriver = null;
+                }
+            }
+        }
     }
 }

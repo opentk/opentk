@@ -87,7 +87,7 @@ namespace OpenTK.Platform.SDL2
 
         public void ProcessWheelEvent(MouseWheelEvent wheel)
         {
-            state.SetScrollRelative(0, wheel.Y);
+            state.SetScrollRelative(wheel.X, wheel.Y);
         }
 
         public void ProcessMouseEvent(MouseMotionEvent motion)
@@ -117,6 +117,25 @@ namespace OpenTK.Platform.SDL2
                 return state;
             else
                 return new MouseState();
+        }
+
+        public MouseState GetCursorState()
+        {
+            int x, y;
+            var buttons = SDL.GetMouseState(out x, out y);
+
+            var c = new MouseState();
+            c.SetIsConnected(true);
+            c.X = x;
+            c.Y = y;
+            c.SetScrollAbsolute(state.Scroll.X, state.Scroll.Y); // we cannot query the scrollwheel directly
+            c[MouseButton.Left] = (buttons & ButtonFlags.Left) != 0;
+            c[MouseButton.Middle] = (buttons & ButtonFlags.Middle) != 0;
+            c[MouseButton.Right] = (buttons & ButtonFlags.Right) != 0;
+            c[MouseButton.Button1] = (buttons & ButtonFlags.X1) != 0;
+            c[MouseButton.Button2] = (buttons & ButtonFlags.X2) != 0;
+
+            return state;
         }
 
         public void SetPosition(double x, double y)

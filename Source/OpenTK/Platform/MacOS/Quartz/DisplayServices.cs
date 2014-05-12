@@ -28,8 +28,9 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using OpenTK.Platform.MacOS.Carbon;
 
-namespace OpenTK.Platform.MacOS.Carbon
+namespace OpenTK.Platform.MacOS
 {
     using CGDirectDisplayID = System.IntPtr;
 
@@ -55,18 +56,18 @@ namespace OpenTK.Platform.MacOS.Carbon
         NoneAvailable = 1011,
     }
 
-    internal static class CG
+    partial class CG
     {
-        const string appServices = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
+        const string lib = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
 
         // CGPoint -> HIPoint
         // CGSize -> HISize
         // CGRect -> HIRect
 
-        [DllImport(appServices,EntryPoint="CGGetActiveDisplayList")]
+        [DllImport(lib,EntryPoint="CGGetActiveDisplayList")]
         internal unsafe static extern CGDisplayErr GetActiveDisplayList(int maxDisplays, IntPtr* activeDspys, out int dspyCnt);
 
-        [DllImport(appServices,EntryPoint="CGMainDisplayID")]
+        [DllImport(lib,EntryPoint="CGMainDisplayID")]
         internal static extern IntPtr MainDisplayID();
 
         // Note: sizeof(HIRect) == 16, which is larger than 8 bytes.
@@ -81,55 +82,55 @@ namespace OpenTK.Platform.MacOS.Carbon
             return rect;
         }
 
-        [DllImport(appServices, EntryPoint = "CGDisplayBounds")]
+        [DllImport(lib, EntryPoint = "CGDisplayBounds")]
         unsafe static extern void DisplayBounds(out HIRect rect, IntPtr display);
 
-        [DllImport(appServices,EntryPoint="CGDisplayPixelsWide")]
+        [DllImport(lib,EntryPoint="CGDisplayPixelsWide")]
         internal static extern int DisplayPixelsWide(IntPtr display);
 
-        [DllImport(appServices,EntryPoint="CGDisplayPixelsHigh")]
+        [DllImport(lib,EntryPoint="CGDisplayPixelsHigh")]
         internal static extern int DisplayPixelsHigh(IntPtr display);
 
-        [DllImport(appServices,EntryPoint="CGDisplayCurrentMode")]
+        [DllImport(lib,EntryPoint="CGDisplayCurrentMode")]
         internal static extern IntPtr DisplayCurrentMode(IntPtr display);
 
-        [DllImport(appServices,EntryPoint="CGDisplayCapture")]
+        [DllImport(lib,EntryPoint="CGDisplayCapture")]
         internal static extern CGDisplayErr DisplayCapture(IntPtr display);
 
-        [DllImport(appServices,EntryPoint="CGCaptureAllDisplays")]
+        [DllImport(lib,EntryPoint="CGCaptureAllDisplays")]
         internal static extern CGDisplayErr CaptureAllDisplays();
 
-        [DllImport(appServices,EntryPoint="CGShieldingWindowLevel")]
+        [DllImport(lib,EntryPoint="CGShieldingWindowLevel")]
         internal static extern uint ShieldingWindowLevel();
 
-        [DllImport(appServices,EntryPoint="CGDisplayRelease")]
+        [DllImport(lib,EntryPoint="CGDisplayRelease")]
         internal static extern CGDisplayErr DisplayRelease(IntPtr display);
 
-        [DllImport(appServices,EntryPoint="CGReleaseAllDisplays")]
+        [DllImport(lib,EntryPoint="CGReleaseAllDisplays")]
         internal static extern CGDisplayErr DisplayReleaseAll();
 
-        [DllImport(appServices, EntryPoint = "CGDisplayAvailableModes")]
+        [DllImport(lib, EntryPoint = "CGDisplayAvailableModes")]
         internal static extern IntPtr DisplayAvailableModes(IntPtr display);
 
-        [DllImport(appServices, EntryPoint = "CGDisplaySwitchToMode")]
+        [DllImport(lib, EntryPoint = "CGDisplaySwitchToMode")]
         internal static extern IntPtr DisplaySwitchToMode(IntPtr display, IntPtr displayMode);
 
-        [DllImport(appServices, EntryPoint = "CGWarpMouseCursorPosition")]
+        [DllImport(lib, EntryPoint = "CGWarpMouseCursorPosition")]
         internal static extern CGError WarpMouseCursorPosition(HIPoint newCursorPosition);
 
-        [DllImport(appServices, EntryPoint = "CGCursorIsVisible")]
+        [DllImport(lib, EntryPoint = "CGCursorIsVisible")]
         internal static extern bool CursorIsVisible();
 
-        [DllImport(appServices, EntryPoint = "CGDisplayShowCursor")]
+        [DllImport(lib, EntryPoint = "CGDisplayShowCursor")]
         internal static extern CGError DisplayShowCursor(CGDirectDisplayID display);
 
-        [DllImport(appServices, EntryPoint = "CGDisplayHideCursor")]
+        [DllImport(lib, EntryPoint = "CGDisplayHideCursor")]
         internal static extern CGError DisplayHideCursor(CGDirectDisplayID display);
 
-         [DllImport(appServices, EntryPoint = "CGAssociateMouseAndMouseCursorPosition")]
+         [DllImport(lib, EntryPoint = "CGAssociateMouseAndMouseCursorPosition")]
         internal static extern CGError AssociateMouseAndMouseCursorPosition(bool connected);
 
-        [DllImport(appServices, EntryPoint="CGSetLocalEventsSuppressionInterval")]
+        [DllImport(lib, EntryPoint="CGSetLocalEventsSuppressionInterval")]
         internal static extern CGError SetLocalEventsSuppressionInterval(double seconds);
     }
 }
