@@ -41,6 +41,11 @@ namespace OpenTK.Platform.X11
 
         #region --- Constructors ---
 
+        static X11GLContext()
+        {
+            new Glx().LoadEntryPoints();
+        }
+
         public X11GLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shared, bool direct,
             int major, int minor, GraphicsContextFlags flags)
         {
@@ -258,8 +263,7 @@ namespace OpenTK.Platform.X11
         {
             return
                 SupportsExtension(display, window, "GLX_ARB_create_context") &&
-                SupportsExtension(display, window, "GLX_ARB_create_context_profile") &&
-                Glx.SupportsFunction("glXCreateContextAttribsARB");
+                SupportsExtension(display, window, "GLX_ARB_create_context_profile");
         }
 
         #endregion
@@ -402,23 +406,24 @@ namespace OpenTK.Platform.X11
 
         public override void LoadAll()
         {
+            // Note: GLX entry points are always available, even
+            // for extensions that are not currently supported by
+            // the underlying driver. This means we can only check
+            // the extension strings for support, not the entry
+            // points themselves.
             vsync_ext_supported =
-                SupportsExtension(display, currentWindow, "GLX_EXT_swap_control") &&
-                Glx.SupportsFunction("glXSwapIntervalEXT") &&
-                Glx.SupportsFunction("glXGetSwapIntervalEXT");
+                SupportsExtension(display, currentWindow, "GLX_EXT_swap_control");
             vsync_mesa_supported =
-                SupportsExtension(display, currentWindow, "GLX_MESA_swap_control") &&
-                Glx.SupportsFunction("glXSwapIntervalMESA") &&
-                Glx.SupportsFunction("glXGetSwapIntervalMESA");
+                SupportsExtension(display, currentWindow, "GLX_MESA_swap_control");
             vsync_sgi_supported =
-                SupportsExtension(display, currentWindow, "GLX_SGI_swap_control") &&
-                Glx.SupportsFunction("glXSwapIntervalSGI");
-            Debug.Print("Context supports vsync: {0}.",
-                vsync_ext_supported || vsync_mesa_supported || vsync_ext_supported);
-
+                SupportsExtension(display, currentWindow, "GLX_SGI_swap_control");
             vsync_tear_supported =
                 SupportsExtension(display, currentWindow, "GLX_EXT_swap_control_tear");
-            Debug.Print("Context supports vsync tear: {0}.", vsync_tear_supported);
+
+            Debug.Print("Context supports vsync: {0}.",
+                vsync_ext_supported || vsync_mesa_supported || vsync_sgi_supported);
+            Debug.Print("Context supports adaptive vsync: {0}.",
+                vsync_tear_supported);
 
             base.LoadAll();
         }
