@@ -156,29 +156,37 @@ namespace OpenTK.Platform.X11
         // If a display is not specified, the default display is used.
         internal static bool IsSupported(IntPtr display)
         {
-            if (display == IntPtr.Zero)
+            try
             {
-                display = API.DefaultDisplay;
-            }
-
-            using (new XLock(display))
-            {
-                int major, ev, error;
-                if (Functions.XQueryExtension(display, "XInputExtension", out major, out ev, out error) != 0)
+                if (display == IntPtr.Zero)
                 {
-                    XIOpCode = major;
+                    display = API.DefaultDisplay;
+                }
 
-                    int minor = 2;
-                    while (minor >= 0)
+                using (new XLock(display))
+                {
+                    int major, ev, error;
+                    if (Functions.XQueryExtension(display, "XInputExtension", out major, out ev, out error) != 0)
                     {
-                        if (XI.QueryVersion(display, ref major, ref minor) == ErrorCodes.Success)
+                        XIOpCode = major;
+
+                        int minor = 2;
+                        while (minor >= 0)
                         {
-                            XIVersion = major * 100 + minor * 10;
-                            return true;
+                            if (XI.QueryVersion(display, ref major, ref minor) == ErrorCodes.Success)
+                            {
+                                XIVersion = major * 100 + minor * 10;
+                                return true;
+                            }
+                            minor--;
                         }
-                        minor--;
                     }
                 }
+            }
+            catch (DllNotFoundException e)
+            {
+                Debug.Print(e.ToString());
+                Debug.Print("XInput2 extension not supported. Mouse support will suffer.");
             }
 
             return false;
