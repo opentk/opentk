@@ -1441,11 +1441,18 @@ namespace OpenTK.Platform.X11
             {
                 unsafe
                 {
+                    if (value == cursor)
+                        return;
+
                     using (new XLock(window.Display))
                     {
                         if (value == MouseCursor.Default)
                         {
-                            Functions.XUndefineCursor(window.Display, window.Handle);
+                            cursorHandle = IntPtr.Zero;
+                        }
+                        else if (value == MouseCursor.Empty)
+                        {
+                            cursorHandle = EmptyCursor;
                         }
                         else
                         {
@@ -1457,14 +1464,26 @@ namespace OpenTK.Platform.X11
                                 xcursorimage->pixels = (uint*)pixels;
                                 xcursorimage->delay = 0;
                                 cursorHandle = Functions.XcursorImageLoadCursor(window.Display, xcursorimage);
-                                Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
                                 Functions.XcursorImageDestroy(xcursorimage);
                             }
                         }
+
+                        // If the cursor is visible set it now.
+                        // Otherwise, it will be set in CursorVisible = true.
+                        if (CursorVisible)
+                        {
+                            Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
+                        }
+
                         cursor = value;
                     }
                 }
             }
+        }
+
+        void SetCursor(IntPtr handle)
+        {
+            Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
         }
 
         #endregion
@@ -1480,6 +1499,8 @@ namespace OpenTK.Platform.X11
                 {
                     using (new XLock(window.Display))
                     {
+                        // Note: if cursorHandle = IntPtr.Zero, this function
+                        // is equivalent to XUndefineCursor.
                         Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
                         cursor_visible = true;
                     }
