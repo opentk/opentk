@@ -34,7 +34,7 @@ namespace OpenTK.Input
     /// <summary>
     /// Represents the state of a mouse wheel.
     /// </summary>
-    public struct MouseScrollWheel : IEquatable<MouseScrollWheel>
+    public struct MouseScroll : IEquatable<MouseScroll>
     {
         #region Public Members
 
@@ -52,31 +52,31 @@ namespace OpenTK.Input
         /// <value>The y.</value>
         public float Y { get; internal set; }
 
-        /// <param name="left">A <see cref="MouseScrollWheel"/> instance to test for equality.</param>
-        /// <param name="right">A <see cref="MouseScrollWheel"/> instance to test for equality.</param>
-        public static bool operator ==(MouseScrollWheel left, MouseScrollWheel right)
+        /// <param name="left">A <see cref="MouseScroll"/> instance to test for equality.</param>
+        /// <param name="right">A <see cref="MouseScroll"/> instance to test for equality.</param>
+        public static bool operator ==(MouseScroll left, MouseScroll right)
         {
             return left.Equals(right);
         }
 
-        /// <param name="left">A <see cref="MouseScrollWheel"/> instance to test for inequality.</param>
-        /// <param name="right">A <see cref="MouseScrollWheel"/> instance to test for inequality.</param>
-        public static bool operator !=(MouseScrollWheel left, MouseScrollWheel right)
+        /// <param name="left">A <see cref="MouseScroll"/> instance to test for inequality.</param>
+        /// <param name="right">A <see cref="MouseScroll"/> instance to test for inequality.</param>
+        public static bool operator !=(MouseScroll left, MouseScroll right)
         {
             return !left.Equals(right);
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.MouseScrollWheel"/>.
+        /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.MouseScroll"/>.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.MouseScrollWheel"/>.</returns>
+        /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.MouseScroll"/>.</returns>
         public override string ToString()
         {
             return string.Format("[X={0:0.00}, Y={1:0.00}]", X, Y);
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="OpenTK.Input.MouseScrollWheel"/> object.
+        /// Serves as a hash function for a <see cref="OpenTK.Input.MouseScroll"/> object.
         /// </summary>
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
         /// hash table.</returns>
@@ -86,16 +86,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="OpenTK.Input.MouseScrollWheel"/>.
+        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="OpenTK.Input.MouseScroll"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="OpenTK.Input.MouseScrollWheel"/>.</param>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="OpenTK.Input.MouseScroll"/>.</param>
         /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
-        /// <see cref="OpenTK.Input.MouseScrollWheel"/>; otherwise, <c>false</c>.</returns>
+        /// <see cref="OpenTK.Input.MouseScroll"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             return
-                obj is MouseScrollWheel &&
-                Equals((MouseScrollWheel)obj);
+                obj is MouseScroll &&
+                Equals((MouseScroll)obj);
         }
 
         #endregion
@@ -103,12 +103,12 @@ namespace OpenTK.Input
         #region IEquatable Members
 
         /// <summary>
-        /// Determines whether the specified <see cref="OpenTK.Input.MouseScrollWheel"/> is equal to the current <see cref="OpenTK.Input.MouseScrollWheel"/>.
+        /// Determines whether the specified <see cref="OpenTK.Input.MouseScroll"/> is equal to the current <see cref="OpenTK.Input.MouseScroll"/>.
         /// </summary>
-        /// <param name="other">The <see cref="OpenTK.Input.MouseScrollWheel"/> to compare with the current <see cref="OpenTK.Input.MouseScrollWheel"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="OpenTK.Input.MouseScrollWheel"/> is equal to the current
-        /// <see cref="OpenTK.Input.MouseScrollWheel"/>; otherwise, <c>false</c>.</returns>
-        public bool Equals(MouseScrollWheel other)
+        /// <param name="other">The <see cref="OpenTK.Input.MouseScroll"/> to compare with the current <see cref="OpenTK.Input.MouseScroll"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="OpenTK.Input.MouseScroll"/> is equal to the current
+        /// <see cref="OpenTK.Input.MouseScroll"/>; otherwise, <c>false</c>.</returns>
+        public bool Equals(MouseScroll other)
         {
             return X == other.X && Y == other.Y;
         }
