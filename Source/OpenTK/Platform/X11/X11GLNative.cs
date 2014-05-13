@@ -1472,11 +1472,6 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void SetCursor(IntPtr handle)
-        {
-            Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
-        }
-
         #endregion
 
         #region CursorVisible
