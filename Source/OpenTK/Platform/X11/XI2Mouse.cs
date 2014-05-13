@@ -78,16 +78,6 @@ namespace OpenTK.Platform.X11
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
         readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
 
-        // Store information on a mouse warp event, so it can be ignored.
-        struct MouseWarp : IEquatable<MouseWarp>
-        {
-            public MouseWarp(double x, double y) { X = x; Y = y; }
-            double X, Y;
-            public bool Equals(MouseWarp warp) { return X == warp.X && Y == warp.Y; }
-        }
-        MouseWarp? mouse_warp_event;
-        int mouse_warp_event_count;
-
         static XI2Mouse()
         {
             using (new XLock(API.DefaultDisplay))
@@ -316,12 +306,6 @@ namespace OpenTK.Platform.X11
                     IntPtr.Zero, window.RootWindow, 0, 0, 0, 0, (int)x, (int)y);
                 Interlocked.Exchange(ref cursor_x, (long)x);
                 Interlocked.Exchange(ref cursor_y, (long)y);
-
-                // Mark the expected warp-event so it can be ignored.
-                if (mouse_warp_event == null)
-                    mouse_warp_event_count = 0;
-                mouse_warp_event_count++;
-                mouse_warp_event = new MouseWarp((int)x, (int)y);
             }
         }
 
