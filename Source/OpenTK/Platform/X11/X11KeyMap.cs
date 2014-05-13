@@ -388,7 +388,7 @@ namespace OpenTK.Platform.X11
             return key != Key.Unknown;
         }
 
-        internal static MouseButton TranslateButton(int button, out int wheelx, out int wheely)
+        internal static MouseButton TranslateButton(int button, out float wheelx, out float wheely)
         {
             wheelx = 0;
             wheely = 0;

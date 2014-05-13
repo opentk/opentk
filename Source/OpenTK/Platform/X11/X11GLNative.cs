@@ -132,6 +132,7 @@ namespace OpenTK.Platform.X11
 
         readonly bool xi2_supported;
         readonly int xi2_opcode;
+        readonly int xi2_version;
 
         #endregion
 
@@ -243,6 +244,7 @@ namespace OpenTK.Platform.X11
             if (xi2_supported)
             {
                 xi2_opcode = XI2Mouse.XIOpCode;
+                xi2_version = XI2Mouse.XIVersion;
             }
 
             exists = true;
@@ -918,15 +920,29 @@ namespace OpenTK.Platform.X11
 
                     case XEventName.ButtonPress:
                         {
-                            int dx, dy;
+                            float dx, dy;
                             MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
 
                             if (button != MouseButton.LastButton)
                             {
                                 OnMouseDown(button);
                             }
-                            else if (dx != 0 || dy != 0)
+
+                            if (xi2_version >= 210)
                             {
+                                // High resolution scroll events supported.
+                                // This code is implemented in XI2Mouse.GetCursorState().
+                                // Instead of reimplementing this functionality, just
+                                // use the values from there.
+                                MouseState state = Mouse.GetCursorState();
+                                dx = state.Scroll.X - MouseState.Scroll.X;
+                                dy = state.Scroll.Y - MouseState.Scroll.Y;
+                            }
+
+                            if (dx != 0 || dy != 0)
+                            {
+                                // High resolution scroll events not supported
+                                // fallback to the old Button4-7 scroll buttons
                                 OnMouseWheel(dx, dy);
                             }
                         }
@@ -934,7 +950,7 @@ namespace OpenTK.Platform.X11
 
                     case XEventName.ButtonRelease:
                         {
-                            int dx, dy;
+                            float dx, dy;
                             MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
                             if (button != MouseButton.LastButton)
                             {
@@ -1003,7 +1019,7 @@ namespace OpenTK.Platform.X11
                         //    RefreshWindowBorders();
                         //}
                         break;
-                       
+
                     default:
                         //Debug.WriteLine(String.Format("{0} event was not handled", e.type));
                         break;
@@ -1499,11 +1515,8 @@ namespace OpenTK.Platform.X11
         void GrabMouse()
         {
             Functions.XGrabPointer(window.Display, window.Handle, false,
-                EventMask.PointerMotionMask |
-                EventMask.ButtonMotionMask | EventMask.Button1MotionMask |
-                EventMask.Button2MotionMask | EventMask.Button3MotionMask |
-                EventMask.Button4MotionMask | EventMask.Button5MotionMask |
-                EventMask.ButtonPressMask | EventMask.ButtonReleaseMask,
+                EventMask.PointerMotionMask | EventMask.ButtonPressMask |
+                EventMask.ButtonReleaseMask,
                 GrabMode.GrabModeAsync, GrabMode.GrabModeAsync,
                 window.Handle, EmptyCursor, IntPtr.Zero);
         }
