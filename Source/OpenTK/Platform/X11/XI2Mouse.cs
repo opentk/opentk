@@ -139,6 +139,7 @@ namespace OpenTK.Platform.X11
                 XIEventMasks.RawButtonPressMask |
                 XIEventMasks.RawButtonReleaseMask |
                 XIEventMasks.RawMotionMask |
+                XIEventMasks.MotionMask |
                 XIEventMasks.DeviceChangedMask |
                 (XIEventMasks)(1 << (int)ExitEvent)))
             {
@@ -313,6 +314,8 @@ namespace OpenTK.Platform.X11
             {
                 Functions.XWarpPointer(API.DefaultDisplay,
                     IntPtr.Zero, window.RootWindow, 0, 0, 0, 0, (int)x, (int)y);
+                Interlocked.Exchange(ref cursor_x, (long)x);
+                Interlocked.Exchange(ref cursor_y, (long)y);
 
                 // Mark the expected warp-event so it can be ignored.
                 if (mouse_warp_event == null)
@@ -352,6 +355,10 @@ namespace OpenTK.Platform.X11
                     {
                         switch ((XIEventType)cookie.evtype)
                         {
+                            case XIEventType.Motion:
+                                // Nothing to do
+                                break;
+
                             case XIEventType.RawMotion:
                             case XIEventType.RawButtonPress:
                             case XIEventType.RawButtonRelease:
