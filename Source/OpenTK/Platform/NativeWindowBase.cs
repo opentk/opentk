@@ -232,6 +232,8 @@ namespace OpenTK.Platform
             MouseState[button] = true;
 
             var e = MouseDownArgs;
+            e.Button = button;
+            e.IsPressed = true;
             e.Mouse = MouseState;
 
             MouseDown(this, e);
@@ -242,6 +244,8 @@ namespace OpenTK.Platform
             MouseState[button] = false;
 
             var e = MouseUpArgs;
+            e.Button = button;
+            e.IsPressed = false;
             e.Mouse = MouseState;
 
             MouseUp(this, e);
