@@ -73,6 +73,7 @@ namespace OpenTK.Platform.X11
 
         internal readonly X11WindowInfo window;
         internal static int XIOpCode { get; private set; }
+        internal static int XIVersion { get; private set; }
 
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
         readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
@@ -172,6 +173,7 @@ namespace OpenTK.Platform.X11
                     {
                         if (XI.QueryVersion(display, ref major, ref minor) == ErrorCodes.Success)
                         {
+                            XIVersion = major * 100 + minor * 10;
                             return true;
                         }
                         minor--;
@@ -385,15 +387,13 @@ namespace OpenTK.Platform.X11
                             case 1: d.State.EnableBit((int)MouseButton.Left); break;
                             case 2: d.State.EnableBit((int)MouseButton.Middle); break;
                             case 3: d.State.EnableBit((int)MouseButton.Right); break;
-                            case 6: d.State.EnableBit((int)MouseButton.Button1); break;
-                            case 7: d.State.EnableBit((int)MouseButton.Button2); break;
-                            case 8: d.State.EnableBit((int)MouseButton.Button3); break;
-                            case 9: d.State.EnableBit((int)MouseButton.Button4); break;
-                            case 10: d.State.EnableBit((int)MouseButton.Button5); break;
-                            case 11: d.State.EnableBit((int)MouseButton.Button6); break;
-                            case 12: d.State.EnableBit((int)MouseButton.Button7); break;
-                            case 13: d.State.EnableBit((int)MouseButton.Button8); break;
-                            case 14: d.State.EnableBit((int)MouseButton.Button9); break;
+                            case 8: d.State.EnableBit((int)MouseButton.Button1); break;
+                            case 9: d.State.EnableBit((int)MouseButton.Button2); break;
+                            case 10: d.State.EnableBit((int)MouseButton.Button3); break;
+                            case 11: d.State.EnableBit((int)MouseButton.Button4); break;
+                            case 12: d.State.EnableBit((int)MouseButton.Button5); break;
+                            case 13: d.State.EnableBit((int)MouseButton.Button6); break;
+                            case 14: d.State.EnableBit((int)MouseButton.Button7); break;
                         }
                         break;
 
@@ -403,15 +403,13 @@ namespace OpenTK.Platform.X11
                             case 1: d.State.DisableBit((int)MouseButton.Left); break;
                             case 2: d.State.DisableBit((int)MouseButton.Middle); break;
                             case 3: d.State.DisableBit((int)MouseButton.Right); break;
-                            case 6: d.State.DisableBit((int)MouseButton.Button1); break;
-                            case 7: d.State.DisableBit((int)MouseButton.Button2); break;
-                            case 8: d.State.DisableBit((int)MouseButton.Button3); break;
-                            case 9: d.State.DisableBit((int)MouseButton.Button4); break;
-                            case 10: d.State.DisableBit((int)MouseButton.Button5); break;
-                            case 11: d.State.DisableBit((int)MouseButton.Button6); break;
-                            case 12: d.State.DisableBit((int)MouseButton.Button7); break;
-                            case 13: d.State.DisableBit((int)MouseButton.Button8); break;
-                            case 14: d.State.DisableBit((int)MouseButton.Button9); break;
+                            case 8: d.State.DisableBit((int)MouseButton.Button1); break;
+                            case 9: d.State.DisableBit((int)MouseButton.Button2); break;
+                            case 10: d.State.DisableBit((int)MouseButton.Button3); break;
+                            case 11: d.State.DisableBit((int)MouseButton.Button4); break;
+                            case 12: d.State.DisableBit((int)MouseButton.Button5); break;
+                            case 13: d.State.DisableBit((int)MouseButton.Button6); break;
+                            case 14: d.State.DisableBit((int)MouseButton.Button7); break;
                         }
                         break;
                 }
