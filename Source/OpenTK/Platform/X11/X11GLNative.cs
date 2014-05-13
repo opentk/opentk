@@ -1499,6 +1499,10 @@ namespace OpenTK.Platform.X11
                 {
                     using (new XLock(window.Display))
                     {
+                        Point p = PointToScreen(new Point(MouseState.X, MouseState.Y));
+                        Mouse.SetPosition(p.X, p.Y);
+                        Functions.XFlush(window.Display);
+
                         // Note: if cursorHandle = IntPtr.Zero, this function
                         // is equivalent to XUndefineCursor.
                         Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
