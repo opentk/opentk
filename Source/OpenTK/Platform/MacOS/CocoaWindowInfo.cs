@@ -68,6 +68,7 @@ namespace OpenTK.Platform.MacOS
         {
             this.nsWindowRef = nsWindowRef;
             this.nsViewRef = nsViewRef;
+            Cocoa.SendVoid(nsWindowRef, Selector.Retain);
         }
 
         #endregion
@@ -107,16 +108,22 @@ namespace OpenTK.Platform.MacOS
 
             if (disposing)
             {
-
+                Cocoa.SendVoid(nsWindowRef, Selector.Release);
+            }
+            else
+            {
+                Debug.Print("CocoaWindowInfo:{0} leaked, did you forget to call Dispose()?", nsWindowRef);
             }
 
             disposed = true;
         }
 
+        #if DEBUG
         ~CocoaWindowInfo()
         {
             Dispose(false);
         }
+        #endif
 
         #endregion
     }
