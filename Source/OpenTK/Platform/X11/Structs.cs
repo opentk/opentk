@@ -945,7 +945,7 @@ namespace OpenTK.Platform.X11
         public byte pad;
     }
 
-    internal enum Atom
+    internal enum AtomName
     {
         AnyPropertyType = 0,
         XA_PRIMARY = 1,

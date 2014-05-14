@@ -55,7 +55,8 @@ namespace OpenTK.Platform.X11
         
         const int _min_width = 30, _min_height = 30;
 
-        X11WindowInfo window = new X11WindowInfo();
+        readonly X11WindowInfo window = new X11WindowInfo();
+        readonly X11KeyMap KeyMap;
 
         // Window manager hints for fullscreen windows.
         // Not used right now (the code is written, but is not 64bit-correct), but could be useful for older WMs which
@@ -231,12 +232,18 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine(String.Format("X11GLNative window created successfully (id: {0}).", Handle));
             Debug.Unindent();
 
-            // Request that auto-repeat is only set on devices that support it physically.
-            // This typically means that it's turned off for keyboards (which is what we want).
-            // We prefer this method over XAutoRepeatOff/On, because the latter needs to
-            // be reset before the program exits.
-            bool supported;
-            Functions.XkbSetDetectableAutoRepeat(window.Display, true, out supported);
+            using (new XLock(window.Display))
+            {
+                // Request that auto-repeat is only set on devices that support it physically.
+                // This typically means that it's turned off for keyboards (which is what we want).
+                // We prefer this method over XAutoRepeatOff/On, because the latter needs to
+                // be reset before the program exits.
+                if (Xkb.IsSupported(window.Display))
+                {
+                    bool supported;
+                    Xkb.SetDetectableAutoRepeat(window.Display, true, out supported);
+                }
+            }
 
             // The XInput2 extension makes keyboard and mouse handling much easier.
             // Check whether it is available.
@@ -271,6 +278,7 @@ namespace OpenTK.Platform.X11
                 {
                     window.Screen = Functions.XDefaultScreen(window.Display); //API.DefaultScreen;
                     window.RootWindow = Functions.XRootWindow(window.Display, window.Screen); // API.RootWindow;
+                    KeyMap = new X11KeyMap(window.Display);
                 }
 
                 Debug.Print("Display: {0}, Screen {1}, Root window: {2}", window.Display, window.Screen,
@@ -677,7 +685,7 @@ namespace OpenTK.Platform.X11
                 {
                     Functions.XGetWindowProperty(window.Display, window.Handle,
                         _atom_net_frame_extents, IntPtr.Zero, new IntPtr(16), false,
-                        (IntPtr)Atom.XA_CARDINAL, out atom, out format, out nitems, out bytes_after, ref prop);
+                        (IntPtr)AtomName.XA_CARDINAL, out atom, out format, out nitems, out bytes_after, ref prop);
                 }
     
                 if ((prop != IntPtr.Zero))
@@ -870,7 +878,7 @@ namespace OpenTK.Platform.X11
                     case XEventName.KeyRelease:
                         bool pressed = e.type == XEventName.KeyPress;
                         Key key;
-                        if (X11KeyMap.TranslateKey(ref e.KeyEvent, out key))
+                        if (KeyMap.TranslateKey(ref e.KeyEvent, out key))
                         {
                             if (pressed)
                             {
@@ -1005,6 +1013,7 @@ namespace OpenTK.Platform.X11
                         {
                             Debug.Print("keybard mapping refreshed");
                             Functions.XRefreshKeyboardMapping(ref e.MappingEvent);
+                            KeyMap.RefreshKeycodes(window.Display);
                         }
                         break;
 
@@ -1738,7 +1747,6 @@ namespace OpenTK.Platform.X11
                         }
 
                         window.Dispose();
-                        window = null;
                     }
                 }
                 else
