@@ -77,7 +77,6 @@ namespace OpenTK.Platform.SDL2
                 var bounds = device.Bounds;
                 var flags = TranslateFlags(options);
                 flags |= WindowFlags.OPENGL;
-                flags |= WindowFlags.RESIZABLE;
                 flags |= WindowFlags.HIDDEN;
                 if (Toolkit.Options.EnableHighResolution)
                 {
@@ -87,6 +86,9 @@ namespace OpenTK.Platform.SDL2
                 if ((flags & WindowFlags.FULLSCREEN_DESKTOP) != 0 ||
                     (flags & WindowFlags.FULLSCREEN) != 0)
                     window_state = WindowState.Fullscreen;
+
+                if ((flags & WindowFlags.RESIZABLE) == 0)
+                    window_border = WindowBorder.Fixed;
 
                 IntPtr handle;
                 lock (SDL.Sync)
@@ -114,8 +116,11 @@ namespace OpenTK.Platform.SDL2
                     else
                         return WindowFlags.FULLSCREEN;
 
-                default:
+                case GameWindowFlags.FixedWindow:
                     return WindowFlags.Default;
+
+                default:
+                    return WindowFlags.Default | WindowFlags.RESIZABLE;
             }
         }
 
