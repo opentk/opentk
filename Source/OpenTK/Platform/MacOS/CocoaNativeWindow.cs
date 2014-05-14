@@ -1021,7 +1021,7 @@ namespace OpenTK.Platform.MacOS
                     trackingArea = IntPtr.Zero;
                 }
 
-                Cocoa.SendVoid(windowInfo.Handle, Selector.Release);
+                windowInfo.Dispose();
             }
 
             OnDisposed(EventArgs.Empty);

@@ -38,6 +38,7 @@ namespace OpenTK.Platform.MacOS
         public static readonly IntPtr Init = Selector.Get("init");
         public static readonly IntPtr InitWithCoder = Selector.Get("initWithCoder:");
         public static readonly IntPtr Alloc = Selector.Get("alloc");
+        public static readonly IntPtr Retain = Selector.Get("retain");
         public static readonly IntPtr Release = Selector.Get("release");
         public static readonly IntPtr Autorelease = Selector.Get("autorelease");
 
