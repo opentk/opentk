@@ -542,11 +542,6 @@
       <token name="UnsignedInt2101010Rev" value="0x8368" />
     </enum>
 
-    <enum name="DrawElementsType">
-      <token name="UnsignedByte" value="0X1401" />
-      <token name="UnsignedShort" value="0X1403" />
-    </enum>
-
     <enum name="ErrorCode">
       <token name="NoError" value="0" />
       <token name="InvalidEnum" value="0X0500" />
