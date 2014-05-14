@@ -1,6 +1,6 @@
-﻿#region License
+﻿﻿#region License
 //
-// Xkb.cs
+// X11KeyMap.cs
 //
 // Author:
 //       Stefanos Apostolopoulos <stapostol@gmail.com>
@@ -693,10 +693,9 @@ namespace OpenTK.Platform.X11
         internal bool TranslateKey(ref XKeyEvent e, out Key key)
         {
             return TranslateKey(e.keycode, out key);
-
         }
 
-        internal static MouseButton TranslateButton(int button, out int wheelx, out int wheely)
+        internal static MouseButton TranslateButton(int button, out float wheelx, out float wheely)
         {
             wheelx = 0;
             wheely = 0;
