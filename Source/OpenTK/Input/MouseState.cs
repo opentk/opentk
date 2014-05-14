@@ -39,7 +39,7 @@ namespace OpenTK.Input
         #region Fields
 
         int x, y;
-        MouseScrollWheel scroll;
+        MouseScroll scroll;
         ushort buttons;
         bool is_connected;
 
@@ -104,7 +104,7 @@ namespace OpenTK.Input
         /// Gets a <see cref="OpenTK.Input.MouseScrollWheel"/> instance,
         /// representing the current state of the mouse scroll wheel.
         /// </summary>
-        public MouseScrollWheel Scroll
+        public MouseScroll Scroll
         {
             get { return scroll; }
         }

@@ -34,8 +34,6 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    // Todo: multi-mouse support. Right now we aggregate all data into a single mouse device.
-    // This should be easy: just read the device id and route the data to the correct device.
     sealed class XI2Mouse : IMouseDriver2, IDisposable
     {
         const XEventName ExitEvent = XEventName.LASTEvent + 1;
@@ -73,19 +71,10 @@ namespace OpenTK.Platform.X11
 
         internal readonly X11WindowInfo window;
         internal static int XIOpCode { get; private set; }
+        internal static int XIVersion { get; private set; }
 
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
         readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
-
-        // Store information on a mouse warp event, so it can be ignored.
-        struct MouseWarp : IEquatable<MouseWarp>
-        {
-            public MouseWarp(double x, double y) { X = x; Y = y; }
-            double X, Y;
-            public bool Equals(MouseWarp warp) { return X == warp.X && Y == warp.Y; }
-        }
-        MouseWarp? mouse_warp_event;
-        int mouse_warp_event_count;
 
         static XI2Mouse()
         {
@@ -138,6 +127,7 @@ namespace OpenTK.Platform.X11
                 XIEventMasks.RawButtonPressMask |
                 XIEventMasks.RawButtonReleaseMask |
                 XIEventMasks.RawMotionMask |
+                XIEventMasks.MotionMask |
                 XIEventMasks.DeviceChangedMask |
                 (XIEventMasks)(1 << (int)ExitEvent)))
             {
@@ -155,28 +145,37 @@ namespace OpenTK.Platform.X11
         // If a display is not specified, the default display is used.
         internal static bool IsSupported(IntPtr display)
         {
-            if (display == IntPtr.Zero)
+            try
             {
-                display = API.DefaultDisplay;
-            }
-
-            using (new XLock(display))
-            {
-                int major, ev, error;
-                if (Functions.XQueryExtension(display, "XInputExtension", out major, out ev, out error) != 0)
+                if (display == IntPtr.Zero)
                 {
-                    XIOpCode = major;
+                    display = API.DefaultDisplay;
+                }
 
-                    int minor = 2;
-                    while (minor >= 0)
+                using (new XLock(display))
+                {
+                    int major, ev, error;
+                    if (Functions.XQueryExtension(display, "XInputExtension", out major, out ev, out error) != 0)
                     {
-                        if (XI.QueryVersion(display, ref major, ref minor) == ErrorCodes.Success)
+                        XIOpCode = major;
+
+                        int minor = 2;
+                        while (minor >= 0)
                         {
-                            return true;
+                            if (XI.QueryVersion(display, ref major, ref minor) == ErrorCodes.Success)
+                            {
+                                XIVersion = major * 100 + minor * 10;
+                                return true;
+                            }
+                            minor--;
                         }
-                        minor--;
                     }
                 }
+            }
+            catch (DllNotFoundException e)
+            {
+                Debug.Print(e.ToString());
+                Debug.Print("XInput2 extension not supported. Mouse support will suffer.");
             }
 
             return false;
@@ -303,12 +302,8 @@ namespace OpenTK.Platform.X11
             {
                 Functions.XWarpPointer(API.DefaultDisplay,
                     IntPtr.Zero, window.RootWindow, 0, 0, 0, 0, (int)x, (int)y);
-
-                // Mark the expected warp-event so it can be ignored.
-                if (mouse_warp_event == null)
-                    mouse_warp_event_count = 0;
-                mouse_warp_event_count++;
-                mouse_warp_event = new MouseWarp((int)x, (int)y);
+                Interlocked.Exchange(ref cursor_x, (long)x);
+                Interlocked.Exchange(ref cursor_y, (long)y);
             }
         }
 
@@ -342,6 +337,10 @@ namespace OpenTK.Platform.X11
                     {
                         switch ((XIEventType)cookie.evtype)
                         {
+                            case XIEventType.Motion:
+                                // Nothing to do
+                                break;
+
                             case XIEventType.RawMotion:
                             case XIEventType.RawButtonPress:
                             case XIEventType.RawButtonRelease:
@@ -385,15 +384,13 @@ namespace OpenTK.Platform.X11
                             case 1: d.State.EnableBit((int)MouseButton.Left); break;
                             case 2: d.State.EnableBit((int)MouseButton.Middle); break;
                             case 3: d.State.EnableBit((int)MouseButton.Right); break;
-                            case 6: d.State.EnableBit((int)MouseButton.Button1); break;
-                            case 7: d.State.EnableBit((int)MouseButton.Button2); break;
-                            case 8: d.State.EnableBit((int)MouseButton.Button3); break;
-                            case 9: d.State.EnableBit((int)MouseButton.Button4); break;
-                            case 10: d.State.EnableBit((int)MouseButton.Button5); break;
-                            case 11: d.State.EnableBit((int)MouseButton.Button6); break;
-                            case 12: d.State.EnableBit((int)MouseButton.Button7); break;
-                            case 13: d.State.EnableBit((int)MouseButton.Button8); break;
-                            case 14: d.State.EnableBit((int)MouseButton.Button9); break;
+                            case 8: d.State.EnableBit((int)MouseButton.Button1); break;
+                            case 9: d.State.EnableBit((int)MouseButton.Button2); break;
+                            case 10: d.State.EnableBit((int)MouseButton.Button3); break;
+                            case 11: d.State.EnableBit((int)MouseButton.Button4); break;
+                            case 12: d.State.EnableBit((int)MouseButton.Button5); break;
+                            case 13: d.State.EnableBit((int)MouseButton.Button6); break;
+                            case 14: d.State.EnableBit((int)MouseButton.Button7); break;
                         }
                         break;
 
@@ -403,15 +400,13 @@ namespace OpenTK.Platform.X11
                             case 1: d.State.DisableBit((int)MouseButton.Left); break;
                             case 2: d.State.DisableBit((int)MouseButton.Middle); break;
                             case 3: d.State.DisableBit((int)MouseButton.Right); break;
-                            case 6: d.State.DisableBit((int)MouseButton.Button1); break;
-                            case 7: d.State.DisableBit((int)MouseButton.Button2); break;
-                            case 8: d.State.DisableBit((int)MouseButton.Button3); break;
-                            case 9: d.State.DisableBit((int)MouseButton.Button4); break;
-                            case 10: d.State.DisableBit((int)MouseButton.Button5); break;
-                            case 11: d.State.DisableBit((int)MouseButton.Button6); break;
-                            case 12: d.State.DisableBit((int)MouseButton.Button7); break;
-                            case 13: d.State.DisableBit((int)MouseButton.Button8); break;
-                            case 14: d.State.DisableBit((int)MouseButton.Button9); break;
+                            case 8: d.State.DisableBit((int)MouseButton.Button1); break;
+                            case 9: d.State.DisableBit((int)MouseButton.Button2); break;
+                            case 10: d.State.DisableBit((int)MouseButton.Button3); break;
+                            case 11: d.State.DisableBit((int)MouseButton.Button4); break;
+                            case 12: d.State.DisableBit((int)MouseButton.Button5); break;
+                            case 13: d.State.DisableBit((int)MouseButton.Button6); break;
+                            case 14: d.State.DisableBit((int)MouseButton.Button7); break;
                         }
                         break;
                 }

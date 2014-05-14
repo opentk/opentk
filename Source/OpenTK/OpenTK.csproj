@@ -790,7 +790,6 @@
     <Compile Include="WindowIcon.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSBitmapFormat.cs" />
     <Compile Include="Platform\NativeWindowBase.cs" />
-    <Compile Include="Input\MouseScrollWheel.cs" />
     <Compile Include="Input\MouseEventArgs.cs" />
     <Compile Include="Platform\MacOS\Quartz\EventServices.cs" />
     <Compile Include="Platform\MacOS\Quartz\DisplayServices.cs">
@@ -799,6 +798,7 @@
     <Compile Include="Platform\MacOS\Quartz\CoreFoundation.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Input\MouseScroll.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
