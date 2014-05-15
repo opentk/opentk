@@ -247,11 +247,11 @@ namespace OpenTK.Platform.X11
 
             // The XInput2 extension makes keyboard and mouse handling much easier.
             // Check whether it is available.
-            xi2_supported = XI2Mouse.IsSupported(window.Display);
+            xi2_supported = XI2MouseKeyboard.IsSupported(window.Display);
             if (xi2_supported)
             {
-                xi2_opcode = XI2Mouse.XIOpCode;
-                xi2_version = XI2Mouse.XIVersion;
+                xi2_opcode = XI2MouseKeyboard.XIOpCode;
+                xi2_version = XI2MouseKeyboard.XIVersion;
             }
 
             exists = true;

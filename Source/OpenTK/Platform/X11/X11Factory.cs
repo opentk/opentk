@@ -41,7 +41,7 @@ namespace OpenTK.Platform.X11
             {
                 if (input_driver == null)
                 {
-                    if (XI2Mouse.IsSupported(IntPtr.Zero))
+                    if (XI2MouseKeyboard.IsSupported(IntPtr.Zero))
                     {
                         input_driver = new XI2Input();
                     }

@@ -35,7 +35,7 @@ namespace OpenTK.Platform.X11
 {
     class XI2Input : IInputDriver2
     {
-        readonly XI2Mouse mouse_keyboard = new XI2Mouse();
+        readonly XI2MouseKeyboard mouse_keyboard = new XI2MouseKeyboard();
         readonly X11Joystick joystick = new X11Joystick();
         readonly IGamePadDriver gamepad = new MappedGamePadDriver();
 

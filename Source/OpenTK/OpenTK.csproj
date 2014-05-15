@@ -697,7 +697,6 @@
     <Compile Include="Platform\X11\X11Keyboard.cs" />
     <Compile Include="Platform\X11\X11Mouse.cs" />
     <Compile Include="Input\ButtonState.cs" />
-    <Compile Include="Platform\X11\XI2Mouse.cs" />
     <EmbeddedResource Include="OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -802,6 +801,7 @@
     <Compile Include="Input\MouseScroll.cs" />
     <Compile Include="Platform\X11\X11Input.cs" />
     <Compile Include="Platform\X11\XI2Input.cs" />
+    <Compile Include="Platform\X11\XI2MouseKeyboard.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
