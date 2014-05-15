@@ -108,20 +108,20 @@ namespace OpenTK.Platform.SDL2
 
         static WindowFlags TranslateFlags(GameWindowFlags flags)
         {
-            switch (flags)
+            WindowFlags windowFlags = WindowFlags.Default;
+
+            if ((flags & GameWindowFlags.Fullscreen) != 0)
             {
-                case GameWindowFlags.Fullscreen:
-                    if (Sdl2Factory.UseFullscreenDesktop)
-                        return WindowFlags.FULLSCREEN_DESKTOP;
-                    else
-                        return WindowFlags.FULLSCREEN;
-
-                case GameWindowFlags.FixedWindow:
-                    return WindowFlags.Default;
-
-                default:
-                    return WindowFlags.Default | WindowFlags.RESIZABLE;
+                if (Sdl2Factory.UseFullscreenDesktop)
+                    windowFlags |= WindowFlags.FULLSCREEN_DESKTOP;
+                else
+                    windowFlags |= WindowFlags.FULLSCREEN;
             }
+
+            if ((flags & GameWindowFlags.FixedWindow) == 0)
+                windowFlags |= WindowFlags.RESIZABLE;
+
+            return windowFlags;
         }
 
         static Key TranslateKey(Scancode scan)
