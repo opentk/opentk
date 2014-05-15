@@ -34,7 +34,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    sealed class XI2Mouse : IKeyboardDriver2, IMouseDriver2, IDisposable
+    sealed class XI2MouseKeyboard : IKeyboardDriver2, IMouseDriver2, IDisposable
     {
         const XEventName ExitEvent = XEventName.LASTEvent + 1;
         readonly object Sync = new object();
@@ -89,7 +89,7 @@ namespace OpenTK.Platform.X11
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
         readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
 
-        static XI2Mouse()
+        static XI2MouseKeyboard()
         {
             using (new XLock(API.DefaultDisplay))
             {
@@ -119,7 +119,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public XI2Mouse()
+        public XI2MouseKeyboard()
         {
             window = new X11WindowInfo();
 
@@ -620,7 +620,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        ~XI2Mouse()
+        ~XI2MouseKeyboard()
         {
             Dispose(false);
         }
