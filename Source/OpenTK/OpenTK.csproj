@@ -800,6 +800,8 @@
     </Compile>
     <Compile Include="Platform\X11\Bindings\Xkb.cs" />
     <Compile Include="Input\MouseScroll.cs" />
+    <Compile Include="Platform\X11\X11Input.cs" />
+    <Compile Include="Platform\X11\XI2Input.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
