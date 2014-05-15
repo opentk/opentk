@@ -1688,7 +1688,7 @@ namespace OpenTK.Platform.X11
     {
         public int deviceid;
         public IntPtr name; // byte*
-        public int use;
+        public XIDeviceType use;
         public int attachment;
         public Bool enabled;
         public int num_classes;
