@@ -112,6 +112,11 @@ namespace OpenTK
                 }
                 WindowState = WindowState.Fullscreen;
             }
+
+            if ((options & GameWindowFlags.FixedWindow) != 0)
+            {
+                WindowBorder = WindowBorder.Fixed;
+            }
         }
 
         #endregion
