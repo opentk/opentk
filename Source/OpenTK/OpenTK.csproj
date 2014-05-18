@@ -163,9 +163,12 @@
     <Compile Include="Math\Matrix4x3.cs" />
     <Compile Include="Math\Matrix4x3d.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
+    <Compile Include="Platform\Egl\EglUnixContext.cs" />
+    <Compile Include="Platform\Egl\EglWinContext.cs" />
     <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
     <Compile Include="Platform\Windows\XInputJoystick.cs" />
+    <Compile Include="Platform\X11\Bindings\DL.cs" />
     <Compile Include="Platform\X11\Bindings\INotify.cs" />
     <Compile Include="Platform\X11\Bindings\XI.cs" />
     <Compile Include="ToolkitOptions.cs" />
@@ -831,7 +834,5 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <Folder Include="Platform\MacOS\Quartz\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
