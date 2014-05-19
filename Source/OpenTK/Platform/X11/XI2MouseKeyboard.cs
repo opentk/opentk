@@ -34,10 +34,12 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    sealed class XI2Mouse : IMouseDriver2, IDisposable
+    sealed class XI2MouseKeyboard : IKeyboardDriver2, IMouseDriver2, IDisposable
     {
         const XEventName ExitEvent = XEventName.LASTEvent + 1;
+        readonly object Sync = new object();
         readonly Thread ProcessingThread;
+        readonly X11KeyMap KeyMap;
         bool disposed;
 
         class XIMouse
@@ -48,6 +50,14 @@ namespace OpenTK.Platform.X11
             public XIScrollClassInfo ScrollY = new XIScrollClassInfo { number = -1 };
             public XIValuatorClassInfo MotionX = new XIValuatorClassInfo { number = -1 };
             public XIValuatorClassInfo MotionY = new XIValuatorClassInfo { number = -1 };
+            public string Name;
+        }
+
+        class XIKeyboard
+        {
+            public KeyboardState State;
+            public XIDeviceInfo DeviceInfo;
+            public string Name;
         }
 
         // Atoms
@@ -66,8 +76,11 @@ namespace OpenTK.Platform.X11
         //static readonly IntPtr RelVertWheel;
 
         long cursor_x, cursor_y; // For GetCursorState()
-        List<XIMouse> devices = new List<XIMouse>(); // List of connected mice
+        List<XIMouse> devices = new List<XIMouse>(); // list of connected mice
         Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps hardware device ids to XIMouse ids
+
+        List<XIKeyboard> keyboards = new List<XIKeyboard>(); // list of connected keybords
+        Dictionary<int, int> keyboard_ids = new Dictionary<int, int>(); // maps hardware device ids to XIKeyboard ids
 
         internal readonly X11WindowInfo window;
         internal static int XIOpCode { get; private set; }
@@ -76,7 +89,7 @@ namespace OpenTK.Platform.X11
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
         readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
 
-        static XI2Mouse()
+        static XI2MouseKeyboard()
         {
             using (new XLock(API.DefaultDisplay))
             {
@@ -106,9 +119,8 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public XI2Mouse()
+        public XI2MouseKeyboard()
         {
-            Debug.WriteLine("Using XI2Mouse.");
             window = new X11WindowInfo();
 
             window.Display = Functions.XOpenDisplay(IntPtr.Zero);
@@ -117,6 +129,8 @@ namespace OpenTK.Platform.X11
                 window.Screen = Functions.XDefaultScreen(window.Display);
                 window.RootWindow = Functions.XRootWindow(window.Display, window.Screen);
                 window.Handle = window.RootWindow;
+
+                KeyMap = new X11KeyMap(window.Display);
             }
 
             if (!IsSupported(window.Display))
@@ -124,6 +138,8 @@ namespace OpenTK.Platform.X11
 
             using (new XLock(window.Display))
             using (XIEventMask mask = new XIEventMask(1,
+                XIEventMasks.RawKeyPressMask |
+                XIEventMasks.RawKeyReleaseMask |
                 XIEventMasks.RawButtonPressMask |
                 XIEventMasks.RawButtonReleaseMask |
                 XIEventMasks.RawMotionMask |
@@ -132,9 +148,8 @@ namespace OpenTK.Platform.X11
                 (XIEventMasks)(1 << (int)ExitEvent)))
             {
                 XI.SelectEvents(window.Display, window.Handle, mask);
+                UpdateDevices();
             }
-
-            UpdateDevices();
 
             ProcessingThread = new Thread(ProcessEvents);
             ProcessingThread.IsBackground = true;
@@ -181,133 +196,222 @@ namespace OpenTK.Platform.X11
             return false;
         }
 
-        void UpdateDevices()
+        #region IKeyboardDriver2 Members
+
+        KeyboardState IKeyboardDriver2.GetState()
         {
-            int count;
-            unsafe
+            lock (Sync)
             {
-                XIDeviceInfo* list = (XIDeviceInfo*)XI.QueryDevice(window.Display, 1, out count);
-
-                Debug.Print("Refreshing mouse device list");
-                Debug.Print("{0} mouse devices detected", count);
-
-                for (int i = 0; i < count; i++)
+                KeyboardState state = new KeyboardState();
+                foreach (XIKeyboard k in keyboards)
                 {
-                    if (devices.Count <= i)
-                    {
-                        devices.Add(new XIMouse());
-                    }
-                    XIMouse d = devices[i];
-                    d.DeviceInfo = *(list + i);
-                    d.State.SetIsConnected(d.DeviceInfo.enabled);
-                    Debug.Print("Device {0} is {1} and has:",
-                        i, d.DeviceInfo.enabled ? "enabled" : "disabled");
-
-                    // Decode the XIDeviceInfo to axes, buttons and scroll types
-                    for (int j = 0; j < d.DeviceInfo.num_classes; j++)
-                    {
-                        XIAnyClassInfo* class_info = *((XIAnyClassInfo**)d.DeviceInfo.classes + j);
-                        switch (class_info->type)
-                        {
-                            case XIClassType.Button:
-                                {
-                                    XIButtonClassInfo* button = (XIButtonClassInfo*)class_info;
-                                    Debug.Print("\t{0} buttons", button->num_buttons);
-                                }
-                                break;
-
-                            case XIClassType.Scroll:
-                                {
-                                    XIScrollClassInfo* scroll = (XIScrollClassInfo*)class_info;
-                                    switch (scroll->scroll_type)
-                                    {
-                                        case XIScrollType.Vertical:
-                                            Debug.WriteLine("\tSmooth vertical scrolling");
-                                            d.ScrollY = *scroll;
-                                            break;
-
-                                        case XIScrollType.Horizontal:
-                                            Debug.WriteLine("\tSmooth horizontal scrolling");
-                                            d.ScrollX = *scroll;
-                                            break;
-
-                                        default:
-                                            Debug.Print("\tUnknown scrolling type {0}", scroll->scroll_type);
-                                            break;
-                                    }
-                                }
-                                break;
-
-                            case XIClassType.Valuator:
-                                {
-                                    XIValuatorClassInfo* valuator = (XIValuatorClassInfo*)class_info;
-                                    if (valuator->label == RelX)
-                                    {
-                                        Debug.WriteLine("\tRelative X movement");
-                                        d.MotionX = *valuator;
-                                    }
-                                    else if (valuator->label == RelY)
-                                    {
-                                        Debug.WriteLine("\tRelative Y movement");
-                                        d.MotionY = *valuator;
-                                    }
-                                }
-                                break;
-                        }
-                    }
-
-                    // Map the hardware device id to the current XIMouse id
-                    if (!rawids.ContainsKey(d.DeviceInfo.deviceid))
-                    {
-                        rawids.Add(d.DeviceInfo.deviceid, 0);
-                    }
-                    rawids[d.DeviceInfo.deviceid] = i;
+                    state.MergeBits(k.State);
                 }
-                XI.FreeDeviceInfo((IntPtr)list);
+                return state;
             }
-
         }
+
+        KeyboardState IKeyboardDriver2.GetState(int index)
+        {
+            lock (Sync)
+            {
+                if (index >= 0 && index < keyboards.Count)
+                {
+                    return keyboards[index].State;
+                }
+                return new KeyboardState();
+            }
+        }
+
+        string IKeyboardDriver2.GetDeviceName(int index)
+        {
+            lock (Sync)
+            {
+                if (index >= 0 && index < keyboards.Count)
+                {
+                    return keyboards[index].Name;
+                }
+                return String.Empty;
+            } 
+        }
+
+        #endregion
 
         #region IMouseDriver2 Members
 
-        public MouseState GetState()
+        MouseState IMouseDriver2.GetState()
         {
-            MouseState master = new MouseState();
-            foreach (var d in devices)
+            lock (Sync)
             {
-                master.MergeBits(d.State);
+                MouseState master = new MouseState();
+                foreach (var d in devices)
+                {
+                    master.MergeBits(d.State);
+                }
+                return master;
             }
-            return master;
         }
 
-        public MouseState GetState(int index)
+        MouseState IMouseDriver2.GetState(int index)
         {
-            if (devices.Count > index)
-                return devices[index].State;
-            else
+            lock (Sync)
+            {
+                if (index >= 0 && index < devices.Count)
+                {
+                    return devices[index].State;
+                }
                 return new MouseState();
+            }
         }
 
-        public MouseState GetCursorState()
+        MouseState IMouseDriver2.GetCursorState()
         {
-            MouseState master = GetState();
-            master.X = (int)Interlocked.Read(ref cursor_x);
-            master.Y = (int)Interlocked.Read(ref cursor_y);
-            return master;
+            lock (Sync)
+            {
+                MouseState master = (this as IMouseDriver2).GetState();
+                master.X = (int)Interlocked.Read(ref cursor_x);
+                master.Y = (int)Interlocked.Read(ref cursor_y);
+                return master;
+            }
         }
 
-        public void SetPosition(double x, double y)
+        void IMouseDriver2.SetPosition(double x, double y)
         {
+            // Note: we cannot use window.Display here, because
+            // that will deadlock the input thread, which is
+            // blocking inside XIfEvent
             using (new XLock(API.DefaultDisplay))
             {
                 Functions.XWarpPointer(API.DefaultDisplay,
                     IntPtr.Zero, window.RootWindow, 0, 0, 0, 0, (int)x, (int)y);
+                Functions.XFlush(API.DefaultDisplay);
                 Interlocked.Exchange(ref cursor_x, (long)x);
                 Interlocked.Exchange(ref cursor_y, (long)y);
             }
         }
 
         #endregion
+
+        #region Private Members
+
+        void UpdateDevices()
+        {
+            lock (Sync)
+            {
+                devices.Clear();
+                keyboards.Clear();
+
+                int count;
+                unsafe
+                {
+                    XIDeviceInfo* list = (XIDeviceInfo*)XI.QueryDevice(window.Display,
+                        XI.XIAllDevices, out count);
+
+                    Debug.Print("Refreshing input device list");
+                    Debug.Print("{0} input devices detected", count);
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        switch ((list + i)->use)
+                        {
+                            case XIDeviceType.MasterKeyboard:
+                            //case XIDeviceType.SlaveKeyboard:
+                                {
+                                    XIKeyboard k = new XIKeyboard();
+                                    k.DeviceInfo = *(list + i);
+                                    k.State.SetIsConnected(k.DeviceInfo.enabled);
+                                    k.Name = Marshal.PtrToStringAnsi(k.DeviceInfo.name);
+                                    int id = k.DeviceInfo.deviceid;
+                                    if (!keyboard_ids.ContainsKey(id))
+                                    {
+                                        keyboard_ids.Add(k.DeviceInfo.deviceid, 0);
+                                    }
+                                    keyboard_ids[id] = keyboards.Count;
+                                    keyboards.Add(k);
+                                }
+                                break;
+
+                            case XIDeviceType.MasterPointer:
+                            //case XIDeviceType.SlavePointer:
+                            case XIDeviceType.FloatingSlave:
+                                {
+                                    XIMouse d = new XIMouse();
+                                    d.DeviceInfo = *(list + i);
+                       
+                                    d.State.SetIsConnected(d.DeviceInfo.enabled);
+                                    d.Name = Marshal.PtrToStringAnsi(d.DeviceInfo.name);
+                                    Debug.Print("Device {0} \"{1}\" is {2} and has:",
+                                        i, d.Name, d.DeviceInfo.enabled ? "enabled" : "disabled");
+
+                                    // Decode the XIDeviceInfo to axes, buttons and scroll types
+                                    for (int j = 0; j < d.DeviceInfo.num_classes; j++)
+                                    {
+                                        XIAnyClassInfo* class_info = *((XIAnyClassInfo**)d.DeviceInfo.classes + j);
+                                        switch (class_info->type)
+                                        {
+                                            case XIClassType.Button:
+                                                {
+                                                    XIButtonClassInfo* button = (XIButtonClassInfo*)class_info;
+                                                    Debug.Print("\t{0} buttons", button->num_buttons);
+                                                }
+                                                break;
+
+                                            case XIClassType.Scroll:
+                                                {
+                                                    XIScrollClassInfo* scroll = (XIScrollClassInfo*)class_info;
+                                                    switch (scroll->scroll_type)
+                                                    {
+                                                        case XIScrollType.Vertical:
+                                                            Debug.WriteLine("\tSmooth vertical scrolling");
+                                                            d.ScrollY = *scroll;
+                                                            break;
+
+                                                        case XIScrollType.Horizontal:
+                                                            Debug.WriteLine("\tSmooth horizontal scrolling");
+                                                            d.ScrollX = *scroll;
+                                                            break;
+
+                                                        default:
+                                                            Debug.Print("\tUnknown scrolling type {0}", scroll->scroll_type);
+                                                            break;
+                                                    }
+                                                }
+                                                break;
+
+                                            case XIClassType.Valuator:
+                                                {
+                                                    XIValuatorClassInfo* valuator = (XIValuatorClassInfo*)class_info;
+                                                    if (valuator->label == RelX)
+                                                    {
+                                                        Debug.WriteLine("\tRelative X movement");
+                                                        d.MotionX = *valuator;
+                                                    }
+                                                    else if (valuator->label == RelY)
+                                                    {
+                                                        Debug.WriteLine("\tRelative Y movement");
+                                                        d.MotionY = *valuator;
+                                                    }
+                                                }
+                                                break;
+                                        }
+                                    }
+
+                                    // Map the hardware device id to the current XIMouse id
+                                    int id = d.DeviceInfo.deviceid;
+                                    if (!rawids.ContainsKey(id))
+                                    {
+                                        rawids.Add(id, 0);
+                                    }
+                                    rawids[id] = devices.Count;
+                                    devices.Add(d);
+                                }
+                                break;
+                        }
+                    }
+                    XI.FreeDeviceInfo((IntPtr)list);
+                }
+            }
+        }
 
         void ProcessEvents()
         {
@@ -341,6 +445,8 @@ namespace OpenTK.Platform.X11
                                 // Nothing to do
                                 break;
 
+                            case XIEventType.RawKeyPress:
+                            case XIEventType.RawKeyRelease:
                             case XIEventType.RawMotion:
                             case XIEventType.RawButtonPress:
                             case XIEventType.RawButtonRelease:
@@ -360,57 +466,71 @@ namespace OpenTK.Platform.X11
 
         void ProcessRawEvent(ref XGenericEventCookie cookie)
         {
-            unsafe
+            lock (Sync)
             {
-                XIRawEvent raw = *(XIRawEvent*)cookie.data;
-
-                if (!rawids.ContainsKey(raw.deviceid))
+                unsafe
                 {
-                    Debug.Print("Unknown mouse device {0} encountered, ignoring.", raw.deviceid);
-                    return;
-                }
+                    XIRawEvent raw = *(XIRawEvent*)cookie.data;
+                    XIMouse mouse;
+                    XIKeyboard keyboard;
 
-                var d = devices[rawids[raw.deviceid]];
+                    switch (raw.evtype)
+                    {
+                        case XIEventType.RawMotion:
+                            if (GetMouseDevice(raw.deviceid, out mouse))
+                            {
+                                ProcessRawMotion(mouse, ref raw);
+                            }
+                            break;
 
-                switch (raw.evtype)
-                {
-                    case XIEventType.RawMotion:
-                        ProcessRawMotion(d, ref raw);
-                        break;
+                        case XIEventType.RawButtonPress:
+                        case XIEventType.RawButtonRelease:
+                            if (GetMouseDevice(raw.deviceid, out mouse))
+                            {
+                                float dx, dy;
+                                MouseButton button = X11KeyMap.TranslateButton(raw.detail, out dx, out dy);
+                                mouse.State[button] = raw.evtype == XIEventType.RawButtonPress;
+                            }
+                            break;
 
-                    case XIEventType.RawButtonPress:
-                        switch (raw.detail)
-                        {
-                            case 1: d.State.EnableBit((int)MouseButton.Left); break;
-                            case 2: d.State.EnableBit((int)MouseButton.Middle); break;
-                            case 3: d.State.EnableBit((int)MouseButton.Right); break;
-                            case 8: d.State.EnableBit((int)MouseButton.Button1); break;
-                            case 9: d.State.EnableBit((int)MouseButton.Button2); break;
-                            case 10: d.State.EnableBit((int)MouseButton.Button3); break;
-                            case 11: d.State.EnableBit((int)MouseButton.Button4); break;
-                            case 12: d.State.EnableBit((int)MouseButton.Button5); break;
-                            case 13: d.State.EnableBit((int)MouseButton.Button6); break;
-                            case 14: d.State.EnableBit((int)MouseButton.Button7); break;
-                        }
-                        break;
-
-                    case XIEventType.RawButtonRelease:
-                        switch (raw.detail)
-                        {
-                            case 1: d.State.DisableBit((int)MouseButton.Left); break;
-                            case 2: d.State.DisableBit((int)MouseButton.Middle); break;
-                            case 3: d.State.DisableBit((int)MouseButton.Right); break;
-                            case 8: d.State.DisableBit((int)MouseButton.Button1); break;
-                            case 9: d.State.DisableBit((int)MouseButton.Button2); break;
-                            case 10: d.State.DisableBit((int)MouseButton.Button3); break;
-                            case 11: d.State.DisableBit((int)MouseButton.Button4); break;
-                            case 12: d.State.DisableBit((int)MouseButton.Button5); break;
-                            case 13: d.State.DisableBit((int)MouseButton.Button6); break;
-                            case 14: d.State.DisableBit((int)MouseButton.Button7); break;
-                        }
-                        break;
+                        case XIEventType.RawKeyPress:
+                        case XIEventType.RawKeyRelease:
+                            if (GetKeyboardDevice(raw.deviceid, out keyboard))
+                            {
+                                Key key;
+                                if (KeyMap.TranslateKey(raw.detail, out key))
+                                {
+                                    keyboard.State[key] = raw.evtype == XIEventType.RawKeyPress;
+                                }
+                            }
+                            break;
+                    }
                 }
             }
+        }
+
+        bool GetMouseDevice(int deviceid, out XIMouse mouse)
+        {
+            if (!rawids.ContainsKey(deviceid))
+            {
+                Debug.Print("Unknown mouse device {0} encountered, ignoring.", deviceid);
+                mouse = null;
+                return false;
+            }
+            mouse = devices[rawids[deviceid]];
+            return true;
+        }
+
+        bool GetKeyboardDevice(int deviceid, out XIKeyboard keyboard)
+        {
+            if (!keyboard_ids.ContainsKey(deviceid))
+            {
+                Debug.Print("Unknown keyboard device {0} encountered, ignoring.", deviceid);
+                keyboard = null;
+                return false;
+            }
+            keyboard = keyboards[keyboard_ids[deviceid]];
+            return true;
         }
 
         unsafe static void ProcessRawMotion(XIMouse d, ref XIRawEvent raw)
@@ -453,6 +573,8 @@ namespace OpenTK.Platform.X11
             bool valid = false;
             if ((long)e.GenericEventCookie.extension == arg.ToInt64())
             {
+                valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawKeyPress;
+                valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawKeyRelease;
                 valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawMotion;
                 valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawButtonPress;
                 valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawButtonRelease;
@@ -469,6 +591,8 @@ namespace OpenTK.Platform.X11
                 return bit >= 0 && (*((byte*)mask + (bit >> 3)) & (1 << (bit & 7))) != 0;
             }
         }
+
+        #endregion
 
         #region IDisposable Members
 
@@ -496,7 +620,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        ~XI2Mouse()
+        ~XI2MouseKeyboard()
         {
             Dispose(false);
         }

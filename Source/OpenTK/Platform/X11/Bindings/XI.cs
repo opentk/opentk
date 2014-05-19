@@ -44,6 +44,9 @@ namespace OpenTK.Platform.X11
     {
         const string lib = "libXi";
 
+        internal const int XIAllDevices = 0;
+        internal const int XIAllMasterDevices = 1;
+
         // mouse
         internal static readonly IntPtr ButtonLeft = Functions.XInternAtom(API.DefaultDisplay, "Button Left", false);
         internal static readonly IntPtr ButtonMiddle = Functions.XInternAtom(API.DefaultDisplay, "Button Middle", false);
@@ -123,5 +126,14 @@ namespace OpenTK.Platform.X11
 
         [DllImport(lib, EntryPoint = "XIQueryVersion")]
         internal static extern Status QueryVersion(Display display, ref int major, ref int minor);
+    }
+
+    enum XIDeviceType
+    {
+        MasterPointer = 1,
+        MasterKeyboard = 2,
+        SlavePointer = 3,
+        SlaveKeyboard = 4,
+        FloatingSlave = 5,
     }
 }
