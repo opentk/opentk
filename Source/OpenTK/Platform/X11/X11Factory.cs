@@ -94,11 +94,6 @@ namespace OpenTK.Platform.X11
             };
         }
 
-        public override IGraphicsMode CreateGraphicsMode()
-        {
-            throw new NotSupportedException();
-        }
-
         public override IKeyboardDriver2 CreateKeyboardDriver()
         {
             return InputDriver.KeyboardDriver;
