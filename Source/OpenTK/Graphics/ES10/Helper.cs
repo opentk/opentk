@@ -7,31 +7,8 @@ namespace OpenTK.Graphics.ES10
     /// <summary>
     /// Provides access to OpenGL ES 1.0 methods.
     /// </summary>
-    public sealed partial class GL : GraphicsBindingsBase
+    public sealed partial class GL
     {
         const string Library = "libGLES.dll";
-        static readonly object sync_root = new object();
-
-        #region --- Protected Members ---
-
-        /// <summary>
-        /// Returns a synchronization token unique for the GL class.
-        /// </summary>
-        protected override object SyncRoot
-        {
-            get { return sync_root; }
-        }
-
-        #endregion
-
-        internal override void LoadEntryPoints()
-        {
-            // nothing to do
-        }
-
-        internal override bool LoadEntryPoint(string function)
-        {
-            return true; // nothing to do
-        }
     }
 }

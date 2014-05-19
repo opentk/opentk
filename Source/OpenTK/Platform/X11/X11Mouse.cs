@@ -48,6 +48,7 @@ namespace OpenTK.Platform.X11
         readonly IntPtr display;
         readonly IntPtr root_window;
         MouseState mouse = new MouseState();
+        MouseState cursor = new MouseState();
 
         // When the mouse warps, "detach" the current location
         // from the pointer.
@@ -58,6 +59,7 @@ namespace OpenTK.Platform.X11
         {
             Debug.WriteLine("Using X11Mouse.");
             mouse.IsConnected = true;
+            cursor.IsConnected = true;
             display = API.DefaultDisplay;
             root_window = Functions.XRootWindow(display, Functions.XDefaultScreen(display));
         }
@@ -76,6 +78,12 @@ namespace OpenTK.Platform.X11
                 return mouse;
             else
                 return new MouseState();
+        }
+
+        public MouseState GetCursorState()
+        {
+            ProcessEvents();
+            return cursor;
         }
 
         public void SetPosition(double x, double y)
@@ -97,14 +105,6 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void WriteBit(MouseButton offset, int enabled)
-        {
-            if (enabled != 0)
-                mouse.EnableBit((int)offset);
-            else
-                mouse.DisableBit((int)offset);
-        }
-
         void ProcessEvents()
         {
             IntPtr root, child;
@@ -116,6 +116,9 @@ namespace OpenTK.Platform.X11
                 IntPtr window = root_window;
                 Functions.XQueryPointer(display, window, out root, out child,
                     out root_x, out root_y, out win_x, out win_y, out buttons);
+
+                cursor.X = root_x;
+                cursor.Y = root_y;
 
                 if (!mouse_detached)
                 {
@@ -129,9 +132,9 @@ namespace OpenTK.Platform.X11
                     mouse_detached_x = root_x;
                     mouse_detached_y = root_y;
                 }
-                WriteBit(MouseButton.Left, buttons & (int)MouseMask.Button1Mask);
-                WriteBit(MouseButton.Middle, buttons & (int)MouseMask.Button2Mask);
-                WriteBit(MouseButton.Right, buttons & (int)MouseMask.Button3Mask);
+                cursor[MouseButton.Left] = mouse[MouseButton.Left] = (buttons & (int)MouseMask.Button1Mask) != 0;
+                cursor[MouseButton.Middle] = mouse[MouseButton.Middle] = (buttons & (int)MouseMask.Button2Mask) != 0;
+                cursor[MouseButton.Right] = mouse[MouseButton.Right] = (buttons & (int)MouseMask.Button3Mask) != 0;
                 // Note: this will never work right, wheel events have a duration of 0
                 // (yes, zero). They are impposible to catch via polling.
                 // After spending a week on this, I simply don't care anymore.
@@ -142,9 +145,9 @@ namespace OpenTK.Platform.X11
                 //   mouse.WheelPrecise++;
                 //if ((buttons & (int)MouseMask.Button5Mask) != 0)
                 //    mouse.WheelPrecise--;
-                WriteBit(MouseButton.Button1, buttons & (int)MouseMask.Button6Mask);
-                WriteBit(MouseButton.Button2, buttons & (int)MouseMask.Button7Mask);
-                WriteBit(MouseButton.Button3, buttons & (int)MouseMask.Button8Mask);
+                cursor[MouseButton.Button1] = mouse[MouseButton.Button1] = (buttons & (int)MouseMask.Button6Mask) != 0;
+                cursor[MouseButton.Button2] = mouse[MouseButton.Button2] = (buttons & (int)MouseMask.Button7Mask) != 0;
+                cursor[MouseButton.Button3] = mouse[MouseButton.Button3] = (buttons & (int)MouseMask.Button8Mask) != 0;
             }
         }
     }

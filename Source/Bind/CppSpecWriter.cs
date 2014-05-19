@@ -41,7 +41,6 @@ namespace Bind
 
     sealed class CppSpecWriter : ISpecWriter
     {
-        readonly char[] numbers = "0123456789".ToCharArray();
         const string AllowDeprecated = "GLPP_COMPATIBLE";
         const string DigitPrefix = "T"; // Prefix for identifiers that start with a digit
         const string OutputFileHeader = "gl++.h";
@@ -665,60 +664,24 @@ typedef const char* GLstring;
             return sb.ToString();
         }
 
-        DocProcessor processor_;
-        DocProcessor Processor
-        {
-            get
-            {
-                if (processor_ == null)
-                    processor_ = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
-                return processor_;
-            }
-        }
-        Dictionary<string, string> docfiles;
         void WriteDocumentation(BindStreamWriter sw, Function f)
         {
-            if (docfiles == null)
-            {
-                docfiles = new Dictionary<string, string>();
-                foreach (string file in Directory.GetFiles(Settings.DocPath))
-                {
-                    docfiles.Add(Path.GetFileName(file), file);
-                }
-            }
+            var docs = f.Documentation;
 
-            string docfile = null;
             try
             {
-                docfile = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
-                if (!docfiles.ContainsKey(docfile))
-                    docfile = Settings.FunctionPrefix + f.TrimmedName + ".xml";
-                if (!docfiles.ContainsKey(docfile))
-                    docfile = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
-
-                var docs = new List<string>();
-                if (docfiles.ContainsKey(docfile))
-                {
-                    docs.AddRange(Processor.ProcessFile(docfiles[docfile]));
-                }
-                if (docs.Count == 0)
-                {
-                    docs.Add("/// <summary></summary>");
-                }
-
-                int summary_start = docs[0].IndexOf("<summary>") + "<summary>".Length;
                 string warning = "[deprecated: v{0}]";
                 string category = "[requires: {0}]";
                 if (f.Deprecated)
                 {
                     warning = String.Format(warning, f.DeprecatedVersion);
-                    docs[0] = docs[0].Insert(summary_start, warning);
+                    docs.Summary = docs.Summary.Insert(0, warning);
                 }
 
                 if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
                 {
                     category = String.Format(category, f.Category);
-                    docs[0] = docs[0].Insert(summary_start, category);
+                    docs.Summary = docs.Summary.Insert(0, category);
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
@@ -726,17 +689,31 @@ typedef const char* GLstring;
                         category = String.Format(category, "v" + f.Version);
                     else
                         category = String.Format(category, "v" + f.Version + " and " + f.Category);
-                    docs[0] = docs[0].Insert(summary_start, category);
+                    docs.Summary = docs.Summary.Insert(0, category);
                 }
 
-                foreach (var doc in docs)
+                for (int i = 0; i < f.WrappedDelegate.Parameters.Count; i++)
                 {
-                    sw.WriteLine(doc);
+                    var param = f.WrappedDelegate.Parameters[i];
+                    if (param.ComputeSize != String.Empty)
+                    {
+                        docs.Parameters[i].Documentation.Insert(0,
+                            String.Format("[length: {0}]", param.ComputeSize));
+                    }
+                }
+
+                sw.Write("/// \brief ");
+                sw.WriteLine(docs.Summary);
+                foreach (var p in docs.Parameters)
+                {
+                    sw.Write(@"/// \param ");
+                    sw.Write(p.Name);
+                    sw.WriteLine(p.Documentation);
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Warning] Error processing file {0}: {1}", docfile, e.ToString());
+            Console.WriteLine("[Warning] Error documenting function {0}: {1}", f.WrappedDelegate.Name, e.ToString());
             }
         }
 

@@ -34,7 +34,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2InputDriver : IInputDriver2, IInputDriver
+    class Sdl2InputDriver : IInputDriver2
     {
         readonly static Dictionary<IntPtr, Sdl2InputDriver> DriverHandles =
             new Dictionary<IntPtr, Sdl2InputDriver>();
@@ -150,51 +150,6 @@ namespace OpenTK.Platform.SDL2
             }
 
             return 0;
-        }
-
-        #endregion
-
-        #region IInputDriver Members
-
-        public void Poll()
-        {
-            joystick_driver.Poll();
-        }
-
-        #endregion
-
-        #region IJoystickDriver Members
-
-        public IList<JoystickDevice> Joysticks
-        {
-            get
-            {
-                return joystick_driver.Joysticks;
-            }
-        }
-
-        #endregion
-
-        #region IMouseDriver Members
-
-        public IList<MouseDevice> Mouse
-        {
-            get
-            {
-                return mouse_driver.Mouse;
-            }
-        }
-
-        #endregion
-
-        #region IKeyboardDriver Members
-
-        public IList<KeyboardDevice> Keyboard
-        {
-            get
-            {
-                return keyboard_driver.Keyboard;
-            }
         }
 
         #endregion

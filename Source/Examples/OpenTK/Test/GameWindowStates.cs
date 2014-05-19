@@ -26,6 +26,28 @@ namespace Examples.Tests
         bool mouse_in_window = false;
         bool viewport_changed = true;
 
+        MouseCursor Pencil;
+
+        // legacy GameWindow.Mouse.* events
+        Vector4 mousedevice_pos;
+        int mousedevice_buttons;
+        MouseState mousedevice_state;
+
+        // new GameWindow.Mouse* events
+        Vector4 mouse_pos;
+        int mouse_buttons;
+        MouseState mouse_state;
+
+        // legacy GameWindow.Keyboard.Key* events
+        Dictionary<Key, int> legacy_keyboard_keys = new Dictionary<Key, int>();
+        KeyboardState legacy_keyboard_state;
+        KeyModifiers legacy_keyboard_modifiers;
+
+        //new GameWindow.Key* events
+        Dictionary<Key, int> keyboard_keys = new Dictionary<Key, int>();
+        KeyboardState keyboard_state;
+        KeyModifiers keyboard_modifiers;
+
         // time drift
         Stopwatch watch = new Stopwatch();
         double update_time, render_time;
@@ -42,8 +64,6 @@ namespace Examples.Tests
         double variable_refresh_timestep_pos = -1;
         double fixed_update_timestep_pos = -1;
 
-        KeyModifiers modifiers;
-
         public GameWindowStates()
             : base(800, 600, GraphicsMode.Default)
         {
@@ -52,16 +72,26 @@ namespace Examples.Tests
             KeyDown += KeyDownHandler;
             KeyUp += KeyUpHandler;
             KeyPress += KeyPressHandler;
+            Keyboard.KeyDown += KeyboardDeviceDownHandler;
+            Keyboard.KeyUp += KeyboardDeviceUpHandler;
 
             MouseEnter += delegate { mouse_in_window = true; };
             MouseLeave += delegate { mouse_in_window = false; };
 
-            Mouse.Move += MouseMoveHandler;
-            Mouse.ButtonDown += MouseButtonHandler;
-            Mouse.ButtonUp += MouseButtonHandler;
+            Mouse.Move += MouseDeviceMoveHandler;
+            Mouse.WheelChanged += MouseDeviceWheelHandler;
+            Mouse.ButtonDown += MouseDeviceButtonHandler;
+            Mouse.ButtonUp += MouseDeviceButtonHandler;
+
+            MouseMove += MouseMoveHandler;
+            MouseWheel += MouseWheelHandler;
+            MouseDown += MouseButtonHandler;
+            MouseUp += MouseButtonHandler;
         }
 
-        private void KeyPressHandler(object sender, KeyPressEventArgs e)
+        #region Keyboard Events
+
+        void KeyPressHandler(object sender, KeyPressEventArgs e)
         {
             if (TypedText.Length > 32)
                 TypedText.Remove(0, 1);
@@ -108,26 +138,132 @@ namespace Examples.Tests
                 case Key.BracketRight: TargetUpdateFrequency++; break;
                 case Key.Comma: TargetRenderFrequency--; break;
                 case Key.Period: TargetRenderFrequency++; break;
+
+                case Key.Enter:
+                    CursorVisible = !CursorVisible;
+                    break;
+
+                case Key.C:
+                    if (Cursor == MouseCursor.Default)
+                        Cursor = Pencil;
+                    else if (Cursor == Pencil)
+                        Cursor = MouseCursor.Empty;
+                    else
+                        Cursor = MouseCursor.Default;
+                    break;
+
+                case Key.Space:
+                    Point p = new Point(Width / 2, Height / 2);
+                    p = PointToScreen(p);
+                    OpenTK.Input.Mouse.SetPosition(p.X, p.Y);
+                    break;
             }
-            modifiers = e.Modifiers;
+
+            if (!keyboard_keys.ContainsKey(e.Key))
+            {
+                keyboard_keys.Add(e.Key, 0);
+            }
+            keyboard_keys[e.Key] = e.IsRepeat ? 1 : 0;
+            keyboard_modifiers = e.Modifiers;
+            keyboard_state = e.Keyboard;
         }
 
         void KeyUpHandler(object sender, KeyboardKeyEventArgs e)
         {
-            modifiers = e.Modifiers;
+            keyboard_keys.Remove(e.Key);
+            keyboard_modifiers = e.Modifiers;
+            keyboard_state = e.Keyboard;
         }
+
+        void KeyboardDeviceDownHandler(object sender, KeyboardKeyEventArgs e)
+        {
+            if (!legacy_keyboard_keys.ContainsKey(e.Key))
+            {
+                legacy_keyboard_keys.Add(e.Key, 0);
+            }
+            legacy_keyboard_keys[e.Key] = e.IsRepeat ? 1 : 0;
+            legacy_keyboard_modifiers = e.Modifiers;
+            legacy_keyboard_state = e.Keyboard;
+        }
+
+        void KeyboardDeviceUpHandler(object sender, KeyboardKeyEventArgs e)
+        {
+            legacy_keyboard_keys.Remove(e.Key);
+            legacy_keyboard_modifiers = e.Modifiers;
+            legacy_keyboard_state = e.Keyboard;
+        }
+
+        #endregion
+
+        #region MouseDevice events
+
+        void MouseDeviceMoveHandler(object sender, MouseMoveEventArgs e)
+        {
+            mousedevice_pos.X = e.X;
+            mousedevice_pos.Y = e.Y;
+            mousedevice_pos.Z = e.Mouse.Scroll.X;
+            mousedevice_pos.W = e.Mouse.Scroll.Y;
+            mousedevice_state = e.Mouse;
+        }
+
+        void MouseDeviceButtonHandler(object sender, MouseButtonEventArgs e)
+        {
+            if (e.IsPressed)
+            {
+                mousedevice_buttons |= 1 << (int)e.Button;
+                Cursor = Pencil;
+            }
+            else
+            {
+                mousedevice_buttons &= ~(1 << (int)e.Button);
+                Cursor = MouseCursor.Default;
+            }
+            mousedevice_state = e.Mouse;
+        }
+
+        void MouseDeviceWheelHandler(object sender, MouseWheelEventArgs e)
+        {
+            mousedevice_pos.Z = e.Mouse.Scroll.X;
+            mousedevice_pos.W = e.Mouse.Scroll.Y;
+            mousedevice_state = e.Mouse;
+        }
+
+        #endregion
+
+        #region Mouse events
 
         void MouseMoveHandler(object sender, MouseMoveEventArgs e)
         {
+            mouse_pos.X = e.X;
+            mouse_pos.Y = e.Y;
+            mouse_pos.Z = e.Mouse.Scroll.X;
+            mouse_pos.W = e.Mouse.Scroll.Y;
+            mouse_state = e.Mouse;
         }
 
         void MouseButtonHandler(object sender, MouseButtonEventArgs e)
         {
-            if (e.Button == MouseButton.Left && e.IsPressed)
+            if (e.IsPressed)
             {
-                CursorVisible = false;
+                mouse_buttons |= 1 << (int)e.Button;
             }
+            else
+            {
+                mouse_buttons &= ~(1 << (int)e.Button);
+            }
+            mouse_state = e.Mouse;
         }
+
+        void MouseWheelHandler(object sender, MouseWheelEventArgs e)
+        {
+            mouse_pos.Z = e.Mouse.Scroll.X;
+            mouse_pos.W = e.Mouse.Scroll.Y;
+            mouse_state = e.Mouse;
+        }
+
+        #endregion
+
+        #region Private Members
 
         static int Clamp(int val, int min, int max)
         {
@@ -145,10 +281,23 @@ namespace Examples.Tests
             return offset + gfx.MeasureString(str, TextFont).Width;
         }
 
+        static void KeyboardStateToString(KeyboardState state, StringBuilder sb)
+        {
+            for (int key_index = 0; key_index < (int)Key.LastKey; key_index++)
+            {
+                Key k = (Key)key_index;
+                if (state[k])
+                {
+                    sb.Append(k);
+                    sb.Append(" ");
+                }
+            }
+        }
+
         int DrawKeyboards(Graphics gfx, int line)
         {
             line++;
-            DrawString(gfx, String.Format("Keyboard ({0}):", modifiers), line++);
+            DrawString(gfx, "Keyboard:", line++);
             for (int i = 0; i < 4; i++)
             {
                 var state = OpenTK.Input.Keyboard.GetState(i);
@@ -157,15 +306,7 @@ namespace Examples.Tests
                     StringBuilder sb = new StringBuilder();
                     sb.Append(i);
                     sb.Append(": ");
-                    for (int key_index = 0; key_index < (int)Key.LastKey; key_index++)
-                    {
-                        Key k = (Key)key_index;
-                        if (state[k])
-                        {
-                            sb.Append(k);
-                            sb.Append(" ");
-                        }
-                    }
+                    KeyboardStateToString(state, sb);
                     DrawString(gfx, sb.ToString(), line++);
                 }
             }
@@ -175,29 +316,122 @@ namespace Examples.Tests
         static int DrawMice(Graphics gfx, int line)
         {
             line++;
+            DrawString(gfx, String.Format("Cursor: {0}", OpenTK.Input.Mouse.GetCursorState()), line++);
             DrawString(gfx, "Mouse:", line++);
             for (int i = 0; i < 4; i++)
             {
                 var state = OpenTK.Input.Mouse.GetState(i);
                 if (state.IsConnected)
                 {
-                    StringBuilder sb = new StringBuilder();
-                    Vector3 pos = new Vector3(state.X, state.Y, state.WheelPrecise);
-                    sb.Append(i);
-                    sb.Append(": ");
-                    sb.Append(pos);
-                    for (int button_index = 0; button_index < (int)MouseButton.LastButton; button_index++)
-                    {
-                        MouseButton b = (MouseButton)button_index;
-                        if (state[b])
-                        {
-                            sb.Append(b);
-                            sb.Append(" ");
-                        }
-                    }
-                    DrawString(gfx, sb.ToString(), line++);
+                    DrawString(gfx, state.ToString(), line++);
                 }
             }
+            return line;
+        }
+
+        int DrawKeyboardDevice(Graphics gfx, int line)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("KeyboardDevice: ");
+            for (Key key = 0; key < Key.LastKey; key++)
+            {
+                if (Keyboard[key])
+                {
+                    sb.Append(key);
+                    sb.Append(" ");
+                }
+            }
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("KeyboardDevice events: [");
+            sb.Append(legacy_keyboard_modifiers);
+            sb.Append("] ");
+            foreach (var pair in legacy_keyboard_keys)
+            {
+                sb.Append(pair.Key);
+                sb.Append(":");
+                sb.Append(pair.Value);
+                sb.Append(" ");
+            }
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("KeyboardDevice state: ");
+            KeyboardStateToString(legacy_keyboard_state, sb);
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("Keyboard events: [");
+            sb.Append(keyboard_modifiers);
+            sb.Append("] ");
+            foreach (var pair in keyboard_keys)
+            {
+                sb.Append(pair.Key);
+                sb.Append(":");
+                sb.Append(pair.Value);
+                sb.Append(" ");
+            }
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("Keyboard state: ");
+            KeyboardStateToString(keyboard_state, sb);
+            DrawString(gfx, sb.ToString(), line++);
+
+            return line;
+        }
+
+        int DrawMouseDevice(Graphics gfx, int line)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("MouseDevice: ");
+            sb.AppendFormat("[{0}, {1}, {2:0.00}] ",
+                Mouse.X, Mouse.Y, Mouse.WheelPrecise);
+            for (var i = MouseButton.Left; i < MouseButton.LastButton; i++)
+            {
+                if (Mouse[i])
+                {
+                    sb.Append(i);
+                    sb.Append(" ");
+                }
+            }
+            sb.AppendLine();
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("MouseDevice events: ");
+            sb.AppendFormat("[{0}, {1}, {2:0.00}, {3:0.00}] ",
+                mousedevice_pos.X, mousedevice_pos.Y,
+                mousedevice_pos.Z, mousedevice_pos.W);
+            for (var i = MouseButton.Left; i < MouseButton.LastButton; i++)
+            {
+                if ((mousedevice_buttons & (1 << (int)i)) != 0)
+                {
+                    sb.Append(i);
+                    sb.Append(" ");
+                }
+            }
+            sb.Append(" ");
+            sb.AppendLine(mousedevice_state.ToString());
+            DrawString(gfx, sb.ToString(), line++);
+
+            sb.Remove(0, sb.Length);
+            sb.Append("Mouse events: ");
+            sb.AppendFormat("[{0}, {1}, {2:0.00}, {3:0.00}] ",
+                mouse_pos.X, mouse_pos.Y,
+                mouse_pos.Z, mouse_pos.W);
+            for (var i = MouseButton.Left; i < MouseButton.LastButton; i++)
+            {
+                if ((mouse_buttons & (1 << (int)i)) != 0)
+                {
+                    sb.Append(i);
+                    sb.Append(" ");
+                }
+            }
+            sb.Append(" ");
+            sb.AppendLine(mouse_state.ToString());
+            DrawString(gfx, sb.ToString(), line++);
             return line;
         }
 
@@ -236,6 +470,8 @@ namespace Examples.Tests
             return line;
         }
 
+        #endregion
+
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             double clock_time = watch.Elapsed.TotalSeconds;
@@ -267,7 +503,9 @@ namespace Examples.Tests
                     mouse_in_window ? "inside" : "outside",
                     CursorVisible ? "visible" : "hidden",
                     Focused ? "Focused" : "Not focused"), line++);
-                DrawString(gfx, String.Format("Mouse coordinates: {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.WheelPrecise)), line++);
+
+                line = DrawKeyboardDevice(gfx, line);
+                line = DrawMouseDevice(gfx, line);
 
                 // Timing information
                 line++;
@@ -349,6 +587,17 @@ namespace Examples.Tests
         protected override void OnLoad(EventArgs e)
         {
             watch.Start();
+
+            using (var bitmap = new Bitmap("Data/Textures/cursor.png"))
+            {
+                var data = bitmap.LockBits(
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height), 
+                    System.Drawing.Imaging.ImageLockMode.ReadOnly, 
+                    System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
+                Pencil = new OpenTK.MouseCursor(
+                    2, 21, data.Width, data.Height, data.Scan0);
+            }
 
             GL.ClearColor(Color.MidnightBlue);
 

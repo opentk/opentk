@@ -1493,6 +1493,21 @@ namespace OpenTK
             vec.W *= scale;
             return vec;
         }
+		
+        /// <summary>
+        /// Component-wise multiplication between the specified instance by a scale vector.
+        /// </summary>
+        /// <param name="scale">Left operand.</param>
+        /// <param name="vec">Right operand.</param>
+        /// <returns>Result of multiplication.</returns>
+        public static Vector4d operator *(Vector4d vec, Vector4d scale)
+        {
+            vec.X *= scale.X;
+            vec.Y *= scale.Y;
+            vec.Z *= scale.Z;
+            vec.W *= scale.W;
+            return vec;
+        }
 
         /// <summary>
         /// Divides an instance by a scalar.

@@ -162,6 +162,22 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Agl.cs">
+      <DependentUpon>CarbonGLControl.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AglContext.cs">
+      <DependentUpon>CarbonGLControl.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AglGraphicsMode.cs">
+      <DependentUpon>CarbonGLControl.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Carbon.cs" />
+    <Compile Include="NS.cs">
+      <DependentUpon>CarbonGLControl.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\OpenTK.snk">

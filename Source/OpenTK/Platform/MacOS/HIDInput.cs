@@ -100,6 +100,10 @@ namespace OpenTK.Platform.MacOS
 
         readonly MappedGamePadDriver mapped_gamepad = new MappedGamePadDriver();
 
+        IntPtr MouseEventTap;
+        IntPtr MouseEventTapSource;
+        MouseState CursorState;
+
         NativeMethods.IOHIDDeviceCallback HandleDeviceAdded;
         NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved;
         NativeMethods.IOHIDValueCallback HandleDeviceValueReceived;
@@ -118,13 +122,92 @@ namespace OpenTK.Platform.MacOS
             HandleDeviceRemoved = DeviceRemoved;
             HandleDeviceValueReceived = DeviceValueReceived;
 
+            // For retrieving input directly from the hardware
             hidmanager = CreateHIDManager();
             RegisterHIDCallbacks(hidmanager);
+
+            // For retrieving the global cursor position
+            RegisterMouseMonitor();
         }
 
         #endregion
 
         #region Private Members
+
+        void RegisterMouseMonitor()
+        {
+            Debug.Write("Creating mouse event monitor... ");
+            MouseEventTapDelegate = MouseEventTapCallback;
+            MouseEventTap = CG.EventTapCreate(
+                CGEventTapLocation.HIDEventTap,
+                CGEventTapPlacement.HeadInsert,
+                CGEventTapOptions.ListenOnly,
+                CGEventMask.AllMouse,
+                MouseEventTapDelegate,
+                IntPtr.Zero);
+
+            if (MouseEventTap != IntPtr.Zero)
+            {
+                MouseEventTapSource = CF.MachPortCreateRunLoopSource(IntPtr.Zero, MouseEventTap, IntPtr.Zero);
+                CF.RunLoopAddSource(RunLoop, MouseEventTapSource, CF.RunLoopModeDefault);
+            }
+
+            Debug.WriteLine(
+                MouseEventTap != IntPtr.Zero  && MouseEventTapSource != IntPtr.Zero ?
+                "success!" : "failed.");
+        }
+
+        CG.EventTapCallBack MouseEventTapDelegate;
+        IntPtr MouseEventTapCallback(
+            IntPtr proxy,
+            CGEventType type,
+            IntPtr @event,
+            IntPtr refcon)
+        {
+            CursorState.SetIsConnected(true);
+
+            switch (type)
+            {
+                case CGEventType.MouseMoved:
+                case CGEventType.LeftMouseDragged:
+                case CGEventType.RightMouseDragged:
+                case CGEventType.OtherMouseDragged:
+                    {
+                        Carbon.HIPoint p = CG.EventGetLocation(@event);
+                        CursorState.X = (int)Math.Round(p.X);
+                        CursorState.Y = (int)Math.Round(p.Y);
+                    }
+                    break;
+
+                case CGEventType.ScrollWheel:
+                    CursorState.SetScrollRelative(
+                        (float)CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis2) * MacOSFactory.ScrollFactor,
+                        (float)CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis1) * MacOSFactory.ScrollFactor);
+                    break;
+
+                case CGEventType.LeftMouseDown:
+                case CGEventType.RightMouseDown:
+                case CGEventType.OtherMouseDown:
+                    {
+                        int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
+                        MouseButton b = MouseButton.Left + n;
+                        CursorState[b] = true;
+                    }
+                    break;
+
+                case CGEventType.LeftMouseUp:
+                case CGEventType.RightMouseUp:
+                case CGEventType.OtherMouseUp:
+                    {
+                        int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
+                        MouseButton b = MouseButton.Left + n;
+                        CursorState[b] = false;
+                    }
+                    break;
+            }
+
+            return @event;
+        }
 
         IOHIDManagerRef CreateHIDManager()
         {
@@ -324,13 +407,22 @@ namespace OpenTK.Platform.MacOS
                             break;
 
                         case HIDUsageGD.Wheel:
-                            mouse.State.WheelPrecise += v_int;
+                            mouse.State.SetScrollRelative(0, v_int);
                             break;
                     }
                     break;
 
                 case HIDPage.Button:
                     mouse.State[OpenTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
+                    break;
+
+                case HIDPage.Consumer:
+                    switch ((HIDUsageCD)usage)
+                    {
+                        case HIDUsageCD.ACPan:
+                            mouse.State.SetScrollRelative(v_int, 0);
+                            break;
+                    }
                     break;
             }
         }
@@ -381,7 +473,8 @@ namespace OpenTK.Platform.MacOS
                         {
                             Debug.Print("[Warning] Key {0} not mapped.", usage);
                         }
-                        keyboard.State.SetKeyState(RawKeyMap[usage], (byte)usage, v_int != 0);
+
+                        keyboard.State[RawKeyMap[usage]] = v_int != 0;
                         break;
                 }
             }
@@ -824,6 +917,11 @@ namespace OpenTK.Platform.MacOS
             return new MouseState();
         }
 
+        MouseState IMouseDriver2.GetCursorState()
+        {
+            return CursorState;
+        }
+
         void IMouseDriver2.SetPosition(double x, double y)
         {
             CG.SetLocalEventsSuppressionInterval(0.0);
@@ -1105,6 +1203,12 @@ namespace OpenTK.Platform.MacOS
             /* Reserved 0x92 - 0xFEFF */
             /* VendorDefined 0xFF00 - 0xFFFF */
             VendorDefinedStart = 0xFF00
+        }
+
+        // Consumer electronic devices
+        enum HIDUsageCD
+        {
+            ACPan = 0x0238
         }
 
         // Generic desktop usage
@@ -1634,6 +1738,17 @@ namespace OpenTK.Platform.MacOS
                     HandleDeviceAdded = null;
                     HandleDeviceRemoved = null;
                     HandleDeviceValueReceived = null;
+
+                    if (MouseEventTap != IntPtr.Zero)
+                    {
+                        CF.CFRelease(MouseEventTap);
+                        MouseEventTap = IntPtr.Zero;
+                    }
+                    if (MouseEventTapSource != IntPtr.Zero)
+                    {
+                        CF.CFRelease(MouseEventTapSource);
+                        MouseEventTapSource = IntPtr.Zero;
+                    }
                 }
                 else
                 {

@@ -45,19 +45,30 @@ namespace OpenTK.Platform.Egl
 
         #endregion
 
-        #region Constructiors
+        #region Constructors
 
         public EglWindowInfo(IntPtr handle, IntPtr display)
+            : this(handle, display, IntPtr.Zero)
         {
-            Handle = handle;
-            Display = display;
         }
 
         public EglWindowInfo(IntPtr handle, IntPtr display, IntPtr surface)
         {
             Handle = handle;
-            Display = display;
             Surface = surface;
+
+            if (display == IntPtr.Zero)
+            {
+                display = Egl.GetDisplay(IntPtr.Zero);
+            }
+
+            Display = display;
+
+            int dummy_major, dummy_minor;
+            if (!Egl.Initialize(Display, out dummy_major, out dummy_minor))
+            {
+                throw new GraphicsContextException(String.Format("Failed to initialize EGL, error {0}.", Egl.GetError()));
+            }
         }
 
         #endregion
@@ -72,7 +83,7 @@ namespace OpenTK.Platform.Egl
 
         public void CreateWindowSurface(IntPtr config)
         {
-            Surface = Egl.CreateWindowSurface(Display, config, Handle, null);
+            Surface = Egl.CreateWindowSurface(Display, config, Handle, IntPtr.Zero);
 			if (Surface==IntPtr.Zero)
 			{
                 throw new GraphicsContextException(String.Format(

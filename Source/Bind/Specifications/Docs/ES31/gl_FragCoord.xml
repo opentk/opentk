@@ -1,0 +1,64 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="gl_FragCoord">
+    <info>
+        <copyright>
+            <year>2011-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>gl_FragCoord</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>gl_FragCoord</refname>
+        <refpurpose>contains the window-relative coordinates of the current fragment</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Declaration</title>
+        <fieldsynopsis>
+            <modifier>in highp</modifier>
+            <type>vec4</type>
+            <varname>gl_FragCoord</varname>
+        </fieldsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            Available only in the fragment language, <varname>gl_FragCoord</varname> is an input variable that contains the
+            window relative coordinate (x, y, z, 1/w) values for the fragment. If multi-sampling,
+            this value can be for any location within the pixel, or one of the fragment samples.
+            This value is the result of fixed functionality that interpolates primitives after vertex
+            processing to generate fragments. The z component is the depth value that would be used for the
+            fragment's depth if no shader contained any writes to <citerefentry><refentrytitle>gl_FragDepth</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="4" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="varhead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry>gl_FragCoord</entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="version.xml" xpointer="xpointer(/*/*[@role='es10']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>gl_FragDepth</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2011-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

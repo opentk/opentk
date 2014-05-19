@@ -371,6 +371,21 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region GetMessageTime
+
+        /// <summary>
+        /// Retrieves the message time for the last message retrieved by the 
+        /// GetMessage function. The time is a long integer that specifies the 
+        /// elapsed time, in milliseconds, from the time the system was started 
+        /// to the time the message was created (that is, placed in the thread's
+        /// message queue).
+        /// </summary>
+        /// <returns>The return value specifies the message time.</returns>
+        [DllImport("User32.dll")]
+        internal static extern int GetMessageTime();
+
+        #endregion
+
         #region SendMessage
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -841,6 +856,98 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region CreateIconIndirect
+
+        /// <summary>
+        /// Creates an icon or cursor from an IconInfo structure.
+        /// </summary>
+        /// <param name="iconInfo">
+        /// A pointer to an IconInfo structure the function uses to create the 
+        /// icon or cursor.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, the return value is a handle to the icon
+        /// or cursor that is created.
+        /// 
+        /// If the function fails, the return value is null. To get extended 
+        /// error information, call Marshal.GetLastWin32Error.
+        /// </returns>
+        /// <remarks>
+        /// The system copies the bitmaps in the IconInfo structure before 
+        /// creating the icon or cursor. Because the system may temporarily 
+        /// select the bitmaps in a device context, the hbmMask and hbmColor 
+        /// members of the IconInfo structure should not already be selected 
+        /// into a device context. The application must continue to manage the 
+        /// original bitmaps and delete them when they are no longer necessary.
+        /// When you are finished using the icon, destroy it using the 
+        /// DestroyIcon function.
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError=true)]
+        public static extern HICON CreateIconIndirect(ref IconInfo iconInfo);
+
+        #endregion
+
+        #region GetIconInfo
+
+        /// <summary>
+        /// Retrieves information about the specified icon or cursor.
+        /// </summary>
+        /// <param name="hIcon">A handle to the icon or cursor.</param>
+        /// <param name="pIconInfo">
+        /// A pointer to an IconInfo structure. The function fills in the 
+        /// structure's members.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, the return value is nonzero and the 
+        /// function fills in the members of the specified IconInfo structure.
+        /// 
+        /// If the function fails, the return value is zero. To get extended 
+        /// error information, call Marshal.GetLastWin32Error.
+        /// </returns>
+        /// <remarks>
+        /// GetIconInfo creates bitmaps for the hbmMask and hbmColor members 
+        /// of IconInfo. The calling application must manage these bitmaps and
+        /// delete them when they are no longer necessary.
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError=true)]
+        public static extern BOOL GetIconInfo(HICON hIcon, out IconInfo pIconInfo);
+
+        #endregion
+
+        #region DestroyIcon
+
+        /// <summary>
+        /// Destroys an icon and frees any memory the icon occupied.
+        /// </summary>
+        /// <param name="hIcon">
+        /// A handle to the icon to be destroyed. The icon must not be in use.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, the return value is nonzero.
+        /// 
+        /// If the function fails, the return value is zero. To get extended 
+        /// error information, call Marshal.GetLastWin32Error.
+        /// </returns>
+        /// <remarks>
+        /// It is only necessary to call DestroyIcon for icons and cursors 
+        /// created with the following functions: CreateIconFromResourceEx 
+        /// (if called without the LR_SHARED flag), CreateIconIndirect, and 
+        /// CopyIcon. Do not use this function to destroy a shared icon. A 
+        /// shared icon is valid as long as the module from which it was loaded
+        /// remains in memory. The following functions obtain a shared icon.
+        /// 
+        /// LoadIcon
+        /// LoadImage (if you use the LR_SHARED flag)
+        /// CopyImage (if you use the LR_COPYRETURNORG flag and the hImage parameter is a shared icon)
+        /// CreateIconFromResource
+        /// CreateIconFromResourceEx (if you use the LR_SHARED flag)
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern BOOL DestroyIcon(HICON hIcon);
+
+        #endregion
+
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern BOOL SetForegroundWindow(HWND hWnd);
 
@@ -1003,6 +1110,77 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll")]
         public static extern bool SetCursorPos(int X, int Y);
+
+        /// <summary>
+        /// Retrieves a history of up to 64 previous coordinates of the mouse or pen.
+        /// </summary>
+        /// <param name="cbSize">The size, in bytes, of the MouseMovePoint structure.</param>
+        /// <param name="pointsIn">
+        /// A pointer to a MOUSEMOVEPOINT structure containing valid mouse 
+        /// coordinates (in screen coordinates). It may also contain a time 
+        /// stamp.
+        /// </param>
+        /// <param name="pointsBufferOut">
+        /// A pointer to a buffer that will receive the points. It should be at 
+        /// least cbSize * nBufPoints in size.
+        /// </param>
+        /// <param name="nBufPoints">The number of points to be retrieved.</param>
+        /// <param name="resolution">
+        /// The resolution desired. This parameter can GMMP_USE_DISPLAY_POINTS 
+        /// or GMMP_USE_HIGH_RESOLUTION_POINTS.
+        /// </param>
+        /// <returns></returns>
+        [DllImport("user32", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
+        unsafe internal static extern int GetMouseMovePointsEx(
+            uint cbSize, MouseMovePoint* pointsIn, 
+            MouseMovePoint* pointsBufferOut, int nBufPoints, uint resolution);
+
+        /// <summary>
+        /// Sets the cursor shape.
+        /// </summary>
+        /// <param name="hCursor">
+        /// A handle to the cursor. The cursor must have been created by the 
+        /// CreateCursor function or loaded by the LoadCursor or LoadImage 
+        /// function. If this parameter is IntPtr.Zero, the cursor is removed 
+        /// from the screen.
+        /// </param>
+        /// <returns>
+        /// The return value is the handle to the previous cursor, if there was one.
+        /// 
+        /// If there was no previous cursor, the return value is null.
+        /// </returns>
+        /// <remarks>
+        /// The cursor is set only if the new cursor is different from the 
+        /// previous cursor; otherwise, the function returns immediately.
+        /// 
+        /// The cursor is a shared resource. A window should set the cursor 
+        /// shape only when the cursor is in its client area or when the window 
+        /// is capturing mouse input. In systems without a mouse, the window 
+        /// should restore the previous cursor before the cursor leaves the 
+        /// client area or before it relinquishes control to another window.
+        /// 
+        /// If your application must set the cursor while it is in a window, 
+        /// make sure the class cursor for the specified window's class is set 
+        /// to NULL. If the class cursor is not NULL, the system restores the 
+        /// class cursor each time the mouse is moved.
+        /// 
+        /// The cursor is not shown on the screen if the internal cursor 
+        /// display count is less than zero. This occurs if the application 
+        /// uses the ShowCursor function to hide the cursor more times than to 
+        /// show the cursor.
+        /// </remarks>
+        [DllImport("user32.dll")]
+        public static extern HCURSOR SetCursor(HCURSOR hCursor);
+
+        /// <summary>
+        /// Retrieves a handle to the current cursor.
+        /// </summary>
+        /// <returns>
+        /// The return value is the handle to the current cursor. If there is 
+        /// no cursor, the return value is null.
+        /// </returns>
+        [DllImport("user32.dll")]
+        public static extern HCURSOR GetCursor();
 
         #region Async input
 
@@ -1633,6 +1811,27 @@ namespace OpenTK.Platform.Windows
             internal static readonly IntPtr MESSAGE_ONLY = new IntPtr(-3);
 
             internal static readonly IntPtr HKEY_LOCAL_MACHINE = new IntPtr(unchecked((int)0x80000002));
+
+            // System Error Codes
+            // http://msdn.microsoft.com/en-us/library/windows/desktop/ms681381(v=vs.85).aspx
+
+            /// <summary>
+            /// The point passed to GetMouseMovePoints is not in the buffer.
+            /// </summary>
+            internal const int ERROR_POINT_NOT_FOUND = 1171;
+
+            /// <summary>
+            /// Retrieves the points using the display resolution.
+            /// </summary>
+            internal const int GMMP_USE_DISPLAY_POINTS = 1;
+
+            /// <summary>
+            /// Retrieves high resolution points. Points can range from zero to 
+            /// 65,535 (0xFFFF) in both x and y coordinates. This is the resolution 
+            /// provided by absolute coordinate pointing devices such as drawing 
+            /// tablets.
+            /// </summary>
+            internal const int GMMP_USE_HIGH_RESOLUTION_POINTS = 2;
         }
 
         #endregion
@@ -2917,6 +3116,87 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
+    #region MouseMovePoint
+
+    /// <summary>
+    /// Contains information about the mouse's location in screen coordinates.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MouseMovePoint
+    {
+        /// <summary>
+        /// The x-coordinate of the mouse.
+        /// </summary>
+        public int X;
+        /// <summary>
+        /// The y-coordinate of the mouse.
+        /// </summary>
+        public int Y;
+        /// <summary>
+        /// The time stamp of the mouse coordinate.
+        /// </summary>
+        public int Time;
+        /// <summary>
+        /// Additional information associated with this coordinate.
+        /// </summary>
+        public IntPtr ExtraInfo;
+
+        public static readonly int SizeInBytes = Marshal.SizeOf(default(MouseMovePoint));
+    }
+
+    #endregion
+
+    #region IconInfo
+
+    /// \internal
+    /// <summary>
+    /// Contains information about an icon or a cursor.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    struct IconInfo
+    {
+        /// <summary>
+        /// Specifies whether this structure defines an icon or a cursor. A 
+        /// value of TRUE specifies an icon; FALSE specifies a cursor
+        /// </summary>
+        public bool fIcon;
+
+        /// <summary>
+        /// The x-coordinate of a cursor's hot spot. If this structure defines 
+        /// an icon, the hot spot is always in the center of the icon, and 
+        /// this member is ignored.
+        /// </summary>
+        public Int32 xHotspot;
+
+        /// <summary>
+        /// The y-coordinate of a cursor's hot spot. If this structure defines 
+        /// an icon, the hot spot is always in the center of the icon, and 
+        /// this member is ignored.
+        /// </summary>
+        public Int32 yHotspot;
+
+        /// <summary>
+        /// The icon bitmask bitmap. If this structure defines a black and 
+        /// white icon, this bitmask is formatted so that the upper half is 
+        /// the icon AND bitmask and the lower half is the icon XOR bitmask. 
+        /// Under this condition, the height should be an even multiple of 
+        /// two. If this structure defines a color icon, this mask only 
+        /// defines the AND bitmask of the icon.
+        /// </summary>
+        public IntPtr hbmMask;
+
+        /// <summary>
+        /// A handle to the icon color bitmap. This member can be optional if
+        /// this structure defines a black and white icon. The AND bitmask of
+        /// hbmMask is applied with the SRCAND flag to the destination; 
+        /// subsequently, the color bitmap is applied (using XOR) to the 
+        /// destination by using the SRCINVERT flag.
+        /// </summary>
+        public IntPtr hbmColor;
+    }
+
+    #endregion
+
     #endregion
 
     #region --- Enums ---
@@ -3311,7 +3591,8 @@ namespace OpenTK.Platform.Windows
         BUTTON_5_DOWN    = 0x0100,
         BUTTON_5_UP      = 0x0200,
 
-        WHEEL            = 0x0400
+        WHEEL            = 0x0400,
+        HWHEEL            = 0x0800,
     }
 
     #endregion
@@ -3917,7 +4198,6 @@ namespace OpenTK.Platform.Windows
         MBUTTONUP = 0x0208,
         MBUTTONDBLCLK = 0x0209,
         MOUSEWHEEL = 0x020A,
-        MOUSELAST = 0x020D,
         /// <summary>
         /// Windows 2000 and higher only.
         /// </summary>
@@ -3930,6 +4210,10 @@ namespace OpenTK.Platform.Windows
         /// Windows 2000 and higher only.
         /// </summary>
         XBUTTONDBLCLK    = 0x020D,
+        /// <summary>
+        /// Windows Vista and higher only.
+        /// </summary>
+        MOUSEHWHEEL = 0x020E,
         PARENTNOTIFY = 0x0210,
         ENTERMENULOOP = 0x0211,
         EXITMENULOOP = 0x0212,

@@ -1,43 +1,107 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
-using System.Xml.Xsl;
+using System.Xml.Linq;
+using System.Xml.XPath;
+
+using Bind.Structures;
 
 namespace Bind
 {
     class DocProcessor
     {
+        static readonly char[] numbers = "0123456789".ToCharArray();
         static readonly Regex remove_mathml = new Regex(
             @"<(mml:math|inlineequation)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
+        static readonly Regex remove_doctype = new Regex(
+            @"<!DOCTYPE[^>\[]*(\[.*\])?>", RegexOptions.Compiled | RegexOptions.Multiline);
+        static readonly Regex remove_xmlns = new Regex(
+            "xmlns=\".+\"", RegexOptions.Compiled);
 
-        static readonly XslCompiledTransform xslt = new XslCompiledTransform();
-        static readonly XmlReaderSettings settings = new XmlReaderSettings();
+        readonly Dictionary<string, string> DocumentationFiles =
+            new Dictionary<string, string>();
+        readonly Dictionary<string, Documentation> DocumentationCache =
+            new Dictionary<string, Documentation>();
 
-        string[] Text;
+        Documentation Cached;
         string LastFile;
 
-        public DocProcessor(string transform_file)
+        IBind Generator { get; set; }
+        Settings Settings { get { return Generator.Settings; } }
+
+        public DocProcessor(IBind generator)
         {
-            xslt.Load(transform_file);
-            settings.ProhibitDtd = false;
-            settings.XmlResolver = null;
+            if (generator == null)
+                throw new ArgumentNullException();
+
+            Generator = generator;
+            foreach (string file in Directory.GetFiles(Settings.DocPath).Concat(
+                Directory.GetFiles(Settings.FallbackDocPath)))
+            {
+                var name = Path.GetFileName(file);
+                if (!DocumentationFiles.ContainsKey(name))
+                {
+                    DocumentationFiles.Add(name, file);
+                }
+            }
+        }
+
+        public Documentation Process(Function f, EnumProcessor processor)
+        {
+            Documentation docs = null;
+
+            if (DocumentationCache.ContainsKey(f.WrappedDelegate.Name))
+            {
+                return DocumentationCache[f.WrappedDelegate.Name];
+            }
+            else
+            {
+                var file = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
+                if (!DocumentationFiles.ContainsKey(file))
+                    file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
+                if (!DocumentationFiles.ContainsKey(file))
+                    file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
+
+                docs = 
+                    (DocumentationFiles.ContainsKey(file) ? ProcessFile(DocumentationFiles[file], processor) : null) ??
+                    new Documentation
+                    {
+                        Summary = String.Empty,
+                        Parameters = f.Parameters.Select(p =>
+                        new DocumentationParameter(p.Name, String.Empty)).ToList()
+                    };
+
+                DocumentationCache.Add(f.WrappedDelegate.Name, docs);
+            }
+
+            return docs;
         }
 
         // Strips MathML tags from the source and replaces the equations with the content
         // found in the <!-- eqn: :--> comments in the docs.
         // Todo: Some simple MathML tags do not include comments, find a solution.
         // Todo: Some files include more than 1 function - find a way to map these extra functions.
-        public string[] ProcessFile(string file)
+        Documentation ProcessFile(string file, EnumProcessor processor)
         {
             string text;
 
             if (LastFile == file)
-                return Text;
+                return Cached;
 
             LastFile = file;
             text = File.ReadAllText(file);
+
+            text = text
+                .Replace("&epsi;", "epsilon") // Fix unrecognized &epsi; entities
+                .Replace("xml:", String.Empty); // Remove namespaces
+            text = remove_doctype.Replace(text, String.Empty);
+            text = remove_xmlns.Replace(text, string.Empty);
 
             Match m = remove_mathml.Match(text);
             while (m.Length > 0)
@@ -69,34 +133,72 @@ namespace Bind
                 m = remove_mathml.Match(text);
             }
 
-            XmlReader doc = null;
+            XDocument doc = null;
             try
             {
-                // The pure XmlReader is ~20x faster than the XmlTextReader.
-                doc = XmlReader.Create(new StringReader(text), settings);
-                //doc = new XmlTextReader(new StringReader(text));
-                
-                using (StringWriter sw = new StringWriter())
-                {
-                    xslt.Transform(doc, null, sw);
-                    Text = sw.ToString().Split(new char[] { '\r', '\n' },
-                        StringSplitOptions.RemoveEmptyEntries);
-
-                    // Remove unecessary whitespace
-                    // Indentation is handled by BindStreamWriter
-                    for (int i = 0; i < Text.Length; i++)
-                    {
-                        Text[i] = Text[i].Trim();
-                    }
-                    return Text;
-                }
+                doc = XDocument.Parse(text);
+                Cached = ToInlineDocs(doc, processor);
+                return Cached;
             }
-            catch (XmlException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
                 Console.WriteLine(doc.ToString());
-                return new string[0];
+                return null;
             }
+        }
+
+        Documentation ToInlineDocs(XDocument doc, EnumProcessor enum_processor)
+        {
+            if (doc == null || enum_processor == null)
+                throw new ArgumentNullException();
+
+            var no_const_processing = Settings.Legacy.NoAdvancedEnumProcessing | Settings.Legacy.ConstIntEnums;
+            if (!Generator.Settings.IsEnabled(no_const_processing))
+            {
+                // Translate all GL_FOO_BAR constants according to EnumProcessor
+                foreach (var e in doc.XPathSelectElements("//constant"))
+                {
+                    var c = e.Value;
+                    if (c.StartsWith(Settings.ConstantPrefix))
+                    {
+                        // Remove "GL_" from the beginning of the string
+                        c = c.Replace(Settings.ConstantPrefix, String.Empty);
+                    }
+                    e.Value = enum_processor.TranslateConstantName(c, false);
+                }
+            }
+
+            // Create inline documentation
+            var inline = new Documentation
+            {
+                Summary =
+                    Cleanup(
+                        ((IEnumerable)doc.XPathEvaluate("/refentry/refnamediv/refpurpose"))
+                        .Cast<XElement>().First().Value),
+                Parameters =
+                    ((IEnumerable)doc.XPathEvaluate("/refentry/refsect1[@id='parameters']/variablelist/varlistentry/term/parameter"))
+                        .Cast<XElement>()
+                        .Select(p =>
+                            new DocumentationParameter(
+                                p.Value.Trim(),
+                                Cleanup(p.XPathSelectElement("../../listitem").Value)))
+                    .ToList()
+            };
+
+            inline.Summary = Char.ToUpper(inline.Summary[0]) + inline.Summary.Substring(1);
+            return inline;
+        }
+
+        static readonly char[] newline = new char[] { '\n' };
+        static string Cleanup(string text)
+        {
+            return
+                String.Join(" ", text
+                    .Replace("\r", "\n")
+                    .Split(newline, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(s => s.Trim()).ToArray())
+                    .Trim();
         }
     }
 }

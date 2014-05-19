@@ -33,28 +33,18 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2Mouse : IMouseDriver2, IMouseDriver
+    class Sdl2Mouse : IMouseDriver2
     {
         MouseState state;
-
-        readonly List<MouseDevice> mice =
-            new List<MouseDevice>();
-        readonly IList<MouseDevice> mice_readonly;
 
         public Sdl2Mouse()
         {
             state.IsConnected = true;
-
-            mice.Add(new MouseDevice());
-            mice[0].Description = "Standard mouse";
-            mice[0].NumberOfButtons = 3;
-            mice[0].NumberOfWheels = 1;
-            mice_readonly = mice.AsReadOnly();
         }
 
         #region Private Members
 
-        MouseButton TranslateButton(Button button)
+        static internal MouseButton TranslateButton(Button button)
         {
             switch (button)
             {
@@ -97,34 +87,19 @@ namespace OpenTK.Platform.SDL2
 
         public void ProcessWheelEvent(MouseWheelEvent wheel)
         {
-            state.WheelPrecise += wheel.Y;
-            mice[0].WheelPrecise += wheel.Y;
+            state.SetScrollRelative(wheel.X, wheel.Y);
         }
 
         public void ProcessMouseEvent(MouseMotionEvent motion)
         {
             state.X += motion.Xrel;
             state.Y += motion.Yrel;
-            mice[0].Position = new Point(motion.X, motion.Y);
         }
 
         public void ProcessMouseEvent(MouseButtonEvent button)
         {
             bool pressed = button.State == State.Pressed;
             SetButtonState(TranslateButton(button.Button), pressed);
-            mice[0][TranslateButton(button.Button)] = pressed;
-        }
-
-        #endregion
-
-        #region IMouseDriver Members
-
-        public IList<MouseDevice> Mouse
-        {
-            get
-            {
-                return mice_readonly;
-            }
         }
 
         #endregion
@@ -142,6 +117,25 @@ namespace OpenTK.Platform.SDL2
                 return state;
             else
                 return new MouseState();
+        }
+
+        public MouseState GetCursorState()
+        {
+            int x, y;
+            var buttons = SDL.GetMouseState(out x, out y);
+
+            var c = new MouseState();
+            c.SetIsConnected(true);
+            c.X = x;
+            c.Y = y;
+            c.SetScrollAbsolute(state.Scroll.X, state.Scroll.Y); // we cannot query the scrollwheel directly
+            c[MouseButton.Left] = (buttons & ButtonFlags.Left) != 0;
+            c[MouseButton.Middle] = (buttons & ButtonFlags.Middle) != 0;
+            c[MouseButton.Right] = (buttons & ButtonFlags.Right) != 0;
+            c[MouseButton.Button1] = (buttons & ButtonFlags.X1) != 0;
+            c[MouseButton.Button2] = (buttons & ButtonFlags.X2) != 0;
+
+            return state;
         }
 
         public void SetPosition(double x, double y)

@@ -31,9 +31,11 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
-    class EglContext : EmbeddedGraphicsContext
+    abstract class EglContext : EmbeddedGraphicsContext
     {
         #region Fields
+
+        readonly RenderableFlags Renderable;
 
         EglWindowInfo WindowInfo;
         IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
@@ -53,19 +55,16 @@ namespace OpenTK.Platform.Egl
 
             EglContext shared = (EglContext)sharedContext;
 
-            int dummy_major, dummy_minor;
-            if (!Egl.Initialize(window.Display, out dummy_major, out dummy_minor))
-                throw new GraphicsContextException(String.Format("Failed to initialize EGL, error {0}.", Egl.GetError()));
-
             WindowInfo = window;
 
             // Select an EGLConfig that matches the desired mode. We cannot use the 'mode'
             // parameter directly, since it may have originated on a different system (e.g. GLX)
             // and it may not support the desired renderer.
-            Mode = new EglGraphicsMode().SelectGraphicsMode(mode.ColorFormat,
-                mode.Depth, mode.Stencil, mode.Samples, mode.AccumulatorFormat,
-                mode.Buffers, mode.Stereo,
-                major > 1 ? RenderableFlags.ES2 : RenderableFlags.ES);
+            Renderable = major > 1 ? RenderableFlags.ES2 : RenderableFlags.ES;
+            Mode = new EglGraphicsMode().SelectGraphicsMode(window,
+                mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
+                mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
+                Renderable);
             if (!Mode.Index.HasValue)
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
             IntPtr config = Mode.Index.Value;
@@ -125,6 +124,12 @@ namespace OpenTK.Platform.Egl
             }
             set
             {
+                if (value < 0)
+                {
+                    // EGL does not offer EXT_swap_control_tear yet
+                    value = 1;
+                }
+
                 if (Egl.SwapInterval(WindowInfo.Display, value))
                     swap_interval = value;
                 else
@@ -136,15 +141,26 @@ namespace OpenTK.Platform.Egl
 
         #region IGraphicsContextInternal Members
 
-        public override IntPtr GetAddress(string function)
-        {
-            return Egl.GetProcAddress(function);
-        }
-
         public override IntPtr GetAddress(IntPtr function)
         {
-            return Egl.GetProcAddress(function);
+            // Try loading a static export from ES1 or ES2
+            IntPtr address = GetStaticAddress(function, Renderable);
+
+            // If a static export is not available, try retrieving an extension
+            // function pointer with eglGetProcAddress
+            if (address == IntPtr.Zero)
+            {
+                address = Egl.GetProcAddress(function);
+            }
+
+            return address;
         }
+
+        #endregion
+
+        #region Abstract Members
+
+        protected abstract IntPtr GetStaticAddress(IntPtr function, RenderableFlags renderable);
 
         #endregion
 
@@ -158,7 +174,7 @@ namespace OpenTK.Platform.Egl
 
         // Todo: cross-reference the specs. What should happen if the context is destroyed from a different
         // thread?
-        void Dispose(bool manual)
+        protected virtual void Dispose(bool manual)
         {
             if (!IsDisposed)
             {

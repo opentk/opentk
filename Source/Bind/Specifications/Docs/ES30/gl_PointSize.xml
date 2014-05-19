@@ -1,0 +1,62 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="gl_PointSize">
+    <info>
+        <copyright>
+            <year>2011-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>gl_PointSize</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>gl_PointSize</refname>
+        <refpurpose>contains size of rasterized points, in pixels</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Declaration</title>
+        <fieldsynopsis>
+            <modifier>out highp</modifier>
+            <type>float</type>
+            <varname>gl_PointSize</varname>
+        </fieldsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            The variable <varname>gl_PointSize</varname> is intended for a vertex shader to write
+            the size of the point to be rasterized. It is measured in pixels.
+            If <varname>gl_PointSize</varname> is not written to, its value is undefined in subsequent
+            pipeline stages.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="3" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="varhead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry>gl_PointSize</entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="version.xml" xpointer="xpointer(/*/*[@role='10']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>gl_Position</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2011-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

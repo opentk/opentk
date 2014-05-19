@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A37A7E14-0000-0000-0000-000000000000}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -163,10 +163,14 @@
     <Compile Include="Math\Matrix4x3.cs" />
     <Compile Include="Math\Matrix4x3d.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
+    <Compile Include="Platform\Egl\EglUnixContext.cs" />
+    <Compile Include="Platform\Egl\EglWinContext.cs" />
     <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
     <Compile Include="Platform\Windows\XInputJoystick.cs" />
+    <Compile Include="Platform\X11\Bindings\DL.cs" />
     <Compile Include="Platform\X11\Bindings\INotify.cs" />
+    <Compile Include="Platform\X11\Bindings\XI.cs" />
     <Compile Include="ToolkitOptions.cs" />
     <Compile Include="WindowBorder.cs">
       <SubType>Code</SubType>
@@ -279,12 +283,6 @@
     <Compile Include="Platform\Egl\EglMacPlatformFactory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\MacOS\EventInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\MacOSGraphicsMode.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\MacOS\MacOSFactory.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -294,40 +292,7 @@
     <Compile Include="Platform\MacOS\MacOSKeyMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\MacOS\CarbonGLNative.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\Application.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\AglContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\MacOS\QuartzDisplayDeviceDriver.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonInput.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonWindowInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\CarbonAPI.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\SpeechChannel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\QuartzDisplayServicesAPI.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\MacOSKeys.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\Agl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\MacOS\CarbonBindings\CoreFoundation.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\Windows\WinRawKeyboard.cs">
@@ -384,9 +349,6 @@
     <Compile Include="Platform\X11\Functions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\X11\GlxHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\X11\API.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -406,9 +368,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\X11\Structs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\X11\X11Input.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\X11\X11Factory.cs">
@@ -741,7 +700,6 @@
     <Compile Include="Platform\X11\X11Keyboard.cs" />
     <Compile Include="Platform\X11\X11Mouse.cs" />
     <Compile Include="Input\ButtonState.cs" />
-    <Compile Include="Platform\X11\XI2Mouse.cs" />
     <EmbeddedResource Include="OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -758,7 +716,6 @@
     <Compile Include="Platform\SDL2\Sdl2Mouse.cs" />
     <Compile Include="Platform\SDL2\Sdl2NativeWindow.cs" />
     <Compile Include="Platform\SDL2\Sdl2WindowInfo.cs" />
-    <Compile Include="Platform\MacOS\Cgl.cs" />
     <Compile Include="Platform\SDL2\Sdl2.cs" />
     <Compile Include="Platform\Egl\EglSdl2PlatformFactory.cs" />
     <Compile Include="Platform\SDL2\Sdl2JoystickDriver.cs" />
@@ -802,7 +759,53 @@
     <Compile Include="Input\JoystickHat.cs" />
     <Compile Include="Input\HatPosition.cs" />
     <Compile Include="Input\JoystickHatState.cs" />
+    <Compile Include="MouseCursor.cs" />
     <Compile Include="Input\KeyModifiers.cs" />
+    <Compile Include="Platform\MacOS\CocoaContext.cs" />
+    <Compile Include="Platform\MacOS\CocoaNativeWindow.cs" />
+    <Compile Include="Platform\MacOS\CocoaWindowInfo.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\Cocoa.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\Class.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\Selector.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSApplication.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSApplicationActivationPolicy.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSBackingStore.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSWindowStyle.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSOpenGLPixelFormatAttribute.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSOpenGLProfile.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSOpenGLContextParameter.cs" />
+    <Compile Include="Platform\LegacyInputDriver.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSEventType.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSEventModifierMask.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSTrackingAreaOptions.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSApplicationPresentationOptions.cs" />
+    <Compile Include="Platform\MacOS\CarbonWindowInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\MacOS\Carbon\CarbonAPI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\MacOS\Carbon\MacOSKeys.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\MacOS\Carbon\Cgl.cs" />
+    <Compile Include="WindowIcon.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSBitmapFormat.cs" />
+    <Compile Include="Platform\NativeWindowBase.cs" />
+    <Compile Include="Input\MouseEventArgs.cs" />
+    <Compile Include="Platform\MacOS\Quartz\EventServices.cs" />
+    <Compile Include="Platform\MacOS\Quartz\DisplayServices.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\MacOS\Quartz\CoreFoundation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\X11\Bindings\Xkb.cs" />
+    <Compile Include="Input\MouseScroll.cs" />
+    <Compile Include="Platform\X11\X11Input.cs" />
+    <Compile Include="Platform\X11\XI2Input.cs" />
+    <Compile Include="Platform\X11\XI2MouseKeyboard.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSFloat.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -832,4 +835,5 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup />
 </Project>

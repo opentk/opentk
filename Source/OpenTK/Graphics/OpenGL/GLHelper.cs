@@ -75,11 +75,11 @@ namespace OpenTK.Graphics.OpenGL
 
         internal const string Library = "opengl32.dll";
 
-        static SortedList<string, bool> AvailableExtensions = new SortedList<string, bool>();
         static readonly object sync_root = new object();
 
         static IntPtr[] EntryPoints;
-        static string[] EntryPointNames;
+        static byte[] EntryPointNames;
+        static int[] EntryPointNameOffsets;
 
         #endregion
 
@@ -90,8 +90,9 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         public GL()
         {
-            EntryPointsInstance = EntryPoints;
-            EntryPointNamesInstance = EntryPointNames;
+            _EntryPointsInstance = EntryPoints;
+            _EntryPointNamesInstance = EntryPointNames;
+            _EntryPointNameOffsetsInstance = EntryPointNameOffsets;
         }
 
         #endregion

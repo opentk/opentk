@@ -16,7 +16,8 @@ namespace OpenTK.Graphics.ES11
         static readonly object sync_root = new object();
 
         static IntPtr[] EntryPoints;
-        static string[] EntryPointNames;
+        static byte[] EntryPointNames;
+        static int[] EntryPointNameOffsets;
 
         #region Constructors
 
@@ -25,8 +26,9 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         public GL()
         {
-            EntryPointsInstance = EntryPoints;
-            EntryPointNamesInstance = EntryPointNames;
+            _EntryPointsInstance = EntryPoints;
+            _EntryPointNamesInstance = EntryPointNames;
+            _EntryPointNameOffsetsInstance = EntryPointNameOffsets;
         }
 
         #endregion

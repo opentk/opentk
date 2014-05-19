@@ -34,6 +34,26 @@ namespace OpenTK.Platform.X11
 {
     class X11Factory : PlatformFactoryBase
     {
+        IInputDriver2 input_driver;
+        IInputDriver2 InputDriver
+        {
+            get
+            {
+                if (input_driver == null)
+                {
+                    if (XI2MouseKeyboard.IsSupported(IntPtr.Zero))
+                    {
+                        input_driver = new XI2Input();
+                    }
+                    else
+                    {
+                        input_driver = new X11Input();
+                    }
+                }
+                return input_driver;
+            }
+        }
+
         #region Constructors
 
         public X11Factory()
@@ -74,29 +94,34 @@ namespace OpenTK.Platform.X11
             };
         }
 
-        public override IGraphicsMode CreateGraphicsMode()
-        {
-            throw new NotSupportedException();
-        }
-
         public override IKeyboardDriver2 CreateKeyboardDriver()
         {
-            return new X11Keyboard();
+            return InputDriver.KeyboardDriver;
         }
 
         public override IMouseDriver2 CreateMouseDriver()
         {
-            if (XI2Mouse.IsSupported(IntPtr.Zero))
-                return new XI2Mouse(); // Requires xorg 1.7 or higher.
-            else
-                return new X11Mouse(); // Always supported.
+            return InputDriver.MouseDriver;
         }
 
         public override IJoystickDriver2 CreateJoystickDriver()
         {
-            return new X11Joystick();
+            return InputDriver.JoystickDriver;
         }
 
         #endregion
+
+        protected override void Dispose(bool manual)
+        {
+            base.Dispose(manual);
+            if (manual)
+            {
+                if (input_driver is IDisposable)
+                {
+                    (input_driver as IDisposable).Dispose();
+                    input_driver = null;
+                }
+            }
+        }
     }
 }

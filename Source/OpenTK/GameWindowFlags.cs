@@ -44,5 +44,10 @@ namespace OpenTK
         /// Indicates that the GameWindow should cover the whole screen.
         /// </summary>
         Fullscreen = 1,
+
+        /// <summary>
+        /// Indicates that the GameWindow should be a fixed window.
+        /// </summary>
+        FixedWindow = 2,
     }
 }

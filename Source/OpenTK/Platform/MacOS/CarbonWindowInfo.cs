@@ -32,13 +32,6 @@ using System.Text;
 
 namespace OpenTK.Platform.MacOS
 {
-    /// <summary>
-    /// This delegate represents any method that takes no arguments and returns an int.
-    /// I would have used Func but that requires .NET 4
-    /// </summary>
-    /// <returns>The int value that your method returns</returns>
-    public delegate int GetInt();
-
     /// \internal
     /// <summary>
     /// Describes a Carbon window.
@@ -48,7 +41,7 @@ namespace OpenTK.Platform.MacOS
         IntPtr windowRef;
         bool ownHandle = false;
         bool disposed = false;
-        bool isControl = false;
+        bool isControl = true;
         bool goFullScreenHack = false;
         bool goWindowedHack = false;
 
@@ -151,8 +144,6 @@ namespace OpenTK.Platform.MacOS
             
             if (ownHandle)
             {
-                Debug.Print("Disposing window {0}.", windowRef);
-                Carbon.API.DisposeWindow(this.windowRef);
                 windowRef = IntPtr.Zero;
             }
             

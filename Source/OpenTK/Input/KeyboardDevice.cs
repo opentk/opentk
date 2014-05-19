@@ -21,13 +21,11 @@ namespace OpenTK.Input
     public sealed class KeyboardDevice : IInputDevice
     {
         //private IKeyboard keyboard;
-        private bool[] keys = new bool[Enum.GetValues(typeof(Key)).Length];
-        private bool[] scancodes = new bool[256];
         private string description;
         private int numKeys, numFKeys, numLeds;
         private IntPtr devID;
         private bool repeat;
-        private KeyboardKeyEventArgs args = new KeyboardKeyEventArgs();
+        private KeyboardState state;
 
         #region --- Constructors ---
 
@@ -44,7 +42,7 @@ namespace OpenTK.Input
         /// <returns>True if the Key is pressed, false otherwise.</returns>
         public bool this[Key key]
         {
-            get { return keys[(int)key]; }
+            get { return state[key]; }
         }
 
         /// <summary>
@@ -52,9 +50,10 @@ namespace OpenTK.Input
         /// </summary>
         /// <param name="scancode">The scancode to check.</param>
         /// <returns>True if the scancode is pressed, false otherwise.</returns>
+        [CLSCompliant(false)]
         public bool this[uint scancode]
         {
-            get { return scancodes[scancode]; }
+            get { return scancode < (uint)Key.LastKey && state[(Key)scancode]; }
         }
 
         /// <summary>
@@ -124,7 +123,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Occurs when a key is pressed.
         /// </summary>
-        public event EventHandler<KeyboardKeyEventArgs> KeyDown;
+        public event EventHandler<KeyboardKeyEventArgs> KeyDown = delegate { };
 
         #endregion
 
@@ -133,7 +132,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Occurs when a key is released.
         /// </summary>
-        public event EventHandler<KeyboardKeyEventArgs> KeyUp;
+        public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
 
         #endregion
 
@@ -185,21 +184,22 @@ namespace OpenTK.Input
 
         #region --- Internal Methods ---
 
-        #region internal void ClearKeys()
-
-        internal void ClearKeys()
+        internal void HandleKeyDown(object sender, KeyboardKeyEventArgs e)
         {
-            for (int i = 0; i < keys.Length; i++)
-                keys[i] = false;
-            for (uint i = 0; i < scancodes.Length; i++)
-                scancodes[i] = false;
+            state = e.Keyboard;
+            KeyDown(this, e);
         }
 
-        #endregion
-
-        internal void SetKey(Key key, uint scancode, bool state)
+        internal void HandleKeyUp(object sender, KeyboardKeyEventArgs e)
         {
-            if (keys[(int)key] != state || KeyRepeat)
+            state = e.Keyboard;
+            KeyUp(this, e);
+        }
+
+        #if false
+        internal void SetKey(Key key, uint scancode, KeyModifiers mods, bool pressed)
+        {
+            if (state[key] != pressed || KeyRepeat)
             {
                 // limit scancode to 8bits, otherwise the assignment
                 // below will crash randomly
@@ -209,40 +209,22 @@ namespace OpenTK.Input
 
                 if (state && KeyDown != null)
                 {
+
                     args.Key = key;
                     args.ScanCode = scancode;
+                    args.Modifiers = mods;
                     KeyDown(this, args);
                 }
                 else if (!state && KeyUp != null)
                 {
                     args.Key = key;
                     args.ScanCode = scancode;
+                    args.Modifiers = mods;
                     KeyUp(this, args);
                 }
             }
         }
-
-        internal KeyModifiers GetModifiers()
-        {
-            KeyModifiers mods = 0;
-
-            if (this[Key.AltLeft] || this[Key.AltRight])
-            {
-                mods |= KeyModifiers.Alt;
-            }
-
-            if (this[Key.ControlLeft] || this[Key.ControlRight])
-            {
-                mods |= KeyModifiers.Control;
-            }
-
-            if (this[Key.ShiftLeft] || this[Key.ShiftRight])
-            {
-                mods |= KeyModifiers.Shift;
-            }
-
-            return mods;
-        }
+        #endif
 
         #endregion
     }

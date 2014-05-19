@@ -1,0 +1,217 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDrawBuffer">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDrawBuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDrawBuffer</refname>
+        <refpurpose>specify which color buffers are to be drawn into</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDrawBuffer</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies up to four color buffers to be drawn into.
+                    Symbolic constants
+                    <constant>GL_NONE</constant>,
+                    <constant>GL_FRONT_LEFT</constant>,
+                    <constant>GL_FRONT_RIGHT</constant>,
+                    <constant>GL_BACK_LEFT</constant>,
+                    <constant>GL_BACK_RIGHT</constant>,
+                    <constant>GL_FRONT</constant>,
+                    <constant>GL_BACK</constant>,
+                    <constant>GL_LEFT</constant>,
+                    <constant>GL_RIGHT</constant>, and
+                    <constant>GL_FRONT_AND_BACK</constant>
+                    are accepted.
+                    The initial value is <constant>GL_FRONT</constant> for single-buffered contexts,
+                    and <constant>GL_BACK</constant> for double-buffered contexts.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            When colors are written to the frame buffer,
+            they are written into the color buffers specified by <function>glDrawBuffer</function>.
+            The specifications are as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_NONE</constant></term>
+                <listitem>
+                    <para>
+                        No color buffers are written.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRONT_LEFT</constant></term>
+                <listitem>
+                    <para>
+                        Only the front left color buffer is written.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRONT_RIGHT</constant></term>
+                <listitem>
+                    <para>
+                        Only the front right color buffer is written.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BACK_LEFT</constant></term>
+                <listitem>
+                    <para>
+                        Only the back left color buffer is written.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BACK_RIGHT</constant></term>
+                <listitem>
+                    <para>
+                        Only the back right color buffer is written.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRONT</constant></term>
+                <listitem>
+                    <para>
+                        Only the front left and front right color buffers are written.
+                        If there is no front right color buffer,
+                        only the front left color buffer is written.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BACK</constant></term>
+                <listitem>
+                    <para>
+                        Only the back left and back right color buffers are written.
+                        If there is no back right color buffer,
+                        only the back left color buffer is written.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LEFT</constant></term>
+                <listitem>
+                    <para>
+                        Only the front left and back left color buffers are written.
+                        If there is no back left color buffer,
+                        only the front left color buffer is written.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RIGHT</constant></term>
+                <listitem>
+                    <para>
+                        Only the front right and back right color buffers are written.
+                        If there is no back right color buffer,
+                        only the front right color buffer is written.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRONT_AND_BACK</constant></term>
+                <listitem>
+                    <para>
+                        All the front and back color buffers
+                        (front left, front right, back left, back right)
+                        are written.
+                        If there are no back color buffers,
+                        only the front left and front right color buffers are written.
+                        If there are no right color buffers,
+                        only the front left and back left color buffers are written.
+                        If there are no right or back color buffers,
+                        only the front left color buffer is written.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            If more than one color buffer is selected for drawing,
+            then blending or logical operations are computed and applied independently
+            for each color buffer and can produce different results in each buffer.
+        </para>
+        <para>
+            Monoscopic contexts include only
+            <emphasis>left</emphasis>
+            buffers, and stereoscopic contexts include both
+            <emphasis>left</emphasis>
+            and
+            <emphasis>right</emphasis>
+            buffers.
+            Likewise, single-buffered contexts include only
+            <emphasis>front</emphasis>
+            buffers, and double-buffered contexts include both
+            <emphasis>front</emphasis>
+            and
+            <emphasis>back</emphasis>
+            buffers.
+            The context is selected at GL initialization.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if none of the buffers indicated
+            by <parameter>mode</parameter> exists.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DRAW_BUFFER</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColorMask</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glReadBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2013 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</link>.
+        </para>
+    </refsect1>
+</refentry>

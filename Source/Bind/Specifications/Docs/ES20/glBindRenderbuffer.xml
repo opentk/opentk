@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glBindRenderbuffer">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2005</year>
+                <holder>Sams Publishing</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glBindRenderbuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindRenderbuffer</refname>
+        <refpurpose>bind a named renderbuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindRenderbuffer</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>renderbuffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the renderbuffer object is bound.
+                    The symbolic constant must be
+                    <constant>GL_RENDERBUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>renderbuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a renderbuffer object.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            A renderbuffer is a data storage object containing a single
+            image of a renderable internal format.  A renderbuffer's image
+            may be attached to a framebuffer object to use as a destination
+            for rendering and as a source for reading.
+        </para>
+        <para>
+            <function>glBindRenderbuffer</function> lets you create or use a named renderbuffer object. Calling <function>glBindRenderbuffer</function> with
+            <parameter>target</parameter> set to <constant>GL_RENDERBUFFER</constant>
+            and <parameter>renderbuffer</parameter> set to the name
+            of the new renderbuffer object binds the renderbuffer object name.
+            When a renderbuffer object is bound, the previous binding
+            is automatically broken.
+        </para>
+        <para>
+            Renderbuffer object names are unsigned integers. The value zero is reserved, but there is no default renderbuffer object.
+            Instead, <parameter>renderbuffer</parameter> set to zero effectively unbinds any renderbuffer object previously bound. 
+            Renderbuffer object names and the corresponding renderbuffer object contents are local to
+            the shared object space of the current GL rendering context.
+        </para>
+        <para>
+            You may use <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry> to generate a set of new renderbuffer object names.
+        </para>
+        <para>
+            The state of a renderbuffer object immediately after it is first bound is
+            a zero-sized memory buffer with format <constant>GL_RGBA4</constant> and
+            zero-sized red, green, blue, alpha, depth, and stencil pixel depths.
+        </para>
+        <para>
+            While a non-zero renderbuffer object name is bound, GL operations on
+            target <constant>GL_RENDERBUFFER</constant> affect the bound renderbuffer
+            object, and queries of target <constant>GL_RENDERBUFFER</constant>
+            return state from the bound renderbuffer object. While renderbuffer object 
+            name zero is bound, as in the initial state, attempts to modify or query
+            state on target <constant>GL_RENDERBUFFER</constant> generates an 
+            <constant>GL_INVALID_OPERATION</constant> error.
+        </para>
+        <para>
+            A renderbuffer object binding created with <function>glBindRenderbuffer</function> remains active until a different
+            renderbuffer object name is bound, or until the bound renderbuffer object is
+            deleted with <citerefentry><refentrytitle>glDeleteRenderbuffers</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_RENDERBUFFER</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_RENDERBUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDeleteRenderbuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetRenderbufferParameteriv</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderbufferStorage</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2008 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

@@ -3520,6 +3520,7 @@
       <use enum="VERSION_4_0" token="PATCH_VERTICES" />
       <use enum="VERSION_4_0" token="PATCH_DEFAULT_INNER_LEVEL" />
       <use enum="VERSION_4_0" token="PATCH_DEFAULT_OUTER_LEVEL" />
+      <use enum="VERSION_4_0" token="MAX_PATCH_VERTICES​" />
       <use enum="VERSION_4_0" token="MAX_TESS_GEN_LEVEL" />
       <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_UNIFORM_COMPONENTS" />
       <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_UNIFORM_COMPONENTS" />
@@ -3560,6 +3561,13 @@
       <use enum="VERSION_4_1" token="VIEWPORT_BOUNDS_RANGE" />
       <use enum="VERSION_4_1" token="LAYER_PROVOKING_VERTEX" />
       <use enum="VERSION_4_1" token="VIEWPORT_INDEX_PROVOKING_VERTEX" />
+      <use enum="VERSION_4_2" token="MAX_VERTEX_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_2" token="MAX_TESS_CONTROL_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_2" token="MAX_TESS_EVALUATION_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_2" token="MAX_GEOMETRY_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_2" token="MAX_FRAGMENT_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_2" token="MAX_COMBINED_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_3" token="MAX_COMPUTE_IMAGE_UNIFORMS" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -4009,6 +4017,10 @@
       <use enum="VERSION_3_1" token="RG8_SNORM" />
       <use enum="VERSION_3_1" token="RGB8_SNORM" />
       <use enum="VERSION_3_1" token="RGBA8_SNORM" />
+      <use enum="VERSION_3_1" token="R16_SNORM" />
+      <use enum="VERSION_3_1" token="RG16_SNORM" />
+      <use enum="VERSION_3_1" token="RGB16_SNORM" />
+      <use enum="VERSION_3_1" token="RGBA16_SNORM" />
       <use enum="VERSION_3_3" token="RGB10_A2UI" />
       <use enum="VERSION_4_3" token="COMPRESSED_RED_RGTC1" />
       <use enum="VERSION_4_3" token="COMPRESSED_RG_RGTC2" />
@@ -4327,10 +4339,12 @@
       <use enum="PixelInternalFormat" token="RGBA16UI" />
       <use enum="PixelInternalFormat" token="RGBA32I" />
       <use enum="PixelInternalFormat" token="RGBA32UI" />
+      <use enum="PixelFormat" token="DEPTH_COMPONENT" />
       <use enum="PixelInternalFormat" token="DEPTH_COMPONENT16" />
       <use enum="PixelInternalFormat" token="DEPTH_COMPONENT24" />
       <use enum="PixelInternalFormat" token="DEPTH_COMPONENT32" />
       <use enum="PixelInternalFormat" token="DEPTH_COMPONENT32F" />
+      <use enum="PixelFormat" token="DEPTH_STENCIL" />
       <use enum="PixelInternalFormat" token="DEPTH24_STENCIL8" />
       <use enum="PixelInternalFormat" token="DEPTH32F_STENCIL8" />
       <use enum="ARB_framebuffer_object" token="STENCIL_INDEX1" />
