@@ -206,7 +206,6 @@ namespace OpenTK.Platform.MacOS
 
             // Set up behavior
             Cocoa.SendIntPtr(windowPtr, Selector.Get("setDelegate:"), windowPtr); // The window class acts as its own delegate 
-            Cocoa.SendVoid(windowPtr, Selector.Get("cascadeTopLeftFromPoint:"), System.Drawing.PointF.Empty);
             Cocoa.SendVoid(windowPtr, Selector.Get("makeKeyWindow"));
             SetTitle(title, false);
 
@@ -247,7 +246,12 @@ namespace OpenTK.Platform.MacOS
             {
                 ResetTrackingArea();
             }
-            GraphicsContext.CurrentContext.Update(windowInfo);
+
+            var context = GraphicsContext.CurrentContext;
+            if (context != null)
+            {
+                context.Update(windowInfo);
+            }
 
             if (suppressResize == 0)
                 OnResize(EventArgs.Empty);
