@@ -831,12 +831,8 @@ namespace OpenTK.Platform.X11
                             if (!ce.Cancel)
                             {
                                 isExiting = true;
-                                
-                                Debug.WriteLine("Destroying window.");
-                                using (new XLock(window.Display))
-                                {
-                                    Functions.XDestroyWindow(window.Display, window.Handle);
-                                }
+                                DestroyWindow();
+                                OnClosed(EventArgs.Empty);
                                 break;
                             }
                         }
@@ -846,9 +842,6 @@ namespace OpenTK.Platform.X11
                     case XEventName.DestroyNotify:
                         Debug.WriteLine("Window destroyed");
                         exists = false;
-
-                        OnClosed(EventArgs.Empty);
-
                         return;
 
                     case XEventName.ConfigureNotify:
@@ -1653,7 +1646,9 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine("X11GLNative shutdown sequence initiated.");
             using (new XLock(window.Display))
             {
+                Functions.XSync(window.Display, true);
                 Functions.XDestroyWindow(window.Display, window.Handle);
+                exists = false;
             }
         }
 
@@ -1711,20 +1706,15 @@ namespace OpenTK.Platform.X11
                 {
                     if (window != null && window.Handle != IntPtr.Zero)
                     {
+                        Functions.XFreeCursor(window.Display, EmptyCursor);
+                        if(cursorHandle != IntPtr.Zero)
+                        {
+                            Functions.XFreeCursor(window.Display, cursorHandle);
+                        }
+
                         if (Exists)
                         {
-                            using (new XLock(window.Display))
-                            {
-                                if(cursorHandle != IntPtr.Zero)
-                                {
-                                    Functions.XFreeCursor(window.Display, cursorHandle);
-                                }
-                                Functions.XFreeCursor(window.Display, EmptyCursor);
-                                Functions.XDestroyWindow(window.Display, window.Handle);
-                            }
-
-                            while (Exists)
-                                ProcessEvents();
+                            DestroyWindow();
                         }
 
                         window.Dispose();
