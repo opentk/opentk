@@ -27,6 +27,7 @@ Instructions
 The simplest way to use OpenTK in your project is to install the [NuGet package](http://www.nuget.org/packages/OpenTK/).
 
 Alternatively, download the [OpenTK binaries](http://www.opentk.com) and:
+
 1. Copy OpenTK.dll and OpenTK.dll.config to your project directory
 2. Use "Add reference" to add OpenTK.dll as a project reference
 3. Use "Add files" to add OpenTK.dll.config to your project, and enable the "Copy to Output Directory" option.
@@ -42,6 +43,7 @@ OpenTK 1.1.2 was released on 19 May 2014.
 It contains performance and stability improvements and synchronizes the OpenGL and OpenGL ES bindings with the May 2014 Khronos specifications.
 
 === Changelog: ===
+
 1. New Cocoa backend for Mac OS X, with support for OpenGL 4.x and retina displays. Huge thanks to [Ollhax](https://github.com/Ollhax) for implementing the backend from scratch, including the necessary Cocoa bindings!
 2. Custom hardware cursors are now supported: `INativeWindow.Cursor = new MouseCursor(...)`
 3. Up to 2000% improvement in binding loading speed. The exact numbers depend on the operating system and hardware configuration. On a Nvidia 650M GPU and a 2.3GHz processor:
@@ -90,7 +92,7 @@ OpenTK 1.1.2 is backwards compatible with 1.1.1. Users of previous versions are 
 Known issues
 ============
 
-1. The SDL2 backend has a number of limitations compared to the native platform backends. In particular, SDL2 does not support:
+The SDL2 backend has a number of limitations compared to the native platform backends. In particular, SDL2 does not support:
    - `OpenTK.GLControl`. OpenTK will automatically use a native platform backend instead.
    - `DisplayDevice.ChangeResolution()` without a fullscreen `INativeWindow`.
    - changing `INativeWindow.WindowBorder` once a window is created.
