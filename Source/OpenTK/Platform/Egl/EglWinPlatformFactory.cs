@@ -63,11 +63,6 @@ namespace OpenTK.Platform.Egl
             };
         }
 
-        public override IGraphicsMode CreateGraphicsMode()
-        {
-            return new EglGraphicsMode();
-        }
-
         #endregion
 
         #region Private Members
