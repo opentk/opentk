@@ -32,31 +32,17 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
-    class EglGraphicsMode : IGraphicsMode
+    class EglGraphicsMode
     {
-        #region IGraphicsMode Members
-
-        public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil,
-            int samples, ColorFormat accum, int buffers, bool stereo)
-        {
-            // According to the EGL specs, the ES flag should select ES 1.0 or higher, which
-            // makes sense as a default. EglContext.cs checks 
-            return SelectGraphicsMode(color, depth, stencil, samples, accum, buffers, stereo,
-                RenderableFlags.ES);
-        }
-
-        #endregion
-
-        #region Public Members
-
-        public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil,
+        public GraphicsMode SelectGraphicsMode(EglWindowInfo window,
+            ColorFormat color, int depth, int stencil,
             int samples, ColorFormat accum, int buffers, bool stereo,
             RenderableFlags renderable_flags)
         {
             IntPtr[] configs = new IntPtr[1];
             int[] attribList = new int[] 
             { 
-                //Egl.SURFACE_TYPE, Egl.WINDOW_BIT,
+                Egl.SURFACE_TYPE, Egl.WINDOW_BIT,
                 Egl.RENDERABLE_TYPE, (int)renderable_flags,
 
                 Egl.RED_SIZE, color.Red, 
@@ -73,11 +59,7 @@ namespace OpenTK.Platform.Egl
                 Egl.NONE,
             };
 
-            // Todo: what if we don't wish to use the default display?
-            IntPtr display = Egl.GetDisplay(IntPtr.Zero);
-            int major, minor;
-            if (!Egl.Initialize(display, out major, out minor))
-                throw new GraphicsModeException(String.Format("Failed to initialize display connection, error {0}", Egl.GetError()));
+            IntPtr display = window.Display;
 
             int num_configs;
             if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out num_configs) || num_configs == 0)
@@ -101,7 +83,5 @@ namespace OpenTK.Platform.Egl
 
             return new GraphicsMode(active_config, new ColorFormat(r, g, b, a), d, s, sample_buffers > 0 ? samples : 0, 0, 2, false);
         }
-
-        #endregion
     }
 }

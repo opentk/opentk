@@ -331,7 +331,10 @@ namespace OpenTK.Platform.Windows
                         {
                             value = 1;
                         }
-                        Wgl.Ext.SwapInterval(value);
+                        if (!Wgl.Ext.SwapInterval(value))
+                        {
+                            Debug.Print("wglSwapIntervalEXT call failed.");
+                        }
                     }
                 }
             }
@@ -351,7 +354,7 @@ namespace OpenTK.Platform.Windows
                     Wgl.SupportsFunction("wglGetSwapIntervalEXT") &&
                     Wgl.SupportsFunction("wglSwapIntervalEXT");
                 vsync_tear_supported =
-                    Wgl.SupportsExtension(DeviceContext, "WGL_EXT_swap_tear");
+                    Wgl.SupportsExtension(DeviceContext, "WGL_EXT_swap_control_tear");
             }
 
             base.LoadAll();
@@ -373,16 +376,6 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region GetAddress
-
-        public override IntPtr GetAddress(string function_string)
-        {
-            IntPtr address = Wgl.GetProcAddress(function_string);
-            if (!IsValid(address))
-            {
-                address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
-            }
-            return address;
-        }
 
         public override IntPtr GetAddress(IntPtr function_string)
         {

@@ -23,7 +23,7 @@ namespace Bind
         public string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
         public string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
         public string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
-        public string DefaultDocFile = "ToInlineDocs.xslt";
+        public string DefaultFallbackDocPath = "../../../Source/Bind/Specifications/Docs/GL";
         public string DefaultLicenseFile = "License.txt";
         public string DefaultOverridesFile = "GL2/gloverrides.xml";
         public string DefaultLanguageTypeMapFile = "csharp.tm";
@@ -34,7 +34,7 @@ namespace Bind
         public string DefaultWrappersFile = "GL.cs";
         public Legacy DefaultCompatibility = Legacy.NoDropMultipleTokens;
 
-        string inputPath, outputPath, outputNamespace, docPath, docFile, licenseFile, overridesFile,
+        string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile, overridesFile,
             languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
             wrappersFile;
         Nullable<Legacy> compatibility;
@@ -42,7 +42,7 @@ namespace Bind
         public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
         public string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
         public string DocPath { get { return docPath ?? DefaultDocPath; } set { docPath = value; } }
-        public string DocFile { get { return docFile ?? DefaultDocFile; } set { docFile = value; } }
+        public string FallbackDocPath { get { return fallbackDocPath ?? DefaultFallbackDocPath; } set { fallbackDocPath = value; } }
         public string LicenseFile { get { return licenseFile ?? DefaultLicenseFile; } set { licenseFile = value; } }
         public string OverridesFile { get { return overridesFile ?? DefaultOverridesFile; } set { overridesFile = value; } }
         public string LanguageTypeMapFile { get { return languageTypeMapFile ?? DefaultLanguageTypeMapFile; } set { languageTypeMapFile = value; } }
@@ -156,6 +156,13 @@ namespace Bind
             AddDeprecationWarnings = 0x2000,
             /// <summary>Use DllImport declaration for core functions (do not generate entry point slots)</summary>
             UseDllImports = 0x4000,
+            /// <summary>
+            /// Use in conjuction with UseDllImports, to create
+            /// bindings that are compatible with opengl32.dll on Windows.
+            /// This uses DllImports up to GL 1.1 and function pointers
+            /// for higher versions.
+            /// </summary>
+            UseWindowsCompatibleGL = 0x8000,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |

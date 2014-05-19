@@ -823,6 +823,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         GeometryShaderBit = ((int)0x00000004)        ,
         /// <summary>
+        /// Original was GL_GEOMETRY_SHADER_BIT_EXT = 0x00000004
+        /// </summary>
+        GeometryShaderBitExt = ((int)0x00000004)        ,
+        /// <summary>
         /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
         /// </summary>
         QueryStencilFailEventBitAmd = ((int)0x00000004)        ,
@@ -843,6 +847,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         TessControlShaderBit = ((int)0x00000008)        ,
         /// <summary>
+        /// Original was GL_TESS_CONTROL_SHADER_BIT_EXT = 0x00000008
+        /// </summary>
+        TessControlShaderBitExt = ((int)0x00000008)        ,
+        /// <summary>
         /// Original was GL_TEXTURE_FETCH_BARRIER_BIT = 0x00000008
         /// </summary>
         TextureFetchBarrierBit = ((int)0x00000008)        ,
@@ -858,6 +866,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_TESS_EVALUATION_SHADER_BIT = 0x00000010
         /// </summary>
         TessEvaluationShaderBit = ((int)0x00000010)        ,
+        /// <summary>
+        /// Original was GL_TESS_EVALUATION_SHADER_BIT_EXT = 0x00000010
+        /// </summary>
+        TessEvaluationShaderBitExt = ((int)0x00000010)        ,
         /// <summary>
         /// Original was GL_COMPUTE_SHADER_BIT = 0x00000020
         /// </summary>
@@ -1011,6 +1023,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Quads = ((int)0x0007)        ,
         /// <summary>
+        /// Original was GL_QUADS_EXT = 0x0007
+        /// </summary>
+        QuadsExt = ((int)0x0007)        ,
+        /// <summary>
         /// Original was GL_MAP_INVALIDATE_BUFFER_BIT = 0x0008
         /// </summary>
         MapInvalidateBufferBit = ((int)0x0008)        ,
@@ -1078,6 +1094,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_PATCHES = 0x000E
         /// </summary>
         Patches = ((int)0x000E)        ,
+        /// <summary>
+        /// Original was GL_PATCHES_EXT = 0x000E
+        /// </summary>
+        PatchesExt = ((int)0x000E)        ,
         /// <summary>
         /// Original was GL_MAP_FLUSH_EXPLICIT_BIT = 0x0010
         /// </summary>
@@ -8618,6 +8638,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_DOUBLE_MAT4x3 = 0x8F4E
         /// </summary>
         DoubleMat4x3 = ((int)0x8F4E)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_BINDING_BUFFER = 0x8F4F
+        /// </summary>
+        VertexBindingBuffer = ((int)0x8F4F)        ,
         /// <summary>
         /// Original was GL_R8_SNORM = 0x8F94
         /// </summary>
@@ -19808,6 +19832,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         PatchDefaultOuterLevel = ((int)0x8E74)        ,
         /// <summary>
+        /// Original was GL_MAX_PATCH_VERTICES = 0x8E7D
+        /// </summary>
+        MaxPatchVertices = ((int)0x8E7D)        ,
+        /// <summary>
         /// Original was GL_MAX_TESS_GEN_LEVEL = 0x8E7E
         /// </summary>
         MaxTessGenLevel = ((int)0x8E7E)        ,
@@ -19856,6 +19884,30 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         DrawIndirectBufferBinding = ((int)0x8F43)        ,
         /// <summary>
+        /// Original was GL_MAX_VERTEX_IMAGE_UNIFORMS = 0x90CA
+        /// </summary>
+        MaxVertexImageUniforms = ((int)0x90CA)        ,
+        /// <summary>
+        /// Original was GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS = 0x90CB
+        /// </summary>
+        MaxTessControlImageUniforms = ((int)0x90CB)        ,
+        /// <summary>
+        /// Original was GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS = 0x90CC
+        /// </summary>
+        MaxTessEvaluationImageUniforms = ((int)0x90CC)        ,
+        /// <summary>
+        /// Original was GL_MAX_GEOMETRY_IMAGE_UNIFORMS = 0x90CD
+        /// </summary>
+        MaxGeometryImageUniforms = ((int)0x90CD)        ,
+        /// <summary>
+        /// Original was GL_MAX_FRAGMENT_IMAGE_UNIFORMS = 0x90CE
+        /// </summary>
+        MaxFragmentImageUniforms = ((int)0x90CE)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMBINED_IMAGE_UNIFORMS = 0x90CF
+        /// </summary>
+        MaxCombinedImageUniforms = ((int)0x90CF)        ,
+        /// <summary>
         /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE = 0x9104
         /// </summary>
         TextureBinding2DMultisample = ((int)0x9104)        ,
@@ -19891,6 +19943,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_MAX_FRAGMENT_INPUT_COMPONENTS = 0x9125
         /// </summary>
         MaxFragmentInputComponents = ((int)0x9125)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMPUTE_IMAGE_UNIFORMS = 0x91BD
+        /// </summary>
+        MaxComputeImageUniforms = ((int)0x91BD)        ,
     }
 
     /// <summary>
@@ -23633,6 +23689,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Rgba8Snorm = ((int)0x8F97)        ,
         /// <summary>
+        /// Original was GL_R16_SNORM = 0x8F98
+        /// </summary>
+        R16Snorm = ((int)0x8F98)        ,
+        /// <summary>
+        /// Original was GL_RG16_SNORM = 0x8F99
+        /// </summary>
+        Rg16Snorm = ((int)0x8F99)        ,
+        /// <summary>
+        /// Original was GL_RGB16_SNORM = 0x8F9A
+        /// </summary>
+        Rgb16Snorm = ((int)0x8F9A)        ,
+        /// <summary>
+        /// Original was GL_RGBA16_SNORM = 0x8F9B
+        /// </summary>
+        Rgba16Snorm = ((int)0x8F9B)        ,
+        /// <summary>
         /// Original was GL_RGB10_A2UI = 0x906F
         /// </summary>
         Rgb10A2ui = ((int)0x906F)        ,
@@ -24464,6 +24536,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Quads = ((int)0x0007)        ,
         /// <summary>
+        /// Original was GL_QUADS_EXT = 0x0007
+        /// </summary>
+        QuadsExt = ((int)0x0007)        ,
+        /// <summary>
         /// Original was GL_LINES_ADJACENCY = 0x000A
         /// </summary>
         LinesAdjacency = ((int)0x000A)        ,
@@ -24515,6 +24591,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_PATCHES = 0x000E
         /// </summary>
         Patches = ((int)0x000E)        ,
+        /// <summary>
+        /// Original was GL_PATCHES_EXT = 0x000E
+        /// </summary>
+        PatchesExt = ((int)0x000E)        ,
     }
 
     /// <summary>
@@ -25278,6 +25358,10 @@ namespace OpenTK.Graphics.OpenGL4
     public enum RenderbufferStorage : int
     {
         /// <summary>
+        /// Original was GL_DEPTH_COMPONENT = 0x1902
+        /// </summary>
+        DepthComponent = ((int)0x1902)        ,
+        /// <summary>
         /// Original was GL_R3_G3_B2 = 0x2A10
         /// </summary>
         R3G3B2 = ((int)0x2A10)        ,
@@ -25421,6 +25505,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_RG32UI = 0x823C
         /// </summary>
         Rg32ui = ((int)0x823C)        ,
+        /// <summary>
+        /// Original was GL_DEPTH_STENCIL = 0x84F9
+        /// </summary>
+        DepthStencil = ((int)0x84F9)        ,
         /// <summary>
         /// Original was GL_RGBA32F = 0x8814
         /// </summary>
@@ -27805,13 +27893,25 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         GeometryShaderBit = ((int)0x00000004)        ,
         /// <summary>
+        /// Original was GL_GEOMETRY_SHADER_BIT_EXT = 0x00000004
+        /// </summary>
+        GeometryShaderBitExt = ((int)0x00000004)        ,
+        /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x00000008
         /// </summary>
         TessControlShaderBit = ((int)0x00000008)        ,
         /// <summary>
+        /// Original was GL_TESS_CONTROL_SHADER_BIT_EXT = 0x00000008
+        /// </summary>
+        TessControlShaderBitExt = ((int)0x00000008)        ,
+        /// <summary>
         /// Original was GL_TESS_EVALUATION_SHADER_BIT = 0x00000010
         /// </summary>
         TessEvaluationShaderBit = ((int)0x00000010)        ,
+        /// <summary>
+        /// Original was GL_TESS_EVALUATION_SHADER_BIT_EXT = 0x00000010
+        /// </summary>
+        TessEvaluationShaderBitExt = ((int)0x00000010)        ,
         /// <summary>
         /// Original was GL_COMPUTE_SHADER_BIT = 0x00000020
         /// </summary>
@@ -32644,6 +32744,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES = 0x8F39
         /// </summary>
         MaxCombinedShaderOutputResources = ((int)0x8F39)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_BINDING_BUFFER = 0x8F4F
+        /// </summary>
+        VertexBindingBuffer = ((int)0x8F4F)        ,
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BUFFER = 0x90D2
         /// </summary>

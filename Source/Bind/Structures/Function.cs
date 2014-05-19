@@ -19,7 +19,7 @@ namespace Bind.Structures
         Delegate wrapped_delegate;
 
         #endregion
-        
+
         #region --- Constructors ---
 
         public Function(Delegate d)
@@ -38,6 +38,7 @@ namespace Bind.Structures
             TrimmedName = f.TrimmedName;
             Obsolete = f.Obsolete;
             CLSCompliant = f.CLSCompliant;
+            Documentation = f.Documentation;
             Body.AddRange(f.Body);
         }
 
@@ -96,6 +97,12 @@ namespace Bind.Structures
         #region public string TrimmedName
 
         public string TrimmedName { get; set; }
+
+        #endregion
+
+        #region Documentation
+
+        public Documentation Documentation { get; set; }
 
         #endregion
 

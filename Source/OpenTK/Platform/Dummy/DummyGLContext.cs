@@ -79,14 +79,10 @@ namespace OpenTK.Platform.Dummy
             get { return current_thread != null && current_thread == Thread.CurrentThread; }
         }
 
-        public override IntPtr GetAddress(string function)
-        {
-            return Loader(function);
-        }
-
         public override IntPtr GetAddress(IntPtr function)
         {
-            return IntPtr.Zero;
+            string str = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(function);
+            return Loader(str);
         }
 
         public override int SwapInterval
@@ -108,7 +104,6 @@ namespace OpenTK.Platform.Dummy
         {
             new OpenTK.Graphics.OpenGL.GL().LoadEntryPoints();
             new OpenTK.Graphics.OpenGL4.GL().LoadEntryPoints();
-            new OpenTK.Graphics.ES10.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES11.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES30.GL().LoadEntryPoints();

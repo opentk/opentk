@@ -74,8 +74,8 @@ namespace OpenTK
         /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
         public NativeWindow(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
-            : this(device.Bounds.Left + (device.Bounds.Width - width) / 2,
-                   device.Bounds.Top + (device.Bounds.Height - height) / 2,
+            : this(device != null ? device.Bounds.Left + (device.Bounds.Width - width) / 2 : 0,
+                   device != null ? device.Bounds.Top + (device.Bounds.Height - height) / 2 : 0,
                    width, height, title, options, mode, device) { }
 
         /// <summary>Constructs a new NativeWindow with the specified attributes.</summary>
@@ -98,8 +98,6 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
             if (mode == null)
                 throw new ArgumentNullException("mode");
-            if (device == null)
-                throw new ArgumentNullException("device");
 
             this.options = options;
             this.device = device;
@@ -108,8 +106,16 @@ namespace OpenTK
 
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {
-                this.device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
+                if (this.device != null)
+                {
+                    this.device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
+                }
                 WindowState = WindowState.Fullscreen;
+            }
+
+            if ((options & GameWindowFlags.FixedWindow) != 0)
+            {
+                WindowBorder = WindowBorder.Fixed;
             }
         }
 
@@ -163,12 +169,7 @@ namespace OpenTK
         /// </returns>
         public Point PointToScreen(Point point)
         {
-            // Here we use the fact that PointToClient just translates the point, and PointToScreen
-            // should perform the inverse operation.
-            Point trans = PointToClient(Point.Empty);
-            point.X -= trans.X;
-            point.Y -= trans.Y;
-            return point;
+            return implementation.PointToScreen(point);
         }
 
         #endregion
@@ -254,6 +255,31 @@ namespace OpenTK
             {
                 EnsureUndisposed();
                 implementation.ClientSize = value;
+            }
+        }
+
+        #endregion
+
+        #region Cursor
+
+        /// <summary>
+        /// Gets or sets the <see cref="OpenTK.MouseCursor"/> for this window.
+        /// </summary>
+        public MouseCursor Cursor
+        {
+            get
+            {
+                EnsureUndisposed();
+                return implementation.Cursor;
+            }
+            set
+            {
+                EnsureUndisposed();
+                if (value == null)
+                {
+                    value = MouseCursor.Empty;
+                }
+                implementation.Cursor = value;
             }
         }
 
@@ -655,6 +681,26 @@ namespace OpenTK
         /// </summary>
         public event EventHandler<EventArgs> WindowStateChanged = delegate { };
 
+        /// <summary>
+        /// Occurs when a <see cref="MouseButton"/> is pressed.
+        /// </summary>
+        public event EventHandler<MouseButtonEventArgs> MouseDown = delegate { };
+
+        /// <summary>
+        /// Occurs when a <see cref="MouseButton"/> is released.
+        /// </summary>
+        public event EventHandler<MouseButtonEventArgs> MouseUp = delegate { };
+
+        /// <summary>
+        /// Occurs whenever the mouse is moved.
+        /// </summary>
+        public event EventHandler<MouseMoveEventArgs> MouseMove = delegate { };
+
+        /// <summary>
+        /// Occurs whenever a mouse wheel is moved;
+        /// </summary>
+        public event EventHandler<MouseWheelEventArgs> MouseWheel = delegate { };
+
         #endregion
 
         #endregion
@@ -672,8 +718,10 @@ namespace OpenTK
             {
                 if ((options & GameWindowFlags.Fullscreen) != 0)
                 {
-                    //if (WindowState == WindowState.Fullscreen) WindowState = WindowState.Normal; // TODO: Revise.
-                    device.RestoreResolution();
+                    if (device != null)
+                    {
+                        device.RestoreResolution();
+                    }
                 }
                 implementation.Dispose();
                 GC.SuppressFinalize(this);
@@ -877,6 +925,54 @@ namespace OpenTK
 
         #endregion
 
+        /// <summary>
+        /// Raises the <see cref="MouseDown"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="MouseButtonEventArgs"/> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
+        /// </param>
+        protected virtual void OnMouseDown(MouseButtonEventArgs e)
+        {
+            MouseDown(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MouseUp"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="MouseButtonEventArgs"/> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
+        /// </param>
+        protected virtual void OnMouseUp(MouseButtonEventArgs e)
+        {
+            MouseUp(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MouseMove"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="MouseMoveEventArgs"/> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
+        /// </param>
+        protected virtual void OnMouseMove(MouseMoveEventArgs e)
+        {
+            MouseMove(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MouseWheel"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="MouseWheelEventArgs"/> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
+        /// </param>
+        protected virtual void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            MouseWheel(this, e);
+        }
+
         #region OnResize
 
         /// <summary>
@@ -1029,6 +1125,11 @@ namespace OpenTK
 
         #endregion
 
+        private void OnMouseDownInternal(object sender, MouseButtonEventArgs e) { OnMouseDown(e); }
+        private void OnMouseUpInternal(object sender, MouseButtonEventArgs e) { OnMouseUp(e); }
+        private void OnMouseMoveInternal(object sender, MouseMoveEventArgs e) { OnMouseMove(e); }
+        private void OnMouseWheelInternal(object sender, MouseWheelEventArgs e) { OnMouseWheel(e); }
+
         #region OnMoveInternal
 
         private void OnMoveInternal(object sender, EventArgs e) { OnMove(e); }
@@ -1091,6 +1192,10 @@ namespace OpenTK
                     implementation.KeyUp += OnKeyUpInternal;
                     implementation.MouseEnter += OnMouseEnterInternal;
                     implementation.MouseLeave += OnMouseLeaveInternal;
+                    implementation.MouseDown += OnMouseDownInternal;
+                    implementation.MouseUp += OnMouseUpInternal;
+                    implementation.MouseMove += OnMouseMoveInternal;
+                    implementation.MouseWheel += OnMouseWheelInternal;
                     implementation.Move += OnMoveInternal;
                     implementation.Resize += OnResizeInternal;
                     implementation.TitleChanged += OnTitleChangedInternal;
@@ -1111,6 +1216,10 @@ namespace OpenTK
                     implementation.KeyUp -= OnKeyUpInternal;
                     implementation.MouseEnter -= OnMouseEnterInternal;
                     implementation.MouseLeave -= OnMouseLeaveInternal;
+                    implementation.MouseDown -= OnMouseDownInternal;
+                    implementation.MouseUp -= OnMouseUpInternal;
+                    implementation.MouseMove -= OnMouseMoveInternal;
+                    implementation.MouseWheel -= OnMouseWheelInternal;
                     implementation.Move -= OnMoveInternal;
                     implementation.Resize -= OnResizeInternal;
                     implementation.TitleChanged -= OnTitleChangedInternal;

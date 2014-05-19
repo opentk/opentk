@@ -98,8 +98,6 @@ namespace OpenTK
 
         bool is_running_slowly; // true, when UpdatePeriod cannot reach TargetUpdatePeriod
 
-        VSyncMode vsync;
-
         FrameEventArgs update_args = new FrameEventArgs();
         FrameEventArgs render_args = new FrameEventArgs();
 
@@ -884,7 +882,18 @@ namespace OpenTK
             {
                 EnsureUndisposed();
                 GraphicsContext.Assert();
-                return vsync;
+                if (Context.SwapInterval < 0)
+                {
+                    return VSyncMode.Adaptive;
+                }
+                else if (Context.SwapInterval == 0)
+                {
+                    return VSyncMode.Off;
+                }
+                else
+                {
+                    return VSyncMode.On;
+                }
             }
             set
             {
@@ -904,7 +913,6 @@ namespace OpenTK
                         Context.SwapInterval = -1;
                         break;
                 }
-                vsync = value;
             }
         }
 

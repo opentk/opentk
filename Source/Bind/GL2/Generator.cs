@@ -18,7 +18,7 @@ using Type=Bind.Structures.Type;
 
 namespace Bind.GL2
 {
-    class Generator : IBind
+    abstract class Generator : IBind
     {
         #region Fields
 
@@ -82,22 +82,6 @@ namespace Bind.GL2
             Settings.DelegatesClass = "Delegates";
             Settings.OutputClass = "GL";
 
-            if (Settings.Compatibility == Settings.Legacy.Tao)
-            {
-                Settings.OutputNamespace = "Tao.OpenGl";
-                Settings.OutputClass = "Gl";
-            }
-            else
-            {
-                // Defaults
-            }
-
-            Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-            Settings.DefaultImportsFile = "GLCore.cs";
-            Settings.DefaultDelegatesFile = "GLDelegates.cs";
-            Settings.DefaultEnumsFile = "GLEnums.cs";
-            Settings.DefaultWrappersFile = "GL.cs";
-
             Delegates = new DelegateCollection();
             Enums = new EnumCollection();
             Wrappers = new FunctionCollection();
@@ -129,9 +113,11 @@ namespace Bind.GL2
 
             var enum_processor = new EnumProcessor(this, overrides);
             var func_processor = new FuncProcessor(this, overrides);
+            var doc_processor = new DocProcessor(this);
 
             Enums = enum_processor.Process(Enums, Profile);
-            Wrappers = func_processor.Process(enum_processor, Delegates, Enums, Profile, Version);
+            Wrappers = func_processor.Process(enum_processor, doc_processor,
+                Delegates, Enums, Profile, Version);
         }
 
         #endregion

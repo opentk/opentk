@@ -129,8 +129,14 @@ namespace OpenTK
         /// <summary>
         /// This property is deprecated and should not be used.
         /// </summary>
-        [Obsolete("Use OpenTK.Input.Mouse/Keybord/Joystick/GamePad instead.")]
+        [Obsolete("Use OpenTK.Input.Mouse/Keyboard/Joystick/GamePad instead.")]
         OpenTK.Input.IInputDriver InputDriver { get; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="OpenTK.MouseCursor"/> for this window.
+        /// </summary>
+        /// <value>The cursor.</value>
+        MouseCursor Cursor { get; set; }
 
         /// <summary>
         /// Gets or sets a value, indicating whether the mouse cursor is visible.
@@ -254,10 +260,26 @@ namespace OpenTK
         /// </summary>
         event EventHandler<EventArgs> MouseEnter;
 
-        //event EventHandler<MouseEventArgs> MouseMove;
-        //event EventHandler<MouseEventArgs> MouseWheel; 
-        //event EventHandler<MouseEventArgs> MouseDown;
-        //event EventHandler<MouseEventArgs> MouseUp;
+        /// <summary>
+        /// Occurs whenever a <see cref="MouseButton"/> is clicked.
+        /// </summary>
+        event EventHandler<Input.MouseButtonEventArgs> MouseDown;
+
+        /// <summary>
+        /// Occurs whenever a <see cref="MouseButton"/> is released.
+        /// </summary>
+        event EventHandler<Input.MouseButtonEventArgs> MouseUp;
+
+        /// <summary>
+        /// Occurs whenever the mouse cursor is moved;
+        /// </summary>
+        event EventHandler<Input.MouseMoveEventArgs> MouseMove;
+
+        /// <summary>
+        /// Occurs whenever a mouse wheel is moved;
+        /// </summary>
+        event EventHandler<Input.MouseWheelEventArgs> MouseWheel;
+
         //event EventHandler<MouseEventArgs> MouseClick;
         //event EventHandler<MouseEventArgs> MouseDoubleClick;
 

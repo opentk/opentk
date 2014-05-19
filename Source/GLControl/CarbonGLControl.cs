@@ -32,6 +32,7 @@ using System.Windows.Forms;
 
 using OpenTK.Graphics;
 using OpenTK.Platform;
+using OpenTK.Platform.MacOS;
 
 namespace OpenTK
 {
@@ -46,7 +47,7 @@ namespace OpenTK
             this.mode = mode;
             this.control = owner;
 
-            window_info = Utilities.CreateMacOSCarbonWindowInfo(control.Handle, false, true, GetXOffset, GetYOffset);
+            window_info = Utilities.CreateMacOSCarbonWindowInfo(control.Handle, false, true);
         }
 
         private int GetXOffset()
@@ -70,7 +71,8 @@ namespace OpenTK
 
         public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
-            return new GraphicsContext(mode, WindowInfo, major, minor, flags);
+            // AGL does not support OpenGL profiles
+            return new AglContext(mode, WindowInfo, GraphicsContext.CurrentContext, GetXOffset, GetYOffset);
         }
 
         // TODO: Fix this

@@ -33,6 +33,8 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.SDL2
 {
+    using Surface = IntPtr;
+    using Cursor = IntPtr;
 
     partial class SDL
     {
@@ -76,6 +78,26 @@ namespace OpenTK.Platform.SDL2
             //while (Marshal.ReadByte(ptr) != 0)
             //    strlen++;
         }
+
+        #region Cursor
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateColorCursor", ExactSpelling = true)]
+        public static extern Cursor CreateColorCursor(Surface surface, int hot_x, int hot_y);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_FreeCursor", ExactSpelling = true)]
+        public static extern void FreeCursor(Cursor cursor);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDefaultCursor", ExactSpelling = true)]
+        public static extern IntPtr GetDefaultCursor();
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetCursor", ExactSpelling = true)]
+        public static extern void SetCursor(Cursor cursor);
+
+        #endregion
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_AddEventWatch", ExactSpelling = true)]
@@ -219,6 +241,10 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetModState", ExactSpelling = true)]
         public static extern Keymod GetModState();
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetMouseState", ExactSpelling = true)]
+        public static extern ButtonFlags GetMouseState(out int hx, out int hy);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetNumDisplayModes", ExactSpelling = true)]
@@ -1418,6 +1444,13 @@ namespace OpenTK.Platform.SDL2
         [FieldOffset(0)]
         public DropEvent drop;
 #endif
+
+        // Ensure the structure is big enough
+        // This hack is necessary to ensure compatibility
+        // with different SDL versions, which might have
+        // different sizeof(SDL_Event).
+        [FieldOffset(0)]
+        private unsafe fixed byte reserved[128];
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -1539,8 +1572,8 @@ namespace OpenTK.Platform.SDL2
         public UInt32 Which;
         public Button Button;
         public State State;
+        public byte Clicks;
         byte padding1;
-        byte padding2;
         public Int32 X;
         public Int32 Y;
     }
@@ -1551,10 +1584,7 @@ namespace OpenTK.Platform.SDL2
         public uint Timestamp;
         public uint WindowID;
         public uint Which;
-        public State State;
-        byte padding1;
-        byte padding2;
-        byte padding3;
+        public ButtonFlags State;
         public Int32 X;
         public Int32 Y;
         public Int32 Xrel;
@@ -1584,10 +1614,6 @@ namespace OpenTK.Platform.SDL2
         }
 
         public const uint TouchMouseID = 0xffffffff;
-
-        public static class GL
-        {
-        }
     }
 
     struct Rect

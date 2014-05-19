@@ -29,13 +29,22 @@ namespace OpenTK.Platform.X11
         // current on window originating from a different display.
         IntPtr display;
         X11WindowInfo currentWindow;
-        bool vsync_supported;
-        int swap_interval = 1; // As defined in GLX_SGI_swap_control
+        bool vsync_ext_supported;
+        bool vsync_mesa_supported;
+        bool vsync_sgi_supported;
+        bool vsync_tear_supported;
+        int sgi_swap_interval = 1; // As defined in GLX_SGI_swap_control
         readonly X11GraphicsMode ModeSelector = new X11GraphicsMode();
+        string extensions = null;
 
         #endregion
 
         #region --- Constructors ---
+
+        static X11GLContext()
+        {
+            new Glx().LoadEntryPoints();
+        }
 
         public X11GLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shared, bool direct,
             int major, int minor, GraphicsContextFlags flags)
@@ -231,7 +240,7 @@ namespace OpenTK.Platform.X11
             return result;
         }
 
-        static bool SupportsExtension(IntPtr display, X11WindowInfo window, string e)
+        bool SupportsExtension(IntPtr display, X11WindowInfo window, string e)
         {
             if (window == null)
                 throw new ArgumentNullException("window");
@@ -240,20 +249,21 @@ namespace OpenTK.Platform.X11
             if (window.Display != display)
                 throw new InvalidOperationException();
 
-            string extensions = null;
-            using (new XLock(display))
+            if (String.IsNullOrEmpty(extensions))
             {
-                extensions = Glx.QueryExtensionsString(display, window.Screen);
+                using (new XLock(display))
+                {
+                    extensions = Glx.QueryExtensionsString(display, window.Screen);
+                }
             }
             return !String.IsNullOrEmpty(extensions) && extensions.Contains(e);
         }
 
-        static bool SupportsCreateContextAttribs(IntPtr display, X11WindowInfo window)
+        bool SupportsCreateContextAttribs(IntPtr display, X11WindowInfo window)
         {
             return
                 SupportsExtension(display, window, "GLX_ARB_create_context") &&
-                SupportsExtension(display, window, "GLX_ARB_create_context_profile") &&
-                Glx.Delegates.glXCreateContextAttribsARB != null;
+                SupportsExtension(display, window, "GLX_ARB_create_context_profile");
         }
 
         #endregion
@@ -353,24 +363,66 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                if (vsync_supported)
-                    return swap_interval;
-                else
+                if (currentWindow == null)
+                {
+                    Debug.Print("Context must be current");
+                    throw new InvalidOperationException();
+                }
+
+                using (new XLock(display))
+                {
+                    if (vsync_ext_supported)
+                    {
+                        int value;
+                        Glx.QueryDrawable(Display, currentWindow.Handle, GLXAttribute.SWAP_INTERVAL_EXT, out value);
+                        return value;
+                    }
+                    else if (vsync_mesa_supported)
+                    {
+                        return Glx.Mesa.GetSwapInterval();
+                    }
+                    else if (vsync_sgi_supported)
+                    {
+                        return sgi_swap_interval;
+                    }
+
                     return 0;
+                }
             }
             set
             {
-                if (vsync_supported)
+                if (currentWindow == null)
                 {
-                    ErrorCode error_code = 0;
-                    using (new XLock(Display))
-                        error_code = Glx.Sgi.SwapInterval(value);
-
-                    if (error_code == X11.ErrorCode.NO_ERROR)
-                        swap_interval = value;
-                    else
-                        Debug.Print("VSync = {0} failed, error code: {1}.", value, error_code);
+                    Debug.Print("Context must be current");
+                    throw new InvalidOperationException();
                 }
+
+                if (value < 0 && !vsync_tear_supported)
+                {
+                    value = 1;
+                }
+
+                ErrorCode error_code = 0;
+                using (new XLock(Display))
+                {
+                    if (vsync_ext_supported)
+                    {
+                        Glx.Ext.SwapInterval(Display, currentWindow.Handle, value);
+                    }
+                    else if (vsync_mesa_supported)
+                    {
+                        error_code = Glx.Mesa.SwapInterval(value);
+                    }
+                    else if (vsync_sgi_supported)
+                    {
+                        error_code = Glx.Sgi.SwapInterval(value);
+                    }
+                }
+
+                if (error_code == X11.ErrorCode.NO_ERROR)
+                    sgi_swap_interval = value;
+                else
+                    Debug.Print("VSync = {0} failed, error code: {1}.", value, error_code);
             }
         }
 
@@ -380,9 +432,24 @@ namespace OpenTK.Platform.X11
 
         public override void LoadAll()
         {
-            new Glx().LoadEntryPoints();
-            vsync_supported = this.GetAddress("glXSwapIntervalSGI") != IntPtr.Zero;
-            Debug.Print("Context supports vsync: {0}.", vsync_supported);
+            // Note: GLX entry points are always available, even
+            // for extensions that are not currently supported by
+            // the underlying driver. This means we can only check
+            // the extension strings for support, not the entry
+            // points themselves.
+            vsync_ext_supported =
+                SupportsExtension(display, currentWindow, "GLX_EXT_swap_control");
+            vsync_mesa_supported =
+                SupportsExtension(display, currentWindow, "GLX_MESA_swap_control");
+            vsync_sgi_supported =
+                SupportsExtension(display, currentWindow, "GLX_SGI_swap_control");
+            vsync_tear_supported =
+                SupportsExtension(display, currentWindow, "GLX_EXT_swap_control_tear");
+
+            Debug.Print("Context supports vsync: {0}.",
+                vsync_ext_supported || vsync_mesa_supported || vsync_sgi_supported);
+            Debug.Print("Context supports adaptive vsync: {0}.",
+                vsync_tear_supported);
 
             base.LoadAll();
         }
@@ -394,14 +461,6 @@ namespace OpenTK.Platform.X11
         #region --- IGraphicsContextInternal Members ---
 
         #region GetAddress
-
-        public override IntPtr GetAddress(string function)
-        {
-            using (new XLock(Display))
-            {
-                return Glx.GetProcAddress(function);
-            }
-        }
 
         public override IntPtr GetAddress(IntPtr function)
         {

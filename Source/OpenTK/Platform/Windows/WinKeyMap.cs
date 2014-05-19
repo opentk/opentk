@@ -32,163 +32,142 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    class WinKeyMap
+    static class WinKeyMap
     {
-        readonly Dictionary<int, Key> ScanMap = new Dictionary<int, Key>();
-
-        public WinKeyMap()
+        public static Key GetKey(int code)
         {
-            // 0 - 15
-            Append(Key.Unknown);
-            Append(Key.Escape);
+            switch (code)
+            {
+                // 0 - 15
+                case 0: return Key.Unknown;
+                case 1: return Key.Escape;
+                case 2: return Key.Number1;
+                case 3: return Key.Number2;
+                case 4: return Key.Number3;
+                case 5: return Key.Number4;
+                case 6: return Key.Number5;
+                case 7: return Key.Number6;
+                case 8: return Key.Number7;
+                case 9: return Key.Number8;
+                case 10: return Key.Number9;
+                case 11: return Key.Number0;
+                case 12: return Key.Minus;
+                case 13: return Key.Plus;
+                case 14: return Key.BackSpace;
+                case 15: return Key.Tab;
 
-            for (int i = 0; i < 9; i++)
-                Append(Key.Number1 + i);
-            Append(Key.Number0);
+                // 16-31
+                case 16: return Key.Q;
+                case 17: return Key.W;
+                case 18: return Key.E;
+                case 19: return Key.R;
+                case 20: return Key.T;
+                case 21: return Key.Y;
+                case 22: return Key.U;
+                case 23: return Key.I;
+                case 24: return Key.O;
+                case 25: return Key.P;
+                case 26: return Key.BracketLeft;
+                case 27: return Key.BracketRight;
+                case 28: return Key.Enter;
+                case 29: return Key.ControlLeft;
+                case 30: return Key.A;
+                case 31: return Key.S;
 
-            Append(Key.Minus);
-            Append(Key.Plus);
-            Append(Key.BackSpace);
-            Append(Key.Tab);
+                // 32 - 47
+                case 32: return Key.D;
+                case 33: return Key.F;
+                case 34: return Key.G;
+                case 35: return Key.H;
+                case 36: return Key.J;
+                case 37: return Key.K;
+                case 38: return Key.L;
+                case 39: return Key.Semicolon;
+                case 40: return Key.Quote;
+                case 41: return Key.Grave;
+                case 42: return Key.ShiftLeft;
+                case 43: return Key.BackSlash;
+                case 44: return Key.Z;
+                case 45: return Key.X;
+                case 46: return Key.C;
+                case 47: return Key.V;
 
-            // 16-31
-            Append(Key.Q);
-            Append(Key.W);
-            Append(Key.E);
-            Append(Key.R);
-            Append(Key.T);
-            Append(Key.Y);
-            Append(Key.U);
-            Append(Key.I);
-            Append(Key.O);
-            Append(Key.P);
-            Append(Key.BracketLeft);
-            Append(Key.BracketRight);
-            Append(Key.Enter);
-            Append(Key.ControlLeft);
-            Append(Key.A);
-            Append(Key.S);
+                // 48 - 63
+                case 48: return Key.B;
+                case 49: return Key.N;
+                case 50: return Key.M;
+                case 51: return Key.Comma;
+                case 52: return Key.Period;
+                case 53: return Key.Slash;
+                case 54: return Key.ShiftRight;
+                case 55: return Key.PrintScreen;
+                case 56: return Key.AltLeft;
+                case 57: return Key.Space;
+                case 58: return Key.CapsLock;
+                case 59: return Key.F1;
+                case 60: return Key.F2;
+                case 61: return Key.F3;
+                case 62: return Key.F4;
+                case 63: return Key.F5;
 
-            // 32 - 47
-            Append(Key.D);
-            Append(Key.F);
-            Append(Key.G);
-            Append(Key.H);
-            Append(Key.J);
-            Append(Key.K);
-            Append(Key.L);
-            Append(Key.Semicolon);
-            Append(Key.Quote);
-            Append(Key.Grave);
-            Append(Key.ShiftLeft);
-            Append(Key.BackSlash);
-            Append(Key.Z);
-            Append(Key.X);
-            Append(Key.C);
-            Append(Key.V);
+                // 64 - 79
+                case 64: return Key.F6;
+                case 65: return Key.F7;
+                case 66: return Key.F8;
+                case 67: return Key.F9;
+                case 68: return Key.F10;
+                case 69: return Key.NumLock;
+                case 70: return Key.ScrollLock;
+                case 71: return Key.Home;
+                case 72: return Key.Up;
+                case 73: return Key.PageUp;
+                case 74: return Key.KeypadMinus;
+                case 75: return Key.Left;
+                case 76: return Key.Keypad5;
+                case 77: return Key.Right;
+                case 78: return Key.KeypadPlus;
+                case 79: return Key.End;
 
-            // 48 - 63
-            Append(Key.B);
-            Append(Key.N);
-            Append(Key.M);
-            Append(Key.Comma);
-            Append(Key.Period);
-            Append(Key.Slash);
-            Append(Key.ShiftRight);
-            Append(Key.PrintScreen);
-            Append(Key.AltLeft);
-            Append(Key.Space);
-            Append(Key.CapsLock);
-            Append(Key.F1);
-            Append(Key.F2);
-            Append(Key.F3);
-            Append(Key.F4);
-            Append(Key.F5);
+                // 80 - 95
+                case 80: return Key.Down;
+                case 81: return Key.PageDown;
+                case 82: return Key.Insert;
+                case 83: return Key.Delete;
+                case 84: return Key.Unknown;
+                case 85: return Key.Unknown;
+                case 86: return Key.NonUSBackSlash;
+                case 87: return Key.F11;
+                case 88: return Key.F12;
+                case 89: return Key.Pause;
+                case 90: return Key.Unknown;
+                case 91: return Key.WinLeft;
+                case 92: return Key.WinRight;
+                case 93: return Key.Menu;
+                case 94: return Key.Unknown;
+                case 95: return Key.Unknown;
 
-            // 64 - 79
-            Append(Key.F6);
-            Append(Key.F7);
-            Append(Key.F8);
-            Append(Key.F9);
-            Append(Key.F10);
-            Append(Key.NumLock);
-            Append(Key.ScrollLock);
-            Append(Key.Home);
-            Append(Key.Up);
-            Append(Key.PageUp);
-            Append(Key.KeypadMinus);
-            Append(Key.Left);
-            Append(Key.Keypad5);
-            Append(Key.Right);
-            Append(Key.KeypadPlus);
-            Append(Key.End);
+                // 96 - 106
+                case 96: return Key.Unknown;
+                case 97: return Key.Unknown;
+                case 98: return Key.Unknown;
+                case 99: return Key.Unknown;
+                case 100: return Key.F13;
+                case 101: return Key.F14;
+                case 102: return Key.F15;
+                case 103: return Key.F16;
+                case 104: return Key.F17;
+                case 105: return Key.F18;
+                case 106: return Key.F19;
 
-            // 80 - 95
-            Append(Key.Down);
-            Append(Key.PageDown);
-            Append(Key.Insert);
-            Append(Key.Delete);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.NonUSBackSlash);
-            Append(Key.F11);
-            Append(Key.F12);
-            Append(Key.Pause);
-            Append(Key.Unknown);
-            Append(Key.WinLeft);
-            Append(Key.WinRight);
-            Append(Key.Menu);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-
-            // 96 - 111
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.F13);
-            Append(Key.F14);
-            Append(Key.F15);
-            Append(Key.F16);
-            Append(Key.F17);
-            Append(Key.F18);
-            Append(Key.F19);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-
-            // 112 - 127
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
-            Append(Key.Unknown);
+                default: return Key.Unknown;
+            }
         }
 
-        void Append(Key key)
-        {
-            ScanMap.Add(ScanMap.Count, key);
-        }
-
-        public Key TranslateKey(short scancode, VirtualKeys vkey, bool extended0, bool extended1, out bool is_valid)
+        public static Key TranslateKey(short scancode, VirtualKeys vkey, bool extended0, bool extended1, out bool is_valid)
         {
             is_valid = true;
 
-            Key key;
-            ScanMap.TryGetValue(scancode, out key);
+            Key key = GetKey(scancode);
 
             if (!extended0)
             {

@@ -15,7 +15,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Windows
 {
-    internal partial class Wgl : GraphicsBindingsBase
+    internal partial class Wgl
     {
         static IntPtr[] EntryPoints;
         static string[] EntryPointNames;
@@ -29,8 +29,6 @@ namespace OpenTK.Platform.Windows
 
         public Wgl()
         {
-            EntryPointsInstance = EntryPoints;
-            EntryPointNamesInstance = EntryPointNames;
         }
 
         #region Public Members
@@ -43,8 +41,8 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Checks if a Wgl extension is supported by the given context.
         /// </summary>
-        /// <param name="context">The device context.</param>
-        /// <param name="ext">The extension to check.</param>
+        /// <param name="dc">The device context.</param>
+        /// <param name="name">The extension to check.</param>
         /// <returns>True if the extension is supported by the given context, false otherwise</returns>
         public static bool SupportsExtension(IntPtr dc, string name)
         {
@@ -102,12 +100,12 @@ namespace OpenTK.Platform.Windows
 
         #region Protected Members
 
-        protected override object SyncRoot
+        object SyncRoot
         {
             get { return sync; }
         }
 
-        protected override IntPtr GetAddress(string function_string)
+        IntPtr GetAddress(string function_string)
         {
             IntPtr address = Wgl.GetProcAddress(function_string);
             if (!IsValid(address))
@@ -133,15 +131,15 @@ namespace OpenTK.Platform.Windows
 
         #region Internal Members
 
-        internal override void LoadEntryPoints()
+        internal void LoadEntryPoints()
         {
             lock (SyncRoot)
             {
                 if (Wgl.GetCurrentContext() != IntPtr.Zero)
                 {
-                    for (int i = 0; i < EntryPointsInstance.Length; i++)
+                    for (int i = 0; i < EntryPointNames.Length; i++)
                     {
-                        EntryPointsInstance[i] = GetAddress(EntryPointNamesInstance[i]);
+                        EntryPoints[i] = GetAddress(EntryPointNames[i]);
                     }
                     extensions.Clear();
                 }

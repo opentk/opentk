@@ -302,5 +302,19 @@ namespace Bind
         }
 
         #endregion
+
+        public static bool RequiresSlot(this Delegate d, Settings settings)
+        {
+            double version;
+            Double.TryParse(
+                d.Version,
+                System.Globalization.NumberStyles.Float,
+                System.Globalization.CultureInfo.InvariantCulture,
+                out version);
+            return
+                !settings.IsEnabled(Settings.Legacy.UseDllImports) ||
+                (settings.IsEnabled(Settings.Legacy.UseWindowsCompatibleGL) && version > 1.1) ||
+                d.Extension != "Core";
+        }
     }
 }

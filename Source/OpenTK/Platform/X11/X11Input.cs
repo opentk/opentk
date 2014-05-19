@@ -1,241 +1,97 @@
-#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
+#region License
+//
+// X11Input.cs
+//
+// Author:
+//       thefiddler <stapostol@gmail.com>
+//
+// Copyright (c) 2006-2014 
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 #endregion
 
 using System;
-using System.Collections.Generic;
-#if !MINIMAL
-using System.Drawing;
-#endif
-using System.Text;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
-
 using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    /// \internal
-    /// <summary>
-    /// Drives the InputDriver on X11.
-    /// This class supports OpenTK, and is not intended for users of OpenTK.
-    /// </summary>
-    internal sealed class X11Input : IInputDriver
+    class X11Input : IInputDriver2
     {
-        KeyboardDevice keyboard = new KeyboardDevice();
-        MouseDevice mouse = new MouseDevice();
-        List<KeyboardDevice> dummy_keyboard_list = new List<KeyboardDevice>(1);
-        List<MouseDevice> dummy_mice_list = new List<MouseDevice>(1);
+        readonly X11Mouse mouse = new X11Mouse();
+        readonly X11Keyboard keyboard = new X11Keyboard();
+        readonly X11Joystick joystick = new X11Joystick();
+        readonly IGamePadDriver gamepad = new MappedGamePadDriver();
 
-        X11KeyMap keymap = new X11KeyMap();
-        int firstKeyCode, lastKeyCode; // The smallest and largest KeyCode supported by the X server.
-        int keysyms_per_keycode;    // The number of KeySyms for each KeyCode.
-        IntPtr[] keysyms;
-
-        //bool disposed;
-
-        #region --- Constructors ---
-
-        /// <summary>
-        /// Constructs a new X11Input driver. Creates a hidden InputOnly window, child to
-        /// the main application window, which selects input events and routes them to 
-        /// the device specific drivers (Keyboard, Mouse, Hid).
-        /// </summary>
-        /// <param name="attach">The window which the InputDriver will attach itself on.</param>
-        public X11Input(IWindowInfo attach)
+        internal X11Input()
         {
-            Debug.WriteLine("Initalizing X11 input driver.");
-            Debug.Indent();
-
-            if (attach == null)
-                throw new ArgumentException("A valid parent window must be defined, in order to create an X11Input driver.");
-
-            //window = new X11WindowInfo(attach);
-            X11WindowInfo window = (X11WindowInfo)attach;
-
-            // Init mouse
-            mouse.Description = "Default X11 mouse";
-            mouse.DeviceID = IntPtr.Zero;
-            mouse.NumberOfButtons = 5;
-            mouse.NumberOfWheels = 1;
-            dummy_mice_list.Add(mouse);
-            
-            using (new XLock(window.Display))
-            {
-                // Init keyboard
-                API.DisplayKeycodes(window.Display, ref firstKeyCode, ref lastKeyCode);
-                Debug.Print("First keycode: {0}, last {1}", firstKeyCode, lastKeyCode);
-    
-                IntPtr keysym_ptr = API.GetKeyboardMapping(window.Display, (byte)firstKeyCode,
-                    lastKeyCode - firstKeyCode + 1, ref keysyms_per_keycode);
-                Debug.Print("{0} keysyms per keycode.", keysyms_per_keycode);
-    
-                keysyms = new IntPtr[(lastKeyCode - firstKeyCode + 1) * keysyms_per_keycode];
-                Marshal.PtrToStructure(keysym_ptr, keysyms);
-                API.Free(keysym_ptr);
-    
-                keyboard.Description = "Default X11 keyboard";
-                keyboard.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
-                keyboard.DeviceID = IntPtr.Zero;
-                dummy_keyboard_list.Add(keyboard);
-    
-                // Request that auto-repeat is only set on devices that support it physically.
-                // This typically means that it's turned off for keyboards (which is what we want).
-                // We prefer this method over XAutoRepeatOff/On, because the latter needs to
-                // be reset before the program exits.
-                bool supported;
-                Functions.XkbSetDetectableAutoRepeat(window.Display, true, out supported);
-            }
-
-            Debug.Unindent();
+            Debug.WriteLine("Using X11 core input driver.");
+            Debug.WriteLine("[Warning] Mouse functionality will be significantly reduced.");
+            Debug.WriteLine("[Warning] Copy OpenTK.dll.config to use the XI2 input driver instead.");
         }
 
-        #endregion
+        #region IInputDriver2 Members
 
-        #region TranslateKey
-
-        internal bool TranslateKey(ref XKeyEvent e, out Key key)
+        public IMouseDriver2 MouseDriver
         {
-            XKey keysym = (XKey)API.LookupKeysym(ref e, 0);
-            XKey keysym2 = (XKey)API.LookupKeysym(ref e, 1);
-            key = Key.Unknown;
-
-            if (keymap.ContainsKey(keysym))
+            get
             {
-                key = keymap[keysym];
+                return mouse;
             }
-            else if (keymap.ContainsKey(keysym2))
-            {
-                key = keymap[keysym2];
-            }
-            else
-            {
-                Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
-            }
-
-            return key != Key.Unknown;
         }
 
-        #endregion
-
-        #region internal void ProcessEvent(ref XEvent e)
-
-        internal void ProcessEvent(ref XEvent e)
+        public IKeyboardDriver2 KeyboardDriver
         {
-            switch (e.type)
+            get
             {
-                case XEventName.ButtonPress:
-                    if (e.ButtonEvent.button == 1) mouse[OpenTK.Input.MouseButton.Left] = true;
-                    else if (e.ButtonEvent.button == 2) mouse[OpenTK.Input.MouseButton.Middle] = true;
-                    else if (e.ButtonEvent.button == 3) mouse[OpenTK.Input.MouseButton.Right] = true;
-                    else if (e.ButtonEvent.button == 4) mouse.Wheel++;
-                    else if (e.ButtonEvent.button == 5) mouse.Wheel--;
-                    else if (e.ButtonEvent.button == 6) mouse[OpenTK.Input.MouseButton.Button1] = true;
-                    else if (e.ButtonEvent.button == 7) mouse[OpenTK.Input.MouseButton.Button2] = true;
-                    else if (e.ButtonEvent.button == 8) mouse[OpenTK.Input.MouseButton.Button3] = true;
-                    else if (e.ButtonEvent.button == 9) mouse[OpenTK.Input.MouseButton.Button4] = true;
-                    else if (e.ButtonEvent.button == 10) mouse[OpenTK.Input.MouseButton.Button5] = true;
-                    else if (e.ButtonEvent.button == 11) mouse[OpenTK.Input.MouseButton.Button6] = true;
-                    else if (e.ButtonEvent.button == 12) mouse[OpenTK.Input.MouseButton.Button7] = true;
-                    else if (e.ButtonEvent.button == 13) mouse[OpenTK.Input.MouseButton.Button8] = true;
-                    else if (e.ButtonEvent.button == 14) mouse[OpenTK.Input.MouseButton.Button9] = true;
-                    //if ((e.state & (int)X11.MouseMask.Button4Mask) != 0) m.Wheel++;
-                    //if ((e.state & (int)X11.MouseMask.Button5Mask) != 0) m.Wheel--;
-                    //Debug.Print("Button pressed: {0}", e.ButtonEvent.button);
-                    break;
+                return keyboard;
+            }
+        }
 
-                case XEventName.ButtonRelease:
-                    if (e.ButtonEvent.button == 1) mouse[OpenTK.Input.MouseButton.Left] = false;
-                    else if (e.ButtonEvent.button == 2) mouse[OpenTK.Input.MouseButton.Middle] = false;
-                    else if (e.ButtonEvent.button == 3) mouse[OpenTK.Input.MouseButton.Right] = false;
-                    else if (e.ButtonEvent.button == 6) mouse[OpenTK.Input.MouseButton.Button1] = false;
-                    else if (e.ButtonEvent.button == 7) mouse[OpenTK.Input.MouseButton.Button2] = false;
-                    else if (e.ButtonEvent.button == 8) mouse[OpenTK.Input.MouseButton.Button3] = false;
-                    else if (e.ButtonEvent.button == 9) mouse[OpenTK.Input.MouseButton.Button4] = false;
-                    else if (e.ButtonEvent.button == 10) mouse[OpenTK.Input.MouseButton.Button5] = false;
-                    else if (e.ButtonEvent.button == 11) mouse[OpenTK.Input.MouseButton.Button6] = false;
-                    else if (e.ButtonEvent.button == 12) mouse[OpenTK.Input.MouseButton.Button7] = false;
-                    else if (e.ButtonEvent.button == 13) mouse[OpenTK.Input.MouseButton.Button8] = false;
-                    else if (e.ButtonEvent.button == 14) mouse[OpenTK.Input.MouseButton.Button9] = false;
-                    break;
+        public IGamePadDriver GamePadDriver
+        {
+            get
+            {
+                return gamepad;
+            }
+        }
 
-                case XEventName.MotionNotify:
-                    mouse.Position = new Point(e.MotionEvent.x, e.MotionEvent.y);
-                    break;
+        public IJoystickDriver2 JoystickDriver
+        {
+            get
+            {
+                return joystick;
             }
         }
 
         #endregion
 
-        #region --- IInputDriver Members ---
-
-        #region public IList<Keyboard> Keyboard
-
-        public IList<KeyboardDevice> Keyboard
-        {
-            get { return dummy_keyboard_list;  }//return keyboardDriver.Keyboard;
-        }
-
-        #endregion
-
-        #region public IList<Mouse> Mouse
-
-        public IList<MouseDevice> Mouse
-        {
-            get { return (IList<MouseDevice>)dummy_mice_list; } //return mouseDriver.Mouse;
-        }
-
-        #endregion
-
-        public IList<JoystickDevice> Joysticks
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
-
-        #region public void Poll()
-
-        /// <summary>
-        /// Polls and updates state of all keyboard, mouse and joystick devices.
-        /// </summary>
-        public void Poll()
-        {
-        }
-
-        #endregion
-
-        #region --- IDisposable Members ---
+        #region IDisposable Members
 
         public void Dispose()
         {
-            //this.Dispose(true);
-            //GC.SuppressFinalize(this);
+            joystick.Dispose();
         }
 
-        //private void Dispose(bool manual)
-        //{
-        //    if (!disposed)
-        //    {
-        //        //disposing = true;
-        //        if (pollingThread != null && pollingThread.IsAlive)
-        //            pollingThread.Abort();
-
-        //        if (manual)
-        //        {
-        //        }
-
-        //        disposed = true;
-        //    }
-        //}
-
-        //~X11Input()
-        //{
-        //    this.Dispose(false);
-        //}
-
         #endregion
+
     }
 }
+

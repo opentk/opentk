@@ -440,9 +440,6 @@ namespace OpenTK.Platform.X11
         public extern static bool XFilterEvent(ref XEvent xevent, IntPtr window);
 
         [DllImport("libX11")]
-        public extern static bool XkbSetDetectableAutoRepeat(IntPtr display, bool detectable, out bool supported);
-
-        [DllImport("libX11")]
         public extern static void XPeekEvent(IntPtr display, ref XEvent xevent);
 
         [DllImport("libX11", EntryPoint = "XGetVisualInfo")]
@@ -513,33 +510,8 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11")]
         public static extern void XFreeEventData(IntPtr display, ref XGenericEventCookie cookie);
 
-        [DllImport("libXi")]
-        static extern int XISelectEvents(IntPtr dpy, Window win, [In] XIEventMask[] masks, int num_masks);
-        [DllImport("libXi")]
-        static extern int XISelectEvents(IntPtr dpy, Window win, [In] ref XIEventMask masks, int num_masks);
-
-        public static int XISelectEvents(IntPtr dpy, Window win, XIEventMask[] masks)
-        {
-            return XISelectEvents(dpy, win, masks, masks.Length);
-        }
-
-        public static int XISelectEvents(IntPtr dpy, Window win, XIEventMask mask)
-        {
-            return XISelectEvents(dpy, win, ref mask, 1);
-        }
-
-        [DllImport("libXi")]
-        static extern Status XIGrabDevice(IntPtr display, int deviceid, Window grab_window, Time time,
-            Cursor cursor, int grab_mode, int paired_device_mode, Bool owner_events, XIEventMask[] mask);
-
-        [DllImport("libXi")]
-        static extern Status XIUngrabDevice(IntPtr display, int deviceid, Time time);
-
-        [DllImport("libXi")]
-        public static extern Bool XIWarpPointer(Display display,
-            int deviceid, Window src_w, Window dest_w,
-            double src_x, double src_y, int src_width, int src_height,
-            double dest_x, double dest_y);
+        [DllImport("libX11")]
+        public static extern void XSetClassHint(IntPtr display, IntPtr window, ref XClassHint hint);
 
         static readonly IntPtr CopyFromParent = IntPtr.Zero;
 

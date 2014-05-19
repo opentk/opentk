@@ -41,7 +41,6 @@ namespace Bind
 
     sealed class CSharpSpecWriter : ISpecWriter
     {
-        readonly char[] numbers = "0123456789".ToCharArray();
         IBind Generator { get; set; }
         Settings Settings { get { return Generator.Settings; } }
 
@@ -169,19 +168,42 @@ namespace Bind
             sw.WriteLine("static {0}()", Settings.OutputClass);
             sw.WriteLine("{");
             sw.Indent();
-            sw.WriteLine("EntryPointNames = new string[]", delegates.Count);
+            // Write entry point names.
+            // Instead of strings, which are costly to construct,
+            // we use a 1d array of ASCII bytes. Names are laid out
+            // sequentially, with a nul-terminator between them.
+            sw.WriteLine("EntryPointNames = new byte[]", delegates.Count);
             sw.WriteLine("{");
             sw.Indent();
             foreach (var d in delegates.Values.Select(d => d.First()))
             {
-                if (!Settings.IsEnabled(Settings.Legacy.UseDllImports) || d.Extension != "Core")
+                if (d.RequiresSlot(Settings))
                 {
-                    sw.WriteLine("\"{0}{1}\",", Settings.FunctionPrefix, d.Name);
+                    var name = Settings.FunctionPrefix + d.Name;
+                    sw.WriteLine("{0}, 0,", String.Join(", ",
+                        System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
                 }
             }
             sw.Unindent();
             sw.WriteLine("};");
-            sw.WriteLine("EntryPoints = new IntPtr[EntryPointNames.Length];");
+            // Write entry point name offsets.
+            // This is an array of offsets into the EntryPointNames[] array above.
+            sw.WriteLine("EntryPointNameOffsets = new int[]", delegates.Count);
+            sw.WriteLine("{");
+            sw.Indent();
+            int offset = 0;
+            foreach (var d in delegates.Values.Select(d => d.First()))
+            {
+                if (d.RequiresSlot(Settings))
+                {
+                    sw.WriteLine("{0},", offset);
+                    var name = Settings.FunctionPrefix + d.Name;
+                    offset += name.Length + 1;
+                }
+            }
+            sw.Unindent();
+            sw.WriteLine("};");
+            sw.WriteLine("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
             sw.Unindent();
             sw.WriteLine("}");
             sw.WriteLine();
@@ -268,89 +290,112 @@ namespace Bind
             sw.WriteLine("public static {0} {{ throw new NotImplementedException(); }}", GetDeclarationString(f, Settings.Compatibility));
         }
 
-        DocProcessor processor_;
-        DocProcessor Processor
-        {
-            get
-            {
-                if (processor_ == null)
-                    processor_ = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
-                return processor_;
-            }
-        }
-        Dictionary<string, string> docfiles;
         void WriteDocumentation(BindStreamWriter sw, Function f)
         {
-            if (docfiles == null)
-            {
-                docfiles = new Dictionary<string, string>();
-                foreach (string file in Directory.GetFiles(Settings.DocPath))
-                {
-                    docfiles.Add(Path.GetFileName(file), file);
-                }
-            }
+            var docs = f.Documentation;
 
-            string docfile = null;
             try
             {
-                docfile = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
-                if (!docfiles.ContainsKey(docfile))
-                    docfile = Settings.FunctionPrefix + f.TrimmedName + ".xml";
-                if (!docfiles.ContainsKey(docfile))
-                    docfile = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
-
-                var docs = new List<string>();
-                if (docfiles.ContainsKey(docfile))
-                {
-                    docs.AddRange(Processor.ProcessFile(docfiles[docfile]));
-                }
-                if (docs.Count == 0)
-                {
-                    docs.Add("/// <summary></summary>");
-                }
-
-                int summary_start = docs[0].IndexOf("<summary>") + "<summary>".Length;
-                string warning = "[deprecated: v{0}]";
-                string category = "[requires: {0}]";
+                string warning = String.Empty;
+                string category = String.Empty;
                 if (f.Deprecated)
                 {
-                    warning = String.Format(warning, f.DeprecatedVersion);
-                    docs[0] = docs[0].Insert(summary_start, warning);
+                    warning = String.Format("[deprecated: v{0}]", f.DeprecatedVersion);
                 }
 
                 if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
                 {
-                    category = String.Format(category, f.Category);
-                    docs[0] = docs[0].Insert(summary_start, category);
+                    category = String.Format("[requires: {0}]", f.Category);
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
                     if (f.Category.StartsWith("VERSION"))
-                        category = String.Format(category, "v" + f.Version);
+                        category = String.Format("[requires: {0}]", "v" + f.Version);
                     else
-                        category = String.Format(category, "v" + f.Version + " and " + f.Category);
-                    docs[0] = docs[0].Insert(summary_start, category);
+                        category = String.Format("[requires: {0}]", "v" + f.Version + " or " + f.Category);
                 }
 
-                foreach (var param in f.WrappedDelegate.Parameters)
+                // Write function summary
+                sw.Write("/// <summary>");
+                if (!String.IsNullOrEmpty(category) || !String.IsNullOrEmpty(warning))
                 {
-                    var index = docs.IndexOf("/// <param name=\"" + param.Name +"\">");
-                    if (index != -1 && param.ComputeSize != "")
+                    sw.Write(WriteOptions.NoIndent, "{0}{1}", category, warning);
+                }
+                if (!String.IsNullOrEmpty(docs.Summary))
+                {
+                    sw.WriteLine();
+                    sw.WriteLine("/// {0}", docs.Summary);
+                    sw.WriteLine("/// </summary>");
+                }
+                else
+                {
+                    sw.WriteLine(WriteOptions.NoIndent, "</summary>");
+                }
+
+                // Write function parameters
+                for (int i = 0; i < f.Parameters.Count; i++)
+                {
+                    var param = f.Parameters[i];
+
+                    string length = String.Empty;
+                    if (!String.IsNullOrEmpty(param.ComputeSize))
                     {
-                        var compute_size = string.Format("[length: {0}]", param.ComputeSize);
-                        docs[index] = docs[index] + compute_size;
+                        length = String.Format("[length: {0}]", param.ComputeSize);
                     }
-                }
 
-                foreach (var doc in docs)
-                {
-                    sw.WriteLine(doc);
+                    // Try to match the correct parameter from documentation:
+                    // - first by name
+                    // - then by index
+                    var docparam =
+                        (docs.Parameters
+                            .Where(p => p.Name == param.RawName)
+                            .FirstOrDefault()) ??
+                        (docs.Parameters.Count > i ?
+                            docs.Parameters[i] : null);
+
+                    if (docparam != null)
+                    {
+                        if (docparam.Name != param.RawName &&
+                            docparam.Name != param.RawName.Substring(1)) // '@ref' -> 'ref' etc
+                        {
+                            Console.Error.WriteLine(
+                                "[Warning] Parameter '{0}' in function '{1}' has incorrect doc name '{2}'",
+                                param.RawName, f.Name, docparam.Name);
+                        }
+
+                        // Note: we use param.Name, because the documentation sometimes
+                        // uses different names than the specification.
+                        sw.Write("/// <param name=\"{0}\">", param.Name);
+                        if (!String.IsNullOrEmpty(length))
+                        {
+                            sw.Write(WriteOptions.NoIndent, "{0}", length);
+                        }
+                        if (!String.IsNullOrEmpty(docparam.Documentation))
+                        {
+                            sw.WriteLine(WriteOptions.NoIndent, " ");
+                            sw.WriteLine("/// {0}", docparam.Documentation);
+                            sw.WriteLine("/// </param>");
+                        }
+                        else
+                        {
+                            sw.WriteLine(WriteOptions.NoIndent, "</param>");
+                        }
+                    }
+                    else
+                    {
+                        Console.Error.WriteLine(
+                            "[Warning] Parameter '{0}' in function '{1}' not found in documentation '{{{3}}}'",
+                            param.Name, f.Name,
+                            String.Join(",", docs.Parameters.Select(p => p.Name).ToArray()));
+                        sw.WriteLine("/// <param name=\"{0}\">{1}</param>",
+                            param.Name, length);
+                    }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Warning] Error processing file {0}: {1}", docfile, e.ToString());
-            }
+                Console.WriteLine("[Warning] Error documenting function {0}: {1}", f.WrappedDelegate.Name, e.ToString());
+            }   
         }
 
         #endregion

@@ -44,14 +44,13 @@ namespace OpenTK.Platform.Windows
     /// Drives GameWindow on Windows.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class WinGLNative : INativeWindow, IInputDriver
+    internal sealed class WinGLNative : NativeWindowBase
     {
         #region Fields
 
         const ExtendedWindowStyle ParentStyleEx = ExtendedWindowStyle.WindowEdge | ExtendedWindowStyle.ApplicationWindow;
         const ExtendedWindowStyle ChildStyleEx = 0;
 
-        static readonly WinKeyMap KeyMap = new WinKeyMap();
         readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
         readonly IntPtr ClassName = Marshal.StringToHGlobalAuto(Guid.NewGuid().ToString());
         readonly WindowProcedure WindowProcedureDelegate;
@@ -70,6 +69,7 @@ namespace OpenTK.Platform.Windows
         bool borderless_maximized_window_state = false; // Hack to get maximized mode with hidden border (not normally possible).
         bool focused;
         bool mouse_outside_window = true;
+        int mouse_last_timestamp = 0;
         bool invisible_since_creation; // Set by WindowsMessage.CREATE and consumed by Visible = true (calls BringWindowToFront).
         int suppress_resize; // Used in WindowBorder and WindowState in order to avoid rapid, consecutive resize events.
         bool is_in_modal_loop; // set to true whenever we enter the modal resize/move event loop 
@@ -82,12 +82,6 @@ namespace OpenTK.Platform.Windows
 
         const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
 
-        // Used for IInputDriver implementation
-        IJoystickDriver joystick_driver = Factory.Default.CreateLegacyJoystickDriver();
-        KeyboardDevice keyboard = new KeyboardDevice();
-        MouseDevice mouse = new MouseDevice();
-        IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
-        IList<MouseDevice> mice = new List<MouseDevice>(1);
         const long ExtendedBit = 1 << 24;           // Used to distinguish left and right control, alt and enter keys.
         
         public static readonly uint ShiftLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LSHIFT, 0);
@@ -97,10 +91,8 @@ namespace OpenTK.Platform.Windows
         public static readonly uint AltLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LMENU, 0);
         public static readonly uint AltRightScanCode = Functions.MapVirtualKey(VirtualKeys.RMENU, 0);
 
-        KeyboardKeyEventArgs key_down = new KeyboardKeyEventArgs();
-        KeyboardKeyEventArgs key_up = new KeyboardKeyEventArgs();
-        KeyPressEventArgs key_press = new KeyPressEventArgs((char)0);
-
+        MouseCursor cursor = MouseCursor.Default;
+        IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
         int cursor_visible_count = 0;
 
         static readonly object SyncRoot = new object();
@@ -158,18 +150,6 @@ namespace OpenTK.Platform.Windows
                     window);
 
                 exists = true;
-
-                keyboard.Description = "Standard Windows keyboard";
-                keyboard.NumberOfFunctionKeys = 12;
-                keyboard.NumberOfKeys = 101;
-                keyboard.NumberOfLeds = 3;
-
-                mouse.Description = "Standard Windows mouse";
-                mouse.NumberOfButtons = 3;
-                mouse.NumberOfWheels = 1;
-
-                keyboards.Add(keyboard);
-                mice.Add(mouse);
             }
         }
 
@@ -252,7 +232,7 @@ namespace OpenTK.Platform.Windows
                 focused = (wParam.ToInt64() & 0xFFFF) != 0;
 
             if (new_focused_state != Focused)
-                FocusedChanged(this, EventArgs.Empty);
+                OnFocusedChanged(EventArgs.Empty);
         }
 
         void HandleEnterModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -290,7 +270,7 @@ namespace OpenTK.Platform.Windows
                     if (Location != new_location)
                     {
                         bounds.Location = new_location;
-                        Move(this, EventArgs.Empty);
+                        OnMove(EventArgs.Empty);
                     }
 
                     Size new_size = new Size(pos->cx, pos->cy);
@@ -308,7 +288,7 @@ namespace OpenTK.Platform.Windows
                             SetWindowPosFlags.NOACTIVATE | SetWindowPosFlags.NOSENDCHANGING);
 
                         if (suppress_resize <= 0)
-                            Resize(this, EventArgs.Empty);
+                            OnResize(EventArgs.Empty);
                     }
 
                     if (!is_in_modal_loop)
@@ -350,7 +330,7 @@ namespace OpenTK.Platform.Windows
                     GrabCursor();
 
                 windowBorder = new_border;
-                WindowBorderChanged(this, EventArgs.Empty);
+                OnWindowBorderChanged(EventArgs.Empty);
             }
         }
 
@@ -378,12 +358,29 @@ namespace OpenTK.Platform.Windows
             if (new_state != windowState)
             {
                 windowState = new_state;
-                WindowStateChanged(this, EventArgs.Empty);
+                OnWindowStateChanged(EventArgs.Empty);
 
                 // Ensure cursor remains grabbed
                 if (!CursorVisible)
                     GrabCursor();
             }
+        }
+
+        private IntPtr? HandleSetCursor(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            if (cursor != MouseCursor.Default)
+            {
+                // Only set the mouse cursor inside the client rectangle
+                // See MSDN "Setting the Cursor Image"
+                const int ht_client = 1;
+                if ((lParam.ToInt64() & 0xffff) == ht_client)
+                {
+                    Functions.SetCursor(cursor_handle);
+                    return new IntPtr(1);
+                }
+            }
+
+            return null;
         }
 
         void HandleChar(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -396,17 +393,91 @@ namespace OpenTK.Platform.Windows
 
             if (!Char.IsControl(c))
             {
-                key_press.KeyChar = c;
-                KeyPress(this, key_press);
+                OnKeyPress(c);
             }
         }
 
         void HandleMouseMove(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            Point point = new Point(
-                (short)((uint)lParam.ToInt32() & 0x0000FFFF),
-                (short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16));
-            mouse.Position = point;
+            unsafe
+            {
+                Point point = new Point(
+                    (short)((uint)lParam.ToInt32() & 0x0000FFFF),
+                    (short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16));
+
+                // GetMouseMovePointsEx works with screen coordinates
+                Point screenPoint = point;
+                Functions.ClientToScreen(handle, ref screenPoint);
+                int timestamp = Functions.GetMessageTime();
+
+                // & 0xFFFF to handle multiple monitors http://support.microsoft.com/kb/269743 
+                MouseMovePoint movePoint = new MouseMovePoint()
+                {
+                    X = screenPoint.X & 0xFFFF,
+                    Y = screenPoint.Y & 0xFFFF,
+                    Time = timestamp,
+                };
+
+                // Max points GetMouseMovePointsEx can return is 64.
+                const int numPoints = 64;
+                MouseMovePoint* movePoints = stackalloc MouseMovePoint[numPoints];
+
+                // GetMouseMovePointsEx fills in movePoints so that the most 
+                // recent events are at low indices in the array.
+                int points = Functions.GetMouseMovePointsEx(
+                    (uint)MouseMovePoint.SizeInBytes,
+                    &movePoint, movePoints, numPoints,
+                    Constants.GMMP_USE_DISPLAY_POINTS);
+
+                int lastError = Marshal.GetLastWin32Error();
+
+                // No points returned or search point not found
+                if (points == 0 || (points == -1 && lastError == Constants.ERROR_POINT_NOT_FOUND))
+                {
+                    // Just use the mouse move position
+                    OnMouseMove(point.X, point.Y);
+                }
+                else if (points == -1)
+                {
+                    throw new System.ComponentModel.Win32Exception(lastError);
+                }
+                else
+                {
+                    // Exclude the current position. 
+                    Point currentScreenPosition = new Point(InputDriver.Mouse[0].X, InputDriver.Mouse[0].Y);
+                    Functions.ClientToScreen(handle, ref currentScreenPosition);
+
+                    // Find the first move point we've already seen.
+                    int i = 0;
+                    for (i = 0; i < points; ++i)
+                    {
+                        if (movePoints[i].Time < mouse_last_timestamp)
+                            break;
+                        if (movePoints[i].Time == mouse_last_timestamp &&
+                            movePoints[i].X == currentScreenPosition.X &&
+                            movePoints[i].Y == currentScreenPosition.Y)
+                            break;
+                    }
+
+                    // Now move the mouse to each point before the one just found.
+                    while (--i >= 0)
+                    {
+                        Point position = new Point(movePoints[i].X, movePoints[i].Y);
+                        // Handle multiple monitors http://support.microsoft.com/kb/269743 
+                        if (position.X > 32767)
+                        {
+                            position.X -= 65536;
+                        }
+                        if (position.Y > 32767)
+                        {
+                            position.Y -= 65536;
+                        }
+                        Functions.ScreenToClient(handle, ref position);
+                        OnMouseMove(position.X, position.Y);
+                    }
+                }
+                mouse_last_timestamp = timestamp;
+            }
 
             if (mouse_outside_window)
             {
@@ -415,7 +486,7 @@ namespace OpenTK.Platform.Windows
                 mouse_outside_window = false;
                 EnableMouseTracking();
 
-                MouseEnter(this, EventArgs.Empty);
+                OnMouseEnter(EventArgs.Empty);
             }
         }
 
@@ -424,64 +495,75 @@ namespace OpenTK.Platform.Windows
             mouse_outside_window = true;
             // Mouse tracking is disabled automatically by the OS
 
-            MouseLeave(this, EventArgs.Empty);
+            OnMouseLeave(EventArgs.Empty);
         }
 
         void HandleMouseWheel(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
             // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
-            mouse.WheelPrecise += ((long)wParam << 32 >> 48) / 120.0f;
+            OnMouseWheel(0, ((long)wParam << 32 >> 48) / 120.0f);
+        }
+
+        void HandleMouseHWheel(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
+            // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
+            OnMouseWheel(((long)wParam << 32 >> 48) / 120.0f, 0);
         }
 
         void HandleLButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.SetCapture(window.Handle);
-            mouse[MouseButton.Left] = true;
+            OnMouseDown(MouseButton.Left);
         }
 
         void HandleMButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.SetCapture(window.Handle);
-            mouse[MouseButton.Middle] = true;
+            OnMouseDown(MouseButton.Middle);
         }
 
         void HandleRButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.SetCapture(window.Handle);
-            mouse[MouseButton.Right] = true;
+            OnMouseDown(MouseButton.Right);
         }
 
         void HandleXButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.SetCapture(window.Handle);
-            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) == 1 ?
-                MouseButton.Button1 : MouseButton.Button2] = true;
+            MouseButton button =
+                ((wParam.ToInt32() & 0xFFFF0000) >> 16) == 1 ?
+                MouseButton.Button1 : MouseButton.Button2;
+            OnMouseDown(button);
         }
 
         void HandleLButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.ReleaseCapture();
-            mouse[MouseButton.Left] = false;
+            OnMouseUp(MouseButton.Left);
         }
 
         void HandleMButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.ReleaseCapture();
-            mouse[MouseButton.Middle] = false;
+            OnMouseUp(MouseButton.Middle);
         }
 
         void HandleRButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.ReleaseCapture();
-            mouse[MouseButton.Right] = false;
+            OnMouseUp(MouseButton.Right);
         }
 
         void HandleXButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.ReleaseCapture();
-            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) == 1 ?
-                MouseButton.Button1 : MouseButton.Button2] = false;
+            MouseButton button =
+                ((wParam.ToInt32() & 0xFFFF0000) >> 16) == 1 ?
+                MouseButton.Button1 : MouseButton.Button2;
+            OnMouseUp(button);
         }
 
         void HandleKeyboard(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -498,33 +580,28 @@ namespace OpenTK.Platform.Windows
             // In this case, both keys will be reported as pressed.
 
             bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
-            short scancode = (short)((lParam.ToInt64() >> 16) & 0xFF);
+            short scancode = (short)((lParam.ToInt64() >> 16) & 0xff);
+            //ushort repeat_count = unchecked((ushort)((ulong)lParam.ToInt64() & 0xffffu));
             VirtualKeys vkey = (VirtualKeys)wParam;
             bool is_valid;
-            Key key = KeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
+            Key key = WinKeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
 
             if (is_valid)
             {
-                keyboard.SetKey(key, (byte)scancode, pressed);
-
                 if (pressed)
                 {
-                    key_down.Key = key;
-                    key_down.Modifiers = keyboard.GetModifiers();
-                    KeyDown(this, key_down);
+                    //OnKeyDown(key, repeat_count > 0);
+                    OnKeyDown(key, KeyboardState[key]);
                 }
                 else
                 {
-                    key_up.Key = key;
-                    key_up.Modifiers = keyboard.GetModifiers();
-                    KeyUp(this, key_up);
+                    OnKeyUp(key);
                 }
             }
         }
 
         void HandleKillFocus(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            keyboard.ClearKeys();
         }
 
         void HandleCreate(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -549,7 +626,7 @@ namespace OpenTK.Platform.Windows
         {
             System.ComponentModel.CancelEventArgs e = new System.ComponentModel.CancelEventArgs();
 
-            Closing(this, e);
+            OnClosing(e);
 
             if (!e.Cancel)
             {
@@ -568,7 +645,7 @@ namespace OpenTK.Platform.Windows
             window.Dispose();
             child_window.Dispose();
 
-            Closed(this, EventArgs.Empty);
+            OnClosed(EventArgs.Empty);
         }
 
         #endregion
@@ -577,6 +654,8 @@ namespace OpenTK.Platform.Windows
 
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
+            IntPtr? result = null;
+
             switch (message)
             {
                 #region Size / Move / Style events
@@ -610,6 +689,10 @@ namespace OpenTK.Platform.Windows
                     HandleSize(handle, message, wParam, lParam);
                     break;
 
+                case WindowMessage.SETCURSOR:
+                    result = HandleSetCursor(handle, message, wParam, lParam);
+                    break;
+
                 #endregion
 
                 #region Input events
@@ -628,6 +711,10 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.MOUSEWHEEL:
                     HandleMouseWheel(handle, message, wParam, lParam);
+                    break;
+
+                case WindowMessage.MOUSEHWHEEL:
+                    HandleMouseHWheel(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.LBUTTONDOWN:
@@ -696,7 +783,14 @@ namespace OpenTK.Platform.Windows
                 #endregion
             }
 
-            return Functions.DefWindowProc(handle, message, wParam, lParam);
+            if (result.HasValue)
+            {
+                return result.Value;
+            }
+            else
+            {
+                return Functions.DefWindowProc(handle, message, wParam, lParam);
+            }
         }
 
         private void EnableMouseTracking()
@@ -819,7 +913,6 @@ namespace OpenTK.Platform.Windows
         {
             suppress_resize++;
             WindowBorder = WindowBorder.Hidden;
-            ProcessEvents();
             suppress_resize--;
         }
 
@@ -830,7 +923,6 @@ namespace OpenTK.Platform.Windows
                 deferred_window_border.HasValue ? deferred_window_border.Value :
                 previous_window_border.HasValue ? previous_window_border.Value :
                 WindowBorder;
-            ProcessEvents();
             suppress_resize--;
             deferred_window_border = previous_window_border = null;
         }
@@ -839,7 +931,6 @@ namespace OpenTK.Platform.Windows
         {
             suppress_resize++;
             WindowState = WindowState.Normal;
-            ProcessEvents();
             suppress_resize--;
         }
 
@@ -869,7 +960,7 @@ namespace OpenTK.Platform.Windows
 
         #region Bounds
 
-        public Rectangle Bounds
+        public override Rectangle Bounds
         {
             get { return bounds; }
             set
@@ -883,7 +974,7 @@ namespace OpenTK.Platform.Windows
 
         #region Location
 
-        public Point Location
+        public override Point Location
         {
             get { return Bounds.Location; }
             set
@@ -897,7 +988,7 @@ namespace OpenTK.Platform.Windows
 
         #region Size
 
-        public Size Size
+        public override Size Size
         {
             get { return Bounds.Size; }
             set
@@ -909,36 +1000,13 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region ClientRectangle
-
-        public Rectangle ClientRectangle
-        {
-            get
-            {
-                if (client_rectangle.Width == 0)
-                    client_rectangle.Width = 1;
-                if (client_rectangle.Height == 0)
-                    client_rectangle.Height = 1;
-                return client_rectangle;
-            }
-            set
-            {
-                WindowStyle style = (WindowStyle)Functions.GetWindowLong(window.Handle, GetWindowLongOffsets.STYLE);
-                Win32Rectangle rect = Win32Rectangle.From(value);
-                Functions.AdjustWindowRect(ref rect, style, false);
-                Size = new Size(rect.Width, rect.Height);
-            }
-        }
-
-        #endregion
-
         #region ClientSize
 
-        public Size ClientSize
+        public override Size ClientSize
         {
             get
             {
-                return ClientRectangle.Size;
+                return client_rectangle.Size;
             }
             set
             {
@@ -947,53 +1015,13 @@ namespace OpenTK.Platform.Windows
                 Functions.AdjustWindowRect(ref rect, style, false);
                 Size = new Size(rect.Width, rect.Height);
             }
-        }
-
-        #endregion
-
-        #region Width
-
-        public int Width
-        {
-            get { return ClientRectangle.Width; }
-            set { ClientRectangle = new Rectangle(0, 0, value, Height); }
-        }
-
-        #endregion
-
-        #region Height
-
-        public int Height
-        {
-            get { return ClientRectangle.Height; }
-            set { ClientRectangle = new Rectangle(0, 0, Width, value); }
-        }
-
-        #endregion
-
-        #region X
-
-        public int X
-        {
-            get { return Location.X; }
-            set { Location = new Point(value, Y); }
-        }
-
-        #endregion
-
-        #region Y
-
-        public int Y
-        {
-            get { return Location.Y; }
-            set { Location = new Point(X, value); }
         }
 
         #endregion
 
         #region Icon
 
-        public Icon Icon
+        public override Icon Icon
         {
             get
             {
@@ -1009,7 +1037,7 @@ namespace OpenTK.Platform.Windows
                         Functions.SendMessage(window.Handle, WindowMessage.SETICON, (IntPtr)0, icon == null ? IntPtr.Zero : value.Handle);
                         Functions.SendMessage(window.Handle, WindowMessage.SETICON, (IntPtr)1, icon == null ? IntPtr.Zero : value.Handle);
                     }
-                    IconChanged(this, EventArgs.Empty);
+                    OnIconChanged(EventArgs.Empty);
                 }
             }
         }
@@ -1018,7 +1046,7 @@ namespace OpenTK.Platform.Windows
 
         #region Focused
 
-        public bool Focused
+        public override bool Focused
         {
             get { return focused; }
         }
@@ -1028,7 +1056,7 @@ namespace OpenTK.Platform.Windows
         #region Title
 
         StringBuilder sb_title = new StringBuilder(256);
-        public string Title
+        public override string Title
         {
             get
             {
@@ -1043,7 +1071,7 @@ namespace OpenTK.Platform.Windows
                 {
                     if (!Functions.SetWindowText(window.Handle, value))
                         Debug.Print("Failed to change window title (window:{0}, new title:{1}, reason:{2}).", window.Handle, value, Marshal.GetLastWin32Error());
-                    TitleChanged(this, EventArgs.Empty);
+                    OnTitleChanged(EventArgs.Empty);
                 }
             }
         }
@@ -1052,7 +1080,7 @@ namespace OpenTK.Platform.Windows
 
         #region Visible
 
-        public bool Visible
+        public override bool Visible
         {
             get
             {
@@ -1076,7 +1104,7 @@ namespace OpenTK.Platform.Windows
                         Functions.ShowWindow(window.Handle, ShowWindowCommand.HIDE);
                     }
 
-                    VisibleChanged(this, EventArgs.Empty);
+                    OnVisibleChanged(EventArgs.Empty);
                 }
             }
         }
@@ -1085,13 +1113,85 @@ namespace OpenTK.Platform.Windows
 
         #region Exists
 
-        public bool Exists { get { return exists; } }
+        public override  bool Exists { get { return exists; } }
 
         #endregion
-        
+
+        #region Cursor
+
+        public override MouseCursor Cursor
+        {
+            get
+            {
+                return cursor;
+            }
+            set
+            {
+                if (value != cursor)
+                {
+                    bool destoryOld = cursor != MouseCursor.Default;
+                    IntPtr oldCursor = IntPtr.Zero;
+
+                    if (value == MouseCursor.Default)
+                    {
+                        cursor_handle = Functions.LoadCursor(CursorName.Arrow);
+                        oldCursor = Functions.SetCursor(cursor_handle);
+                        cursor = value;
+                    }
+                    else
+                    {
+                        var stride = value.Width *
+                            (Bitmap.GetPixelFormatSize(System.Drawing.Imaging.PixelFormat.Format32bppArgb) / 8);
+
+                        Bitmap bmp;
+                        unsafe
+                        {
+                            fixed (byte* pixels = value.Data)
+                            {
+                                bmp = new Bitmap(value.Width, value.Height, stride,
+                                    System.Drawing.Imaging.PixelFormat.Format32bppArgb,
+                                    new IntPtr(pixels));
+                            }
+                        }
+                        using (bmp)
+                        {
+                            var iconInfo = new IconInfo();
+                            var bmpIcon = bmp.GetHicon();
+                            var success = Functions.GetIconInfo(bmpIcon, out iconInfo);
+
+                            if (success)
+                            {
+                                iconInfo.xHotspot = value.X;
+                                iconInfo.yHotspot = value.Y;
+                                iconInfo.fIcon = false;
+
+                                var icon = Functions.CreateIconIndirect(ref iconInfo);
+
+                                if (icon != IntPtr.Zero)
+                                {
+                                    // Currently using a custom cursor so destroy it 
+                                    // once replaced
+                                    cursor = value;
+                                    cursor_handle = icon;
+                                    oldCursor = Functions.SetCursor(icon);
+                                }
+                            }
+                        }
+                    }
+
+                    if (destoryOld && oldCursor != IntPtr.Zero)
+                    {
+                        Functions.DestroyIcon(oldCursor);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
         #region CursorVisible
-        
-        public bool CursorVisible
+
+        public override bool CursorVisible
         {
             get { return cursor_visible_count >= 0; } // Not used
             set
@@ -1123,7 +1223,7 @@ namespace OpenTK.Platform.Windows
 
         #region Close
 
-        public void Close()
+        public override void Close()
         {
             Functions.PostMessage(window.Handle, WindowMessage.CLOSE, IntPtr.Zero, IntPtr.Zero);
         }
@@ -1132,7 +1232,7 @@ namespace OpenTK.Platform.Windows
 
         #region public WindowState WindowState
 
-        public WindowState WindowState
+        public override WindowState WindowState
         {
             get
             {
@@ -1145,12 +1245,12 @@ namespace OpenTK.Platform.Windows
 
                 ShowWindowCommand command = 0;
                 bool exiting_fullscreen = false;
-                borderless_maximized_window_state = false;
 
                 switch (value)
                 {
                     case WindowState.Normal:
                         command = ShowWindowCommand.RESTORE;
+                        borderless_maximized_window_state = false;
 
                         // If we are leaving fullscreen mode we need to restore the border.
                         if (WindowState == WindowState.Fullscreen)
@@ -1178,6 +1278,7 @@ namespace OpenTK.Platform.Windows
                         }
                         else
                         {
+                            borderless_maximized_window_state = false;
                             command = ShowWindowCommand.MAXIMIZE;
                         }
                         break;
@@ -1226,7 +1327,7 @@ namespace OpenTK.Platform.Windows
 
         #region public WindowBorder WindowBorder
 
-        public WindowBorder WindowBorder
+        public override WindowBorder WindowBorder
         {
             get
             {
@@ -1320,7 +1421,7 @@ namespace OpenTK.Platform.Windows
 
         #region PointToClient
 
-        public Point PointToClient(Point point)
+        public override Point PointToClient(Point point)
         {
             if (!Functions.ScreenToClient(window.Handle, ref point))
                 throw new InvalidOperationException(String.Format(
@@ -1334,7 +1435,7 @@ namespace OpenTK.Platform.Windows
 
         #region PointToScreen
 
-        public Point PointToScreen(Point point)
+        public override Point PointToScreen(Point point)
         {
             if (!Functions.ClientToScreen(window.Handle, ref point))
                 throw new InvalidOperationException(String.Format(
@@ -1346,27 +1447,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region Events
-
-        public event EventHandler<EventArgs> Move = delegate { };
-        public event EventHandler<EventArgs> Resize = delegate { };
-        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
-        public event EventHandler<EventArgs> Closed = delegate { };
-        public event EventHandler<EventArgs> Disposed = delegate { };
-        public event EventHandler<EventArgs> IconChanged = delegate { };
-        public event EventHandler<EventArgs> TitleChanged = delegate { };
-        public event EventHandler<EventArgs> VisibleChanged = delegate { };
-        public event EventHandler<EventArgs> FocusedChanged = delegate { };
-        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
-        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown = delegate { };
-        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp = delegate { }; 
-        public event EventHandler<EventArgs> MouseEnter = delegate { };
-        public event EventHandler<EventArgs> MouseLeave = delegate { };
-
-        #endregion
-
         #endregion
 
         #region INativeGLWindow Members
@@ -1374,8 +1454,9 @@ namespace OpenTK.Platform.Windows
         #region public void ProcessEvents()
 
         MSG msg;
-        public void ProcessEvents()
+        public override void ProcessEvents()
         {
+            base.ProcessEvents();
             while (Functions.PeekMessage(ref msg, IntPtr.Zero, 0, 0, PeekMessageFlags.Remove))
             {
                 Functions.TranslateMessage(ref msg);
@@ -1385,18 +1466,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public IInputDriver InputDriver
-
-        public IInputDriver InputDriver
-        {
-            get { return this; }
-        }
-
-        #endregion
-
         #region public IWindowInfo WindowInfo
 
-        public IWindowInfo WindowInfo
+        public override IWindowInfo WindowInfo
         {
             get { return child_window; }
         }
@@ -1405,67 +1477,20 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region IInputDriver Members
-
-        public void Poll()
-        {
-            if (joystick_driver is WinMMJoystick)
-                (joystick_driver as WinMMJoystick).Poll();
-        }
-
-        #endregion
-
-        #region IKeyboardDriver Members
-
-        public IList<KeyboardDevice> Keyboard
-        {
-            get { return keyboards; }
-        }
-
-        public KeyboardState GetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        public KeyboardState GetState(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IMouseDriver Members
-
-        public IList<MouseDevice> Mouse
-        {
-            get { return mice; }
-        }
-
-        #endregion
-
-        #region IJoystickDriver Members
-
-        public IList<JoystickDevice> Joysticks
-        {
-            get { return joystick_driver.Joysticks; }
-        }
-
-        #endregion
-
         #region IDisposable Members
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        void Dispose(bool calledManually)
+        protected override void Dispose(bool calledManually)
         {
             if (!disposed)
             {
                 if (calledManually)
                 {
+                    if (Cursor != MouseCursor.Default && cursor_handle != IntPtr.Zero)
+                    {
+                        Functions.DestroyIcon(cursor_handle);
+                        cursor_handle = IntPtr.Zero;
+                    }
+
                     // Safe to clean managed resources
                     DestroyWindow();
                     if (Icon != null)
@@ -1476,14 +1501,9 @@ namespace OpenTK.Platform.Windows
                     Debug.Print("[Warning] INativeWindow leaked ({0}). Did you forget to call INativeWindow.Dispose()?", this);
                 }
 
-                Disposed(this, EventArgs.Empty);
+                OnDisposed(EventArgs.Empty);
                 disposed = true;
             }
-        }
-
-        ~WinGLNative()
-        {
-            Dispose(false);
         }
 
         #endregion

@@ -9,5 +9,4 @@
 - Add Portable Class Library (PCL) target.
 
 [Hard]
-- Merge updates from mono/opentk.
-- Add Cocoa backend for Mac OS X.
+- Merge with mono/opentk.

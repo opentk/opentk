@@ -38,7 +38,6 @@ namespace OpenTK.Platform.Windows
 {
     sealed class WinRawKeyboard : IKeyboardDriver2
     {
-        static readonly WinKeyMap KeyMap = new WinKeyMap();
         readonly List<KeyboardState> keyboards = new List<KeyboardState>();
         readonly List<string> names = new List<string>();
         readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
@@ -185,11 +184,11 @@ namespace OpenTK.Platform.Windows
             int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
             keyboard = keyboards[keyboard_handle];
 
-            Key key = KeyMap.TranslateKey(scancode, vkey, extended0, extended1, out is_valid);
+            Key key = WinKeyMap.TranslateKey(scancode, vkey, extended0, extended1, out is_valid);
 
             if (is_valid)
             {
-                keyboard.SetKeyState(key, (byte)scancode, pressed);
+                keyboard.SetKeyState(key, pressed);
                 processed = true;
             }
 

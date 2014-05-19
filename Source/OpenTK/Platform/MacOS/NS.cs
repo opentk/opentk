@@ -33,21 +33,52 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.MacOS
 {
+    [Flags]
+    enum AddImageFlags
+    {
+        ReturnOnError = 1,
+        WithSearching = 2,
+        ReturnOnlyIfLoaded = 4
+    }
+
+    [Flags]
+    enum SymbolLookupFlags
+    {
+        Bind = 0,
+        BindNow = 1,
+        BindFully = 2,
+        ReturnOnError = 4
+    }
 
     internal class NS
     {
         const string Library = "libdl.dylib";
 
-        [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
-        static extern bool NSIsSymbolNameDefined(string s);
-        [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
-        static extern bool NSIsSymbolNameDefined(IntPtr s);
-        [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
-        static extern IntPtr NSLookupAndBindSymbol(string s);
-        [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
-        static extern IntPtr NSLookupAndBindSymbol(IntPtr s);
+        [DllImport(Library, EntryPoint = "NSAddImage")]
+        internal static extern IntPtr AddImage(string s, AddImageFlags flags);
         [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
-        static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
+        internal static extern IntPtr AddressOfSymbol(IntPtr symbol);
+        [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
+        internal static extern bool IsSymbolNameDefined(string s);
+        [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
+        internal static extern bool IsSymbolNameDefined(IntPtr s);
+        [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
+        internal static extern IntPtr LookupAndBindSymbol(string s);
+        [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
+        internal static extern IntPtr LookupAndBindSymbol(IntPtr s);
+        [DllImport(Library, EntryPoint = "NSLookupSymbolInImage")]
+        internal static extern IntPtr LookupSymbolInImage(IntPtr image, IntPtr symbolName, SymbolLookupFlags options);
+
+        // Unfortunately, these are slower even if they are more
+        // portable and simpler to use.
+        [DllImport(Library)]
+        internal static extern IntPtr dlopen(String fileName, int flags);
+        [DllImport(Library)]
+        internal static extern int dlclose(IntPtr handle);
+        [DllImport (Library)]
+        internal static extern IntPtr dlsym (IntPtr handle, string symbol);
+        [DllImport (Library)]
+        internal static extern IntPtr dlsym (IntPtr handle, IntPtr symbol);
 
         public static IntPtr GetAddress(string function)
         {
@@ -67,7 +98,7 @@ namespace OpenTK.Platform.MacOS
                 }
                 Marshal.WriteByte(ptr, function.Length + 1, 0); // null-terminate
 
-                IntPtr symbol = GetAddress(ptr);
+                IntPtr symbol = GetAddressInternal(ptr);
                 return symbol;
             }
             finally
@@ -78,14 +109,62 @@ namespace OpenTK.Platform.MacOS
 
         public static IntPtr GetAddress(IntPtr function)
         {
-            IntPtr symbol = IntPtr.Zero;
-            if (NSIsSymbolNameDefined(function))
+            unsafe
             {
-                symbol = NSLookupAndBindSymbol(function);
+                const int max = 64;
+                byte* symbol = stackalloc byte[max];
+                byte* ptr = symbol;
+                byte* cur = (byte*)function.ToPointer();
+                int i = 0;
+
+                *ptr++ = (byte)'_';
+                while (*cur != 0 && ++i < max)
+                {
+                    *ptr++ = *cur++;
+                }
+
+                if (i >= max - 1)
+                {
+                    throw new NotSupportedException(String.Format(
+                        "Function {0} is too long. Please report a bug at https://github.com/opentk/issues/issues",
+                        Marshal.PtrToStringAnsi(function)));
+                }
+
+                return GetAddressInternal(new IntPtr(symbol));
+            }
+        }
+
+        static IntPtr GetAddressInternal(IntPtr function)
+        {
+            IntPtr symbol = IntPtr.Zero;
+            if (IsSymbolNameDefined(function))
+            {
+                symbol = LookupAndBindSymbol(function);
                 if (symbol != IntPtr.Zero)
-                    symbol = NSAddressOfSymbol(symbol);
+                    symbol = AddressOfSymbol(symbol);
             }
             return symbol;
+        }
+
+        public static IntPtr GetSymbol(IntPtr handle, string symbol)
+        {
+            return dlsym(handle, symbol);
+        }
+
+        public static IntPtr GetSymbol(IntPtr handle, IntPtr symbol)
+        {
+            return dlsym(handle, symbol);
+        }
+
+        public static IntPtr LoadLibrary(string fileName)
+        {
+            const int RTLD_NOW = 2;
+            return dlopen(fileName, RTLD_NOW);
+        }
+
+        public static void FreeLibrary(IntPtr handle)
+        {
+            dlclose(handle);
         }
     }
 }

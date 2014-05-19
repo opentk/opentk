@@ -44,17 +44,20 @@ namespace OpenTK
         /// <summary>
         /// A reflection handle to the nested type that contains the function delegates.
         /// </summary>
+        [Obsolete("Not used")]
         readonly protected Type DelegatesClass;
 
         /// <summary>
         /// A refection handle to the nested type that contains core functions (i.e. not extensions).
         /// </summary>
+        [Obsolete("Not used")]
         readonly protected Type CoreClass;
 
         /// <summary>
         /// A mapping of core function names to MethodInfo handles.
         /// </summary>
-        readonly protected SortedList<string, MethodInfo> CoreFunctionMap = new SortedList<string, MethodInfo>();
+        [Obsolete("Not used")]
+        readonly protected SortedList<string, MethodInfo> CoreFunctionMap;
 
         bool rebuildExtensionList = true;
 
@@ -67,18 +70,6 @@ namespace OpenTK
         /// </summary>
         public BindingsBase()
         {
-            DelegatesClass = this.GetType().GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
-            CoreClass = this.GetType().GetNestedType("Core", BindingFlags.Static | BindingFlags.NonPublic);
-
-            if (CoreClass != null)
-            {
-                MethodInfo[] methods = CoreClass.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
-                CoreFunctionMap = new SortedList<string, MethodInfo>(methods.Length); // Avoid resizing
-                foreach (MethodInfo m in methods)
-                {
-                    CoreFunctionMap.Add(m.Name, m);
-                }
-            }
         }
 
         #endregion
@@ -122,7 +113,7 @@ namespace OpenTK
         /// <summary>
         /// Marshals a pointer to a null-terminated byte array to the specified <c>StringBuilder</c>.
         /// This method supports OpenTK and is not intended to be called by user code.
-       /// </summary>
+        /// </summary>
         /// <param name="ptr">A pointer to a null-terminated byte array.</param>
         /// <param name="sb">The StringBuilder to receive the contents of the pointer.</param>
         protected static void MarshalPtrToStringBuilder(IntPtr ptr, StringBuilder sb)
@@ -238,107 +229,7 @@ namespace OpenTK
 
         #region Internal Members
 
-        #region LoadEntryPoints
-
-        internal virtual void LoadEntryPoints()
-        {
-            // Using reflection is more than 3 times faster than directly loading delegates on the first
-            // run, probably due to code generation overhead. Subsequent runs are faster with direct loading
-            // than with reflection, but the first time is more significant.
-
-            int supported = 0;
-
-            FieldInfo[] delegates = DelegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-            if (delegates == null)
-                throw new InvalidOperationException("The specified type does not have any loadable extensions.");
-
-            Debug.Write("Loading extensions for " + this.GetType().FullName + "... ");
-
-            Stopwatch time = new Stopwatch();
-            time.Reset();
-            time.Start();
-
-            foreach (FieldInfo f in delegates)
-            {
-                Delegate d = LoadDelegate(f.Name, f.FieldType);
-                if (d != null)
-                    ++supported;
-
-                lock (SyncRoot)
-                {
-                    f.SetValue(null, d);
-                }
-            }
-
-            rebuildExtensionList = true;
-
-            time.Stop();
-            Debug.Print("{0} extensions loaded in {1} ms.", supported, time.Elapsed.TotalMilliseconds);
-            time.Reset();
-        }
-
-        #endregion
-
-        #region LoadEntryPoint
-
-        internal virtual bool LoadEntryPoint(string function)
-        {
-            FieldInfo f = DelegatesClass.GetField(function, BindingFlags.Static | BindingFlags.NonPublic);
-            if (f == null)
-                return false;
-
-            Delegate old = f.GetValue(null) as Delegate;
-            Delegate @new = LoadDelegate(f.Name, f.FieldType);
-            lock (SyncRoot)
-            {
-                if (old.Target != @new.Target)
-                {
-                    f.SetValue(null, @new);
-                }
-            }
-            return @new != null;
-        }
-
-        #endregion
-
-		#region GetExtensionDelegate
-
-		// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
-		internal virtual Delegate GetExtensionDelegate(string name, Type signature)
-		{
-			IntPtr address = GetAddress(name);
-
-			if (address == IntPtr.Zero ||
-				address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
-				address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
-			{
-				return null;
-			}
-			else
-			{
-				return Marshal.GetDelegateForFunctionPointer(address, signature);
-			}
-		}
-
-		#endregion
-
-        #endregion
-
-        #region Private Members
-
-        #region LoadDelegate
-
-        // Tries to load the specified core or extension function.
-        Delegate LoadDelegate(string name, Type signature)
-        {
-            MethodInfo m;
-            return
-                GetExtensionDelegate(name, signature) ??
-                (CoreFunctionMap.TryGetValue((name.Substring(2)), out m) ?
-                Delegate.CreateDelegate(signature, m) : null);
-        }
-
-        #endregion
+        internal abstract void LoadEntryPoints();
 
         #endregion
     }

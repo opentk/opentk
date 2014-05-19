@@ -55,6 +55,37 @@
       <token name="DEPTH_CLAMP_FAR_AMD" value="0x901F" />
     </enum>
     <enum name="AMD_draw_buffers_blend" />
+    <enum name="AMD_gcn_shader" />
+    <enum name="AMD_gpu_shader_int64">
+      <token name="INT64_NV" value="0x140E" />
+      <token name="UNSIGNED_INT64_NV" value="0x140F" />
+      <token name="INT8_NV" value="0x8FE0" />
+      <token name="INT8_VEC2_NV" value="0x8FE1" />
+      <token name="INT8_VEC3_NV" value="0x8FE2" />
+      <token name="INT8_VEC4_NV" value="0x8FE3" />
+      <token name="INT16_NV" value="0x8FE4" />
+      <token name="INT16_VEC2_NV" value="0x8FE5" />
+      <token name="INT16_VEC3_NV" value="0x8FE6" />
+      <token name="INT16_VEC4_NV" value="0x8FE7" />
+      <token name="INT64_VEC2_NV" value="0x8FE9" />
+      <token name="INT64_VEC3_NV" value="0x8FEA" />
+      <token name="INT64_VEC4_NV" value="0x8FEB" />
+      <token name="UNSIGNED_INT8_NV" value="0x8FEC" />
+      <token name="UNSIGNED_INT8_VEC2_NV" value="0x8FED" />
+      <token name="UNSIGNED_INT8_VEC3_NV" value="0x8FEE" />
+      <token name="UNSIGNED_INT8_VEC4_NV" value="0x8FEF" />
+      <token name="UNSIGNED_INT16_NV" value="0x8FF0" />
+      <token name="UNSIGNED_INT16_VEC2_NV" value="0x8FF1" />
+      <token name="UNSIGNED_INT16_VEC3_NV" value="0x8FF2" />
+      <token name="UNSIGNED_INT16_VEC4_NV" value="0x8FF3" />
+      <token name="UNSIGNED_INT64_VEC2_NV" value="0x8FF5" />
+      <token name="UNSIGNED_INT64_VEC3_NV" value="0x8FF6" />
+      <token name="UNSIGNED_INT64_VEC4_NV" value="0x8FF7" />
+      <token name="FLOAT16_NV" value="0x8FF8" />
+      <token name="FLOAT16_VEC2_NV" value="0x8FF9" />
+      <token name="FLOAT16_VEC3_NV" value="0x8FFA" />
+      <token name="FLOAT16_VEC4_NV" value="0x8FFB" />
+    </enum>
     <enum name="AMD_interleaved_elements">
       <token name="VERTEX_ELEMENT_SWIZZLE_AMD" value="0x91A4" />
       <token name="VERTEX_ID_SWIZZLE_AMD" value="0x91A5" />
@@ -127,6 +158,9 @@
     </enum>
     <enum name="AMD_texture_texture4" />
     <enum name="AMD_transform_feedback3_lines_triangles" />
+    <enum name="AMD_transform_feedback4">
+      <token name="STREAM_RASTERIZATION_AMD" value="0x91A0" />
+    </enum>
     <enum name="AMD_vertex_shader_layer" />
     <enum name="AMD_vertex_shader_tessellator">
       <token name="SAMPLER_BUFFER_AMD" value="0x9001" />
@@ -2809,6 +2843,7 @@
       <token name="SINGLE_COLOR_EXT" value="0x81F9" />
       <token name="SEPARATE_SPECULAR_COLOR_EXT" value="0x81FA" />
     </enum>
+    <enum name="EXT_shader_image_load_formatted" />
     <enum name="EXT_shader_image_load_store">
       <token name="MAX_IMAGE_UNITS_EXT" value="0x8F38" />
       <token name="MAX_COMBINED_IMAGE_UNITS_AND_FRAGMENT_OUTPUTS_EXT" value="0x8F39" />
@@ -5069,6 +5104,12 @@
       <token name="WRITE_ONLY" value="0x88B9" />
     </enum>
     <enum name="NV_shader_storage_buffer_object" />
+    <enum name="NV_shader_thread_group">
+      <token name="WARP_SIZE_NV" value="0x9339" />
+      <token name="WARPS_PER_SM_NV" value="0x933A" />
+      <token name="SM_COUNT_NV" value="0x933B" />
+    </enum>
+    <enum name="NV_shader_thread_shuffle" />
     <enum name="NV_tessellation_program5">
       <token name="MAX_PROGRAM_PATCH_ATTRIBS_NV" value="0x86D8" />
       <token name="TESS_CONTROL_PROGRAM_NV" value="0x891E" />
@@ -5726,9 +5767,11 @@
       <token name="LINE_STRIP_ADJACENCY_ARB" value="0x000B" />
       <token name="LINE_STRIP_ADJACENCY_EXT" value="0x000B" />
       <token name="PATCHES" value="0x000E" />
+      <token name="PATCHES_EXT" value="0x000E" />
       <token name="POINTS" value="0x0000" />
       <token name="POLYGON" value="0x0009" deprecated="3.2" />
       <token name="QUADS" value="0x0007" />
+      <token name="QUADS_EXT" value="0x0007" />
       <token name="QUAD_STRIP" value="0x0008" deprecated="3.2" />
       <token name="TRIANGLES" value="0x0004" />
       <token name="TRIANGLES_ADJACENCY" value="0x000C" />
@@ -6353,8 +6396,11 @@
       <token name="FRAGMENT_SHADER_BIT" value="0x00000002" />
       <token name="FRAGMENT_SHADER_BIT_EXT" value="0x00000002" />
       <token name="GEOMETRY_SHADER_BIT" value="0x00000004" />
+      <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
       <token name="TESS_CONTROL_SHADER_BIT" value="0x00000008" />
+      <token name="TESS_CONTROL_SHADER_BIT_EXT" value="0x00000008" />
       <token name="TESS_EVALUATION_SHADER_BIT" value="0x00000010" />
+      <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
@@ -11337,7 +11383,7 @@
       <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(location)" />
       <returns type="void" />
     </function>
-    <function name="GetUniformi64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="GetUniformi64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="params" type="GLint64EXT *" flow="out" count="COMPSIZE(location)" />
@@ -11372,7 +11418,7 @@
       <param name="params" type="GLuint *" flow="out" count="1" />
       <returns type="void" />
     </function>
-    <function name="GetUniformui64vNV" category="NV_shader_buffer_load" extension="NV">
+    <function name="GetUniformui64vNV" category="AMD_gpu_shader_int64|NV_shader_buffer_load" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="params" type="GLuint64EXT *" flow="out" count="COMPSIZE(program,location)" />
@@ -14286,13 +14332,13 @@
       <param name="v0" type="GLint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1i64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform1i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1i64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform1i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -14325,13 +14371,13 @@
       <param name="v0" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1ui64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform1ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1ui64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform1ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -14421,14 +14467,14 @@
       <param name="v1" type="GLint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2i64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform2i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
       <param name="y" type="GLint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2i64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform2i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -14463,14 +14509,14 @@
       <param name="v1" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2ui64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform2ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
       <param name="y" type="GLuint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2ui64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform2ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -14566,7 +14612,7 @@
       <param name="v2" type="GLint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3i64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform3i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
@@ -14574,7 +14620,7 @@
       <param name="z" type="GLint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3i64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform3i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -14611,7 +14657,7 @@
       <param name="v2" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3ui64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform3ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
@@ -14619,7 +14665,7 @@
       <param name="z" type="GLuint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3ui64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform3ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -14721,7 +14767,7 @@
       <param name="v3" type="GLint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4i64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform4i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
@@ -14730,7 +14776,7 @@
       <param name="w" type="GLint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4i64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform4i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -14769,7 +14815,7 @@
       <param name="v3" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4ui64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform4ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
@@ -14778,7 +14824,7 @@
       <param name="w" type="GLuint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4ui64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="ProgramUniform4ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -16977,12 +17023,12 @@
       <param name="value" type="GLfloat *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="Uniform1i64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform1i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform1i64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform1i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count" />
@@ -16999,12 +17045,12 @@
       <param name="value" type="GLint *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="Uniform1ui64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform1ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform1ui64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform1ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count" />
@@ -17045,13 +17091,13 @@
       <param name="value" type="GLfloat *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="Uniform2i64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform2i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
       <param name="y" type="GLint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform2i64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform2i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count*2" />
@@ -17069,13 +17115,13 @@
       <param name="value" type="GLint *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="Uniform2ui64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform2ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
       <param name="y" type="GLuint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform2ui64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform2ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count*2" />
@@ -17119,14 +17165,14 @@
       <param name="value" type="GLfloat *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="Uniform3i64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform3i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
       <param name="y" type="GLint64EXT" flow="in" />
       <param name="z" type="GLint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform3i64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform3i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count*3" />
@@ -17145,14 +17191,14 @@
       <param name="value" type="GLint *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="Uniform3ui64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform3ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
       <param name="y" type="GLuint64EXT" flow="in" />
       <param name="z" type="GLuint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform3ui64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform3ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count*3" />
@@ -17199,7 +17245,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="Uniform4i64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform4i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
       <param name="y" type="GLint64EXT" flow="in" />
@@ -17207,7 +17253,7 @@
       <param name="w" type="GLint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform4i64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform4i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count*4" />
@@ -17227,7 +17273,7 @@
       <param name="value" type="GLint *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="Uniform4ui64NV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform4ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
       <param name="y" type="GLuint64EXT" flow="in" />
@@ -17235,7 +17281,7 @@
       <param name="w" type="GLuint64EXT" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform4ui64vNV" category="NV_gpu_shader5" extension="NV">
+    <function name="Uniform4ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count*4" />
@@ -26206,6 +26252,7 @@
       <token name="VERTEX_BINDING_STRIDE" value="0x82D8" />
       <token name="MAX_VERTEX_ATTRIB_RELATIVE_OFFSET" value="0x82D9" />
       <token name="MAX_VERTEX_ATTRIB_BINDINGS" value="0x82DA" />
+      <token name="VERTEX_BINDING_BUFFER" value="0x8F4F" />
       <token name="DISPLAY_LIST" value="0x82E7" />
       <token name="STACK_UNDERFLOW" value="0x0504" />
       <token name="STACK_OVERFLOW" value="0x0503" />
@@ -28976,8 +29023,10 @@
       <token name="LINE_STRIP_ADJACENCY_ARB" value="0x000B" />
       <token name="LINE_STRIP_ADJACENCY_EXT" value="0x000B" />
       <token name="PATCHES" value="0x000E" />
+      <token name="PATCHES_EXT" value="0x000E" />
       <token name="POINTS" value="0x0000" />
       <token name="QUADS" value="0x0007" />
+      <token name="QUADS_EXT" value="0x0007" />
       <token name="TRIANGLES" value="0x0004" />
       <token name="TRIANGLES_ADJACENCY" value="0x000C" />
       <token name="TRIANGLES_ADJACENCY_ARB" value="0x000C" />
@@ -29182,8 +29231,11 @@
       <token name="FRAGMENT_SHADER_BIT" value="0x00000002" />
       <token name="FRAGMENT_SHADER_BIT_EXT" value="0x00000002" />
       <token name="GEOMETRY_SHADER_BIT" value="0x00000004" />
+      <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
       <token name="TESS_CONTROL_SHADER_BIT" value="0x00000008" />
+      <token name="TESS_CONTROL_SHADER_BIT_EXT" value="0x00000008" />
       <token name="TESS_EVALUATION_SHADER_BIT" value="0x00000010" />
+      <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
@@ -36435,6 +36487,7 @@
       <token name="VERTEX_BINDING_STRIDE" value="0x82D8" />
       <token name="MAX_VERTEX_ATTRIB_RELATIVE_OFFSET" value="0x82D9" />
       <token name="MAX_VERTEX_ATTRIB_BINDINGS" value="0x82DA" />
+      <token name="VERTEX_BINDING_BUFFER" value="0x8F4F" />
       <token name="DISPLAY_LIST" value="0x82E7" />
       <token name="STACK_UNDERFLOW" value="0x0504" />
       <token name="STACK_OVERFLOW" value="0x0503" />
@@ -38725,9 +38778,11 @@
       <token name="LINE_STRIP_ADJACENCY_ARB" value="0x000B" />
       <token name="LINE_STRIP_ADJACENCY_EXT" value="0x000B" />
       <token name="PATCHES" value="0x000E" />
+      <token name="PATCHES_EXT" value="0x000E" />
       <token name="POINTS" value="0x0000" />
       <token name="POLYGON" value="0x0009" deprecated="3.2" />
       <token name="QUADS" value="0x0007" deprecated="3.2" />
+      <token name="QUADS_EXT" value="0x0007" />
       <token name="QUAD_STRIP" value="0x0008" deprecated="3.2" />
       <token name="TRIANGLES" value="0x0004" />
       <token name="TRIANGLES_ADJACENCY" value="0x000C" />
@@ -39014,8 +39069,11 @@
       <token name="FRAGMENT_SHADER_BIT" value="0x00000002" />
       <token name="FRAGMENT_SHADER_BIT_EXT" value="0x00000002" />
       <token name="GEOMETRY_SHADER_BIT" value="0x00000004" />
+      <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
       <token name="TESS_CONTROL_SHADER_BIT" value="0x00000008" />
+      <token name="TESS_CONTROL_SHADER_BIT_EXT" value="0x00000008" />
       <token name="TESS_EVALUATION_SHADER_BIT" value="0x00000010" />
+      <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
@@ -41676,6 +41734,11 @@
       <token name="MALI_SHADER_BINARY_ARM" value="0x8F60" />
     </enum>
     <enum name="ARM_rgba8" />
+    <enum name="ARM_shader_framebuffer_fetch">
+      <token name="FETCH_PER_SAMPLE_ARM" value="0x8F65" />
+      <token name="FRAGMENT_SHADER_FRAMEBUFFER_FETCH_MRT_ARM" value="0x8F66" />
+    </enum>
+    <enum name="ARM_shader_framebuffer_fetch_depth_stencil" />
     <enum name="AttribMask">
       <token name="ACCUM_BUFFER_BIT" value="0x00000200" deprecated="3.2" />
       <token name="ALL_ATTRIB_BITS" value="0xFFFFFFFF" deprecated="3.2" />
@@ -42019,6 +42082,7 @@
       <token name="FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE_EXT" value="0x8211" />
       <token name="UNSIGNED_NORMALIZED_EXT" value="0x8C17" />
     </enum>
+    <enum name="EXT_copy_image" />
     <enum name="EXT_debug_label">
       <token name="PROGRAM_PIPELINE_OBJECT_EXT" value="0x8A4F" />
       <token name="PROGRAM_OBJECT_EXT" value="0x8B40" />
@@ -42080,7 +42144,73 @@
       <token name="COLOR_ATTACHMENT14_EXT" value="0x8CEE" />
       <token name="COLOR_ATTACHMENT15_EXT" value="0x8CEF" />
     </enum>
+    <enum name="EXT_draw_buffers_indexed">
+      <token name="BLEND_EQUATION_RGB" value="0x8009" />
+      <token name="BLEND_EQUATION_ALPHA" value="0x883D" />
+      <token name="BLEND_SRC_RGB" value="0x80C9" />
+      <token name="BLEND_SRC_ALPHA" value="0x80CB" />
+      <token name="BLEND_DST_RGB" value="0x80C8" />
+      <token name="BLEND_DST_ALPHA" value="0x80CA" />
+      <token name="COLOR_WRITEMASK" value="0x0C23" />
+      <token name="BLEND" value="0x0BE2" />
+      <token name="FUNC_ADD" value="0x8006" />
+      <token name="FUNC_SUBTRACT" value="0x800A" />
+      <token name="FUNC_REVERSE_SUBTRACT" value="0x800B" />
+      <token name="MIN" value="0x8007" />
+      <token name="MAX" value="0x8008" />
+      <token name="ZERO" value="0" />
+      <token name="ONE" value="1" />
+      <token name="SRC_COLOR" value="0x0300" />
+      <token name="ONE_MINUS_SRC_COLOR" value="0x0301" />
+      <token name="DST_COLOR" value="0x0306" />
+      <token name="ONE_MINUS_DST_COLOR" value="0x0307" />
+      <token name="SRC_ALPHA" value="0x0302" />
+      <token name="ONE_MINUS_SRC_ALPHA" value="0x0303" />
+      <token name="DST_ALPHA" value="0x0304" />
+      <token name="ONE_MINUS_DST_ALPHA" value="0x0305" />
+      <token name="CONSTANT_COLOR" value="0x8001" />
+      <token name="ONE_MINUS_CONSTANT_COLOR" value="0x8002" />
+      <token name="CONSTANT_ALPHA" value="0x8003" />
+      <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
+      <token name="SRC_ALPHA_SATURATE" value="0x0308" />
+    </enum>
     <enum name="EXT_draw_instanced" />
+    <enum name="EXT_geometry_shader">
+      <token name="GEOMETRY_SHADER_EXT" value="0x8DD9" />
+      <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
+      <token name="GEOMETRY_LINKED_VERTICES_OUT_EXT" value="0x8916" />
+      <token name="GEOMETRY_LINKED_INPUT_TYPE_EXT" value="0x8917" />
+      <token name="GEOMETRY_LINKED_OUTPUT_TYPE_EXT" value="0x8918" />
+      <token name="GEOMETRY_SHADER_INVOCATIONS_EXT" value="0x887F" />
+      <token name="LAYER_PROVOKING_VERTEX_EXT" value="0x825E" />
+      <token name="LINES_ADJACENCY_EXT" value="0x000A" />
+      <token name="LINE_STRIP_ADJACENCY_EXT" value="0x000B" />
+      <token name="TRIANGLES_ADJACENCY_EXT" value="0x000C" />
+      <token name="TRIANGLE_STRIP_ADJACENCY_EXT" value="0x000D" />
+      <token name="MAX_GEOMETRY_UNIFORM_COMPONENTS_EXT" value="0x8DDF" />
+      <token name="MAX_GEOMETRY_UNIFORM_BLOCKS_EXT" value="0x8A2C" />
+      <token name="MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS_EXT" value="0x8A32" />
+      <token name="MAX_GEOMETRY_INPUT_COMPONENTS_EXT" value="0x9123" />
+      <token name="MAX_GEOMETRY_OUTPUT_COMPONENTS_EXT" value="0x9124" />
+      <token name="MAX_GEOMETRY_OUTPUT_VERTICES_EXT" value="0x8DE0" />
+      <token name="MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS_EXT" value="0x8DE1" />
+      <token name="MAX_GEOMETRY_SHADER_INVOCATIONS_EXT" value="0x8E5A" />
+      <token name="MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_EXT" value="0x8C29" />
+      <token name="MAX_GEOMETRY_ATOMIC_COUNTER_BUFFERS_EXT" value="0x92CF" />
+      <token name="MAX_GEOMETRY_ATOMIC_COUNTERS_EXT" value="0x92D5" />
+      <token name="MAX_GEOMETRY_IMAGE_UNIFORMS_EXT" value="0x90CD" />
+      <token name="MAX_GEOMETRY_SHADER_STORAGE_BLOCKS_EXT" value="0x90D7" />
+      <token name="FIRST_VERTEX_CONVENTION_EXT" value="0x8E4D" />
+      <token name="LAST_VERTEX_CONVENTION_EXT" value="0x8E4E" />
+      <token name="UNDEFINED_VERTEX_EXT" value="0x8260" />
+      <token name="PRIMITIVES_GENERATED_EXT" value="0x8C87" />
+      <token name="FRAMEBUFFER_DEFAULT_LAYERS_EXT" value="0x9312" />
+      <token name="MAX_FRAMEBUFFER_LAYERS_EXT" value="0x9317" />
+      <token name="FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS_EXT" value="0x8DA8" />
+      <token name="FRAMEBUFFER_ATTACHMENT_LAYERED_EXT" value="0x8DA7" />
+      <token name="REFERENCED_BY_GEOMETRY_SHADER_EXT" value="0x9309" />
+    </enum>
+    <enum name="EXT_gpu_shader5" />
     <enum name="EXT_instanced_arrays">
       <token name="VERTEX_ATTRIB_ARRAY_DIVISOR_EXT" value="0x88FE" />
     </enum>
@@ -42118,6 +42248,8 @@
       <token name="COMPRESSED_SRGB_PVRTC_4BPPV1_EXT" value="0x8A55" />
       <token name="COMPRESSED_SRGB_ALPHA_PVRTC_2BPPV1_EXT" value="0x8A56" />
       <token name="COMPRESSED_SRGB_ALPHA_PVRTC_4BPPV1_EXT" value="0x8A57" />
+      <token name="COMPRESSED_SRGB_ALPHA_PVRTC_2BPPV2_IMG" value="0x93F0" />
+      <token name="COMPRESSED_SRGB_ALPHA_PVRTC_4BPPV2_IMG" value="0x93F1" />
     </enum>
     <enum name="EXT_read_format_bgra">
       <token name="BGRA_EXT" value="0x80E1" />
@@ -42146,7 +42278,14 @@
     <enum name="EXT_shader_framebuffer_fetch">
       <token name="FRAGMENT_SHADER_DISCARDS_SAMPLES_EXT" value="0x8A52" />
     </enum>
+    <enum name="EXT_shader_implicit_conversions" />
     <enum name="EXT_shader_integer_mix" />
+    <enum name="EXT_shader_io_blocks" />
+    <enum name="EXT_shader_pixel_local_storage">
+      <token name="MAX_SHADER_PIXEL_LOCAL_STORAGE_FAST_SIZE_EXT" value="0x8F63" />
+      <token name="MAX_SHADER_PIXEL_LOCAL_STORAGE_SIZE_EXT" value="0x8F67" />
+      <token name="SHADER_PIXEL_LOCAL_STORAGE_EXT" value="0x8F64" />
+    </enum>
     <enum name="EXT_shader_texture_lod" />
     <enum name="EXT_shadow_samplers">
       <token name="TEXTURE_COMPARE_MODE_EXT" value="0x884C" />
@@ -42163,6 +42302,75 @@
     <enum name="EXT_sRGB_write_control">
       <token name="FRAMEBUFFER_SRGB_EXT" value="0x8DB9" />
     </enum>
+    <enum name="EXT_tessellation_shader">
+      <token name="PATCHES_EXT" value="0x000E" />
+      <token name="PATCH_VERTICES_EXT" value="0x8E72" />
+      <token name="TESS_CONTROL_OUTPUT_VERTICES_EXT" value="0x8E75" />
+      <token name="TESS_GEN_MODE_EXT" value="0x8E76" />
+      <token name="TESS_GEN_SPACING_EXT" value="0x8E77" />
+      <token name="TESS_GEN_VERTEX_ORDER_EXT" value="0x8E78" />
+      <token name="TESS_GEN_POINT_MODE_EXT" value="0x8E79" />
+      <token name="TRIANGLES" value="0x0004" />
+      <token name="ISOLINES_EXT" value="0x8E7A" />
+      <token name="QUADS_EXT" value="0x0007" />
+      <token name="EQUAL" value="0x0202" />
+      <token name="FRACTIONAL_ODD_EXT" value="0x8E7B" />
+      <token name="FRACTIONAL_EVEN_EXT" value="0x8E7C" />
+      <token name="CCW" value="0x0901" />
+      <token name="CW" value="0x0900" />
+      <token name="MAX_PATCH_VERTICES_EXT" value="0x8E7D" />
+      <token name="MAX_TESS_GEN_LEVEL_EXT" value="0x8E7E" />
+      <token name="MAX_TESS_CONTROL_UNIFORM_COMPONENTS_EXT" value="0x8E7F" />
+      <token name="MAX_TESS_EVALUATION_UNIFORM_COMPONENTS_EXT" value="0x8E80" />
+      <token name="MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS_EXT" value="0x8E81" />
+      <token name="MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS_EXT" value="0x8E82" />
+      <token name="MAX_TESS_CONTROL_OUTPUT_COMPONENTS_EXT" value="0x8E83" />
+      <token name="MAX_TESS_PATCH_COMPONENTS_EXT" value="0x8E84" />
+      <token name="MAX_TESS_CONTROL_TOTAL_OUTPUT_COMPONENTS_EXT" value="0x8E85" />
+      <token name="MAX_TESS_EVALUATION_OUTPUT_COMPONENTS_EXT" value="0x8E86" />
+      <token name="MAX_TESS_CONTROL_UNIFORM_BLOCKS_EXT" value="0x8E89" />
+      <token name="MAX_TESS_EVALUATION_UNIFORM_BLOCKS_EXT" value="0x8E8A" />
+      <token name="MAX_TESS_CONTROL_INPUT_COMPONENTS_EXT" value="0x886C" />
+      <token name="MAX_TESS_EVALUATION_INPUT_COMPONENTS_EXT" value="0x886D" />
+      <token name="MAX_COMBINED_TESS_CONTROL_UNIFORM_COMPONENTS_EXT" value="0x8E1E" />
+      <token name="MAX_COMBINED_TESS_EVALUATION_UNIFORM_COMPONENTS_EXT" value="0x8E1F" />
+      <token name="MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS_EXT" value="0x92CD" />
+      <token name="MAX_TESS_EVALUATION_ATOMIC_COUNTER_BUFFERS_EXT" value="0x92CE" />
+      <token name="MAX_TESS_CONTROL_ATOMIC_COUNTERS_EXT" value="0x92D3" />
+      <token name="MAX_TESS_EVALUATION_ATOMIC_COUNTERS_EXT" value="0x92D4" />
+      <token name="MAX_TESS_CONTROL_IMAGE_UNIFORMS_EXT" value="0x90CB" />
+      <token name="MAX_TESS_EVALUATION_IMAGE_UNIFORMS_EXT" value="0x90CC" />
+      <token name="MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS_EXT" value="0x90D8" />
+      <token name="MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS_EXT" value="0x90D9" />
+      <token name="PRIMITIVE_RESTART_FOR_PATCHES_SUPPORTED" value="0x8221" />
+      <token name="IS_PER_PATCH_EXT" value="0x92E7" />
+      <token name="REFERENCED_BY_TESS_CONTROL_SHADER_EXT" value="0x9307" />
+      <token name="REFERENCED_BY_TESS_EVALUATION_SHADER_EXT" value="0x9308" />
+      <token name="TESS_CONTROL_SHADER_EXT" value="0x8E88" />
+      <token name="TESS_EVALUATION_SHADER_EXT" value="0x8E87" />
+      <token name="TESS_CONTROL_SHADER_BIT_EXT" value="0x00000008" />
+      <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
+    </enum>
+    <enum name="EXT_texture_border_clamp">
+      <token name="TEXTURE_BORDER_COLOR_EXT" value="0x1004" />
+      <token name="CLAMP_TO_BORDER_EXT" value="0x812D" />
+    </enum>
+    <enum name="EXT_texture_buffer">
+      <token name="TEXTURE_BUFFER_EXT" value="0x8C2A" />
+      <token name="TEXTURE_BUFFER_BINDING_EXT" value="0x8C2A" />
+      <token name="MAX_TEXTURE_BUFFER_SIZE_EXT" value="0x8C2B" />
+      <token name="TEXTURE_BINDING_BUFFER_EXT" value="0x8C2C" />
+      <token name="TEXTURE_BUFFER_DATA_STORE_BINDING_EXT" value="0x8C2D" />
+      <token name="TEXTURE_BUFFER_OFFSET_ALIGNMENT_EXT" value="0x919F" />
+      <token name="SAMPLER_BUFFER_EXT" value="0x8DC2" />
+      <token name="INT_SAMPLER_BUFFER_EXT" value="0x8DD0" />
+      <token name="UNSIGNED_INT_SAMPLER_BUFFER_EXT" value="0x8DD8" />
+      <token name="IMAGE_BUFFER_EXT" value="0x9051" />
+      <token name="INT_IMAGE_BUFFER_EXT" value="0x905C" />
+      <token name="UNSIGNED_INT_IMAGE_BUFFER_EXT" value="0x9067" />
+      <token name="TEXTURE_BUFFER_OFFSET_EXT" value="0x919D" />
+      <token name="TEXTURE_BUFFER_SIZE_EXT" value="0x919E" />
+    </enum>
     <enum name="EXT_texture_compression_dxt1">
       <token name="COMPRESSED_RGB_S3TC_DXT1_EXT" value="0x83F0" />
       <token name="COMPRESSED_RGBA_S3TC_DXT1_EXT" value="0x83F1" />
@@ -42172,6 +42380,17 @@
       <token name="COMPRESSED_RGBA_S3TC_DXT1_EXT" value="0x83F1" />
       <token name="COMPRESSED_RGBA_S3TC_DXT3_EXT" value="0x83F2" />
       <token name="COMPRESSED_RGBA_S3TC_DXT5_EXT" value="0x83F3" />
+    </enum>
+    <enum name="EXT_texture_cube_map_array">
+      <token name="TEXTURE_CUBE_MAP_ARRAY_EXT" value="0x9009" />
+      <token name="TEXTURE_BINDING_CUBE_MAP_ARRAY_EXT" value="0x900A" />
+      <token name="SAMPLER_CUBE_MAP_ARRAY_EXT" value="0x900C" />
+      <token name="SAMPLER_CUBE_MAP_ARRAY_SHADOW_EXT" value="0x900D" />
+      <token name="INT_SAMPLER_CUBE_MAP_ARRAY_EXT" value="0x900E" />
+      <token name="UNSIGNED_INT_SAMPLER_CUBE_MAP_ARRAY_EXT" value="0x900F" />
+      <token name="IMAGE_CUBE_MAP_ARRAY_EXT" value="0x9054" />
+      <token name="INT_IMAGE_CUBE_MAP_ARRAY_EXT" value="0x905F" />
+      <token name="UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY_EXT" value="0x906A" />
     </enum>
     <enum name="EXT_texture_filter_anisotropic">
       <token name="TEXTURE_MAX_ANISOTROPY_EXT" value="0x84FE" />
@@ -42218,6 +42437,13 @@
     </enum>
     <enum name="EXT_texture_type_2_10_10_10_REV">
       <token name="UNSIGNED_INT_2_10_10_10_REV_EXT" value="0x8368" />
+    </enum>
+    <enum name="EXT_texture_view">
+      <token name="TEXTURE_VIEW_MIN_LEVEL_EXT" value="0x82DB" />
+      <token name="TEXTURE_VIEW_NUM_LEVELS_EXT" value="0x82DC" />
+      <token name="TEXTURE_VIEW_MIN_LAYER_EXT" value="0x82DD" />
+      <token name="TEXTURE_VIEW_NUM_LAYERS_EXT" value="0x82DE" />
+      <token name="TEXTURE_IMMUTABLE_LEVELS" value="0x82DF" />
     </enum>
     <enum name="EXT_unpack_subimage">
       <token name="UNPACK_ROW_LENGTH_EXT" value="0x0CF2" />
@@ -42996,6 +43222,24 @@
       <token name="RGBA4" value="0x8056" />
       <token name="RGBA8" value="0x8058" />
     </enum>
+    <enum name="KHR_blend_equation_advanced">
+      <token name="BLEND_ADVANCED_COHERENT_KHR" value="0x9285" />
+      <token name="MULTIPLY_KHR" value="0x9294" />
+      <token name="SCREEN_KHR" value="0x9295" />
+      <token name="OVERLAY_KHR" value="0x9296" />
+      <token name="DARKEN_KHR" value="0x9297" />
+      <token name="LIGHTEN_KHR" value="0x9298" />
+      <token name="COLORDODGE_KHR" value="0x9299" />
+      <token name="COLORBURN_KHR" value="0x929A" />
+      <token name="HARDLIGHT_KHR" value="0x929B" />
+      <token name="SOFTLIGHT_KHR" value="0x929C" />
+      <token name="DIFFERENCE_KHR" value="0x929E" />
+      <token name="EXCLUSION_KHR" value="0x92A0" />
+      <token name="HSL_HUE_KHR" value="0x92AD" />
+      <token name="HSL_SATURATION_KHR" value="0x92AE" />
+      <token name="HSL_COLOR_KHR" value="0x92AF" />
+      <token name="HSL_LUMINOSITY_KHR" value="0x92B0" />
+    </enum>
     <enum name="KHR_debug">
       <token name="DEBUG_OUTPUT_SYNCHRONOUS" value="0x8242" />
       <token name="DEBUG_NEXT_LOGGED_MESSAGE_LENGTH" value="0x8243" />
@@ -43614,6 +43858,17 @@
       <token name="RGB8_OES" value="0x8051" />
       <token name="RGBA8_OES" value="0x8058" />
     </enum>
+    <enum name="OES_sample_shading">
+      <token name="SAMPLE_SHADING_OES" value="0x8C36" />
+      <token name="MIN_SAMPLE_SHADING_VALUE_OES" value="0x8C37" />
+    </enum>
+    <enum name="OES_sample_variables" />
+    <enum name="OES_shader_image_atomic" />
+    <enum name="OES_shader_multisample_interpolation">
+      <token name="MIN_FRAGMENT_INTERPOLATION_OFFSET_OES" value="0x8E5B" />
+      <token name="MAX_FRAGMENT_INTERPOLATION_OFFSET_OES" value="0x8E5C" />
+      <token name="FRAGMENT_INTERPOLATION_OFFSET_BITS_OES" value="0x8E5D" />
+    </enum>
     <enum name="OES_standard_derivatives">
       <token name="FRAGMENT_SHADER_DERIVATIVE_HINT_OES" value="0x8B8B" />
     </enum>
@@ -43693,6 +43948,17 @@
     </enum>
     <enum name="OES_texture_half_float_linear" />
     <enum name="OES_texture_npot" />
+    <enum name="OES_texture_stencil8">
+      <token name="STENCIL_INDEX_OES" value="0x1901" />
+      <token name="STENCIL_INDEX8_OES" value="0x8D48" />
+    </enum>
+    <enum name="OES_texture_storage_multisample_2d_array">
+      <token name="TEXTURE_2D_MULTISAMPLE_ARRAY_OES" value="0x9102" />
+      <token name="TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY_OES" value="0x9105" />
+      <token name="SAMPLER_2D_MULTISAMPLE_ARRAY_OES" value="0x910B" />
+      <token name="INT_SAMPLER_2D_MULTISAMPLE_ARRAY_OES" value="0x910C" />
+      <token name="UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY_OES" value="0x910D" />
+    </enum>
     <enum name="OES_vertex_array_object">
       <token name="VERTEX_ARRAY_BINDING_OES" value="0x85B5" />
     </enum>
@@ -43912,9 +44178,11 @@
       <token name="LINE_STRIP_ADJACENCY_ARB" value="0x000B" />
       <token name="LINE_STRIP_ADJACENCY_EXT" value="0x000B" />
       <token name="PATCHES" value="0x000E" />
+      <token name="PATCHES_EXT" value="0x000E" />
       <token name="POINTS" value="0x0000" />
       <token name="POLYGON" value="0x0009" deprecated="3.2" />
       <token name="QUADS" value="0x0007" deprecated="3.2" />
+      <token name="QUADS_EXT" value="0x0007" />
       <token name="QUAD_STRIP" value="0x0008" deprecated="3.2" />
       <token name="TRIANGLES" value="0x0004" />
       <token name="TRIANGLES_ADJACENCY" value="0x000C" />
@@ -44212,8 +44480,11 @@
       <token name="FRAGMENT_SHADER_BIT" value="0x00000002" />
       <token name="FRAGMENT_SHADER_BIT_EXT" value="0x00000002" />
       <token name="GEOMETRY_SHADER_BIT" value="0x00000004" />
+      <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
       <token name="TESS_CONTROL_SHADER_BIT" value="0x00000008" />
+      <token name="TESS_CONTROL_SHADER_BIT_EXT" value="0x00000008" />
       <token name="TESS_EVALUATION_SHADER_BIT" value="0x00000010" />
+      <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
@@ -44262,11 +44533,39 @@
       <param name="array" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
+    <function name="BlendBarrierKHR" category="KHR_blend_equation_advanced" extension="KHR">
+      <returns type="void" />
+    </function>
     <function name="BlendBarrierNV" category="NV_blend_equation_advanced" extension="NV">
       <returns type="void" />
     </function>
     <function name="BlendEquationEXT" category="EXT_blend_minmax" extension="EXT">
       <param name="mode" type="BlendEquationModeEXT" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BlendEquationiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="buf" type="GLuint" flow="in" />
+      <param name="mode" type="GLenum" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BlendEquationSeparateiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="buf" type="GLuint" flow="in" />
+      <param name="modeRGB" type="GLenum" flow="in" />
+      <param name="modeAlpha" type="GLenum" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BlendFunciEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="buf" type="GLuint" flow="in" />
+      <param name="src" type="GLenum" flow="in" />
+      <param name="dst" type="GLenum" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BlendFuncSeparateiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="buf" type="GLuint" flow="in" />
+      <param name="srcRGB" type="GLenum" flow="in" />
+      <param name="dstRGB" type="GLenum" flow="in" />
+      <param name="srcAlpha" type="GLenum" flow="in" />
+      <param name="dstAlpha" type="GLenum" flow="in" />
       <returns type="void" />
     </function>
     <function name="BlendParameteriNV" category="NV_blend_equation_advanced" extension="NV">
@@ -44306,6 +44605,14 @@
       <param name="timeout" type="GLuint64" flow="in" />
       <returns type="GLenum" />
     </function>
+    <function name="ColorMaskiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="index" type="GLuint" flow="in" />
+      <param name="r" type="Boolean" flow="in" />
+      <param name="g" type="Boolean" flow="in" />
+      <param name="b" type="Boolean" flow="in" />
+      <param name="a" type="Boolean" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="CompressedTexImage3DOES" category="OES_texture_3D" extension="OES">
       <param name="target" type="GLenum" flow="in" />
       <param name="level" type="GLint" flow="in" />
@@ -44338,6 +44645,24 @@
       <param name="readOffset" type="BufferOffset" flow="in" />
       <param name="writeOffset" type="BufferOffset" flow="in" />
       <param name="size" type="BufferSize" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="CopyImageSubDataEXT" category="EXT_copy_image" extension="EXT">
+      <param name="srcName" type="GLuint" flow="in" />
+      <param name="srcTarget" type="GLenum" flow="in" />
+      <param name="srcLevel" type="GLint" flow="in" />
+      <param name="srcX" type="GLint" flow="in" />
+      <param name="srcY" type="GLint" flow="in" />
+      <param name="srcZ" type="GLint" flow="in" />
+      <param name="dstName" type="GLuint" flow="in" />
+      <param name="dstTarget" type="GLenum" flow="in" />
+      <param name="dstLevel" type="GLint" flow="in" />
+      <param name="dstX" type="GLint" flow="in" />
+      <param name="dstY" type="GLint" flow="in" />
+      <param name="dstZ" type="GLint" flow="in" />
+      <param name="srcWidth" type="GLsizei" flow="in" />
+      <param name="srcHeight" type="GLsizei" flow="in" />
+      <param name="srcDepth" type="GLsizei" flow="in" />
       <returns type="void" />
     </function>
     <function name="CopyTexSubImage3DOES" category="OES_texture_3D" extension="OES">
@@ -44466,6 +44791,11 @@
       <param name="driverControl" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
+    <function name="DisableiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="DiscardFramebufferEXT" category="EXT_discard_framebuffer" extension="EXT">
       <param name="target" type="GLenum" flow="in" />
       <param name="numAttachments" type="GLsizei" flow="in" />
@@ -44545,6 +44875,11 @@
     </function>
     <function name="EnableDriverControlQCOM" category="QCOM_driver_control" extension="QCOM">
       <param name="driverControl" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="EnableiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="EndPerfMonitorAMD" category="AMD_performance_monitor" extension="AMD">
@@ -44683,6 +45018,13 @@
       <param name="texture" type="GLuint" flow="in" />
       <param name="level" type="GLint" flow="in" />
       <param name="zoffset" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="FramebufferTextureEXT" category="EXT_geometry_shader" extension="EXT">
+      <param name="target" type="FramebufferTarget" flow="in" />
+      <param name="attachment" type="FramebufferAttachment" flow="in" />
+      <param name="texture" type="Texture" flow="in" />
+      <param name="level" type="CheckedInt32" flow="in" />
       <returns type="void" />
     </function>
     <function name="GenFencesNV" category="NV_fence" extension="NV">
@@ -44974,12 +45316,36 @@
       <param name="params" type="GLuint *" flow="out" />
       <returns type="void" />
     </function>
+    <function name="GetSamplerParameterIivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="sampler" type="GLuint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="GetSamplerParameterIuivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="sampler" type="GLuint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="GLuint *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
     <function name="GetSyncivAPPLE" category="APPLE_sync" extension="APPLE">
       <param name="sync" type="GLsync" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
       <param name="length" type="GLsizei *" flow="out" />
       <param name="values" type="GLint *" flow="out" count="bufSize" />
+      <returns type="void" />
+    </function>
+    <function name="GetTexParameterIivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="pname" type="GetTextureParameter" flow="in" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="GetTexParameterIuivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="pname" type="GetTextureParameter" flow="in" />
+      <param name="params" type="GLuint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetTranslatedShaderSourceANGLE" category="ANGLE_translated_shader_source" extension="ANGLE">
@@ -44993,6 +45359,11 @@
       <param name="length" type="GLsizei" flow="in" />
       <param name="marker" type="GLchar *" flow="in" />
       <returns type="void" />
+    </function>
+    <function name="IsEnablediEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <returns type="Boolean" />
     </function>
     <function name="IsFenceNV" category="NV_fence" extension="NV">
       <param name="fence" type="FenceNV" flow="in" />
@@ -45033,6 +45404,10 @@
       <param name="access" type="GLbitfield" flow="in" />
       <returns type="void *" />
     </function>
+    <function name="MinSampleShadingOES" category="OES_sample_shading" extension="OES">
+      <param name="value" type="ColorF" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="MultiDrawArraysEXT" category="EXT_multi_draw_arrays" extension="EXT">
       <param name="mode" type="PrimitiveType" flow="in" />
       <param name="first" type="GLint *" flow="in" count="COMPSIZE(primcount)" />
@@ -45072,6 +45447,11 @@
       <param name="ptr" type="void *" flow="in" />
       <param name="length" type="GLsizei" flow="in" />
       <param name="label" type="GLchar *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="PatchParameteriEXT" category="EXT_tessellation_shader" extension="EXT">
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="value" type="GLint" flow="in" />
       <returns type="void" />
     </function>
     <function name="PopDebugGroup" category="KHR_debug" extension="Core">
@@ -45429,6 +45809,18 @@
     <function name="ResolveMultisampleFramebufferAPPLE" category="APPLE_framebuffer_multisample" extension="APPLE">
       <returns type="void" />
     </function>
+    <function name="SamplerParameterIivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="sampler" type="GLuint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="GLint *" flow="in" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="SamplerParameterIuivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="sampler" type="GLuint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="GLuint *" flow="in" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
     <function name="SelectPerfMonitorCountersAMD" category="AMD_performance_monitor" extension="AMD">
       <param name="monitor" type="GLuint" flow="in" />
       <param name="enable" type="Boolean" flow="in" />
@@ -45454,6 +45846,20 @@
       <param name="fence" type="FenceNV" flow="in" />
       <returns type="Boolean" />
     </function>
+    <function name="TexBufferEXT" category="EXT_texture_buffer" extension="EXT">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="internalformat" type="GLenum" flow="in" />
+      <param name="buffer" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="TexBufferRangeEXT" category="EXT_texture_buffer" extension="EXT">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="internalformat" type="GLenum" flow="in" />
+      <param name="buffer" type="GLuint" flow="in" />
+      <param name="offset" type="BufferOffset" flow="in" />
+      <param name="size" type="BufferSize" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="TexImage3DOES" category="OES_texture_3D" extension="OES">
       <param name="target" type="GLenum" flow="in" />
       <param name="level" type="GLint" flow="in" />
@@ -45465,6 +45871,18 @@
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
       <param name="pixels" type="void *" flow="in" count="COMPSIZE(format,type,width,height,depth)" />
+      <returns type="void" />
+    </function>
+    <function name="TexParameterIivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="pname" type="TextureParameterName" flow="in" />
+      <param name="params" type="GLint *" flow="in" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="TexParameterIuivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="pname" type="TextureParameterName" flow="in" />
+      <param name="params" type="GLuint *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="TexStorage1DEXT" category="EXT_texture_storage" extension="EXT">
@@ -45489,6 +45907,16 @@
       <param name="width" type="GLsizei" flow="in" />
       <param name="height" type="GLsizei" flow="in" />
       <param name="depth" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="TexStorage3DMultisampleOES" category="OES_texture_storage_multisample_2d_array" extension="OES">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="samples" type="GLsizei" flow="in" />
+      <param name="internalformat" type="GLenum" flow="in" />
+      <param name="width" type="GLsizei" flow="in" />
+      <param name="height" type="GLsizei" flow="in" />
+      <param name="depth" type="GLsizei" flow="in" />
+      <param name="fixedsamplelocations" type="Boolean" flow="in" />
       <returns type="void" />
     </function>
     <function name="TexSubImage3DOES" category="OES_texture_3D" extension="OES">
@@ -45530,6 +45958,17 @@
       <param name="width" type="GLsizei" flow="in" />
       <param name="height" type="GLsizei" flow="in" />
       <param name="depth" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="TextureViewEXT" category="EXT_texture_view" extension="EXT">
+      <param name="texture" type="GLuint" flow="in" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="origtexture" type="GLuint" flow="in" />
+      <param name="internalformat" type="GLenum" flow="in" />
+      <param name="minlevel" type="GLuint" flow="in" />
+      <param name="numlevels" type="GLuint" flow="in" />
+      <param name="minlayer" type="GLuint" flow="in" />
+      <param name="numlayers" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x3fvNV" category="NV_non_square_matrices" extension="NV">
@@ -47721,6 +48160,647 @@
       <param name="sync" type="sync" flow="in" />
       <param name="flags" type="GLbitfield" flow="in" />
       <param name="timeout" type="GLuint64" flow="in" />
+      <returns type="void" />
+    </function>
+  </add>
+  <add name="gles2" version="3.1">
+    <enum name="ES_VERSION_3_1">
+      <token name="COMPUTE_SHADER" value="0x91B9" />
+      <token name="MAX_COMPUTE_UNIFORM_BLOCKS" value="0x91BB" />
+      <token name="MAX_COMPUTE_TEXTURE_IMAGE_UNITS" value="0x91BC" />
+      <token name="MAX_COMPUTE_IMAGE_UNIFORMS" value="0x91BD" />
+      <token name="MAX_COMPUTE_SHARED_MEMORY_SIZE" value="0x8262" />
+      <token name="MAX_COMPUTE_UNIFORM_COMPONENTS" value="0x8263" />
+      <token name="MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS" value="0x8264" />
+      <token name="MAX_COMPUTE_ATOMIC_COUNTERS" value="0x8265" />
+      <token name="MAX_COMBINED_COMPUTE_UNIFORM_COMPONENTS" value="0x8266" />
+      <token name="MAX_COMPUTE_WORK_GROUP_INVOCATIONS" value="0x90EB" />
+      <token name="MAX_COMPUTE_WORK_GROUP_COUNT" value="0x91BE" />
+      <token name="MAX_COMPUTE_WORK_GROUP_SIZE" value="0x91BF" />
+      <token name="COMPUTE_WORK_GROUP_SIZE" value="0x8267" />
+      <token name="DISPATCH_INDIRECT_BUFFER" value="0x90EE" />
+      <token name="DISPATCH_INDIRECT_BUFFER_BINDING" value="0x90EF" />
+      <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
+      <token name="DRAW_INDIRECT_BUFFER" value="0x8F3F" />
+      <token name="DRAW_INDIRECT_BUFFER_BINDING" value="0x8F43" />
+      <token name="MAX_UNIFORM_LOCATIONS" value="0x826E" />
+      <token name="FRAMEBUFFER_DEFAULT_WIDTH" value="0x9310" />
+      <token name="FRAMEBUFFER_DEFAULT_HEIGHT" value="0x9311" />
+      <token name="FRAMEBUFFER_DEFAULT_SAMPLES" value="0x9313" />
+      <token name="FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS" value="0x9314" />
+      <token name="MAX_FRAMEBUFFER_WIDTH" value="0x9315" />
+      <token name="MAX_FRAMEBUFFER_HEIGHT" value="0x9316" />
+      <token name="MAX_FRAMEBUFFER_SAMPLES" value="0x9318" />
+      <token name="UNIFORM" value="0x92E1" />
+      <token name="UNIFORM_BLOCK" value="0x92E2" />
+      <token name="PROGRAM_INPUT" value="0x92E3" />
+      <token name="PROGRAM_OUTPUT" value="0x92E4" />
+      <token name="BUFFER_VARIABLE" value="0x92E5" />
+      <token name="SHADER_STORAGE_BLOCK" value="0x92E6" />
+      <token name="ATOMIC_COUNTER_BUFFER" value="0x92C0" />
+      <token name="TRANSFORM_FEEDBACK_VARYING" value="0x92F4" />
+      <token name="ACTIVE_RESOURCES" value="0x92F5" />
+      <token name="MAX_NAME_LENGTH" value="0x92F6" />
+      <token name="MAX_NUM_ACTIVE_VARIABLES" value="0x92F7" />
+      <token name="NAME_LENGTH" value="0x92F9" />
+      <token name="TYPE" value="0x92FA" />
+      <token name="ARRAY_SIZE" value="0x92FB" />
+      <token name="OFFSET" value="0x92FC" />
+      <token name="BLOCK_INDEX" value="0x92FD" />
+      <token name="ARRAY_STRIDE" value="0x92FE" />
+      <token name="MATRIX_STRIDE" value="0x92FF" />
+      <token name="IS_ROW_MAJOR" value="0x9300" />
+      <token name="ATOMIC_COUNTER_BUFFER_INDEX" value="0x9301" />
+      <token name="BUFFER_BINDING" value="0x9302" />
+      <token name="BUFFER_DATA_SIZE" value="0x9303" />
+      <token name="NUM_ACTIVE_VARIABLES" value="0x9304" />
+      <token name="ACTIVE_VARIABLES" value="0x9305" />
+      <token name="REFERENCED_BY_VERTEX_SHADER" value="0x9306" />
+      <token name="REFERENCED_BY_FRAGMENT_SHADER" value="0x930A" />
+      <token name="REFERENCED_BY_COMPUTE_SHADER" value="0x930B" />
+      <token name="TOP_LEVEL_ARRAY_SIZE" value="0x930C" />
+      <token name="TOP_LEVEL_ARRAY_STRIDE" value="0x930D" />
+      <token name="LOCATION" value="0x930E" />
+      <token name="VERTEX_SHADER_BIT" value="0x00000001" />
+      <token name="FRAGMENT_SHADER_BIT" value="0x00000002" />
+      <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
+      <token name="PROGRAM_SEPARABLE" value="0x8258" />
+      <token name="ACTIVE_PROGRAM" value="0x8259" />
+      <token name="PROGRAM_PIPELINE_BINDING" value="0x825A" />
+      <token name="ATOMIC_COUNTER_BUFFER" value="0x92C0" />
+      <token name="ATOMIC_COUNTER_BUFFER_BINDING" value="0x92C1" />
+      <token name="ATOMIC_COUNTER_BUFFER_START" value="0x92C2" />
+      <token name="ATOMIC_COUNTER_BUFFER_SIZE" value="0x92C3" />
+      <token name="MAX_VERTEX_ATOMIC_COUNTER_BUFFERS" value="0x92CC" />
+      <token name="MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS" value="0x92D0" />
+      <token name="MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS" value="0x8264" />
+      <token name="MAX_COMBINED_ATOMIC_COUNTER_BUFFERS" value="0x92D1" />
+      <token name="MAX_VERTEX_ATOMIC_COUNTERS" value="0x92D2" />
+      <token name="MAX_FRAGMENT_ATOMIC_COUNTERS" value="0x92D6" />
+      <token name="MAX_COMPUTE_ATOMIC_COUNTERS" value="0x8265" />
+      <token name="MAX_COMBINED_ATOMIC_COUNTERS" value="0x92D7" />
+      <token name="MAX_ATOMIC_COUNTER_BUFFER_SIZE" value="0x92D8" />
+      <token name="MAX_ATOMIC_COUNTER_BUFFER_BINDINGS" value="0x92DC" />
+      <token name="ACTIVE_ATOMIC_COUNTER_BUFFERS" value="0x92D9" />
+      <token name="UNSIGNED_INT_ATOMIC_COUNTER" value="0x92DB" />
+      <token name="MAX_IMAGE_UNITS" value="0x8F38" />
+      <token name="MAX_VERTEX_IMAGE_UNIFORMS" value="0x90CA" />
+      <token name="MAX_FRAGMENT_IMAGE_UNIFORMS" value="0x90CE" />
+      <token name="MAX_COMPUTE_IMAGE_UNIFORMS" value="0x91BD" />
+      <token name="MAX_COMBINED_IMAGE_UNIFORMS" value="0x90CF" />
+      <token name="IMAGE_BINDING_NAME" value="0x8F3A" />
+      <token name="IMAGE_BINDING_LEVEL" value="0x8F3B" />
+      <token name="IMAGE_BINDING_LAYERED" value="0x8F3C" />
+      <token name="IMAGE_BINDING_LAYER" value="0x8F3D" />
+      <token name="IMAGE_BINDING_ACCESS" value="0x8F3E" />
+      <token name="IMAGE_BINDING_FORMAT" value="0x906E" />
+      <token name="VERTEX_ATTRIB_ARRAY_BARRIER_BIT" value="0x00000001" />
+      <token name="ELEMENT_ARRAY_BARRIER_BIT" value="0x00000002" />
+      <token name="UNIFORM_BARRIER_BIT" value="0x00000004" />
+      <token name="TEXTURE_FETCH_BARRIER_BIT" value="0x00000008" />
+      <token name="SHADER_IMAGE_ACCESS_BARRIER_BIT" value="0x00000020" />
+      <token name="COMMAND_BARRIER_BIT" value="0x00000040" />
+      <token name="PIXEL_BUFFER_BARRIER_BIT" value="0x00000080" />
+      <token name="TEXTURE_UPDATE_BARRIER_BIT" value="0x00000100" />
+      <token name="BUFFER_UPDATE_BARRIER_BIT" value="0x00000200" />
+      <token name="FRAMEBUFFER_BARRIER_BIT" value="0x00000400" />
+      <token name="TRANSFORM_FEEDBACK_BARRIER_BIT" value="0x00000800" />
+      <token name="ATOMIC_COUNTER_BARRIER_BIT" value="0x00001000" />
+      <token name="ALL_BARRIER_BITS" value="0xFFFFFFFF" />
+      <token name="IMAGE_2D" value="0x904D" />
+      <token name="IMAGE_3D" value="0x904E" />
+      <token name="IMAGE_CUBE" value="0x9050" />
+      <token name="IMAGE_2D_ARRAY" value="0x9053" />
+      <token name="INT_IMAGE_2D" value="0x9058" />
+      <token name="INT_IMAGE_3D" value="0x9059" />
+      <token name="INT_IMAGE_CUBE" value="0x905B" />
+      <token name="INT_IMAGE_2D_ARRAY" value="0x905E" />
+      <token name="UNSIGNED_INT_IMAGE_2D" value="0x9063" />
+      <token name="UNSIGNED_INT_IMAGE_3D" value="0x9064" />
+      <token name="UNSIGNED_INT_IMAGE_CUBE" value="0x9066" />
+      <token name="UNSIGNED_INT_IMAGE_2D_ARRAY" value="0x9069" />
+      <token name="IMAGE_FORMAT_COMPATIBILITY_TYPE" value="0x90C7" />
+      <token name="IMAGE_FORMAT_COMPATIBILITY_BY_SIZE" value="0x90C8" />
+      <token name="IMAGE_FORMAT_COMPATIBILITY_BY_CLASS" value="0x90C9" />
+      <token name="READ_ONLY" value="0x88B8" />
+      <token name="WRITE_ONLY" value="0x88B9" />
+      <token name="READ_WRITE" value="0x88BA" />
+      <token name="SHADER_STORAGE_BUFFER" value="0x90D2" />
+      <token name="SHADER_STORAGE_BUFFER_BINDING" value="0x90D3" />
+      <token name="SHADER_STORAGE_BUFFER_START" value="0x90D4" />
+      <token name="SHADER_STORAGE_BUFFER_SIZE" value="0x90D5" />
+      <token name="MAX_VERTEX_SHADER_STORAGE_BLOCKS" value="0x90D6" />
+      <token name="MAX_FRAGMENT_SHADER_STORAGE_BLOCKS" value="0x90DA" />
+      <token name="MAX_COMPUTE_SHADER_STORAGE_BLOCKS" value="0x90DB" />
+      <token name="MAX_COMBINED_SHADER_STORAGE_BLOCKS" value="0x90DC" />
+      <token name="MAX_SHADER_STORAGE_BUFFER_BINDINGS" value="0x90DD" />
+      <token name="MAX_SHADER_STORAGE_BLOCK_SIZE" value="0x90DE" />
+      <token name="SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT" value="0x90DF" />
+      <token name="SHADER_STORAGE_BARRIER_BIT" value="0x00002000" />
+      <token name="MAX_COMBINED_SHADER_OUTPUT_RESOURCES" value="0x8F39" />
+      <token name="DEPTH_STENCIL_TEXTURE_MODE" value="0x90EA" />
+      <token name="STENCIL_INDEX" value="0x1901" />
+      <token name="MIN_PROGRAM_TEXTURE_GATHER_OFFSET" value="0x8E5E" />
+      <token name="MAX_PROGRAM_TEXTURE_GATHER_OFFSET" value="0x8E5F" />
+      <token name="SAMPLE_POSITION" value="0x8E50" />
+      <token name="SAMPLE_MASK" value="0x8E51" />
+      <token name="SAMPLE_MASK_VALUE" value="0x8E52" />
+      <token name="TEXTURE_2D_MULTISAMPLE" value="0x9100" />
+      <token name="MAX_SAMPLE_MASK_WORDS" value="0x8E59" />
+      <token name="MAX_COLOR_TEXTURE_SAMPLES" value="0x910E" />
+      <token name="MAX_DEPTH_TEXTURE_SAMPLES" value="0x910F" />
+      <token name="MAX_INTEGER_SAMPLES" value="0x9110" />
+      <token name="TEXTURE_BINDING_2D_MULTISAMPLE" value="0x9104" />
+      <token name="TEXTURE_SAMPLES" value="0x9106" />
+      <token name="TEXTURE_FIXED_SAMPLE_LOCATIONS" value="0x9107" />
+      <token name="TEXTURE_WIDTH" value="0x1000" />
+      <token name="TEXTURE_HEIGHT" value="0x1001" />
+      <token name="TEXTURE_DEPTH" value="0x8071" />
+      <token name="TEXTURE_INTERNAL_FORMAT" value="0x1003" />
+      <token name="TEXTURE_RED_SIZE" value="0x805C" />
+      <token name="TEXTURE_GREEN_SIZE" value="0x805D" />
+      <token name="TEXTURE_BLUE_SIZE" value="0x805E" />
+      <token name="TEXTURE_ALPHA_SIZE" value="0x805F" />
+      <token name="TEXTURE_DEPTH_SIZE" value="0x884A" />
+      <token name="TEXTURE_STENCIL_SIZE" value="0x88F1" />
+      <token name="TEXTURE_SHARED_SIZE" value="0x8C3F" />
+      <token name="TEXTURE_RED_TYPE" value="0x8C10" />
+      <token name="TEXTURE_GREEN_TYPE" value="0x8C11" />
+      <token name="TEXTURE_BLUE_TYPE" value="0x8C12" />
+      <token name="TEXTURE_ALPHA_TYPE" value="0x8C13" />
+      <token name="TEXTURE_DEPTH_TYPE" value="0x8C16" />
+      <token name="TEXTURE_COMPRESSED" value="0x86A1" />
+      <token name="SAMPLER_2D_MULTISAMPLE" value="0x9108" />
+      <token name="INT_SAMPLER_2D_MULTISAMPLE" value="0x9109" />
+      <token name="UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE" value="0x910A" />
+      <token name="VERTEX_ATTRIB_BINDING" value="0x82D4" />
+      <token name="VERTEX_ATTRIB_RELATIVE_OFFSET" value="0x82D5" />
+      <token name="VERTEX_BINDING_DIVISOR" value="0x82D6" />
+      <token name="VERTEX_BINDING_OFFSET" value="0x82D7" />
+      <token name="VERTEX_BINDING_STRIDE" value="0x82D8" />
+      <token name="VERTEX_BINDING_BUFFER" value="0x8F4F" />
+      <token name="MAX_VERTEX_ATTRIB_RELATIVE_OFFSET" value="0x82D9" />
+      <token name="MAX_VERTEX_ATTRIB_BINDINGS" value="0x82DA" />
+      <token name="MAX_VERTEX_ATTRIB_STRIDE" value="0x82E5" />
+    </enum>
+    <function name="ActiveShaderProgram" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="pipeline" type="GLuint" flow="in" />
+      <param name="program" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BindImageTexture" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="unit" type="GLuint" flow="in" />
+      <param name="texture" type="GLuint" flow="in" />
+      <param name="level" type="GLint" flow="in" />
+      <param name="layered" type="Boolean" flow="in" />
+      <param name="layer" type="GLint" flow="in" />
+      <param name="access" type="GLenum" flow="in" />
+      <param name="format" type="GLenum" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BindProgramPipeline" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="pipeline" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BindVertexBuffer" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="bindingindex" type="GLuint" flow="in" />
+      <param name="buffer" type="GLuint" flow="in" />
+      <param name="offset" type="BufferOffset" flow="in" />
+      <param name="stride" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="CreateShaderProgramv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="type" type="GLenum" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="strings" type="GLchar **" flow="in" count="count" />
+      <returns type="GLuint" />
+    </function>
+    <function name="DeleteProgramPipelines" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="n" type="GLsizei" flow="in" />
+      <param name="pipelines" type="GLuint *" flow="in" count="n" />
+      <returns type="void" />
+    </function>
+    <function name="DispatchCompute" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="num_groups_x" type="GLuint" flow="in" />
+      <param name="num_groups_y" type="GLuint" flow="in" />
+      <param name="num_groups_z" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DispatchComputeIndirect" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="indirect" type="BufferOffset" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawArraysIndirect" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="mode" type="PrimitiveType" flow="in" />
+      <param name="indirect" type="void *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawElementsIndirect" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="mode" type="PrimitiveType" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="indirect" type="void *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="FramebufferParameteri" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="GenProgramPipelines" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="n" type="GLsizei" flow="in" />
+      <param name="pipelines" type="GLuint *" flow="out" count="n" />
+      <returns type="void" />
+    </function>
+    <function name="GetBooleani_v" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <param name="data" type="Boolean *" flow="out" count="COMPSIZE(target)" />
+      <returns type="void" />
+    </function>
+    <function name="GetFramebufferParameteriv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="GetMultisamplefv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <param name="val" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="GetProgramInterfaceiv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="programInterface" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="GetProgramPipelineInfoLog" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="pipeline" type="GLuint" flow="in" />
+      <param name="bufSize" type="GLsizei" flow="in" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
+      <param name="infoLog" type="GLchar *" flow="out" count="bufSize" />
+      <returns type="void" />
+    </function>
+    <function name="GetProgramPipelineiv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="pipeline" type="GLuint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="GetProgramResourceIndex" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="programInterface" type="GLenum" flow="in" />
+      <param name="name" type="GLchar *" flow="in" count="COMPSIZE(name)" />
+      <returns type="GLuint" />
+    </function>
+    <function name="GetProgramResourceiv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="programInterface" type="GLenum" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <param name="propCount" type="GLsizei" flow="in" />
+      <param name="props" type="GLenum *" flow="in" count="propCount" />
+      <param name="bufSize" type="GLsizei" flow="in" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
+      <param name="params" type="GLint *" flow="out" count="bufSize" />
+      <returns type="void" />
+    </function>
+    <function name="GetProgramResourceLocation" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="programInterface" type="GLenum" flow="in" />
+      <param name="name" type="GLchar *" flow="in" count="COMPSIZE(name)" />
+      <returns type="GLint" />
+    </function>
+    <function name="GetProgramResourceName" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="programInterface" type="GLenum" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <param name="bufSize" type="GLsizei" flow="in" />
+      <param name="length" type="GLsizei *" flow="out" count="1" />
+      <param name="name" type="GLchar *" flow="out" count="bufSize" />
+      <returns type="void" />
+    </function>
+    <function name="GetTexLevelParameterfv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="level" type="CheckedInt32" flow="in" />
+      <param name="pname" type="GetTextureParameter" flow="in" />
+      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="GetTexLevelParameteriv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="level" type="CheckedInt32" flow="in" />
+      <param name="pname" type="GetTextureParameter" flow="in" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="IsProgramPipeline" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="pipeline" type="GLuint" flow="in" />
+      <returns type="Boolean" />
+    </function>
+    <function name="MemoryBarrier" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="barriers" type="GLbitfield" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="MemoryBarrierByRegion" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="barriers" type="GLbitfield" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform1f" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLfloat" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform1fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="1" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform1i" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform1iv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLint *" flow="in" count="1" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform1ui" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform1uiv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLuint *" flow="in" count="1" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform2f" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLfloat" flow="in" />
+      <param name="v1" type="GLfloat" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform2fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="2" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform2i" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLint" flow="in" />
+      <param name="v1" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform2iv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLint *" flow="in" count="2" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform2ui" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLuint" flow="in" />
+      <param name="v1" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform2uiv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLuint *" flow="in" count="2" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform3f" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLfloat" flow="in" />
+      <param name="v1" type="GLfloat" flow="in" />
+      <param name="v2" type="GLfloat" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform3fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="3" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform3i" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLint" flow="in" />
+      <param name="v1" type="GLint" flow="in" />
+      <param name="v2" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform3iv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLint *" flow="in" count="3" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform3ui" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLuint" flow="in" />
+      <param name="v1" type="GLuint" flow="in" />
+      <param name="v2" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform3uiv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLuint *" flow="in" count="3" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform4f" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLfloat" flow="in" />
+      <param name="v1" type="GLfloat" flow="in" />
+      <param name="v2" type="GLfloat" flow="in" />
+      <param name="v3" type="GLfloat" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform4fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="4" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform4i" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLint" flow="in" />
+      <param name="v1" type="GLint" flow="in" />
+      <param name="v2" type="GLint" flow="in" />
+      <param name="v3" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform4iv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLint *" flow="in" count="4" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform4ui" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="v0" type="GLuint" flow="in" />
+      <param name="v1" type="GLuint" flow="in" />
+      <param name="v2" type="GLuint" flow="in" />
+      <param name="v3" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniform4uiv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="value" type="GLuint *" flow="in" count="4" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniformMatrix2fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="transpose" type="Boolean" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="2" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniformMatrix2x3fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="transpose" type="Boolean" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniformMatrix2x4fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="transpose" type="Boolean" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniformMatrix3fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="transpose" type="Boolean" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="3" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniformMatrix3x2fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="transpose" type="Boolean" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniformMatrix3x4fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="transpose" type="Boolean" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniformMatrix4fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="transpose" type="Boolean" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="4" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniformMatrix4x2fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="transpose" type="Boolean" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="ProgramUniformMatrix4x3fv" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="location" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="transpose" type="Boolean" flow="in" />
+      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="SampleMaski" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="maskNumber" type="GLuint" flow="in" />
+      <param name="mask" type="GLbitfield" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="TexStorage2DMultisample" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="samples" type="GLsizei" flow="in" />
+      <param name="internalformat" type="GLenum" flow="in" />
+      <param name="width" type="GLsizei" flow="in" />
+      <param name="height" type="GLsizei" flow="in" />
+      <param name="fixedsamplelocations" type="Boolean" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="UseProgramStages" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="pipeline" type="GLuint" flow="in" />
+      <param name="stages" type="GLbitfield" flow="in" />
+      <param name="program" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ValidateProgramPipeline" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="pipeline" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="VertexAttribBinding" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="attribindex" type="GLuint" flow="in" />
+      <param name="bindingindex" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="VertexAttribFormat" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="attribindex" type="GLuint" flow="in" />
+      <param name="size" type="GLint" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="normalized" type="Boolean" flow="in" />
+      <param name="relativeoffset" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="VertexAttribIFormat" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="attribindex" type="GLuint" flow="in" />
+      <param name="size" type="GLint" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="relativeoffset" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="VertexBindingDivisor" category="ES_VERSION_3_1" extension="Core" version="3.1">
+      <param name="bindingindex" type="GLuint" flow="in" />
+      <param name="divisor" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
   </add>

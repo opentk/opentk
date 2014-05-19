@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+	      "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glGenerateMipmap">
+    <refmeta>
+	<refentrytitle>glGenerateMipmap</refentrytitle>
+	<manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+	<refname>glGenerateMipmap</refname>
+	<refpurpose>generate a complete set of mipmaps for a texture object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glGenerateMipmap</function></funcdef>
+		<paramdef>GLenum <parameter>target</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+	<variablelist>
+	    <varlistentry>
+		<term><parameter>target</parameter></term>
+		<listitem>
+		    <para>Specifies the texture target of the active texture unit to which the texture object
+		    is bound whose mipmaps will be generated.  Must be one of the following
+		    symbolic constants: <constant>GL_TEXTURE_2D</constant> or
+		    <constant>GL_TEXTURE_CUBE_MAP</constant>.</para>
+		</listitem>
+	    </varlistentry>
+	</variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+	<para><function>glGenerateMipmap</function> computes a complete set
+	of mipmap arrays derived from the zero level array. Array levels up to and
+	including the 1x1 dimension texture image are replaced with the derived arrays,
+	regardless of previous contents.  The zero level texture image is left unchanged.</para>
+
+	<para>The internal formats of the derived mipmap arrays all match those of
+	the zero level texture image. The dimensions of the derived arrays are computed by
+	halving the width and height of the zero level texture image, then in turn halving
+	the dimensions of each array level until the 1x1 dimension texture image is 
+	reached.</para>
+	
+	<para>The contents of the derived arrays are computed by repeated filtered reduction
+	of the zero level array. No particular filter algorithm is required, though a
+	box filter is recommended. 
+	<citerefentry><refentrytitle>glHint</refentrytitle></citerefentry> may be called
+	to express a preference for speed or quality of filtering.</para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+	<para><constant>GL_INVALID_ENUM</constant> is generated if
+	<parameter>target</parameter> is not <constant>GL_TEXTURE_2D</constant> or
+	<constant>GL_TEXTURE_CUBE_MAP</constant>.</para>
+
+	<para><constant>GL_INVALID_OPERATION</constant> is generated if
+	the texture bound to <parameter>target</parameter> is a cube map, but its
+	six faces do not share indentical widths, heights, formats, and types.</para>
+
+	<para><constant>GL_INVALID_OPERATION</constant> is generated if
+	either the width or height of the zero level array is not a power of two.</para>
+
+	<para><constant>GL_INVALID_OPERATION</constant> is generated if
+	the zero level array is stored in a compressed internal format.</para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+	<para><citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glFramebufferTexture2D</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glHint</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2008 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

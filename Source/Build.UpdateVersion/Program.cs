@@ -104,7 +104,7 @@ namespace Build.UpdateVersion
                 "",
                 "[assembly: AssemblyCompany(\"The Open Toolkit Library\")]",
                 "[assembly: AssemblyProduct(\"The Open Toolkit Library\")]",
-                "[assembly: AssemblyCopyright(\"Copyright © 2006 - 2013 the Open Toolkit Library\")]",
+                "[assembly: AssemblyCopyright(\"Copyright © 2006 - 2014 the Open Toolkit Library\")]",
                 "[assembly: AssemblyTrademark(\"OpenTK\")]",
                 String.Format("[assembly: AssemblyVersion(\"{0}.{1}.0.0\")]", major, minor),
                 String.Format("[assembly: AssemblyFileVersion(\"{0}\")]", version),
@@ -114,7 +114,7 @@ namespace Build.UpdateVersion
         static string RetrieveRevisionNumber(DateTime now)
         {
             double timespan = now.Subtract(new DateTime(2010, 1, 1)).TotalDays;
-            string revision = RetrieveGitRevision() ?? RetrieveSvnRevision() ?? RetrieveBzrRevision() ?? RetrieveSeconds(timespan);
+            string revision = RetrieveGitRevision() ?? RetrieveSvnRevision() ?? RetrieveBzrRevision() ?? "0";
             revision = revision.Trim();
             return revision;
         }
