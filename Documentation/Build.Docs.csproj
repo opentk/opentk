@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Exe</OutputType>
     <AssemblyName>Build.Docs</AssemblyName>
@@ -55,12 +55,13 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="Doxyfile" />
+    <None Include="..\README.md">
+      <Link>README.md</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Contributors.txt" />
-    <None Include="Instructions.txt" />
     <None Include="License.txt" />
-    <None Include="Release.txt" />
     <None Include="Todo.txt" />
   </ItemGroup>
   <Target Name="Build">
