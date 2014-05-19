@@ -907,6 +907,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         GeometryShaderBit = ((int)0x00000004)        ,
         /// <summary>
+        /// Original was GL_GEOMETRY_SHADER_BIT_EXT = 0x00000004
+        /// </summary>
+        GeometryShaderBitExt = ((int)0x00000004)        ,
+        /// <summary>
         /// Original was GL_8X_BIT_ATI = 0x00000004
         /// </summary>
         Gl8XBitAti = ((int)0x00000004)        ,
@@ -955,6 +959,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         TessControlShaderBit = ((int)0x00000008)        ,
         /// <summary>
+        /// Original was GL_TESS_CONTROL_SHADER_BIT_EXT = 0x00000008
+        /// </summary>
+        TessControlShaderBitExt = ((int)0x00000008)        ,
+        /// <summary>
         /// Original was GL_TEXTURE_FETCH_BARRIER_BIT = 0x00000008
         /// </summary>
         TextureFetchBarrierBit = ((int)0x00000008)        ,
@@ -982,6 +990,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_TESS_EVALUATION_SHADER_BIT = 0x00000010
         /// </summary>
         TessEvaluationShaderBit = ((int)0x00000010)        ,
+        /// <summary>
+        /// Original was GL_TESS_EVALUATION_SHADER_BIT_EXT = 0x00000010
+        /// </summary>
+        TessEvaluationShaderBitExt = ((int)0x00000010)        ,
         /// <summary>
         /// Original was GL_COMPUTE_SHADER_BIT = 0x00000020
         /// </summary>
@@ -1219,6 +1231,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Quads = ((int)0x0007)        ,
         /// <summary>
+        /// Original was GL_QUADS_EXT = 0x0007
+        /// </summary>
+        QuadsExt = ((int)0x0007)        ,
+        /// <summary>
         /// Original was GL_MAP_INVALIDATE_BUFFER_BIT = 0x0008
         /// </summary>
         MapInvalidateBufferBit = ((int)0x0008)        ,
@@ -1298,6 +1314,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_PATCHES = 0x000E
         /// </summary>
         Patches = ((int)0x000E)        ,
+        /// <summary>
+        /// Original was GL_PATCHES_EXT = 0x000E
+        /// </summary>
+        PatchesExt = ((int)0x000E)        ,
         /// <summary>
         /// Original was GL_MAP_FLUSH_EXPLICIT_BIT = 0x0010
         /// </summary>
@@ -47752,6 +47772,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Quads = ((int)0x0007)        ,
         /// <summary>
+        /// Original was GL_QUADS_EXT = 0x0007
+        /// </summary>
+        QuadsExt = ((int)0x0007)        ,
+        /// <summary>
         /// Original was GL_QUAD_STRIP = 0x0008
         /// </summary>
         QuadStrip = ((int)0x0008)        ,
@@ -47811,6 +47835,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_PATCHES = 0x000E
         /// </summary>
         Patches = ((int)0x000E)        ,
+        /// <summary>
+        /// Original was GL_PATCHES_EXT = 0x000E
+        /// </summary>
+        PatchesExt = ((int)0x000E)        ,
     }
 
     /// <summary>
@@ -52749,13 +52777,25 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         GeometryShaderBit = ((int)0x00000004)        ,
         /// <summary>
+        /// Original was GL_GEOMETRY_SHADER_BIT_EXT = 0x00000004
+        /// </summary>
+        GeometryShaderBitExt = ((int)0x00000004)        ,
+        /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x00000008
         /// </summary>
         TessControlShaderBit = ((int)0x00000008)        ,
         /// <summary>
+        /// Original was GL_TESS_CONTROL_SHADER_BIT_EXT = 0x00000008
+        /// </summary>
+        TessControlShaderBitExt = ((int)0x00000008)        ,
+        /// <summary>
         /// Original was GL_TESS_EVALUATION_SHADER_BIT = 0x00000010
         /// </summary>
         TessEvaluationShaderBit = ((int)0x00000010)        ,
+        /// <summary>
+        /// Original was GL_TESS_EVALUATION_SHADER_BIT_EXT = 0x00000010
+        /// </summary>
+        TessEvaluationShaderBitExt = ((int)0x00000010)        ,
         /// <summary>
         /// Original was GL_COMPUTE_SHADER_BIT = 0x00000020
         /// </summary>
