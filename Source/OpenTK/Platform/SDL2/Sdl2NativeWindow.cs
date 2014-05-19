@@ -77,7 +77,6 @@ namespace OpenTK.Platform.SDL2
                 var bounds = device.Bounds;
                 var flags = TranslateFlags(options);
                 flags |= WindowFlags.OPENGL;
-                flags |= WindowFlags.RESIZABLE;
                 flags |= WindowFlags.HIDDEN;
                 if (Toolkit.Options.EnableHighResolution)
                 {
@@ -87,6 +86,9 @@ namespace OpenTK.Platform.SDL2
                 if ((flags & WindowFlags.FULLSCREEN_DESKTOP) != 0 ||
                     (flags & WindowFlags.FULLSCREEN) != 0)
                     window_state = WindowState.Fullscreen;
+
+                if ((flags & WindowFlags.RESIZABLE) == 0)
+                    window_border = WindowBorder.Fixed;
 
                 IntPtr handle;
                 lock (SDL.Sync)
@@ -106,17 +108,20 @@ namespace OpenTK.Platform.SDL2
 
         static WindowFlags TranslateFlags(GameWindowFlags flags)
         {
-            switch (flags)
-            {
-                case GameWindowFlags.Fullscreen:
-                    if (Sdl2Factory.UseFullscreenDesktop)
-                        return WindowFlags.FULLSCREEN_DESKTOP;
-                    else
-                        return WindowFlags.FULLSCREEN;
+            WindowFlags windowFlags = WindowFlags.Default;
 
-                default:
-                    return WindowFlags.Default;
+            if ((flags & GameWindowFlags.Fullscreen) != 0)
+            {
+                if (Sdl2Factory.UseFullscreenDesktop)
+                    windowFlags |= WindowFlags.FULLSCREEN_DESKTOP;
+                else
+                    windowFlags |= WindowFlags.FULLSCREEN;
             }
+
+            if ((flags & GameWindowFlags.FixedWindow) == 0)
+                windowFlags |= WindowFlags.RESIZABLE;
+
+            return windowFlags;
         }
 
         static Key TranslateKey(Scancode scan)
