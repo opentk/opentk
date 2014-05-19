@@ -5767,9 +5767,11 @@
       <token name="LINE_STRIP_ADJACENCY_ARB" value="0x000B" />
       <token name="LINE_STRIP_ADJACENCY_EXT" value="0x000B" />
       <token name="PATCHES" value="0x000E" />
+      <token name="PATCHES_EXT" value="0x000E" />
       <token name="POINTS" value="0x0000" />
       <token name="POLYGON" value="0x0009" deprecated="3.2" />
       <token name="QUADS" value="0x0007" />
+      <token name="QUADS_EXT" value="0x0007" />
       <token name="QUAD_STRIP" value="0x0008" deprecated="3.2" />
       <token name="TRIANGLES" value="0x0004" />
       <token name="TRIANGLES_ADJACENCY" value="0x000C" />
@@ -6394,8 +6396,11 @@
       <token name="FRAGMENT_SHADER_BIT" value="0x00000002" />
       <token name="FRAGMENT_SHADER_BIT_EXT" value="0x00000002" />
       <token name="GEOMETRY_SHADER_BIT" value="0x00000004" />
+      <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
       <token name="TESS_CONTROL_SHADER_BIT" value="0x00000008" />
+      <token name="TESS_CONTROL_SHADER_BIT_EXT" value="0x00000008" />
       <token name="TESS_EVALUATION_SHADER_BIT" value="0x00000010" />
+      <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
@@ -29018,8 +29023,10 @@
       <token name="LINE_STRIP_ADJACENCY_ARB" value="0x000B" />
       <token name="LINE_STRIP_ADJACENCY_EXT" value="0x000B" />
       <token name="PATCHES" value="0x000E" />
+      <token name="PATCHES_EXT" value="0x000E" />
       <token name="POINTS" value="0x0000" />
       <token name="QUADS" value="0x0007" />
+      <token name="QUADS_EXT" value="0x0007" />
       <token name="TRIANGLES" value="0x0004" />
       <token name="TRIANGLES_ADJACENCY" value="0x000C" />
       <token name="TRIANGLES_ADJACENCY_ARB" value="0x000C" />
@@ -29224,8 +29231,11 @@
       <token name="FRAGMENT_SHADER_BIT" value="0x00000002" />
       <token name="FRAGMENT_SHADER_BIT_EXT" value="0x00000002" />
       <token name="GEOMETRY_SHADER_BIT" value="0x00000004" />
+      <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
       <token name="TESS_CONTROL_SHADER_BIT" value="0x00000008" />
+      <token name="TESS_CONTROL_SHADER_BIT_EXT" value="0x00000008" />
       <token name="TESS_EVALUATION_SHADER_BIT" value="0x00000010" />
+      <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
@@ -38768,9 +38778,11 @@
       <token name="LINE_STRIP_ADJACENCY_ARB" value="0x000B" />
       <token name="LINE_STRIP_ADJACENCY_EXT" value="0x000B" />
       <token name="PATCHES" value="0x000E" />
+      <token name="PATCHES_EXT" value="0x000E" />
       <token name="POINTS" value="0x0000" />
       <token name="POLYGON" value="0x0009" deprecated="3.2" />
       <token name="QUADS" value="0x0007" deprecated="3.2" />
+      <token name="QUADS_EXT" value="0x0007" />
       <token name="QUAD_STRIP" value="0x0008" deprecated="3.2" />
       <token name="TRIANGLES" value="0x0004" />
       <token name="TRIANGLES_ADJACENCY" value="0x000C" />
@@ -39057,8 +39069,11 @@
       <token name="FRAGMENT_SHADER_BIT" value="0x00000002" />
       <token name="FRAGMENT_SHADER_BIT_EXT" value="0x00000002" />
       <token name="GEOMETRY_SHADER_BIT" value="0x00000004" />
+      <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
       <token name="TESS_CONTROL_SHADER_BIT" value="0x00000008" />
+      <token name="TESS_CONTROL_SHADER_BIT_EXT" value="0x00000008" />
       <token name="TESS_EVALUATION_SHADER_BIT" value="0x00000010" />
+      <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
@@ -42067,6 +42082,7 @@
       <token name="FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE_EXT" value="0x8211" />
       <token name="UNSIGNED_NORMALIZED_EXT" value="0x8C17" />
     </enum>
+    <enum name="EXT_copy_image" />
     <enum name="EXT_debug_label">
       <token name="PROGRAM_PIPELINE_OBJECT_EXT" value="0x8A4F" />
       <token name="PROGRAM_OBJECT_EXT" value="0x8B40" />
@@ -42128,7 +42144,73 @@
       <token name="COLOR_ATTACHMENT14_EXT" value="0x8CEE" />
       <token name="COLOR_ATTACHMENT15_EXT" value="0x8CEF" />
     </enum>
+    <enum name="EXT_draw_buffers_indexed">
+      <token name="BLEND_EQUATION_RGB" value="0x8009" />
+      <token name="BLEND_EQUATION_ALPHA" value="0x883D" />
+      <token name="BLEND_SRC_RGB" value="0x80C9" />
+      <token name="BLEND_SRC_ALPHA" value="0x80CB" />
+      <token name="BLEND_DST_RGB" value="0x80C8" />
+      <token name="BLEND_DST_ALPHA" value="0x80CA" />
+      <token name="COLOR_WRITEMASK" value="0x0C23" />
+      <token name="BLEND" value="0x0BE2" />
+      <token name="FUNC_ADD" value="0x8006" />
+      <token name="FUNC_SUBTRACT" value="0x800A" />
+      <token name="FUNC_REVERSE_SUBTRACT" value="0x800B" />
+      <token name="MIN" value="0x8007" />
+      <token name="MAX" value="0x8008" />
+      <token name="ZERO" value="0" />
+      <token name="ONE" value="1" />
+      <token name="SRC_COLOR" value="0x0300" />
+      <token name="ONE_MINUS_SRC_COLOR" value="0x0301" />
+      <token name="DST_COLOR" value="0x0306" />
+      <token name="ONE_MINUS_DST_COLOR" value="0x0307" />
+      <token name="SRC_ALPHA" value="0x0302" />
+      <token name="ONE_MINUS_SRC_ALPHA" value="0x0303" />
+      <token name="DST_ALPHA" value="0x0304" />
+      <token name="ONE_MINUS_DST_ALPHA" value="0x0305" />
+      <token name="CONSTANT_COLOR" value="0x8001" />
+      <token name="ONE_MINUS_CONSTANT_COLOR" value="0x8002" />
+      <token name="CONSTANT_ALPHA" value="0x8003" />
+      <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
+      <token name="SRC_ALPHA_SATURATE" value="0x0308" />
+    </enum>
     <enum name="EXT_draw_instanced" />
+    <enum name="EXT_geometry_shader">
+      <token name="GEOMETRY_SHADER_EXT" value="0x8DD9" />
+      <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
+      <token name="GEOMETRY_LINKED_VERTICES_OUT_EXT" value="0x8916" />
+      <token name="GEOMETRY_LINKED_INPUT_TYPE_EXT" value="0x8917" />
+      <token name="GEOMETRY_LINKED_OUTPUT_TYPE_EXT" value="0x8918" />
+      <token name="GEOMETRY_SHADER_INVOCATIONS_EXT" value="0x887F" />
+      <token name="LAYER_PROVOKING_VERTEX_EXT" value="0x825E" />
+      <token name="LINES_ADJACENCY_EXT" value="0x000A" />
+      <token name="LINE_STRIP_ADJACENCY_EXT" value="0x000B" />
+      <token name="TRIANGLES_ADJACENCY_EXT" value="0x000C" />
+      <token name="TRIANGLE_STRIP_ADJACENCY_EXT" value="0x000D" />
+      <token name="MAX_GEOMETRY_UNIFORM_COMPONENTS_EXT" value="0x8DDF" />
+      <token name="MAX_GEOMETRY_UNIFORM_BLOCKS_EXT" value="0x8A2C" />
+      <token name="MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS_EXT" value="0x8A32" />
+      <token name="MAX_GEOMETRY_INPUT_COMPONENTS_EXT" value="0x9123" />
+      <token name="MAX_GEOMETRY_OUTPUT_COMPONENTS_EXT" value="0x9124" />
+      <token name="MAX_GEOMETRY_OUTPUT_VERTICES_EXT" value="0x8DE0" />
+      <token name="MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS_EXT" value="0x8DE1" />
+      <token name="MAX_GEOMETRY_SHADER_INVOCATIONS_EXT" value="0x8E5A" />
+      <token name="MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_EXT" value="0x8C29" />
+      <token name="MAX_GEOMETRY_ATOMIC_COUNTER_BUFFERS_EXT" value="0x92CF" />
+      <token name="MAX_GEOMETRY_ATOMIC_COUNTERS_EXT" value="0x92D5" />
+      <token name="MAX_GEOMETRY_IMAGE_UNIFORMS_EXT" value="0x90CD" />
+      <token name="MAX_GEOMETRY_SHADER_STORAGE_BLOCKS_EXT" value="0x90D7" />
+      <token name="FIRST_VERTEX_CONVENTION_EXT" value="0x8E4D" />
+      <token name="LAST_VERTEX_CONVENTION_EXT" value="0x8E4E" />
+      <token name="UNDEFINED_VERTEX_EXT" value="0x8260" />
+      <token name="PRIMITIVES_GENERATED_EXT" value="0x8C87" />
+      <token name="FRAMEBUFFER_DEFAULT_LAYERS_EXT" value="0x9312" />
+      <token name="MAX_FRAMEBUFFER_LAYERS_EXT" value="0x9317" />
+      <token name="FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS_EXT" value="0x8DA8" />
+      <token name="FRAMEBUFFER_ATTACHMENT_LAYERED_EXT" value="0x8DA7" />
+      <token name="REFERENCED_BY_GEOMETRY_SHADER_EXT" value="0x9309" />
+    </enum>
+    <enum name="EXT_gpu_shader5" />
     <enum name="EXT_instanced_arrays">
       <token name="VERTEX_ATTRIB_ARRAY_DIVISOR_EXT" value="0x88FE" />
     </enum>
@@ -42166,6 +42248,8 @@
       <token name="COMPRESSED_SRGB_PVRTC_4BPPV1_EXT" value="0x8A55" />
       <token name="COMPRESSED_SRGB_ALPHA_PVRTC_2BPPV1_EXT" value="0x8A56" />
       <token name="COMPRESSED_SRGB_ALPHA_PVRTC_4BPPV1_EXT" value="0x8A57" />
+      <token name="COMPRESSED_SRGB_ALPHA_PVRTC_2BPPV2_IMG" value="0x93F0" />
+      <token name="COMPRESSED_SRGB_ALPHA_PVRTC_4BPPV2_IMG" value="0x93F1" />
     </enum>
     <enum name="EXT_read_format_bgra">
       <token name="BGRA_EXT" value="0x80E1" />
@@ -42194,7 +42278,9 @@
     <enum name="EXT_shader_framebuffer_fetch">
       <token name="FRAGMENT_SHADER_DISCARDS_SAMPLES_EXT" value="0x8A52" />
     </enum>
+    <enum name="EXT_shader_implicit_conversions" />
     <enum name="EXT_shader_integer_mix" />
+    <enum name="EXT_shader_io_blocks" />
     <enum name="EXT_shader_pixel_local_storage">
       <token name="MAX_SHADER_PIXEL_LOCAL_STORAGE_FAST_SIZE_EXT" value="0x8F63" />
       <token name="MAX_SHADER_PIXEL_LOCAL_STORAGE_SIZE_EXT" value="0x8F67" />
@@ -42216,6 +42302,75 @@
     <enum name="EXT_sRGB_write_control">
       <token name="FRAMEBUFFER_SRGB_EXT" value="0x8DB9" />
     </enum>
+    <enum name="EXT_tessellation_shader">
+      <token name="PATCHES_EXT" value="0x000E" />
+      <token name="PATCH_VERTICES_EXT" value="0x8E72" />
+      <token name="TESS_CONTROL_OUTPUT_VERTICES_EXT" value="0x8E75" />
+      <token name="TESS_GEN_MODE_EXT" value="0x8E76" />
+      <token name="TESS_GEN_SPACING_EXT" value="0x8E77" />
+      <token name="TESS_GEN_VERTEX_ORDER_EXT" value="0x8E78" />
+      <token name="TESS_GEN_POINT_MODE_EXT" value="0x8E79" />
+      <token name="TRIANGLES" value="0x0004" />
+      <token name="ISOLINES_EXT" value="0x8E7A" />
+      <token name="QUADS_EXT" value="0x0007" />
+      <token name="EQUAL" value="0x0202" />
+      <token name="FRACTIONAL_ODD_EXT" value="0x8E7B" />
+      <token name="FRACTIONAL_EVEN_EXT" value="0x8E7C" />
+      <token name="CCW" value="0x0901" />
+      <token name="CW" value="0x0900" />
+      <token name="MAX_PATCH_VERTICES_EXT" value="0x8E7D" />
+      <token name="MAX_TESS_GEN_LEVEL_EXT" value="0x8E7E" />
+      <token name="MAX_TESS_CONTROL_UNIFORM_COMPONENTS_EXT" value="0x8E7F" />
+      <token name="MAX_TESS_EVALUATION_UNIFORM_COMPONENTS_EXT" value="0x8E80" />
+      <token name="MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS_EXT" value="0x8E81" />
+      <token name="MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS_EXT" value="0x8E82" />
+      <token name="MAX_TESS_CONTROL_OUTPUT_COMPONENTS_EXT" value="0x8E83" />
+      <token name="MAX_TESS_PATCH_COMPONENTS_EXT" value="0x8E84" />
+      <token name="MAX_TESS_CONTROL_TOTAL_OUTPUT_COMPONENTS_EXT" value="0x8E85" />
+      <token name="MAX_TESS_EVALUATION_OUTPUT_COMPONENTS_EXT" value="0x8E86" />
+      <token name="MAX_TESS_CONTROL_UNIFORM_BLOCKS_EXT" value="0x8E89" />
+      <token name="MAX_TESS_EVALUATION_UNIFORM_BLOCKS_EXT" value="0x8E8A" />
+      <token name="MAX_TESS_CONTROL_INPUT_COMPONENTS_EXT" value="0x886C" />
+      <token name="MAX_TESS_EVALUATION_INPUT_COMPONENTS_EXT" value="0x886D" />
+      <token name="MAX_COMBINED_TESS_CONTROL_UNIFORM_COMPONENTS_EXT" value="0x8E1E" />
+      <token name="MAX_COMBINED_TESS_EVALUATION_UNIFORM_COMPONENTS_EXT" value="0x8E1F" />
+      <token name="MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS_EXT" value="0x92CD" />
+      <token name="MAX_TESS_EVALUATION_ATOMIC_COUNTER_BUFFERS_EXT" value="0x92CE" />
+      <token name="MAX_TESS_CONTROL_ATOMIC_COUNTERS_EXT" value="0x92D3" />
+      <token name="MAX_TESS_EVALUATION_ATOMIC_COUNTERS_EXT" value="0x92D4" />
+      <token name="MAX_TESS_CONTROL_IMAGE_UNIFORMS_EXT" value="0x90CB" />
+      <token name="MAX_TESS_EVALUATION_IMAGE_UNIFORMS_EXT" value="0x90CC" />
+      <token name="MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS_EXT" value="0x90D8" />
+      <token name="MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS_EXT" value="0x90D9" />
+      <token name="PRIMITIVE_RESTART_FOR_PATCHES_SUPPORTED" value="0x8221" />
+      <token name="IS_PER_PATCH_EXT" value="0x92E7" />
+      <token name="REFERENCED_BY_TESS_CONTROL_SHADER_EXT" value="0x9307" />
+      <token name="REFERENCED_BY_TESS_EVALUATION_SHADER_EXT" value="0x9308" />
+      <token name="TESS_CONTROL_SHADER_EXT" value="0x8E88" />
+      <token name="TESS_EVALUATION_SHADER_EXT" value="0x8E87" />
+      <token name="TESS_CONTROL_SHADER_BIT_EXT" value="0x00000008" />
+      <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
+    </enum>
+    <enum name="EXT_texture_border_clamp">
+      <token name="TEXTURE_BORDER_COLOR_EXT" value="0x1004" />
+      <token name="CLAMP_TO_BORDER_EXT" value="0x812D" />
+    </enum>
+    <enum name="EXT_texture_buffer">
+      <token name="TEXTURE_BUFFER_EXT" value="0x8C2A" />
+      <token name="TEXTURE_BUFFER_BINDING_EXT" value="0x8C2A" />
+      <token name="MAX_TEXTURE_BUFFER_SIZE_EXT" value="0x8C2B" />
+      <token name="TEXTURE_BINDING_BUFFER_EXT" value="0x8C2C" />
+      <token name="TEXTURE_BUFFER_DATA_STORE_BINDING_EXT" value="0x8C2D" />
+      <token name="TEXTURE_BUFFER_OFFSET_ALIGNMENT_EXT" value="0x919F" />
+      <token name="SAMPLER_BUFFER_EXT" value="0x8DC2" />
+      <token name="INT_SAMPLER_BUFFER_EXT" value="0x8DD0" />
+      <token name="UNSIGNED_INT_SAMPLER_BUFFER_EXT" value="0x8DD8" />
+      <token name="IMAGE_BUFFER_EXT" value="0x9051" />
+      <token name="INT_IMAGE_BUFFER_EXT" value="0x905C" />
+      <token name="UNSIGNED_INT_IMAGE_BUFFER_EXT" value="0x9067" />
+      <token name="TEXTURE_BUFFER_OFFSET_EXT" value="0x919D" />
+      <token name="TEXTURE_BUFFER_SIZE_EXT" value="0x919E" />
+    </enum>
     <enum name="EXT_texture_compression_dxt1">
       <token name="COMPRESSED_RGB_S3TC_DXT1_EXT" value="0x83F0" />
       <token name="COMPRESSED_RGBA_S3TC_DXT1_EXT" value="0x83F1" />
@@ -42225,6 +42380,17 @@
       <token name="COMPRESSED_RGBA_S3TC_DXT1_EXT" value="0x83F1" />
       <token name="COMPRESSED_RGBA_S3TC_DXT3_EXT" value="0x83F2" />
       <token name="COMPRESSED_RGBA_S3TC_DXT5_EXT" value="0x83F3" />
+    </enum>
+    <enum name="EXT_texture_cube_map_array">
+      <token name="TEXTURE_CUBE_MAP_ARRAY_EXT" value="0x9009" />
+      <token name="TEXTURE_BINDING_CUBE_MAP_ARRAY_EXT" value="0x900A" />
+      <token name="SAMPLER_CUBE_MAP_ARRAY_EXT" value="0x900C" />
+      <token name="SAMPLER_CUBE_MAP_ARRAY_SHADOW_EXT" value="0x900D" />
+      <token name="INT_SAMPLER_CUBE_MAP_ARRAY_EXT" value="0x900E" />
+      <token name="UNSIGNED_INT_SAMPLER_CUBE_MAP_ARRAY_EXT" value="0x900F" />
+      <token name="IMAGE_CUBE_MAP_ARRAY_EXT" value="0x9054" />
+      <token name="INT_IMAGE_CUBE_MAP_ARRAY_EXT" value="0x905F" />
+      <token name="UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY_EXT" value="0x906A" />
     </enum>
     <enum name="EXT_texture_filter_anisotropic">
       <token name="TEXTURE_MAX_ANISOTROPY_EXT" value="0x84FE" />
@@ -42271,6 +42437,13 @@
     </enum>
     <enum name="EXT_texture_type_2_10_10_10_REV">
       <token name="UNSIGNED_INT_2_10_10_10_REV_EXT" value="0x8368" />
+    </enum>
+    <enum name="EXT_texture_view">
+      <token name="TEXTURE_VIEW_MIN_LEVEL_EXT" value="0x82DB" />
+      <token name="TEXTURE_VIEW_NUM_LEVELS_EXT" value="0x82DC" />
+      <token name="TEXTURE_VIEW_MIN_LAYER_EXT" value="0x82DD" />
+      <token name="TEXTURE_VIEW_NUM_LAYERS_EXT" value="0x82DE" />
+      <token name="TEXTURE_IMMUTABLE_LEVELS" value="0x82DF" />
     </enum>
     <enum name="EXT_unpack_subimage">
       <token name="UNPACK_ROW_LENGTH_EXT" value="0x0CF2" />
@@ -44005,9 +44178,11 @@
       <token name="LINE_STRIP_ADJACENCY_ARB" value="0x000B" />
       <token name="LINE_STRIP_ADJACENCY_EXT" value="0x000B" />
       <token name="PATCHES" value="0x000E" />
+      <token name="PATCHES_EXT" value="0x000E" />
       <token name="POINTS" value="0x0000" />
       <token name="POLYGON" value="0x0009" deprecated="3.2" />
       <token name="QUADS" value="0x0007" deprecated="3.2" />
+      <token name="QUADS_EXT" value="0x0007" />
       <token name="QUAD_STRIP" value="0x0008" deprecated="3.2" />
       <token name="TRIANGLES" value="0x0004" />
       <token name="TRIANGLES_ADJACENCY" value="0x000C" />
@@ -44305,8 +44480,11 @@
       <token name="FRAGMENT_SHADER_BIT" value="0x00000002" />
       <token name="FRAGMENT_SHADER_BIT_EXT" value="0x00000002" />
       <token name="GEOMETRY_SHADER_BIT" value="0x00000004" />
+      <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
       <token name="TESS_CONTROL_SHADER_BIT" value="0x00000008" />
+      <token name="TESS_CONTROL_SHADER_BIT_EXT" value="0x00000008" />
       <token name="TESS_EVALUATION_SHADER_BIT" value="0x00000010" />
+      <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
@@ -44365,6 +44543,31 @@
       <param name="mode" type="BlendEquationModeEXT" flow="in" />
       <returns type="void" />
     </function>
+    <function name="BlendEquationiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="buf" type="GLuint" flow="in" />
+      <param name="mode" type="GLenum" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BlendEquationSeparateiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="buf" type="GLuint" flow="in" />
+      <param name="modeRGB" type="GLenum" flow="in" />
+      <param name="modeAlpha" type="GLenum" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BlendFunciEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="buf" type="GLuint" flow="in" />
+      <param name="src" type="GLenum" flow="in" />
+      <param name="dst" type="GLenum" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BlendFuncSeparateiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="buf" type="GLuint" flow="in" />
+      <param name="srcRGB" type="GLenum" flow="in" />
+      <param name="dstRGB" type="GLenum" flow="in" />
+      <param name="srcAlpha" type="GLenum" flow="in" />
+      <param name="dstAlpha" type="GLenum" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="BlendParameteriNV" category="NV_blend_equation_advanced" extension="NV">
       <param name="pname" type="GLenum" flow="in" />
       <param name="value" type="GLint" flow="in" />
@@ -44402,6 +44605,14 @@
       <param name="timeout" type="GLuint64" flow="in" />
       <returns type="GLenum" />
     </function>
+    <function name="ColorMaskiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="index" type="GLuint" flow="in" />
+      <param name="r" type="Boolean" flow="in" />
+      <param name="g" type="Boolean" flow="in" />
+      <param name="b" type="Boolean" flow="in" />
+      <param name="a" type="Boolean" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="CompressedTexImage3DOES" category="OES_texture_3D" extension="OES">
       <param name="target" type="GLenum" flow="in" />
       <param name="level" type="GLint" flow="in" />
@@ -44434,6 +44645,24 @@
       <param name="readOffset" type="BufferOffset" flow="in" />
       <param name="writeOffset" type="BufferOffset" flow="in" />
       <param name="size" type="BufferSize" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="CopyImageSubDataEXT" category="EXT_copy_image" extension="EXT">
+      <param name="srcName" type="GLuint" flow="in" />
+      <param name="srcTarget" type="GLenum" flow="in" />
+      <param name="srcLevel" type="GLint" flow="in" />
+      <param name="srcX" type="GLint" flow="in" />
+      <param name="srcY" type="GLint" flow="in" />
+      <param name="srcZ" type="GLint" flow="in" />
+      <param name="dstName" type="GLuint" flow="in" />
+      <param name="dstTarget" type="GLenum" flow="in" />
+      <param name="dstLevel" type="GLint" flow="in" />
+      <param name="dstX" type="GLint" flow="in" />
+      <param name="dstY" type="GLint" flow="in" />
+      <param name="dstZ" type="GLint" flow="in" />
+      <param name="srcWidth" type="GLsizei" flow="in" />
+      <param name="srcHeight" type="GLsizei" flow="in" />
+      <param name="srcDepth" type="GLsizei" flow="in" />
       <returns type="void" />
     </function>
     <function name="CopyTexSubImage3DOES" category="OES_texture_3D" extension="OES">
@@ -44562,6 +44791,11 @@
       <param name="driverControl" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
+    <function name="DisableiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="DiscardFramebufferEXT" category="EXT_discard_framebuffer" extension="EXT">
       <param name="target" type="GLenum" flow="in" />
       <param name="numAttachments" type="GLsizei" flow="in" />
@@ -44641,6 +44875,11 @@
     </function>
     <function name="EnableDriverControlQCOM" category="QCOM_driver_control" extension="QCOM">
       <param name="driverControl" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="EnableiEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="EndPerfMonitorAMD" category="AMD_performance_monitor" extension="AMD">
@@ -44779,6 +45018,13 @@
       <param name="texture" type="GLuint" flow="in" />
       <param name="level" type="GLint" flow="in" />
       <param name="zoffset" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="FramebufferTextureEXT" category="EXT_geometry_shader" extension="EXT">
+      <param name="target" type="FramebufferTarget" flow="in" />
+      <param name="attachment" type="FramebufferAttachment" flow="in" />
+      <param name="texture" type="Texture" flow="in" />
+      <param name="level" type="CheckedInt32" flow="in" />
       <returns type="void" />
     </function>
     <function name="GenFencesNV" category="NV_fence" extension="NV">
@@ -45070,12 +45316,36 @@
       <param name="params" type="GLuint *" flow="out" />
       <returns type="void" />
     </function>
+    <function name="GetSamplerParameterIivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="sampler" type="GLuint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="GetSamplerParameterIuivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="sampler" type="GLuint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="GLuint *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
     <function name="GetSyncivAPPLE" category="APPLE_sync" extension="APPLE">
       <param name="sync" type="GLsync" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
       <param name="bufSize" type="GLsizei" flow="in" />
       <param name="length" type="GLsizei *" flow="out" />
       <param name="values" type="GLint *" flow="out" count="bufSize" />
+      <returns type="void" />
+    </function>
+    <function name="GetTexParameterIivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="pname" type="GetTextureParameter" flow="in" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="GetTexParameterIuivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="pname" type="GetTextureParameter" flow="in" />
+      <param name="params" type="GLuint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetTranslatedShaderSourceANGLE" category="ANGLE_translated_shader_source" extension="ANGLE">
@@ -45089,6 +45359,11 @@
       <param name="length" type="GLsizei" flow="in" />
       <param name="marker" type="GLchar *" flow="in" />
       <returns type="void" />
+    </function>
+    <function name="IsEnablediEXT" category="EXT_draw_buffers_indexed" extension="EXT">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <returns type="Boolean" />
     </function>
     <function name="IsFenceNV" category="NV_fence" extension="NV">
       <param name="fence" type="FenceNV" flow="in" />
@@ -45172,6 +45447,11 @@
       <param name="ptr" type="void *" flow="in" />
       <param name="length" type="GLsizei" flow="in" />
       <param name="label" type="GLchar *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="PatchParameteriEXT" category="EXT_tessellation_shader" extension="EXT">
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="value" type="GLint" flow="in" />
       <returns type="void" />
     </function>
     <function name="PopDebugGroup" category="KHR_debug" extension="Core">
@@ -45529,6 +45809,18 @@
     <function name="ResolveMultisampleFramebufferAPPLE" category="APPLE_framebuffer_multisample" extension="APPLE">
       <returns type="void" />
     </function>
+    <function name="SamplerParameterIivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="sampler" type="GLuint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="GLint *" flow="in" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="SamplerParameterIuivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="sampler" type="GLuint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="GLuint *" flow="in" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
     <function name="SelectPerfMonitorCountersAMD" category="AMD_performance_monitor" extension="AMD">
       <param name="monitor" type="GLuint" flow="in" />
       <param name="enable" type="Boolean" flow="in" />
@@ -45554,6 +45846,20 @@
       <param name="fence" type="FenceNV" flow="in" />
       <returns type="Boolean" />
     </function>
+    <function name="TexBufferEXT" category="EXT_texture_buffer" extension="EXT">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="internalformat" type="GLenum" flow="in" />
+      <param name="buffer" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="TexBufferRangeEXT" category="EXT_texture_buffer" extension="EXT">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="internalformat" type="GLenum" flow="in" />
+      <param name="buffer" type="GLuint" flow="in" />
+      <param name="offset" type="BufferOffset" flow="in" />
+      <param name="size" type="BufferSize" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="TexImage3DOES" category="OES_texture_3D" extension="OES">
       <param name="target" type="GLenum" flow="in" />
       <param name="level" type="GLint" flow="in" />
@@ -45565,6 +45871,18 @@
       <param name="format" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
       <param name="pixels" type="void *" flow="in" count="COMPSIZE(format,type,width,height,depth)" />
+      <returns type="void" />
+    </function>
+    <function name="TexParameterIivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="pname" type="TextureParameterName" flow="in" />
+      <param name="params" type="GLint *" flow="in" count="COMPSIZE(pname)" />
+      <returns type="void" />
+    </function>
+    <function name="TexParameterIuivEXT" category="EXT_texture_border_clamp" extension="EXT">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="pname" type="TextureParameterName" flow="in" />
+      <param name="params" type="GLuint *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="TexStorage1DEXT" category="EXT_texture_storage" extension="EXT">
@@ -45640,6 +45958,17 @@
       <param name="width" type="GLsizei" flow="in" />
       <param name="height" type="GLsizei" flow="in" />
       <param name="depth" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="TextureViewEXT" category="EXT_texture_view" extension="EXT">
+      <param name="texture" type="GLuint" flow="in" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="origtexture" type="GLuint" flow="in" />
+      <param name="internalformat" type="GLenum" flow="in" />
+      <param name="minlevel" type="GLuint" flow="in" />
+      <param name="numlevels" type="GLuint" flow="in" />
+      <param name="minlayer" type="GLuint" flow="in" />
+      <param name="numlayers" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x3fvNV" category="NV_non_square_matrices" extension="NV">
