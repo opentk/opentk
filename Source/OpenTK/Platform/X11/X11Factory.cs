@@ -34,7 +34,25 @@ namespace OpenTK.Platform.X11
 {
     class X11Factory : PlatformFactoryBase
     {
-        static IMouseDriver2 MouseDriver;
+        IInputDriver2 input_driver;
+        IInputDriver2 InputDriver
+        {
+            get
+            {
+                if (input_driver == null)
+                {
+                    if (XI2MouseKeyboard.IsSupported(IntPtr.Zero))
+                    {
+                        input_driver = new XI2Input();
+                    }
+                    else
+                    {
+                        input_driver = new X11Input();
+                    }
+                }
+                return input_driver;
+            }
+        }
 
         #region Constructors
 
@@ -83,25 +101,17 @@ namespace OpenTK.Platform.X11
 
         public override IKeyboardDriver2 CreateKeyboardDriver()
         {
-            return new X11Keyboard();
+            return InputDriver.KeyboardDriver;
         }
 
         public override IMouseDriver2 CreateMouseDriver()
         {
-            lock (this)
-            {
-                MouseDriver =
-                    MouseDriver ??
-                    (XI2Mouse.IsSupported(IntPtr.Zero) ?
-                        (IMouseDriver2)new XI2Mouse() : // Requires xorg 1.7 or higher.
-                        (IMouseDriver2)new X11Mouse()); // Always supported.
-                return MouseDriver;
-            }
+            return InputDriver.MouseDriver;
         }
 
         public override IJoystickDriver2 CreateJoystickDriver()
         {
-            return new X11Joystick();
+            return InputDriver.JoystickDriver;
         }
 
         #endregion
@@ -109,12 +119,12 @@ namespace OpenTK.Platform.X11
         protected override void Dispose(bool manual)
         {
             base.Dispose(manual);
-            if (manual && MouseDriver != null)
+            if (manual)
             {
-                if (MouseDriver is IDisposable)
+                if (input_driver is IDisposable)
                 {
-                    (MouseDriver as IDisposable).Dispose();
-                    MouseDriver = null;
+                    (input_driver as IDisposable).Dispose();
+                    input_driver = null;
                 }
             }
         }

@@ -1,9 +1,30 @@
-﻿#region --- License ---
-/* Licensed under the MIT/X11 license.
- * Copyright (c) 2006-2008 the OpenTK team.
- * This notice may not be removed.
- * See license.txt for licensing detailed licensing details.
- */
+﻿﻿#region License
+//
+// X11KeyMap.cs
+//
+// Author:
+//       Stefanos Apostolopoulos <stapostol@gmail.com>
+//
+// Copyright (c) 2006-2014 
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 #endregion
 
 using System;
@@ -14,9 +35,230 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    static class X11KeyMap
+    class X11KeyMap
     {
-        public static Key GetKey(XKey key)
+        // Keycode lookup table for current layout
+        readonly Key[] keycodes = new Key[256];
+        readonly bool xkb_supported;
+
+        internal X11KeyMap(IntPtr display)
+        {
+            xkb_supported = Xkb.IsSupported(display);
+            if (xkb_supported)
+            {
+                RefreshKeycodes(display);
+            }
+        }
+
+        // Refreshes the keycodes lookup table based
+        // on the current keyboard layout.
+        internal void RefreshKeycodes(IntPtr display)
+        {
+            // Approach inspired by GLFW: http://www.glfw.org/
+            // Huge props to the GLFW team! 
+            if (xkb_supported)
+            {
+                unsafe
+                {
+                    // Xkb.GetKeyboard appears to be broken (multiple bug reports across distros)
+                    // so use Xkb.AllocKeyboard with Xkb.GetNames instead.
+                    XkbDesc* keyboard = Xkb.AllocKeyboard(display);
+                    if (keyboard != null)
+                    {
+                        Xkb.GetNames(display, XkbNamesMask.All, keyboard);
+
+                        for (int i = 0; i < keycodes.Length; i++)
+                        {
+                            keycodes[i] = Key.Unknown;
+                        }
+
+                        // Map all alphanumeric keys of this layout
+                        // Symbols are handled in GetKey() instead.
+                        for (int i = keyboard->min_key_code; i <= keyboard->max_key_code; ++i)
+                        {
+                            string name = new string((sbyte*)keyboard->names->keys[i].name, 0, Xkb.KeyNameLength);
+
+                            Key key = Key.Unknown;
+                            switch (name)
+                            {
+                                case "TLDE":
+                                    key = Key.Tilde;
+                                    break;
+                                case "AE01":
+                                    key = Key.Number1;
+                                    break;
+                                case "AE02":
+                                    key = Key.Number2;
+                                    break;
+                                case "AE03":
+                                    key = Key.Number3;
+                                    break;
+                                case "AE04":
+                                    key = Key.Number4;
+                                    break;
+                                case "AE05":
+                                    key = Key.Number5;
+                                    break;
+                                case "AE06":
+                                    key = Key.Number6;
+                                    break;
+                                case "AE07":
+                                    key = Key.Number7;
+                                    break;
+                                case "AE08":
+                                    key = Key.Number8;
+                                    break;
+                                case "AE09":
+                                    key = Key.Number9;
+                                    break;
+                                case "AE10":
+                                    key = Key.Number0;
+                                    break;
+                                case "AE11":
+                                    key = Key.Minus;
+                                    break;
+                                case "AE12":
+                                    key = Key.Plus;
+                                    break;
+                                case "AD01":
+                                    key = Key.Q;
+                                    break;
+                                case "AD02":
+                                    key = Key.W;
+                                    break;
+                                case "AD03":
+                                    key = Key.E;
+                                    break;
+                                case "AD04":
+                                    key = Key.R;
+                                    break;
+                                case "AD05":
+                                    key = Key.T;
+                                    break;
+                                case "AD06":
+                                    key = Key.Y;
+                                    break;
+                                case "AD07":
+                                    key = Key.U;
+                                    break;
+                                case "AD08":
+                                    key = Key.I;
+                                    break;
+                                case "AD09":
+                                    key = Key.O;
+                                    break;
+                                case "AD10":
+                                    key = Key.P;
+                                    break;
+                                case "AD11":
+                                    key = Key.BracketLeft;
+                                    break;
+                                case "AD12":
+                                    key = Key.BracketRight;
+                                    break;
+                                case "AC01":
+                                    key = Key.A;
+                                    break;
+                                case "AC02":
+                                    key = Key.S;
+                                    break;
+                                case "AC03":
+                                    key = Key.D;
+                                    break;
+                                case "AC04":
+                                    key = Key.F;
+                                    break;
+                                case "AC05":
+                                    key = Key.G;
+                                    break;
+                                case "AC06":
+                                    key = Key.H;
+                                    break;
+                                case "AC07":
+                                    key = Key.J;
+                                    break;
+                                case "AC08":
+                                    key = Key.K;
+                                    break;
+                                case "AC09":
+                                    key = Key.L;
+                                    break;
+                                case "AC10":
+                                    key = Key.Semicolon;
+                                    break;
+                                case "AC11":
+                                    key = Key.Quote;
+                                    break;
+                                case "AB01":
+                                    key = Key.Z;
+                                    break;
+                                case "AB02":
+                                    key = Key.X;
+                                    break;
+                                case "AB03":
+                                    key = Key.C;
+                                    break;
+                                case "AB04":
+                                    key = Key.V;
+                                    break;
+                                case "AB05":
+                                    key = Key.B;
+                                    break;
+                                case "AB06":
+                                    key = Key.N;
+                                    break;
+                                case "AB07":
+                                    key = Key.M;
+                                    break;
+                                case "AB08":
+                                    key = Key.Comma;
+                                    break;
+                                case "AB09":
+                                    key = Key.Period;
+                                    break;
+                                case "AB10":
+                                    key = Key.Slash;
+                                    break;
+                                case "BKSL":
+                                    key = Key.BackSlash;
+                                    break;
+                                case "LSGT":
+                                    key = Key.Unknown;
+                                    break;
+                                default:
+                                    key = Key.Unknown;
+                                    break;
+                            }
+
+                            keycodes[i] = key;
+                        }
+
+                        Xkb.FreeKeyboard(keyboard, 0, true);
+                    }
+                }
+            }
+
+            // Translate unknown keys (and symbols) using
+            // regular layout-dependent GetKey()
+            for (int i = 0; i < 256; i++)
+            {
+                if (keycodes[i] == Key.Unknown)
+                {
+                    // TranslateKeyCode expects a XKeyEvent structure
+                    // Make one up
+                    XKeyEvent e = new XKeyEvent();
+                    e.display = display;
+                    e.keycode = i;
+                    Key key = Key.Unknown;
+                    if (TranslateKeyEvent(ref e, out key))
+                    {
+                        keycodes[i] = key;
+                    }
+                }
+            }
+        }
+
+        static Key TranslateXKey(XKey key)
         {
             switch (key)
             {
@@ -371,14 +613,26 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        internal static bool TranslateKey(ref XKeyEvent e, out Key key)
+        bool TranslateKeyEvent(ref XKeyEvent e, out Key key)
+        {
+            if (xkb_supported)
+            {
+                return TranslateKeyXkb(e.display, e.keycode, out key);
+            }
+            else
+            {
+                return TranslateKeyX11(ref e, out key);
+            }
+        }
+
+        bool TranslateKeyX11(ref XKeyEvent e, out Key key)
         {
             XKey keysym = (XKey)API.LookupKeysym(ref e, 0);
             XKey keysym2 = (XKey)API.LookupKeysym(ref e, 1);
-            key = X11KeyMap.GetKey(keysym);
+            key = X11KeyMap.TranslateXKey(keysym);
             if (key == Key.Unknown)
             {
-                key = X11KeyMap.GetKey(keysym2);
+                key = X11KeyMap.TranslateXKey(keysym2);
             }
             if (key == Key.Unknown)
             {
@@ -386,6 +640,59 @@ namespace OpenTK.Platform.X11
             }
 
             return key != Key.Unknown;
+        }
+
+        bool TranslateKeyXkb(IntPtr display, int keycode, out Key key)
+        {
+            if (keycode < 8 || keycode > 255)
+            {
+                key = Key.Unknown;
+                return false;
+            }
+
+            // Translate the numeric keypad using the secondary group
+            // (equivalent to NumLock = on)
+            XKey keysym = Xkb.KeycodeToKeysym(display, keycode, 0, 1);
+            switch (keysym)
+            {
+                case XKey.KP_0: key = Key.Keypad0; return true;
+                case XKey.KP_1: key = Key.Keypad1; return true;
+                case XKey.KP_2: key = Key.Keypad2; return true;
+                case XKey.KP_3: key = Key.Keypad3; return true;
+                case XKey.KP_4: key = Key.Keypad4; return true;
+                case XKey.KP_5: key = Key.Keypad5; return true;
+                case XKey.KP_6: key = Key.Keypad6; return true;
+                case XKey.KP_7: key = Key.Keypad7; return true;
+                case XKey.KP_8: key = Key.Keypad8; return true;
+                case XKey.KP_9: key = Key.Keypad9; return true;
+                case XKey.KP_Separator:
+                case XKey.KP_Decimal: key = Key.KeypadDecimal; return true;
+                case XKey.KP_Equal: key = Key.Unknown; return false; // Todo: fixme
+                case XKey.KP_Enter: key = Key.KeypadEnter; return true;
+            }
+
+            // Translate non-alphanumeric keys using the primary group
+            keysym = Xkb.KeycodeToKeysym(display, keycode, 0, 0);
+            key = TranslateXKey(keysym);
+            return key != Key.Unknown;
+        }
+
+        internal bool TranslateKey(int keycode, out Key key)
+        {
+            if (keycode < 0 || keycode > 255)
+            {
+                key = Key.Unknown;
+            }
+            else
+            {
+                key = keycodes[keycode];
+            }
+            return key != Key.Unknown;
+        }
+
+        internal bool TranslateKey(ref XKeyEvent e, out Key key)
+        {
+            return TranslateKey(e.keycode, out key);
         }
 
         internal static MouseButton TranslateButton(int button, out float wheelx, out float wheely)

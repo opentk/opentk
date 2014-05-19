@@ -440,9 +440,6 @@ namespace OpenTK.Platform.X11
         public extern static bool XFilterEvent(ref XEvent xevent, IntPtr window);
 
         [DllImport("libX11")]
-        public extern static bool XkbSetDetectableAutoRepeat(IntPtr display, bool detectable, out bool supported);
-
-        [DllImport("libX11")]
         public extern static void XPeekEvent(IntPtr display, ref XEvent xevent);
 
         [DllImport("libX11", EntryPoint = "XGetVisualInfo")]

@@ -39,6 +39,7 @@ namespace OpenTK.Platform.X11
         readonly static string name = "Core X11 keyboard";
         readonly byte[] keys = new byte[32];
         readonly int KeysymsPerKeycode;
+        readonly X11KeyMap KeyMap;
         KeyboardState state = new KeyboardState();
 
         public X11Keyboard()
@@ -59,17 +60,15 @@ namespace OpenTK.Platform.X11
                         ref KeysymsPerKeycode);
                 Functions.XFree(keysym_ptr);
 
-                try
+                if (Xkb.IsSupported(display))
                 {
                     // Request that auto-repeat is only set on devices that support it physically.
                     // This typically means that it's turned off for keyboards what we want).
                     // We prefer this method over XAutoRepeatOff/On, because the latter needs to
                     // be reset before the program exits.
                     bool supported;
-                    Functions.XkbSetDetectableAutoRepeat(display, true, out supported);
-                }
-                catch
-                {
+                    Xkb.SetDetectableAutoRepeat(display, true, out supported);
+                    KeyMap = new X11KeyMap(display);
                 }
             }
         }
@@ -104,23 +103,13 @@ namespace OpenTK.Platform.X11
             using (new XLock(display))
             {
                 Functions.XQueryKeymap(display, keys);
-                for (int keycode = 8; keycode < 256; keycode++)
+                for (int keycode = 0; keycode < 256; keycode++)
                 {
                     bool pressed = (keys[keycode >> 3] >> (keycode & 0x07) & 0x01) != 0;
                     Key key;
-
-                    for (int mod = 0; mod < KeysymsPerKeycode; mod++)
+                    if (KeyMap.TranslateKey(keycode, out key))
                     {
-                        IntPtr keysym = Functions.XKeycodeToKeysym(display, (byte)keycode, mod);
-                        if (keysym != IntPtr.Zero)
-                        {
-                            key = X11KeyMap.GetKey((XKey)keysym);
-                            if (pressed)
-                                state.EnableBit((int)key);
-                            else
-                                state.DisableBit((int)key);
-                            break;
-                        }
+                        state[key] = pressed;
                     }
                 }
             }
