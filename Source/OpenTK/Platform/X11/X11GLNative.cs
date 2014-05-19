@@ -194,9 +194,6 @@ namespace OpenTK.Platform.X11
                     Functions.XStoreName(window.Display, window.Handle, title);
             }
 
-            // Set the window hints
-            SetWindowMinMax(_min_width, _min_height, -1, -1);            
-            
             XSizeHints hints = new XSizeHints();
             hints.base_width = width;
             hints.base_height = height;
@@ -216,6 +213,8 @@ namespace OpenTK.Platform.X11
                 // Set the window class hints
                 Functions.XSetClassHint(window.Display, window.Handle, ref class_hint);
             }
+
+            SetWindowMinMax(_min_width, _min_height, -1, -1);
 
             // Set the initial window size to ensure X, Y, Width, Height and the rest
             // return the correct values inside the constructor and the Load event.
@@ -395,33 +394,15 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                IntPtr actual_atom;
-                int actual_format;
-                IntPtr nitems;
-                IntPtr bytes_after;
-                IntPtr prop = IntPtr.Zero;
-                IntPtr atom;
-                //XWindowAttributes attributes;                
-
                 using (new XLock(window.Display))
                 {
-                    Functions.XGetWindowProperty(window.Display, window.Handle,
-                                                 _atom_net_wm_allowed_actions, IntPtr.Zero, new IntPtr(256), false,
-                                                 IntPtr.Zero, out actual_atom, out actual_format, out nitems,
-                                                 out bytes_after, ref prop);
-                    if ((long)nitems > 0 && prop != IntPtr.Zero)
+                    XSizeHints hints = new XSizeHints();
+                    IntPtr dummy;
+                    if (Functions.XGetWMNormalHints(window.Display, window.Handle, ref hints, out dummy) != 0)
                     {
-                        for (int i = 0; i < (long)nitems; i++)
-                        {
-                            atom = (IntPtr)Marshal.ReadIntPtr(prop, i * IntPtr.Size);
-    
-                            if (atom == _atom_net_wm_action_resize)
-                                return true;
-                        }
-                        Functions.XFree(prop);
+                        return hints.min_width != hints.max_width || hints.min_height != hints.max_height;
                     }
                 }
-                    
                 return false;
             }
         }
