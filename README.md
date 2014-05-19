@@ -42,7 +42,7 @@ OpenTK 1.1.2 was released on 19 May 2014.
 
 It contains performance and stability improvements and synchronizes the OpenGL and OpenGL ES bindings with the May 2014 Khronos specifications.
 
-=== Changelog: ===
+**Changelog:**
 
 1. New Cocoa backend for Mac OS X, with support for OpenGL 4.x and retina displays. Huge thanks to [Ollhax](https://github.com/Ollhax) for implementing the backend from scratch, including the necessary Cocoa bindings!
 2. Custom hardware cursors are now supported: `INativeWindow.Cursor = new MouseCursor(...)`
@@ -111,7 +111,7 @@ For details on coding style and best practices, refer to https://github.com/open
 
 Some areas we could really use your help:
 - Tutorials for OpenGL 3.x and 4.x. [Inspiration here](https://github.com/Groovounet/ogl-samples)
-- Porting to new platforms:
+- New platforms:
   - Native Client (NaCL)
   - Raspberry PI (EGL without X11)
   - Wayland
