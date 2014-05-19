@@ -802,6 +802,7 @@
     <Compile Include="Platform\X11\X11Input.cs" />
     <Compile Include="Platform\X11\XI2Input.cs" />
     <Compile Include="Platform\X11\XI2MouseKeyboard.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSFloat.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
