@@ -63,11 +63,6 @@ namespace OpenTK.Platform
 
         public abstract GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext();
 
-        public virtual IGraphicsMode CreateGraphicsMode()
-        {
-            throw new NotSupportedException();
-        }
-
         public abstract IKeyboardDriver2 CreateKeyboardDriver();
 
         public abstract IMouseDriver2 CreateMouseDriver();

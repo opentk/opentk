@@ -45,8 +45,6 @@ namespace OpenTK.Platform
 
         GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext();
         
-        IGraphicsMode CreateGraphicsMode();
-        
         OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver();
 
         OpenTK.Input.IMouseDriver2 CreateMouseDriver();
