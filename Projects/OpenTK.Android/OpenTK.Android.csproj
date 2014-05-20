@@ -605,9 +605,6 @@
     <Compile Include="..\..\Source\OpenTK\Platform\Android\GLCalls.cs">
       <Link>OpenTK\Platform\Android\GLCalls.cs</Link>
     </Compile>
-    <Compile Include="..\..\Source\OpenTK\Platform\Android\GameActivity.cs">
-      <Link>OpenTK\Platform\Android\GameActivity.cs</Link>
-    </Compile>
     <Compile Include="..\..\Source\OpenTK\Platform\Android\GameViewBase.cs">
       <Link>OpenTK\Platform\Android\GameViewBase.cs</Link>
     </Compile>
@@ -651,6 +648,13 @@
   <ItemGroup>
     <None Include="..\..\Source\OpenTK\OpenTK.dll.config">
       <Link>OpenTK\OpenTK.dll.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <Target Name="AfterBuild">
+    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)$(AssemblyName).dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)$(AssemblyName).dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) != 'Debug'" />
+    <Exec Command="mono $(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)$(AssemblyName).dll ..\..\OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="mono $(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)$(AssemblyName).dll ..\..\OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) != 'Debug'" />
+  </Target>
 </Project>
