@@ -14,7 +14,11 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
 
+#if XAMCORE_2_0
+using OpenGLES;
+#else
 using MonoTouch.OpenGLES;
+#endif
 
 using OpenTK.Graphics;
 

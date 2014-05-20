@@ -30,7 +30,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+#if XAMCORE_2_0
+using OpenGLES;
+#else
 using MonoTouch.OpenGLES;
+#endif
 
 using OpenTK.Graphics;
 
