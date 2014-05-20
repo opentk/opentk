@@ -149,8 +149,6 @@ namespace OpenTK
     {
     }
 
-    #endif
-
     // System.ComponentModel.EditorBrowrableAttribute
     class EditorBrowsableAttribute : Attribute
     {

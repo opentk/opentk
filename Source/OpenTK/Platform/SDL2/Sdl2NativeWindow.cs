@@ -67,13 +67,10 @@ namespace OpenTK.Platform.SDL2
         static readonly Dictionary<uint, Sdl2NativeWindow> windows =
             new Dictionary<uint, Sdl2NativeWindow>();
 
-        static readonly Sdl2KeyMap map = new Sdl2KeyMap();
-
         public Sdl2NativeWindow(
             int x, int y, int width, int height, string title,
             Graphics.GraphicsMode mode, GameWindowFlags options, DisplayDevice device,
-            int major, int minor, Graphics.GraphicsContextFlags flags,
-            IInputDriver input_driver)
+            int major, int minor, Graphics.GraphicsContextFlags flags)
         {
             lock (sync)
             {
@@ -90,7 +87,7 @@ namespace OpenTK.Platform.SDL2
                     (options_flags & WindowFlags.FULLSCREEN) != 0)
                     window_state = WindowState.Fullscreen;
 
-                if ((flags & WindowFlags.RESIZABLE) == 0)
+                if ((options_flags & WindowFlags.RESIZABLE) == 0)
                     window_border = WindowBorder.Fixed;
 
                 IntPtr handle;
