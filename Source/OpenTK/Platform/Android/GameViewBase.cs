@@ -1099,6 +1099,50 @@ namespace OpenTK
 			}
 		}
 
+        public Icon Icon {
+            get {
+                throw new NotSupportedException ();
+            }
+            set {
+                throw new NotImplementedException ();
+            }
+        }
+
+        /// <summary>This member is not supported.</summary>
+        public event EventHandler<EventArgs> IconChanged;
+
+        public MouseCursor Cursor {
+            get {
+                throw new NotSupportedException ();
+            }
+            set {
+                throw new NotImplementedException ();
+            }
+        }
+
+        public bool CursorVisible {
+            get {
+                throw new NotSupportedException ();
+            }
+            set {
+                throw new NotImplementedException ();
+            }
+        }
+
+        /// <summary>This member is not supported.</summary>
+        public event EventHandler<Input.KeyboardKeyEventArgs> KeyDown;
+        /// <summary>This member is not supported.</summary>
+        public event EventHandler<Input.KeyboardKeyEventArgs> KeyUp;
+        /// <summary>This member is not supported.</summary>
+        public event EventHandler<Input.MouseButtonEventArgs> MouseDown;
+        /// <summary>This member is not supported.</summary>
+        public event EventHandler<Input.MouseButtonEventArgs> MouseUp;
+        /// <summary>This member is not supported.</summary>
+        public event EventHandler<Input.MouseMoveEventArgs> MouseMove;
+        /// <summary>This member is not supported.</summary>
+        public event EventHandler<Input.MouseWheelEventArgs> MouseWheel;
+
+
 #if OPENTK_1
 		public OpenTK.Input.IInputDriver InputDriver {
 			get {

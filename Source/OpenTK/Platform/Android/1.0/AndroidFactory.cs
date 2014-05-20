@@ -18,7 +18,7 @@ namespace OpenTK.Platform.Android
     {
         #region IPlatformFactory Members
 
-        public virtual INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public virtual INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
         {
 			throw new NotImplementedException ();
         }
@@ -65,6 +65,30 @@ namespace OpenTK.Platform.Android
         }
 
         public virtual OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual OpenTK.Input.IJoystickDriver2 CreateJoystickDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual OpenTK.Input.IJoystickDriver CreateLegacyJoystickDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
         {
             throw new NotImplementedException();
         }

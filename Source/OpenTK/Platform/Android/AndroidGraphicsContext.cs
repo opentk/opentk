@@ -209,6 +209,11 @@ namespace OpenTK.Platform.Android {
 			return IntPtr.Zero;
 		}
 
+        IntPtr IGraphicsContextInternal.GetAddress(IntPtr function)
+        {
+            return Egl.Egl.GetProcAddress(function);
+        }
+
 		public void Dispose()
 		{
 			Dispose(true);
@@ -398,6 +403,14 @@ namespace OpenTK.Platform.Android {
 				eglDisplay = null;
 			}
 		}
+
+        public IntPtr Handle
+        {
+            get
+            {
+                return Surface.Handle;
+            }
+        }
 
 #region IDisposable Members
 
