@@ -46,7 +46,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>DEBUG;TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;WIN32;CARBON;COCOA;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <DocumentationFile>..\..\Binaries\OpenTK\Debug\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>False</Optimize>
@@ -63,7 +63,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
+    <DefineConstants>TRACE;WIN32;CARBON;COCOA;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
@@ -81,7 +81,7 @@
     <DebugType>pdbonly</DebugType>
     <WarningLevel>4</WarningLevel>
     <Optimize>True</Optimize>
-    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
+    <DefineConstants>TRACE;WIN32;CARBON;COCOA;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
@@ -92,7 +92,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
+    <DefineConstants>TRACE;WIN32;CARBON;COCOA;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>

@@ -335,7 +335,11 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle)
         {
+            #if COCOA
             return new OpenTK.Platform.MacOS.CocoaWindowInfo(windowHandle);
+            #else
+            return new Dummy.DummyWindowInfo();
+            #endif
         }
 
         /// <summary>
@@ -346,7 +350,11 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle, IntPtr viewHandle)
         {
+            #if COCOA
             return new OpenTK.Platform.MacOS.CocoaWindowInfo(windowHandle, viewHandle);
+            #else
+            return new Dummy.DummyWindowInfo();
+            #endif
         }
 
         #endregion
