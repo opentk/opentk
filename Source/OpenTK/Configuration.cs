@@ -313,12 +313,14 @@ namespace OpenTK
                 {
 #if ANDROID
                     runningOnMono = true;
+                    runningOnLinux = runningOnUnix = true;
                     if (options.Backend == PlatformBackend.Default)
                     {
                         runningOnSdl2 = DetectSdl2();
                     }
 #elif IPHONE
                     runningOnMono = true;
+                    runningOnIOS = true;
                     if (options.Backend == PlatformBackend.Default)
                     {
                         runningOnSdl2 = DetectSdl2();

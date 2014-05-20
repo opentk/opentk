@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -141,6 +141,8 @@ namespace OpenTK
             }
         }
     }
+
+    #endif
 
     // System.Xml.XmlIgnoreAttribute
     class XmlIgnoreAttribute : Attribute

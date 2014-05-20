@@ -1,6 +1,7 @@
 #region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
+Copyright 2013 Xamarin Inc
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -66,6 +67,11 @@ namespace OpenTK
         public Quaternion(float x, float y, float z, float w)
             : this(new Vector3(x, y, z), w)
         { }
+
+        public Quaternion(ref Matrix3 matrix)
+        {
+            FromMatrix(ref matrix, out this);
+        }
 
         #endregion
 

@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -449,6 +449,12 @@ namespace OpenTK.Graphics.ES20
         }
 #endif
         #endregion
+
+        public static 
+        OpenTK.Graphics.ES20.ErrorCode GetErrorCode()
+        {
+            return GL.GetError();
+        }
 
 #pragma warning restore 3019
 #pragma warning restore 1591

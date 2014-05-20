@@ -1,0 +1,2886 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<signatures>
+
+  <replace>
+
+    <function name="DisableClientState" extension="Core">
+      <param name="array">
+        <type>ArrayCap</type>
+      </param>
+    </function>
+
+    <function name="EnableClientState" extension="Core">
+      <param name="array">
+        <type>ArrayCap</type>
+      </param>
+    </function>
+
+    <function name="TexImage1D" extension="Core">
+      <param name="internalformat">
+        <type>PixelInternalFormat</type>
+      </param>
+    </function>
+
+    <function name="TexImage2D" extension="Core">
+      <param name="internalformat">
+        <type>PixelInternalFormat</type>
+      </param>
+    </function>
+
+    <function name="TexImage3D" extension="Core">
+      <param name="internalformat">
+        <type>PixelInternalFormat</type>
+      </param>
+    </function>
+
+    <function name="BlendFuncSeparate" extension="Core">
+      <param name="sfactorRGB">
+        <type>BlendingFactorSrc</type>
+      </param>
+      <param name="dfactorRGB">
+        <type>BlendingFactorDest</type>
+      </param>
+      <param name="sfactorAlpha">
+        <type>BlendingFactorSrc</type>
+      </param>
+      <param name="dfactorAlpha">
+        <type>BlendingFactorDest</type>
+      </param>
+    </function>
+
+    <function name="FogCoordPointer" extension="Core">
+      <param name="type">
+        <type>FogPointerType</type>
+      </param>
+    </function>
+
+    <function name="PointParameter" extension="Core">
+      <param name="pname">
+        <type>PointParameterName</type>
+      </param>
+    </function>
+
+    <!-- Version 1.5 -->
+
+    <function name="BeginQuery" extension="Core">
+      <param name="target">
+        <type>QueryTarget</type>
+      </param>
+    </function>
+
+    <function name="EndQuery" extension="Core">
+      <param name="target">
+        <type>QueryTarget</type>
+      </param>
+    </function>
+
+    <function name="GetQuery" extension="Core">
+      <param name="target">
+        <type>QueryTarget</type>
+      </param>
+      <param name="pname">
+        <type>GetQueryParam</type>
+      </param>
+    </function>
+
+    <function name="GetQueryObject" extension="Core">
+      <param name="pname">
+        <type>GetQueryObjectParam</type>
+      </param>
+    </function>
+
+    <function name="BindBuffer" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+    <function name="BufferData" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+      <param name="usage">
+        <type>BufferUsageHint</type>
+      </param>
+    </function>
+
+    <function name="BufferSubData" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+    <function name="GetBufferSubData" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+    <function name="MapBuffer" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+      <param name="access">
+        <type>BufferAccess</type>
+      </param>
+    </function>
+
+    <function name="UnmapBuffer" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+    <function name="GetBufferParameter" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+      <param name="pname">
+        <type>BufferParameterName</type>
+      </param>
+    </function>
+
+    <function name="GetBufferPointer" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+      <param name="pname">
+        <type>BufferPointer</type>
+      </param>
+    </function>
+
+    <!-- Version 2.0-->
+
+    <function name="BlendEquationSeparate" extension="Core">
+      <param name="modeRGB">
+        <type>BlendEquationMode</type>
+      </param>
+      <param name="modeAlpha">
+        <type>BlendEquationMode</type>
+      </param>
+    </function>
+
+    <function name="DrawBuffers" extension="Core">
+      <param name="bufs">
+        <type>DrawBuffersEnum</type>
+      </param>
+    </function>
+
+    <function name="StencilFuncSeparate" extension="Core">
+      <param name="frontfunc">
+        <name>face</name>
+        <type>StencilFace</type>
+      </param>
+      <param name="backfunc">
+        <name>func</name>
+      </param>
+    </function>
+
+    <function name="StencilMaskSeparate" extension="Core">
+      <param name="face">
+        <type>StencilFace</type>
+      </param>
+    </function>
+
+    <function name="StencilOpSeparate" extension="Core">
+      <param name="face">
+        <type>StencilFace</type>
+      </param>
+    </function>
+
+    <function name="CreateShader" extension="Core">
+      <param name="type">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetShader" extension="Core">
+      <param name="pname">
+        <type>ShaderParameter</type>
+      </param>
+    </function>
+
+    <function name="GetActiveAttrib" extension="Core">
+      <param name="type">
+        <type>ActiveAttribType</type>
+      </param>
+    </function>
+
+    <function name="GetActiveUniform" extension="Core">
+      <param name="type">
+        <type>ActiveUniformType</type>
+      </param>
+    </function>
+
+    <function name="GetProgram" extension="Core">
+      <param name="pname">
+        <type>ProgramParameter</type>
+      </param>
+    </function>
+
+    <function name="GetVertexAttrib" extension="Core">
+      <param name="pname">
+        <type>VertexAttribParameter</type>
+      </param>
+    </function>
+
+    <function name="GetVertexAttribI" extension="Core">
+      <param name="pname">
+        <type>VertexAttribParameter</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribPointer" extension="Core">
+      <param name="type">
+        <type>VertexAttribPointerType</type>
+      </param>
+    </function>
+
+    <function name="GetVertexAttribPointer" extension="Core">
+      <param name="pname">
+        <type>VertexAttribPointerParameter</type>
+      </param>
+    </function>
+
+    <!-- Version 3.0 -->
+
+    <function name="GetBoolean" extension="Core">
+      <param name="target">
+        <type>GetIndexedPName</type>
+      </param>
+    </function>
+
+    <function name="GetInteger" extension="Core">
+      <param name="target">
+        <type>GetIndexedPName</type>
+      </param>
+    </function>
+
+    <function name="Enable" extension="Core">
+      <param name="target">
+        <type>IndexedEnableCap</type>
+      </param>
+    </function>
+
+    <function name="Disable" extension="Core">
+      <param name="target">
+        <type>IndexedEnableCap</type>
+      </param>
+    </function>
+
+    <function name="IsEnabled" extension="Core">
+      <param name="target">
+        <type>IndexedEnableCap</type>
+      </param>
+    </function>
+
+    <function name="BeginTransformFeedback" extension="Core">
+      <param name="primitiveMode">
+        <type>BeginFeedbackMode</type>
+      </param>
+    </function>
+
+    <function name="BindBufferRange" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+    <function name="BindBufferBase" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+    <function name="TransformFeedbackVaryings" extension="Core">
+      <param name="bufferMode">
+        <type>TransformFeedbackMode</type>
+      </param>
+    </function>
+
+    <function name="GetTransformFeedbackVarying" extension="Core">
+      <param name="type">
+        <type>ActiveAttribType</type>
+      </param>
+    </function>
+
+    <function name="ClampColor" extension="Core">
+      <param name="target">
+        <type>ClampColorTarget</type>
+      </param>
+      <param name="clamp">
+        <type>ClampColorMode</type>
+      </param>
+    </function>
+
+    <function name="RenderbufferStorage" extension="Core">
+      <param name="internalformat">
+        <type>RenderbufferStorage</type>
+      </param>
+    </function>
+
+    <function name="GetRenderbufferParameter" extension="Core">
+      <param name="pname">
+        <type>RenderbufferParameterName</type>
+      </param>
+    </function>
+
+    <function name="FramebufferTexture1D" extension="Core">
+      <param name="textarget">
+        <type>TextureTarget</type>
+      </param>
+    </function>
+
+    <function name="FramebufferTexture2D" extension="Core">
+      <param name="textarget">
+        <type>TextureTarget</type>
+      </param>
+    </function>
+
+    <function name="FramebufferTexture3D" extension="Core">
+      <param name="textarget">
+        <type>TextureTarget</type>
+      </param>
+    </function>
+
+    <function name="GetFramebufferAttachmentParameter" extension="Core">
+      <param name="pname">
+        <type>FramebufferParameterName</type>
+      </param>
+    </function>
+
+    <function name="CheckFramebufferStatus" extension="Core">
+      <returns>FramebufferErrorCode</returns>
+    </function>
+
+    <function name="GenerateMipmap" extension="Core">
+      <param name="target">
+        <type>GenerateMipmapTarget</type>
+      </param>
+    </function>
+
+    <function name="BlitFramebuffer" extension="Core">
+      <param name="filter">
+        <type>BlitFramebufferFilter</type>
+      </param>
+    </function>
+
+    <function name="RenderbufferStorageMultisample" extension="Core">
+      <param name="target">
+        <type>RenderbufferTarget</type>
+      </param>
+      <param name="internalformat">
+        <type>RenderbufferStorage</type>
+      </param>
+    </function>
+
+    <function name="MapBufferRange" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+    <function name="FlushMappedBufferRange" extension="Core">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+    <function name="CopyBufferSubData" extension="Core">
+      <param name="readTarget">
+        <type>BufferTarget</type>
+      </param>
+      <param name="writeTarget">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribIPointer" extension="Core">
+      <param name="type">
+        <type>VertexAttribIPointerType</type>
+      </param>
+    </function>
+
+    <function name="BeginConditionalRender" extension="Core">
+      <param name="mode">
+        <type>ConditionalRenderType</type>
+      </param>
+    </function>
+
+    <function name="ClearBuffer" extension="Core">
+      <param name="buffer">
+        <type>ClearBuffer</type>
+      </param>
+    </function>
+
+    <function name="GetString" extension="Core">
+      <param name="name">
+        <type>StringName</type>
+      </param>
+    </function>
+
+    <!-- Version 3.1 -->
+
+    <function name="TexBuffer" extension="Core">
+      <param name="target">
+        <type>TextureBufferTarget</type>
+      </param>
+      <param name="internalformat">
+        <type>SizedInternalFormat</type>
+      </param>
+    </function>
+
+    <function name="GetActiveUniformBlock" extension="Core">
+      <param name="pname">
+        <type>ActiveUniformBlockParameter</type>
+      </param>
+    </function>
+
+    <!-- Version 3.2 -->
+
+    <function name="TexImage2DMultisample" extension="Core">
+      <param name="target">
+        <type>TextureTargetMultisample</type>
+      </param>
+      <param name="internalformat">
+        <type>PixelInternalFormat</type>
+      </param>
+    </function>
+
+    <function name="TexImage3DMultisample" extension="Core">
+      <param name="target">
+        <type>TextureTargetMultisample</type>
+      </param>
+      <param name="internalformat">
+        <type>PixelInternalFormat</type>
+      </param>
+    </function>
+
+    <function name="GetMultisample" extension="Core">
+      <param name="pname">
+        <type>GetMultisamplePName</type>
+      </param>
+    </function>
+
+    <function name="ProvokingVertex" extension="Core">
+      <param name="mode">
+        <type>ProvokingVertexMode</type>
+      </param>
+    </function>
+
+    <function name="DrawElementsBaseVertex" extension="Core">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+
+    <function name="DrawRangeElementsBaseVertex" extension="Core">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+
+    <function name="DrawElementsInstancedBaseVertex" extension="Core">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+
+    <function name="MultiDrawElementsBaseVertex" extension="Core">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+
+    <function name="FramebufferTexture" extension="Core">
+      <param name="target">
+        <type>FramebufferTarget</type>
+      </param>
+      <param name="attachment">
+        <type>FramebufferAttachment</type>
+      </param>
+    </function>
+
+    <function name="GetActiveUniforms" extension="Core">
+      <param name="pname">
+        <type>ActiveUniformParameter</type>
+      </param>
+    </function>
+
+    <!-- Version 3.3 -->
+    <function name="SamplerParameter" extension="Core">
+      <param name="pname">
+        <type>SamplerParameter</type>
+      </param>
+    </function>
+
+    <function name="GetSamplerParameter" extension="Core">
+      <param name="pname">
+        <type>SamplerParameter</type>
+      </param>
+    </function>
+
+    <function name="QueryCounter" extension="Core">
+      <param name="target">
+        <type>QueryCounterTarget</type>
+      </param>
+    </function>
+
+    <function name="VertexP2" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexP4" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="TexCoordP1" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="TexCoordP2" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="TexCoordP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="TexCoordP4" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="MultiTexCoordP1" extension="Core">
+      <param name="texture">
+        <type>TextureUnit</type>
+      </param>
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="MultiTexCoordP2" extension="Core">
+      <param name="texture">
+        <type>TextureUnit</type>
+      </param>
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="MultiTexCoordP3" extension="Core">
+      <param name="texture">
+        <type>TextureUnit</type>
+      </param>
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="MultiTexCoordP4" extension="Core">
+      <param name="texture">
+        <type>TextureUnit</type>
+      </param>
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="NormalP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="ColorP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="ColorP4" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="SecondaryColorP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribP1" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribP2" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribP4" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+    
+    <!-- Version 4.0 -->
+    <function name="BeginQueryIndexed" extension="Core">
+      <param name="target">
+        <type>QueryTarget</type>
+      </param>
+    </function>
+
+    <function name="EndQueryIndexed" extension="Core">
+      <param name="target">
+        <type>QueryTarget</type>
+      </param>
+    </function>
+
+    <function name="GetQueryIndexed" extension="Core">
+      <param name="target">
+        <type>QueryTarget</type>
+      </param>
+      <param name="pname">
+        <type>GetQueryParam</type>
+      </param>
+    </function>
+    
+    <function name="BindTransformFeedback" extension="Core">
+      <param name="target">
+        <type>TransformFeedbackTarget</type>
+      </param>
+    </function>
+
+    <function name="DrawTransformFeedback" extension="Core">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+
+    <function name="DrawTransformFeedbackStream" extension="Core">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+
+    <function name="GetSubroutineUniformLocation" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetSubroutineIndex" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetActiveSubroutineUniform" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+      <param name="pname">
+        <type>ActiveSubroutineUniformParameter</type>
+      </param>
+    </function>
+
+    <function name="GetActiveSubroutineUniformName" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetActiveSubroutineName" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="UniformSubroutines" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetUniformSubroutine" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetProgramStage" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+      <param name="pname">
+        <type>ProgramStageParameter</type>
+      </param>
+    </function>
+
+    <function name="PatchParameteri" extension="Core">
+      <param name="pname">
+        <type>PatchParameterInt</type>
+      </param>
+    </function>
+
+    <function name="PatchParameterfv" extension="Core">
+      <param name="pname">
+        <type>PatchParameterFloat</type>
+      </param>
+    </function>
+
+    <!-- Version 4.1 -->
+
+    <function name="GetFloati_v" extension="Core">
+      <param name="target">
+        <type>GetIndexedPName</type>
+      </param>
+    </function>
+
+    <function name="GetDoublei_v" extension="Core">
+      <param name="target">
+        <type>GetIndexedPName</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribLPointer" extension="Core">
+      <param name="type">
+        <type>VertexAttribDPointerType</type>
+      </param>
+    </function>
+
+    <function name="GetVertexAttribL" extension="Core">
+      <param name="pname">
+        <type>VertexAttribParameter</type>
+      </param>
+    </function>
+
+    <function name="CreateShaderProgram" extension="Core">
+      <param name="type">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetProgramPipelineiv" extension="Core">
+      <param name="pname">
+        <type>ProgramPipelineParameter</type>
+      </param>
+    </function>
+
+    <!-- also found Arb and Ext flavors -->
+    <function name="ProgramParameteri" extension="Core">
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
+
+    <function name="UseProgramStages" extension="Core">
+      <param name="stages">
+        <type>ProgramStageMask</type>
+      </param>
+    </function>
+
+    <function name="GetShaderPrecisionFormat" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+      <param name="precisiontype">
+        <type>ShaderPrecisionType</type>
+      </param>
+    </function>
+
+    <function name="ShaderBinary" extension="Core">
+      <param name="binaryformat">
+        <type>BinaryFormat</type>
+      </param>
+    </function>
+
+    <function name="ProgramBinary" extension="Core">
+      <param name="binaryFormat">
+        <type>BinaryFormat</type>
+      </param>
+    </function>
+
+    <function name="GetProgramBinary" extension="Core">
+      <param name="binaryFormat">
+        <type>BinaryFormat</type>
+      </param>
+    </function>
+
+    <!-- Arb -->
+
+    <function name="ProgramParameteri" extension="Arb">
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribPointer" extension="Arb">
+      <param name="type">
+        <type>VertexAttribPointerTypeArb</type>
+      </param>
+    </function>
+
+    <function name="ProgramString" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="BindProgram" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="ProgramEnvParameter4" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="ProgramLocalParameter4" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgramEnvParameter4" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgramLocalParameter4" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgram" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgramString" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
+
+    <function name="GetVertexAttrib" extension="Arb">
+      <param name="pname">
+        <type>VertexAttribParameterArb</type>
+      </param>
+    </function>
+
+    <function name="GetVertexAttribPointer" extension="Arb">
+      <param name="pname">
+        <type>VertexAttribPointerParameterArb</type>
+      </param>
+    </function>
+
+    <function name="BindBuffer" extension="Arb">
+      <param name="target">
+        <type>BufferTargetArb</type>
+      </param>
+    </function>
+
+    <function name="BufferData" extension="Arb">
+      <param name="target">
+        <type>BufferTargetArb</type>
+      </param>
+      <param name="usage">
+        <type>BufferUsageArb</type>
+      </param>
+    </function>
+
+    <function name="BufferSubData" extension="Arb">
+      <param name="target">
+        <type>BufferTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetBufferSubData" extension="Arb">
+      <param name="target">
+        <type>BufferTargetArb</type>
+      </param>
+    </function>
+
+    <function name="MapBuffer" extension="Arb">
+      <param name="target">
+        <type>BufferTargetArb</type>
+      </param>
+    </function>
+
+    <function name="UnmapBuffer" extension="Arb">
+      <param name="target">
+        <type>BufferTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetBufferParameter" extension="Arb">
+      <param name="pname">
+        <type>BufferParameterNameArb</type>
+      </param>
+    </function>
+
+    <function name="GetBufferPointer" extension="Arb">
+      <param name="pname">
+        <type>BufferPointerNameArb</type>
+      </param>
+    </function>
+
+    <!-- Ext -->
+
+    <function name="GetIntegerIndexed" extension="Ext">
+      <param name="target">
+        <type>GetIndexedPName</type>
+      </param>
+    </function>
+
+    <function name="EnableIndexed" extension="Ext">
+      <param name="target">
+        <type>IndexedEnableCap</type>
+      </param>
+    </function>
+
+    <function name="DisableIndexed" extension="Ext">
+      <param name="target">
+        <type>IndexedEnableCap</type>
+      </param>
+    </function>
+
+    <function name="IsEnabledIndexed" extension="Ext">
+      <param name="target">
+        <type>IndexedEnableCap</type>
+      </param>
+    </function>
+
+    <function name="ProgramParameteri" extension="Ext">
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
+
+    <function name="TangentPointer" extension="Ext">
+      <param name="type">
+        <type>NormalPointerType</type>
+      </param>
+    </function>
+
+    <function name="BinormalPointer" extension="Ext">
+      <param name="type">
+        <type>NormalPointerType</type>
+      </param>
+    </function>
+
+    <function name="RenderbufferStorage" extension="Ext">
+      <param name="internalformat">
+        <type>RenderbufferStorage</type>
+      </param>
+    </function>
+
+    <function name="GetRenderbufferParameter" extension="Ext">
+      <param name="pname">
+        <type>RenderbufferParameterName</type>
+      </param>
+    </function>
+
+    <function name="CheckFramebufferStatus" extension="Ext">
+      <returns>FramebufferErrorCode</returns>
+    </function>
+
+    <function name="FramebufferTexture1D" extension="Ext">
+      <param name="textarget">
+        <type>TextureTarget</type>
+      </param>
+    </function>
+
+    <function name="FramebufferTexture2D" extension="Ext">
+      <param name="textarget">
+        <type>TextureTarget</type>
+      </param>
+    </function>
+
+    <function name="FramebufferTexture3D" extension="Ext">
+      <param name="textarget">
+        <type>TextureTarget</type>
+      </param>
+    </function>
+
+    <function name="GetFramebufferAttachmentParameter" extension="Ext">
+      <param name="pname">
+        <type>FramebufferParameterName</type>
+      </param>
+    </function>
+
+    <function name="GenerateMipmap" extension="Ext">
+      <param name="target">
+        <type>GenerateMipmapTarget</type>
+      </param>
+    </function>
+
+    <function name="BlitFramebuffer">
+      <param name="filter">
+        <type>BlitFramebufferFilter</type>
+      </param>
+    </function>
+
+    <function name="RenderbufferStorageMultisample">
+      <param name="target">
+        <type>RenderbufferTarget</type>
+      </param>
+      <param name="internalformat">
+        <type>RenderbufferStorage</type>
+      </param>
+    </function>
+
+    <!-- Apple -->
+
+    <function name="BufferParameter" extension="Apple">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+      <param name="pname">
+        <type>BufferParameterApple</type>
+      </param>
+    </function>
+
+    <function name="FlushMappedBufferRange" extension="Apple">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+
+    <!-- IBM -->
+
+    <function name="FogCoordPointerList" extension="IBM">
+      <param name="type">
+        <type>FogPointerType</type>
+      </param>
+    </function>
+
+    <!-- NV -->
+
+    <function name="BindProgram" extension="NV">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="ExecuteProgram" extension="NV">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgramParameter" extension="NV">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgram" extension="NV">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgramString" extension="NV">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetTrackMatrix" extension="NV">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
+
+    <function name="GetVertexAttrib" extension="NV">
+      <param name="target">
+        <type>VertexAttribParameterArb</type>
+      </param>
+    </function>
+
+    <function name="GetVertexAttribPointer" extension="NV">
+      <param name="target">
+        <type>VertexAttribParameterPointerArb</type>
+      </param>
+    </function>
+
+    <function name="LoadProgram" extension="NV">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="ProgramParameter4" extension="NV">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="ProgramParameters4" extension="NV">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="TrackMatrix" extension="NV">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribPointer" extension="NV">
+      <param name="type">
+        <type>VertexAttribParameterArb</type>
+      </param>
+    </function>
+
+  </replace>
+
+  <add>
+    <enum name="ActiveAttribType">
+      <use enum="DataType" token="FLOAT" />
+      <token name="FLOAT_MAT2" value="0x8B5A" />
+      <token name="FLOAT_MAT3" value="0x8B5B" />
+      <token name="FLOAT_MAT4" value="0x8B5C" />
+      <token name="FLOAT_VEC2" value="0x8B50" />
+      <token name="FLOAT_VEC3" value="0x8B51" />
+      <token name="FLOAT_VEC4" value="0x8B52" />
+      <use enum="VERSION_2_0" token="INT" />
+      <use enum="VERSION_2_0" token="INT_VEC2" />
+      <use enum="VERSION_2_0" token="INT_VEC3" />
+      <use enum="VERSION_2_0" token="INT_VEC4" />
+      <use enum="VERSION_3_0" token="UNSIGNED_INT" />
+      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC2" />
+      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC3" />
+      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC4" />
+      <use enum="VERSION_4_0" token="DOUBLE" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC2" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC3" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2x3" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2x4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3x2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3x4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4x2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4x3" />
+    </enum>
+    <enum name="ActiveSubroutineUniformParameter">
+      <use enum="VERSION_4_0" token="NUM_COMPATIBLE_SUBROUTINES" />
+      <use enum="VERSION_4_0" token="COMPATIBLE_SUBROUTINES" />
+      <use enum="VERSION_4_0" token="UNIFORM_SIZE" />
+      <use enum="VERSION_4_0" token="UNIFORM_NAME_LENGTH" />
+    </enum>
+    <enum name="ActiveUniformBlockParameter">
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_BINDING" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_DATA_SIZE" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_NAME_LENGTH" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_ACTIVE_UNIFORMS" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" />
+      <use enum="VERSION_4_0" token="UNIFORM_BLOCK_REFERENCED_BY_TESS_CONTROL_SHADER" />
+      <use enum="VERSION_4_0" token="UNIFORM_BLOCK_REFERENCED_BY_TESS_EVALUATION_SHADER" />
+    </enum>
+    <enum name="ActiveUniformParameter">
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_TYPE" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_SIZE" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_NAME_LENGTH" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_INDEX" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_OFFSET" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_ARRAY_STRIDE" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_MATRIX_STRIDE" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_IS_ROW_MAJOR" />
+    </enum>
+    <enum name="ActiveUniformType">
+      <use enum="DataType" token="FLOAT" />
+      <use enum="DataType" token="INT" />
+      <token name="BOOL" value="0x8B56" />
+      <token name="BOOL_VEC2" value="0x8B57" />
+      <token name="BOOL_VEC3" value="0x8B58" />
+      <token name="BOOL_VEC4" value="0x8B59" />
+      <token name="FLOAT_MAT2" value="0x8B5A" />
+      <token name="FLOAT_MAT2x3" value="0x8B65" />
+      <token name="FLOAT_MAT2x4" value="0x8B66" />
+      <token name="FLOAT_MAT3" value="0x8B5B" />
+      <token name="FLOAT_MAT3x2" value="0x8B67" />
+      <token name="FLOAT_MAT3x4" value="0x8B68" />
+      <token name="FLOAT_MAT4" value="0x8B5C" />
+      <token name="FLOAT_MAT4x2" value="0x8B69" />
+      <token name="FLOAT_MAT4x3" value="0x8B6A" />
+      <token name="FLOAT_VEC2" value="0x8B50" />
+      <token name="FLOAT_VEC3" value="0x8B51" />
+      <token name="FLOAT_VEC4" value="0x8B52" />
+      <token name="INT_SAMPLER_1D" value="0x8DC9" />
+      <token name="INT_SAMPLER_1D_ARRAY" value="0x8DCE" />
+      <token name="INT_SAMPLER_2D" value="0x8DCA" />
+      <token name="INT_SAMPLER_2D_ARRAY" value="0x8DCF" />
+      <token name="INT_SAMPLER_2D_MULTISAMPLE" value="0x9109" />
+      <token name="INT_SAMPLER_2D_MULTISAMPLE_ARRAY" value="0x910C" />
+      <token name="INT_SAMPLER_2D_RECT" value="0x8DCD" />
+      <token name="INT_SAMPLER_3D" value="0x8DCB" />
+      <token name="INT_SAMPLER_BUFFER" value="0x8DD0" />
+      <token name="INT_SAMPLER_CUBE" value="0x8DCC" />
+      <token name="INT_VEC2" value="0x8B53" />
+      <token name="INT_VEC3" value="0x8B54" />
+      <token name="INT_VEC4" value="0x8B55" />
+      <token name="SAMPLER_1D" value="0x8B5D" />
+      <token name="SAMPLER_1D_ARRAY" value="0x8DC0" />
+      <token name="SAMPLER_1D_ARRAY_SHADOW" value="0x8DC3" />
+      <token name="SAMPLER_1D_SHADOW" value="0x8B61" />
+      <token name="SAMPLER_2D" value="0x8B5E" />
+      <token name="SAMPLER_2D_ARRAY" value="0x8DC1" />
+      <token name="SAMPLER_2D_ARRAY_SHADOW" value="0x8DC4" />
+      <token name="SAMPLER_2D_MULTISAMPLE" value="0x9108" />
+      <token name="SAMPLER_2D_MULTISAMPLE_ARRAY" value="0x910B" />
+      <token name="SAMPLER_2D_RECT" value="0x8B63" />
+      <token name="SAMPLER_2D_RECT_SHADOW" value="0x8B64" />
+      <token name="SAMPLER_2D_SHADOW" value="0x8B62" />
+      <token name="SAMPLER_3D" value="0x8B5F" />
+      <token name="SAMPLER_BUFFER" value="0x8DC2" />
+      <token name="SAMPLER_CUBE" value="0x8B60" />
+      <token name="SAMPLER_CUBE_SHADOW" value="0x8DC5" />
+      <use enum="DataType" token="UNSIGNED_INT" />
+      <token name="UNSIGNED_INT_SAMPLER_1D" value="0x8DD1" />
+      <token name="UNSIGNED_INT_SAMPLER_1D_ARRAY" value="0x8DD6" />
+      <token name="UNSIGNED_INT_SAMPLER_2D" value="0x8DD2" />
+      <token name="UNSIGNED_INT_SAMPLER_2D_ARRAY" value="0x8DD7" />
+      <token name="UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE" value="0x910A" />
+      <token name="UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY" value="0x910D" />
+      <token name="UNSIGNED_INT_SAMPLER_2D_RECT" value="0x8DD5" />
+      <token name="UNSIGNED_INT_SAMPLER_3D" value="0x8DD3" />
+      <token name="UNSIGNED_INT_SAMPLER_BUFFER" value="0x8DD8" />
+      <token name="UNSIGNED_INT_SAMPLER_CUBE" value="0x8DD4" />
+      <token name="UNSIGNED_INT_VEC2" value="0x8DC6" />
+      <token name="UNSIGNED_INT_VEC3" value="0x8DC7" />
+      <token name="UNSIGNED_INT_VEC4" value="0x8DC8" />
+      <use enum="VERSION_4_0" token="DOUBLE" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC2" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC3" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2x3" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2x4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3x2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3x4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4x2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4x3" />
+      <use enum="VERSION_4_0" token="SAMPLER_CUBE_MAP_ARRAY" />
+      <use enum="VERSION_4_0" token="SAMPLER_CUBE_MAP_ARRAY_SHADOW" />
+      <use enum="VERSION_4_0" token="INT_SAMPLER_CUBE_MAP_ARRAY" />
+      <use enum="VERSION_4_0" token="UNSIGNED_INT_SAMPLER_CUBE_MAP_ARRAY" />
+    </enum>
+    <enum name="ArrayCap">
+      <use enum="GetPName" token="VERTEX_ARRAY" />
+      <use enum="GetPName" token="NORMAL_ARRAY" />
+      <use enum="GetPName" token="COLOR_ARRAY" />
+      <use enum="GetPName" token="INDEX_ARRAY" />
+      <use enum="GetPName" token="EDGE_FLAG_ARRAY" />
+      <use enum="GetPName" token="TEXTURE_COORD_ARRAY" />
+      <token name="FOG_COORD_ARRAY" value="0x8457" />
+      <token name="SECONDARY_COLOR_ARRAY" value="0x845E" />
+    </enum>
+    <enum name="AssemblyProgramFormatARB">
+      <token name="PROGRAM_FORMAT_ASCII_ARB" value="0x8875" />
+    </enum>
+    <enum name="AssemblyProgramParameterARB">
+      <token name="MAX_PROGRAM_ADDRESS_REGISTERS" value="0x88B1" />
+      <token name="MAX_PROGRAM_ALU_INSTRUCTIONS_ARB" value="0x880B" />
+      <token name="MAX_PROGRAM_ATTRIBS" value="0x88AD" />
+      <token name="MAX_PROGRAM_ENV_PARAMETERS" value="0x88B5" />
+      <token name="MAX_PROGRAM_INSTRUCTIONS" value="0x88A1" />
+      <token name="MAX_PROGRAM_LOCAL_PARAMETERS" value="0x88B4" />
+      <token name="MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS" value="0x88B3" />
+      <token name="MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB" value="0x880E" />
+      <token name="MAX_PROGRAM_NATIVE_ATTRIBS" value="0x88AF" />
+      <token name="MAX_PROGRAM_NATIVE_INSTRUCTIONS" value="0x88A3" />
+      <token name="MAX_PROGRAM_NATIVE_PARAMETERS" value="0x88AB" />
+      <token name="MAX_PROGRAM_NATIVE_TEMPORARIES" value="0x88A7" />
+      <token name="MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB" value="0x8810" />
+      <token name="MAX_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB" value="0x880F" />
+      <token name="MAX_PROGRAM_PARAMETERS" value="0x88A9" />
+      <token name="MAX_PROGRAM_TEMPORARIES" value="0x88A5" />
+      <token name="MAX_PROGRAM_TEX_INDIRECTIONS_ARB" value="0x880D" />
+      <token name="MAX_PROGRAM_TEX_INSTRUCTIONS_ARB" value="0x880C" />
+      <token name="PROGRAM_ADDRESS_REGISTERS" value="0x88B0" />
+      <token name="PROGRAM_ALU_INSTRUCTIONS_ARB" value="0x8805" />
+      <token name="PROGRAM_ATTRIBS" value="0x88AC" />
+      <token name="PROGRAM_BINDING" value="0x8677" />
+      <token name="PROGRAM_FORMAT" value="0x8876" />
+      <token name="PROGRAM_INSTRUCTION" value="0x88A0" />
+      <token name="PROGRAM_LENGTH" value="0x8627" />
+      <token name="PROGRAM_NATIVE_ADDRESS_REGISTERS" value="0x88B2" />
+      <token name="PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB" value="0x8808" />
+      <token name="PROGRAM_NATIVE_ATTRIBS" value="0x88AE" />
+      <token name="PROGRAM_NATIVE_INSTRUCTIONS" value="0x88A2" />
+      <token name="PROGRAM_NATIVE_PARAMETERS" value="0x88AA" />
+      <token name="PROGRAM_NATIVE_TEMPORARIES" value="0x88A6" />
+      <token name="PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB" value="0x880A" />
+      <token name="PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB" value="0x8809" />
+      <token name="PROGRAM_PARAMETERS" value="0x88A8" />
+      <token name="PROGRAM_TEMPORARIES" value="0x88A4" />
+      <token name="PROGRAM_TEX_INDIRECTIONS_ARB" value="0x8807" />
+      <token name="PROGRAM_TEX_INSTRUCTIONS_ARB" value="0x8806" />
+      <token name="PROGRAM_UNDER_NATIVE_LIMITS" value="0x88B6" />
+      <use enum="VERSION_3_2" token="GEOMETRY_INPUT_TYPE" />
+      <use enum="VERSION_3_2" token="GEOMETRY_OUTPUT_TYPE" />
+      <use enum="VERSION_3_2" token="GEOMETRY_VERTICES_OUT" />
+      <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
+      <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+    </enum>
+    <enum name="AssemblyProgramStringParameterARB">
+      <token name="PROGRAM_STRING" value="0x8628" />
+    </enum>
+    <enum name="AssemblyProgramTargetARB">
+      <use enum="NV_geometry_program4" token="GEOMETRY_PROGRAM_NV" />
+      <token name="FRAGMENT_PROGRAM" value="0x8804" />
+      <token name="VERTEX_PROGRAM" value="0x8620" />
+    </enum>
+    <enum name="AttribMask">
+      <token name="MULTISAMPLE_BIT" value="0x20000000" />
+    </enum>
+    <enum name="BeginFeedbackMode">
+      <use enum="BeginMode" token="Points" />
+      <use enum="BeginMode" token="Lines" />
+      <use enum="BeginMode" token="Triangles" />
+    </enum>
+    <enum name="BeginMode">
+      <token name="LINE_STRIP_ADJACENCY" value="0xB" />
+      <token name="LINES_ADJACENCY" value="0xA" />
+      <token name="TRIANGLE_STRIP_ADJACENCY" value="0xD" />
+      <token name="TRIANGLES_ADJACENCY" value="0xC" />
+      <use enum="VERSION_4_0" token="PATCHES" />
+    </enum>
+    <enum name="BinaryFormat">
+      <!-- Tokens must be queried at runtime. -->
+    </enum>
+    <enum name="BlendEquationMode">
+      <token name="FUNC_ADD" value="0x8006" />
+      <token name="FUNC_REVERSE_SUBTRACT" value="0x800B" />
+      <token name="FUNC_SUBTRACT" value="0x800A" />
+      <token name="MAX" value="0x8008" />
+      <token name="MIN" value="0x8007" />
+    </enum>
+    <enum name="BlendingFactorDest">
+      <token name="CONSTANT_ALPHA" value="0x8003" />
+      <token name="CONSTANT_COLOR" value="0x8001" />
+      <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
+      <token name="ONE_MINUS_CONSTANT_COLOR" value="0x8002" />
+      <use enum="VERSION_3_3" token="SRC1_ALPHA" />
+      <use enum="VERSION_3_3" token="SRC1_COLOR" />
+      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_ALPHA" />
+      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_COLOR" />
+    </enum>
+    <enum name="BlendingFactorSrc">
+      <token name="CONSTANT_ALPHA" value="0x8003" />
+      <token name="CONSTANT_COLOR" value="0x8001" />
+      <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
+      <token name="ONE_MINUS_CONSTANT_COLOR" value="0x8002" />
+      <use enum="VERSION_3_3" token="SRC1_ALPHA" />
+      <use enum="VERSION_3_3" token="SRC1_COLOR" />
+      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_ALPHA" />
+      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_COLOR" />
+    </enum>
+    <enum name="BlitFramebufferFilter">
+      <use enum="TextureMagFilter" token="LINEAR" />
+      <use enum="TextureMagFilter" token="NEAREST" />
+    </enum>
+    <enum name="Buffer_Parameter_Apple">
+      <use enum="APPLE_flush_buffer_range" token="BUFFER_SERIALIZED_MODIFY_APPLE" />
+      <use enum="APPLE_flush_buffer_range" token="BUFFER_FLUSHING_UNMAP_APPLE" />
+    </enum>
+    <enum name="BufferAccess">
+      <token name="READ_ONLY" value="0x88B8" />
+      <token name="READ_WRITE" value="0x88BA" />
+      <token name="WRITE_ONLY" value="0x88B9" />
+    </enum>
+    <enum name="BufferAccessARB">
+      <token name="READ_ONLY" value="0x88B8" />
+      <token name="READ_WRITE" value="0x88BA" />
+      <token name="WRITE_ONLY" value="0x88B9" />
+    </enum>
+    <enum name="BufferAccessMask">
+      <use enum="ARB_map_buffer_range" token="MAP_READ_BIT" />
+      <use enum="ARB_map_buffer_range" token="MAP_WRITE_BIT" />
+      <use enum="ARB_map_buffer_range" token="MAP_INVALIDATE_RANGE_BIT" />
+      <use enum="ARB_map_buffer_range" token="MAP_INVALIDATE_BUFFER_BIT" />
+      <use enum="ARB_map_buffer_range" token="MAP_FLUSH_EXPLICIT_BIT" />
+      <use enum="ARB_map_buffer_range" token="MAP_UNSYNCHRONIZED_BIT" />
+    </enum>
+    <enum name="BufferParameterName">
+      <token name="BUFFER_ACCESS" value="0x88BB" />
+      <token name="BUFFER_MAPPED" value="0x88BC" />
+      <token name="BUFFER_SIZE" value="0x8764" />
+      <token name="BUFFER_USAGE" value="0x8765" />
+    </enum>
+    <enum name="BufferParameterNameARB">
+      <token name="BUFFER_ACCESS" value="0x88BB" />
+      <token name="BUFFER_MAPPED" value="0x88BC" />
+      <token name="BUFFER_SIZE" value="0x8764" />
+      <token name="BUFFER_USAGE" value="0x8765" />
+    </enum>
+    <enum name="BufferPointer">
+      <token name="BUFFER_MAP_POINTER" value="0x88BD" />
+    </enum>
+    <enum name="BufferPointerNameARB">
+      <token name="BUFFER_MAP_POINTER" value="0x88BD" />
+    </enum>
+    <enum name="BufferTarget">
+      <use enum="ARB_copy_buffer" token="COPY_READ_BUFFER" />
+      <use enum="ARB_copy_buffer" token="COPY_WRITE_BUFFER" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BUFFER" />
+      <token name="ARRAY_BUFFER" value="0x8892" />
+      <token name="ELEMENT_ARRAY_BUFFER" value="0x8893" />
+      <token name="PIXEL_PACK_BUFFER" value="0x88EB" />
+      <token name="PIXEL_UNPACK_BUFFER" value="0x88EC" />
+      <token name="TRANSFORM_FEEDBACK_BUFFER" value="0x8C8E" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
+      <use enum="VERSION_4_0" token="DRAW_INDIRECT_BUFFER" />
+    </enum>
+    <enum name="BufferTargetARB">
+      <token name="ARRAY_BUFFER" value="0x8892" />
+      <token name="ELEMENT_ARRAY_BUFFER" value="0x8893" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" /> <!-- Arb_texture_buffer_object -->
+    </enum>
+    <enum name="BufferUsageARB">
+      <token name="DYNAMIC_COPY" value="0x88EA" />
+      <token name="DYNAMIC_DRAW" value="0x88E8" />
+      <token name="DYNAMIC_READ" value="0x88E9" />
+      <token name="STATIC_COPY" value="0x88E6" />
+      <token name="STATIC_DRAW" value="0x88E4" />
+      <token name="STATIC_READ" value="0x88E5" />
+      <token name="STREAM_COPY" value="0x88E2" />
+      <token name="STREAM_DRAW" value="0x88E0" />
+      <token name="STREAM_READ" value="0x88E1" />
+    </enum>
+    <enum name="BufferUsageHint">
+      <token name="DYNAMIC_COPY" value="0x88EA" />
+      <token name="DYNAMIC_DRAW" value="0x88E8" />
+      <token name="DYNAMIC_READ" value="0x88E9" />
+      <token name="STATIC_COPY" value="0x88E6" />
+      <token name="STATIC_DRAW" value="0x88E4" />
+      <token name="STATIC_READ" value="0x88E5" />
+      <token name="STREAM_COPY" value="0x88E2" />
+      <token name="STREAM_DRAW" value="0x88E0" />
+      <token name="STREAM_READ" value="0x88E1" />
+    </enum>
+    <enum name="ClampColorMode">
+      <use enum="Boolean" token="TRUE" />
+      <use enum="Boolean" token="FALSE" />
+      <token name="FIXED_ONLY" value="0x891D" />
+    </enum>
+    <enum name="ClampColorTarget">
+      <token name="CLAMP_FRAGMENT_COLOR" value="0x891B" />
+      <token name="CLAMP_READ_COLOR" value="0x891C" />
+      <token name="CLAMP_VERTEX_COLOR" value="0x891A" />
+    </enum>
+    <enum name="ClearBuffer">
+      <use enum="VERSION_1_1" token="COLOR" />
+      <use enum="VERSION_1_1" token="DEPTH" />
+      <use enum="VERSION_1_1" token="STENCIL" />
+      <use enum="VERSION_3_0" token="DEPTH_STENCIL" />
+    </enum>
+    <enum name="ColorPointerType">
+      <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+    </enum>
+    <enum name="ColorTableParameterPName">
+      <token name="COLOR_TABLE_BIAS" value="0x80D7" />
+      <token name="COLOR_TABLE_SCALE" value="0x80D6" />
+    </enum>
+    <enum name="ColorTableTarget">
+      <token name="COLOR_TABLE" value="0x80D0" />
+      <token name="POST_COLOR_MATRIX_COLOR_TABLE" value="0x80D2" />
+      <token name="POST_CONVOLUTION_COLOR_TABLE" value="0x80D1" />
+      <token name="PROXY_COLOR_TABLE" value="0x80D3" />
+      <token name="PROXY_POST_COLOR_MATRIX_COLOR_TABLE" value="0x80D5" />
+      <token name="PROXY_POST_CONVOLUTION_COLOR_TABLE" value="0x80D4" />
+    </enum>
+    <enum name="ConditionalRenderType">
+      <token name="QUERY_BY_REGION_NO_WAIT" value="0x8E16" />
+      <token name="QUERY_BY_REGION_WAIT" value="0x8E15" />
+      <token name="QUERY_NO_WAIT" value="0x8E14" />
+      <token name="QUERY_WAIT" value="0x8E13" />
+    </enum>
+    <enum name="ConvolutionParameter">
+      <token name="CONVOLUTION_BORDER_MODE" value="0x8013" />
+      <token name="CONVOLUTION_FILTER_BIAS" value="0x8015" />
+      <token name="CONVOLUTION_FILTER_SCALE" value="0x8014" />
+    </enum>
+    <enum name="ConvolutionParameterValue">
+      <token name="CONSTANT_BORDER" value="0x8151" />
+      <token name="REDUCE" value="0x8016" />
+      <token name="REPLICATE_BORDER" value="0x8153" />
+    </enum>
+    <enum name="ConvolutionTarget">
+      <token name="CONVOLUTION_1D" value="0x8010" />
+      <token name="CONVOLUTION_2D" value="0x8011" />
+      <token name="SEPARABLE_2D" value="0x8012" />
+    </enum>
+    <enum name="DrawBufferMode">
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT2" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT3" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT4" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT5" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT6" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT7" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT8" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT9" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT10" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT11" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT12" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT13" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
+    </enum>
+    <enum name="DrawBuffersEnum">
+      <use enum="DrawBufferMode" token="NONE" />
+      <use enum="DrawBufferMode" token="FRONT_LEFT" />
+      <use enum="DrawBufferMode" token="FRONT_RIGHT" />
+      <use enum="DrawBufferMode" token="BACK_LEFT" />
+      <use enum="DrawBufferMode" token="BACK_RIGHT" />
+      <use enum="DrawBufferMode" token="AUX0" />
+      <use enum="DrawBufferMode" token="AUX1" />
+      <use enum="DrawBufferMode" token="AUX2" />
+      <use enum="DrawBufferMode" token="AUX3" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT2" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT3" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT4" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT5" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT6" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT7" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT8" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT9" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT10" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT11" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT12" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT13" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
+    </enum>
+    <enum name="DrawElementsType">
+      <use enum="DataType" token="UNSIGNED_BYTE" />
+      <use enum="DataType" token="UNSIGNED_SHORT" />
+      <use enum="DataType" token="UNSIGNED_INT" />
+    </enum>
+    <enum name="EnableCap">
+      <use enum="ARB_framebuffer_sRGB" token="FRAMEBUFFER_SRGB" />
+      <token name="COLOR_SUM" value="0x8458" />
+      <token name="COLOR_TABLE" value="0x80D0" />
+      <token name="CONVOLUTION_1D" value="0x8010" />
+      <token name="CONVOLUTION_2D" value="0x8011" />
+      <token name="DEPTH_CLAMP" value="0x864F" />
+      <token name="FOG_COORD_ARRAY" value="0x8457" />
+      <token name="HISTOGRAM" value="0x8024" />
+      <token name="MULTISAMPLE" value="0x809D" />
+      <token name="POINT_SPRITE" value="0x8861" />
+      <token name="POST_COLOR_MATRIX_COLOR_TABLE" value="0x80D2" />
+      <token name="POST_CONVOLUTION_COLOR_TABLE" value="0x80D1" />
+      <token name="PRIMITIVE_RESTART" value="0x8F9D" />
+      <token name="PROGRAM_POINT_SIZE" value="0x8642" />
+      <token name="RASTERIZER_DISCARD" value="0x8C89" />
+      <token name="RESCALE_NORMAL" value="0x803A" />
+      <token name="SAMPLE_ALPHA_TO_COVERAGE" value="0x809E" />
+      <token name="SAMPLE_ALPHA_TO_ONE" value="0x809F" />
+      <token name="SAMPLE_COVERAGE" value="0x80A0" />
+      <token name="SAMPLE_MASK" value="0x8E51" />
+      <token name="SECONDARY_COLOR_ARRAY" value="0x845E" />
+      <token name="SEPARABLE_2D" value="0x8012" />
+      <token name="TEXTURE_CUBE_MAP" value="0x8513" />
+      <token name="TEXTURE_CUBE_MAP_SEAMLESS" value="0x884F" />
+      <token name="VERTEX_PROGRAM_POINT_SIZE" value="0x8642" />
+      <token name="VERTEX_PROGRAM_TWO_SIDE" value="0x8643" />
+      <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
+      <use enum="VERSION_4_0" token="SAMPLE_SHADING" />
+    </enum>
+    <enum name="ErrorCode">
+      <use enum="ARB_framebuffer_object" token="INVALID_FRAMEBUFFER_OPERATION" />
+      <token name="INVALID_FRAMEBUFFER_OPERATION_EXT" value="0x0506" />
+    </enum>
+    <enum name="FogMode">
+      <token name="FOG_COORD" value="0x8451" />
+      <token name="FRAGMENT_DEPTH" value="0x8452" />
+    </enum>
+    <enum name="FogParameter">
+      <token name="FOG_COORD_SRC" value="0x8450" />
+    </enum>
+    <enum name="FogPointerType">
+      <use enum="DataType" token="FLOAT" />
+      <use enum="DataType" token="DOUBLE" />
+      <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+    </enum>
+    <enum name="FramebufferAttachment">
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT2" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT3" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT4" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT5" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT6" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT7" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT8" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT9" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT10" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT11" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT12" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT13" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
+      <use enum="ARB_framebuffer_object" token="DEPTH_ATTACHMENT" />
+      <use enum="ARB_framebuffer_object" token="STENCIL_ATTACHMENT" />
+      <use enum="ARB_framebuffer_object" token="DEPTH_STENCIL_ATTACHMENT" />
+      <token name="COLOR_ATTACHMENT0_EXT" value="0x8CE0" />
+      <token name="COLOR_ATTACHMENT1_EXT" value="0x8CE1" />
+      <token name="COLOR_ATTACHMENT10_EXT" value="0x8CEA" />
+      <token name="COLOR_ATTACHMENT11_EXT" value="0x8CEB" />
+      <token name="COLOR_ATTACHMENT12_EXT" value="0x8CEC" />
+      <token name="COLOR_ATTACHMENT13_EXT" value="0x8CED" />
+      <token name="COLOR_ATTACHMENT14_EXT" value="0x8CEE" />
+      <token name="COLOR_ATTACHMENT15_EXT" value="0x8CEF" />
+      <token name="COLOR_ATTACHMENT2_EXT" value="0x8CE2" />
+      <token name="COLOR_ATTACHMENT3_EXT" value="0x8CE3" />
+      <token name="COLOR_ATTACHMENT4_EXT" value="0x8CE4" />
+      <token name="COLOR_ATTACHMENT5_EXT" value="0x8CE5" />
+      <token name="COLOR_ATTACHMENT6_EXT" value="0x8CE6" />
+      <token name="COLOR_ATTACHMENT7_EXT" value="0x8CE7" />
+      <token name="COLOR_ATTACHMENT8_EXT" value="0x8CE8" />
+      <token name="COLOR_ATTACHMENT9_EXT" value="0x8CE9" />
+      <token name="DEPTH_ATTACHMENT_EXT" value="0x8D00" />
+      <token name="STENCIL_ATTACHMENT_EXT" value="0x8D20" />
+    </enum>
+    <enum name="FramebufferAttachmentComponentType">
+      <use enum="DataType" token="FLOAT" />
+      <use enum="DataType" token="INT" />
+      <use enum="ARB_framebuffer_object" token="UNSIGNED_NORMALIZED" />
+      <use enum="ARB_framebuffer_object" token="INDEX" />
+    </enum>
+    <enum name="FramebufferAttachmentObjectType">
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_DEFAULT" />
+      <use enum="MatrixMode" token="TEXTURE" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER" />
+      <token name="NONE" value="0" />
+    </enum>
+    <enum name="FramebufferErrorCode">
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_COMPLETE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_INCOMPLETE_ATTACHMENT" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_INCOMPLETE_READ_BUFFER" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_UNSUPPORTED" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_INCOMPLETE_MULTISAMPLE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_UNDEFINED" />
+      <token name="FRAMEBUFFER_COMPLETE_EXT" value="0x8CD5" />
+      <token name="FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT" value="0x8CD6" />
+      <token name="FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT" value="0x8CD9" />
+      <token name="FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT" value="0x8CDB" />
+      <token name="FRAMEBUFFER_INCOMPLETE_FORMATS_EXT" value="0x8CDA" />
+      <token name="FRAMEBUFFER_INCOMPLETE_LAYER_COUNT" value="0x8DA9" />
+      <token name="FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS" value="0x8DA8" />
+      <token name="FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT" value="0x8CD7" />
+      <token name="FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT" value="0x8CDC" />
+      <token name="FRAMEBUFFER_UNSUPPORTED_EXT" value="0x8CDD" />
+    </enum>
+    <enum name="FramebufferParameterName">
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_RED_SIZE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_GREEN_SIZE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_BLUE_SIZE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_OBJECT_NAME" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER" />
+      <token name="FRAMEBUFFER_ATTACHMENT_LAYERED" value="0x8DA7" />
+      <token name="FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_EXT" value="0x8CD1" />
+      <token name="FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_EXT" value="0x8CD0" />
+      <token name="FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_EXT" value="0x8CD4" />
+      <token name="FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_EXT" value="0x8CD3" />
+      <token name="FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER" value="0x8CD4" />
+      <token name="FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_EXT" value="0x8CD2" />
+    </enum>
+    <enum name="FramebufferTarget">
+      <use enum="ARB_framebuffer_object" token="READ_FRAMEBUFFER" />
+      <use enum="ARB_framebuffer_object" token="DRAW_FRAMEBUFFER" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER" />
+      <token name="FRAMEBUFFER_EXT" value="0x8D40" />
+    </enum>
+    <enum name="GenerateMipmapTarget">
+      <use enum="TextureTarget" token="TEXTURE_1D" />
+      <use enum="TextureTarget" token="TEXTURE_1D_ARRAY" />
+      <use enum="TextureTarget" token="TEXTURE_2D" />
+      <use enum="TextureTarget" token="TEXTURE_2D_ARRAY" />
+      <use enum="TextureTarget" token="TEXTURE_2D_MULTISAMPLE" />
+      <use enum="TextureTarget" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
+      <use enum="TextureTarget" token="TEXTURE_3D" />
+      <use enum="TextureTarget" token="TEXTURE_CUBE_MAP" />
+    </enum>
+    <enum name="GetColorTableParameterPName">
+      <token name="COLOR_TABLE_ALPHA_SIZE" value="0x80DD" />
+      <token name="COLOR_TABLE_BIAS" value="0x80D7" />
+      <token name="COLOR_TABLE_BLUE_SIZE" value="0x80DC" />
+      <token name="COLOR_TABLE_FORMAT" value="0x80D8" />
+      <token name="COLOR_TABLE_GREEN_SIZE" value="0x80DB" />
+      <token name="COLOR_TABLE_INTENSITY_SIZE" value="0x80DF" />
+      <token name="COLOR_TABLE_LUMINANCE_SIZE" value="0x80DE" />
+      <token name="COLOR_TABLE_RED_SIZE" value="0x80DA" />
+      <token name="COLOR_TABLE_SCALE" value="0x80D6" />
+      <token name="COLOR_TABLE_WIDTH" value="0x80D9" />
+    </enum>
+    <enum name="GetConvolutionParameterPName">
+      <token name="CONVOLUTION_BORDER_COLOR" value="0x8154" />
+      <token name="CONVOLUTION_BORDER_MODE" value="0x8013" />
+      <token name="CONVOLUTION_FILTER_BIAS" value="0x8015" />
+      <token name="CONVOLUTION_FILTER_SCALE" value="0x8014" />
+      <token name="CONVOLUTION_FORMAT" value="0x8017" />
+      <token name="CONVOLUTION_HEIGHT" value="0x8019" />
+      <token name="CONVOLUTION_WIDTH" value="0x8018" />
+      <token name="MAX_CONVOLUTION_HEIGHT" value="0x801B" />
+      <token name="MAX_CONVOLUTION_WIDTH" value="0x801A" />
+    </enum>
+    <enum name="GetHistogramParameterPName">
+      <token name="HISTOGRAM_ALPHA_SIZE" value="0x802B" />
+      <token name="HISTOGRAM_BLUE_SIZE" value="0x802A" />
+      <token name="HISTOGRAM_FORMAT" value="0x8027" />
+      <token name="HISTOGRAM_GREEN_SIZE" value="0x8029" />
+      <token name="HISTOGRAM_LUMINANCE_SIZE" value="0x802C" />
+      <token name="HISTOGRAM_RED_SIZE" value="0x8028" />
+      <token name="HISTOGRAM_SINK" value="0x802D" />
+      <token name="HISTOGRAM_WIDTH" value="0x8026" />
+    </enum>
+    <enum name="GetIndexedPName">
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BUFFER_BINDING" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BUFFER_START" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BUFFER_SIZE" />
+      <token name="SAMPLE_MASK_VALUE" value="0x8E52" />
+      <token name="TRANSFORM_FEEDBACK_BUFFER_BINDING" value="0x8C8F" />
+      <token name="TRANSFORM_FEEDBACK_BUFFER_SIZE" value="0x8C85" />
+      <token name="TRANSFORM_FEEDBACK_BUFFER_START" value="0x8C84" />
+      <use enum="VERSION_1_1" token="COLOR_WRITEMASK" />
+      <use enum="VERSION_4_1" token="SCISSOR_BOX" />
+      <use enum="VERSION_4_1" token="VIEWPORT" />
+      <use enum="VERSION_4_1" token="DEPTH_RANGE" />
+    </enum>
+    <enum name="GetMinmaxParameterPName">
+      <token name="MINMAX_FORMAT" value="0x802F" />
+      <token name="MINMAX_SINK" value="0x8030" />
+    </enum>
+    <enum name="GetMultisamplePName">
+      <token name="SAMPLE_POSITION" value="0x8E50" />
+    </enum>
+    <enum name="GetPName">
+      <use enum="ClampColorTarget" token="CLAMP_VERTEX_COLOR" />
+      <use enum="ClampColorTarget" token="CLAMP_FRAGMENT_COLOR" />
+      <use enum="ClampColorTarget" token="CLAMP_READ_COLOR" />
+      <use enum="ARB_framebuffer_object" token="MAX_SAMPLES" />
+      <use enum="ARB_framebuffer_object" token="MAX_COLOR_ATTACHMENTS" />
+      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_BINDING" />
+      <use enum="ARB_framebuffer_object" token="DRAW_FRAMEBUFFER_BINDING" />
+      <use enum="ARB_framebuffer_object" token="READ_FRAMEBUFFER_BINDING" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_BINDING" />
+      <use enum="ARB_framebuffer_object" token="MAX_RENDERBUFFER_SIZE" />
+      <use enum="ARB_framebuffer_sRGB" token="FRAMEBUFFER_SRGB" />
+      <use enum="ARB_vertex_array_object" token="VERTEX_ARRAY_BINDING" />
+      <use enum="ARB_uniform_buffer_object" token="MAX_VERTEX_UNIFORM_BLOCKS" />
+      <use enum="ARB_uniform_buffer_object" token="MAX_GEOMETRY_UNIFORM_BLOCKS" />
+      <use enum="ARB_uniform_buffer_object" token="MAX_FRAGMENT_UNIFORM_BLOCKS" />
+      <use enum="ARB_uniform_buffer_object" token="MAX_COMBINED_UNIFORM_BLOCKS" />
+      <use enum="ARB_uniform_buffer_object" token="MAX_UNIFORM_BUFFER_BINDINGS" />
+      <use enum="ARB_uniform_buffer_object" token="MAX_UNIFORM_BLOCK_SIZE" />
+      <use enum="ARB_uniform_buffer_object" token="MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS" />
+      <use enum="ARB_uniform_buffer_object" token="MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS" />
+      <use enum="ARB_uniform_buffer_object" token="MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BUFFER_OFFSET_ALIGNMENT" />
+      <token name="ACTIVE_TEXTURE" value="0x84E0" />
+      <token name="ALIASED_LINE_WIDTH_RANGE" value="0x846E" />
+      <token name="ALIASED_POINT_SIZE_RANGE" value="0x846D" />
+      <token name="ARRAY_BUFFER_BINDING" value="0x8894" />
+      <token name="BLEND_DST_ALPHA" value="0x80CA" />
+      <token name="BLEND_DST_RGB" value="0x80C8" />
+      <token name="BLEND_EQUATION_ALPHA" value="0x883D" />
+      <token name="BLEND_EQUATION_RGB" value="0x8009" />
+      <token name="BLEND_SRC_ALPHA" value="0x80CB" />
+      <token name="BLEND_SRC_RGB" value="0x80C9" />
+      <token name="CLIENT_ACTIVE_TEXTURE" value="0x84E1" />
+      <token name="COLOR_ARRAY_BUFFER_BINDING" value="0x8898" />
+      <token name="COLOR_SUM" value="0x8458" />
+      <token name="COMPRESSED_TEXTURE_FORMATS" value="0x86A3" />
+      <token name="CONTEXT_FLAGS" value="0x821E" />
+      <token name="CURRENT_FOG_COORD" value="0x8453" />
+      <token name="CURRENT_PROGRAM" value="0x8B8D" />
+      <token name="CURRENT_RASTER_SECONDARY_COLOR" value="0x845F" />
+      <token name="CURRENT_SECONDARY_COLOR" value="0x8459" />
+      <token name="DEPTH_CLAMP" value="0x864F" />
+      <token name="DRAW_BUFFER0" value="0x8825" />
+      <token name="DRAW_BUFFER1" value="0x8826" />
+      <token name="DRAW_BUFFER10" value="0x882F" />
+      <token name="DRAW_BUFFER11" value="0x8830" />
+      <token name="DRAW_BUFFER12" value="0x8831" />
+      <token name="DRAW_BUFFER13" value="0x8832" />
+      <token name="DRAW_BUFFER14" value="0x8833" />
+      <token name="DRAW_BUFFER15" value="0x8834" />
+      <token name="DRAW_BUFFER2" value="0x8827" />
+      <token name="DRAW_BUFFER3" value="0x8828" />
+      <token name="DRAW_BUFFER4" value="0x8829" />
+      <token name="DRAW_BUFFER5" value="0x882A" />
+      <token name="DRAW_BUFFER6" value="0x882B" />
+      <token name="DRAW_BUFFER7" value="0x882C" />
+      <token name="DRAW_BUFFER8" value="0x882D" />
+      <token name="DRAW_BUFFER9" value="0x882E" />
+      <token name="EDGE_FLAG_ARRAY_BUFFER_BINDING" value="0x889B" />
+      <token name="ELEMENT_ARRAY_BUFFER_BINDING" value="0x8895" />
+      <token name="FOG_COORD_ARRAY_BUFFER_BINDING" value="0x889D" />
+      <token name="FOG_COORD_ARRAY_STRIDE" value="0x8455" />
+      <token name="FOG_COORD_ARRAY_TYPE" value="0x8454" />
+      <token name="FRAGMENT_SHADER_DERIVATIVE_HINT" value="0x8B8B" />
+      <token name="FRAMEBUFFER_BINDING_EXT" value="0x8CA6" />
+      <token name="GENERATE_MIPMAP_HINT" value="0x8192" />
+      <token name="INDEX_ARRAY_BUFFER_BINDING" value="0x8899" />
+      <token name="LIGHT_MODEL_COLOR_CONTROL" value="0x81F8" />
+      <token name="MAJOR_VERSION" value="0x821B" />
+      <token name="MAX_3D_TEXTURE_SIZE" value="0x8073" />
+      <token name="MAX_ARRAY_TEXTURE_LAYERS" value="0x88FF" />
+      <token name="MAX_COLOR_ATTACHMENTS_EXT" value="0x8CDF" />
+      <token name="MAX_COLOR_TEXTURE_SAMPLES" value="0x910E" />
+      <token name="MAX_COMBINED_TEXTURE_IMAGE_UNITS" value="0x8B4D" />
+      <token name="MAX_CUBE_MAP_TEXTURE_SIZE" value="0x851C" />
+      <token name="MAX_DEPTH_TEXTURE_SAMPLES" value="0x910F" />
+      <token name="MAX_DRAW_BUFFERS" value="0x8824" />
+      <token name="MAX_ELEMENTS_INDICES" value="0x80E9" />
+      <token name="MAX_ELEMENTS_VERTICES" value="0x80E8" />
+      <token name="MAX_FRAGMENT_UNIFORM_COMPONENTS" value="0x8B49" />
+      <token name="MAX_GEOMETRY_OUTPUT_VERTICES" value="0x8DE0" />
+      <token name="MAX_GEOMETRY_TEXTURE_IMAGE_UNITS" value="0x8C29" />
+      <token name="MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS" value="0x8DE1" />
+      <token name="MAX_GEOMETRY_UNIFORM_COMPONENTS" value="0x8DDF" />
+      <token name="MAX_GEOMETRY_VARYING_COMPONENTS" value="0x8DDD" />
+      <token name="MAX_INTEGER_SAMPLES" value="0x9110" />
+      <token name="MAX_PROGRAM_TEXEL_OFFSET" value="0x8905" />
+      <token name="MAX_RECTANGLE_TEXTURE_SIZE" value="0x84F8" />
+      <token name="MAX_RENDERBUFFER_SIZE_EXT" value="0x84E8" />
+      <token name="MAX_SAMPLE_MASK_WORDS" value="0x8E59" />
+      <token name="MAX_TEXTURE_COORDS" value="0x8871" />
+      <token name="MAX_TEXTURE_IMAGE_UNITS" value="0x8872" />
+      <token name="MAX_TEXTURE_LOD_BIAS" value="0x84FD" />
+      <token name="MAX_TEXTURE_UNITS" value="0x84E2" />
+      <token name="MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS" value="0x8C8A" />
+      <token name="MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS" value="0x8C8B" />
+      <token name="MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS" value="0x8C80" />
+      <token name="MAX_VARYING_COMPONENTS" value="0x8B4B" />
+      <token name="MAX_VARYING_FLOATS" value="0x8B4B" />
+      <token name="MAX_VERTEX_ATTRIBS" value="0x8869" />
+      <token name="MAX_VERTEX_TEXTURE_IMAGE_UNITS" value="0x8B4C" />
+      <token name="MAX_VERTEX_UNIFORM_COMPONENTS" value="0x8B4A" />
+      <token name="MAX_VERTEX_VARYING_COMPONENTS" value="0x8DDE" />
+      <token name="MIN_PROGRAM_TEXEL_OFFSET" value="0x8904" />
+      <token name="MINOR_VERSION" value="0x821C" />
+      <token name="MULTISAMPLE" value="0x809D" />
+      <token name="NORMAL_ARRAY_BUFFER_BINDING" value="0x8897" />
+      <token name="NUM_COMPRESSED_TEXTURE_FORMATS" value="0x86A2" />
+      <token name="NUM_EXTENSIONS" value="0x821D" />
+      <token name="PIXEL_PACK_BUFFER_BINDING" value="0x88ED" />
+      <token name="PIXEL_UNPACK_BUFFER_BINDING" value="0x88EF" />
+      <token name="POINT_DISTANCE_ATTENUATION" value="0x8129" />
+      <token name="POINT_FADE_THRESHOLD_SIZE" value="0x8128" />
+      <token name="POINT_SIZE_MAX" value="0x8127" />
+      <token name="POINT_SIZE_MIN" value="0x8126" />
+      <token name="POINT_SPRITE" value="0x8861" />
+      <token name="PROGRAM_POINT_SIZE" value="0x8642" />
+      <token name="PROVOKING_VERTEX" value="0x8E4F" />
+      <token name="QUADS_FOLLOW_PROVOKING_VERTEX_CONVENTION" value="0x8E4C" />
+      <token name="RENDERBUFFER_BINDING_EXT" value="0x8CA7" />
+      <token name="RGBA_FLOAT_MODE" value="0x8820" />
+      <token name="SAMPLE_ALPHA_TO_COVERAGE" value="0x809E" />
+      <token name="SAMPLE_ALPHA_TO_ONE" value="0x809F" />
+      <token name="SAMPLE_BUFFERS" value="0x80A8" />
+      <token name="SAMPLE_COVERAGE" value="0x80A0" />
+      <token name="SAMPLE_COVERAGE_INVERT" value="0x80AB" />
+      <token name="SAMPLE_COVERAGE_VALUE" value="0x80AA" />
+      <token name="SAMPLE_MASK" value="0x8E51" />
+      <token name="SAMPLES" value="0x80A9" />
+      <token name="SECONDARY_COLOR_ARRAY_BUFFER_BINDING" value="0x889C" />
+      <token name="SECONDARY_COLOR_ARRAY_SIZE" value="0x845A" />
+      <token name="SECONDARY_COLOR_ARRAY_STRIDE" value="0x845C" />
+      <token name="SECONDARY_COLOR_ARRAY_TYPE" value="0x845B" />
+      <token name="SMOOTH_LINE_WIDTH_GRANULARITY" value="0x0B23" />
+      <token name="SMOOTH_LINE_WIDTH_RANGE" value="0x0B22" />
+      <token name="SMOOTH_POINT_SIZE_GRANULARITY" value="0x0B13" />
+      <token name="SMOOTH_POINT_SIZE_RANGE" value="0x0B12" />
+      <token name="STENCIL_BACK_FAIL" value="0x8801" />
+      <token name="STENCIL_BACK_FUNC" value="0x8800" />
+      <token name="STENCIL_BACK_PASS_DEPTH_FAIL" value="0x8802" />
+      <token name="STENCIL_BACK_PASS_DEPTH_PASS" value="0x8803" />
+      <token name="STENCIL_BACK_REF" value="0x8CA3" />
+      <token name="STENCIL_BACK_VALUE_MASK" value="0x8CA4" />
+      <token name="STENCIL_BACK_WRITEMASK" value="0x8CA5" />
+      <token name="TEXTURE_BINDING_1D_ARRAY" value="0x8C1C" />
+      <token name="TEXTURE_BINDING_2D_ARRAY" value="0x8C1D" />
+      <token name="TEXTURE_BINDING_2D_MULTISAMPLE" value="0x9104" />
+      <token name="TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY" value="0x9105" />
+      <token name="TEXTURE_BINDING_3D" value="0x806A" />
+      <token name="TEXTURE_BINDING_CUBE_MAP" value="0x8514" />
+      <token name="TEXTURE_BINDING_RECTANGLE" value="0x84F6" />
+      <token name="TEXTURE_COMPRESSION_HINT" value="0x84EF" />
+      <token name="TEXTURE_COORD_ARRAY_BUFFER_BINDING" value="0x889A" />
+      <token name="TEXTURE_CUBE_MAP" value="0x8513" />
+      <token name="TEXTURE_CUBE_MAP_SEAMLESS" value="0x884F" />
+      <token name="TRANSPOSE_COLOR_MATRIX" value="0x84E6" />
+      <token name="TRANSPOSE_MODELVIEW_MATRIX" value="0x84E3" />
+      <token name="TRANSPOSE_PROJECTION_MATRIX" value="0x84E4" />
+      <token name="TRANSPOSE_TEXTURE_MATRIX" value="0x84E5" />
+      <token name="VERTEX_ARRAY_BUFFER_BINDING" value="0x8896" />
+      <token name="VERTEX_ATTRIB_ARRAY_BUFFER_BINDING" value="0x889F" />
+      <token name="WEIGHT_ARRAY_BUFFER_BINDING" value="0x889E" />
+      <use enum="VERSION_1_3" token="SAMPLES" />
+      <use enum="VERSION_1_3" token="SAMPLE_BUFFERS" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
+      <use enum="VERSION_3_1" token="MAX_TEXTURE_BUFFER_SIZE" />
+      <use enum="VERSION_3_1" token="TEXTURE_BINDING_BUFFER" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER_DATA_STORE_BINDING" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER_FORMAT" />
+      <use enum="VERSION_3_2" token="MAX_FRAGMENT_INPUT_COMPONENTS" />
+      <use enum="VERSION_3_2" token="MAX_GEOMETRY_INPUT_COMPONENTS" />
+      <use enum="VERSION_3_2" token="MAX_GEOMETRY_OUTPUT_COMPONENTS" />
+      <use enum="VERSION_3_2" token="MAX_VERTEX_OUTPUT_COMPONENTS" />
+      <use enum="VERSION_3_3" token="SAMPLER_BINDING" />
+      <use enum="VERSION_3_3" token="MAX_DUAL_SOURCE_DRAW_BUFFERS" />
+      <use enum="VERSION_3_3" token="TIMESTAMP" />
+      <use enum="VERSION_4_0" token="DRAW_INDIRECT_BUFFER_BINDING" />
+      <use enum="VERSION_4_0" token="MAX_GEOMETRY_SHADER_INVOCATIONS" />
+      <use enum="VERSION_4_0" token="MIN_FRAGMENT_INTERPOLATION_OFFSET" />
+      <use enum="VERSION_4_0" token="MAX_FRAGMENT_INTERPOLATION_OFFSET" />
+      <use enum="VERSION_4_0" token="FRAGMENT_INTERPOLATION_OFFSET_BITS" />
+      <use enum="VERSION_4_0" token="MAX_VERTEX_STREAMS" />
+      <use enum="VERSION_4_0" token="SAMPLE_SHADING" />
+      <use enum="VERSION_4_0" token="MIN_SAMPLE_SHADING_VALUE" />
+      <use enum="VERSION_4_0" token="MAX_SUBROUTINES" />
+      <use enum="VERSION_4_0" token="MAX_SUBROUTINE_UNIFORM_LOCATIONS" />
+      <use enum="VERSION_4_0" token="PATCH_VERTICES" />
+      <use enum="VERSION_4_0" token="PATCH_DEFAULT_INNER_LEVEL" />
+      <use enum="VERSION_4_0" token="PATCH_DEFAULT_OUTER_LEVEL" />
+      <use enum="VERSION_4_0" token="MAX_TESS_GEN_LEVEL" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_OUTPUT_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_PATCH_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_TOTAL_OUTPUT_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_OUTPUT_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_UNIFORM_BLOCKS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_UNIFORM_BLOCKS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_INPUT_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_INPUT_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_COMBINED_TESS_CONTROL_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_COMBINED_TESS_EVALUATION_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY_BINDING" />
+      <use enum="VERSION_4_0" token="MAX_PROGRAM_TEXTURE_GATHER_OFFSET" />
+      <use enum="VERSION_4_0" token="MIN_PROGRAM_TEXTURE_GATHER_OFFSET" />
+      <use enum="VERSION_4_0" token="MAX_PROGRAM_TEXTURE_GATHER_COMPONENTS" />
+      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BUFFER_PAUSED" />
+      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BUFFER_ACTIVE" />
+      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BINDING" />
+      <use enum="VERSION_4_0" token="MAX_TRANSFORM_FEEDBACK_BUFFERS" />
+      <use enum="VERSION_4_0" token="MAX_VERTEX_STREAMS" />
+      <use enum="VERSION_4_1" token="PROGRAM_PIPELINE_BINDING" />
+      <use enum="VERSION_4_1" token="SHADER_COMPILER" />
+      <use enum="VERSION_4_1" token="SHADER_BINARY_FORMATS" />
+      <use enum="VERSION_4_1" token="NUM_SHADER_BINARY_FORMATS" />
+      <use enum="VERSION_4_1" token="MAX_VERTEX_UNIFORM_VECTORS" />
+      <use enum="VERSION_4_1" token="MAX_VARYING_VECTORS" />
+      <use enum="VERSION_4_1" token="MAX_FRAGMENT_UNIFORM_VECTORS" />
+      <use enum="VERSION_4_1" token="IMPLEMENTATION_COLOR_READ_TYPE" />
+      <use enum="VERSION_4_1" token="IMPLEMENTATION_COLOR_READ_FORMAT" />
+      <use enum="VERSION_4_1" token="NUM_PROGRAM_BINARY_FORMATS" />
+      <use enum="VERSION_4_1" token="PROGRAM_BINARY_FORMATS" />
+      <use enum="VERSION_4_1" token="MAX_VIEWPORTS" />
+      <use enum="VERSION_4_1" token="VIEWPORT_SUBPIXEL_BITS" />
+      <use enum="VERSION_4_1" token="VIEWPORT_BOUNDS_RANGE" />
+      <use enum="VERSION_4_1" token="LAYER_PROVOKING_VERTEX" />
+      <use enum="VERSION_4_1" token="VIEWPORT_INDEX_PROVOKING_VERTEX" />
+    </enum>
+    <enum name="GetPointervPName">
+      <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
+      <token name="SECONDARY_COLOR_ARRAY_POINTER" value="0x845D" />
+    </enum>
+    <enum name="GetQueryObjectParam">
+      <token name="QUERY_RESULT" value="0x8866" />
+      <token name="QUERY_RESULT_AVAILABLE" value="0x8867" />
+    </enum>
+    <enum name="GetQueryParam">
+      <token name="CURRENT_QUERY" value="0x8865" />
+      <token name="QUERY_COUNTER_BITS" value="0x8864" />
+    </enum>
+    <enum name="GetTextureParameter">
+      <use enum="ARB_framebuffer_object" token="TEXTURE_STENCIL_SIZE" />
+      <use enum="ARB_framebuffer_object" token="TEXTURE_RED_TYPE" />
+      <use enum="ARB_framebuffer_object" token="TEXTURE_GREEN_TYPE" />
+      <use enum="ARB_framebuffer_object" token="TEXTURE_BLUE_TYPE" />
+      <use enum="ARB_framebuffer_object" token="TEXTURE_ALPHA_TYPE" />
+      <use enum="ARB_framebuffer_object" token="TEXTURE_LUMINANCE_TYPE" />
+      <use enum="ARB_framebuffer_object" token="TEXTURE_INTENSITY_TYPE" />
+      <use enum="ARB_framebuffer_object" token="TEXTURE_DEPTH_TYPE" />
+      <token name="DEPTH_TEXTURE_MODE" value="0x884B" />
+      <token name="GENERATE_MIPMAP" value="0x8191" />
+      <token name="TEXTURE_ALPHA_TYPE" value="0x8C13" />
+      <token name="TEXTURE_BASE_LEVEL" value="0x813C" />
+      <token name="TEXTURE_BLUE_TYPE" value="0x8C12" />
+      <token name="TEXTURE_COMPARE_FUNC" value="0x884D" />
+      <token name="TEXTURE_COMPARE_MODE" value="0x884C" />
+      <token name="TEXTURE_COMPRESSED" value="0x86A1" />
+      <token name="TEXTURE_COMPRESSED_IMAGE_SIZE" value="0x86A0" />
+      <token name="TEXTURE_DEPTH" value="0x8071" />
+      <token name="TEXTURE_DEPTH_SIZE" value="0x884A" />
+      <token name="TEXTURE_DEPTH_TYPE" value="0x8C16" />
+      <token name="TEXTURE_FIXED_SAMPLE_LOCATIONS" value="0x9107" />
+      <token name="TEXTURE_GREEN_TYPE" value="0x8C11" />
+      <token name="TEXTURE_INTENSITY_TYPE" value="0x8C15" />
+      <token name="TEXTURE_LUMINANCE_TYPE" value="0x8C14" />
+      <token name="TEXTURE_MAX_LEVEL" value="0x813D" />
+      <token name="TEXTURE_MAX_LOD" value="0x813B" />
+      <token name="TEXTURE_MIN_LOD" value="0x813A" />
+      <token name="TEXTURE_RED_TYPE" value="0x8C10" />
+      <token name="TEXTURE_SAMPLES" value="0x9106" />
+      <token name="TEXTURE_SHARED_SIZE" value="0x8C3F" />
+      <token name="TEXTURE_WRAP_R" value="0x8072" />
+      <use enum="VERSION_1_3" token="TEXTURE_COMPRESSED" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_R" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_G" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_B" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_A" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_RGBA" />
+    </enum>
+    <enum name="HintTarget">
+      <token name="FRAGMENT_SHADER_DERIVATIVE_HINT" value="0x8B8B" />
+      <token name="GENERATE_MIPMAP_HINT" value="0x8192" />
+      <token name="TEXTURE_COMPRESSION_HINT" value="0x84EF" />
+    </enum>
+    <enum name="HistogramTarget">
+      <token name="HISTOGRAM" value="0x8024" />
+      <token name="PROXY_HISTOGRAM" value="0x8025" />
+    </enum>
+    <enum name="IndexedEnableCap">
+      <use enum="GetPName" token="BLEND" />
+      <use enum="VERSION_4_1" token="SCISSOR_TEST" />
+    </enum>
+    <enum name="LightModelColorControl">
+      <token name="SEPARATE_SPECULAR_COLOR" value="0x81FA" />
+      <token name="SINGLE_COLOR" value="0x81F9" />
+    </enum>
+    <enum name="LightModelParameter">
+      <token name="LIGHT_MODEL_COLOR_CONTROL" value="0x81F8" />
+    </enum>
+    <enum name="MatrixMode">
+      <use enum="PixelCopyType" token="COLOR" />
+    </enum>
+    <enum name="MatrixModeARB">
+      <use enum="MatrixMode" token="MODELVIEW" />
+      <use enum="MatrixMode" token="PROJECTION" />
+      <use enum="MatrixMode" token="TEXTURE" />
+      <use enum="MatrixMode" token="COLOR" />
+      <token name="MATRIX0" value="0x88C0" />
+      <token name="MATRIX1" value="0x88C1" />
+      <token name="MATRIX10" value="0x88CA" />
+      <token name="MATRIX11" value="0x88CB" />
+      <token name="MATRIX12" value="0x88CC" />
+      <token name="MATRIX13" value="0x88CD" />
+      <token name="MATRIX14" value="0x88CE" />
+      <token name="MATRIX15" value="0x88CF" />
+      <token name="MATRIX16" value="0x88D0" />
+      <token name="MATRIX17" value="0x88D1" />
+      <token name="MATRIX18" value="0x88D2" />
+      <token name="MATRIX19" value="0x88D3" />
+      <token name="MATRIX2" value="0x88C2" />
+      <token name="MATRIX20" value="0x88D4" />
+      <token name="MATRIX21" value="0x88D5" />
+      <token name="MATRIX22" value="0x88D6" />
+      <token name="MATRIX23" value="0x88D7" />
+      <token name="MATRIX24" value="0x88D8" />
+      <token name="MATRIX25" value="0x88D9" />
+      <token name="MATRIX26" value="0x88DA" />
+      <token name="MATRIX27" value="0x88DB" />
+      <token name="MATRIX28" value="0x88DC" />
+      <token name="MATRIX29" value="0x88DD" />
+      <token name="MATRIX3" value="0x88C3" />
+      <token name="MATRIX30" value="0x88DE" />
+      <token name="MATRIX31" value="0x88DF" />
+      <token name="MATRIX4" value="0x88C4" />
+      <token name="MATRIX5" value="0x88C5" />
+      <token name="MATRIX6" value="0x88C6" />
+      <token name="MATRIX7" value="0x88C7" />
+      <token name="MATRIX8" value="0x88C8" />
+      <token name="MATRIX9" value="0x88C9" />
+    </enum>
+    <enum name="MinmaxTarget">
+      <token name="MINMAX" value="0x802E" />
+    </enum>
+    <enum name="NormalPointerType">
+      <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+    </enum>
+    <enum name="PackedPointerType">
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+    </enum>
+    <enum name="PatchParameterInt">
+      <use enum="VERSION_4_0" token="PATCH_VERTICES" />
+    </enum>
+    <enum name="PatchParameterFloat">
+      <use enum="VERSION_4_0" token="PATCH_DEFAULT_INNER_LEVEL" />
+      <use enum="VERSION_4_0" token="PATCH_DEFAULT_OUTER_LEVEL" />
+    </enum>
+    <enum name="PixelFormat">
+      <use enum="ARB_texture_rg" token="RG" />
+      <use enum="ARB_texture_rg" token="RG_INTEGER" />
+      <use enum="ARB_framebuffer_object" token="DEPTH_STENCIL" />
+      <token name="ALPHA_INTEGER" value="0x8D97" />
+      <token name="BGR" value="0x80E0" />
+      <token name="BGR_INTEGER" value="0x8D9A" />
+      <token name="BGRA" value="0x80E1" />
+      <token name="BGRA_INTEGER" value="0x8D9B" />
+      <token name="BLUE_INTEGER" value="0x8D96" />
+      <token name="GREEN_INTEGER" value="0x8D95" />
+      <token name="RED_INTEGER" value="0x8D94" />
+      <token name="RGB_INTEGER" value="0x8D98" />
+      <token name="RGBA_INTEGER" value="0x8D99" />
+    </enum>
+    <enum name="PixelInternalFormat">
+      <use enum="PixelFormat" token="DEPTH_COMPONENT" />
+      <use enum="ARB_depth_buffer_float" token="DEPTH_COMPONENT32F" />
+      <use enum="ARB_depth_buffer_float" token="DEPTH32F_STENCIL8" />
+      <use enum="ARB_depth_buffer_float" token="FLOAT_32_UNSIGNED_INT_24_8_REV" />
+      <use enum="ARB_texture_rg" token="R8" />
+      <use enum="ARB_texture_rg" token="R16" />
+      <use enum="ARB_texture_rg" token="RG8" />
+      <use enum="ARB_texture_rg" token="RG16" />
+      <use enum="ARB_texture_rg" token="R16F" />
+      <use enum="ARB_texture_rg" token="R32F" />
+      <use enum="ARB_texture_rg" token="RG16F" />
+      <use enum="ARB_texture_rg" token="RG32F" />
+      <use enum="ARB_texture_rg" token="R8I" />
+      <use enum="ARB_texture_rg" token="R8UI" />
+      <use enum="ARB_texture_rg" token="R16I" />
+      <use enum="ARB_texture_rg" token="R16UI" />
+      <use enum="ARB_texture_rg" token="R32I" />
+      <use enum="ARB_texture_rg" token="R32UI" />
+      <use enum="ARB_texture_rg" token="RG8I" />
+      <use enum="ARB_texture_rg" token="RG8UI" />
+      <use enum="ARB_texture_rg" token="RG16I" />
+      <use enum="ARB_texture_rg" token="RG16UI" />
+      <use enum="ARB_texture_rg" token="RG32I" />
+      <use enum="ARB_texture_rg" token="RG32UI" />
+      <use enum="ARB_texture_compression_rgtc" token="COMPRESSED_RED_RGTC1" />
+      <use enum="ARB_texture_compression_rgtc" token="COMPRESSED_SIGNED_RED_RGTC1" />
+      <use enum="ARB_texture_compression_rgtc" token="COMPRESSED_RG_RGTC2" />
+      <use enum="ARB_texture_compression_rgtc" token="COMPRESSED_SIGNED_RG_RGTC2" />
+      <use enum="ARB_framebuffer_object" token="DEPTH_STENCIL" />
+      <use enum="ARB_framebuffer_object" token="DEPTH24_STENCIL8" />
+      <token name="COMPRESSED_ALPHA" value="0x84E9" />
+      <token name="COMPRESSED_INTENSITY" value="0x84EC" />
+      <token name="COMPRESSED_LUMINANCE" value="0x84EA" />
+      <token name="COMPRESSED_LUMINANCE_ALPHA" value="0x84EB" />
+      <token name="COMPRESSED_RED" value="0x8225" />
+      <token name="COMPRESSED_RG" value="0x8226" />
+      <token name="COMPRESSED_RGB" value="0x84ED" />
+      <token name="COMPRESSED_RGB_S3TC_DXT1_EXT" value="0x83F0" />
+      <token name="COMPRESSED_RGBA" value="0x84EE" />
+      <token name="COMPRESSED_RGBA_S3TC_DXT1_EXT" value="0x83F1" />
+      <token name="COMPRESSED_RGBA_S3TC_DXT3_EXT" value="0x83F2" />
+      <token name="COMPRESSED_RGBA_S3TC_DXT5_EXT" value="0x83F3" />
+      <token name="COMPRESSED_SLUMINANCE" value="0x8C4A" />
+      <token name="COMPRESSED_SLUMINANCE_ALPHA" value="0x8C4B" />
+      <token name="COMPRESSED_SRGB" value="0x8C48" />
+      <token name="COMPRESSED_SRGB_ALPHA" value="0x8C49" />
+      <token name="COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT" value="0x8C4D" />
+      <token name="COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT" value="0x8C4E" />
+      <token name="COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT" value="0x8C4F" />
+      <token name="COMPRESSED_SRGB_S3TC_DXT1_EXT" value="0x8C4C" />
+      <token name="DEPTH_COMPONENT16" value="0x81a5" />
+      <token name="DEPTH_COMPONENT24" value="0x81a6" />
+      <token name="DEPTH_COMPONENT32" value="0x81a7" />
+      <token name="R11F_G11F_B10F" value="0x8C3A" />
+      <token name="RGB16F" value="0x881B" />
+      <token name="RGB16I" value="0x8D89" />
+      <token name="RGB16UI" value="0x8D77" />
+      <token name="RGB32F" value="0x8815" />
+      <token name="RGB32I" value="0x8D83" />
+      <token name="RGB32UI" value="0x8D71" />
+      <token name="RGB8I" value="0x8D8F" />
+      <token name="RGB8UI" value="0x8D7D" />
+      <token name="RGB9_E5" value="0x8C3D" />
+      <token name="RGBA16F" value="0x881A" />
+      <token name="RGBA16I" value="0x8D88" />
+      <token name="RGBA16UI" value="0x8D76" />
+      <token name="RGBA32F" value="0x8814" />
+      <token name="RGBA32I" value="0x8D82" />
+      <token name="RGBA32UI" value="0x8D70" />
+      <token name="RGBA8I" value="0x8D8E" />
+      <token name="RGBA8UI" value="0x8D7C" />
+      <token name="SLUMINANCE" value="0x8C46" />
+      <token name="SLUMINANCE_ALPHA" value="0x8C44" />
+      <token name="SLUMINANCE8" value="0x8C47" />
+      <token name="SLUMINANCE8_ALPHA8" value="0x8C45" />
+      <token name="SRGB" value="0x8C40" />
+      <token name="SRGB_ALPHA" value="0x8C42" />
+      <token name="SRGB8" value="0x8C41" />
+      <token name="SRGB8_ALPHA8" value="0x8C43" />
+      <token name="ONE" value="1" />
+      <token name="TWO" value="2" />
+      <token name="THREE" value="3" />
+      <token name="FOUR" value="4" />
+      <use enum="PixelFormat" token="ALPHA" />
+      <use enum="PixelFormat" token="LUMINANCE" />
+      <use enum="PixelFormat" token="LUMINANCE_ALPHA" />
+      <use enum="PixelFormat" token="RGB" />
+      <use enum="PixelFormat" token="RGBA" />
+      <use enum="VERSION_3_3" token="RGB10_A2UI" />
+    </enum>
+    <enum name="PixelStoreParameter">
+      <token name="PACK_IMAGE_HEIGHT" value="0x806C" />
+      <token name="PACK_SKIP_IMAGES" value="0x806B" />
+      <token name="UNPACK_IMAGE_HEIGHT" value="0x806E" />
+      <token name="UNPACK_SKIP_IMAGES" value="0x806D" />
+    </enum>
+    <enum name="PixelType">
+      <use enum="ARB_framebuffer_object" token="UNSIGNED_INT_24_8" />
+      <use enum="ARB_depth_buffer_float" token="FLOAT_32_UNSIGNED_INT_24_8_REV" />
+      <token name="HALF_FLOAT" value="0x140B" />
+      <token name="UNSIGNED_BYTE_2_3_3_REVERSED" value="0x8362" />
+      <token name="UNSIGNED_BYTE_3_3_2" value="0x8032" />
+      <token name="UNSIGNED_INT_10_10_10_2" value="0x8036" />
+      <token name="UNSIGNED_INT_10F_11F_11F_REV" value="0x8C3B" />
+      <token name="UNSIGNED_INT_2_10_10_10_REVERSED" value="0x8368" />
+      <token name="UNSIGNED_INT_5_9_9_9_REV" value="0x8C3E" />
+      <token name="UNSIGNED_INT_8_8_8_8" value="0x8035" />
+      <token name="UNSIGNED_INT_8_8_8_8_REVERSED" value="0x8367" />
+      <token name="UNSIGNED_SHORT_1_5_5_5_REVERSED" value="0x8366" />
+      <token name="UNSIGNED_SHORT_4_4_4_4" value="0x8033" />
+      <token name="UNSIGNED_SHORT_4_4_4_4_REVERSED" value="0x8365" />
+      <token name="UNSIGNED_SHORT_5_5_5_1" value="0x8034" />
+      <token name="UNSIGNED_SHORT_5_6_5" value="0x8363" />
+      <token name="UNSIGNED_SHORT_5_6_5_REVERSED" value="0x8364" />
+    </enum>
+    <enum name="PointParameterName">
+      <token name="POINT_DISTANCE_ATTENUATION" value="0x8129" />
+      <token name="POINT_FADE_THRESHOLD_SIZE" value="0x8128" />
+      <token name="POINT_SIZE_MAX" value="0x8127" />
+      <token name="POINT_SIZE_MIN" value="0x8126" />
+      <token name="POINT_SPRITE_COORD_ORIGIN" value="0x8CA0" />
+    </enum>
+    <enum name="PointSpriteCoordOriginParameter">
+      <token name="LOWER_LEFT" value="0x8CA1" />
+      <token name="UPPER_LEFT" value="0x8CA2" />
+    </enum>
+    <enum name="ProgramParameter">
+      <use enum="ARB_uniform_buffer_object" token="ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH" />
+      <use enum="ARB_uniform_buffer_object" token="ACTIVE_UNIFORM_BLOCKS" />
+      <token name="ACTIVE_ATTRIBUTE_MAX_LENGTH" value="0x8B8A" />
+      <token name="ACTIVE_ATTRIBUTES" value="0x8B89" />
+      <token name="ACTIVE_UNIFORM_MAX_LENGTH" value="0x8B87" />
+      <token name="ACTIVE_UNIFORMS" value="0x8B86" />
+      <token name="ATTACHED_SHADERS" value="0x8B85" />
+      <token name="DELETE_STATUS" value="0x8B80" />
+      <token name="GEOMETRY_INPUT_TYPE" value="0x8DDB" />
+      <token name="GEOMETRY_OUTPUT_TYPE" value="0x8DDC" />
+      <token name="GEOMETRY_VERTICES_OUT" value="0x8DDA" />
+      <token name="INFO_LOG_LENGTH" value="0x8B84" />
+      <token name="LINK_STATUS" value="0x8B82" />
+      <token name="TRANSFORM_FEEDBACK_BUFFER_MODE" value="0x8C7F" />
+      <token name="TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH" value="0x8C76" />
+      <token name="TRANSFORM_FEEDBACK_VARYINGS" value="0x8C83" />
+      <token name="VALIDATE_STATUS" value="0x8B83" />
+      <use enum="VERSION_4_0" token="GEOMETRY_SHADER_INVOCATIONS" />
+      <use enum="VERSION_4_0" token="TESS_CONTROL_OUTPUT_VERTICES" />
+      <use enum="VERSION_4_0" token="TESS_GEN_MODE" />
+      <use enum="VERSION_4_0" token="TESS_GEN_SPACING" />
+      <use enum="VERSION_4_0" token="TESS_GEN_VERTEX_ORDER" />
+      <use enum="VERSION_4_0" token="TESS_GEN_POINT_MODE" />
+      <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
+      <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+      <use enum="VERSION_4_1" token="PROGRAM_BINARY_LENGTH" />
+    </enum>
+    <enum name="ProgramPipelineParameter">
+      <use enum="VERSION_4_1" token="ACTIVE_PROGRAM" />
+    </enum>
+    <enum name="ProgramStageMask">
+      <use enum="VERSION_4_1" token="VERTEX_SHADER_BIT" />
+      <use enum="VERSION_4_1" token="FRAGMENT_SHADER_BIT" />
+      <use enum="VERSION_4_1" token="GEOMETRY_SHADER_BIT" />
+      <use enum="VERSION_4_1" token="TESS_CONTROL_SHADER_BIT" />
+      <use enum="VERSION_4_1" token="TESS_EVALUATION_SHADER_BIT" />
+      <use enum="VERSION_4_1" token="ALL_SHADER_BITS" />
+    </enum>
+    <enum name="ProgramStageParameter">
+      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINES" />
+      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_UNIFORMS" />
+      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS" />
+      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_MAX_LENGTH" />
+      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_UNIFORM_MAX_LENGTH" />
+    </enum>
+    <enum name="ProvokingVertexMode">
+      <token name="FIRST_VERTEX_CONVENTION" value="0x8E4D" />
+      <token name="LAST_VERTEX_CONVENTION" value="0x8E4E" />
+    </enum>
+    <enum name="QueryCounterTarget">
+      <use enum="VERSION_3_3" token="TIMESTAMP" />
+    </enum>
+      <enum name="QueryTarget">
+      <token name="PRIMITIVES_GENERATED" value="0x8C87" />
+      <token name="SAMPLES_PASSED" value="0x8914" />
+      <token name="TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN" value="0x8C88" />
+      <use enum="ARB_occlusion_query2" token="ANY_SAMPLES_PASSED" />
+      <use enum="VERSION_3_3" token="TIME_ELAPSED" />
+      <use enum="VERSION_3_3" token="TIMESTAMP" />
+    </enum>
+    <enum name="ReadBufferMode">
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT2" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT3" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT4" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT5" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT6" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT7" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT8" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT9" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT10" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT11" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT12" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT13" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
+      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
+      <use enum="VERSION_1_1" token="NONE" />
+    </enum>
+    <enum name="RenderbufferParameterName">
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_SAMPLES" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_WIDTH" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_HEIGHT" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_INTERNAL_FORMAT" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_RED_SIZE" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_GREEN_SIZE" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_BLUE_SIZE" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_ALPHA_SIZE" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_DEPTH_SIZE" />
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_STENCIL_SIZE" />
+      <token name="RENDERBUFFER_ALPHA_SIZE_EXT" value="0x8D53" />
+      <token name="RENDERBUFFER_BLUE_SIZE_EXT" value="0x8D52" />
+      <token name="RENDERBUFFER_DEPTH_SIZE_EXT" value="0x8D54" />
+      <token name="RENDERBUFFER_GREEN_SIZE_EXT" value="0x8D51" />
+      <token name="RENDERBUFFER_HEIGHT_EXT" value="0x8D43" />
+      <token name="RENDERBUFFER_INTERNAL_FORMAT_EXT" value="0x8D44" />
+      <token name="RENDERBUFFER_RED_SIZE_EXT" value="0x8D50" />
+      <token name="RENDERBUFFER_STENCIL_SIZE_EXT" value="0x8D55" />
+      <token name="RENDERBUFFER_WIDTH_EXT" value="0x8D42" />
+    </enum>
+    <enum name="RenderbufferStorage">
+      <use enum="PixelInternalFormat" token="ALPHA4" />
+      <use enum="PixelInternalFormat" token="ALPHA8" />
+      <use enum="PixelInternalFormat" token="ALPHA12" />
+      <use enum="PixelInternalFormat" token="ALPHA16" />
+      <use enum="PixelInternalFormat" token="R8" />
+      <use enum="PixelInternalFormat" token="R16" />
+      <use enum="PixelInternalFormat" token="RG8" />
+      <use enum="PixelInternalFormat" token="RG16" />
+      <use enum="PixelInternalFormat" token="R3_G3_B2" />
+      <use enum="PixelInternalFormat" token="RGB4" />
+      <use enum="PixelInternalFormat" token="RGB5" />
+      <use enum="PixelInternalFormat" token="RGB8" />
+      <use enum="PixelInternalFormat" token="RGB10" />
+      <use enum="PixelInternalFormat" token="RGB12" />
+      <use enum="PixelInternalFormat" token="RGB16" />
+      <use enum="PixelInternalFormat" token="RGBA2" />
+      <use enum="PixelInternalFormat" token="RGBA4" />
+      <use enum="PixelInternalFormat" token="RGB5" />
+      <use enum="PixelInternalFormat" token="RGBA8" />
+      <use enum="PixelInternalFormat" token="RGB10_A2" />
+      <use enum="PixelInternalFormat" token="RGBA12" />
+      <use enum="PixelInternalFormat" token="RGBA16" />
+      <use enum="PixelInternalFormat" token="SRGB8" />
+      <use enum="PixelInternalFormat" token="SRGB8_ALPHA8" />
+      <use enum="PixelInternalFormat" token="R16F" />
+      <use enum="PixelInternalFormat" token="RG16F" />
+      <use enum="PixelInternalFormat" token="RGB16F" />
+      <use enum="PixelInternalFormat" token="RGBA16F" />
+      <use enum="PixelInternalFormat" token="R32F" />
+      <use enum="PixelInternalFormat" token="RG32F" />
+      <use enum="PixelInternalFormat" token="RGB32F" />
+      <use enum="PixelInternalFormat" token="RGBA32F" />
+      <use enum="PixelInternalFormat" token="R11F_G11F_B10F" />
+      <use enum="PixelInternalFormat" token="RGB9_E5" />
+      <use enum="PixelInternalFormat" token="R8I" />
+      <use enum="PixelInternalFormat" token="R8UI" />
+      <use enum="PixelInternalFormat" token="R16I" />
+      <use enum="PixelInternalFormat" token="R16UI" />
+      <use enum="PixelInternalFormat" token="R32I" />
+      <use enum="PixelInternalFormat" token="R32UI" />
+      <use enum="PixelInternalFormat" token="RG8I" />
+      <use enum="PixelInternalFormat" token="RG8UI" />
+      <use enum="PixelInternalFormat" token="RG16I" />
+      <use enum="PixelInternalFormat" token="RG16UI" />
+      <use enum="PixelInternalFormat" token="RG32I" />
+      <use enum="PixelInternalFormat" token="RG32UI" />
+      <use enum="PixelInternalFormat" token="RGB8I" />
+      <use enum="PixelInternalFormat" token="RGB8UI" />
+      <use enum="PixelInternalFormat" token="RGB16I" />
+      <use enum="PixelInternalFormat" token="RGB16UI" />
+      <use enum="PixelInternalFormat" token="RGB32I" />
+      <use enum="PixelInternalFormat" token="RGB32UI" />
+      <use enum="PixelInternalFormat" token="RGBA8I" />
+      <use enum="PixelInternalFormat" token="RGBA8UI" />
+      <use enum="PixelInternalFormat" token="RGBA16I" />
+      <use enum="PixelInternalFormat" token="RGBA16UI" />
+      <use enum="PixelInternalFormat" token="RGBA32I" />
+      <use enum="PixelInternalFormat" token="RGBA32UI" />
+      <use enum="PixelInternalFormat" token="DEPTH_COMPONENT16" />
+      <use enum="PixelInternalFormat" token="DEPTH_COMPONENT24" />
+      <use enum="PixelInternalFormat" token="DEPTH_COMPONENT32" />
+      <use enum="PixelInternalFormat" token="DEPTH_COMPONENT32F" />
+      <use enum="PixelInternalFormat" token="DEPTH24_STENCIL8" />
+      <use enum="PixelInternalFormat" token="DEPTH32F_STENCIL8" />
+      <use enum="ARB_framebuffer_object" token="STENCIL_INDEX1" />
+      <use enum="ARB_framebuffer_object" token="STENCIL_INDEX4" />
+      <use enum="ARB_framebuffer_object" token="STENCIL_INDEX8" />
+      <use enum="ARB_framebuffer_object" token="STENCIL_INDEX16" />
+      <use enum="PixelInternalFormat" token="R11F_G11F_B10F" />
+      <use enum="PixelInternalFormat" token="RGB9_E5" />
+      <token name="STENCIL_INDEX1_EXT" value="0x8D46" />
+      <token name="STENCIL_INDEX16_EXT" value="0x8D49" />
+      <token name="STENCIL_INDEX4_EXT" value="0x8D47" />
+      <token name="STENCIL_INDEX8_EXT" value="0x8D48" />
+      <use enum="VERSION_3_3" token="RGB10_A2UI" />
+    </enum>
+    <enum name="RenderbufferTarget">
+      <use enum="ARB_framebuffer_object" token="RENDERBUFFER" />
+      <token name="RENDERBUFFER_EXT" value="0x8D41" />
+    </enum>
+    <enum name="SamplerParameter">
+      <token name="TextureWrapS" value = "0x2802" />
+      <token name="TextureWrapT" value = "0x2803" />
+      <token name="TextureWrapR" value = "0x8072" />
+      <token name="TextureMinFilter" value = "0x2801" />
+      <token name="TextureMagFilter" value = "0x2800" />
+      <token name="TextureBorderColor" value = "0x1004" />
+      <token name="TextureMinLod" value = "0x813A" />
+      <token name="TextureMaxLod" value = "0x813B" />
+      <token name="TextureLodBias" value = "0x8501" />
+      <token name="TextureCompareMode" value = "0x884C" />
+      <token name="TextureCompareFunc" value = "0x884D" />
+      <token name="TextureMaxAnisotropyExt" value = "0x84FE" />
+    </enum>
+    <enum name="SeparableTarget">
+      <token name="SEPARABLE_2D" value="0x8012" />
+    </enum>
+    <enum name="ShaderParameter">
+      <token name="COMPILE_STATUS" value="0x8B81" />
+      <token name="DELETE_STATUS" value="0x8B80" />
+      <token name="INFO_LOG_LENGTH" value="0x8B84" />
+      <token name="SHADER_SOURCE_LENGTH" value="0x8B88" />
+      <token name="SHADER_TYPE" value="0x8B4F" />
+    </enum>
+    <enum name="ShaderPrecisionType">
+      <use enum="VERSION_4_1" token="LOW_FLOAT" />
+      <use enum="VERSION_4_1" token="MEDIUM_FLOAT" />
+      <use enum="VERSION_4_1" token="HIGH_FLOAT" />
+      <use enum="VERSION_4_1" token="LOW_INT" />
+      <use enum="VERSION_4_1" token="MEDIUM_INT" />
+      <use enum="VERSION_4_1" token="HIGH_INT" />
+    </enum>
+    <enum name="ShaderType">
+      <token name="FRAGMENT_SHADER" value="0x8B30" />
+      <token name="GEOMETRY_SHADER" value="0x8DD9" />
+      <token name="GEOMETRY_SHADER_EXT" value="0x8DD9" />
+      <token name="VERTEX_SHADER" value="0x8B31" />
+      <use enum="VERSION_4_0" token="TESS_EVALUATION_SHADER" />
+      <use enum="VERSION_4_0" token="TESS_CONTROL_SHADER" />    </enum>
+    <enum name="SizedInternalFormat">
+      <use enum="PixelInternalFormat" token="R8" />
+      <use enum="PixelInternalFormat" token="R16" />
+      <use enum="PixelInternalFormat" token="R16F" />
+      <use enum="PixelInternalFormat" token="R32F" />
+      <use enum="PixelInternalFormat" token="R8I" />
+      <use enum="PixelInternalFormat" token="R16I" />
+      <use enum="PixelInternalFormat" token="R32I" />
+      <use enum="PixelInternalFormat" token="R8UI" />
+      <use enum="PixelInternalFormat" token="R16UI" />
+      <use enum="PixelInternalFormat" token="R32UI" />
+      <use enum="PixelInternalFormat" token="RG8" />
+      <use enum="PixelInternalFormat" token="RG16" />
+      <use enum="PixelInternalFormat" token="RG16F" />
+      <use enum="PixelInternalFormat" token="RG32F" />
+      <use enum="PixelInternalFormat" token="RG8I" />
+      <use enum="PixelInternalFormat" token="RG16I" />
+      <use enum="PixelInternalFormat" token="RG32I" />
+      <use enum="PixelInternalFormat" token="RG8UI" />
+      <use enum="PixelInternalFormat" token="RG16UI" />
+      <use enum="PixelInternalFormat" token="RG32UI" />
+      <use enum="PixelInternalFormat" token="RGBA8" />
+      <use enum="PixelInternalFormat" token="RGBA16" />
+      <use enum="PixelInternalFormat" token="RGBA16F" />
+      <use enum="PixelInternalFormat" token="RGBA32F" />
+      <use enum="PixelInternalFormat" token="RGBA8I" />
+      <use enum="PixelInternalFormat" token="RGBA16I" />
+      <use enum="PixelInternalFormat" token="RGBA32I" />
+      <use enum="PixelInternalFormat" token="RGBA8UI" />
+      <use enum="PixelInternalFormat" token="RGBA16UI" />
+      <use enum="PixelInternalFormat" token="RGBA32UI" />
+    </enum>
+    <enum name="StencilFace">
+      <use enum="DrawBufferMode" token="FRONT" />
+      <use enum="DrawBufferMode" token="BACK" />
+      <use enum="DrawBufferMode" token="FRONT_AND_BACK" />
+    </enum>
+    <enum name="StencilOp">
+      <token name="DECR_WRAP" value="0x8508" />
+      <token name="INCR_WRAP" value="0x8507" />
+    </enum>
+    <enum name="StringName">
+      <use enum="StringName" token="EXTENSIONS" />
+      <token name="SHADING_LANGUAGE_VERSION" value="0x8B8C" />
+    </enum>
+    <enum name="TexCoordPointerType">
+      <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+    </enum>
+    <enum name="TextureBufferTarget">
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
+    </enum>
+    <enum name="TextureCompareMode">
+      <token name="COMPARE_R_TO_TEXTURE" value="0x884E" />
+      <token name="COMPARE_REF_TO_TEXTURE" value="GL_COMPARE_R_TO_TEXTURE_ARB" />
+      <use enum="VERSION_1_1" token="NONE" />
+    </enum>
+    <enum name="TextureEnvMode">
+      <token name="COMBINE" value="0x8570" />
+      <token name="REPLACE" value="0x1E01" />
+    </enum>
+    <enum name="TextureEnvModeCombine">
+      <use enum="StencilOp" token="REPLACE" />
+      <use enum="TextureEnvMode" token="MODULATE" />
+      <use enum="AccumOp" token="ADD" />
+      <token name="ADD_SIGNED" value="0x8574" />
+      <token name="DOT3_RGB" value="0x86AE" />
+      <token name="DOT3_RGBA" value="0x86AF" />
+      <token name="INTERPOLATE" value="0x8575" />
+      <token name="SUBTRACT" value="0x84E7" />
+    </enum>
+    <enum name="TextureEnvModeOperandAlpha">
+      <use enum="BlendingFactorDest" token="SRC_ALPHA" />
+      <use enum="BlendingFactorDest" token="ONE_MINUS_SRC_ALPHA" />
+    </enum>
+    <enum name="TextureEnvModeOperandRgb">
+      <use enum="BlendingFactorDest" token="SRC_COLOR" />
+      <use enum="BlendingFactorDest" token="ONE_MINUS_SRC_COLOR" />
+      <use enum="BlendingFactorDest" token="SRC_ALPHA" />
+      <use enum="BlendingFactorDest" token="ONE_MINUS_SRC_ALPHA" />
+    </enum>
+    <enum name="TextureEnvModePointSprite">
+      <use enum="Boolean" token="TRUE" />
+      <use enum="Boolean" token="FALSE" />
+    </enum>
+    <enum name="TextureEnvModeScale">
+      <token name="FOUR" value="4" />
+      <token name="ONE" value="1" />
+      <token name="TWO" value="2" />
+    </enum>
+    <enum name="TextureEnvModeSource">
+      <use enum="MatrixMode" token="TEXTURE" />
+      <token name="CONSTANT" value="0x8576" />
+      <token name="PREVIOUS" value="0x8578" />
+      <token name="PRIMARY_COLOR" value="0x8577" />
+      <token name="TEXTURE0" value="0x84C0" />
+      <token name="TEXTURE1" value="0x84C1" />
+      <token name="TEXTURE10" value="0x84CA" />
+      <token name="TEXTURE11" value="0x84CB" />
+      <token name="TEXTURE12" value="0x84CC" />
+      <token name="TEXTURE13" value="0x84CD" />
+      <token name="TEXTURE14" value="0x84CE" />
+      <token name="TEXTURE15" value="0x84CF" />
+      <token name="TEXTURE16" value="0x84D0" />
+      <token name="TEXTURE17" value="0x84D1" />
+      <token name="TEXTURE18" value="0x84D2" />
+      <token name="TEXTURE19" value="0x84D3" />
+      <token name="TEXTURE2" value="0x84C2" />
+      <token name="TEXTURE20" value="0x84D4" />
+      <token name="TEXTURE21" value="0x84D5" />
+      <token name="TEXTURE22" value="0x84D6" />
+      <token name="TEXTURE23" value="0x84D7" />
+      <token name="TEXTURE24" value="0x84D8" />
+      <token name="TEXTURE25" value="0x84D9" />
+      <token name="TEXTURE26" value="0x84DA" />
+      <token name="TEXTURE27" value="0x84DB" />
+      <token name="TEXTURE28" value="0x84DC" />
+      <token name="TEXTURE29" value="0x84DD" />
+      <token name="TEXTURE3" value="0x84C3" />
+      <token name="TEXTURE30" value="0x84DE" />
+      <token name="TEXTURE31" value="0x84DF" />
+      <token name="TEXTURE4" value="0x84C4" />
+      <token name="TEXTURE5" value="0x84C5" />
+      <token name="TEXTURE6" value="0x84C6" />
+      <token name="TEXTURE7" value="0x84C7" />
+      <token name="TEXTURE8" value="0x84C8" />
+      <token name="TEXTURE9" value="0x84C9" />
+    </enum>
+    <enum name="TextureEnvParameter">
+      <use enum="GetPName" token="ALPHA_SCALE" />
+      <token name="COMBINE_ALPHA" value="0x8572" />
+      <token name="COMBINE_RGB" value="0x8571" />
+      <token name="COORD_REPLACE" value="0x8862" />
+      <token name="OPERAND0_ALPHA" value="0x8598" />
+      <token name="OPERAND0_RGB" value="0x8590" />
+      <token name="OPERAND1_ALPHA" value="0x8599" />
+      <token name="OPERAND1_RGB" value="0x8591" />
+      <token name="OPERAND2_ALPHA" value="0x859A" />
+      <token name="OPERAND2_RGB" value="0x8592" />
+      <token name="RGB_SCALE" value="0x8573" />
+      <token name="SOURCE0_RGB" value="0x8580" />
+      <token name="SRC0_ALPHA" value="0x8588" />
+      <token name="SRC1_ALPHA" value="0x8589" />
+      <token name="SRC1_RGB" value="0x8581" />
+      <token name="SRC2_ALPHA" value="0x858A" />
+      <token name="SRC2_RGB" value="0x8582" />
+      <token name="TEXTURE_LOD_BIAS" value="0x8501" />
+    </enum>
+    <enum name="TextureEnvTarget">
+      <token name="POINT_SPRITE" value="0x8861" />
+      <token name="TEXTURE_FILTER_CONTROL" value="0x8500" />
+      <token name="TEXTURE_FILTER_CONTROL" value="0x8500" />
+    </enum>
+    <enum name="TextureGenMode">
+      <token name="NORMAL_MAP" value="0x8511" />
+      <token name="REFLECTION_MAP" value="0x8512" />
+    </enum>
+    <enum name="TextureParameterName">
+      <use enum="GetTextureParameter" token="TEXTURE_MIN_LOD" />
+      <use enum="GetTextureParameter" token="TEXTURE_MAX_LOD" />
+      <use enum="GetTextureParameter" token="TEXTURE_BASE_LEVEL" />
+      <use enum="GetTextureParameter" token="TEXTURE_MAX_LEVEL" />
+      <use enum="GetTextureParameter" token="TEXTURE_DEPTH" />
+      <use enum="GetTextureParameter" token="TEXTURE_WRAP_R" />
+      <token name="CLAMP_TO_BORDER" value="0x812D" />
+      <token name="CLAMP_TO_EDGE" value="0x812F" />
+      <token name="DEPTH_TEXTURE_MODE" value="0x884B" />
+      <token name="GENERATE_MIPMAP" value="0x8191" />
+      <token name="TEXTURE_COMPARE_FAIL_VALUE" value="0x80BF" />
+      <token name="TEXTURE_COMPARE_FUNC" value="0x884D" />
+      <token name="TEXTURE_COMPARE_MODE" value="0x884C" />
+      <token name="TEXTURE_LOD_BIAS" value="0x8501" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_R" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_G" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_B" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_A" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_RGBA" />
+    </enum>
+    <enum name="TextureTarget">
+      <token name="PROXY_TEXTURE_1D_ARRAY" value="0x8C19" />
+      <token name="PROXY_TEXTURE_2D_ARRAY" value="0x8C1B" />
+      <token name="PROXY_TEXTURE_2D_MULTISAMPLE" value="0x9101" />
+      <token name="PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY" value="0x9103" />
+      <token name="PROXY_TEXTURE_3D" value="0x8070" />
+      <token name="PROXY_TEXTURE_CUBE_MAP" value="0x851B" />
+      <token name="PROXY_TEXTURE_RECTANGLE" value="0x84F7" />
+      <token name="TEXTURE_1D_ARRAY" value="0x8C18" />
+      <token name="TEXTURE_2D_ARRAY" value="0x8C1A" />
+      <token name="TEXTURE_2D_MULTISAMPLE" value="0x9100" />
+      <token name="TEXTURE_2D_MULTISAMPLE_ARRAY" value="0x9102" />
+      <token name="TEXTURE_3D" value="0x806F" />
+      <token name="TEXTURE_BINDING_CUBE_MAP" value="0x8514" />
+      <token name="TEXTURE_CUBE_MAP" value="0x8513" />
+      <token name="TEXTURE_CUBE_MAP_NEGATIVE_X" value="0x8516" />
+      <token name="TEXTURE_CUBE_MAP_NEGATIVE_Y" value="0x8518" />
+      <token name="TEXTURE_CUBE_MAP_NEGATIVE_Z" value="0x851A" />
+      <token name="TEXTURE_CUBE_MAP_POSITIVE_X" value="0x8515" />
+      <token name="TEXTURE_CUBE_MAP_POSITIVE_Y" value="0x8517" />
+      <token name="TEXTURE_CUBE_MAP_POSITIVE_Z" value="0x8519" />
+      <token name="TEXTURE_RECTANGLE" value="0x84F5" />
+      <use enum="ARB_texture_rectangle" token="TEXTURE_RECTANGLE_ARB" />
+      <use enum="NV_texture_rectangle" token="TEXTURE_RECTANGLE_NV" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
+      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
+      <use enum="VERSION_4_0" token="PROXY_TEXTURE_CUBE_MAP_ARRAY" />
+    </enum>
+    <enum name="TextureTargetMultisample">
+      <token name="PROXY_TEXTURE_2D_MULTISAMPLE" value="0x9101" />
+      <token name="PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY" value="0x9103" />
+      <token name="TEXTURE_2D_MULTISAMPLE" value="0x9100" />
+      <token name="TEXTURE_2D_MULTISAMPLE_ARRAY" value="0x9102" />
+    </enum>
+    <enum name="TextureUnit">
+      <token name="TEXTURE0" value="0x84C0" />
+      <token name="TEXTURE1" value="0x84C1" />
+      <token name="TEXTURE10" value="0x84CA" />
+      <token name="TEXTURE11" value="0x84CB" />
+      <token name="TEXTURE12" value="0x84CC" />
+      <token name="TEXTURE13" value="0x84CD" />
+      <token name="TEXTURE14" value="0x84CE" />
+      <token name="TEXTURE15" value="0x84CF" />
+      <token name="TEXTURE16" value="0x84D0" />
+      <token name="TEXTURE17" value="0x84D1" />
+      <token name="TEXTURE18" value="0x84D2" />
+      <token name="TEXTURE19" value="0x84D3" />
+      <token name="TEXTURE2" value="0x84C2" />
+      <token name="TEXTURE20" value="0x84D4" />
+      <token name="TEXTURE21" value="0x84D5" />
+      <token name="TEXTURE22" value="0x84D6" />
+      <token name="TEXTURE23" value="0x84D7" />
+      <token name="TEXTURE24" value="0x84D8" />
+      <token name="TEXTURE25" value="0x84D9" />
+      <token name="TEXTURE26" value="0x84DA" />
+      <token name="TEXTURE27" value="0x84DB" />
+      <token name="TEXTURE28" value="0x84DC" />
+      <token name="TEXTURE29" value="0x84DD" />
+      <token name="TEXTURE3" value="0x84C3" />
+      <token name="TEXTURE30" value="0x84DE" />
+      <token name="TEXTURE31" value="0x84DF" />
+      <token name="TEXTURE4" value="0x84C4" />
+      <token name="TEXTURE5" value="0x84C5" />
+      <token name="TEXTURE6" value="0x84C6" />
+      <token name="TEXTURE7" value="0x84C7" />
+      <token name="TEXTURE8" value="0x84C8" />
+      <token name="TEXTURE9" value="0x84C9" />
+    </enum>
+    <enum name="TextureWrapMode">
+      <token name="CLAMP_TO_BORDER" value="0x812D" />
+      <token name="CLAMP_TO_EDGE" value="0x812F" />
+      <token name="MIRRORED_REPEAT" value="0x8370" />
+    </enum>
+    <enum name="TransformFeedbackMode">
+      <token name="INTERLEAVED_ATTRIBS" value="0x8C8C" />
+      <token name="SEPARATE_ATTRIBS" value="0x8C8D" />
+    </enum>
+    <enum name="TransformFeedbackTarget">
+      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK" />
+    </enum>
+    <enum name="VertexAttribD_PointerType">
+      <use enum="VERSION_4_1" token="DOUBLE" />
+    </enum>
+    <enum name="VertexAttribI_PointerType">
+      <use enum="DataType" token="BYTE" />
+      <use enum="DataType" token="UNSIGNED_BYTE" />
+      <use enum="DataType" token="SHORT" />
+      <use enum="DataType" token="UNSIGNED_SHORT" />
+      <use enum="DataType" token="INT" />
+      <use enum="DataType" token="UNSIGNED_INT" />
+    </enum>
+    <enum name="VertexAttribParameter">
+      <token name="ARRAY_ENABLED" value="0x8622" />
+      <token name="ARRAY_NORMALIZED" value="0x886A" />
+      <token name="ARRAY_SIZE" value="0x8623" />
+      <token name="ARRAY_STRIDE" value="0x8624" />
+      <token name="ARRAY_TYPE" value="0x8625" />
+      <token name="CURRENT_VERTEX_ATTRIB" value="0x8626" />
+      <token name="VERTEX_ATTRIB_ARRAY_INTEGER" value="0x88FD" />
+      <use enum="VERSION_3_3" token="VERTEX_ATTRIB_ARRAY_DIVISOR" />
+    </enum>
+    <enum name="VertexAttribParameterARB">
+      <token name="ARRAY_DIVISOR" value="0x88FE" />
+      <token name="ARRAY_ENABLED" value="0x8622" />
+      <token name="ARRAY_NORMALIZED" value="0x886A" />
+      <token name="ARRAY_SIZE" value="0x8623" />
+      <token name="ARRAY_STRIDE" value="0x8624" />
+      <token name="ARRAY_TYPE" value="0x8625" />
+      <token name="CURRENT_VERTEX_ATTRIB" value="0x8626" />
+    </enum>
+    <enum name="VertexAttribPointerParameter">
+      <token name="ARRAY_POINTER" value="0x8645" />
+    </enum>
+    <enum name="VertexAttribPointerParameterARB">
+      <token name="ARRAY_POINTER" value="0x8645" />
+    </enum>
+    <enum name="VertexAttribPointerType">
+      <use enum="DataType" token="BYTE" />
+      <use enum="DataType" token="UNSIGNED_BYTE" />
+      <use enum="DataType" token="SHORT" />
+      <use enum="DataType" token="UNSIGNED_SHORT" />
+      <use enum="DataType" token="INT" />
+      <use enum="DataType" token="UNSIGNED_INT" />
+      <use enum="DataType" token="FLOAT" />
+      <use enum="DataType" token="DOUBLE" />
+      <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+      <use enum="VERSION_4_1" token="FIXED" />
+    </enum>
+    <enum name="VertexAttribPointerTypeARB">
+      <use enum="DataType" token="BYTE" />
+      <use enum="DataType" token="UNSIGNED_BYTE" />
+      <use enum="DataType" token="SHORT" />
+      <use enum="DataType" token="UNSIGNED_SHORT" />
+      <use enum="DataType" token="INT" />
+      <use enum="DataType" token="UNSIGNED_INT" />
+      <use enum="DataType" token="FLOAT" />
+      <use enum="DataType" token="DOUBLE" />
+    </enum>
+    <enum name="VertexPointerType">
+      <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+    </enum>
+  </add>
+
+</signatures>
