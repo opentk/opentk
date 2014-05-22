@@ -817,6 +817,8 @@ namespace OpenTK
 
     #region Color
 
+#if MINIMAL
+
     /// <summary>
     /// Represents a color with 4 8bit components (R, G, B, A).
     /// </summary>
@@ -1671,6 +1673,8 @@ namespace OpenTK
             return new Color(r, g, b, a);
         }
     }
+
+#endif
 
     #endregion
 
