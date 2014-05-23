@@ -644,10 +644,16 @@
     <Compile Include="..\..\Source\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\Source\OpenTK\Graphics\ES20\ES20Obsolete.cs">
+      <Link>OpenTK\Graphics\ES20\ES20Obsolete.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Source\OpenTK\Graphics\ES30\ES30Obsolete.cs">
+      <Link>OpenTK\Graphics\ES30\ES30Obsolete.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Source\OpenTK\OpenTK.dll.config">
-      <Link>OpenTK\OpenTK.dll.config</Link>
+      <Link>OpenTK.dll.config</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
