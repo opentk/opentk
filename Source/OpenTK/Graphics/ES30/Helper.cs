@@ -372,6 +372,15 @@ namespace OpenTK.Graphics.ES30
 
         #endregion
 
+        #region DrawElements
+
+        public static void DrawElements(BeginMode mode, int count, DrawElementsType type, int offset)
+        {
+            DrawElements((PrimitiveType)mode, count, type, new IntPtr(offset));
+        }
+
+        #endregion
+
         #region Get[Float|Double]
 
         public static void GetFloat(GetPName pname, out Vector2 vector)
