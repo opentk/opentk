@@ -189,6 +189,8 @@ namespace OpenTK
 
     #endregion
 
+    #if MINIMAL
+
     #region PointF
 
     public struct PointF : IEquatable<PointF>
@@ -740,6 +742,8 @@ namespace OpenTK
 
     #endregion
 
+    #endif
+
     #region Icon
 
     public sealed class Icon : IDisposable
@@ -817,7 +821,7 @@ namespace OpenTK
 
     #region Color
 
-#if MINIMAL
+#if IPHONE || MINIMAL
 
     /// <summary>
     /// Represents a color with 4 8bit components (R, G, B, A).

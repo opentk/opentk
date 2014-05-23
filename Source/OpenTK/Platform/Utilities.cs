@@ -31,7 +31,7 @@ namespace OpenTK.Platform
     /// <summary>
     /// Provides cross-platform utilities to help interact with the underlying platform.
     /// </summary>
-    public static class Utilities
+    public static partial class Utilities
     {
         #region internal static bool ThrowOnX11Error
 

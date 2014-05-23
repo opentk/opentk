@@ -36,9 +36,9 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform
 {
-    sealed class Factory
+    sealed class iPhoneOSFactory
     {
-        private Factory()
+        private iPhoneOSFactory()
         {
         }
 

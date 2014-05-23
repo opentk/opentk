@@ -62,10 +62,10 @@ namespace OpenTK.Platform.iPhoneOS
 
         public static GLCalls GetGLCalls(EAGLRenderingAPI api)
         {
-            switch (api) {
-                case EAGLRenderingAPI.OpenGLES1: return CreateES1();
-                case EAGLRenderingAPI.OpenGLES2: return CreateES2();
-                case EAGLRenderingAPI.OpenGLES3: return CreateES3();
+            switch ((int)api) {
+                case 1 /*EAGLRenderingAPI.OpenGLES1*/: return CreateES1();
+                case 2 /*EAGLRenderingAPI.OpenGLES2*/: return CreateES2();
+                case 3 /*EAGLRenderingAPI.OpenGLES3*/: return CreateES3();
             }
             throw new ArgumentException("api");
         }
@@ -913,6 +913,158 @@ namespace OpenTK.Platform.iPhoneOS
         public event EventHandler<EventArgs> Unload;
         public event EventHandler<FrameEventArgs> UpdateFrame;
         public event EventHandler<FrameEventArgs> RenderFrame;
+
+        event EventHandler<EventArgs> INativeWindow.IconChanged
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> INativeWindow.KeyDown
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> INativeWindow.KeyUp
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        event EventHandler<EventArgs> INativeWindow.MouseLeave
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        event EventHandler<EventArgs> INativeWindow.MouseEnter
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        event EventHandler<OpenTK.Input.MouseButtonEventArgs> INativeWindow.MouseDown
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        event EventHandler<OpenTK.Input.MouseButtonEventArgs> INativeWindow.MouseUp
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        event EventHandler<OpenTK.Input.MouseMoveEventArgs> INativeWindow.MouseMove
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        event EventHandler<OpenTK.Input.MouseWheelEventArgs> INativeWindow.MouseWheel
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        Icon INativeWindow.Icon
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        OpenTK.Input.IInputDriver INativeWindow.InputDriver
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        MouseCursor INativeWindow.Cursor
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        bool INativeWindow.CursorVisible
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
 

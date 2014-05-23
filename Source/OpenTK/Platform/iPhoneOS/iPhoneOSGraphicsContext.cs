@@ -41,7 +41,7 @@ namespace OpenTK.Platform.iPhoneOS {
             else if (major == 2 && minor == 0)
                 version = EAGLRenderingAPI.OpenGLES2;
             else if (major == 3 && minor == 0)
-                version = EAGLRenderingAPI.OpenGLES3;
+                version = (EAGLRenderingAPI)3; //EAGLRenderingAPI.OpenGLES3;
             else
                 throw new ArgumentException (string.Format("Unsupported GLES version {0}.{1}.", major, minor));
 
@@ -68,7 +68,7 @@ namespace OpenTK.Platform.iPhoneOS {
             else if (major == 2 && minor == 0)
                 version = EAGLRenderingAPI.OpenGLES2;
             else if (major == 3 && minor == 0)
-                version = EAGLRenderingAPI.OpenGLES3;
+                version = (EAGLRenderingAPI)3; //EAGLRenderingAPI.OpenGLES3;
             else
                 throw new ArgumentException (string.Format("Unsupported GLES version {0}.{1}.", major, minor));
 
@@ -138,6 +138,11 @@ namespace OpenTK.Platform.iPhoneOS {
         }
 
         IntPtr IGraphicsContextInternal.GetAddress(string function)
+        {
+            return IntPtr.Zero;
+        }
+
+        IntPtr IGraphicsContextInternal.GetAddress(IntPtr function)
         {
             return IntPtr.Zero;
         }

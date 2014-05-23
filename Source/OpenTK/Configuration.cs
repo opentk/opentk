@@ -124,7 +124,7 @@ namespace OpenTK
 
         /// <summary>
         /// Gets a <c>System.Boolean</c> indicating whether
-        /// OpenTK is running on an Android device.
+        /// OpenTK is currently running on an Android device.
         /// </summary>
         public static bool RunningOnAndroid
         {
@@ -138,6 +138,10 @@ namespace OpenTK
             }
         }
 
+        /// <summary>
+        /// Gets a <c>System.Boolean</c> indicating whether
+        /// OpenTK is currently running on an iOS device.
+        /// </summary>
         public static bool RunningOniOS
         {
             get
@@ -320,7 +324,6 @@ namespace OpenTK
                     }
 #elif IPHONE
                     runningOnMono = true;
-                    runningOnIOS = true;
                     if (options.Backend == PlatformBackend.Default)
                     {
                         runningOnSdl2 = DetectSdl2();

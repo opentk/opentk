@@ -25,36 +25,15 @@ namespace OpenTK.Platform
     /// <summary>
     /// Provides cross-platform utilities to help interact with the underlying platform.
     /// </summary>
-    public static class Utilities
+    public static partial class Utilities
     {
-        /// <summary>
-        /// Creates an IGraphicsContext instance for the specified window.
-        /// </summary>
-        /// <param name="mode">The GraphicsMode for the GraphicsContext.</param>
-        /// <param name="window">An IWindowInfo instance describing the parent window for this IGraphicsContext.</param>
-        /// <param name="major">The major OpenGL version number for this IGraphicsContext.</param>
-        /// <param name="minor">The minor OpenGL version number for this IGraphicsContext.</param>
-        /// <param name="flags">A bitwise collection of GraphicsContextFlags with specific options for this IGraphicsContext.</param>
-        /// <returns>A new IGraphicsContext instance.</returns>
-        public static IGraphicsContext CreateGraphicsContext(
-            GraphicsMode mode, IWindowInfo window,
-            int major, int minor, GraphicsContextFlags flags)
-        {
-            GraphicsContext context = new GraphicsContext(mode, window, major, minor, flags);
-            context.MakeCurrent(window);
-
-            (context as IGraphicsContextInternal).LoadAll();
-
-            return context;
-        }
-
         public static IGraphicsContext CreateGraphicsContext(EAGLRenderingAPI version)
         {
             int major = 0, minor = 0;
-            switch (version) {
-                case EAGLRenderingAPI.OpenGLES1: major = 1; minor = 1; break;
-                case EAGLRenderingAPI.OpenGLES2: major = 2; minor = 0; break;
-                case EAGLRenderingAPI.OpenGLES3: major = 3; minor = 0; break;
+            switch ((int)version) {
+                case 1 /*EAGLRenderingAPI.OpenGLES1*/: major = 1; minor = 1; break;
+                case 2 /*EAGLRenderingAPI.OpenGLES2*/: major = 2; minor = 0; break;
+                case 3 /*EAGLRenderingAPI.OpenGLES3*/: major = 3; minor = 0; break;
                 default:
                     throw new ArgumentException("Unsupported EAGLRenderingAPI version: " + version);
             }
