@@ -45,6 +45,8 @@ namespace Bind.GL2
             Settings.DefaultDelegatesFile = "GL4Delegates.cs";
             Settings.DefaultEnumsFile = "GL4Enums.cs";
             Settings.DefaultWrappersFile = "GL4.cs";
+            Settings.DefaultOutputPath = String.Format(
+                Settings.DefaultOutputPath, "OpenGL4");
             Settings.DefaultDocPath = Path.Combine(
                 Settings.DefaultDocPath, "GL");
 

@@ -20,7 +20,7 @@ namespace Bind
         }
 
         public string DefaultInputPath = "../../../Source/Bind/Specifications";
-        public string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
+        public string DefaultOutputPath = "../../../Source/OpenTK/Graphics/{0}";
         public string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
         public string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
         public string DefaultFallbackDocPath = "../../../Source/Bind/Specifications/Docs/GL";
@@ -163,6 +163,7 @@ namespace Bind
             /// for higher versions.
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
+            ForceDllImports = 0x10000,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |

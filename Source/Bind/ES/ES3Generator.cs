@@ -15,8 +15,8 @@ namespace Bind.ES
         public ES3Generator(Settings settings, string dirName)
             : base(settings, dirName)
         {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "../ES30");
+            Settings.DefaultOutputPath = String.Format(
+                Settings.DefaultOutputPath, "ES30");
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
             Settings.DefaultImportsFile = "ES30Core.cs";
             Settings.DefaultDelegatesFile = "ES30Delegates.cs";
@@ -32,7 +32,6 @@ namespace Bind.ES
             // overloads using the "All" enum in addition to strongly-typed enums.
             // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
             Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
-            //Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
         }
     }
 }

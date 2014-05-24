@@ -15,8 +15,8 @@ namespace Bind.ES
         public ES2Generator(Settings settings, string dirName)
             : base(settings, dirName)
         {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "../ES20");
+            Settings.DefaultOutputPath = String.Format(
+                Settings.DefaultOutputPath, "ES20");
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
             Settings.DefaultImportsFile = "ES20Core.cs";
             Settings.DefaultDelegatesFile = "ES20Delegates.cs";
@@ -32,7 +32,6 @@ namespace Bind.ES
             // overloads using the "All" enum in addition to strongly-typed enums.
             // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
             Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
-            //Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
         }
     }
 }

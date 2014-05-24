@@ -185,13 +185,31 @@ namespace Bind
                 switch (mode)
                 {
                     case GeneratorMode.All:
-                        Console.WriteLine("Using 'all' generator mode.");
-                        Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30' to select a specific mode.");
-                        Generators.Add(new GL2Generator(Settings, dirName));
-                        Generators.Add(new GL4Generator(Settings, dirName));
-                        Generators.Add(new ESGenerator(Settings, dirName));
-                        Generators.Add(new ES2Generator(Settings, dirName));
-                        Generators.Add(new ES3Generator(Settings, dirName));
+                        {
+                            Console.WriteLine("Using 'all' generator mode.");
+                            Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30' to select a specific mode.");
+
+                            var desktop = Settings.Clone();
+                            Generators.Add(new GL2Generator(desktop, dirName));
+                            Generators.Add(new GL4Generator(desktop, dirName));
+                            Generators.Add(new ESGenerator(desktop, dirName));
+                            Generators.Add(new ES2Generator(desktop, dirName));
+                            Generators.Add(new ES3Generator(desktop, dirName));
+
+                            var android = Settings.Clone();
+                            android.Compatibility |= Settings.Legacy.UseDllImports;
+                            android.DefaultOutputPath += ".Android";
+                            Generators.Add(new ESGenerator(android, dirName));
+                            Generators.Add(new ES2Generator(android, dirName));
+                            Generators.Add(new ES3Generator(android, dirName));
+
+                            var ios = Settings.Clone();
+                            ios.Compatibility |= Settings.Legacy.ForceDllImports;
+                            ios.DefaultOutputPath += ".iPhone";
+                            Generators.Add(new ESGenerator(ios, dirName));
+                            Generators.Add(new ES2Generator(ios, dirName));
+                            Generators.Add(new ES3Generator(ios, dirName));
+                        }
                         break;
 
                     case GeneratorMode.GL2:
