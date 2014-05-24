@@ -37,7 +37,7 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <ConsolePause>false</ConsolePause>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>ANDROID;OPENGLES</DefineConstants>
+    <DefineConstants>ANDROID;OPENGLES;OPENTK_1</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <DocumentationFile>..\..\Binaries\Android\Release\OpenTK.xml</DocumentationFile>
     <DebugType>pdbonly</DebugType>
