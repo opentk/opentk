@@ -9,8 +9,13 @@
 
 using System;
 
+#if XAMCORE_2_0
+using ObjCRuntime;
+using OpenGLES;
+#else
 using MonoTouch.ObjCRuntime;
 using MonoTouch.OpenGLES;
+#endif
 
 using OpenTK.Graphics;
 using OpenTK.Graphics.ES11;

@@ -6,6 +6,9 @@
     <function name="GetString" extension="Core">
       <returns>String</returns>
     </function>
+    <function name="Clear" extension="Core">
+      <param name="mask"><type>ClearBufferMask</type></param>
+    </function>
   </replace>
   <add>
     <enum name="All">

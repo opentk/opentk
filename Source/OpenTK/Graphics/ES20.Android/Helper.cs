@@ -190,16 +190,6 @@ namespace OpenTK.Graphics.ES20
             return sb.ToString();
         }
 
-        public static string GetActiveUniform(int program, int uniformIndex, out int size, out All type)
-        {
-            ActiveUniformType t;
-	    string str = GetActiveUniform(program, uniformIndex, out size, out t);
-
-	    type = (All)(int) t;
-
-            return str;
-        }
-
         #endregion
 
         #region public static void ShaderSource(Int32 shader, System.String @string)
@@ -337,6 +327,21 @@ namespace OpenTK.Graphics.ES20
 
         #endregion
 
+        #region VertexAttribPointer
+
+        public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
+        {
+            VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
+        }
+
+        [CLSCompliant(false)]
+        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
+        {
+            VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
+        }
+
+        #endregion
+
         #region DrawElements
 
         public static void DrawElements(BeginMode mode, int count, DrawElementsType type, int offset)
@@ -362,6 +367,52 @@ namespace OpenTK.Graphics.ES20
         public static void DeleteTexture(int id)
         {
             DeleteTextures(1, ref id);
+        }
+
+        [CLSCompliant(false)]
+        public static void DeleteTexture(uint id)
+        {
+            DeleteTextures(1, ref id);
+        }
+
+        #endregion
+
+        #region Get[Float|Double]
+
+        public static void GetFloat(GetPName pname, out Vector2 vector)
+        {
+            unsafe
+            {
+                fixed (Vector2* ptr = &vector)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        public static void GetFloat(GetPName pname, out Vector3 vector)
+        {
+            unsafe
+            {
+                fixed (Vector3* ptr = &vector)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        public static void GetFloat(GetPName pname, out Vector4 vector)
+        {
+            unsafe
+            {
+                fixed (Vector4* ptr = &vector)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        public static void GetFloat(GetPName pname, out Matrix4 matrix)
+        {
+            unsafe
+            {
+                fixed (Matrix4* ptr = &matrix)
+                    GetFloat(pname, (float*)ptr);
+            }
         }
 
         #endregion

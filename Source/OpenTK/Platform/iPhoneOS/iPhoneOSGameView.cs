@@ -12,12 +12,21 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 
+#if XAMCORE_2_0
+using CoreAnimation;
+using CoreGraphics;
+using Foundation;
+using OpenGLES;
+using UIKit;
+using ObjCRuntime;
+#else
 using MonoTouch.CoreAnimation;
 using MonoTouch.CoreGraphics;
 using MonoTouch.Foundation;
 using MonoTouch.OpenGLES;
 using MonoTouch.UIKit;
 using MonoTouch.ObjCRuntime;
+#endif
 
 using OpenTK;
 using OpenTK.Graphics;
@@ -28,6 +37,11 @@ using All  = OpenTK.Graphics.ES11.All;
 using ES11 = OpenTK.Graphics.ES11;
 using ES20 = OpenTK.Graphics.ES20;
 using ES30 = OpenTK.Graphics.ES30;
+
+#if XAMCORE_2_0
+using RectangleF=CoreGraphics.CGRect;
+using SizeF=CoreGraphics.CGSize;
+#endif
 
 namespace OpenTK.Platform.iPhoneOS
 {
@@ -787,10 +801,10 @@ namespace OpenTK.Platform.iPhoneOS
                         // OpenGL ES measures data in PIXELS
                         // Create a graphics context with the target size measured in POINTS
                         int widthInPoints, heightInPoints;
-                        float scale = ContentScaleFactor;
+                        float scale = (float) ContentScaleFactor;
                         widthInPoints = (int) (width / scale);
                         heightInPoints = (int) (height / scale);
-                        UIGraphics.BeginImageContextWithOptions (new System.Drawing.SizeF (widthInPoints, heightInPoints), false, scale);
+                        UIGraphics.BeginImageContextWithOptions (new SizeF (widthInPoints, heightInPoints), false, scale);
 
                         try {
                             var cgcontext = UIGraphics.GetCurrentContext ();
@@ -799,7 +813,7 @@ namespace OpenTK.Platform.iPhoneOS
                             // Flip the CGImage by rendering it to the flipped bitmap context
                             // The size of the destination area is measured in POINTS
                             cgcontext.SetBlendMode (CGBlendMode.Copy);
-                            cgcontext.DrawImage (new System.Drawing.RectangleF (0, 0, widthInPoints, heightInPoints), iref);
+                            cgcontext.DrawImage (new RectangleF (0, 0, widthInPoints, heightInPoints), iref);
 
                             // Retrieve the UIImage from the current context
                             var image = UIGraphics.GetImageFromCurrentImageContext ();
