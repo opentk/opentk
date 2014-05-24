@@ -108,6 +108,7 @@ namespace OpenTK.Rewrite
                             if (reference.Name == "mscorlib")
                             {
                                 mscorlib = resolved;
+                                break;
                             }
                         }
                         catch (Exception e)
