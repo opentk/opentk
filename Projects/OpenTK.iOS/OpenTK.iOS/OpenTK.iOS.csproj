@@ -43,6 +43,7 @@
     <Folder Include="Resources\" />
     <Folder Include="OpenTK\" />
     <Folder Include="Properties\" />
+    <Folder Include="OpenTK\Platform\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -222,24 +223,6 @@
     </Compile>
     <Compile Include="..\..\..\Source\OpenTK\Graphics\IGraphicsMode.cs">
       <Link>OpenTK\Graphics\IGraphicsMode.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Source\OpenTK\Graphics\ES10\Core.cs">
-      <Link>OpenTK\Graphics\ES10\Core.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Source\OpenTK\Graphics\ES10\Delegates.cs">
-      <Link>OpenTK\Graphics\ES10\Delegates.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Source\OpenTK\Graphics\ES10\ES.cs">
-      <Link>OpenTK\Graphics\ES10\ES.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Source\OpenTK\Graphics\ES10\Enums.cs">
-      <Link>OpenTK\Graphics\ES10\Enums.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Source\OpenTK\Graphics\ES10\ErrorHelper.cs">
-      <Link>OpenTK\Graphics\ES10\ErrorHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Source\OpenTK\Graphics\ES10\Helper.cs">
-      <Link>OpenTK\Graphics\ES10\Helper.cs</Link>
     </Compile>
     <Compile Include="..\..\..\Source\OpenTK\Graphics\ES11\ES11.cs">
       <Link>OpenTK\Graphics\ES11\ES11.cs</Link>
@@ -598,18 +581,6 @@
     <Compile Include="..\..\..\Source\OpenTK\Platform\Dummy\DummyWindowInfo.cs">
       <Link>OpenTK\Platform\Dummy\DummyWindowInfo.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\Source\OpenTK\Platform\Egl\Egl.cs">
-      <Link>OpenTK\Platform\Egl\Egl.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Source\OpenTK\Platform\Egl\EglContext.cs">
-      <Link>OpenTK\Platform\Egl\EglContext.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Source\OpenTK\Platform\Egl\EglGraphicsMode.cs">
-      <Link>OpenTK\Platform\Egl\EglGraphicsMode.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Source\OpenTK\Platform\Egl\EglWindowInfo.cs">
-      <Link>OpenTK\Platform\Egl\EglWindowInfo.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\Source\OpenTK\Platform\iPhoneOS\Factory.iPhone.cs">
       <Link>OpenTK\Platform\iPhoneOS\Factory.iPhone.cs</Link>
     </Compile>
@@ -630,6 +601,9 @@
     </Compile>
     <Compile Include="..\..\..\Source\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Source\OpenTK\Platform\MacOS\NS.cs">
+      <Link>OpenTK\Platform\MacOS\NS.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
