@@ -126,10 +126,14 @@ namespace OpenTK.Platform.iPhoneOS {
 
         void IGraphicsContextInternal.LoadAll()
         {
+            new Graphics.ES11.GL().LoadEntryPoints();
+            new Graphics.ES20.GL().LoadEntryPoints();
+            new Graphics.ES30.GL().LoadEntryPoints();
         }
 
         void IGraphicsContext.LoadAll ()
         {
+            (this as IGraphicsContextInternal).LoadAll();
         }
 
         ContextHandle contextHandle;
@@ -139,12 +143,12 @@ namespace OpenTK.Platform.iPhoneOS {
 
         IntPtr IGraphicsContextInternal.GetAddress(string function)
         {
-            return IntPtr.Zero;
+            throw new NotSupportedException();
         }
 
         IntPtr IGraphicsContextInternal.GetAddress(IntPtr function)
         {
-            return IntPtr.Zero;
+            return MacOS.NS.GetSymbol(MacOS.NS.RuntimeLoadDefault, function);
         }
 
         public void Dispose()
