@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>OpenTK.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>OpenTK.iOS</AssemblyName>
+    <AssemblyName>OpenTK</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
