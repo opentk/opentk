@@ -20,7 +20,12 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\Debug\OpenTK.iOS.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\Binaries\iOS\Debug\OpenTK.iOS.xml</DocumentationFile>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="mono ../../Tools/Debug/Rewrite.exe ${TargetFile} ../../../OpenTK.snk -debug" workingdir="${TargetDir}" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,7 +37,12 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>IPHONE;OPENGLES;OPENTK_1</DefineConstants>
-    <DocumentationFile>bin\Release\OpenTK.iOS.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\Binaries\iOS\Release\OpenTK.iOS.xml</DocumentationFile>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="mono ../../Tools/Debug/Rewrite.exe ${TargetFile} ../../../OpenTK.snk" workingdir="${TargetDir}" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
