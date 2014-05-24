@@ -202,6 +202,9 @@ namespace OpenTK.Platform.Android {
 
 		public void LoadAll()
 		{
+            new OpenTK.Graphics.ES11.GL().LoadEntryPoints();
+            new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
+            new OpenTK.Graphics.ES30.GL().LoadEntryPoints();
 		}
 
 		IntPtr IGraphicsContextInternal.GetAddress(string function)

@@ -394,6 +394,8 @@ namespace OpenTK.Platform.Android
 								ContextRenderingApi,
 #endif
 								GraphicsContextFlags.Embedded);
+
+            GraphicsContext.LoadAll();
 		}
 
 		void DestroyContext ()
