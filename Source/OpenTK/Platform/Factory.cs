@@ -64,8 +64,13 @@ namespace OpenTK.Platform
             #if X11
             Default = Default ?? (Configuration.RunningOnX11 ? new X11.X11Factory() : null);
             #endif
+            #if IPHONE
+            Default = Default ?? (Configuration.RunningOniOS ? new iPhoneOS.iPhoneOSFactory() : null);
+            Embedded = Default;
+            #endif
             Default = Default ?? new UnsupportedPlatform();
 
+            #if ANDROID || CARBON || COCOA || SDL2 || WIN32 || X11
             // Create embedded platform backend for EGL / OpenGL ES.
             // Todo: we could probably delay this until the embedded
             // factory is actually accessed. This might improve startup
@@ -93,6 +98,7 @@ namespace OpenTK.Platform
             {
                 Embedded = new UnsupportedPlatform();
             }
+            #endif
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
                 Default = Embedded;

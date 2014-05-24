@@ -34,16 +34,13 @@ using MonoTouch.OpenGLES;
 
 using OpenTK.Graphics;
 
-namespace OpenTK.Platform
+namespace OpenTK.Platform.iPhoneOS
 {
-    sealed class iPhoneOSFactory
+    sealed class iPhoneOSFactory : IPlatformFactory
     {
-        private iPhoneOSFactory()
+        internal iPhoneOSFactory()
         {
         }
-
-        public static Factory Default = new Factory();
-        public static Factory Embedded = new Factory();
 
         #region IPlatformFactory Members
 
@@ -71,6 +68,46 @@ namespace OpenTK.Platform
                     h = c.Handle;
                 return new ContextHandle(h);
             };
+        }
+
+        public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public OpenTK.Input.IJoystickDriver2 CreateJoystickDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public OpenTK.Input.IJoystickDriver CreateLegacyJoystickDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
