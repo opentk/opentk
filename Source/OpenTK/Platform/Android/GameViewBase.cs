@@ -32,8 +32,10 @@ namespace OpenTK
 {
 	#if OPENTK_0
 		[Register ("opentk/GameViewBase")]
-	#else
+    #elif OPENTK_1
 		[Register ("opentk_1_0/GameViewBase")]
+    #elif OPENTK_1_1
+        [Register ("opentk_1_1/GameViewBase")]
 	#endif
 	public abstract class GameViewBase : SurfaceView, IGameWindow
 	{
@@ -1143,7 +1145,7 @@ namespace OpenTK
         public event EventHandler<Input.MouseWheelEventArgs> MouseWheel;
 
 
-#if OPENTK_1
+#if !OPENTK_0
 		public OpenTK.Input.IInputDriver InputDriver {
 			get {
 				throw new NotSupportedException ();
