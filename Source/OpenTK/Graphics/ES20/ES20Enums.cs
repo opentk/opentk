@@ -13252,6 +13252,25 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
+    /// Used in GL.FramebufferRenderbuffer, GL.FramebufferTexture2D and 2 other functions
+    /// </summary>
+    public enum FramebufferAttachment : int
+    {
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT0 = 0x8CE0
+        /// </summary>
+        ColorAttachment0 = ((int)0x8CE0)        ,
+        /// <summary>
+        /// Original was GL_DEPTH_ATTACHMENT = 0x8D00
+        /// </summary>
+        DepthAttachment = ((int)0x8D00)        ,
+        /// <summary>
+        /// Original was GL_STENCIL_ATTACHMENT = 0x8D20
+        /// </summary>
+        StencilAttachment = ((int)0x8D20)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum FramebufferErrorCode : int
@@ -20899,6 +20918,33 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_RenderbufferStencilSize = 0X8d55
         /// </summary>
         RenderbufferStencilSize = ((int)0X8d55)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.RenderbufferStorage
+    /// </summary>
+    public enum RenderbufferStorage : int
+    {
+        /// <summary>
+        /// Original was GL_Rgba4 = 0X8056
+        /// </summary>
+        Rgba4 = ((int)0X8056)        ,
+        /// <summary>
+        /// Original was GL_Rgb5A1 = 0X8057
+        /// </summary>
+        Rgb5A1 = ((int)0X8057)        ,
+        /// <summary>
+        /// Original was GL_DepthComponent16 = 0X81a5
+        /// </summary>
+        DepthComponent16 = ((int)0X81a5)        ,
+        /// <summary>
+        /// Original was GL_StencilIndex8 = 0X8d48
+        /// </summary>
+        StencilIndex8 = ((int)0X8d48)        ,
+        /// <summary>
+        /// Original was GL_Rgb565 = 0X8d62
+        /// </summary>
+        Rgb565 = ((int)0X8d62)        ,
     }
 
     /// <summary>
