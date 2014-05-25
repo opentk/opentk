@@ -36,8 +36,10 @@ namespace OpenTK.Platform.Android
 
 #if OPENTK_0
 	[Register ("opentk/platform/android/AndroidGameView")]
-#else
+#elif OPENTK_1
 	[Register ("opentk_1_0/platform/android/AndroidGameView")]
+#elif OPENTK_1_1
+    [Register ("opentk_1_1/platform/android/AndroidGameView")]
 #endif
 	public partial class AndroidGameView : GameViewBase, ISurfaceHolderCallback
 	{
@@ -197,7 +199,7 @@ namespace OpenTK.Platform.Android
 		public override void MakeCurrent ()
 		{
 			EnsureUndisposed ();
-			if (Context == null)
+            if (GraphicsContext == null)
 				CreateContext ();
 			AssertContext ();
 			try	{
@@ -224,13 +226,7 @@ namespace OpenTK.Platform.Android
 		{
 			EnsureUndisposed ();
 			AssertContext ();
-
-			if (Context != null) {
-				if (!Context.Swap ()) {
-					CreateContext ();
-				}
-			} else
-				GraphicsContext.SwapBuffers ();
+            GraphicsContext.SwapBuffers();
 		}
 
 		double updates;
@@ -386,14 +382,28 @@ namespace OpenTK.Platform.Android
 		{
 			log ("CreateContext");
 
-			GraphicsContext = AndroidGraphicsContext.CreateGraphicsContext (GraphicsMode,
-								WindowInfo, GraphicsContext,
-#if OPENTK_0
-								GLContextVersion,
-#else
-								ContextRenderingApi,
-#endif
-								GraphicsContextFlags.Embedded);
+            int major = 1;
+            int minor = 1;
+            #if OPENTK_0
+            switch (GLContextVersion)
+            {
+            case GLContextVersion.Gles1_1: major = 1; minor = 1; break;
+            case GLContextVersion.Gles2_0: major = 2; minor = 0; break;
+            case GLContextVersion.Gles3_0: major = 3; minor = 0; break;
+            }
+            #else
+            switch (ContextRenderingApi)
+            {
+                case GLVersion.ES1: major = 1; minor = 1; break;
+                case GLVersion.ES2: major = 2; minor = 0; break;
+                case GLVersion.ES3: major = 3; minor = 0; break;
+            }
+            #endif
+
+            GraphicsContext = new OpenTK.Graphics.GraphicsContext(
+                GraphicsMode, WindowInfo, 
+                major, minor,
+                GraphicsContextFlags.Embedded);
 
             GraphicsContext.LoadAll();
 		}
@@ -578,10 +588,6 @@ namespace OpenTK.Platform.Android
 #endif
 				return gl;
 			}
-		}
-
-		AndroidGraphicsContext Context {
-			get { return GraphicsContext as AndroidGraphicsContext; }
 		}
 
 		public GraphicsMode GraphicsMode {
