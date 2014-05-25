@@ -25,6 +25,10 @@ namespace OpenTK.Platform.Android {
 
 	public class AndroidGraphicsContext : IGraphicsContext, IGraphicsContextInternal, IDisposable
 	{
+        readonly IntPtr ES1 = OpenTK.Platform.X11.DL.Open("libGLESv1_CM", X11.DLOpenFlags.Lazy);
+        readonly IntPtr ES2 = OpenTK.Platform.X11.DL.Open("libGLESv2", X11.DLOpenFlags.Lazy);
+        readonly int Major;
+
 		IEGL10 egl;
 		AndroidWindow window;
 		bool disposed;
@@ -70,6 +74,7 @@ namespace OpenTK.Platform.Android {
 			if (major < 1 || major > 3)
 				throw new ArgumentException (string.Format("Unsupported GLES version {0}.{1}.", major, minor));
 
+            Major = major;
 			Init (mode, window, sharedContext, major, flags);
 		}
 
@@ -159,7 +164,7 @@ namespace OpenTK.Platform.Android {
 			set {throw new NotSupportedException();}
 		}
 
-		public void MakeCurrent (IWindowInfo win)
+        public void MakeCurrent (IWindowInfo win)
 		{
 			var w = win as AndroidWindow;
 			if (w == null)
@@ -202,19 +207,41 @@ namespace OpenTK.Platform.Android {
 
 		public void LoadAll()
 		{
+            #if LOGGING
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            #endif
             new OpenTK.Graphics.ES11.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES30.GL().LoadEntryPoints();
+            #if LOGGING
+            Trace.WriteLine(String.Format("[OpenTK] ES Bindings loaded in {0} ms", sw.Elapsed.TotalMilliseconds));
+            #endif
 		}
 
 		IntPtr IGraphicsContextInternal.GetAddress(string function)
 		{
-			return IntPtr.Zero;
+            throw new NotSupportedException();
 		}
+
+        IntPtr GetStaticAddress(IntPtr function)
+        {
+            if (Major == 1 && ES1 != IntPtr.Zero)
+            {
+                return X11.DL.Symbol(ES1, function);
+            }
+            else if (Major >= 2 && ES2 != IntPtr.Zero)
+            {
+                return X11.DL.Symbol(ES2, function);
+            }
+            return IntPtr.Zero;
+        }
 
         IntPtr IGraphicsContextInternal.GetAddress(IntPtr function)
         {
-            return Egl.Egl.GetProcAddress(function);
+            IntPtr address = GetStaticAddress(function);
+            if (address == IntPtr.Zero)
+                address = Egl.Egl.GetProcAddress(function);
+            return address;
         }
 
 		public void Dispose()
@@ -231,6 +258,15 @@ namespace OpenTK.Platform.Android {
 					DestroyContext ();
 					window = null;
 					disposed = true;
+
+                    if (ES1 != IntPtr.Zero)
+                    {
+                        X11.DL.Close(ES1);
+                    }
+                    if (ES2 != IntPtr.Zero)
+                    {
+                        X11.DL.Close(ES2);
+                    }
 				}
 			}
 		}
@@ -273,7 +309,7 @@ namespace OpenTK.Platform.Android {
 		}
 
 		ContextHandle IGraphicsContextInternal.Context {
-			get { return new ContextHandle (EGLContext.Handle); }
+            get { return new ContextHandle (new IntPtr(EGLContext.GetHashCode())); }
 		}
 	}
 
