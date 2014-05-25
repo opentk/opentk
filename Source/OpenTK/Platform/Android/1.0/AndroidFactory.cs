@@ -46,7 +46,7 @@ namespace OpenTK.Platform.Android
 					var egl = global::Android.Runtime.Extensions.JavaCast<IEGL10> (EGLContext.EGL);
 					var ctx = egl.EglGetCurrentContext ();
 					if (ctx != null && ctx != EGL10.EglNoContext)
-						return new ContextHandle (ctx.Handle);
+                        return new ContextHandle (new IntPtr(ctx.GetHashCode()));
 				} catch (Exception ex) {
 					global::Android.Util.Log.Error ("AndroidFactory", "Could not get the current EGLContext. {0}", ex);
 				}
