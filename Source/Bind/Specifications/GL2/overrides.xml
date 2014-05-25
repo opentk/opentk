@@ -5731,7 +5731,7 @@
     </function>
     <function name="RenderbufferStorage">
       <param name="target"><type>RenderbufferTarget</type></param>
-      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+      <param name="internalformat"><type>RenderbufferStorage</type></param>
     </function>
     <function name="RenderbufferStorageMultisample">
       <param name="target"><type>RenderbufferTarget</type></param>
@@ -5883,7 +5883,10 @@
     </function>
     <function name="ExtGetShaders" extension="QCOM" obsolete="Use out overload instead">
       <param name="numShaders"><count>0</count></param>
-    </function> 
+    </function>
+    <function name="RenderbufferStorage">
+      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+    </function>
   </overload>
 
   <!--  gles2 overloads for backwards compatibility (2.0 only) -->
@@ -6612,6 +6615,12 @@
       <use token="ALPHA" />
     </enum>
 
+    <enum name="FramebufferAttachment">
+      <use token="COLOR_ATTACHMENT0" />
+      <use token="DEPTH_ATTACHMENT" />
+      <use token="STENCIL_ATTACHMENT" />
+    </enum>
+
     <enum name="FramebufferTarget">
       <token name="Framebuffer" value="0X8d40" />
     </enum>
@@ -6634,6 +6643,10 @@
       <token name="Rgb5A1" value="0X8057" />
       <token name="Rgb565" value="0X8d62" />
       <token name="StencilIndex8" value="0X8d48" />
+    </enum>
+
+    <enum name="RenderbufferStorage">
+      <reuse enum="RenderbufferInternalFormat" />
     </enum>
 
     <enum name="RenderbufferParameterName">
@@ -7440,6 +7453,9 @@
       <use token="RENDERBUFFER_STENCIL_SIZE" />
       <use token="RENDERBUFFER_SAMPLES" />
       <use token="RENDERBUFFER_INTERNAL_FORMAT" />
+    </enum>
+    <enum name="RenderbufferStorage">
+      <reuse enum="RenderbufferInternalFormat" />
     </enum>
     <enum name="SamplerParameterName">
       <use token="TEXTURE_WRAP_S" />
