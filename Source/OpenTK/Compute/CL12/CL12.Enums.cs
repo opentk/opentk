@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenTK.Compute.CL20
+namespace OpenTK.Compute.CL12
 {
     /// <summary>
     /// Used in GL.CreateSampler

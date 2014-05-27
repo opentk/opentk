@@ -625,22 +625,7 @@
     <Compile Include="Compute\ComputeContext.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Compute\CL10\Enums.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Compute\CL10\ErrorHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CL10\Delegates.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CL10\Core.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CL10\CLHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CL10\CL.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Compute\CL10\ImageFormat.cs">
@@ -806,6 +791,16 @@
     <Compile Include="Platform\X11\XI2Input.cs" />
     <Compile Include="Platform\X11\XI2MouseKeyboard.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSFloat.cs" />
+    <Compile Include="Compute\CL20\CL20.Enums.cs" />
+    <Compile Include="Compute\CL20\CL20.cs" />
+    <Compile Include="Compute\CL20\CL20.Helper.cs" />
+    <Compile Include="Compute\ComputeBindingsBase.cs" />
+    <Compile Include="Compute\CL12\CL12.Enums.cs" />
+    <Compile Include="Compute\CL12\CL12.cs" />
+    <Compile Include="Compute\CL10\CL10.Enums.cs" />
+    <Compile Include="Compute\CL10\CL10.cs" />
+    <Compile Include="Compute\CL12\CL12.Helper.cs" />
+    <Compile Include="Compute\CL10\CL10.Helper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -835,4 +830,8 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Compute\CL20\" />
+    <Folder Include="Compute\CL12\" />
+  </ItemGroup>
 </Project>
