@@ -2,7 +2,7 @@
 #_cl_context, IntPtr
 #_cl_event, IntPtr
 cl_command_queue, CommandQueue
-cl_context, ContextHandle
+cl_context, ComputeContextHandle
 cl_device_id, ComputeDevice
 cl_event, ComputeEvent
 cl_kernel, ComputeKernel
