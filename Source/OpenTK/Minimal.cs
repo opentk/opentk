@@ -4,6 +4,17 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 
+#if !NET40
+namespace System.Runtime.CompilerServices
+{
+    /// <summary>
+    /// Allow the use of extension methods on 2.0 projects.
+    /// (Requires a 3.5 compiler)
+    /// </summary>
+    public class ExtensionAttribute : Attribute { }
+}
+#endif
+
 #if ANDROID || IPHONE || MINIMAL
 
 namespace OpenTK
