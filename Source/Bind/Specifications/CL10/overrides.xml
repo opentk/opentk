@@ -13,8 +13,9 @@
     <function name="SetEventCallback" />
     <function name="SetMemObjectDestructorCallback" />
   </delete>
+
   <add name="cl">
-    <enum name="SamplerProperties">
+    <enum name="SamplerProperties" version="2.0">
       <use token="SAMPLER_NORMALIZED_COORDS" comment="&lt;see cref='System.Boolean'&gt;; default true" />
       <use token="SAMPLER_ADDRESSING_MODE" comment="&lt;see cref='AddressingMode'&gt;; default Clamp" />
       <use token="SAMPLER_FILTER_MODE" comment="&lt;see cref='FilterMode'&gt;; default LinearNearest" />
@@ -23,7 +24,7 @@
       <use token="SAMPLER_LOD_MAX" comment="Requires CL_KHR_mipmap_image. &lt;see cref='System.Single'&gt;; default 0.0" />
     </enum>
     <!-- Add corrected callback signatures -->
-    <function name="BuildProgram" version="2.0">
+    <function name="BuildProgram" version="1.0">
       <param type="cl_program" name="program" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
       <param type="cl_device_id *" name="device_list" flow="in" />
@@ -32,7 +33,7 @@
       <param type="void*" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
-    <function name="CompileProgram" version="2.0">
+    <function name="CompileProgram" version="1.0">
       <param type="cl_program" name="program" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
       <param type="cl_device_id*" name="device_list" flow="in" />
@@ -44,7 +45,7 @@
       <param type="void*" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
-    <function name="CreateContext" version="2.0">
+    <function name="CreateContext" version="1.0">
       <param type="cl_context_properties*" name="properties" flow="in" />
       <param type="cl_device_type" name="device_type" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
@@ -53,14 +54,14 @@
       <param type="void*" name="user_data" flow="in" />
       <returns type="cl_context" />
     </function>
-    <function name="CreateContextFromType" version="2.0">
+    <function name="CreateContextFromType" version="1.0">
       <param type="cl_context_properties*" name="properties" flow="in" />
       <param type="cl_device_type" name="device_type" flow="in" />
       <param type="ContextNotifyDelegate" name="notify" flow="in" />
       <param type="void*" name="user_data" flow="in" />
       <returns type="cl_context" />
     </function>
-    <function name="CreateSampler" version="2.0">
+    <function name="CreateSampler" version="1.0">
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_bool" name="normalized_coords" flow="in" />
       <param type="cl_addressing_mode" name="addressing_mode" flow="in" />
@@ -68,7 +69,7 @@
       <param type="cl_int*" name="errcode_ret" flow="out" />
       <returns type="cl_sampler" />
     </function>
-    <function name="EnqueueNativeKernel" version="2.0">
+    <function name="EnqueueNativeKernel" version="1.0">
       <param type="cl_command_queue" name="command_queue" flow="in" />
       <param type="UserNotifyDelegate" name="notify" flow="in" />
       <param type="void*" name="args" flow="in" />
@@ -92,7 +93,7 @@
       <param type="cl_event*" name="event" flow="out" />
       <returns type="ErrorCodes" />
     </function>
-    <function name="LinkProgram" version="2.0">
+    <function name="LinkProgram" version="1.2">
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
       <param type="cl_device_id*" name="device_list" flow="in" />
@@ -103,32 +104,29 @@
       <param type="void*" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
-    <function name="SetEventCallback" version="2.0">
+    <function name="SetEventCallback" version="1.2">
       <param type="cl_event" name="event" flow="in" />
       <param type="cl_int" name="command_exec_callback_type" flow="in" />
       <param type="EventNotifyDelegate" name="notify" flow="in" />
       <param type="void*" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
-    <function name="SetMemObjectDestructorCallback" version="2.0">
+    <function name="SetMemObjectDestructorCallback" version="1.2">
       <param type="cl_mem" name="memobj" flow="in" />
       <param type="MemObjectNotifyDelegate" name="pfn_notify" flow="in" />
       <param type="void*" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
   </add>
+
   <replace name="cl">
 
-    <enum name="Unknown">
-      <token name="CHAR_MAX"><value>127</value></token>
-      <token name="CHAR_MIN"><value>-128</value></token>
-    </enum>
-
-    <enum name="ErrorCodes"><name>ErrorCode</name></enum>
+    <!--<enum name="ErrorCodes"><name>ErrorCode</name></enum>-->
     <enum name="DeviceType"><name>DeviceTypeFlags</name></enum>
     <enum name="CommandQueuePropertiesFlags"><name>CommandQueueFlags</name></enum>
     <enum name="CommandQueueProperties"><name>CommandQueueFlags</name></enum>
 
+    <!-- ErrorCode returns -->
     <function name="GetPlatformIDs"><returns>ErrorCodes</returns></function>
     <function name="GetPlatformInfo"><returns>ErrorCodes</returns></function>
     <function name="GetDeviceIDs"><returns>ErrorCodes</returns></function>
@@ -200,37 +198,30 @@
     <function name="EnqueueSVMMap"><returns>ErrorCodes</returns></function>
     <function name="EnqueueSVMUnmap"><returns>ErrorCodes</returns></function>
 
+    <!-- ErrorCode parameters -->
     <function name="CreateContextFromType" extension="Core">
-      <param name="errcode_ret"><type>ErrorCode</type></param>
+      <param name="errcode_ret"><type>ErrorCodes</type></param>
     </function>
-
     <function name="CreateBuffer" extension="Core">
-      <param name="errcode_ret"><type>ErrorCode</type></param>
+      <param name="errcode_ret"><type>ErrorCodes</type></param>
     </function>
-    
     <function name="CreateContext" extension="Core">
-      <param name="errcode_ret"><type>ErrorCode</type></param>
+      <param name="errcode_ret"><type>ErrorCodes</type></param>
     </function>
-
     <function name="CreateContextFromType" extension="Core">
-      <param name="errcode_ret"><type>ErrorCode</type></param>
+      <param name="errcode_ret"><type>ErrorCodes</type></param>
     </function>
-
     <function name="CreateCommandQueue" extension="Core">
-      <param name="errcode_ret"><type>ErrorCode</type></param>
+      <param name="errcode_ret"><type>ErrorCodes</type></param>
     </function>
-
     <function name="CreateKernel" extension="Core">
-      <param name="errcode_ret"><type>ErrorCode</type></param>
+      <param name="errcode_ret"><type>ErrorCodes</type></param>
     </function>
-    
     <function name="CreateProgramWithBinary" extension="Core">
-      <param name="errcode_ret"><type>ErrorCode</type></param>
+      <param name="errcode_ret"><type>ErrorCodes</type></param>
     </function>
-
     <function name="CreateProgramWithSource" extension="Core">
-      <param name="strings"><type>string[]</type></param>
-      <param name="errcode_ret"><type>ErrorCode</type></param>
+      <param name="errcode_ret"><type>ErrorCodes</type></param>
     </function>
   </replace>
 

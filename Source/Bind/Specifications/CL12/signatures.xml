@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <signatures version="1">
-  <add name="c" version="1.2">
+  <add name="cl" version="1.2">
     <enum name="ErrorCodes">
       <token name="SUCCESS" value="0" />
       <token name="DEVICE_NOT_FOUND" value="-1" />
@@ -626,6 +626,14 @@
       <param type="cl_bool" name="normalized_coords" flow="in" />
       <returns type="cl_int" />
     </function>
+    <function name="CreateSampler">
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_bool" name="normalized_coords" flow="in" />
+      <param type="cl_addressing_mode" name="addressing_mode" flow="in" />
+      <param type="cl_filter_mode" name="filter_mode" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+      <returns type="cl_sampler" />
+    </function>
     <function name="RetainSampler" version="1.2">
       <param type="cl_sampler" name="sampler" flow="in" />
       <returns type="cl_int" />
@@ -645,9 +653,9 @@
     <function name="CreateProgramWithSource" version="1.2">
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_uint" name="count" flow="in" />
-      <param type="cl_int*" name="errcode_ret" flow="out" />
-      <param type="size_t*" name="lengths" flow="in" />
       <param type="char**" name="strings" flow="in" />
+      <param type="size_t*" name="lengths" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
       <returns type="cl_program" />
     </function>
     <function name="CreateProgramWithBinary" version="1.2">
@@ -804,10 +812,8 @@
       <returns type="cl_int" />
     </function>
     <function name="CreateUserEvent" version="1.2">
-      <param type="extern" name="clRetainEvent" flow="in" />
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_int*" name="errcode_ret" flow="out" />
-      <param type="cl_event" name="event" flow="in" />
       <returns type="cl_event" />
     </function>
     <function name="ReleaseEvent" version="1.2">

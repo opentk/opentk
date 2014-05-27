@@ -742,9 +742,9 @@
     <function name="CreateProgramWithSource" version="2.0">
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_uint" name="count" flow="in" />
-      <param type="cl_int*" name="errcode_ret" flow="out" />
-      <param type="size_t*" name="lengths" flow="in" />
       <param type="char**" name="strings" flow="in" />
+      <param type="size_t*" name="lengths" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
       <returns type="cl_program" />
     </function>
     <function name="CreateProgramWithBinary" version="2.0">
@@ -1322,11 +1322,11 @@
       <returns type="cl_command_queue" />
     </function>
     <function name="CreateSampler" version="2.0">
-      <param type="cl_functionressing_mode" name="functionressing_mode" flow="in" />
       <param type="cl_context" name="context" flow="in" />
-      <param type="cl_int*" name="errcode_ret" flow="out" />
-      <param type="cl_filter_mode" name="filter_mode" flow="in" />
       <param type="cl_bool" name="normalized_coords" flow="in" />
+      <param type="cl_addressing_mode" name="addressing_mode" flow="in" />
+      <param type="cl_filter_mode" name="filter_mode" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
       <returns type="cl_sampler" />
     </function>
     <function name="EnqueueTask" version="2.0">
