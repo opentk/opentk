@@ -14,7 +14,9 @@ namespace Bind.CL
         public CLGenerator(Settings settings, string dirname)
             : base(settings, dirname)
         {
-            glTypemap = "CL10/cl.tm";
+            // Common settings for all OpenCL generators
+            Settings.DefaultTypeMapFile = "CL10/cl.tm";
+            Settings.DefaultOverridesFile = "../CL10/overrides.xml";
 
             Settings.FunctionPrefix = "cl";
             Settings.ConstantPrefix = "CL_";
@@ -22,10 +24,14 @@ namespace Bind.CL
             Settings.OutputClass = "CL";
 
             Settings.Compatibility |= Settings.Legacy.NoDebugHelpers;
+            Settings.Compatibility |= Settings.Legacy.UseDllImports;
 
             Settings.DefaultOutputNamespace = "OpenTK.Compute.CL10";
             Settings.DefaultWrappersFile = "CL10.cs";
             Settings.DefaultEnumsFile = "CL10.Enums.cs";
+
+            Profile = "cl";
+            Version = "1.0";
         }
     }
 }

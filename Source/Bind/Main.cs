@@ -30,6 +30,7 @@ namespace Bind
         ES20,
         ES30,
         CL10,
+        CL12,
         CL20,
     }
 
@@ -242,6 +243,10 @@ namespace Bind
                         Generators.Add(new CLGenerator(Settings, dirName));
                         break;
 
+                    case GeneratorMode.CL12:
+                        Generators.Add(new CL12Generator(Settings, dirName));
+                        break;
+
                     case GeneratorMode.CL20:
                         Generators.Add(new CL20Generator(Settings, dirName));
                         break;
@@ -342,6 +347,10 @@ namespace Bind
                 case "cl10":
                     mode = GeneratorMode.CL10;
                     Settings.DefaultOutputNamespace = "OpenTK.Compute.OpenCL";
+                    break;
+
+                case "cl12":
+                    mode = GeneratorMode.CL12;
                     break;
 
                 case "cl20":

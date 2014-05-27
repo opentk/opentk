@@ -32,21 +32,21 @@ using System.IO;
 
 namespace Bind.CL
 {
-    class CL20Generator : CLGenerator
+    class CL12Generator : CLGenerator
     {
-        public CL20Generator(Settings settings, string dirname)
-            : base(settings, String.IsNullOrEmpty(dirname) ? "CL20" : dirname)
+        public CL12Generator(Settings settings, string dirname)
+            : base(settings, String.IsNullOrEmpty(dirname) ? "CL12" : dirname)
         {
             Settings.DefaultOutputPath = String.Format(
-                Settings.DefaultOutputPath, "Compute", "CL20");
+                Settings.DefaultOutputPath, "Compute", "CL12");
             //Settings.DefaultDocPath = Path.Combine(Settings.DefaultDocPath,
-            //    "CL20");
+            //    "CL12");
 
-            Settings.DefaultOutputNamespace = "OpenTK.Compute.CL20";
-            Settings.DefaultWrappersFile = "CL20.cs";
-            Settings.DefaultEnumsFile = "CL20.Enums.cs";
+            Settings.DefaultOutputNamespace = "OpenTK.Compute.CL12";
+            Settings.DefaultWrappersFile = "CL12.cs";
+            Settings.DefaultEnumsFile = "CL12.Enums.cs";
 
-            Version = "2.0";
+            Version = "1.2";
         }
     }
 }
