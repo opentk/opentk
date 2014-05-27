@@ -280,9 +280,16 @@ namespace Bind
                     Category = node.GetAttribute("category", String.Empty).Trim(),
                     DeprecatedVersion = node.GetAttribute("deprecated", String.Empty).Trim(),
                     Deprecated = !String.IsNullOrEmpty(node.GetAttribute("deprecated", String.Empty)),
-                    Extension = node.GetAttribute("extension", String.Empty).Trim() ?? "Core",
+                    Extension = node.GetAttribute("extension", String.Empty).Trim(),
                     Obsolete = node.GetAttribute("obsolete", String.Empty).Trim()
                 };
+
+                // Ensure all core functions are under the "Core" extension.
+                // This is used later on by the FuncProcessor and BindStreamWriter
+                // implementations.
+                if (String.IsNullOrEmpty(d.Extension))
+                    d.Extension = "Core";
+
                 if (!extensions.Contains(d.Extension))
                     extensions.Add(d.Extension);
 
