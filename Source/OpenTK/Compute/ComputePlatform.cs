@@ -1,6 +1,6 @@
 #region License
 //
-// CommandQueue.cs
+// ComputePlatform.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Compute
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct CommandQueue
+    public struct ComputePlatform
     {
         IntPtr value;
     }

@@ -583,46 +583,13 @@
     <Compile Include="Math\BezierCurveCubic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Compute\Memory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Device.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Platform.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Sampler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Kernel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Profiler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Program.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Enums.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Compute\CommandQueue.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Compute\CLHelper.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Compute\Event.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Compute\Structs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Configuration.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\ComputeContext.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Compute\CL10\ErrorHelper.cs">
@@ -801,6 +768,27 @@
     <Compile Include="Compute\CL10\CL10.cs" />
     <Compile Include="Compute\CL12\CL12.Helper.cs" />
     <Compile Include="Compute\CL10\CL10.Helper.cs" />
+    <Compile Include="Compute\ComputeEvent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compute\ComputeDevice.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compute\ComputeKernel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compute\ComputeMemory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compute\ComputePlatform.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compute\ComputeProgram.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compute\ComputeSampler.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

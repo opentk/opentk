@@ -1,6 +1,6 @@
 #region License
 //
-// CommandQueue.cs
+// ComputeDevice.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -28,12 +28,15 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace OpenTK.Compute
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct CommandQueue
+    public struct ComputeDevice
     {
         IntPtr value;
     }

@@ -156,7 +156,7 @@ namespace OpenTK.Compute
             return !left.Equals(right);
         }
 
-        #endregion
+    #endregion
 
         #region IComparable<Handle<T>> Members
 
