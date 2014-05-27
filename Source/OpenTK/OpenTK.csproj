@@ -789,6 +789,8 @@
     <Compile Include="Compute\ComputeSampler.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Compute\CL12\CL12.Extensions.cs" />
+    <Compile Include="Compute\ComputeContextHandle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

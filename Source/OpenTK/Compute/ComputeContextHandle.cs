@@ -1,6 +1,6 @@
-#region License
+﻿#region License
 //
-// ComputeDevice.cs
+// ComputeContextHandle.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -28,24 +28,14 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
-using System.Security;
 
 namespace OpenTK.Compute
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct ComputeDevice
+    public struct ComputeContextHandle
     {
-        IntPtr value;
-
-        public static ComputeDevice Zero
-        {
-            get
-            {
-                return new ComputeDevice();
-            }
-        }
+        public ContextHandle Handle { get; private set; }
     }
 }
+

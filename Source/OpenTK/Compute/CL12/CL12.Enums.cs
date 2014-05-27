@@ -148,6 +148,10 @@ namespace OpenTK.Compute.CL12
         /// </summary>
         BuildSuccess = ((int)0)        ,
         /// <summary>
+        /// Original was CL_DEFAULT = 0
+        /// </summary>
+        Default = ((int)0)        ,
+        /// <summary>
         /// Original was CL_FALSE = 0
         /// </summary>
         False = ((int)0)        ,
@@ -1211,7 +1215,7 @@ namespace OpenTK.Compute.CL12
     /// <summary>
     /// Not used directly.
     /// </summary>
-    public enum CommandQueueFlags : long
+    public enum CommandQueueFlags : int
     {
         /// <summary>
         /// Original was CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE = (1 << 0)
@@ -1221,6 +1225,10 @@ namespace OpenTK.Compute.CL12
         /// Original was CL_QUEUE_PROFILING_ENABLE = (1 << 1)
         /// </summary>
         QueueProfilingEnable = ((int)(1 << 1))        ,
+        /// <summary>
+        /// Original was CL_DEFAULT = 0
+        /// </summary>
+        Default = ((int)0)        ,
     }
 
     /// <summary>
@@ -1666,9 +1674,9 @@ namespace OpenTK.Compute.CL12
     }
 
     /// <summary>
-    /// Used in GL.CreateBuffer, GL.CreateCommandQueue and 2 other functions
+    /// Not used directly.
     /// </summary>
-    public enum ErrorCodes : int
+    public enum ErrorCode : int
     {
         /// <summary>
         /// Original was CL_SUCCESS = 0
