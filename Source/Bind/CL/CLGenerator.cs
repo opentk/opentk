@@ -12,7 +12,7 @@ namespace Bind.CL
     class CLGenerator : Generator
     {
         public CLGenerator(Settings settings, string dirname)
-            : base(settings, dirname)
+            : base(settings, "CL10")
         {
             // Common settings for all OpenCL generators
             Settings.DefaultOutputPath = String.Format(
