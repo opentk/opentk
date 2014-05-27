@@ -148,22 +148,26 @@ namespace Bind
             foreach (var version in apiversion.Split('|'))
             {
                 var class_elements = GetClasses(overrides, apiname, version);
-                foreach (XPathNavigator @class in class_elements)
+                foreach (XPathNavigator element in class_elements)
                 {
-                    var c = new Class
+                    foreach (XPathNavigator @class in element.Select("add"))
                     {
-                        Name = @class.GetAttribute("name", String.Empty)
-                    };
-                    foreach (XPathNavigator member in @class.Select("function"))
-                    {
-                        var name = member.GetAttribute("name", String.Empty);
-                        var methods = wrappers["Core"].Where(w => w.Name == name);
-                        foreach (var method in methods)
+                        var c = new Class
                         {
-                            var m = new Function(method);
-                            m.IsExtensionMethod = true;
-                            c.Methods.Add(m);
+                            Name = @class.GetAttribute("name", String.Empty)
+                        };
+                        foreach (XPathNavigator member in @class.Select("function"))
+                        {
+                            var name = member.GetAttribute("name", String.Empty);
+                            var methods = wrappers["Core"].Where(w => w.Name == name);
+                            foreach (var method in methods)
+                            {
+                                var m = new Function(method);
+                                m.IsExtensionMethod = true;
+                                c.Methods.Add(m);
+                            }
                         }
+                        classes.Add(c);
                     }
                 }
             }
@@ -252,9 +256,9 @@ namespace Bind
                 path.Append(String.Format("[contains(concat('|', @version, '|'), '|{0}|') or not(boolean(@version))]", apiversion));
             }
 
-            if (function != null)
+            if (!String.IsNullOrEmpty(function))
             {
-                if (extension != null)
+                if (!String.IsNullOrEmpty(extension))
                 {
                     // match an override that has this specific extension
                     // *or* one that has no extension at all (equivalent

@@ -45,6 +45,7 @@ namespace Bind.CL
             Settings.DefaultOutputNamespace = "OpenTK.Compute.CL12";
             Settings.DefaultWrappersFile = "CL12.cs";
             Settings.DefaultEnumsFile = "CL12.Enums.cs";
+            Settings.DefaultClassesFile = "CL12.Extensions.cs";
 
             Version = "1.2";
         }

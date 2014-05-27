@@ -33,13 +33,14 @@ namespace Bind
         public string DefaultDelegatesFile = "Delegates.cs";
         public string DefaultEnumsFile = "Enums.cs";
         public string DefaultWrappersFile = "GL.cs";
+        public string DefaultClassesFile = "Extensions.cs";
         public string DefaultTypeMapFile = "gl.tm";
         public Legacy DefaultCompatibility = Legacy.NoDropMultipleTokens;
 
         string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
             signaturesFile, overridesFile, typemap,
             languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
-            wrappersFile;
+            wrappersFile, classesFile;
         Nullable<Legacy> compatibility;
         public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
         public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
@@ -55,6 +56,7 @@ namespace Bind
         public string DelegatesFile { get { return delegatesFile ?? DefaultDelegatesFile; } set { delegatesFile = value; } }
         public string EnumsFile { get { return enumsFile ?? DefaultEnumsFile; } set { enumsFile = value; } }
         public string WrappersFile { get { return wrappersFile ?? DefaultWrappersFile; } set { wrappersFile = value; } }
+        public string ClassesFile { get { return classesFile ?? DefaultClassesFile; } set { classesFile = value; } }
         public string TypeMapFile { get { return typemap ?? DefaultTypeMapFile; } set { typemap = value; } }
         public Legacy Compatibility { get { return compatibility ?? DefaultCompatibility; } set { compatibility = value; } }
 

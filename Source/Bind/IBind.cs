@@ -14,6 +14,7 @@ namespace Bind
         DelegateCollection Delegates { get; }
         EnumCollection Enums { get; }
         FunctionCollection Wrappers { get; }
+        ClassCollection Classes { get; }
         Settings Settings { get; }
 
         IDictionary<string, string> GLTypes { get; }

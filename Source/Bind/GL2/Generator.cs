@@ -72,6 +72,7 @@ namespace Bind.GL2
             Delegates = new DelegateCollection();
             Enums = new EnumCollection();
             Wrappers = new FunctionCollection();
+            Classes = new ClassCollection();
 
             SpecReader = new XmlSpecReader(Settings);
         }

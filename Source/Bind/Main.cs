@@ -43,7 +43,6 @@ namespace Bind
 
     static class MainClass
     {
-        static GeneratorMode mode = GeneratorMode.Default;
         static internal List<IBind> Generators = new List<IBind>();
         static Settings Settings = new Settings();
 

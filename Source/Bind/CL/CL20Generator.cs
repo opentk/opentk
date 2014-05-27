@@ -45,6 +45,7 @@ namespace Bind.CL
             Settings.DefaultOutputNamespace = "OpenTK.Compute.CL20";
             Settings.DefaultWrappersFile = "CL20.cs";
             Settings.DefaultEnumsFile = "CL20.Enums.cs";
+            Settings.DefaultClassesFile = "CL20.Extensions.cs";
 
             Version = "2.0";
         }

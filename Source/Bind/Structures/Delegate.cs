@@ -55,6 +55,7 @@ namespace Bind.Structures
             Obsolete = d.Obsolete;
             CLSCompliant = d.CLSCompliant;
             Slot = d.Slot;
+            IsExtensionMethod = d.IsExtensionMethod;
         }
 
         #endregion
@@ -243,6 +244,12 @@ namespace Bind.Structures
         public string DeprecatedVersion { get; set; }
         public string EntryPoint { get; set; }
         public string Obsolete { get; set; }
+
+        /// <summary>
+        /// True, if this instance is a .Net extension method; false otherwise.
+        /// </summary>
+        public bool IsExtensionMethod { get; set; }
+
 
         // Slot index in the address table
         public int Slot { get; set; }
