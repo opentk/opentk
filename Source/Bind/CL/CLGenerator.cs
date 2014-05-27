@@ -16,7 +16,7 @@ namespace Bind.CL
         {
             // Common settings for all OpenCL generators
             Settings.DefaultOutputPath = String.Format(
-                Settings.DefaultOutputPath, "Compute", "CL10");
+                Settings.DefaultOutputPath, "Compute", dirname);
 
             Settings.DefaultTypeMapFile = "CL10/cl.tm";
             Settings.DefaultOverridesFile = "../CL10/overrides.xml";
