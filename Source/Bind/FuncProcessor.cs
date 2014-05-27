@@ -71,7 +71,8 @@ namespace Bind
         }
 
         public FunctionCollection Process(EnumProcessor enum_processor, DocProcessor doc_processor,
-            DelegateCollection delegates, EnumCollection enums, string apiname, string apiversion)
+            DelegateCollection delegates, EnumCollection enums, string apiname, string apiversion,
+            ClassCollection classes)
         {
             Console.WriteLine("Processing delegates.");
             var nav = new XPathDocument(Overrides).CreateNavigator();
@@ -134,10 +135,39 @@ namespace Bind
             Console.WriteLine("Generating documentation.");
             GenerateDocumentation(wrappers, enum_processor, doc_processor);
 
+            Console.WriteLine("Generating extensions.");
+            GenerateClasses(wrappers, classes, nav, apiname, apiversion);
+
             return wrappers;
         }
 
         #region Private Members
+
+        void GenerateClasses(FunctionCollection wrappers, ClassCollection classes, XPathNavigator overrides, string apiname, string apiversion)
+        {
+            foreach (var version in apiversion.Split('|'))
+            {
+                var class_elements = GetClasses(overrides, apiname, version);
+                foreach (XPathNavigator @class in class_elements)
+                {
+                    var c = new Class
+                    {
+                        Name = @class.GetAttribute("name", String.Empty)
+                    };
+                    foreach (XPathNavigator member in @class.Select("function"))
+                    {
+                        var name = member.GetAttribute("name", String.Empty);
+                        var methods = wrappers["Core"].Where(w => w.Name == name);
+                        foreach (var method in methods)
+                        {
+                            var m = new Function(method);
+                            m.IsExtensionMethod = true;
+                            c.Methods.Add(m);
+                        }
+                    }
+                }
+            }
+        }
 
         void GenerateDocumentation(FunctionCollection wrappers,
             EnumProcessor enum_processor, DocProcessor doc_processor)
@@ -254,6 +284,11 @@ namespace Bind
         static string GetOverridesPath(string apiname, string apiversion, string function, string extension)
         {
             return GetPath("replace", apiname, apiversion, function, extension);
+        }
+
+        static string GetClassPath(string apiname, string apiversion)
+        {
+            return GetPath("classes", apiname, apiversion, String.Empty, String.Empty);
         }
 
         void TranslateType(Bind.Structures.Type type,
@@ -440,6 +475,12 @@ namespace Bind
             }
 
             return trimmed_name;
+        }
+
+        static XPathNodeIterator GetClasses(XPathNavigator nav, string apiname, string apiversion)
+        {
+            var classpath = GetClassPath(apiname, apiversion);
+            return nav.Select(classpath);
         }
 
         static XPathNodeIterator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname, string apiversion)

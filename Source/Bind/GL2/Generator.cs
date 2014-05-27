@@ -83,6 +83,7 @@ namespace Bind.GL2
         public DelegateCollection Delegates { get; private set; }
         public EnumCollection Enums { get; private set; }
         public FunctionCollection Wrappers { get; private set; }
+        public ClassCollection Classes { get; private set; }
         public IDictionary<string, string> GLTypes { get; private set; }
         public IDictionary<string, string> CSTypes { get; private set; }
 
@@ -106,7 +107,7 @@ namespace Bind.GL2
 
             Enums = enum_processor.Process(Enums, Profile);
             Wrappers = func_processor.Process(enum_processor, doc_processor,
-                Delegates, Enums, Profile, Version);
+                Delegates, Enums, Profile, Version, Classes);
         }
 
         #endregion

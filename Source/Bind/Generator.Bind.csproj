@@ -248,6 +248,8 @@
     <None Include="Specifications\CL20\signatures.xml" />
     <None Include="Specifications\CL12\signatures.xml" />
     <Compile Include="CL\CL12Generator.cs" />
+    <Compile Include="Structures\Class.cs" />
+    <Compile Include="Structures\GenericCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">

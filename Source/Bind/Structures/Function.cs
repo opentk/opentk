@@ -39,6 +39,7 @@ namespace Bind.Structures
             Obsolete = f.Obsolete;
             CLSCompliant = f.CLSCompliant;
             Documentation = f.Documentation;
+            IsExtensionMethod = f.IsExtensionMethod;
             Body.AddRange(f.Body);
         }
 
@@ -97,6 +98,19 @@ namespace Bind.Structures
         #region public string TrimmedName
 
         public string TrimmedName { get; set; }
+
+        #endregion
+
+        #region IsExtensionMethod
+
+        /// <summary>
+        /// True, if this instance is a .Net extension method; false otherwise.
+        /// </summary>
+        public bool IsExtensionMethod
+        {
+            get;
+            set;
+        }
 
         #endregion
 
@@ -210,13 +224,13 @@ namespace Bind.Structures
 
     #endregion
 
-    #region class FunctionCollection : SortedDictionary<string, List<Function>>
+    #region class FunctionCollection
 
-    class FunctionCollection : SortedDictionary<string, List<Function>>
+    class FunctionCollection : GenericCollection<Function>
     {
         Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
-        void Add(Function f)
+        public override void Add(Function f)
         {
             if (!ContainsKey(f.Extension))
             {
@@ -229,7 +243,7 @@ namespace Bind.Structures
             }
         }
 
-        public void AddRange(IEnumerable<Function> functions)
+        public override void AddRange(IEnumerable<Function> functions)
         {
             foreach (Function f in functions)
             {
