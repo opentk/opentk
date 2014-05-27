@@ -833,6 +833,8 @@ namespace Bind
                 sb.Append("return ");
             }
 
+            sb.Append(Settings.OutputClass);
+            sb.Append(".");
             sb.Append(f.Name);
             sb.Append("(");
             if (f.Parameters.Count > 0)
