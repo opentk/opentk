@@ -249,18 +249,30 @@
       <token name="QUEUE_PROPERTIES" value="0x1093" />
       <token name="QUEUE_SIZE" value="0x1094" />
     </enum>
-    <enum name="MemFlagsAndSvmMemFlags">
+    <enum name="MemFlags">
       <token name="MEM_READ_WRITE" value="(1 &lt;&lt; 0)" />
       <token name="MEM_WRITE_ONLY" value="(1 &lt;&lt; 1)" />
       <token name="MEM_READ_ONLY" value="(1 &lt;&lt; 2)" />
       <token name="MEM_USE_HOST_PTR" value="(1 &lt;&lt; 3)" />
       <token name="MEM_ALLOC_HOST_PTR" value="(1 &lt;&lt; 4)" />
       <token name="MEM_COPY_HOST_PTR" value="(1 &lt;&lt; 5)" />
-    </enum>
-    <enum name="Reserved(1&lt;&lt;6)">
       <token name="MEM_HOST_WRITE_ONLY" value="(1 &lt;&lt; 7)" />
       <token name="MEM_HOST_READ_ONLY" value="(1 &lt;&lt; 8)" />
       <token name="MEM_HOST_NO_ACCESS" value="(1 &lt;&lt; 9)" />
+    </enum>
+    <enum name="SvmMemFlags">
+      <token name="MEM_READ_WRITE" value="(1 &lt;&lt; 0)" />
+      <token name="MEM_WRITE_ONLY" value="(1 &lt;&lt; 1)" />
+      <token name="MEM_READ_ONLY" value="(1 &lt;&lt; 2)" />
+      <token name="MEM_USE_HOST_PTR" value="(1 &lt;&lt; 3)" />
+      <token name="MEM_ALLOC_HOST_PTR" value="(1 &lt;&lt; 4)" />
+      <token name="MEM_COPY_HOST_PTR" value="(1 &lt;&lt; 5)" />
+      <token name="MEM_HOST_WRITE_ONLY" value="(1 &lt;&lt; 7)" />
+      <token name="MEM_HOST_READ_ONLY" value="(1 &lt;&lt; 8)" />
+      <token name="MEM_HOST_NO_ACCESS" value="(1 &lt;&lt; 9)" />
+      <token name="MEM_HOST_NO_ACCESS" value="(1 &lt;&lt; 9)" />
+      <token name="MEM_SVM_FINE_GRAIN_BUFFER" value="(1 &lt;&lt; 10)" />
+      <token name="MEM_SVM_ATOMICS" value="(1 &lt;&lt; 11)" />
     </enum>
     <enum name="MemMigrationFlags">
       <token name="MIGRATE_MEM_OBJECT_HOST" value="(1 &lt;&lt; 0)" />
@@ -345,12 +357,12 @@
       <token name="PIPE_PACKET_SIZE" value="0x1120" />
       <token name="PIPE_MAX_PACKETS" value="0x1121" />
     </enum>
-    <enum name="enumressingMode">
-      <token name="enumRESS_NONE" value="0x1130" />
-      <token name="enumRESS_CLAMP_TO_EDGE" value="0x1131" />
-      <token name="enumRESS_CLAMP" value="0x1132" />
-      <token name="enumRESS_REPEAT" value="0x1133" />
-      <token name="enumRESS_MIRRORED_REPEAT" value="0x1134" />
+    <enum name="AddressingMode">
+      <token name="ADDRESS_NONE" value="0x1130" />
+      <token name="ADDRESS_CLAMP_TO_EDGE" value="0x1131" />
+      <token name="ADDRESS_CLAMP" value="0x1132" />
+      <token name="ADDRESS_REPEAT" value="0x1133" />
+      <token name="ADDRESS_MIRRORED_REPEAT" value="0x1134" />
     </enum>
     <enum name="FilterMode">
       <token name="FILTER_NEAREST" value="0x1140" />
@@ -902,10 +914,8 @@
       <returns type="cl_int" />
     </function>
     <function name="CreateUserEvent" version="2.0">
-      <param type="extern" name="clRetainEvent" flow="in" />
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_int*" name="errcode_ret" flow="out" />
-      <param type="cl_event" name="event" flow="in" />
       <returns type="cl_event" />
     </function>
     <function name="ReleaseEvent" version="2.0">
@@ -1267,7 +1277,7 @@
       <param type="size_t" name="image_height" flow="in" />
       <param type="size_t" name="image_row_pitch" flow="in" />
       <param type="size_t" name="image_width" flow="in" />
-      <returns type="CL_EXT_PREFIX__VERSION_1_1_DEPRECATEDcl_mem" />
+      <returns type="cl_mem" />
     </function>
     <function name="CreateImage3D" version="2.0">
       <param type="cl_context" name="context" flow="in" />
@@ -1280,36 +1290,36 @@
       <param type="size_t" name="image_row_pitch" flow="in" />
       <param type="size_t" name="image_slice_pitch" flow="in" />
       <param type="size_t" name="image_width" flow="in" />
-      <returns type="CL_EXT_PREFIX__VERSION_1_1_DEPRECATEDcl_mem" />
+      <returns type="cl_mem" />
     </function>
     <function name="EnqueueMarker" version="2.0">
       <param type="cl_command_queue" name="command_queue" flow="in" />
       <param type="cl_event*" name="event" flow="in" />
-      <returns type="CL_EXT_PREFIX__VERSION_1_1_DEPRECATEDcl_int" />
+      <returns type="cl_int" />
     </function>
     <function name="EnqueueWaitForEvents" version="2.0">
       <param type="cl_command_queue" name="command_queue" flow="in" />
       <param type="cl_event*" name="event_list" flow="in" />
       <param type="cl_uint" name="num_events" flow="in" />
-      <returns type="CL_EXT_PREFIX__VERSION_1_1_DEPRECATEDcl_int" />
+      <returns type="cl_int" />
     </function>
     <function name="EnqueueBarrier" version="2.0">
       <param type="cl_command_queue" name="command_queue" flow="in" />
-      <returns type="CL_EXT_PREFIX__VERSION_1_1_DEPRECATEDcl_int" />
+      <returns type="cl_int" />
     </function>
     <function name="UnloadCompiler" version="2.0">
-      <returns type="CL_EXT_PREFIX__VERSION_1_1_DEPRECATEDcl_int" />
+      <returns type="cl_int" />
     </function>
     <function name="GetExtensionFunctionfunctionress" version="2.0">
       <param type="char*" name="func_name" flow="out" />
-      <returns type="CL_EXT_PREFIX__VERSION_1_1_DEPRECATEDvoid*" />
+      <returns type="void*" />
     </function>
     <function name="CreateCommandQueue" version="2.0">
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_device_id" name="device" flow="in" />
       <param type="cl_int*" name="errcode_ret" flow="out" />
       <param type="cl_command_queue_properties" name="properties" flow="in" />
-      <returns type="CL_EXT_PREFIX__VERSION_2_0_DEPRECATEDcl_command_queue" />
+      <returns type="cl_command_queue" />
     </function>
     <function name="CreateSampler" version="2.0">
       <param type="cl_functionressing_mode" name="functionressing_mode" flow="in" />
@@ -1317,7 +1327,7 @@
       <param type="cl_int*" name="errcode_ret" flow="out" />
       <param type="cl_filter_mode" name="filter_mode" flow="in" />
       <param type="cl_bool" name="normalized_coords" flow="in" />
-      <returns type="CL_EXT_PREFIX__VERSION_2_0_DEPRECATEDcl_sampler" />
+      <returns type="cl_sampler" />
     </function>
     <function name="EnqueueTask" version="2.0">
       <param type="cl_command_queue" name="command_queue" flow="in" />
@@ -1325,7 +1335,7 @@
       <param type="cl_event*" name="event_wait_list" flow="in" />
       <param type="cl_kernel" name="kernel" flow="in" />
       <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
-      <returns type="CL_EXT_PREFIX__VERSION_2_0_DEPRECATEDcl_int" />
+      <returns type="cl_int" />
     </function>
   </add>
 </signatures>
