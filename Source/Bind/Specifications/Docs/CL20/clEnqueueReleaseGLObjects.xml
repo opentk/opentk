@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY gl_sharingInc SYSTEM "gl_sharingInc.xml">
+<!ENTITY gl_formatsInc SYSTEM "gl_formatsInc.xml">
+<!ENTITY gl_lifetimeInc SYSTEM "gl_lifetimeInc.xml">
+<!ENTITY gl_syncInc SYSTEM "gl_syncInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clEnqueueReleaseGLObjects</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clEnqueueReleaseGLObjects</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clEnqueueReleaseGLObjects">
+        <refname>clEnqueueReleaseGLObjects</refname>
+
+        <refpurpose>
+            Release OpenCL memory objects that have been created from OpenGL objects.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef><link xlink:href="scalarDataTypes.html">cl_int</link>
+
+                    <function>
+                        clEnqueueReleaseGLObjects
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_command_queue</link>
+                    <parameter>command_queue</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_uint</link>
+                    <parameter>num_objects</parameter>
+                </paramdef>
+                <paramdef>const
+                    <link xlink:href="abstractDataTypes.html">cl_mem</link>
+                    <parameter>*mem_objects</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_uint</link>
+                    <parameter>num_events_in_wait_list</parameter>
+                </paramdef>
+                <paramdef>const
+                    <link xlink:href="abstractDataTypes.html">cl_event</link>
+                    <parameter>*event_wait_list</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_event</link>
+                    <parameter>*event</parameter>
+                </paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> command_queue </varname> </term>
+                <listitem>
+                    <para>
+                        A valid command-queue.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> num_objects </varname> </term>
+                <listitem>
+                    <para>
+                        The number of memory objects to be released in
+                         <varname>mem_objects</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> mem_objects </varname> </term>
+                <listitem>
+                    <para>
+                        A pointer to a list of CL memory objects that correspond to GL objects.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>event_wait_list</varname>
+                </term>
+                <term>
+                    <varname>num_events_in_wait_list</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      These parameters specify events
+                      that need to complete before this command can be executed. If
+                      <varname>event_wait_list</varname> is NULL, then this particular command does
+                      not wait on any event to complete.  If <varname>event_wait_list</varname>
+                      is NULL, <varname>num_events_in_wait_list</varname> must be 0. If
+                      <varname>event_wait_list</varname> is not NULL, the list of events
+                      pointed to by <varname>event_wait_list</varname> must be valid and
+                      <varname>num_events_in_wait_list</varname> must be greater than
+                      0. The events specified in <varname>event_wait_list</varname> act as
+                      synchronization points.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> event </varname> </term>
+                <listitem>
+                    <para>
+                      Returns an event object that identifies
+                      this particular read/write command and can be used to query or queue a
+                      wait for the command to complete.  <varname>event</varname> can be NULL
+                      in which case it will not be possible for the application to query the
+                      status of this command or queue a wait for this command to complete.
+                      If the <varname>event_wait_list</varname> and the 
+                      <varname>event</varname> arguments are not 
+                      NULL, the <varname>event</varname> argument should not refer 
+                      to an element of the <varname>event_wait_list</varname> array.
+                    </para>
+
+                    <para>
+                      If the
+                      <citerefentry><refentrytitle>cl_khr_gl_event</refentrytitle></citerefentry>
+                      extension is supported, if an OpenGL context is bound to the current thread, 
+                      then then any OpenGL commands which 
+                    </para>
+
+                      <itemizedlist mark="disc">
+                          <listitem>
+                              affect or access the contents of the memory objects listed in the 
+                              <varname>mem_objects</varname> list, and
+                          </listitem>
+
+                          <listitem>
+                              are issued on that context after the call to 
+                              <function>clEnqueueReleaseGLObjects</function>
+                          </listitem>
+                    </itemizedlist>
+
+                    <para>
+                        will not execute until after execution of any OpenCL commands preceding the 
+                        <function>clEnqueueReleaseGLObjects</function>
+                        which affect or access any of those memory objects. If a non-NULL 
+                        event object is returned, it will report completion before execution 
+                        of such OpenGL commands.
+                    </para>
+
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          Release OpenCL memory objects that have been created from OpenGL objects.  These objects
+          need to be released before they can be used by OpenGL.  The OpenGL objects are released
+          by the OpenCL context associated with <varname>command_queue</varname>.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+          If the
+          <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle>
+          </citerefentry> extension is supported and if an OpenGL context is bound
+          to the current thread, then any OpenGL commands which does:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              affect or access the contents of a memory object listed in the
+              <varname>mem_objects</varname> list, and
+            </listitem>
+
+            <listitem>
+              are issued on that context after the call to
+              <function>clEnqueueReleaseGLObjects</function>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+          will not execute until after execution of any OpenCL commands preceding the
+          <function>clEnqueueReleaseGLObjects</function> which affect or access any
+          of those memory objects.  If a non-NULL <varname>event</varname> object is
+          returned, it will report completion before execution of such OpenGL commands.
+        </para>
+
+        &gl_sharingInc;
+        &gl_formatsInc;
+        &gl_lifetimeInc;
+        &gl_syncInc;
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          <function>clEnqueueReleaseGLObjects</function> returns <errorname>CL_SUCCESS</errorname>
+          if the function is executed successfully. If <varname>num_objects</varname> is 0
+          and <varname>mem_objects</varname> is NULL the function does nothing and returns
+          <errorname>CL_SUCCESS</errorname>.  Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>num_objects</varname>
+              is zero and <varname>mem_objects</varname> is not a NULL value or if
+              <varname>num_objects</varname> &gt; 0 and <varname>mem_objects</varname> is NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_MEM_OBJECT</errorname> if memory objects in
+              <varname>mem_objects</varname> are not valid OpenCL memory objects.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_COMMAND_QUEUE</errorname> if <varname>command_queue</varname>
+              is not a valid command-queue.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if context associated with
+              <varname>command_queue</varname> was not created from an OpenGL context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_GL_OBJECT</errorname> if memory objects in
+              <varname>mem_objects</varname> have not been created from a GL object(s).
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EVENT_WAIT_LIST</errorname>
+              if <varname>event_wait_list</varname> is NULL and
+              <varname>num_events_in_wait_list</varname> &gt; 0,
+              or <varname>event_wait_list</varname> is not NULL and
+              <varname>num_events_in_wait_list</varname> is 0, or if event objects in
+              <varname>event_wait_list</varname> are not valid events.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clEnqueueReleaseGLObjects">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_gl_event</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

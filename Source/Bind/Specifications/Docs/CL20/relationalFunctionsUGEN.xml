@@ -1,0 +1,13 @@
+    <!-- ugentype - applies only to select.xml -->
+
+    <para>
+      The argument type <type>ugentype</type> refers to the built-in unsigned integer types,
+      i.e. <type>uchar</type>, <type>uchar<replaceable>n</replaceable></type>,
+      <type>ushort</type>, <type>ushort<replaceable>n</replaceable></type>,
+      <type>uint</type>, <type>uint<replaceable>n</replaceable></type>, <type>ulong</type>,
+      and <type>ulong<replaceable>n</replaceable></type>. <replaceable>n</replaceable> is 2,
+      3, 4, 8, or 16.
+    </para>
+
+ <!-- 13-Dec-2013, rev. 19 -->
+

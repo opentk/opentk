@@ -1,0 +1,107 @@
+
+    <!-- 9.6.6.1 Synchronizing OpenCL and OpenGL Access to Shared Objects -->
+
+    <bridgehead>Synchronizing OpenCL and OpenGL Access</bridgehead>
+
+    <para>
+      In order to ensure data integrity, the application is responsible
+      for synchronizing access to shared CL/GL objects by their respective APIs.  Failure to
+      provide such synchronization may result in race conditions and other undefined behavior
+      including non-portability between implementations.
+    </para>
+
+    <para>
+      Prior to calling <function>clEnqueueAcquireGLObjects</function>,
+      the application must ensure that any pending GL operations which access the objects
+      specified in <varname>mem_objects</varname>  have completed.  This may be accomplished
+      portably by issuing and waiting for completion of a <function>glFinish</function>
+      command on all GL contexts with pending references to these objects.  Implementations
+      may offer more efficient synchronization methods; for example on some platforms calling
+      <function>glFlush</function> may be sufficient, or synchronization may be implicit within
+      a thread, or there may be vendor-specific extensions that enable placing a fence in the
+      GL command stream and waiting for completion of that fence in the CL command queue. Note
+      that no synchronization methods other than <function>glFinish</function> are portable
+      between OpenGL implementations at this time.
+    </para>
+
+    <para>
+        When the extension 
+        <citerefentry><refentrytitle>cl_khr_egl_event</refentrytitle></citerefentry> 
+        is supported: Prior to calling 
+        <function>clEnqueueAcquireGLObjects</function>, 
+        the application must ensure that any pending 
+        EGL or EGL client API operations which access 
+        the objects specified in <varname>mem_objects</varname> have 
+        completed. 
+        If the 
+        <citerefentry><refentrytitle>cl_khr_egl_event</refentrytitle></citerefentry>
+        extension is supported and the EGL context in question supports fence 
+        sync objects, <emphasis>explicit synchronisation</emphasis> can be achieved 
+        as set out in section 5.7.1. <!-- per spec, rev. 19. Is this correct? -->
+        If the 
+        <citerefentry><refentrytitle>cl_khr_egl_event</refentrytitle></citerefentry> 
+        extension is not supported, completion of EGL client API commands 
+        may be determined by issuing and waiting for completion of commands such as 
+        <function>glFinish</function> or 
+        <function>vgFinish</function> on all client API 
+        contexts with pending references to these objects. Some
+        implementations may offer other efficient 
+        synchronization methods. If such methods exist they 
+        will be described in platform-specific documentation.
+        Note that no synchronization methods other than 
+        <function>glFinish</function> and <function>vgFinish</function> 
+        are portable between all 
+        EGL client API implementations and all OpenCL 
+        implementations. While this is the only way to 
+        ensure completion that is portable to all platforms, 
+        these are expensive operation and their use 
+        should be avoided if the 
+        <citerefentry><refentrytitle>cl_khr_egl_event</refentrytitle></citerefentry> extension 
+        is supported on a platform.
+    </para>
+
+    <para>
+      <!-- ext. spec Synchronizing OpenCL and OpenGL Access to Shared Objects -->
+      Similarly, after calling
+      <function>clEnqueueReleaseGLObjects</function>, the application is responsible
+      for ensuring that any pending OpenCL operations which access the objects specified
+      in <varname>mem_objects</varname> have completed prior to executing subsequent GL
+      commands which reference these objects. This may be accomplished portably by calling
+      <citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry> with the
+      event object returned by <function>clEnqueueReleaseGLObjects</function>, or by calling
+      <citerefentry><refentrytitle>clFinish</refentrytitle></citerefentry>.  As above, some
+      implementations may offer more efficient methods.
+    </para>
+
+    <para>
+      The application is responsible for maintaining the proper order
+      of operations if the CL and GL contexts are in separate threads.
+    </para>
+
+    <para>
+      If a GL context is bound to a thread other than the one in which
+      <function>clEnqueueReleaseGLObjects</function> is called, changes to any of the objects in
+      <varname>mem_objects</varname> may not be visible to that context without additional steps
+      being taken by the application. For an OpenGL 3.1 (or later) context, the requirements
+      are described in Appendix D ("Shared Objects and Multiple Contexts") of the OpenGL 3.1
+      Specification. For prior versions of OpenGL, the requirements are implementation-dependent.
+    </para>
+
+    <para>
+      Attempting to access the data store of an OpenGL object after
+      it has been acquired by OpenCL and before it has been released will result in undefined
+      behavior.  Similarly, attempting to access a shared CL/GL object from OpenCL before it
+      has been acquired by the OpenCL command queue, or after it has been released, will result
+      in undefined behavior.
+    </para>
+
+    <para>
+      If the
+      <citerefentry><refentrytitle>cl_khr_gl_event</refentrytitle></citerefentry> extension
+      is supported, then the OpenCL implementation will ensure that any such pending OpenGL
+      operations are complete for an OpenGL context bound to the same thread as the OpenCL
+      context. This is referred to as implicit synchronization.
+    </para>
+
+<!-- 23-Dec-2013, rev. 19 -->
+

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clGetExtensionFunctionAddressForPlatform</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clGetExtensionFunctionAddressForPlatform</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetExtensionFunctionAddressForPlatform">
+        <refname>clGetExtensionFunctionAddressForPlatform</refname>
+
+        <refpurpose>
+            Returns the address of the extension function named by
+            <varname>funcname</varname> for a given <varname>platform</varname>.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                   <link xlink:href="scalarDataTypes.html">void*</link>
+                    <function>
+                        clGetExtensionFunctionAddressForPlatform
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_platform_id</link>
+                    <parameter>platform</parameter>
+                </paramdef>
+
+                <paramdef>const
+                    <link xlink:href="scalarDataTypes.html">char</link>
+                    <parameter>*funcname</parameter>
+               </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term> <varname> funcname </varname> </term>
+                <listitem>
+                    <para> <!-- parameter description -->
+                        Name of an extension function.
+                    </para>
+               </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The function <function>clGetExtensionFunctionAddressForPlatform</function> returns
+          the address of the extension function named by <varname>funcname</varname> for a
+          given <varname>platform</varname>. The pointer returned should be cast to a function
+          pointer type matching the extension function's definition defined in the appropriate
+          extension specification and header file.
+        </para>
+
+        <para>
+          A return value of NULL indicates that the specified function does not exist for the
+          implementation or <varname>platform</varname> is not a valid platform.  A non-NULL
+          return value for <function>clGetExtensionFunctionAddressForPlatform</function>
+          does not guarantee that an extension function is actually supported by
+          the platform. The application must also make a corresponding query using
+          <citerefentry><refentrytitle>clGetPlatformInfo</refentrytitle></citerefentry>
+          (platform, <constant>CL_PLATFORM_EXTENSIONS</constant>, ... ) or
+          <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+          (device,<constant>CL_DEVICE_EXTENSIONS</constant>, ... ) to determine if an extension
+          is supported by the OpenCL implementation.
+        </para>
+
+        <para>
+          <function>clGetExtensionFunctionAddressForPlatform</function> may not be queried
+          for core (non-extension) functions in OpenCL. For functions that are queryable with
+          <function>clGetExtensionFunctionAddressForPlatform</function>, implementations may
+          choose to also export those functions statically from the object libraries implementing
+          those functions. However, portable applications cannot rely on this behavior.
+        </para>
+
+        <para>
+          Function pointer typedefs must be declared for all extensions that add API entrypoints.
+          These typedefs are a required part of the extension interface, to be provided in
+          an appropriate header (such as <code>cl_ext.h</code> if the extension is an OpenCL
+          extension, or <code>cl_gl_ext.h</code> if the extension is an OpenCL/OpenGL sharing
+          extension).
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Since there is no way to qualify the query with a device, the function pointer
+          returned must work for all implementations of that extension on different devices
+          for a platform. The behavior of calling a device extension function on a device not
+          supporting that extension is undefined.
+        </para>
+
+        <para>
+            <!-- spec rev. 19 refers to clGetExtensionFunctionAddress() which does not exist -->
+            If the <citerefentry><refentrytitle>cl_khr_icd</refentrytitle></citerefentry>
+            extension is enabled, for functions supported by the ICD Loader, 
+            <function>clGetExtensionFunctionAddress</function> 
+            will return the function pointer of the ICD Loader 
+            implementation. For extension functions which the ICD
+            Loader is unaware of, the function 
+            <function>clGetExtensionFunctionAddress</function> 
+            will determine the vendor 
+            implementation to return based on the string passed in. 
+            The ICD Loader will return the result from querying 
+            <function>clGetExtensionFunctionAddress</function> 
+            on the vendor ICD enumerated by the ICD 
+            Loader whose ICD suffix is a suffix of the function 
+            name being queried. If no such vendor exists 
+            or the suffix of the function is <code>KHR</code> or <code>EXT</code> then 
+            <function>clGetExtensionFunctionAddress</function> 
+            will return NULL.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+          The following convention must be followed for all extensions affecting the host API,
+          where TAG can be <constant>KHR</constant>, <constant>EXT</constant> or vendor-specific:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" /> <tbody>
+                    <row>
+                        <entry>#ifndef extension_name
+#define extension_name       1
+
+// all data typedefs, token #defines, prototypes, and
+// function pointer typedefs for this extension
+
+// function pointer typedefs must use the
+// following naming convention
+typedef CL_API_ENTRY return type
+      (CL_API_CALL *clextension_func_nameTAG_fn)(...);
+
+#endif // extension_name
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            Consider, for example, the 
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry> 
+            extension. This extension would add the following to <code>cl_gl_ext.h</code>:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>#ifndef cl_khr_gl_sharing
+#define cl_khr_gl_sharing     1
+
+// all data typedefs, token #defines, prototypes, and
+// function pointer typedefs for this extension
+#define CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR -1000
+#define CL_CURRENT_DEVICE_FOR_GL_CONTEXT_KHR   0x2006
+#define CL_DEVICES_FOR_GL_CONTEXT_KHR          0x2007
+#define CL_GL_CONTEXT_KHR                      0x2008
+#define CL_EGL_DISPLAY_KHR                     0x2009
+#define CL_GLX_DISPLAY_KHR                     0x200A
+#define CL_WGL_HDC_KHR                         0x200B
+#define CL_CGL_SHAREGROUP_KHR                  0x200C
+
+// function pointer typedefs must use the
+// following naming convention
+typedef CL_API_ENTRY cl_int
+     (CL_API_CALL *clGetGLContextInfoKHR_fn)(
+              const cl_context_properties * /* properties */,
+              cl_gl_context_info /* param_name */,
+              size_t /* param_value_size */,
+              void * /* param_value */,
+              size_t * /*param_value_size_ret*/);
+#endif // cl_khr_gl_sharing
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clGetExtensionFunctionAddressForPlatform">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

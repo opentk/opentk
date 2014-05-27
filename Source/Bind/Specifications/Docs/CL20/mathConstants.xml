@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Symbolic Math Constants</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Symbolic Math Constants</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="SymbolicMathConstants">
+        <refname>Symbolic Math Constants</refname>
+
+        <refpurpose>
+             The following symbolic constants are available.
+        </refpurpose>
+    </refnamediv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Built-in Math Constants</title>
+        <para>
+          The following symbolic constants are available.  Their values are of type
+          <type>float</type> and are accurate within the precision of a single precision
+          floating-point number.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Constant Name</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+
+                    <row>
+                        <entry> MAXFLOAT </entry>
+                        <entry>
+                            Value of maximum non-infinite single-precision floating-point number.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> HUGE_VALF </entry>
+
+                        <entry>
+                            A positive float constant expression. <constant>HUGE_VALF</constant> evaluates to +infinity.
+                            Used as an error value returned by the
+  <citerefentry href="mathFunctions"><refentrytitle>built-in math functions</refentrytitle></citerefentry>.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> INFINITY </entry>
+
+                        <entry>
+                            A constant expression of type <type>float</type> representing positive or unsigned infinity.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> NAN </entry>
+
+                        <entry>
+                            A constant expression of type <type>float</type> representing a quiet NaN.
+                        </entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          If double precision is supported by the device, the following symbolic constant will
+          also be available:
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Constant Name</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+
+                    <row>
+                        <entry>
+                            HUGE_VAL
+                        </entry>
+
+                        <entry>
+                            <para>
+                              A positive double constant expression. <constant>HUGE_VAL</constant>
+                              evaluates to +infinity.  Used as an error value returned by the
+                              built-in math functions.
+                            </para>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          The following constants are also available. They are of type <type>float</type>
+          and are accurate within the precision of the <type>float</type> type.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Constant Name</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry>M_E_F</entry>
+                        <entry>Value of e</entry>
+                    </row>
+                    <row>
+                        <entry>M_LOG2E_F</entry>
+                        <entry>Value of log<subscript>2</subscript>e</entry>
+                    </row>
+                    <row>
+                        <entry>M_LOG10E_F</entry>
+                        <entry>Value of log<subscript>10</subscript>e</entry>
+                    </row>
+                    <row>
+                        <entry>M_LN2_F</entry>
+                        <entry>Value of log<subscript>e</subscript>2</entry>
+                    </row>
+                    <row>
+                        <entry>M_LN10_F</entry>
+                        <entry>Value of log<subscript>e</subscript>10</entry>
+                    </row>
+                    <row>
+                        <entry>M_PI_F</entry>
+                        <entry>Value of pi</entry>
+                    </row>
+                    <row>
+                        <entry>M_PI_2_F</entry>
+                        <entry>Value of pi / 2</entry>
+                    </row>
+                    <row>
+                        <entry>M_PI_4_F</entry>
+                        <entry>Value of pi / 4</entry>
+                    </row>
+                    <row>
+                        <entry>M_1_PI_F</entry>
+                        <entry>Value of 1 / pi</entry>
+                    </row>
+                    <row>
+                        <entry>M_2_PI_F</entry>
+                        <entry>Value of 2 / pi</entry>
+                    </row>
+                    <row>
+                        <entry>M_2_SQRTPI_F</entry>
+                        <entry>Value of 2 / (square root of pi)</entry>
+                    </row>
+                    <row>
+                        <entry>M_SQRT2_F</entry>
+                        <entry>Value of square root of 2</entry>
+                    </row>
+                    <row>
+                        <entry>M_SQRT1_2_F</entry>
+                        <entry>Value of 1 / (square root of 2)</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          If double precision is supported by the device, the following macros and constants
+          are also available. They are of type <type>double</type> and are accurate within the
+          precision of the <type>double</type> type.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Constant Name</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry>M_E</entry>
+                        <entry>Value of e</entry>
+                    </row>
+                    <row>
+                        <entry>M_LOG2E</entry>
+                        <entry>Value of log<subscript>2</subscript>e</entry>
+                    </row>
+                    <row>
+                        <entry>M_LOG10E</entry>
+                        <entry>Value of log<subscript>10</subscript>e</entry>
+                    </row>
+                    <row>
+                        <entry>M_LN2</entry>
+                        <entry>Value of log<subscript>e</subscript>2</entry>
+                    </row>
+                    <row>
+                        <entry>M_LN10</entry>
+                        <entry>Value of log<subscript>e</subscript>10</entry>
+                    </row>
+                    <row>
+                        <entry>M_PI</entry>
+                        <entry>Value of pi</entry>
+                    </row>
+                    <row>
+                        <entry>M_PI_2</entry>
+                        <entry>Value of pi / 2</entry>
+                    </row>
+                    <row>
+                        <entry>M_PI_4</entry>
+                        <entry>Value of pi / 4</entry>
+                    </row>
+                    <row>
+                        <entry>M_1_PI</entry>
+                        <entry>Value of 1 / pi</entry>
+                    </row>
+                    <row>
+                        <entry>M_2_PI</entry>
+                        <entry>Value of 2 / pi</entry>
+                    </row>
+                    <row>
+                        <entry>M_2_SQRTPI</entry>
+                        <entry>Value of 2 / (square root of pi)</entry>
+                    </row>
+                    <row>
+                        <entry>M_SQRT2</entry>
+                        <entry>Value of square root of 2</entry>
+                    </row>
+                    <row>
+                        <entry>M_SQRT1_2</entry>
+                        <entry>Value of 1 / (square root of 2)</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          The following constants are also available. They are of type <type>half</type> and
+          are accurate within the precision of the <type>half</type> type.  An application that
+          wants to use <type>half</type> and <type>half<replaceable>n</replaceable></type>
+          types will need to include the <code>#pragma OPENCL EXTENSION
+          <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> : enable</code>
+          directive.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Constant</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry>M_E_H</entry>
+                        <entry>Value of e</entry>
+                    </row>
+                    <row>
+                        <entry>M_LOG2E_H</entry>
+                        <entry>Value of log<subscript>2</subscript>e</entry>
+                    </row>
+                    <row>
+                        <entry>M_LOG10E_H</entry>
+                        <entry>Value of log<subscript>10</subscript>e</entry>
+                    </row>
+                    <row>
+                        <entry>M_LN2_H</entry>
+                        <entry>Value of log<subscript>e</subscript>2</entry>
+                    </row>
+                    <row>
+                        <entry>M_LN10_H</entry>
+                        <entry>Value of log<subscript>e</subscript>10</entry>
+                    </row>
+                    <row>
+                        <entry>M_PI_H</entry>
+                        <entry>Value of pi</entry>
+                    </row>
+                    <row>
+                        <entry>M_PI_2_H</entry>
+                        <entry>Value of pi / 2</entry>
+                    </row>
+                    <row>
+                        <entry>M_PI_4_H</entry>
+                        <entry>Value of pi / 4</entry>
+                    </row>
+                    <row>
+                        <entry>M_1_PI_H</entry>
+                        <entry>Value of 1 / pi</entry>
+                    </row>
+                    <row>
+                        <entry>M_2_PI_H</entry>
+                        <entry>Value of 2 / pi</entry>
+                    </row>
+                    <row>
+                        <entry>M_2_SQRTPI_H</entry>
+                        <entry>Value of 2 / (square root of pi)</entry>
+                    </row>
+                    <row>
+                        <entry>M_SQRT2_H</entry>
+                        <entry>Value of square root of 2</entry>
+                    </row>
+                    <row>
+                        <entry>M_SQRT1_2_H</entry>
+                        <entry>Value of 1 / (square root of 2)</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="mathConstants">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="mathFunctions"><refentrytitle>Math Functions</refentrytitle></citerefentry>,
+            <citerefentry href="FP_CONTRACT"><refentrytitle>Floating Point Pragma</refentrytitle></citerefentry>,
+            <citerefentry href="macroLimits"><refentrytitle>Macros and Limits</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-May-2013 -->
+</refentry>
+

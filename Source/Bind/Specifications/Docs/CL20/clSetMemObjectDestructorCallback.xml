@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>clSetMemObjectDestructorCallback</keyword></keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clSetMemObjectDestructorCallback</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clSetCommandQueueProperty">
+        <refname>clSetMemObjectDestructorCallback</refname>
+        <refpurpose>
+            Registers a user callback function with a memory object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef><link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>clSetMemObjectDestructorCallback</function>
+                </funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_mem</link><parameter>memobj</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link> (CL_CALLBACK <parameter>*pfn_notify</parameter>)
+                        (<link xlink:href="abstractDataTypes.html">cl_mem</link> <varname>memobj</varname></paramdef>
+                        <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*user_data</parameter>)</paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*user_data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><varname>memobj</varname></term>
+            <listitem>
+                <para>A valid memory object.</para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>pfn_notify</varname></term>
+            <listitem>
+                <para>
+                    The callback function that can be registered by the application. This
+                    callback function may be called asynchronously by the OpenCL implementation.
+                    It is the application's responsibility to ensure that the callback function
+                    is thread-safe. The parameters to this callback function are:
+                </para>
+
+                <itemizedlist mark="disc">
+                    <listitem>
+                        <varname>memobj</varname>: the memory object being deleted.
+                        When the user callback is called by the implementation, this memory object is
+                        no longer valid.  <varname>memobj</varname> is only provided for reference purposes.
+                    </listitem>
+
+                    <listitem>
+                        <varname>user_data</varname>: a pointer to user supplied data.
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>user_data</varname></term>
+            <listitem>
+                <para>
+                    Data which will be passed as the <varname>user_data</varname>
+                    argument when <varname>pfn_notify</varname> is called. <varname>user_data</varname> can be NULL.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+          Each call to <function>clSetMemObjectDestructorCallback</function> registers
+          the specified user callback function on a callback stack associated with
+          <varname>memobj</varname>. The registered user callback functions are called in the
+          reverse order in which they were registered. The user callback functions are called
+          and then the memory object's resources are freed and the memory object is deleted. This
+          provides a mechanism for the application (and libraries) using <varname>memobj</varname>
+          to be notified when the memory referenced by <varname>host_ptr</varname>, specified
+          when the memory object is created and used as the storage bits for the memory object,
+          can be reused or freed.
+        </para>
+
+        <para>
+          When the user callback function is called by the implementation, the contents of
+          the memory region pointed to by <varname>host_ptr</varname> (if the memory object is
+          created with <constant>CL_MEM_USE_HOST_PTR</constant>) are undefined. The callback
+          function is typically used by the application to either free or reuse the memory
+          region pointed to by <varname>host_ptr</varname>.
+        </para>
+
+        <para>
+          The behavior of calling expensive system routines, OpenCL API calls to create contexts
+          or command-queues, or blocking OpenCL operations from the following list below,
+          in a callback is undefined.
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <citerefentry><refentrytitle>clFinish</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                blocking calls to
+                    <citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>,
+                    <citerefentry><refentrytitle>clEnqueueReadBufferRect</refentrytitle></citerefentry>,
+                    <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>,
+                    <citerefentry><refentrytitle>clEnqueueWriteBufferRect</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                blocking calls to
+                        <citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry> and
+                        <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                blocking calls to
+                        <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry> and
+                        <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                blocking calls to
+                        <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry>, or
+                        <citerefentry><refentrytitle>clLinkProgram</refentrytitle></citerefentry>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+          If an application needs to wait for completion of a routine from the above list in a
+          callback, please use the non-blocking form of the function, and assign a completion
+          callback to it to do the remainder of your work. Note that when a callback (or other
+          code) enqueues commands to a command-queue, the commands are not required to begin
+          execution until the queue is flushed.  In standard usage, blocking enqueue calls serve
+          this role by implicitly flushing the queue. Since blocking calls are not permitted in
+          callbacks, those callbacks that enqueue commands on a command queue should either
+          call <citerefentry><refentrytitle>clFlush</refentrytitle></citerefentry>
+          on the queue before returning or arrange for
+          <citerefentry><refentrytitle>clFlush</refentrytitle></citerefentry> to be called
+          later on another thread.
+        </para>
+
+        <para>
+          The user callback function may not call OpenCL APIs with the memory object for which
+          the callback function is invoked and for such cases the behavior of OpenCL APIs is
+          considered to be undefined.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function is executed
+          successfully. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_MEM_OBJECT</errorname> if <varname>memobj</varname> is not a valid memory object.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if <varname>pfn_notify</varname> is NULL.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate resources required by the
+                OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by the
+                OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clSetMemObjectDestructorCallback">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateCommandQueueWithProperties</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetCommandQueueInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseCommandQueue</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainCommandQueue</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+
+<!-- 7-Jun-2013 -->
+</refentry>
+

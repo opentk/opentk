@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clGetProgramInfo</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clGetProgramInfo
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetProgramInfo">
+        <refname>
+            clGetProgramInfo
+        </refname>
+
+        <refpurpose>
+            Returns information about the program object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clGetProgramInfo</function>
+                </funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_program</link><parameter>program</parameter></paramdef>
+                <paramdef><link xlink:href="#cl_program_info">cl_program_info</link><parameter>param_name</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>param_value_size</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*param_value</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>*param_value_size_ret</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term> <varname> program </varname> </term>
+                <listitem>
+                    <para>
+                        Specifies the program object being queried.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_name </varname> </term>
+                <listitem>
+                    <para>
+                      Specifies the information to query. The list of supported
+                      <varname>param_name</varname> types and the information returned in
+                      <varname>param_value</varname> by <function>clGetProgramInfo</function>
+                      is described in the table below.
+                    </para>
+
+                    <!-- table 5.16 -->
+                    <informaltable frame="all"><anchor id="cl_program_info"/>
+                    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colname="col1" colnum="1" />
+                        <colspec colname="col2" colnum="2" />
+                        <thead>
+                            <row>
+                                <entry>cl_program_info</entry>
+                                <entry>Return Type and Info. returned in <varname>param_value</varname></entry>
+                            </row>
+                        </thead>
+
+                        <tbody>
+                            <row>
+                                <entry><constant>CL_PROGRAM_REFERENCE_COUNT</constant></entry>
+                                <entry>
+                                    Return type: cl_uint
+
+                                    <para>Return the <varname>program</varname> reference count.</para>
+                                    <para>The reference count returned should be considered immediately stale. It is
+                                    unsuitable for general use in applications. This feature is provided
+                                    for identifying memory leaks.</para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_PROGRAM_CONTEXT</constant></entry>
+                                <entry>
+                                    Return type: cl_context
+
+                                    <para>
+                                        Return the context specified when the program object is created
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_PROGRAM_NUM_DEVICES</constant></entry>
+                                <entry>
+                                    Return type: cl_uint
+
+                                    <para>
+                                        Return the number of devices associated with <varname>program</varname>.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_PROGRAM_DEVICES</constant></entry>
+                                <entry>
+                                    Return type: cl_device_id[]
+
+                                    <para>
+                                        Return the list of devices associated with the program object. This can be
+                                        the devices associated with context on which the program object has been
+                                        created or can be a subset of devices that are specified when a progam object
+                                        is created using
+                                        <citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_PROGRAM_SOURCE</constant></entry>
+                                <entry>
+                                    Return type: char[]
+
+                                    <para>
+                                      Return the program source code specified by
+                                      <citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>.
+                                      The source string returned is a
+                                      concatenation of all source strings specified to
+                                      <citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>
+                                      with a null terminator. The concatenation strips any
+                                      nulls in the original source strings.
+                                    </para>
+
+                                    <para>
+                                      If <varname>program</varname> is created using
+                                      <citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>
+                                      or
+                                      <citerefentry><refentrytitle>clCreateProgramWithBuiltInKernels</refentrytitle></citerefentry>,
+                                      a null string or the appropriate program source code is
+                                      returned depending on whether or not the program source
+                                      code is stored in the binary.
+                                    </para>
+
+                                    <para>
+                                      The actual number of characters that represents the
+                                      program source code including the null terminator is
+                                      returned in <varname>param_value_size_ret</varname>.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_PROGRAM_BINARY_SIZES</constant></entry>
+                                <entry>
+                                    Return type: size_t[]
+
+                                    <para>
+                                      Returns an array that contains the size in bytes of
+                                      the program binary (could be an executable binary,
+                                      compiled binary or library binary) for each device
+                                      associated with <varname>program</varname>. The size
+                                      of the array is the number of devices associated with
+                                      <varname>program</varname>. If a binary is not available
+                                      for a device(s), a size of zero is returned.
+                                    </para>
+
+                                    <para>
+                                      If <varname>program</varname> is created using
+                                      <citerefentry><refentrytitle>clCreateProgramWithBuiltInKernels</refentrytitle></citerefentry>,
+                                      the implementation may return zero in any entries of the
+                                      returned array.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_PROGRAM_BINARIES</constant></entry>
+                                <entry>
+                                    Return type: unsigned char *[]
+
+                                    <para>
+                                      Return the program binaries (could be an executable
+                                      binary, compiled binary or library binary) for all
+                                      devices associated with <varname>program</varname>. For
+                                      each device in <varname>program</varname>, the
+                                      binary returned can be the binary specified for
+                                      the device when <varname>program</varname> is created with
+                                      <citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>
+                                      or it can be the executable binary generated by
+                                      <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>
+                                      or
+                                      <citerefentry><refentrytitle>clLinkProgram</refentrytitle></citerefentry>.
+                                      If <varname>program</varname> is created with
+                                      <citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>,
+                                      the binary returned is the binary generated by
+                                      <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>,
+                                      <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry>,
+                                      or
+                                      <citerefentry><refentrytitle>clLinkProgram</refentrytitle></citerefentry>.
+                                      The bits returned can be an implementation-specific
+                                      intermediate representation (a.k.a. IR) or device specific
+                                      executable bits or both. The decision on which information
+                                      is returned in the binary is up to the OpenCL implementation.
+                                    </para>
+
+                                    <para>
+                                      <varname>param_value</varname> points to an array of
+                                      <code>n</code> pointers allocated by the caller, where
+                                      <code>n</code> is the number of devices associated with
+                                      program. The buffer sizes needed to allocate the memory
+                                      that these <code>n</code> pointers refer to can be queried
+                                      using the <constant>CL_PROGRAM_BINARY_SIZES</constant>
+                                      query as described in this table.
+                                    </para>
+
+                                    <para>
+                                      Each entry in this array is used by the implementation as
+                                      the location in memory where to copy the program binary for
+                                      a specific device, if there is a binary available. To find
+                                      out which device the program binary in the array refers to,
+                                      use the <constant>CL_PROGRAM_DEVICES</constant> query to get
+                                      the list of devices. There is a one-to-one correspondence
+                                      between the array of <code>n</code> pointers returned
+                                      by <constant>CL_PROGRAM_BINARIES</constant> and array of
+                                      devices returned by <constant>CL_PROGRAM_DEVICES.</constant>
+                                    </para>
+
+                                    <para>
+                                      If an entry value in the array is NULL, the implementation
+                                      skips copying the program binary for the specific device
+                                      identified by the array index.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_PROGRAM_NUM_KERNELS</constant></entry>
+                                <entry>
+                                    Return type: size_t
+
+                                    <para>
+                                      Returns the number of kernels declared in
+                                      <varname>program</varname> that can be created with
+                                      <citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry>.
+                                      This information is only available after a successful program
+                                      executable has been built for at least one device in the
+                                      list of devices associated with <varname>program</varname>.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_PROGRAM_KERNEL_NAMES</constant></entry>
+                                <entry>
+                                    Return type: char[]
+
+                                    <para>
+                                      Returns a semi-colon separated list of kernel names
+                                      in <varname>program</varname> that can be created with
+                                      <citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry>.
+                                      This information is only available after a successful program
+                                      executable has been built for at least one device in the
+                                      list of devices associated with <varname>program</varname>.
+                                    </para>
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup> </informaltable>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value </varname> </term>
+                <listitem>
+                    <para>
+                        A pointer to memory where the appropriate result being queried is returned.
+                        If <varname>param_value</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value_size </varname> </term>
+                <listitem>
+                    <para>
+                      Used to specify the size in bytes of memory pointed to by
+                      <varname>param_value</varname>.  This size must be &ge; size of return
+                      type as described in the table above.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value_size_ret </varname> </term>
+                <listitem>
+                    <para>
+                        Returns the actual size in bytes of data copied to <varname>param_value</varname>.
+                        If  <varname>param_value_size_ret</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully.
+          Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>param_name</varname> is not
+              valid, or if size in bytes specified by <varname>param_value_size</varname>
+              is &lt; size of return type as described in the table above and
+              <varname>param_value</varname> is not NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_PROGRAM</errorname> if <varname>program</varname> is not
+              a valid program object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_PROGRAM_EXECUTABLE</errorname> if
+              <varname>param_name</varname> is <constant>CL_PROGRAM_NUM_KERNELS</constant> or
+              <constant>CL_PROGRAM_KERNEL_NAMES</constant> and a successful program executable
+              has not been built for at least one device in the list of devices associated
+              with <varname>program</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clGetProgramInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetProgramBuildInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 7-Dec-2013, rev. 19 -->
+</refentry>
+

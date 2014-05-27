@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>restrictions</keyword></keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>restrictions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+  <refnamediv id="restrictionsref">
+    <refname>Restrictions</refname>
+    <refpurpose> </refpurpose>
+  </refnamediv>
+
+    <refsect1 id="restrictions"><title></title>
+      <itemizedlist mark="disc">
+        <listitem>
+
+<!-- RESTRICTION a  -->
+
+            <para>The use of pointers is somewhat restricted. The following rules apply:</para>
+
+            <itemizedlist mark="opencircle">
+              <listitem>
+                <para>
+                  Arguments to kernel
+                  functions declared in a program that are pointers must be declared with the
+                  <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>,
+                  <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>, or
+                  <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>
+                  qualifier.
+                </para>
+              </listitem>
+
+              <listitem>
+                <para>
+                    A pointer declared with the
+                    <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>
+                    qualifier can only be assigned to a pointer declared with the __constant qualifier.
+                </para>
+              </listitem>
+
+              <listitem>
+                <para>Pointers to functions are not allowed.</para>
+              </listitem>
+
+            </itemizedlist>
+        </listitem>
+
+<!-- RESTRICTION b  -->
+
+        <listitem>
+          <para>
+            An image type (
+            <citerefentry href="otherDataTypes"><refentrytitle>image2d_t</refentrytitle></citerefentry>,
+            <citerefentry href="otherDataTypes"><refentrytitle>image3d_t</refentrytitle></citerefentry>,
+            <citerefentry href="otherDataTypes"><refentrytitle>image2d_array_t</refentrytitle></citerefentry>,
+            <citerefentry href="otherDataTypes"><refentrytitle>image1d_t</refentrytitle></citerefentry>,
+            <citerefentry href="otherDataTypes"><refentrytitle>image1d_buffer_t</refentrytitle></citerefentry>, or
+            <citerefentry href="otherDataTypes"><refentrytitle>image1d_array_t</refentrytitle></citerefentry>)
+            can only be used as the type of a function argument. An image function
+            argument cannot be modified.  Elements of an image can only be accessed
+            using the <citerefentry href="imageFunctions"><refentrytitle>Built-in Image
+            Functions</refentrytitle></citerefentry>.
+          </para>
+
+          <para>
+            An image type cannot be used to declare a variable, a structure or
+            union field, an array of images, a pointer to an image, or the return
+            type of a function. An image type cannot be used with the
+            <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>,
+            <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry>,
+            <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry> and
+            <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>
+            address space qualifiers.
+          </para>
+
+          <para>
+            The sampler type
+            (<citerefentry><refentrytitle>sampler_t</refentrytitle></citerefentry>) can only be
+            used as the type of a function argument or a variable declared in the program scope
+            or the outermost scope of a kernel function. The behavior of a sampler variable
+            declared in a non-outermost scope of a kernel function is implementation-defined. A
+            sampler argument or variable cannot be modified.
+          </para>
+
+          <para>
+            The sampler type cannot be used to declare a structure or union field, an array of
+            samplers, a pointer to a sampler, or the return type of a function. The sampler type
+            cannot be used with the 
+            <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry> and 
+            <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry> 
+            address space qualifiers.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION c   -->
+
+        <listitem>
+          <para>Bit-fields struct members are currently not supported.</para>
+        </listitem>
+
+<!-- RESTRICTION d - removed -->
+
+<!-- RESTRICTION e   -->
+
+        <listitem>
+          <para>Variadic macros and functions with the exception of 
+          <citerefentry href="printfFunction"><refentrytitle>printf</refentrytitle></citerefentry> and 
+          <citerefentry><refentrytitle>enqueue_kernel</refentrytitle></citerefentry> 
+          are not supported.</para>
+        </listitem>
+
+<!-- RESTRICTION f  -->
+
+        <listitem>
+          <para>
+            The library functions defined in the C99 standard headers <code>assert.h</code>,
+            <code>ctype.h</code>, <code>complex.h</code>, <code>errno.h</code>,
+            <code>fenv.h</code>, <code>float.h</code>, <code>inttypes.h</code>,
+            <code>limits.h</code>, <code>locale.h</code>, <code>setjmp.h</code>,
+            <code>signal.h</code>, <code>stdarg.h</code>, <code>stdio.h</code>,
+            <code>stdlib.h</code>, <code>string.h</code>, <code>tgmath.h</code>,
+            <code>time.h</code>, <code>wchar.h</code>, and <code>wctype.h</code> are not
+            available and cannot be included by a program.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION g   -->
+
+        <listitem>
+          <para>
+             The <code>auto</code> and <code>register</code> 
+             storage-class specifiers are not supported.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION h deleted with rev 13 of the 1.2 specification   -->
+
+<!-- RESTRICTION i   -->
+
+        <listitem>
+          <para>Recursion is not supported.</para>
+        </listitem>
+
+<!-- RESTRICTION j  -->
+
+        <listitem>
+          <para>
+            The return type of a kernel function must be <type>void</type>.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION k -->
+
+        <listitem>
+          <para>
+            Arguments to kernel functions in a program cannot be declared with the built-in
+            scalar types <type>bool</type>, <type>half</type>, <type>size_t</type>,
+            <type>ptrdiff_t</type>, <type>intptr_t</type>, and <type>uintptr_t</type>, or
+            a struct and/or union that contain fields declared to be one of these built-in
+            scalar types. The size in bytes of these types except <type>half</type> are
+            implementation-defined and in addition can also be different for the OpenCL device
+            and the host processor making it difficult to allocate buffer objects to be passed
+            as arguments to a kernel declared as pointer to these types. <type>half</type> is
+            not supported as <type>half</type> can be used as a storage format only (unless the
+            <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> extension is
+            supported) and is not a data type on which floating-point arithmetic can be performed.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION l  -->
+
+        <listitem>
+          <para>Whether or not irreducible control flow is illegal is implementation defined.</para>
+        </listitem>
+
+<!-- RESTRICTION m  -->
+<!-- Restriction m is removed -->
+
+<!-- RESTRICTION n  -->
+
+        <listitem>
+          <para>
+            The type qualifiers <code>const</code>, <code>restrict</code> 
+            and <code>volatile</code> as defined by the C99 
+            specification are supported. These qualifiers cannot be used with 
+            <citerefentry href="otherDataTypes"><refentrytitle>image2d_t</refentrytitle></citerefentry>, 
+            <citerefentry href="otherDataTypes"><refentrytitle>image3d_t</refentrytitle></citerefentry>, 
+            <citerefentry href="otherDataTypes"><refentrytitle>image2d_array_t</refentrytitle></citerefentry>, 
+            <citerefentry href="otherDataTypes"><refentrytitle>image2d_depth_t</refentrytitle></citerefentry>,
+            <citerefentry href="otherDataTypes"><refentrytitle>image2d_array_depth_t</refentrytitle></citerefentry>, 
+            <citerefentry href="otherDataTypes"><refentrytitle>image1d_t</refentrytitle></citerefentry>, 
+            <citerefentry href="otherDataTypes"><refentrytitle>image1d_buffer_t</refentrytitle></citerefentry> and 
+            <citerefentry href="otherDataTypes"><refentrytitle>image1d_array_t</refentrytitle></citerefentry> 
+            types. Types other than pointer types shall not use the 
+            <code>restrict</code> qualifier.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION o -->
+
+        <listitem>
+          <para>
+            The event type 
+            (<citerefentry href="otherDataTypes"><refentrytitle>event_t</refentrytitle></citerefentry>) 
+            cannot be used as the type of a kernel function argument. 
+            The event type cannot be used to declare a program scope variable. The event type 
+            cannot be used to declare a structure or union field. The event type cannot be used with the 
+            <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>, 
+            <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry> and 
+            <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry> 
+            address space qualifiers.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION p  -->
+
+        <listitem>
+          <para>
+            The <type>clk_event_t</type>, <type>ndrange_t</type> and 
+            <type>reserve_id_t</type> types cannot be used as arguments to 
+            kernel functions that get enqueued from the host. The 
+            <type>clk_event_t</type> and <type>reserve_id_t</type> types 
+            cannot be declared in program scope.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION q-->
+
+        <listitem>
+          <para>
+            The behavior of applying the <code>sizeof</code> operator 
+            to the <type>queue_t</type>, <type>clk_event_t</type>, 
+            <type>ndrange_t</type> and <type>reserve_id_t</type> 
+            types is implementation-defined.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION r -->
+
+        <listitem>
+          <para>
+            Kernels enqueued by the host must continue to have 
+            their arguments that are a pointer to 
+            a type declared to point to a named address space.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION s -->
+
+        <listitem>
+          <para>
+            A function in an OpenCL program cannot be called <code>main</code>.
+          </para>
+        </listitem>
+
+<!-- RESTRICTION if cl_khr_initialize_memory is enabled -->
+
+        <listitem>
+          <para>
+            If the 
+            <citerefentry><refentrytitle>cl_khr_initialize_memory</refentrytitle></citerefentry> 
+            extension is enabled,
+            if the context is created with 
+            <constant>CL CONTEXT MEMORY INITIALIZE KHR</constant>, appropriate memory 
+            locations as specified by the bit-field is 
+            initialized with zeroes, prior to the start of execution of 
+            any kernel. The driver chooses when, prior to 
+            kernel execution, the initialization of local and/or
+            private memory is performed. The only requirement 
+            is there should be no values set from outside 
+            the context, which can be read during a kernel execution.
+          </para>
+        </listitem>
+
+      </itemizedlist>
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="restrictions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry>,
+            <citerefentry href="functionQualifiers"><refentrytitle>Function Qualifiers</refentrytitle></citerefentry>,
+            <citerefentry href="qualifiers"><refentrytitle>Qualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 22-Dec-2013, rev. 19 -->
+</refentry>
+

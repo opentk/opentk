@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Synchronization, barrier</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>sub_group_barrier</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="sub_group_barrier">
+        <refname>sub_group_barrier</refname>
+
+        <refpurpose>
+            All work-items in a sub-group executing the kernel on a 
+processor must execute this function before any are 
+allowed to continue execution beyond the subgroup 
+barrier
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        sub_group_barrier
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_fence_flags">cl_mem_fence_flags</link><parameter>flags</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        sub_group_barrier
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_fence_flags">cl_mem_fence_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef><link xlink:href="memory_order.html">memory_scope</link><parameter>scope</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            All work-items in a sub-group executing the kernel on a 
+            processor must execute this function before any are 
+            allowed to continue execution beyond the subgroup 
+            barrier. This function must be encountered by all 
+            workitems in a sub-group executing the kernel. These rules 
+            apply to ND-ranges implemented with uniform and 
+            nonuniform work-groups. 
+        </para>
+
+        <para>
+          If <function>sub_group_barrier</function> is inside 
+          a conditional statement, then all work-items
+          must enter the conditional if any work-item 
+          enters the conditional statement and
+          executes the subgroup barrier.
+        </para>
+
+        <para>
+          If <function>sub_group_barrier</function> is inside a loop, 
+          all work-items within the sub-group must execute the
+          <function>sub_group_barrier</function> for each 
+          iteration of the loop before any are allowed
+          to continue execution beyond the <function>sub_group_barrier</function>.
+        </para>
+
+        <para>
+          The <function>sub_group_barrier</function> function 
+          also queues a memory fence (reads and writes)
+          to ensure correct ordering of memory operations to local or global memory.
+        </para>
+
+        <para>
+          The <varname>flags</varname> argument specifies 
+          the memory address space and can be
+          set to a combination of the following values.
+        </para>
+
+        <para>
+          <constant>CLK_LOCAL_MEM_FENCE</constant> - The 
+          <function>sub_group_barrier</function> function
+          will either flush any variables stored in local memory or queue a memory fence to
+          ensure correct ordering of memory operations to local memory.
+        </para>
+
+        <para>
+          <constant>CLK_GLOBAL_MEM_FENCE</constant> - The 
+          <function>sub_group_barrier</function> function
+          will queue a memory fence to ensure correct ordering of memory operations to global
+          memory. This can be useful when work-items, for example, write to buffer or image
+          objects and then want to read the updated data from these buffer objects.
+        </para>
+
+        <para>
+          <constant>CLK_IMAGE_MEM_FENCE</constant> - The 
+            <function>sub_group_barrier</function> function
+            will queue a memory fence to ensure correct 
+            ordering of memory operations to image objects. This 
+            can be useful when work-items, for example, write to 
+            image objects and then want to read the updated data 
+            from these image objects.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+
+        </para>
+    </refsect1>-->
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="sub_group_barrier">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_subgroups</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Dec-2013, rev. 19 -->
+</refentry>
+

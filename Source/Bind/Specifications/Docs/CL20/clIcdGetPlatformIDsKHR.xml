@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>clIcdGetPlatformIDsKHR</keyword></keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>clIcdGetPlatformIDsKHR</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+  <refnamediv id="clIcdGetPlatformIDsKHR">
+<refname>clIcdGetPlatformIDsKHR</refname>
+           <refpurpose>Obtain the list of platforms accessible through the Khronos ICD Loader.</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link> 
+                    <function>clIcdGetPlatformIDsKHR</function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_uint</link>
+                    <parameter>num_entries</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_platform_id</link>
+                    <parameter>*platforms</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_uint</link>
+                    <parameter>*num_platforms</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+
+        <varlistentry>
+            <term><varname>num_entries</varname></term>
+            <listitem>
+                <para>
+                    The number of <type>cl_platform_id</type> entries that can 
+                    be added to <varname>platforms</varname>. If <varname>platforms</varname>
+                    is not NULL, then <varname>num_entries</varname> must be greater than zero.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>platforms</varname></term>
+            <listitem>
+                <para>
+                  Returns a list of OpenCL platforms available for access through the 
+                  Khronos ICD Loader. The <type>cl_platform_id</type> values returned in 
+                  <varname>platforms</varname> are ICD compatible and can be used to
+                  identify a specific OpenCL platform. If the <varname>platforms</varname> 
+                  argument is NULL, then this argument is ignored. The number of 
+                  OpenCL platforms returned is the minimum of the value specified by
+                  <varname>num_entries</varname> or the number of OpenCL platforms available.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>num_platforms</varname></term>
+            <listitem>
+                <para>
+                  Returns the number of OpenCL platforms available. If 
+                  <varname>num_platforms</varname> is NULL, then this argument is ignored.
+                </para>
+            </listitem>
+        </varlistentry>
+       </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          This function is enabled by the 
+          <citerefentry><refentrytitle>cl_khr_icd</refentrytitle></citerefentry>
+          extension.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+    <para>
+        Returns <errorname>CL_SUCCESS</errorname> if the function is executed 
+        successfully and there are a non zero number of platforms available, 
+        else it returns on the errors below:
+    </para>
+
+    <itemizedlist mark="disc">
+        <listitem>
+            <errorname>CL_PLATFORM_NOT_FOUND_KHR</errorname> if zero platforms are available.
+        </listitem>
+
+        <listitem>
+          <errorname>CL_INVALID_VALUE</errorname> if <varname>num_entries</varname> 
+          is equal to zero and <varname>platforms</varname> is not NULL or if both
+          <varname>num_platforms</varname> and <varname>platforms</varname> are NULL.
+        </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clIcdGetPlatformIDsKHR">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetPlatformIDs</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_icd</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Dec-2013, rev. 19 -->
+</refentry>
+

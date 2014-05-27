@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY sharingD3D10Inc SYSTEM "sharingD3D10Inc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_d3d10_sharing</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_d3d10_sharing</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_d3d10_sharing">
+        <refname>cl_khr_d3d10_sharing</refname>
+
+        <refpurpose>
+            Provide interoperability between OpenCL and Direct3D 10.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_d3d10_sharing : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="description"><title>Description</title>
+        <para>
+          If the <function>cl_khr_d3d10_sharing</function> extension is supported, then the
+          following functions are enabled:
+        </para>
+
+         <itemizedlist mark="disc">
+            <listitem>
+                <citerefentry><refentrytitle>clGetDeviceIDsFromD3D10KHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clCreateFromD3D10BufferKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clCreateFromD3D10Texture2DKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clCreateFromD3D10Texture3DKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clEnqueueAcquireD3D10ObjectsKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clEnqueueReleaseD3D10ObjectsKHR</refentrytitle></citerefentry>
+            </listitem>
+        </itemizedlist>
+
+        &sharingD3D10Inc;
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_d3d10_sharing">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetPlatformInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 21-Dec-2013, rev. 19 -->
+</refentry>
+

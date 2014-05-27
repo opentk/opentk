@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Scalar Data Types</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Scalar Data Types</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="Built-inScalarDataTypes">
+        <refname>Scalar Data Types</refname>
+
+        <refpurpose>
+            Built-in scalar data types.
+        </refpurpose>
+    </refnamediv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          These are the data types available in the OpenCL C programming language used to create
+          kernels that are executed on OpenCL device(s). The OpenCL C programming language (also
+          referred to as OpenCL C) is based on the ISO/IEC 9899:1999 C language specification
+          (a.k.a. C99 specification) with specific extensions and restrictions. Please refer
+          to the ISO/IEC 9899:1999 specification for a detailed description of the language
+          grammar. This section describes modifications and restrictions to ISO/IEC 9899:1999
+          supported in OpenCL C.
+        </para>
+
+        <para>
+          Most built-in scalar data types are also declared as appropriate types in the OpenCL API
+          (and header files) that can be used by an application. The following table describes
+          the built-in scalar data type in the OpenCL C programming language and the corresponding
+          data type available to the application:
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <colspec colname="col3" colnum="3" />
+
+                <thead>
+                    <row>
+                        <entry>Type in OpenCL C Language</entry>
+                        <entry>Description</entry>
+                        <entry>API type for application</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry> <type>bool</type> </entry>
+                        <entry>
+                            A conditional data type which is either <varname>true</varname> or
+                             <varname>false</varname>. The value <varname>true</varname> expands
+                             to the integer constant 1 and the value <varname>false</varname>
+                             expands to the integer constant 0. When any scalar value is converted
+                             to bool, the result is 0 if the value compares equal to 0; otherwise,
+                             the result is 1.
+                        </entry>
+                        <entry> n/a </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>char</type> </entry>
+                        <entry> A signed two's complement 8-bit integer.  </entry>
+                        <entry> <type>cl_char</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<literallayout><type>unsigned char</type>,
+<type>uchar</type></literallayout>
+                        </entry>
+                        <entry> An unsigned 8-bit integer.  </entry>
+                        <entry> <type>cl_uchar</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>short</type> </entry>
+                        <entry> A signed two's complement 16-bit integer.  </entry>
+                        <entry> <type>cl_short</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<literallayout><type>unsigned short</type>,
+<type>ushort</type></literallayout>
+                        </entry>
+                        <entry> An unsigned 16-bit integer.  </entry>
+                        <entry> <type>cl_ushort</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>int</type> </entry>
+                        <entry> A signed two's complement 32-bit integer.  </entry>
+                        <entry> <type>cl_int</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<literallayout><type>unsigned int</type>,
+<type>uint</type></literallayout>
+                        </entry>
+                        <entry> An unsigned 32-bit integer.  </entry>
+                        <entry> <type>cl_uint</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>long</type> </entry>
+                        <entry> A signed two's complement 64-bit integer.  </entry>
+                        <entry> <type>cl_long</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<literallayout><type>unsigned long</type>,
+<type>ulong</type></literallayout>
+                        </entry>
+                        <entry> An unsigned 64-bit integer.  </entry>
+                        <entry> <type>cl_ulong</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>float</type> </entry>
+                        <entry>
+                            A 32-bit floating point. The float data type must conform to the
+                            IEEE 754 single precision storage format.
+                        </entry>
+                        <entry> <type>cl_float</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>double</type> </entry>
+                        <entry>
+                            A 64-bit floating point. The <type>double</type> data type must conform to the
+                            IEEE 754 double precision storage format. The <type>double</type> scalar
+                            type is an optional type that is supported if <constant>CL_DEVICE_DOUBLE_FP_CONFIG</constant>
+                            for a device is not zero. See the table for <varname>param_name</varname> for
+                            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+                            for details.
+                        </entry>
+                        <entry> <type>cl_double</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>half</type> </entry>
+                        <entry>
+                            A 16-bit float. The <type>half</type> data type must conform to the IEEE 754-2008
+                            half precision storage format.
+                        </entry>
+                        <entry> <type>cl_half</type> </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>size_t</type> </entry>
+                        <entry>
+                            The unsigned integer type of the result of the sizeof
+                            operator. This is a 32-bit unsigned integer if <constant>CL_DEVICE_ADDRESS_BITS</constant>
+                            defined in <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+                            is 32-bits and is a 64-bit unsigned integer if <constant>CL_DEVICE_ADDRESS_BITS</constant>
+                            is 64-bits.
+                        </entry>
+                        <entry> n/a </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>ptrdiff_t</type> </entry>
+                        <entry>
+                            A signed integer type that is the result of subtracting two pointers.
+                            This is a 32-bit signed integer if <constant>CL_DEVICE_ADDRESS_BITS</constant> defined in
+                            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+                            is 32-bits and is a 64-bit signed integer if <constant>CL_DEVICE_ADDRESS_BITS</constant>
+                            is 64-bits.
+                        </entry>
+                        <entry> n/a </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>intptr_t</type> </entry>
+                        <entry>
+                            A signed integer type with the property that any valid pointer to
+                            <type>void</type> can be converted to this type, then converted back
+                            to pointer to <type>void</type>, and the result will compare equal
+                            to the original pointer. This is a 32-bit signed integer if
+                            <constant>CL_DEVICE_ADDRESS_BITS</constant> defined in table 4.3 is
+                            32-bits and is a 64-bit signed integer if <constant>CL_DEVICE_ADDRESS_BITS</constant>
+                            is 64-bits.
+                        </entry>
+                        <entry> n/a </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>uintptr_t</type> </entry>
+                        <entry>
+                            An unsigned integer type with the property that any valid pointer to
+                            <type>void</type> can be converted to this type, then converted back
+                            to pointer to <type>void</type>, and the result will compare equal to
+                            the original pointer. This is a 32-bit signed integer if
+                            <constant>CL_DEVICE_ADDRESS_BITS</constant> defined in table 4.3 is
+                            32-bits and is a 64-bit signed integer if <constant>CL_DEVICE_ADDRESS_BITS</constant>
+                            is 64-bits.
+                        </entry>
+                        <entry> n/a </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>void</type> </entry>
+                        <entry>
+                            The <type>void</type> type comprises an empty set of values; it is an
+                            incomplete type that cannot be completed.
+                        </entry>
+                        <entry> <type>void</type> </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+<!-- OPTIONAL DOUBLE AND HALF DATA TYPES -->
+
+    <refsect1 id="optional"><title>Optional Half Floating Point</title>
+        <para>
+          The <type>half</type> floating-point is supported as an optional
+          extension. An application that wants to use <type>half</type>
+          and <type>half<replaceable>n</replaceable></type> will need to include the
+          <citerefentry href="cl_khr_fp16"><refentrytitle>#pragma OPENCL EXTENSION cl_khr_fp16
+          : enable</refentrytitle></citerefentry> directive. This will extended the list of
+          built-in vector and scalar data types to include the following:
+        </para>
+
+        <para>
+          <informaltable frame="all">
+            <tgroup cols="3" align="left" colsep="1" rowsep="1">
+              <colspec colname="col1" colnum="1" /> <colspec colname="col2" colnum="2" />
+              <colspec colname="col3" colnum="3" />
+
+              <thead>
+                <row>
+                  <entry>Type in OpenCL Language</entry>
+                  <entry>Description</entry>
+                  <entry>API type for application</entry>
+                </row>
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry><type>half2</type></entry>
+                  <entry>A 2-component half-precision floating-point vector.</entry>
+                  <entry><type>cl_half2</type></entry>
+                </row>
+
+                <row>
+                  <entry><type>half3</type></entry>
+                  <entry>A 3-component half-precision floating-point vector.</entry>
+                  <entry><type>cl_half3</type></entry>
+                </row>
+
+                <row>
+                  <entry><type>half4</type></entry>
+                  <entry>A 4-component half-precision floating-point vector.</entry>
+                  <entry><type>cl_half4</type></entry>
+                </row>
+
+                <row>
+                  <entry><type>half8</type></entry>
+                  <entry>An 8-component half-precision floating-point vector.</entry>
+                  <entry><type>cl_half8</type></entry>
+                </row>
+
+                <row>
+                  <entry><type>half16</type></entry>
+                  <entry>A 16-component half-precision floating-point vector.</entry>
+                  <entry><type>cl_half16</type></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </para>
+
+        <para>
+          The relational, equality, logical and logical unary operators can be used with
+          <type>half</type> scalar and <type>half<replaceable>n</replaceable></type>
+          vector types and shall produce a scalar <type>int</type> and vector
+          <type>short<replaceable>n</replaceable></type> result respectively.
+        </para>
+
+        <para>
+          The OpenCL compiler accepts an h and H suffix on floating point literals, indicating
+          the literal is typed as a <type>half</type>.
+        </para>
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="scalarDataTypes">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="macroLimits"><refentrytitle>Macros and Limits</refentrytitle></citerefentry>,
+            <citerefentry href="vectorDataTypes"><refentrytitle>Vector Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="reservedDataTypes"><refentrytitle>Reserved Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="otherDataTypes"><refentrytitle>Other Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="abstractDataTypes"><refentrytitle>Abstract Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="enums"><refentrytitle>Enumerated Data Types</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 4-Jun-2013 -->
+</refentry>
+

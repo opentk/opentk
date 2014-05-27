@@ -1,0 +1,96 @@
+
+    <para>
+        In these operation definitions:
+    </para>
+
+    <para>
+      <itemizedlist>
+        <listitem>
+            An <code>A</code> refers to one of the atomic types.
+        </listitem>
+
+        <listitem>
+            A <code>C</code> refers to its corresponding non-atomic type.
+        </listitem>
+
+        <listitem>
+            An <code>M</code> refers to the type of the other 
+            argument for arithmetic operations. For atomic 
+            integer types, <code>M</code> is <code>C</code>.
+        </listitem>
+
+        <listitem>
+            The functions not ending in explicit have the same semantics as the corresponding
+            explicit function with <constant>memory_order_seq_cst</constant> 
+            for the <code>memory_order</code> argument.
+        </listitem>
+
+        <listitem>
+            The functions that do not have <code>memory_scope</code> 
+            argument have the same semantics as 
+            the corresponding functions with the <code>memory_scope</code> argument set to
+            <constant>memory_scope_device</constant>.
+        </listitem>
+      </itemizedlist>
+    </para>
+
+    <para>
+        NOTE: With fine-grained system SVM, sharing 
+        happens at the granularity of individual loads 
+        and stores anywhere in host memory. Memory 
+        consistency is always guaranteed at 
+        synchronization points, but to obtain finer 
+        control over consistency, the OpenCL atomics 
+        functions may be used to ensure that the updates 
+        to individual data values made by one unit of 
+        execution are visible to other execution units. 
+        In particular, when a host thread needs fine 
+        control over the consistency of memory that is 
+        shared with one or more OpenCL devices, it must 
+        use atomic and fence operations that are 
+        compatible with the C11 atomic operations.
+    </para>
+
+    <para>
+        We can't require C11 atomics since host programs can 
+        be implemented in other programming languages and 
+        versions of C or C++, but we do require that the host 
+        programs use atomics and that those atomics be compatible 
+        with those in C11.
+    </para>
+
+    <bridgehead>Restrictions</bridgehead>
+
+    <para>
+        All operations on atomic types must be performed using the built-in atomic 
+        functions. C11 and C++11 support operators on atomic types. OpenCL C does not 
+        support operators with atomic types. Using atomic types with operators should result in a 
+        compilation error.
+    </para>
+
+    <para>
+        The <type>atomic_bool</type>, <type>atomic_char</type>, 
+        <type>atomic_uchar</type>, <type>atomic_short</type>, 
+        <type>atomic_ushort</type>, <type>atomic_intmax_t</type> 
+        and <type>atomic_uintmax_t</type> types are not 
+        supported by OpenCL C.
+    </para>
+
+    <para>
+        OpenCL C requires that the built-in atomic functions on 
+        atomic types are lock-free.
+    </para>
+
+    <para>
+        The <code>_Atomic</code> type specifier and <code>_Atomic</code> 
+        type qualifier are not supported by OpenCL C.
+    </para>
+
+    <para>
+        The behavior of atomic operations where pointer 
+        arguments to the atomic functions refers 
+        to an atomic type in the private address space is undefined
+    </para>
+
+<!-- 14-Dec-2013, rev. 19 -->
+

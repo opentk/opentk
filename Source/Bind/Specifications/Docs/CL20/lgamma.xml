@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY mathFunctionsInc SYSTEM "mathFunctionsInc.xml">
+]>
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>lgamma, lgamma_r</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>lgamma, lgamma_r</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="lgamma">
+        <refname>lgamma, lgamma_r</refname>
+
+        <refpurpose>
+            Log gamma functions.
+        </refpurpose>
+    </refnamediv>
+
+<!-- floatn VARIATIONS===============================  -->
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        lgamma
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">float<replaceable>n</replaceable></link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">float<replaceable>n</replaceable></link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int<replaceable>n</replaceable></link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">float</link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">float</link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int</link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+<!-- double and doublen VARIATIONS===============================  -->
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">double<replaceable>n</replaceable></link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">double<replaceable>n</replaceable></link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int<replaceable>n</replaceable></link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">double</link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">double</link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int<replaceable>n</replaceable></link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+<!-- halfn VARIATIONS===============================  -->
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half<replaceable>n</replaceable></link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half<replaceable>n</replaceable></link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef><link xlink:href="global.html">__global</link>
+                    <link xlink:href="vectorDataTypes.html">int<replaceable>n</replaceable></link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half<replaceable>n</replaceable></link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half<replaceable>n</replaceable></link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef><link xlink:href="local.html">__local</link>
+                    <link xlink:href="vectorDataTypes.html">int<replaceable>n</replaceable></link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half<replaceable>n</replaceable></link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half<replaceable>n</replaceable></link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef><link xlink:href="private.html">__private</link>
+                    <link xlink:href="vectorDataTypes.html">int<replaceable>n</replaceable></link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half<replaceable>n</replaceable></link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half<replaceable>n</replaceable></link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">int<replaceable>n</replaceable></link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+<!-- half VARIATIONS===============================  -->
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half</link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half</link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef><link xlink:href="global.html">__global</link>
+                    <link xlink:href="vectorDataTypes.html">int</link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half</link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half</link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef><link xlink:href="local.html">__local</link>
+                    <link xlink:href="vectorDataTypes.html">int</link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half</link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half</link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef><link xlink:href="private.html">__private</link>
+                    <link xlink:href="vectorDataTypes.html">int</link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half</link>
+                    <function>
+                        lgamma_r
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half</link>
+                    <parameter>x</parameter></paramdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">int</link>
+                    <parameter>*signp</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          Returns the natural logarithm of the absolute value of the gamma function. The sign
+          of the gamma function is returned in the <varname>signp</varname> argument of the
+          <function>lgamma_r</function>.
+        </para>
+
+        <para>
+          An application that wants to use <type>half</type>
+          and <type>half<replaceable>n</replaceable></type> types
+          will need to include the <code>#pragma OPENCL EXTENSION
+          <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>
+          : enable</code> directive. If extended with
+          <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>,
+          generic type name <type>gentype</type> also includes <type>half</type> and
+          <type>half{2|3|4|8|16}</type>.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        &mathFunctionsInc;
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="mathFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="mathFunctions"><refentrytitle>Math Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 12-Dec-2013, rev. 19 -->
+</refentry>
+

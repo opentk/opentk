@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clGetContextInfo</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clGetContextInfo</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetDeviceIDs">
+        <refname>clGetContextInfo</refname>
+
+        <refpurpose>
+            Query information about a context.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>
+                        clGetContextInfo
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_context</link>
+                    <parameter>context</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="enums.html#cl_context_info">cl_context_info</link>
+                    <parameter>param_name</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>param_value_size</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <parameter>*param_value</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>*param_value_size_ret</parameter>
+                </paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname>context </varname> </term>
+                <listitem>
+                    <para>
+                        Specifies the OpenCL context being queried.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_name </varname> </term>
+                <listitem>
+                    <para>
+                        An enumeration constant that specifies the information to query.
+                        The valid values for <varname>param_name</varname> are:
+                    </para>
+
+                    <!-- Table 4.6 -->
+                    <informaltable frame="all">
+                      <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colname="col1" colnum="1" />
+                        <colspec colname="col2" colnum="2" />
+                        <colspec colname="col3" colnum="3" />
+                        <thead>
+                          <row>
+                            <entry>cl_context_info</entry>
+                            <entry>Return Type</entry>
+                            <entry>Information returned in param_value</entry>
+                          </row>
+                        </thead>
+
+                        <tbody>
+                          <row>
+                            <entry><constant>CL_CONTEXT_REFERENCE_COUNT</constant></entry>
+                            <entry>cl_uint</entry>
+                            <entry>
+                              Return the <varname>context</varname> reference count. The reference
+                              count returned should be considered immediately stale. It is
+                              unsuitable for general use in applications. This feature is
+                              provided for identifying memory leaks.
+                            </entry>
+                          </row>
+
+                          <row>
+                            <entry><constant>CL_CONTEXT_NUM_DEVICES</constant></entry>
+                            <entry>cl_uint</entry>
+                            <entry>
+                              Return the number of devices in <varname>context</varname>.
+                            </entry>
+                          </row>
+
+                          <row>
+                            <entry><constant>CL_CONTEXT_DEVICES</constant></entry>
+                            <entry>cl_device_id[]</entry>
+                            <entry>
+                              Return the list of devices in <varname>context</varname>.
+                            </entry>
+                          </row>
+
+                          <row>
+                            <entry><constant>CL_CONTEXT_PROPERTIES</constant></entry>
+                            <entry>cl_context_-
+properties[]</entry>
+                            <entry>
+                              Return the <varname>properties</varname> argument specified in
+                              <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>
+                              or
+                              <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>.
+                              <para>If the <varname>properties</varname> argument specified in
+                              <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>
+                              or
+                              <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>
+                              used to create <varname>context</varname> is not NULL,
+                              the implementation must return the values specified in the
+                              <varname>properties</varname> argument.  </para>
+                              <para> If the <varname>properties</varname> argument specified in
+                              <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>
+                              or
+                              <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>
+                              used to create <varname>context</varname> is NULL, the implementation
+                              may return either a <varname>param_value_size_ret</varname>
+                              of 0, i.e. there is no context property value to be returned
+                              or can return a context property value of 0 (where 0 is used
+                              to terminate the context properties list) in the memory that
+                              <varname>param_value</varname> points to.  </para>
+                            </entry>
+                          </row>
+
+                          <row>
+                            <entry><constant>CL_CONTEXT_D3D10_PREFER_-
+SHARED_RESOURCES_KHR</constant></entry>
+                            <entry>cl_bool</entry>
+                            <entry>
+                              If the
+                              <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry>
+                              extension is enabled, returns <constant>CL_TRUE</constant>
+                              if Direct3D 10 resources created as shared by
+                              setting <varname>MiscFlags</varname> to include
+                              <constant>D3D10_RESOURCE_MISC_SHARED</constant> will perform faster
+                              when shared with OpenCL, compared with resources which have not
+                              set this flag. Otherwise returns <constant>CL_FALSE</constant>.
+                            </entry>
+                          </row>
+
+                          <row>
+                            <entry><constant>CL_CONTEXT_D3D11_PREFER_-
+SHARED_RESOURCES_KHR</constant></entry>
+                            <entry>cl_bool</entry>
+                            <entry>
+                              If the <citerefentry><refentrytitle>cl_khr_d3d11_sharing</refentrytitle></citerefentry> 
+                              extension is enabled, returns
+                              <constant>CL_TRUE</constant> if Direct3D 11 resources created
+                              as shared by setting <varname>MiscFlags</varname> to include
+                              <constant>D3D11_RESOURCE_MISC_SHARED</constant> will perform faster
+                              when shared with OpenCL, compared with resources which have not
+                              set this flag. Otherwise returns <constant>CL_FALSE</constant>.
+                            </entry>
+                          </row>
+                        </tbody>
+                      </tgroup>
+                    </informaltable>
+                </listitem>
+            </varlistentry>
+
+            <!-- END PARAMETER TABLE  -->
+
+            <varlistentry>
+                <term>
+                    <varname>param_value</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                         A pointer to memory where the appropriate result being queried is returned.
+                         If <varname>param_value</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>param_value_size</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      Specifies the size in bytes of memory
+                      pointed to by <varname>param_value</varname>.  This size must be greater
+                      than or equal to the size of return type as described in the table above.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>param_value_size_ret</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      Returns the actual size in bytes
+                      of data being queried by <varname>param_value</varname>. If
+                      <varname>param_value_size_ret</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <!-- refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>
+                clGetContextInfo
+            </function>
+            Notes go here
+        </para>
+
+        <para>
+            The application can query specific capabilities of the OpenCL device(s) returned by
+            <function>clGetDeviceIDs</function>. This can be used by the application to determine
+            which device(s) to use.
+        </para>
+    </refsect1 -->
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function executed successfully,
+          or one of the errors below:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname>
+                is not a valid context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>param_name</varname>
+              is not one of the supported values or if size in bytes specified by
+              <varname>param_value_size</varname> is &lt; size of return type as specified in the
+              table above and <varname>param_value</varname> is not a <errorname>NULL</errorname>
+              value.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+                resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+                resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clGetContextInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry>
+                <refentrytitle>clGetDeviceInfo</refentrytitle>
+            </citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

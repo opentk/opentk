@@ -1,0 +1,51 @@
+<!-- common example(s) for global, local, constant, and private -->
+
+
+    <para>
+      General qualifier examples follow:
+    </para>
+
+    <informaltable frame="none">
+      <tgroup cols="1" align="left" colsep="0" rowsep="0">
+        <colspec colname="col1" colnum="1" />
+        <tbody>
+          <row>
+            <entry>
+// declares a pointer p in the private address space that
+// points to an object in address space global
+global int *p;
+
+void foo (...)
+{
+    // declares an array of 4 floats in the private address space
+    float x[4];
+    ...
+}
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+
+
+    <para>
+      Example:
+    </para>
+
+    <informaltable frame="none">
+      <tgroup cols="1" align="left" colsep="0" rowsep="0">
+        <colspec colname="col1" colnum="1" />
+        <tbody>
+          <row>
+            <entry>
+private int f() { ... } // should generate an error
+local int *f() { ... } // allowed
+local int * private f() { ... }; // should generate an error.
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+
+<!-- 11-Dec-2013, rev. 19 -->
+

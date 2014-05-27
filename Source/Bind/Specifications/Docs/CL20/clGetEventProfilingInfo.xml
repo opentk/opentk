@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clGetEventProfilingInfo</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clGetEventProfilingInfo
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetEventProfilingInfo">
+        <refname>
+            clGetEventProfilingInfo
+        </refname>
+
+        <refpurpose>
+            Returns profiling information for the command associated with event if profiling is enabled.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clGetEventProfilingInfo</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>event</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_profiling_info">cl_profiling_info</link><parameter>param_name</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>param_value_size</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*param_value</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>*param_value_size_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+<!-- For each <varlistentry />, place the parameter name in <term /><varname />, then the definition in
+     <listitem /><para />. When refering to anything
+     that has a page in this system, use <citerefentry /><refentrytitle /> to make it a link.
+ -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term> <varname>event</varname> </term>
+                <listitem>
+                    <para>Specifies the event object.</para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>param_name</varname> </term>
+                <listitem>
+                    <para>Specifies the profiling data to query. The list of supported
+                    <varname>param_name</varname> types and the information returned in
+                    <varname>param_value</varname> by <function>clGetEventProfilingInfo</function>
+                    is described in the table of parameter queries below.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>param_value_size</varname> </term>
+                <listitem>
+                    <para>
+                      Specifies the size in bytes of memory pointed to by
+                      <varname>param_value</varname>.  This size must be &ge; size of return
+                      type as described in the table below.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>param_value</varname> </term>
+                <listitem>
+                    <para>
+                      A pointer to memory where the appropriate result being queried is returned.
+                      if <varname>param_value</varname> is NULL, it is ignored.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>param_value_size_ret</varname> </term>
+                <listitem>
+                    <para>
+                      Returns the actual size in bytes of data copied to
+                      <varname>param_value</varname>.  If <varname>param_value_size_ret</varname>
+                      is NULL, it is ignored.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <listitem>
+                <para>
+                  The following is a table of <function>clGetEventProfilingInfo</function>
+                  parameter queries
+                </para>
+
+                <!-- Table 5.23 -->
+                <informaltable frame="all">
+                  <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                    <colspec colname="col1" colnum="1" />
+                    <colspec colname="col2" colnum="2" />
+                    <colspec colname="col3" colnum="3" />
+                    <thead>
+                      <row>
+                        <entry>cl_profiling_info</entry> <entry>Return Type</entry>
+                        <entry>Info. returned in <varname>param_value</varname></entry>
+                      </row>
+                    </thead>
+
+                    <tbody>
+                      <row>
+                        <entry><constant>CL_PROFILING_COMMAND_QUEUED</constant></entry>
+                        <entry>cl_ulong</entry>
+                        <entry>
+                          A 64-bit value that describes the current device time counter in
+                          nanoseconds when the command identified by <varname>event</varname>
+                          is enqueued in a command-queue by the host.
+                        </entry>
+                      </row>
+
+                      <row>
+                        <entry><constant>CL_PROFILING_COMMAND_SUBMIT</constant></entry>
+                        <entry>cl_ulong</entry>
+                        <entry>
+                          A 64-bit value that describes the current device time counter in
+                          nanoseconds when the command identified by <varname>event</varname>
+                          that has been enqueued is submitted by the host to the device associated
+                          with the command-queue.
+                        </entry>
+                      </row>
+
+                      <row>
+                        <entry><constant>CL_PROFILING_COMMAND_START</constant></entry>
+                        <entry>cl_ulong</entry>
+                        <entry>
+                          A 64-bit value that describes the current device time counter in
+                          nanoseconds when the command identified by <varname>event</varname>
+                          starts execution on the device.
+                        </entry>
+                      </row>
+
+                      <row>
+                        <entry><constant>CL_PROFILING_COMMAND_END</constant></entry>
+                        <entry>cl_ulong</entry>
+                        <entry>
+                          A 64-bit value that describes the current device time counter in
+                          nanoseconds when the command identified by <varname>event</varname>
+                          has finished execution on the device.
+                        </entry>
+                      </row>
+
+                      <row>
+                        <entry><constant>CL_PROFILING_COMMAND_COMPLETE</constant></entry>
+                        <entry>cl_ulong</entry>
+                        <entry>
+                            A 64-bit value that describes the current device time counter in 
+                            nanoseconds when the command 
+                            identified by <varname>event</varname> and any child 
+                            commands enqueued by this command on the device have finished 
+                            execution.
+                        </entry>
+                      </row>
+
+                    </tbody>
+                  </tgroup>
+                </informaltable>
+              </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          The unsigned 64-bit values returned can be used to measure the time in nano-seconds
+          consumed by OpenCL commands.
+        </para>
+
+        <para>
+          OpenCL devices are required to correctly track time across changes in device frequency
+          and power states. The <constant>CL_DEVICE_PROFILING_TIMER_RESOLUTION</constant>
+          specifies the resolution of the timer i.e. the number of nanoseconds elapsed before
+          the timer is incremented.
+        </para>
+
+        <para>
+          Event objects can be used to capture profiling information that measure execution
+          time of a command. Profiling of OpenCL commands can be enabled either by using a
+          command-queue created with <constant>CL_QUEUE_PROFILING_ENABLE</constant>
+          flag set in <varname>properties</varname> argument to
+          <citerefentry><refentrytitle>clCreateCommandQueueWithProperties</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully
+          and the profiling information has been recorded. Otherwise, it returns one of the
+          following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_PROFILING_INFO_NOT_AVAILABLE</errorname> if the
+              <constant>CL_QUEUE_PROFILING_ENABLE</constant> flag is not set for the command-queue,
+              if the execution status of the command identified by <varname>event</varname>
+              is not <constant>CL_COMPLETE</constant> or if <varname>event</varname> 
+              refers to the 
+              <citerefentry><refentrytitle>clEnqueueSVMFree</refentrytitle></citerefentry> 
+              command or is a user event object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>param_name</varname> is not
+              valid, or if size in bytes specified by <varname>param_value_size</varname>
+              is &lt; size of return type as described in the above table and
+              <varname>param_value</varname> is not NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EVENT</errorname> if <varname>event</varname> is a not a
+              valid event object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clGetEventProfilingInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateCommandQueueWithProperties</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Dec-2013, rev. 19 -->
+</refentry>
+

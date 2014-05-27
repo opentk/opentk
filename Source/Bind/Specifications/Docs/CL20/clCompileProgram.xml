@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd"  [
+<!ENTITY buildOptionsInc SYSTEM "buildOptionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCompileProgram</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clCompileProgram
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCompileProgram">
+        <refname>
+            clCompileProgram
+        </refname>
+
+        <refpurpose>
+            Compiles a program’s source for all the devices or a specific device(s) in the OpenCL context
+                associated with <varname>program</varname>.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clCompileProgram</function>
+                </funcdef>
+<paramdef><link xlink:href="abstractDataTypes.html">cl_program</link><parameter>program</parameter></paramdef>
+<paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_devices</parameter></paramdef>
+<paramdef>const <link xlink:href="abstractDataTypes.html">cl_device_id</link><parameter>*device_list</parameter></paramdef>
+<paramdef>const <link xlink:href="scalarDataTypes.html">char</link><parameter>*options</parameter></paramdef>
+<paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_input_headers</parameter></paramdef>
+<paramdef>const <link xlink:href="scalarDataTypes.html">cl_program</link><parameter>*input_headers</parameter></paramdef>
+<paramdef>const <link xlink:href="scalarDataTypes.html">char</link><parameter>**header_include_names</parameter></paramdef>
+<paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>(CL_CALLBACK *pfn_notify)(
+    <link xlink:href="abstractDataTypes.html">cl_program</link> program,
+    <link xlink:href="scalarDataTypes.html">void</link> *user_data)</parameter></paramdef>
+<paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*user_data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> program </varname> </term>
+                <listitem>
+                    <para>
+                       The program object that is the compilation target.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> device_list </varname> </term>
+                <listitem>
+                    <para>
+                      A pointer to a list of devices associated with <varname>program</varname>. If
+                      <varname>device_list</varname> is a NULL value, the compile is performed for
+                      all devices associated with program.  If <varname>device_list</varname> is a
+                      non-NULL value, the compile is performed for devices specified in this list.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> num_devices </varname> </term>
+                <listitem>
+                    <para>
+                        The number of devices listed in <varname>device_list</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>options</varname></term>
+                <listitem>
+                    <para>
+                      A pointer to a null-terminated string of characters that describes the
+                      compilation options to be used for building the program executable. The
+                      list of supported options is as described below.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>num_input_headers</varname></term>
+                <listitem>
+                    <para>
+                      Specifies the number of programs that describe headers in the array
+                      referenced by <varname>input_headers</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>input_headers</varname></term>
+                <listitem>
+                    <para>
+                      An array of program embedded headers created with
+                      <citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>header_include_names</varname></term>
+                <listitem>
+                    <para>
+                      An array that has a one to one correspondence
+                      with <varname>input_headers</varname>.  Each entry in
+                      <varname>header_include_names</varname> specifies the include name used by
+                      source in <varname>program</varname> that comes from an embedded header.
+                      The corresponding entry in <varname>input_headers</varname> identifies the
+                      program object which contains the header source to be used. The embedded
+                      headers are first searched before the headers in the list of directories
+                      specified by the –I compile option (as described in section 5.8.4.1).
+                      If multiple entries in <varname>header_include_names</varname> refer to
+                      the same header name, the first one encountered will be used.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> pfn_notify </varname> </term>
+                <listitem>
+                    <para>
+                      A function pointer to a notification routine.  The notification routine
+                      is a callback function that an application can register and which will
+                      be called when the program executable has been built (successfully
+                      or unsuccessfully).  If <varname>pfn_notify</varname> is not NULL,
+                      <function>clCompileProgram</function> does not need to wait for the
+                      compiler to complete and can return immediately once the compilation
+                      can begin.  The compilation can begin if the context, program whose
+                      sources are being compiled, list of devices, input headers, programs
+                      that describe input headers and compiler options specified are all
+                      valid and appropriate host and device resources needed to perform
+                      the compile are available.  If <varname>pfn_notify</varname> is NULL,
+                      <function>clCompileProgram</function> does not return until the compiler
+                      has completed.  This callback function may be called asynchronously by
+                      the OpenCL implementation.  It is the application’s responsibility to
+                      ensure that the callback function is thread-safe.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> user_data </varname> </term>
+                <listitem>
+                    <para>
+                      Passed as an argument when <varname>pfn_notify</varname> is
+                      called. <varname>user_data</varname> can be NULL.
+                    </para>
+               </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Compiles a program’s source for all the devices or a specific device(s)
+          in the OpenCL context associated with <varname>program</varname>.  The
+          pre-processor runs before the program sources are compiled. The compiled
+          binary is built for all devices associated with <varname>program</varname>
+          or the list of devices specified. The compiled binary can be queried using
+          <citerefentry><refentrytitle>clGetProgramInfo</refentrytitle></citerefentry>(<varname>program</varname>,
+          <constant>CL_PROGRAM_BINARIES</constant>, ...) and can be specified to
+          <citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>
+          to create a new program object.
+        </para>
+
+        &buildOptionsInc;
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          <function>clCompileProgram</function> returns <errorname>CL_SUCCESS</errorname> if
+          the function is executed successfully. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_PROGRAM</errorname> if <varname>program</varname> is not
+              a valid program object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>device_list</varname>
+              is NULL and <varname>num_devices</varname> is greater than zero, or if
+              <varname>device_list</varname> is not NULL and <varname>num_devices</varname>
+              is zero.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>num_input_headers</varname> is
+              zero and <varname>header_include_names</varname> or <varname>input_headers</varname>
+              are not NULL or if <varname>num_input_headers</varname> is not zero and
+              <varname>header_include_names</varname> or <varname>input_headers</varname> are NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>pfn_notify</varname> is NULL
+              but <varname>user_data</varname> is not NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_DEVICE</errorname> if OpenCL devices listed in
+              <varname>device_list</varname> are not in the list of devices associated with
+              <varname>program</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_COMPILER_OPTIONS</errorname> if the compiler options
+              specified by <varname>options</varname> are invalid.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> if the compilation or build of a program
+              executable for any of the devices listed in <varname>device_list</varname>
+              by a previous call to <function>clCompileProgram</function> or
+              <function>clBuildProgram</function> for <varname>program</varname> has not completed.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_COMPILER_NOT_AVAILABLE</errorname> if a compiler is not
+              available i.e.  <constant>CL_DEVICE_COMPILER_AVAILABLE</constant> specified
+              in in the table of allowed values for <varname>param_name</varname> for
+              <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+              is set to <constant>CL_FALSE</constant>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_COMPILE_PROGRAM_FAILURE</errorname> if there is a
+              failure to compile the program source.  This error will be returned if
+              <function>clCompileProgram</function> does not return until the compile has
+              completed.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> if there are kernel objects attached
+              to <varname>program</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> if <varname>program</varname>
+              has no source i.e. it has not been created with
+              <citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+            For example, consider the following program source:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#include &lt;foo.h>
+#include &lt;mydir/myinc.h>
+
+__kernel void
+image_filter (int n, int m,
+            __constant float *filter_weights,
+            __read_only image2d_t src_image,
+            __write_only image2d_t dst_image)
+{
+...
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          This kernel includes two headers foo.h and mydir/myinc.h. The following describes
+          how these headers can be passed as embedded headers in program objects:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+cl_program foo_pg = clCreateProgramWithSource(context,
+                           1, &amp;foo_header_src, NULL, &amp;err);
+cl_program myinc_pg = clCreateProgramWithSource(context,
+                           1, &amp;myinc_header_src, NULL, &amp;err);
+
+// let’s assume the program source described above is given
+// by program_A and is loaded via clCreateProgramWithSource
+
+cl_program input_headers[2] = { foo_pg, myinc_pg };
+char * input_header_names[2] = { “foo.h”, “mydir/myinc.h” };
+clCompileProgram(program_A,
+                 0, NULL, // num_devices &amp; device_list
+                 NULL,    // compile_options
+                 2,       // num_input_headers
+                 input_headers,
+                 input_header_names,
+                 NULL, NULL); // pfn_notify &amp; user_data
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCompileProgram">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clLinkProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 9-May-2013, rev. 19 -->
+</refentry>
+

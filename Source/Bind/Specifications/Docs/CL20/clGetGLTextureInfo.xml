@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clGetGLTextureInfo</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clGetGLTextureInfo</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetGLTextureInfo">
+        <refname>clGetGLTextureInfo</refname>
+
+        <refpurpose>
+            Returns additional information about the GL texture object associated with a memory object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef><link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>
+                        clGetGLTextureInfo
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_mem</link>
+                    <parameter>memobj</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="enums.html#cl_gl_texture_info">cl_gl_texture_info</link>
+                    <parameter>param_name</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>param_value_size</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <parameter>*param_value</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>*param_value_size_ret</parameter>
+                </paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> param_name </varname> </term>
+                <listitem>
+                    <para>
+                      Specifies what additional information
+                      about the GL texture object associated with <varname>memobj</varname>
+                      to query. The list of supported <varname>param_name</varname> types
+                      and the information returned in <varname>param_value</varname> by
+                      <function>clGetGLTextureInfo</function> is described in the table 
+                      below (Table 9.5).
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value </varname> </term>
+                <listitem>
+                    <para>
+                      A pointer to memory where the result being queried is returned. If
+                      <varname>param_value</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>param_value_size</varname> </term>
+                <listitem>
+                    <para>
+                      Specifies the size in bytes of memory pointed to by
+                      <varname>param_value</varname>.  This size must be &ge; size of return
+                      type as described in the table below.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value_size_ret </varname> </term>
+                <listitem>
+                    <para>
+                      Returns the actual size in bytes of data copied to
+                      <varname>param_value</varname>. If <varname>param_value_size_ret</varname>
+                      is NULL, it is ignored.
+                    </para>
+
+                <para>Table 9.5:</para>
+
+                <informaltable frame="all"><!-- table 9.5 -->
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colname="col1" colnum="1" />
+                        <colspec colname="col2" colnum="2" />
+                        <colspec colname="col3" colnum="3" />
+
+                        <thead>
+                            <row>
+                                <entry>cl_gl_texture_info</entry>
+                                <entry>Return Type</entry>
+                                <entry>Information returned in <varname>param_value</varname></entry>
+                            </row>
+                        </thead>
+
+                        <tbody>
+                            <row>
+                                <entry><constant>CL_GL_TEXTURE_TARGET</constant></entry>
+                                <entry>GLenum</entry>
+                                <entry>
+                                  The <varname>texture_target</varname> argument specified in
+                                  <citerefentry><refentrytitle>clCreateFromGLTexture</refentrytitle></citerefentry>.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_GL_MIPMAP_LEVEL</constant></entry>
+                                <entry>GLint</entry>
+                                <entry>
+                                  The <varname>miplevel</varname> argument specified in
+                                  <citerefentry><refentrytitle>clCreateFromGLTexture</refentrytitle></citerefentry>.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_GL_NUM_SAMPLES</constant></entry>
+                                <entry>GLsizei</entry>
+                                <entry>
+                                    If the <citerefentry><refentrytitle>cl_khr_gl_msaa_sharing</refentrytitle></citerefentry>
+                                    extension is supported,
+                                    the <varname>samples</varname> argument passed to
+                                    <function>glTexImage2DMultisample</function> or 
+                                    <function>glTexImage3DMultisample</function>.
+                                    If <varname>image</varname> is not a MSAA texture, 1 is 
+                                    returned.
+                                </entry>
+                            </row>
+
+                        </tbody>
+                    </tgroup>
+                </informaltable>
+
+            <!-- END PARAMETER TABLE  -->
+
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function is executed
+          successfully. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_MEM_OBJECT</errorname> if <varname>memobj</varname>
+                is not a valid OpenCL memory object
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_GL_OBJECT</errorname> if there is no GL texture object
+              associated with <varname>memobj</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>param_name</varname> is not
+              valid, or if size in bytes specified by <varname>param_value_size</varname>
+              is &lt; size of return type as described in the table above and
+              <varname>param_value</varname> is not NULL, or if <varname>param_value</varname>
+              and <varname>param_value_size_ret</varname> are NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clGetGLTextureInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetGLObjectInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromGLTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromGLTexture</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

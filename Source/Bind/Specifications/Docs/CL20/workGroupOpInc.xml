@@ -1,0 +1,96 @@
+
+<!-- common text for workgroup functions, section 6.13.15 -->
+
+    <para>
+        This built-in function must be encountered by 
+        all work-items in a 
+        work-group executing the kernel. We use the 
+        generic type name gentype to indicate the 
+        built-in data types <type>half</type> (if the
+        <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>
+        extension is supported),
+        <type>int</type>, <type>uint</type>, <type>long</type>, 
+        <type>ulong</type>, <type>float</type> or <type>double</type> 
+        (if double precision is supported) as the type 
+        for the arguments.
+    </para>
+
+    <para>
+        The <emphasis>&lt;op></emphasis> in 
+        <function>work_group_reduce_<emphasis>&lt;op></emphasis></function>, 
+        <function>work_group_scan_exclusive_<emphasis>&lt;op></emphasis></function> and 
+        <function>work_group_scan_inclusive_<emphasis>&lt;op></emphasis></function> 
+        defines the operator and can be <code>add</code>, <code>min</code> or <code>max</code>.
+    </para>
+
+    <para>
+        The inclusive scan operation takes a binary operator <code>op</code> 
+        with an identity <code>I</code> and <code>n</code> (where 
+        <code>n</code> is the size of the work-group) elements 
+        <code>[a0, a1, ... an-1]</code> and returns 
+        <code>[a0, (a0 <emphasis>op</emphasis> a1), ... (a0 <emphasis>op</emphasis> a1 
+        <emphasis>op</emphasis> ... <emphasis>op</emphasis> an-1)]</code>. 
+        If &lt;<code>op</code>&gt; = <code>add</code>, the identity 
+        <code>I</code> is 0. If &lt;<code>op</code>&gt; = <code>min</code>, 
+        the identity <code>I</code> is <constant>INT_MAX</constant>, 
+        <constant>UINT_MAX</constant>, <constant>LONG_MAX</constant>, 
+        <constant>ULONG_MAX</constant>, for <type>int</type>, 
+        <type>uint</type>, <type>long</type>, <type>ulong</type> types 
+        and is <code>+INF</code> for floating-point types. Similarly 
+        if &lt;<code>op</code>&gt; = max, the identity <code>I</code> is 
+        <constant>INT_MIN</constant>, 0, <constant>LONG_MIN</constant>, 
+        0 and <code>-INF</code>.
+    </para>
+
+    <para>
+        Consider the following example:
+    </para>
+
+    <para>
+<literallayout><code>
+void foo(int *p)
+{
+    ... 
+    int prefix_sum_val = work_group_scan_inclusive_add(
+              p[get_local_id(0)]);
+}</code></literallayout>
+    </para>
+
+    <para>
+        For the example above, let's assume that the work-group 
+        size is 8 and p points to the following 
+        elements [3 1 7 0 4 1 6 3]. Work-item 0 calls 
+        <function>work_group_scan_inclusive_add</function> 
+        with 3 and returns 3. Work-item 1 calls 
+        <function>work_group_scan_inclusive_add</function> with 1 and 
+        returns 4. The full set of values returned by 
+        <function>work_group_scan_inclusive_add</function> 
+        for work-items 0 ... 7 are [3 4 11 11 14 16 22 25].
+    </para>
+
+    <para>
+        The exclusive scan operation takes a binary 
+        associative operator <varname>op</varname> with an 
+        identity <code>I</code> and <code>n</code>
+        (where <code>n</code> is the size of the work-group) 
+        elements <code>[a0, a1, ... an-1]</code> and returns <code>[I, a0, 
+        (a0 <emphasis>op</emphasis> a1), ... (a0 <emphasis>op</emphasis> a1 
+        <emphasis>op</emphasis> ... <emphasis>op</emphasis> an-2)]</code>. For the 
+        example above, the exclusive scan 
+        add operation on the ordered set [3 1 7 0 4 1 6 3]
+        would return [0 3 4 11 11 14 16 22].
+    </para>
+
+    <para>
+        NOTE: The order of floating-point operations is not guaranteed for the
+        <function>work_group_reduce_<emphasis>&lt;op></emphasis></function>, 
+        <function>work_group_scan_inclusive_<emphasis>&lt;op></emphasis></function> and 
+        <function>work_group_scan_exclusive_<emphasis>&lt;op></emphasis></function> 
+        built-in functions that operate on <type>half</type>, <type>float</type> and 
+        <type>double</type> data types.
+        The order of these floating-point operations is also non-deterministic 
+        for a given workgroup.
+    </para>
+
+<!-- 20-Dec-2013, rev. 19 -->
+

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Preprocessor Directives and Macros</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Preprocessor Directives and Macros</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="PreprocessorDirectivesandMacros">
+        <refname>Preprocessor Directives and Macros</refname>
+
+        <refpurpose>
+            Preprocessor Directives and Macros.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+# <function>pragma</function> <varname>pp-tokens</varname><subscript>opt</subscript> <emphasis>new-line</emphasis>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The preprocessing directives defined by the C99 specification are supported.
+        </para>
+
+        <para>
+          A <function># pragma</function> directive where the preprocessing token
+          <constant>OPENCL</constant> (used instead of <constant>STDC</constant>) does not
+          immediately follow <function>pragma</function> in the directive (prior to any macro
+          replacement) causes the implementation to behave in an implementation-defined manner. The
+          behavior might cause translation to fail or cause the translator or the resulting
+          program to behave in a non-conforming manner. Any such <function>pragma</function>
+          that is not recognized by the implementation is ignored. If the preprocessing token
+          <constant>OPENCL</constant> does immediately follow <function>pragma</function> in the
+          directive (prior to any macro replacement), then no macro replacement is performed on
+          the directive, and the directive shall have one of the following forms whose meanings
+          are described elsewhere:
+        </para>
+
+        <para>
+<literallayout><constant>          #pragma OPENCL <citerefentry><refentrytitle>FP_CONTRACT</refentrytitle></citerefentry> <replaceable>on-off-switch</replaceable>
+               <replaceable>on-off-switch</replaceable>: one of ON OFF DEFAULT
+          #pragma OPENCL <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry> <varname>extensionname : behavior</varname>
+          #pragma OPENCL <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry> all : <varname>behavior</varname></constant></literallayout>
+        </para>
+
+        <para>
+          The following predefined macro names are available.
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                 <code>__FILE__</code> The presumed name of the current 
+                 source file (a character string literal).
+            </listitem>
+
+            <listitem>
+                 <code>__LINE__</code> The presumed line number (within the current source file)
+                 of the current source line (an integer constant).
+            </listitem>
+
+            <listitem>
+                 <code>__OPENCL_VERSION__</code> substitutes an integer reflecting the version
+                 number of the OpenCL supported by the OpenCL device. The version of OpenCL
+                 described in this document will have <code>__OPENCL_VERSION__</code> substitute
+                 the integer 200.
+            </listitem>
+
+            <listitem>
+                <code>CL_VERSION_1_0</code> substitutes the integer 100 reflecting the OpenCL 1.0 version.
+            </listitem>
+
+            <listitem>
+                <code>CL_VERSION_1_1</code> substitutes the integer 110 reflecting the OpenCL 1.1 version.
+            </listitem>
+
+            <listitem>
+                <code>CL_VERSION_1_2</code> substitutes the integer 120 reflecting the OpenCL 1.2 version.
+            </listitem>
+
+            <listitem>
+                <code>CL_VERSION_2_0</code> substitutes the integer 200 reflecting the OpenCL 2.0 version.
+            </listitem>
+
+            <listitem>
+                <code>__OPENCL_C_VERSION__</code> substitutes an integer reflecting
+                the OpenCL C version specified by the <code>-cl-std</code> build option  to
+                <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry> or
+                <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry>. 
+                If the <code>-cl-std</code>
+                build option is not specified, the highest OpenCL C 1.x 
+                language version supported by each device is used 
+                as the version of OpenCL C when compiling 
+                the program for each device. The version of OpenCL C 
+                described in this document will have 
+                <code>__OPENCL_C_VERSION__</code> substitute the integer 200 
+                if <code>–cl-std=CL2.0</code> is specified.
+            </listitem>
+
+            <listitem>
+                <code>__ENDIAN_LITTLE__</code> is used to determine if the OpenCL device is a
+                little endian architecture or a big endian architecture (an integer constant
+                of 1 if device is little endian and is undefined otherwise). Also refer to
+                <constant>CL_DEVICE_ENDIAN_LITTLE</constant> specified in the table of OpenCL
+                Device Queries for 
+                <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>.
+            </listitem>
+
+            <listitem>
+                <code>__kernel_exec(X, type<replaceable>n</replaceable>)</code> (and
+                <code>kernel_exec(X, type<replaceable>n</replaceable>))</code> is defined as
+                follows:
+
+                <para>
+<literallayout>     <code>__kernel __attribute__((work_group_size_hint(X, 1, 1)))</code> \
+              <code>__attribute__((vec_type_hint(type<replaceable>n</replaceable>)))</code></literallayout>
+                </para>
+            </listitem>
+
+            <listitem>
+                <code>__IMAGE_SUPPORT__</code> is used to determine if the OpenCL device supports
+                images. This is an integer constant of 1 if images are supported and is undefined
+                otherwise. Also refer to <constant>CL_DEVICE_IMAGE_SUPPORT</constant>
+                specified in the table of OpenCL Device Queries for
+                <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry><!--table
+                4.3-->.
+            </listitem>
+
+            <listitem>
+                <code>__FAST_RELAXED_MATH__</code> is used to determine if the
+                cl-fast-relaxed-math optimization option is specified in build options given
+                to  <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry> or
+                <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry>. 
+                This is an integer constant of 1 if the cl-fast-relaxed-math build option 
+                is specified and is undefined otherwise.
+             </listitem>
+
+            <listitem>
+                <code>CL_DEVICE_MAX_GLOBAL_VARIABLE_SIZE</code> 
+                expands to a positive integer specifying the 
+                maximum size in bytes for a program scope 
+                variable or static function variable. This is the same 
+                value as <constant>CL_DEVICE_MAX_GLOBAL_VARIABLE_SIZE</constant>
+                returned by 
+                <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry> 
+                in table 4.3.
+             </listitem>
+
+            <listitem>
+                The <code>NULL</code> macro expands to a null pointer 
+                constant. An integer constant expression with the 
+                value 0, or such an expression cast to type 
+                <code>void *</code> is called a null pointer constant.
+            </listitem>
+
+            <listitem>
+                The macro names defined by the C99 specification but not currently supported
+                by OpenCL are reserved for future use.
+            </listitem>
+
+            <listitem>
+                The predefined identifier <code>__func__</code> is available.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="preprocessorDirectives">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="mathConstants"><refentrytitle>Symbolic Math Constants</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>FP_CONTRACT</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Dec-2013, rev. 19 -->
+</refentry>
+

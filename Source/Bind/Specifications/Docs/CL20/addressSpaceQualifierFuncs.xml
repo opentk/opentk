@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>addressSpaceQualifierFuncs</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>addressSpaceQualifierFuncs</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="addressSpaceQualifierFuncs">
+        <refname>Address Space Qualifier Functions</refname>
+
+        <refpurpose>
+            Address space qualifier functions.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+       <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    global gentype *
+                    <function>to_global</function>
+                </funcdef>
+                <paramdef>gentype<parameter>*ptr</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    const global gentype *
+                    <function>to_global</function>
+                </funcdef>
+                <paramdef>const gentype<parameter>*ptr</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+       <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    local gentype *
+                    <function>to_local</function>
+                </funcdef>
+                <paramdef>gentype<parameter>*ptr</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    const local gentype *
+                    <function>to_local</function>
+                </funcdef>
+                <paramdef>const gentype<parameter>*ptr</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+       <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    private gentype *
+                    <function>to_private</function>
+                </funcdef>
+                <paramdef>gentype<parameter>*ptr</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    const private gentype *
+                    <function>to_private</function>
+                </funcdef>
+                <paramdef>const gentype<parameter>*ptr</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+       <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="enums.html#cl_mem_fence_flags">cl_mem_fence_flags</link>
+                    <function>get_fence</function>
+                </funcdef>
+                <paramdef>gentype<parameter>*ptr</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+       <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="enums.html#cl_mem_fence_flags">cl_mem_fence_flags</link>
+                    <function>get_fence</function>
+                </funcdef>
+                <paramdef>const gentype<parameter>*ptr</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>to_global</function>
+            Returns a pointer that points to a region in the global 
+            address space if <function>to_global</function> can cast <varname>ptr</varname> to the global 
+            address space. Otherwise it returns NULL.
+        </para>
+
+        <para>
+            <function>to_local</function>
+            Returns a pointer that points to a region in the local 
+            address space if <function>to_local</function> can cast <varname>ptr</varname> to the local 
+            address space. Otherwise it returns NULL.
+        </para>
+
+        <para>
+            <function>to_private</function>
+            Returns a pointer that points to a region in the private 
+            address space if <function>to_private</function> can cast <varname>ptr</varname> to the private 
+            address space. Otherwise it returns NULL.
+        </para>
+
+        <para>
+            <function>get_fence</function> returns a valid memory fence value for
+            <varname>ptr</varname>.
+        </para>
+
+        <para>
+          The generic type <type>gentype</type> is used to indicate the built-in data types
+          <type>char</type>, <type>uchar</type>, <type>short</type>, <type>ushort</type>,
+          <type>int</type>, <type>uint</type>, <type>long</type>, <type>ulong</type>,
+          <type>float</type>, or <type>double</type>.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ NOTES
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+
+        </para>
+    </refsect1> -->
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="addressSpaceQualifierFuncs">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>qualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 25-Dec-2013, rev. 19 -->
+</refentry>
+

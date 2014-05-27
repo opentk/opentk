@@ -1,0 +1,84 @@
+  <para>
+    <!-- section 6.13.14 --> The built-in functions defined in this section
+    can only be used with image memory objects.  An image memory object can be accessed by
+    specific function calls that read from and/or write to specific locations in the image.
+  </para>
+
+  <para>
+    Note that image writes to sRGB images are only supported if the 
+    <citerefentry><refentrytitle>cl_khr_srgb_image_writes</refentrytitle></citerefentry> 
+    extension is supported; 
+    otherwise the behavior of writing to a sRGB image is undefined.
+  </para>
+
+
+<!-- Note: use <function> instead of <citerefentry> for the read and write functions in the text below. -->
+
+  <para>
+    Image memory objects that are being read by a kernel should be declared with the <citerefentry
+    href="accessQualifiers"><refentrytitle>read_only</refentrytitle></citerefentry>
+    qualifier. <function>write_image</function> calls to image memory objects declared with the
+    <citerefentry href="accessQualifiers"><refentrytitle>read_only</refentrytitle></citerefentry>
+    qualifier will generate a compilation error. Image memory objects that
+    are being written to by a kernel should be declared with the <citerefentry
+    href="accessQualifiers"><refentrytitle>write_only</refentrytitle></citerefentry> qualifier.
+    <function>read_image</function> calls to image memory objects declared with the <citerefentry
+    href="accessQualifiers"><refentrytitle>write_only</refentrytitle></citerefentry>
+    qualifier will generate a compilation error. <function>read_image</function> and
+    <function>write_image</function> calls to the same image memory object in a kernel are
+    not supported.
+    Image memory objects that are being read and written by a kernel should be declared with the 
+    <citerefentry
+    href="accessQualifiers"><refentrytitle>read_write</refentrytitle></citerefentry> 
+    qualifier.
+  </para>
+
+  <para>
+    The <function>read_image</function> calls returns a four component floating-point, integer or
+    unsigned integer color value. The color values returned by <function>read_image</function>
+    are identified as <code>x, y, z, w</code> where <code>x</code> refers to the red component,
+    <code>y</code> refers to the green component, <code>z</code> refers to the blue component
+    and <code>w</code> refers to the alpha component.
+  </para>
+
+  <bridgehead>sRGB Images</bridgehead>
+
+  <para>
+    <!-- 6.13.14.1.2 sRGB Images -->
+    The built-in image read functions will perform
+     sRGB to linear RGB conversions if the image is 
+    an sRGB image. Writing to sRGB images from a 
+    kernel is an optional extension. The 
+    <citerefentry><refentrytitle>cl_khr_srgb_image_writes</refentrytitle></citerefentry> 
+    extension will be reported in the 
+    <constant>CL_DEVICE_EXTENSIONS</constant> string 
+    if a device supports writing to sRGB images using 
+    <citerefentry href="imageFunctions"><refentrytitle>write_imagef</refentrytitle></citerefentry>. 
+    <citerefentry><refentrytitle>clGetSupportedImageFormats</refentrytitle></citerefentry> 
+    will return the supported sRGB images if 
+    <constant>CL_MEM_READ_WRITE</constant> or 
+    <constant>CL_MEM_WRITE_ONLY</constant> is specified in 
+    <varname>flags</varname> argument and the 
+    device supports writing to an sRGB image. If 
+    <citerefentry><refentrytitle>cl_khr_srgb_image_writes</refentrytitle></citerefentry> 
+    is supported, the 
+    built-in image write functions will perform 
+    the linear to sRGB conversion. 
+  </para>
+
+  <para>
+    Only the R, G and B components are converted from 
+    linear to sRGB and vice-versa. The alpha 
+    component is returned as is.
+  </para>
+
+    <para>
+      The samplerless read image functions behave exactly as the corresponding read
+      image functions that take integer coordinates and a sampler with filter mode
+      set to <constant>CLK_FILTER_NEAREST</constant>, normalized coordinates set
+      to <constant>CLK_NORMALIZED_COORDS_FALSE</constant> and addressing mode to
+      <constant>CLK_ADDRESS_NONE</constant>.
+    </para>
+
+<!-- 17-Dec-2013, rev. 19 -->
+

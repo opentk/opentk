@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<signatures>
+  <replace>
+    <function name="EnqueueNativeKernel">
+      <param name="/user_func/">
+        <type>UserFunctionDelegate</type>
+        <name>user_function</name>
+      </param>
+    </function>
+  </replace>
+</signatures>

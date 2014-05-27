@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>genericAddressSpace</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>genericAddressSpace</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="genericAddressSpace">
+        <refname>generic</refname>
+
+        <refpurpose>
+            Generic Address Space.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__generic (unnamed address space)
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+<!--
+    <refsect1 id="description"><title>Description</title>
+    </refsect1>
+-->
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The following rules apply when using pointers that point to the generic address space:
+        </para>
+
+          <itemizedlist>
+            <listitem>
+                <para>
+                    A pointer that points to the <function>global</function>, 
+                    <function>local</function> or <function>private</function> address space can be 
+                    implicitly converted to a pointer to the unnamed 
+                    generic address space but not vice-versa.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Pointer casts can be used to cast a pointer that points to the 
+                    <function>global</function>, <function>local</function> 
+                    or <function>private</function> space to 
+                    the unnamed generic addresss space and vice-versa.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    A pointer that points to the <function>constant</function> 
+                    address space cannot be cast or implicitly 
+                    converted to the generic address space.
+                </para>
+            </listitem>
+
+          </itemizedlist>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+            This is the canonical example. In this example, function 
+            <function>foo</function>() is declared with an argument that 
+            is a pointer with no address space qualifier. 
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+void foo(int *a)
+{
+    *a = *a + 2;
+}
+
+kernel void k1(local int *a)
+{
+    …
+    foo(a);
+    …
+}
+kernel void k2(global int *a)
+{
+    …
+    foo(a);
+    …
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            In the example below, <varname>var</varname> is in the unnamed 
+            generic address space which gets mapped to the 
+            <function>global</function> or <function>local</function> 
+            address space depending on the result of the conditional expression.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+kernel void bar(global int *g, local int *l)
+{
+    int *var;
+    if (is_even(get_global_id(0))
+        var = g;
+    else
+        var = l;
+    *var = 42;
+    …
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            The example below is an example with one unnamed 
+            generic address space pointer with multiple 
+            named address space assignments.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+int *ptr;
+global int g;
+ptr = &amp;g; // legal
+
+local int l;
+ptr = &amp;l; // legal
+
+private int p;
+ptr = &amp;p; // legal
+
+constant int c;
+ptr = &amp;c; // illegal
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            The example below is an example with one unnamed 
+            generic address space pointer being 
+            assigned to point to several named address spaces.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+global int * gp;
+local int *lp;
+private int *pp;
+
+int *p;
+p = gp; // legal
+p = lp; // legal
+p = pp; // legal
+
+// it is illegal to convert from a generic pointer
+// to an explicit address space pointer without a cast:
+gp = p; // compile-time error
+lp = p; // compile-time error
+pp = p; // compile-time error
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="genericAddressSpace">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>,
+            <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>,
+            <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>qualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 25-Dec-2013, rev. 19 -->
+</refentry>
+

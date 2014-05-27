@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCreateKernelsInProgram</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clCreateKernelsInProgram
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateKernelsInProgram">
+        <refname>
+            clCreateKernelsInProgram
+        </refname>
+
+        <refpurpose>
+            Creates kernel objects for all kernel functions in a program object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clCreateKernelsInProgram</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_program</link> <parameter>program</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_kernels</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_kernel</link><parameter>*kernels</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>*num_kernels_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> program </varname> </term>
+                <listitem>
+                    <para>
+                        A program object with a successfully built executable.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> num_kernels </varname> </term>
+                <listitem>
+                    <para>
+                      The size of memory pointed to by
+                      <varname>kernels</varname> specified as the number of <type>cl_kernel</type>
+                      entries.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> kernels </varname> </term>
+                <listitem>
+                    <para>
+                      The buffer where the kernel
+                      objects for kernels in <varname>program</varname> will be
+                      returned. If <varname>kernels</varname> is NULL, it is ignored. If
+                      <varname>kernels</varname> is not NULL, <varname>num_kernels</varname>
+                      must be greater than or equal to the number of kernels in
+                      <varname>program</varname>.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> num_kernels_ret </varname> </term>
+                <listitem>
+                    <para>
+                      The number of kernels in
+                      <varname>program</varname>. If <varname>num_kernels_ret</varname> is NULL,
+                      it is ignored.
+                    </para>
+               </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+     <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Creates kernel objects for all kernel functions in
+          <varname>program</varname>. Kernel objects are not created for any <citerefentry
+          href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry>
+          functions in <varname>program</varname> that do not have the same function definition
+          across all devices for which a program executable has been successfully built.
+        </para>
+
+        <para>
+          Kernel objects can only be created once you have a program object with a
+          valid program source or binary loaded into the program object and the program
+          executable has been successfully built for one or more devices associated
+          with program. No changes to the program executable are allowed while there
+          are kernel objects associated with a program object. This means that calls to
+          <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry> and
+          <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry> return
+          <constant>CL_INVALID_OPERATION</constant> if there are kernel objects attached
+          to a program object. The OpenCL context associated with <varname>program</varname>
+          will be the context associated with <varname>kernel</varname>. The list of devices
+          associated with <varname>program</varname> are the devices associated with <varname>kernel</varname>.
+          Devices associated with a program object for which a valid program executable has
+          been built can be used to execute kernels declared in the program object.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the kernel objects are successfully allocated.
+            Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_PROGRAM</errorname> if <varname>program</varname> is not
+              a valid program object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_PROGRAM_EXECUTABLE</errorname> if there is no successfully
+              built executable for any device in <varname>program</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>kernels</varname> is not
+              NULL and <varname>num_kernels</varname> is less than the number of kernels in
+              <varname>program</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCreateKernelsInProgram">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelWorkGroupInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

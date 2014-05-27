@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY mathFunctionsInc SYSTEM "mathFunctionsInc.xml">
+<!ENTITY halfNativeMathInc SYSTEM "halfNativeMathInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>log, log2, log10, log1p, logb</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>log, log2, log10, log1p, logb</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="log">
+        <refname>log, log2, log10, log1p, logb</refname>
+
+        <refpurpose>
+            Logarithm functions.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        log
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter></parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        log2
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter></parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        log10
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter></parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        log1p
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        logb
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        half_log
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        half_log2
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        half_log10
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        native_log
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        native_log2
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        native_log10
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>log</function> computes natural logarithm.
+        </para>
+
+        <para>
+            <function>log2</function> computes a base 2 logarithm.
+        </para>
+
+        <para>
+            <function>log10</function> computes a base 10 logarithm.
+        </para>
+
+        <para>
+            <function>log1p</function> computes log<subscript>e</subscript>(1.0 + <varname>x</varname>).
+        </para>
+
+        <para>
+          <function>logb</function> computes the exponent of <varname>x</varname>, which is
+          the integral part of log<subscript>r</subscript> |<varname>x</varname>|.
+        </para>
+
+        <para>
+            <function>half_log</function> computes natural logarithm.
+        </para>
+
+        <para>
+            <function>half_log2</function> computes a base 2 logarithm.
+        </para>
+
+        <para>
+            <function>half_log10</function> computes a base 10 logarithm.
+        </para>
+
+        <para>
+          <function>native_log</function> computes natural logarithm over an implementation-defined
+          range. The maximum error is implementation-defined.
+        </para>
+
+        <para>
+          <function>native_log2</function> computes a base 2 logarithm over an
+          implementation-defined range. The maximum error is implementation-defined.
+        </para>
+
+        <para>
+          <function>native_log10</function> computes a base 10 logarithm over an
+          implementation-defined range. The maximum error is implementation-defined.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        &mathFunctionsInc;
+
+        &halfNativeMathInc;
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="mathFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="mathFunctions"><refentrytitle>Math Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 10-May-2013 -->
+</refentry>
+

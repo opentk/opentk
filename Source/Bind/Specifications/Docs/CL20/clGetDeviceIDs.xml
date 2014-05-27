@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY cl_device_type_Inc SYSTEM "cl_device_type_Inc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>clGetDeviceIDs</keyword></keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>clGetDeviceIDs</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+  <refnamediv id="clGetDeviceIDs">
+    <refname>clGetDeviceIDs</refname>
+    <refpurpose>Obtain the list of devices available on a platform.</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>clGetDeviceIDs</function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_platform_id</link>
+                    <parameter>platform</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="enums.html#cl_device_type">cl_device_type</link>
+                    <parameter>device_type</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_uint</link>
+                    <parameter>num_entries</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_device_id</link>
+                    <parameter>*devices</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_uint</link>
+                    <parameter>*num_devices</parameter>
+                </paramdef>
+           </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><varname>platform</varname></term>
+            <listitem>
+                <para>
+                  Refers to the platform ID returned by
+                  <citerefentry><refentrytitle>clGetPlatformIDs</refentrytitle></citerefentry>
+                  or can be NULL. If <varname>platform</varname> is NULL, the behavior is
+                  implementation-defined.
+                </para>
+            </listitem>
+        </varlistentry>
+
+
+        <varlistentry>
+            <term><varname>device_type</varname></term>
+            <listitem>
+                <para>
+                  A bitfield that identifies the type of OpenCL device. The
+                  <varname>device_type</varname> can be used to query specific OpenCL devices or
+                  all OpenCL devices available. The valid values for <varname>device_type</varname>
+                  are specified in the following table.
+                </para>
+
+                &cl_device_type_Inc;
+
+            </listitem>
+        </varlistentry>
+
+<!-- ================================ END PARAMETER TABLE  -->
+
+        <varlistentry>
+            <term><varname>num_entries</varname></term>
+            <listitem>
+                <para>
+                  The number of <type>cl_device_id</type> entries that can be added to
+                  <varname>devices</varname>.  If <varname>devices</varname> is not NULL,
+                  the <varname>num_entries</varname> must be greater than zero.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>devices</varname></term>
+            <listitem>
+                <para>
+                  A list of OpenCL devices found. The <type>cl_device_id</type> values returned in
+                  <varname>devices</varname> can be used to identify a specific OpenCL device.
+                  If <varname>devices</varname> argument is NULL, this argument is ignored.
+                  The number of OpenCL devices returned is the mininum of the value specified
+                  by <varname>num_entries</varname> or the number of OpenCL devices whose type
+                  matches <varname>device_type</varname>.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>num_devices</varname></term>
+            <listitem>
+                <para>
+                    The number of OpenCL devices available that match <varname>device_type</varname>.
+                    If <varname>num_devices</varname> is NULL, this argument is ignored.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+
+    <para>
+        <function>clGetDeviceIDs</function> may return all or a subset of the actual
+        physical devices present in the platform and that match <varname>device_type</varname>.
+    </para>
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          <function>clGetDeviceIDs</function> returns <errorname>CL_SUCCESS</errorname> if the
+          function is executed successfully. Otherwise it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+        <listitem>
+            <errorname>CL_INVALID_PLATFORM</errorname> if <varname>platform</varname> is not
+            a valid platform.
+        </listitem>
+
+        <listitem>
+          <errorname>CL_INVALID_DEVICE_TYPE</errorname> if <varname>device_type</varname>
+          is not a valid value.
+        </listitem>
+
+        <listitem>
+          <errorname>CL_INVALID_VALUE</errorname> if <varname>num_entries</varname> is equal to
+          zero and <varname>devices</varname> is not NULL or if both <varname>num_devices</varname>
+          and <varname>devices</varname> are NULL.
+        </listitem>
+
+        <listitem>
+          <errorname>CL_DEVICE_NOT_FOUND</errorname> if no OpenCL devices that matched
+          <varname>device_type</varname> were found.
+        </listitem>
+
+        <listitem>
+          <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate resources
+          required by the OpenCL implementation on the device.
+        </listitem>
+
+        <listitem>
+          <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+          resources required by the OpenCL implementation on the host.
+        </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clGetDeviceIDs">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetPlatformIDs</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>,
+            <citerefentry href="classDiagram"><refentrytitle>Cardinality Diagram</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 5-Dec-2013, rev. 19 -->
+</refentry>
+

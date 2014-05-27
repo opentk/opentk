@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clEnqueueNativeKernel</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clEnqueueNativeKernel</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clEnqueueNativeKernel">
+        <refname>clEnqueueNativeKernel</refname>
+
+        <refpurpose>
+            Enqueues a command to execute a native C/C++ function not compiled using the OpenCL compiler.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>
+                        clEnqueueNativeKernel
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_command_queue</link><parameter>command_queue</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>(CL_CALLBACK *user_func)(void *)</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*args</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>cb_args</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_mem_objects</parameter></paramdef>
+                <paramdef>const <link xlink:href="abstractDataTypes.html">cl_mem</link><parameter>*mem_list</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">void</link><parameter>**args_mem_loc</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_events_in_wait_list</parameter></paramdef>
+                <paramdef>const <link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event_wait_list</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> command_queue </varname> </term>
+                <listitem>
+                    <para>
+                      A valid host command-queue. A native user
+                      function can only be executed on a command-queue created on a device
+                      that has <constant>CL_EXEC_NATIVE_KERNEL</constant> capability
+                      set in <constant>CL_DEVICE_EXECUTION_CAPABILITIES</constant>
+                      as specified in the table of OpenCL Device Queries for
+                      <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> user_func </varname> </term>
+                <listitem>
+                    <para>
+                         A pointer to a host-callable user function.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> args </varname> </term>
+                <listitem>
+                    <para>
+                         A pointer to the args list that <varname>user_func</varname> 
+                         should be called with.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> cb_args </varname> </term>
+                <listitem>
+                    <para>
+                        The size in bytes of the args list that <varname>args</varname> points to.
+                    </para>
+
+                    <para>
+                      The data pointed to by <varname>args</varname> and <varname>cb_args</varname>
+                      bytes in size will be copied and a pointer to this copied region will be
+                      passed to <varname>user_func</varname>. The copy needs to be done because
+                      the memory objects (<type>cl_mem</type> values) that <varname>args</varname>
+                      may contain need to be modified and replaced by appropriate pointers to
+                      global memory.  When <function>clEnqueueNativeKernel</function> returns,
+                      the memory region pointed to by <varname>args</varname> can be reused by
+                      the application.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> num_mem_objects </varname> </term>
+                <listitem>
+                    <para>
+                         The number of buffer objects that are passed in <varname>args</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> mem_list </varname> </term>
+                <listitem>
+                    <para>
+                      A list of valid buffer objects,
+                      if <varname>num_mem_objects</varname> &gt; 0. The buffer
+                      object values specified in <varname>mem_list</varname> are
+                      memory object handles (<type>cl_mem</type> values) returned by
+                      <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>
+                      or NULL.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> args_mem_loc </varname> </term>
+                <listitem>
+                    <para>
+                      A pointer to appropriate locations
+                      that <varname>args</varname> points to where memory object handles
+                      (<type>cl_mem</type> values) are stored. Before the user function is
+                      executed, the memory object handles are replaced by pointers to global
+                      memory.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+           <!-- ================================ PARAMETER (NO TABLE)  -->
+            <!-- Use this if the parameter information does not require a table. -->
+
+            <varlistentry>
+                <term>
+                    <varname>event_wait_list</varname> and
+                    <varname>num_events_in_wait_list</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      Specify events that need
+                      to complete before this particular command can be executed. If
+                      <varname>event_wait_list</varname> is NULL, then this particular command does
+                      not wait on any event to complete. If <varname>event_wait_list</varname>
+                      is NULL, <varname>num_events_in_wait_list</varname> must be 0. If
+                      <varname>event_wait_list</varname> is not NULL, the list of events
+                      pointed to by <varname>event_wait_list</varname> must be valid
+                      and <varname>num_events_in_wait_list</varname> must be greater
+                      than 0.  The events specified in <varname>event_wait_list</varname>
+                      act as synchronization points. The context associated with events in
+                      <varname>event_wait_list</varname> and <varname>command_queue</varname> must
+                      be the same.  The memory associated with <varname>event_wait_list</varname>
+                      can be reused or freed after the function returns.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          The total number of read-only images specified as arguments to a kernel cannot exceed
+          <constant>CL_DEVICE_MAX_READ_IMAGE_ARGS</constant>. Each image array argument to
+          a kernel declared with the <code>read_only</code> qualifier counts as one image.
+        </para>
+
+        <para>
+          The total number of write-only images specified as arguments to a kernel cannot exceed
+          <constant>CL_DEVICE_MAX_WRITE_IMAGE_ARGS</constant>. Each image array argument to
+          a kernel declared with the <code>write_only</code> qualifier counts as one image.
+        </para>
+
+        <para>
+            The total number of read-write images specified 
+            as arguments to a kernel cannot exceed
+            <constant>CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS</constant>. 
+            Each image array argument to a kernel
+            declared with the <code>read_write</code> qualifier 
+            counts as one image.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the user function execution instance
+          was successfully queued. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_COMMAND_QUEUE</errorname> if <varname>command_queue</varname>
+              is not a valid host command-queue.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if context associated with
+              <varname>command_queue</varname> and events in <varname>event_wait_list</varname>
+              are not the same.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>user_func</varname> is NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>args</varname> is a NULL
+              value and <varname>cb_args</varname> &gt; 0, or if <varname>args</varname> is a
+              NULL value and <varname>num_mem_objects</varname> &gt; 0.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>args</varname> is not NULL
+              and <varname>cb_args</varname> is 0.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>num_mem_objects</varname>
+              &gt;  0 and <varname>mem_list</varname> or <varname>args_mem_loc</varname> are NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>num_mem_objects</varname> =
+              0 and <varname>mem_list</varname> or <varname>args_mem_loc</varname> are not NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> if the device associated with
+              <varname>command_queue</varname> cannot execute the native kernel.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_MEM_OBJECT</errorname> if one or more memory objects
+              specified in <varname>mem_list</varname> are not valid or are not buffer objects.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to queue the
+              execution instance of <varname>kernel</varname> on the command-queue because of
+              insufficient resources needed to execute the kernel.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MEM_OBJECT_ALLOCATION_FAILURE</errorname> if there is a failure
+              to allocate memory for data store associated with buffer objects specified as
+              arguments to <varname>kernel</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EVENT_WAIT_LIST</errorname>
+              if <varname>event_wait_list</varname> is NULL and
+              <varname>num_events_in_wait_list</varname> &gt; 0,
+              or <varname>event_wait_list</varname> is not NULL and
+              <varname>num_events_in_wait_list</varname> is 0, or if event objects in
+              <varname>event_wait_list</varname> are not valid events.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> 
+                if SVM pointers are passed as arguments to a kernel and the 
+                device does not support SVM or if system 
+                pointers are passed as arguments to a kernel 
+                and/or stored inside SVM allocations passed 
+                as kernel arguments and the device does not 
+                support fine grain system SVM allocations.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clEnqueueNativeKernel">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateCommandQueueWithProperties</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

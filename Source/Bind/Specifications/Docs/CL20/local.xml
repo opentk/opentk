@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+<!ENTITY qualifierInc SYSTEM "qualifierInc.xml">
+<!ENTITY qualifierExampleInc SYSTEM "qualifierExampleInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>__local</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>__local</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="__local">
+        <refname>__local</refname>
+
+        <refpurpose>
+            Address Space Qualifier.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__local
+local
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+            The <function>__local</function> or <function>local</function> address space name is
+            used to describe variables that need to be allocated in local memory and are shared by
+            all work-items of a work-group. Pointers to the <function>__local</function> address
+            space are allowed as arguments to functions (including kernel
+            functions). Variables allocated in the <function>__local</function> address space 
+            inside a kernel function must occur at kernel function scope. 
+        </para>
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        &qualifierInc;
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+// Examples of variables allocated in the __local address space
+// inside a kernel function
+
+kernel void my_func(...)
+{
+      local float      a;       // A single float allocated
+                                // in local address space
+
+      local float      b[10];   // An array of 10 floats
+                                // allocated in local address space.
+      if (...)
+      {
+          // example of variable in __local address space but not
+          // declared at __kernel function scope.
+          local float c;        // not allowed.
+      }
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          Variables allocated in the <function>__local</function> address space inside a
+          kernel function cannot be initialized.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+    kernel void my_func(...)
+    {
+       local float a = 1;    // not allowed 
+
+       local float b; 
+       b = 1;                // allowed
+    }
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            NOTE: Variables allocated in the <function>__local</function> address
+            space inside a kernel function 
+            are allocated for each work-group executing
+            the kernel and exist only for the lifetime of the work-group 
+            executing the kernel.
+        </para>
+
+        &qualifierExampleInc;
+
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="addressSpaceQualifiers">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>,
+            <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>,
+            <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>qualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 25-Dec-2013, rev. 19 -->
+</refentry>
+

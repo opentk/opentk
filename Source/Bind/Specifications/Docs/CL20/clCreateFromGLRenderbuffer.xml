@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY gl_sharingInc SYSTEM "gl_sharingInc.xml">
+<!ENTITY gl_formatsInc SYSTEM "gl_formatsInc.xml">
+<!ENTITY gl_lifetimeInc SYSTEM "gl_lifetimeInc.xml">
+<!ENTITY gl_syncInc SYSTEM "gl_syncInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCreateFromGLRenderbuffer</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clCreateFromGLRenderbuffer</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateFromGLRenderbuffer">
+        <refname>clCreateFromGLRenderbuffer</refname>
+
+        <refpurpose>
+            Creates an OpenCL 2D image object from an OpenGL renderbuffer object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef><link xlink:href="abstractDataTypes.html">cl_mem</link>
+                    <function>
+                        clCreateFromGLRenderbuffer
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef>GLuint<parameter>renderbuffer</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>* errcode_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> context </varname> </term>
+                <listitem>
+                    <para>
+                        A valid OpenCL context created from an OpenGL context.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term> <varname> flags </varname> </term>
+                <listitem>
+                    <para>
+                      A bit-field that is
+                      used to specify usage information. Refer to the table at
+                      <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>
+                      for a description of <varname>flags</varname>. Only
+                      <constant>CL_MEM_READ_ONLY</constant>,
+                      <constant>CL_MEM_WRITE_ONLY</constant>, and
+                      <constant>CL_MEM_READ_WRITE</constant> values specified in the table at
+                      <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>
+                      can be used.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> renderbuffer </varname> </term>
+                <listitem>
+                    <para>
+                      The name of a GL renderbuffer
+                      object. The renderbuffer storage must be specified before the
+                      image object can be created. The <varname>renderbuffer</varname>
+                      format and dimensions defined by OpenGL will be used to create the
+                      2D image object.  Only GL renderbuffers with internal formats that
+                      map to appropriate image channel order and data type 
+                      specified in tables 5.5 and 5.6 (see 
+                      <citerefentry><refentrytitle>cl_image_format</refentrytitle></citerefentry>)
+                      can be used to create the 2D image object.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> errcode_ret </varname> </term>
+                <listitem>
+                    <para>
+                      Returns an appropriate error code as described
+                      below. If <varname>errcode_ret</varname> is NULL, no error code is returned.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          If the state of a GL renderbuffer object is modified through the GL API (i.e. changes
+          to the dimensions or format used to represent pixels of the GL renderbuffer using
+          appropriate GL API calls such as <function>glRenderbufferStorage</function>) while
+          there exists a corresponding CL image object, subsequent use of the CL image object
+          will result in undefined behavior.
+        </para>
+
+        <para>
+          The <citerefentry><refentrytitle>clRetainMemObject</refentrytitle></citerefentry>
+          and <citerefentry><refentrytitle>clReleaseMemObject</refentrytitle></citerefentry>
+          functions can be used to retain and release the image objects.
+        </para>
+
+        &gl_sharingInc;
+        &gl_formatsInc;
+        &gl_lifetimeInc;
+        &gl_syncInc;
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns a valid non-zero OpenCL image object and <varname>errcode_ret</varname> is set
+          to <errorname>CL_SUCCESS</errorname> if the image object is created successfully. 
+          Otherwise, it returns a NULL
+          value with one of the following error values returned in <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not
+              a valid context or was not created from a GL context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if values specified in
+              <varname>flags</varname> are not valid.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_GL_OBJECT</errorname> if <varname>renderbuffer</varname> is not
+              a GL renderbuffer object or if the width or height of <varname>renderbuffer</varname>
+              is zero.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</errorname> if the OpenGL renderbuffer
+              internal format does not map to a supported OpenCL image format.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> if <varname>renderbuffer</varname>
+              is a multi-sample GL renderbuffer object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCreateFromGLRenderbuffer">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_image_format</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainMemObject</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseMemObject</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

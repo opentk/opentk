@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_gl_event</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_gl_event</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_gl_event">
+        <refname>cl_khr_gl_event</refname>
+
+        <refpurpose>
+            Create an OpenCL event object from a GL sync object.
+        </refpurpose>
+    </refnamediv>
+
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+cl_khr_gl_event
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="description"><title>Description</title>
+        <para>
+            This extension enables the function 
+            <citerefentry><refentrytitle>clCreateEventFromGLsyncKHR</refentrytitle></citerefentry>.
+        </para>
+
+        <para>
+            This extension allows creating OpenCL event objects linked to OpenGL fence sync objects,
+            potentially improving efficiency of sharing images and buffers between the two APIs. The
+            companion <function>GL_ARB_cl_event</function> OpenGL extension provides the
+            complementary functionality of creating an OpenGL sync object from an OpenCL event object.
+        </para>
+
+        <para>
+            In addition, this extension modifies the behavior of 
+            <citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>
+            and <citerefentry><refentrytitle>clEnqueueReleaseGLObjects</refentrytitle></citerefentry>
+            to implicitly guarantee synchronization with an OpenGL context bound 
+            in the same thread as the OpenCL context.
+        </para>
+
+        <para>
+            If this extension is supported by an implementation, the 
+            string <function>cl_khr_gl_event</function>
+            will be present in the <constant>CL_PLATFORM_EXTENSIONS</constant> 
+            (see <citerefentry><refentrytitle>clGetPlatformInfo</refentrytitle></citerefentry>) 
+            or <constant>CL_DEVICE_EXTENSIONS</constant> string 
+            (see <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>).
+        </para>
+    </refsect1>
+
+
+<!-- ================================ NOTES  -->
+
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="notes"><title>Notes</title>
+
+     <para>
+        Event objects can also be used to reflect the 
+        status of an OpenGL sync object. The sync object
+        in turn refers to a fence command executing 
+        in an OpenGL command stream. This provides
+        another method of coordinating sharing of 
+        buffers and images between OpenGL and OpenCL
+        (see section 9.7.6.1).
+        </para>
+
+        <para>
+            If the <function>cl_khr_gl_event</function> extension is supported, 
+            then the OpenCL implementation will ensure that
+            any such pending OpenGL operations are complete 
+            for an OpenGL context bound to the same
+            thread as the OpenCL context. This is referred 
+            to as implicit synchronization.
+        </para>
+
+        <para>
+            If the <function>cl_khr_gl_event</function> extension is 
+            supported and the OpenGL context in question supports
+            fence sync objects, completion of OpenGL commands may also 
+            be determined by placing a GL fence command after
+            those commands using <function>glFenceSync</function>, 
+            creating an event from the resulting GL sync object using 
+            <citerefentry><refentrytitle>clCreateEventFromGLsyncKHR</refentrytitle></citerefentry>, 
+            and determining completion of that event object via 
+            <citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>. 
+            This method may be considerably more efficient than calling 
+            <function>glFinish</function>, and is referred to as
+            <varname>explicit synchronization</varname>. Explicit 
+            synchronization is most useful when an OpenGL context
+            bound to another thread is accessing the memory objects.
+        </para>
+
+        <para>
+            If the <function>cl_khr_gl_event</function> extension 
+            is not supported, completion of OpenGL commands may be
+            determined by issuing and waiting for completion of a 
+            <function>glFinish</function> command on all OpenGL
+            contexts with pending references to these objects. Some 
+            implementations may offer other efficient synchronization
+            methods. If such methods exist they will be described 
+            in platform-specific documentation.
+        </para>
+
+        <para>
+            Note that no synchronization method other than 
+            <function>glFinish</function> is portable between all OpenGL
+            implementations and all OpenCL implementations. 
+            While this is the only way to ensure completion that is portable
+            to all platforms, <function>glFinish</function> is 
+            an expensive operation and its use should be avoided if the
+            <function>cl_khr_gl_event</function> extension is supported on a platform.
+        </para>
+    </refsect1>
+
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_gl_event">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateEventFromGLsyncKHR</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 21-Dec-2013, rev. 19 -->
+</refentry>
+

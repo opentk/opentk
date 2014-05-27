@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_mipmap_image</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_mipmap_image</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_mipmap_image">
+        <refname>cl_khr_mipmap_image</refname>
+
+        <refpurpose>
+            Extension adds support for mipmaps.
+        </refpurpose>
+    </refnamediv>
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_mipmap_image : enable
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_mipmap_image_writes : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            This extension adds support for mipmaps. This proposal is implemented 
+            as two optional extensions. The <function>cl_khr_mipmap_image</function> 
+            extension implements support to create a mipmapped image, enqueue commands 
+            to read/write/copy/map a region of a mipmapped image and built-in 
+            functions that can be used to read a mip-mapped image in an OpenCL C 
+            program. The <function>cl_khr_mipmap_image_writes</function> extension 
+            adds built-in functions that can be used to write a mip-mapped image in 
+            an OpenCL C program. If the <function>cl_khr_mipmap_image_writes</function> 
+            extension is supported by the OpenCL device, the 
+            <function>cl_khr_mipmap_image</function> extension must also be supported.
+        </para>
+
+        <bridgehead>Additions to section 5.3 – Image Objects:</bridgehead>
+
+        <para>
+            A mip-mapped 1D image, 1D image array, 2D image, 2D image array 
+            or 3D image is created by specifying <varname>num_mip_levels</varname> 
+            to be a value &gt; 1 in <varname>cl_image_desc</varname> passed to 
+            <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry>. 
+            The dimensions of a mip-mapped image can be a power of two or a 
+            non-power of two. Each successively smaller mipmap level is half 
+            the size of the previous level. If this half value is a fractional 
+            value, it is rounded down to the nearest integer.
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                The following restrictions apply when mip-mapped images are created 
+                with <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry>:
+            </listitem>
+
+            <listitem>
+                <constant>CL_MEM_USE_HOST_PTR</constant> or <constant>CL_MEM_COPY_HOST_PTR</constant> 
+                cannot be specified if a mipmapped image is created.
+            </listitem>
+
+            <listitem>
+                The <varname>host_ptr</varname> argument to 
+                <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry> 
+                must be a NULL value.
+            </listitem>
+
+            <listitem>
+                Mip-mapped images cnnot be created for <constant>CL_MEM_OBJECT_IMAGE1D_BUFFER</constant> 
+                images and multi-sampled (i.e. msaa) images.
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Calls to <citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>, and 
+            <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry> can be used
+            to read from or write to a specific mip-level of a mip-mapped image. 
+            If <varname>image</varname> argument is a 1D image, 
+            <varname>origin</varname>[1] specifies the mip-level to use. 
+            If <varname>image</varname> argument is a 1D image array, 
+            <varname>origin</varname>[2] specifies the mip-level to use. 
+            If <varname>image</varname> argument is a 2D image, 
+            <varname>origin</varname>[3] specifies the mip-level to use. 
+            If <varname>image</varname> argument is a 2D image array or a 3D image, 
+            <varname>origin</varname>[3] specifies the mip-level to use.
+        </para>
+
+        <para>
+            Calls to <citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry> can also 
+            be used to copy from and to a specific mip-level of a mip-mapped image. 
+            If <varname>src_image</varname> argument is a 1D image, 
+            <varname>src_origin</varname>[1] specifies the mip-level to use. 
+            If <varname>src_image</varname> argument is a 1D image array, 
+            <varname>src_origin</varname>[2] specifies the mip-level to use.
+            If <varname>src_image</varname> argument is a 2D image, 
+            <varname>src_origin</varname>[3] specifies the mip-level to use. 
+            If <varname>src_image</varname> argument is a 2D image array or a 3D image, 
+            <varname>src_origin</varname>[3] specifies the mip-level to use. 
+            If <varname>dst_image</varname> argument is a 1D image, 
+            <varname>dst_origin</varname>[1] specifies the mip-level to use. 
+            If <varname>dst_image</varname> argument is a 1D image array, 
+            <varname>dst_origin</varname>[2] specifies the mip-level to use. 
+            If <varname>dst_image</varname> argument is a 2D image, 
+            <varname>dst_origin</varname>[3] specifies the mip-level to use. 
+            If <varname>dst_image</varname> argument is a 2D image array or a 3D image, 
+            <varname>dst_origin</varname>[3] specifies the mip-level to use.
+        </para>
+
+        <para>
+            If the mip level specified is not a valid value, these functions 
+            return the error <errorname>CL_INVALID_MIP_LEVEL</errorname>.
+        </para>
+
+        <bridgehead>Additions to section 5.7 – Sampler Objects:</bridgehead>
+
+        <para>
+            Add the following sampler properties that can be specified when a sampler object is created using 
+            <citerefentry><refentrytitle>clCreateSamplerWithProperties</refentrytitle></citerefentry>.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <colspec colname="col3" colnum="3" />
+
+                <thead>
+                    <row>
+                        <entry>cl_sampler_properties enum</entry>
+                        <entry>Property Value</entry>
+                        <entry>Default Value</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry><constant>CL_SAMPLER_MIP_FILTER_MODE</constant></entry>
+                        <entry>cl_filter_mode</entry>
+                        <entry><constant>CL_FILTER_NONE</constant></entry>
+                    </row>
+
+                    <row>
+                        <entry><constant>CL_SAMPLER_LOD_MIN</constant></entry>
+                        <entry>float</entry>
+                        <entry>0.0f</entry>
+                    </row>
+
+                    <row>
+                        <entry><constant>CL_SAMPLER_LOD_MAX</constant></entry>
+                        <entry>float</entry>
+                        <entry><constant>MAXFLOAT</constant></entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            NOTE: The sampler properties <constant>CL_SAMPLER_MIP_FILTER_MODE</constant>,
+             <constant>CL_SAMPLER_LOD_MIN</constant>, and 
+            <constant>CL_SAMPLER_LOD_MAX</constant> cannot be specified with any 
+            samplers initialized in the OpenCL program source. Only the default 
+            values for these properties will be used. To create a sampler with 
+            specific values for these properties, a sampler object must be created with
+            <citerefentry><refentrytitle>clCreateSamplerWithProperties</refentrytitle></citerefentry> 
+            and passed as an argument to a kernel.
+        </para>
+
+        <bridgehead>Additions to section 6.13.14 – Image Read, Write, and Query Functions</bridgehead>
+
+        <para>
+            The image read and write functions read from and write to mip-level 
+            0 if the <varname>image</varname> argument is a mip-mapped image. 
+            New built-in image read, write, and query functions are added to the 
+            <citerefentry href="imageFunctions"><refentrytitle>image functions</refentrytitle></citerefentry> 
+            available.
+        </para>
+
+        <para>
+            NOTE: <constant>CL_SAMPLER_NORMALIZED_COORDS</constant> must be 
+            <constant>CL_TRUE</constant> for the new built-in read functions 
+            referred to above that read from a mip-mapped image; otherwise 
+            the behavior is undefined. The value specified in the 
+            <varname>lod</varname> argument is clamped to the minimum of 
+            (actual number of mip-levels – 1) in the image or value 
+            specified for <constant>CL_SAMPLER_LOD_MAX</constant>.
+        </para>
+
+        <bridgehead>Additions to section 9.7 – Sharing Memory Objects with OpenGL / OpenGL ES Texture Objects</bridgehead>
+
+        <para>
+            If the <function>cl_khr_mipmap_image</function> extension is 
+            supported by the OpenCL device, the 
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry> 
+            extension adds support for creating a mip-mapped CL image from a mip-mapped GL texture.
+        </para>
+
+        <para>
+            To create a mip-mapped CL image from a mip-mapped GL texture, the 
+            <varname>miplevel</varname> argument to 
+            <citerefentry><refentrytitle>clCreateFromGLTexture</refentrytitle></citerefentry> 
+            should be a negative value. If <varname>miplevel</varname> is a negative 
+            value then a CL mipmapped image object is created from a mipmapped 
+            GL texture object instead of a CL image object for a specific 
+            miplevel of a GL texture.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_mipmap_image">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>,
+            <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromGLTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>,  
+            <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Dec-2013, rev. 19 -->
+</refentry>
+

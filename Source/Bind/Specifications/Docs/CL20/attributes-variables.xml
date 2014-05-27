@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Attributes of Variables</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Attributes of Variables</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="AttributesofVariables">
+        <refname>Attributes of Variables</refname>
+
+        <refpurpose>
+            Attributes of Variables.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+    __attribute__ ((aligned))
+    __attribute__ ((aligned (<emphasis>n</emphasis>)))
+    __attribute__ ((packed))
+    __attribute__ ((endian(host)))
+    __attribute__ ((endian(device)))
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The keyword <constant>__attribute__</constant> allows you to specify special
+          attributes of variables or structure fields. This keyword is followed by an attribute
+          specification inside double parentheses. The <code>aligned</code>, <code>packed</code>,
+          and <code>endian</code> attribute qualifiers are defined below.
+        </para>
+    </refsect1>
+
+    <refsect2 id="aligned"><title>aligned (<varname>alignment</varname>)</title>
+    <!-- Using refsect2 so we can have shaded backgrounds behind examples  -->
+
+    <para>
+      This attribute specifies a minimum alignment for the variable or structure field, measured
+      in bytes. For example, the declaration:
+    </para>
+
+    <para>
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" /> <tbody>
+                    <row>
+                        <entry>    <code>int x __attribute__ ((aligned (16))) = 0;</code></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </para>
+
+    <para>
+      causes the compiler to allocate the global variable <code>x</code> on a 16-byte boundary. The
+      alignment value specified must be a power of two.
+    </para>
+
+    <para>
+      You can also specify the alignment of structure fields. For example, to create double-word
+      aligned <code>int</code> pair, you could write:
+    </para>
+
+    <para>
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" /> <tbody>
+                    <row>
+                        <entry>    <code>struct foo { int x[2] __attribute__ ((aligned (8))); };</code></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </para>
+
+    <para>
+      This is an alternative to creating a union with a <code>double</code> member that forces
+      the union to be double-word aligned.
+    </para>
+
+    <para>
+      As in the preceding examples, you can explicitly specify the alignment (in bytes) that you
+      wish the compiler to use for a given variable or structure field. Alternatively, you can
+      leave out the alignment factor and just ask the compiler to align a variable or field to
+      the maximum useful alignment for the target machine you are compiling for. For example,
+      you could write:
+    </para>
+
+    <para>
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" /> <tbody>
+                    <row>
+                        <entry>    <code>short array[3] __attribute__ ((aligned));</code></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </para>
+
+    <para>
+      Whenever you leave out the alignment factor in an <code>aligned</code> attribute
+      specification, the OpenCL compiler automatically sets the alignment for the declared
+      variable or field to the largest alignment which is ever used for any data type on the
+      target device you are compiling for.
+    </para>
+
+    <para>
+      When used on a <code>struct</code>, or <code>struct</code> member, the aligned
+      <code>attribute</code> can only increase the alignment; in order to decrease it,
+      the <code>packed</code> attribute must be specified as well.  When used as part of a
+      <code>typedef</code>, the <code>aligned</code> attribute can both increase and decrease
+      alignment, and specifying the <code>packed</code> attribute will generate a warning.
+    </para>
+
+    <para>
+      Note that the effectiveness of aligned attributes may be limited by inherent limitations
+      of the OpenCL device and compiler. For some devices, the OpenCL compiler may only be
+      able to arrange for variables to be aligned up to a certain maximum alignment. If the
+      OpenCL compiler is only able to align variables up to a maximum of 8 byte alignment, then
+      specifying <code>aligned(16)</code> in an <code>__attribute__</code> will still only provide
+      you with 8 byte alignment. See your platform-specific documentation for further information.
+    </para>
+</refsect2>
+
+<refsect2 id="packed"><title>packed</title>
+    <!-- Using refsect2 so we can have shaded backgrounds behind examples  -->
+    <para>
+      The <code>packed</code> attribute specifies that a variable or structure field should
+      have the smallest possible alignment -- one byte for a variable, unless you specify a
+      larger value with the <code>aligned</code> attribute.
+    </para>
+
+    <para>
+      Here is a structure in which the field <code>x</code> is packed, so that it immediately
+      follows <code>a</code>:
+    </para>
+
+    <para>
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>    <code>struct foo
+    {
+        char a;
+        int x[2] __attribute__ ((packed));
+    };</code></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </para>
+
+    <para>
+      An attribute list placed at the beginning of a user-defined type applies to the variable
+      of that type and not the type, while attributes following the type body apply to the type.
+    </para>
+
+    <para>
+      For example:
+    </para>
+
+    <para>
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>    <code>/* a has alignment of 128 */
+    __attribute__((aligned(128))) struct A {int i;} a;
+
+    /* b has alignment of 16 */
+    __attribute__((aligned(16))) struct B {double d;}
+                      __attribute__((aligned(32))) b ;
+
+    struct A a1; /* a1 has alignment of 4 */
+
+    struct B b1; /* b1 has alignment of 32 */</code></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </para>
+</refsect2>
+
+<refsect2 id="endian"><title>endian (<varname>endiantype</varname>)</title>
+    <!-- Using refsect2 so we can have shaded backgrounds behind examples  -->
+
+    <para>
+      The <code>endian</code> attribute determines the byte ordering of a variable.
+      <code>endiantype</code> can be set to <code>host</code> indicating the variable uses
+      the endianness of the host processor or can be set to <code>device</code> indicating
+      the variable uses the endianness of the device on which the kernel will be executed. The
+      default is <code>device</code>. For example:
+    </para>
+
+    <para>
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>    <code>global float4 *p   __attribute__ ((endian(host)));</code></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </para>
+
+    <para>
+      specifies that data stored in memory pointed to by <code>p</code> will be in the host
+      endian format.
+    </para>
+
+    <para>
+        The endian attribute can only be applied to pointer 
+        types that are in the <code>global</code> or 
+        <code>constant</code> address space. The endian 
+        attribute cannot be used for variables that are 
+        not a pointer type. The <code>endian</code> attribute value 
+        for both pointers must be the same when 
+        one pointer is assigned to another.
+    </para>
+ </refsect2>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="attributes-variables">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="attribute"><refentrytitle>__attribute__</refentrytitle></citerefentry>,
+            <citerefentry href="attributes-blocksAndControlFlow"><refentrytitle>Blocks and Control-Flow Statement Attributes</refentrytitle></citerefentry>,
+            <citerefentry href="attributes-types"><refentrytitle>Types Attributes</refentrytitle></citerefentry>,
+            <citerefentry href="attributes-loopUnroll"><refentrytitle>Loop Unroll Attributes</refentrytitle></citerefentry>,
+            <citerefentry href="qualifiers"><refentrytitle>Qualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Dec-2013, rev. 19 -->
+</refentry>
+

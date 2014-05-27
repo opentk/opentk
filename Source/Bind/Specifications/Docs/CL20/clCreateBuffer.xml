@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY clCreate_memflagsInc SYSTEM "clCreate_memflagsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>clCreateBuffer
+        <keywordset>
+            <keyword>clCreateBuffer</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clCreateBuffer
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateBuffer">
+        <refname>
+            clCreateBuffer
+        </refname>
+
+        <refpurpose>
+            Creates a buffer object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="abstractDataTypes.html">cl_mem</link> <function>clCreateBuffer</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>size</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*host_ptr</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term><varname>context</varname></term>
+                <listitem>
+                    <para>A valid OpenCL context used to create the buffer object.</para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>flags</varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> A bit-field that is used to specify
+                      allocation and usage information such as the memory arena that should be
+                      used to allocate the buffer object and how it will be used. The following
+                      table describes the possible values for <varname>flags</varname>. If
+                      value specified for <varname>flags</varname> is 0, the default is used
+                      which is <constant>CL_MEM_READ_WRITE</constant>.
+                    </para>
+
+                    <!-- Table 5.3 -->
+                    &clCreate_memflagsInc;
+
+                </listitem>
+            </varlistentry>
+
+            <!-- END PARAMETER TABLE  -->
+
+            <varlistentry>
+                <term><varname>size</varname></term>
+                <listitem>
+                    <para>The size in bytes of the buffer memory object to be allocated.</para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>host_ptr</varname></term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> A pointer to the buffer data that may
+                      already be allocated by the application. The size of the buffer that
+                      <varname>host_ptr</varname> points to must be &ge; <varname>size</varname>
+                      bytes.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>errcode_ret</varname></term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> Returns an appropriate error code. If
+                      <varname>errcode_ret</varname> is NULL, no error code is returned.
+                    </para>
+               </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+<!--    <refsect1 id="notes"><title>Notes</title>
+        <para>
+        </para>
+    </refsect1> -->
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns a valid non-zero buffer object and <varname>errcode_ret</varname>
+          is set to <errorname>CL_SUCCESS</errorname> if the buffer object is created
+          successfully. Otherwise, it returns a NULL value with one of the following error
+          values returned in <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not
+              a valid context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if values specified in
+              <varname>flags</varname> are not valid as defined in the table above.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_BUFFER_SIZE</errorname> if <varname>size</varname> is 0.
+                <para>
+                  Implementations may return <constant>CL_INVALID_BUFFER_SIZE</constant> if <varname>size</varname>
+                  is greater than the <constant>CL_DEVICE_MAX_MEM_ALLOC_SIZE</constant> value
+                  specified in the table of allowed values for <varname>param_name</varname>
+                  for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+                  for all <varname>devices</varname> in context.
+                </para>
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_HOST_PTR</errorname> if <varname>host_ptr</varname>
+              is NULL and <constant>CL_MEM_USE_HOST_PTR</constant> or
+              <constant>CL_MEM_COPY_HOST_PTR</constant> are set in <varname>flags</varname> or if
+              <varname>host_ptr</varname> is not NULL but <constant>CL_MEM_COPY_HOST_PTR</constant>
+              or <constant>CL_MEM_USE_HOST_PTR</constant> are not set in <varname>flags</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MEM_OBJECT_ALLOCATION_FAILURE</errorname> if there is a failure to
+              allocate memory for buffer object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCreateBuffer">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateSubBuffer</refentrytitle></citerefentry>,
+            <citerefentry href="classDiagram"><refentrytitle>Cardinality Diagram</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 6-Dec-2013, rev. 19 -->
+</refentry>
+

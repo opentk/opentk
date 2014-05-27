@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>clSetEventCallback
+        <keywordset>
+            <keyword>clSetEventCallback</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clSetEventCallback
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clSetEventCallback">
+        <refname>
+            clSetEventCallback
+        </refname>
+
+        <refpurpose>
+            Registers a user callback function for a specific command execution status.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link> <function>clSetEventCallback</function>
+                </funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>event</parameter></paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <parameter>command_exec_callback_type</parameter>
+                </paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link> (CL_CALLBACK <parameter>*pfn_event_notify)
+                (<link xlink:href="abstractDataTypes.html">cl_event</link> event, <link xlink:href="scalarDataTypes.html">cl_int</link> event_command_exec_status,
+                 <link xlink:href="scalarDataTypes.html">void</link> *user_data</parameter>)</paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*user_data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term><varname>event</varname></term>
+                <listitem>
+                    <para>A valid event object.</para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>command_exec_callback_type</varname></term>
+                <listitem>
+                    <para>
+                      Specifies the command execution status for which
+                      the callback is registered. The command execution callback values for
+                      which a callback can be registered are <constant>CL_SUBMITTED</constant>,
+                      <constant>CL_RUNNING</constant>, or <constant>CL_COMPLETE</constant>.
+                      There is no guarantee that the callback functions registered for various
+                      execution status values for an event will be called in the exact order
+                      that the execution status of a command changes. Furthermore, it should
+                      be noted that receiving a call back for an event with a status other than
+                      <constant>CL_COMPLETE</constant>, in no way implies that the memory model
+                      or execution model as defined by the OpenCL specification has changed. For
+                      example, it is not valid to assume that a corresponding memory transfer has
+                      completed unless the event is in a state <constant>CL_COMPLETE</constant>.
+                    </para>
+
+                    <para>
+                      The callback function registered for a
+                      <varname>command_exec_callback_type</varname> value of
+                      <constant>CL_COMPLETE</constant> will be called when the command has
+                      completed successfully or is abnormally terminated.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+             <varlistentry>
+                <term><varname>pfn_event_notify</varname></term>
+                <listitem>
+                    <para>
+                      The event callback function that can be
+                      registered by the application. This callback function may be called
+                      asynchronously by the OpenCL implementation. It is the application's
+                      responsibility to ensure that the callback function is thread-safe. The
+                      parameters to this callback function are:
+                    </para>
+
+                    <itemizedlist mark="disc">
+                        <listitem>
+                            <varname>event</varname> is the event object for which the 
+                            callback function is invoked.
+                        </listitem>
+
+                        <listitem>
+                          <varname>event_command_exec_status</varname> represents the
+                          execution status of command for which this callback function is
+                          invoked. See the table of values for <varname>param_value</varname> for
+                          <citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry>
+                          for the command execution status values. If the callback is called as the
+                          result of the command associated with event being abnormally terminated,
+                          an appropriate error code for the error that caused the termination
+                          will be passed to <varname>event_command_exec_status</varname> instead.
+                        </listitem>
+
+                        <listitem>
+                          <varname>user_data</varname> is a pointer to user supplied data.
+                        </listitem>
+                    </itemizedlist>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>user_data</varname></term>
+                <listitem>
+                    <para>
+                      Will be passed as the
+                      <varname>user_data</varname> argument when <varname>pfn_notify</varname>
+                      is called. <varname>user_data</varname> can be NULL.
+                    </para>
+               </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+   <refsect1 id="notes"><title>Notes</title>
+        <para>
+          The registered callback function will be called when the execution status of command
+          associated with <varname>event</varname> changes to an execution status equal to or
+          past the status specified by <varname>command_exec_status</varname>.
+        </para>
+
+        <para>
+          Each call to <function>clSetEventCallback</function> registers the specified user
+          callback function on a callback stack associated with <varname>event</varname>. The
+          order in which the registered user callback functions are called is undefined.
+        </para>
+
+        <para>
+          All callbacks registered for an event object must be called. All enqueued callbacks shall
+          be called before the event object is destroyed. Callbacks must return promptly. The
+          behavior of calling expensive system routines, OpenCL API calls to create contexts
+          or command-queues, or blocking OpenCL operations from the following list below,
+          in a callback is undefined.
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <citerefentry><refentrytitle>clFinish</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+              blocking calls to
+              <citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>,
+              <citerefentry><refentrytitle>clEnqueueReadBufferRect</refentrytitle></citerefentry>,
+              <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>, and
+              <citerefentry><refentrytitle>clEnqueueWriteBufferRect</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+              blocking calls to
+              <citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>
+              and <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+              blocking calls to
+              <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>
+              and <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+              blocking calls to
+              <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>,
+              <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry>,
+              or <citerefentry><refentrytitle>clLinkProgram</refentrytitle></citerefentry>.
+            </listitem>
+
+            <listitem>
+              blocking calls to
+              <citerefentry><refentrytitle>clEnqueueSVMMemcpy</refentrytitle></citerefentry>,
+              or <citerefentry><refentrytitle>clEnqueueSVMMap</refentrytitle></citerefentry>.
+            </listitem>
+        </itemizedlist>
+
+        <para>
+          If an application needs to wait for completion of a routine from the above list in a
+          callback, please use the non-blocking form of the function, and assign a completion
+          callback to it to do the remainder of your work. Note that when a callback (or other
+          code) enqueues commands to a command-queue, the commands are not required to begin
+          execution until the queue is flushed. In standard usage, blocking enqueue calls serve
+          this role by implicitly flushing the queue. Since blocking calls are not permitted in
+          callbacks, those callbacks that enqueue commands on a command queue should either
+          call <citerefentry><refentrytitle>clFlush</refentrytitle></citerefentry>
+          on the queue before returning or arrange for
+          <citerefentry><refentrytitle>clFlush</refentrytitle></citerefentry> to be called
+          later on another thread.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function is executed
+          successfully. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_EVENT</errorname> if <varname>event</varname> 
+                is not a valid event object.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if <varname>pfn_event_notify</varname> 
+                is NULL or if <varname>command_exec_callback_type</varname> is not 
+                <constant>CL_SUBMITTED</constant>, <constant>CL_RUNNING</constant> or
+                <constant>CL_COMPLETE</constant>.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to 
+                allocate resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure 
+                to allocate resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clSetEventCallback">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>-->
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+
