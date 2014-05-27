@@ -174,7 +174,7 @@ namespace Bind
                 sw.WriteLine("/// <summary>");
                 sw.WriteLine(String.Format("/// Defines extension methods to simply {0} usage.", c.Name));
                 sw.WriteLine("/// </summary>");
-                sw.WriteLine(String.Format("public static class {0}Extensions", c.Name));
+                sw.WriteLine(String.Format("public static partial class {0}Extensions", c.Name));
                 sw.WriteLine("{");
                 sw.Indent();
                 foreach (var method in c.Methods.Values.SelectMany(m => m))

@@ -702,7 +702,7 @@ namespace Bind
 
             if (p.CurrentType.ToLower() == "string" && p.Pointer >= 1)
             {
-                // string* -> [In] String[]
+                // string* -> [In] String[] && [In] ref String
                 // [Out] StringBuilder[] parameter is not currently supported
                 // Higher indirection levels are also not supported
                 if (p.Flow == FlowDirection.Out)
@@ -718,6 +718,9 @@ namespace Bind
                 p.Pointer = 0;
                 p.Array = 0;
                 p.WrapperType |= WrapperTypes.StringArrayParameter;
+                p.WrapperType |= WrapperTypes.StringReferenceParameter;
+                p.WrapperType |= WrapperTypes.ArrayParameter;
+                p.WrapperType |= WrapperTypes.ReferenceParameter;
             }
 
             if (p.Pointer > 0 && p.WrapperType == 0)
@@ -1103,6 +1106,11 @@ namespace Bind
                                 p.Array++;
                             }
                             p.Pointer--;
+
+                            if ((p.WrapperType & WrapperTypes.StringArrayParameter) != 0)
+                            {
+                                p.CurrentType = "String";
+                            }
                         }
                     }
 
@@ -1114,6 +1122,11 @@ namespace Bind
 
                             p.Reference = true;
                             p.Pointer--;
+
+                            if ((p.WrapperType & WrapperTypes.StringReferenceParameter) != 0)
+                            {
+                                p.CurrentType = "String";
+                            }
                         }
                     }
 
@@ -1236,20 +1249,6 @@ namespace Bind
                         else
                         {
                             p.QualifiedType = "String"; 
-                        }
-                    }
-
-                    if ((p.WrapperType & WrapperTypes.StringArrayParameter) != 0)
-                    {
-                        if (p.Flow == FlowDirection.Out)
-                        {
-                            throw new NotImplementedException();
-                        }
-                        else
-                        {
-                            p.QualifiedType = "String";
-                            p.Pointer = 0;
-                            p.Array = 1;
                         }
                     }
                 }

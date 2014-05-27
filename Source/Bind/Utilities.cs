@@ -89,6 +89,10 @@ namespace Bind
         /// Function takes a String[] parameter
         /// </summary>
         StringArrayParameter = 1 << 13,
+        /// <summary>
+        /// Function takes a ref String parameter
+        /// </summary>
+        StringReferenceParameter = 1 << 14,
     }
 
     #endregion
