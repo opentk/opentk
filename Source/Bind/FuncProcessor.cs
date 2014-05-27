@@ -523,6 +523,14 @@ namespace Bind
                                     if (Int32.TryParse(node.Value, out count))
                                         d.Parameters[i].ElementCount = count;
                                     break;
+                                case "pointer":
+                                    int pointer;
+                                    if (Int32.TryParse(node.Value, out pointer))
+                                        d.Parameters[i].Pointer = pointer;
+                                    break;
+                                default:
+                                    Console.Error.WriteLine("[Warning] Unknown parameter replacement '{0}'", node.Name);
+                                    break;
                             }
                         }
                     }

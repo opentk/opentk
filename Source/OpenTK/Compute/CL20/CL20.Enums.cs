@@ -28,6 +28,33 @@ using System;
 namespace OpenTK.Compute.CL20
 {
     /// <summary>
+    /// Used in GL.CreateSampler
+    /// </summary>
+    public enum AddressingMode : int
+    {
+        /// <summary>
+        /// Original was CL_ADDRESS_NONE = 0x1130
+        /// </summary>
+        AddressNone = ((int)0x1130)        ,
+        /// <summary>
+        /// Original was CL_ADDRESS_CLAMP_TO_EDGE = 0x1131
+        /// </summary>
+        AddressClampToEdge = ((int)0x1131)        ,
+        /// <summary>
+        /// Original was CL_ADDRESS_CLAMP = 0x1132
+        /// </summary>
+        AddressClamp = ((int)0x1132)        ,
+        /// <summary>
+        /// Original was CL_ADDRESS_REPEAT = 0x1133
+        /// </summary>
+        AddressRepeat = ((int)0x1133)        ,
+        /// <summary>
+        /// Original was CL_ADDRESS_MIRRORED_REPEAT = 0x1134
+        /// </summary>
+        AddressMirroredRepeat = ((int)0x1134)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum All : int
@@ -112,6 +139,14 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_QUEUE_PROFILING_ENABLE = (1 << 1)
         /// </summary>
         QueueProfilingEnable = ((int)(1 << 1))        ,
+        /// <summary>
+        /// Original was CL_MEM_SVM_FINE_GRAIN_BUFFER = (1 << 10)
+        /// </summary>
+        MemSvmFineGrainBuffer = ((int)(1 << 10))        ,
+        /// <summary>
+        /// Original was CL_MEM_SVM_ATOMICS = (1 << 11)
+        /// </summary>
+        MemSvmAtomics = ((int)(1 << 11))        ,
         /// <summary>
         /// Original was CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE = (1 << 2)
         /// </summary>
@@ -973,25 +1008,25 @@ namespace OpenTK.Compute.CL20
         /// </summary>
         PipeMaxPackets = ((int)0x1121)        ,
         /// <summary>
-        /// Original was CL_enumRESS_NONE = 0x1130
+        /// Original was CL_ADDRESS_NONE = 0x1130
         /// </summary>
-        EnumressNone = ((int)0x1130)        ,
+        AddressNone = ((int)0x1130)        ,
         /// <summary>
-        /// Original was CL_enumRESS_CLAMP_TO_EDGE = 0x1131
+        /// Original was CL_ADDRESS_CLAMP_TO_EDGE = 0x1131
         /// </summary>
-        EnumressClampToEdge = ((int)0x1131)        ,
+        AddressClampToEdge = ((int)0x1131)        ,
         /// <summary>
-        /// Original was CL_enumRESS_CLAMP = 0x1132
+        /// Original was CL_ADDRESS_CLAMP = 0x1132
         /// </summary>
-        EnumressClamp = ((int)0x1132)        ,
+        AddressClamp = ((int)0x1132)        ,
         /// <summary>
-        /// Original was CL_enumRESS_REPEAT = 0x1133
+        /// Original was CL_ADDRESS_REPEAT = 0x1133
         /// </summary>
-        EnumressRepeat = ((int)0x1133)        ,
+        AddressRepeat = ((int)0x1133)        ,
         /// <summary>
-        /// Original was CL_enumRESS_MIRRORED_REPEAT = 0x1134
+        /// Original was CL_ADDRESS_MIRRORED_REPEAT = 0x1134
         /// </summary>
-        EnumressMirroredRepeat = ((int)0x1134)        ,
+        AddressMirroredRepeat = ((int)0x1134)        ,
         /// <summary>
         /// Original was CL_FILTER_NEAREST = 0x1140
         /// </summary>
@@ -2681,33 +2716,6 @@ namespace OpenTK.Compute.CL20
     /// <summary>
     /// Not used directly.
     /// </summary>
-    public enum EnumressingMode : int
-    {
-        /// <summary>
-        /// Original was CL_enumRESS_NONE = 0x1130
-        /// </summary>
-        EnumressNone = ((int)0x1130)        ,
-        /// <summary>
-        /// Original was CL_enumRESS_CLAMP_TO_EDGE = 0x1131
-        /// </summary>
-        EnumressClampToEdge = ((int)0x1131)        ,
-        /// <summary>
-        /// Original was CL_enumRESS_CLAMP = 0x1132
-        /// </summary>
-        EnumressClamp = ((int)0x1132)        ,
-        /// <summary>
-        /// Original was CL_enumRESS_REPEAT = 0x1133
-        /// </summary>
-        EnumressRepeat = ((int)0x1133)        ,
-        /// <summary>
-        /// Original was CL_enumRESS_MIRRORED_REPEAT = 0x1134
-        /// </summary>
-        EnumressMirroredRepeat = ((int)0x1134)        ,
-    }
-
-    /// <summary>
-    /// Not used directly.
-    /// </summary>
     public enum ErrorCodes : int
     {
         /// <summary>
@@ -3246,9 +3254,9 @@ namespace OpenTK.Compute.CL20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.CreateBuffer, GL.CreateImage and 5 other functions
     /// </summary>
-    public enum MemFlagsAndSvmMemFlags : int
+    public enum MemFlags : int
     {
         /// <summary>
         /// Original was CL_MEM_READ_WRITE = (1 << 0)
@@ -3274,6 +3282,18 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_MEM_COPY_HOST_PTR = (1 << 5)
         /// </summary>
         MemCopyHostPtr = ((int)(1 << 5))        ,
+        /// <summary>
+        /// Original was CL_MEM_HOST_WRITE_ONLY = (1 << 7)
+        /// </summary>
+        MemHostWriteOnly = ((int)(1 << 7))        ,
+        /// <summary>
+        /// Original was CL_MEM_HOST_READ_ONLY = (1 << 8)
+        /// </summary>
+        MemHostReadOnly = ((int)(1 << 8))        ,
+        /// <summary>
+        /// Original was CL_MEM_HOST_NO_ACCESS = (1 << 9)
+        /// </summary>
+        MemHostNoAccess = ((int)(1 << 9))        ,
     }
 
     /// <summary>
@@ -3540,25 +3560,6 @@ namespace OpenTK.Compute.CL20
     }
 
     /// <summary>
-    /// Not used directly.
-    /// </summary>
-    public enum Reserved(1<<6) : int
-    {
-        /// <summary>
-        /// Original was CL_MEM_HOST_WRITE_ONLY = (1 << 7)
-        /// </summary>
-        MemHostWriteOnly = ((int)(1 << 7))        ,
-        /// <summary>
-        /// Original was CL_MEM_HOST_READ_ONLY = (1 << 8)
-        /// </summary>
-        MemHostReadOnly = ((int)(1 << 8))        ,
-        /// <summary>
-        /// Original was CL_MEM_HOST_NO_ACCESS = (1 << 9)
-        /// </summary>
-        MemHostNoAccess = ((int)(1 << 9))        ,
-    }
-
-    /// <summary>
     /// Used in GL.GetSamplerInfo
     /// </summary>
     public enum SamplerInfo : int
@@ -3595,6 +3596,84 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_SAMPLER_LOD_MAX = 0x1157
         /// </summary>
         SamplerLodMax = ((int)0x1157)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.CreateSamplerWithProperties
+    /// </summary>
+    public enum SamplerProperties : int
+    {
+        /// <summary>
+        /// Original was CL_SAMPLER_NORMALIZED_COORDS = 0x1152
+        /// </summary>
+        SamplerNormalizedCoords = ((int)0x1152)        ,
+        /// <summary>
+        /// Original was CL_SAMPLER_FILTER_MODE = 0x1154
+        /// </summary>
+        SamplerFilterMode = ((int)0x1154)        ,
+        /// <summary>
+        /// Original was CL_SAMPLER_MIP_FILTER_MODE = 0x1155
+        /// </summary>
+        SamplerMipFilterMode = ((int)0x1155)        ,
+        /// <summary>
+        /// Original was CL_SAMPLER_LOD_MIN = 0x1156
+        /// </summary>
+        SamplerLodMin = ((int)0x1156)        ,
+        /// <summary>
+        /// Original was CL_SAMPLER_LOD_MAX = 0x1157
+        /// </summary>
+        SamplerLodMax = ((int)0x1157)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.SVMAlloc
+    /// </summary>
+    public enum SvmMemFlags : int
+    {
+        /// <summary>
+        /// Original was CL_MEM_READ_WRITE = (1 << 0)
+        /// </summary>
+        MemReadWrite = ((int)(1 << 0))        ,
+        /// <summary>
+        /// Original was CL_MEM_WRITE_ONLY = (1 << 1)
+        /// </summary>
+        MemWriteOnly = ((int)(1 << 1))        ,
+        /// <summary>
+        /// Original was CL_MEM_SVM_FINE_GRAIN_BUFFER = (1 << 10)
+        /// </summary>
+        MemSvmFineGrainBuffer = ((int)(1 << 10))        ,
+        /// <summary>
+        /// Original was CL_MEM_SVM_ATOMICS = (1 << 11)
+        /// </summary>
+        MemSvmAtomics = ((int)(1 << 11))        ,
+        /// <summary>
+        /// Original was CL_MEM_READ_ONLY = (1 << 2)
+        /// </summary>
+        MemReadOnly = ((int)(1 << 2))        ,
+        /// <summary>
+        /// Original was CL_MEM_USE_HOST_PTR = (1 << 3)
+        /// </summary>
+        MemUseHostPtr = ((int)(1 << 3))        ,
+        /// <summary>
+        /// Original was CL_MEM_ALLOC_HOST_PTR = (1 << 4)
+        /// </summary>
+        MemAllocHostPtr = ((int)(1 << 4))        ,
+        /// <summary>
+        /// Original was CL_MEM_COPY_HOST_PTR = (1 << 5)
+        /// </summary>
+        MemCopyHostPtr = ((int)(1 << 5))        ,
+        /// <summary>
+        /// Original was CL_MEM_HOST_WRITE_ONLY = (1 << 7)
+        /// </summary>
+        MemHostWriteOnly = ((int)(1 << 7))        ,
+        /// <summary>
+        /// Original was CL_MEM_HOST_READ_ONLY = (1 << 8)
+        /// </summary>
+        MemHostReadOnly = ((int)(1 << 8))        ,
+        /// <summary>
+        /// Original was CL_MEM_HOST_NO_ACCESS = (1 << 9)
+        /// </summary>
+        MemHostNoAccess = ((int)(1 << 9))        ,
     }
 
     /// <summary>
