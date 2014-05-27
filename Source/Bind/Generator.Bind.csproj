@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{31D19132-0000-0000-0000-000000000000}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -55,6 +55,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>full</DebugType>
+    <Commandlineparameters>-mode:cl20</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BaseAddress>285212672</BaseAddress>
@@ -242,6 +243,10 @@
     </Compile>
     <Compile Include="GL2\GL2Generator.cs" />
     <Compile Include="Structures\Documentation.cs" />
+    <Compile Include="CL\CL20Generator.cs" />
+    <None Include="Specifications\CL10\cl.tm" />
+    <None Include="Specifications\CL20\overrides.xml" />
+    <None Include="Specifications\CL20\signatures.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">
@@ -271,5 +276,6 @@
   </ProjectExtensions>
   <ItemGroup>
     <Folder Include="Specifications\Docs\" />
+    <Folder Include="Specifications\CL20\" />
   </ItemGroup>
 </Project>

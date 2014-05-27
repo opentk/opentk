@@ -16,7 +16,7 @@ namespace Bind.ES
             : base(settings, dirName)
         {
             Settings.DefaultOutputPath = String.Format(
-                Settings.DefaultOutputPath, "ES20");
+                Settings.DefaultOutputPath, "Graphics", "ES20");
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
             Settings.DefaultImportsFile = "ES20Core.cs";
             Settings.DefaultDelegatesFile = "ES20Delegates.cs";

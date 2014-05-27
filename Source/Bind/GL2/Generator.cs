@@ -64,7 +64,7 @@ namespace Bind.GL2
         {
             if (settings == null)
                 throw new ArgumentNullException("settings");
-            if (dirName == null)
+            if (String.IsNullOrEmpty(dirName))
                 dirName = "GL2";
 
             Settings = settings.Clone();

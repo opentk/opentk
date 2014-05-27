@@ -9,28 +9,23 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind.CL
 {
-    class CLGenerator : ES.ESGenerator
+    class CLGenerator : Generator
     {
         public CLGenerator(Settings settings, string dirname)
             : base(settings, dirname)
         {
-            glTypemap = null;
-
-            Settings.WrappersFile = "CL.cs";
+            glTypemap = "CL10/cl.tm";
 
             Settings.FunctionPrefix = "cl";
             Settings.ConstantPrefix = "CL_";
             Settings.EnumPrefix = "Cl";
-
             Settings.OutputClass = "CL";
 
-            //Settings.Compatibility &= ~Settings.Legacy.TurnVoidPointersToIntPtr;
             Settings.Compatibility |= Settings.Legacy.NoDebugHelpers;
 
-            Settings.DefaultImportsFile = "CLCore.cs";
-            Settings.DefaultDelegatesFile = "CLDelegates.cs";
-            Settings.DefaultEnumsFile = "CLEnums.cs";
-            Settings.DefaultWrappersFile = "CL.cs";
+            Settings.DefaultOutputNamespace = "OpenTK.Compute.CL10";
+            Settings.DefaultWrappersFile = "CL10.cs";
+            Settings.DefaultEnumsFile = "CL10.Enums.cs";
         }
     }
 }

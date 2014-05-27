@@ -30,6 +30,7 @@ namespace Bind
         ES20,
         ES30,
         CL10,
+        CL20,
     }
 
     enum GeneratorLanguage
@@ -59,7 +60,7 @@ namespace Bind
             Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
             Console.WriteLine();
 
-            string dirName =  "GL2";
+            string dirName =  null;
 
             try
             {
@@ -240,6 +241,10 @@ namespace Bind
                     case GeneratorMode.CL10:
                         Generators.Add(new CLGenerator(Settings, dirName));
                         break;
+
+                    case GeneratorMode.CL20:
+                        Generators.Add(new CL20Generator(Settings, dirName));
+                        break;
                     
                     default:
                         Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl4/es10/es11/es20/es30')");
@@ -337,6 +342,10 @@ namespace Bind
                 case "cl10":
                     mode = GeneratorMode.CL10;
                     Settings.DefaultOutputNamespace = "OpenTK.Compute.OpenCL";
+                    break;
+
+                case "cl20":
+                    mode = GeneratorMode.CL20;
                     break;
 
                 default:

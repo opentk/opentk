@@ -275,7 +275,7 @@ namespace Bind
 
             // Translate enum types
             type.IsEnum = false;
-            if (normal && @enum.Name != "GLenum" && @enum.Name != "Boolean")
+            if (normal && @enum.Name != "GLenum" && @enum.Name != "Boolean" && @enum.Name != "Bool")
             {
                 type.IsEnum = true;
 

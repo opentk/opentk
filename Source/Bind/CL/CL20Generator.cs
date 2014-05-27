@@ -1,6 +1,6 @@
-#region License
+﻿#region License
 //
-// GL2Generator.cs
+// CL20Generator.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -30,36 +30,21 @@
 using System;
 using System.IO;
 
-namespace Bind.GL2
+namespace Bind.CL
 {
-
-    class GL2Generator : Generator
+    class CL20Generator : CLGenerator
     {
-        public GL2Generator(Settings settings, string dirname)
-            : base(settings, dirname)
+        public CL20Generator(Settings settings, string dirname)
+            : base(settings, String.IsNullOrEmpty(dirname) ? "CL20" : dirname)
         {
-            if (Settings.Compatibility == Settings.Legacy.Tao)
-            {
-                Settings.OutputNamespace = "Tao.OpenGl";
-                Settings.OutputClass = "Gl";
-            }
-            else
-            {
-                // Defaults
-            }
-
-            Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-            Settings.DefaultImportsFile = "GLCore.cs";
-            Settings.DefaultDelegatesFile = "GLDelegates.cs";
-            Settings.DefaultEnumsFile = "GLEnums.cs";
-            Settings.DefaultWrappersFile = "GL.cs";
             Settings.DefaultOutputPath = String.Format(
-                Settings.DefaultOutputPath, "Graphics", "OpenGL");
-            Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "GL");
+                Settings.DefaultOutputPath, "Compute", "CL20");
+            //Settings.DefaultDocPath = Path.Combine(Settings.DefaultDocPath,
+            //    "CL20");
 
-            //Settings.DefaultCompatibility |=
-            //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
+            Settings.DefaultOutputNamespace = "OpenTK.Compute.CL20";
+            Settings.DefaultWrappersFile = "CL20.cs";
+            Settings.DefaultEnumsFile = "CL20.Enums.cs";
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Bind
         }
 
         public string DefaultInputPath = "../../../Source/Bind/Specifications";
-        public string DefaultOutputPath = "../../../Source/OpenTK/Graphics/{0}";
+        public string DefaultOutputPath = "../../../Source/OpenTK/{0}/{1}";
         public string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
         public string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
         public string DefaultFallbackDocPath = "../../../Source/Bind/Specifications/Docs/GL";
