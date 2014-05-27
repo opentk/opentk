@@ -15,6 +15,9 @@
   </delete>
 
   <add name="cl">
+    <enum name="CommandQueueFlags">
+      <token name="DEFAULT" value="0" />
+    </enum>
     <enum name="SamplerProperties" version="2.0">
       <use token="SAMPLER_NORMALIZED_COORDS" comment="&lt;see cref='System.Boolean'&gt;; default true" />
       <use token="SAMPLER_ADDRESSING_MODE" comment="&lt;see cref='AddressingMode'&gt;; default Clamp" />
@@ -121,7 +124,7 @@
 
   <replace name="cl">
 
-    <!--<enum name="ErrorCodes"><name>ErrorCode</name></enum>-->
+    <enum name="ErrorCodes"><name>ErrorCode</name></enum>
     <enum name="DeviceType"><name>DeviceTypeFlags</name></enum>
     <enum name="CommandQueuePropertiesFlags"><name>CommandQueueFlags</name></enum>
     <enum name="CommandQueueProperties"><name>CommandQueueFlags</name></enum>
@@ -200,29 +203,80 @@
 
     <!-- ErrorCode parameters -->
     <function name="CreateContextFromType" extension="Core">
-      <param name="errcode_ret"><type>ErrorCodes</type></param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+      </param>
     </function>
     <function name="CreateBuffer" extension="Core">
-      <param name="errcode_ret"><type>ErrorCodes</type></param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+      </param>
     </function>
     <function name="CreateContext" extension="Core">
-      <param name="errcode_ret"><type>ErrorCodes</type></param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+      </param>
     </function>
     <function name="CreateContextFromType" extension="Core">
-      <param name="errcode_ret"><type>ErrorCodes</type></param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+      </param>
     </function>
     <function name="CreateCommandQueue" extension="Core">
-      <param name="errcode_ret"><type>ErrorCodes</type></param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+      </param>
     </function>
     <function name="CreateKernel" extension="Core">
-      <param name="errcode_ret"><type>ErrorCodes</type></param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+      </param>
     </function>
     <function name="CreateProgramWithBinary" extension="Core">
-      <param name="errcode_ret"><type>ErrorCodes</type></param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+      </param>
     </function>
     <function name="CreateProgramWithSource" extension="Core">
-      <param name="errcode_ret"><type>ErrorCodes</type></param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+      </param>
     </function>
   </replace>
+
+  <classes name="cl">
+    <add name="ComputeContextHandle">
+      <function name="CreateBuffer" />
+      <function name="CreateCommandQueue" />
+      <function name="CreateImage" />
+      <function name="CreateImage2D" />
+      <function name="CreateImage3D" />
+      <function name="CreateProgramWithBinary" />
+      <function name="CreateProgramWithBuiltInKernels" />
+      <function name="CreateProgramWithSource" />
+      <function name="CreateSampler" />
+      <function name="CreateUserEvent" />
+      <function name="RetainContext" />
+      <function name="ReleaseContext" />
+      <function name="GetContextInfo" />
+      <function name="GetDeviceInfo" />
+      <function name="GetSupportedImageFormats" />
+      <function name="LinkProgram" />
+      <function name="SetMemObjectDestructorCallback" />
+      <function name="CreateCommandQueueWithProperties" version="2.0" />
+      <function name="CreatePipe" version="2.0" />
+      <function name="SVMAlloc" version="2.0" />
+      <function name="SVMFree" version="2.0" />
+      <function name="CreateSamplerWithProperties" version="2.0" />
+    </add>
+  </classes>
 
 </signatures>
