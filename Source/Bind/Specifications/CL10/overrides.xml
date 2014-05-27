@@ -30,7 +30,7 @@
       <param type="cl_device_id *" name="device_list" flow="in" />
       <param type="char*" name="options" flow="in" />
       <param type="ProgramNotifyDelegate" name="notify" flow="in" />
-      <param type="void*" name="user_data" flow="in" />
+      <param type="IntPtr" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
     <function name="CompileProgram" version="1.0">
@@ -42,7 +42,7 @@
       <param type="cl_program*" name="input_headers" flow="in" />
       <param type="char**" name="header_include_names" flow="in" />
       <param type="ProgramNotifyDelegate" name="notify" flow="in" />
-      <param type="void*" name="user_data" flow="in" />
+      <param type="IntPtr" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
     <function name="CreateContext" version="1.0">
@@ -51,14 +51,14 @@
       <param type="cl_uint" name="num_devices" flow="in" />
       <param type="cl_device_id*" name="devices" flow="in" />
       <param type="ContextNotifyDelegate" name="notify" flow="in" />
-      <param type="void*" name="user_data" flow="in" />
+      <param type="IntPtr" name="user_data" flow="in" />
       <returns type="cl_context" />
     </function>
     <function name="CreateContextFromType" version="1.0">
       <param type="cl_context_properties*" name="properties" flow="in" />
       <param type="cl_device_type" name="device_type" flow="in" />
       <param type="ContextNotifyDelegate" name="notify" flow="in" />
-      <param type="void*" name="user_data" flow="in" />
+      <param type="intptr_t" name="user_data" flow="in" />
       <returns type="cl_context" />
     </function>
     <function name="CreateSampler" version="1.0">
@@ -72,7 +72,7 @@
     <function name="EnqueueNativeKernel" version="1.0">
       <param type="cl_command_queue" name="command_queue" flow="in" />
       <param type="UserNotifyDelegate" name="notify" flow="in" />
-      <param type="void*" name="args" flow="in" />
+      <param type="IntPtr" name="args" flow="in" />
       <param type="size_t" name="cb_args" flow="in" />
       <param type="cl_uint" name="num_mem_objects" flow="in" />
       <param type="cl_mem*" name="mem_list" flow="in" />
@@ -87,7 +87,7 @@
       <param type="cl_uint" name="num_svm_pointers" flow="in" />
       <param type="void**" name="svm_pointers" flow="in" />
       <param type="SvmFreeDelegate" name="free" flow="in" />
-      <param type="void*" name="user_data" flow="in" />
+      <param type="IntPtr" name="user_data" flow="in" />
       <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
       <param type="cl_event*" name="event_wait_list" flow="in" />
       <param type="cl_event*" name="event" flow="out" />
@@ -101,14 +101,14 @@
       <param type="cl_uint" name="num_input_programs" flow="in" />
       <param type="cl_program*" name="input_programs" flow="in" />
       <param type="ProgramNotifyDelegate" name="notify" flow="in" />
-      <param type="void*" name="user_data" flow="in" />
+      <param type="IntPtr" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
     <function name="SetEventCallback" version="1.2">
       <param type="cl_event" name="event" flow="in" />
       <param type="cl_int" name="command_exec_callback_type" flow="in" />
       <param type="EventNotifyDelegate" name="notify" flow="in" />
-      <param type="void*" name="user_data" flow="in" />
+      <param type="IntPtr" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
     <function name="SetMemObjectDestructorCallback" version="1.2">

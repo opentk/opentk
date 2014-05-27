@@ -1666,7 +1666,7 @@ namespace OpenTK.Compute.CL12
     }
 
     /// <summary>
-    /// Used in GL.CreateBuffer, GL.CreateCommandQueue and 3 other functions
+    /// Used in GL.CreateBuffer, GL.CreateCommandQueue and 2 other functions
     /// </summary>
     public enum ErrorCodes : int
     {

@@ -17,6 +17,7 @@ cl_int, int
 cl_uint, uint
 uchar, byte
 size_t, IntPtr
+intptr_t, IntPtr
 
 # Enumerations
 cl_addressing_mode, AddressingMode
