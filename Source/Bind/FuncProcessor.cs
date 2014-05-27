@@ -809,7 +809,7 @@ namespace Bind
             return wrappers;
         }
 
-        static FunctionCollection MarkCLSCompliance(FunctionCollection collection)
+        FunctionCollection MarkCLSCompliance(FunctionCollection collection)
         {
             //foreach (var w in
             //    (from list in collection
@@ -848,6 +848,14 @@ namespace Bind
                                         function_i_is_problematic = true;
                                     else
                                         function_j_is_problematic = true;
+
+                                if (Settings.IsEnabled(Settings.Legacy.NoUnsignedOverloads))
+                                {
+                                    if (wrappers[i].Parameters[k].Unsigned)
+                                        function_i_is_problematic = true;
+                                    if (wrappers[j].Parameters[k].Unsigned)
+                                        function_j_is_problematic = true;
+                                }
                             }
 
                             if (k == wrappers[i].Parameters.Count)
@@ -863,7 +871,7 @@ namespace Bind
 
                 int count = 0;
                 must_remove.Sort();
-                foreach (var i in must_remove)
+                foreach (var i in must_remove.Distinct())
                 {
                     // Careful: whenever we remove a function, the total count
                     // is reduced. We must account for that, or we will remove
@@ -1074,6 +1082,7 @@ namespace Bind
                             {
                                 p.QualifiedType = "IntPtr";
                                 p.Pointer = 0;
+                                p.IsEnum = false;
                             }
                         }
                     }

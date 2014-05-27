@@ -28,6 +28,8 @@ namespace Bind.CL
 
             Settings.Compatibility |= Settings.Legacy.NoDebugHelpers;
             Settings.Compatibility |= Settings.Legacy.UseDllImports;
+            //Settings.Compatibility |= Settings.Legacy.NoPublicUnsafeFunctions;
+            Settings.Compatibility |= Settings.Legacy.NoUnsignedOverloads;
 
             Settings.DefaultOutputNamespace = "OpenTK.Compute.CL10";
             Settings.DefaultWrappersFile = "CL10.cs";

@@ -126,10 +126,8 @@ namespace Bind
             ConstIntEnums = 0x01,
             /// <summary>Leave enums in the default STRANGE_capitalization.ALL_CAPS form.</summary>
             NoAdvancedEnumProcessing = 0x02,
-            /// <summary>Don't allow unsafe wrappers in the interface.</summary>
+            /// <summary>Convert unsafe pointers to IntPtr.</summary>
             NoPublicUnsafeFunctions = 0x04,
-            /// <summary>Don't trim the [fdisub]v? endings from functions.</summary>
-            NoTrimFunctionEnding = NoPublicUnsafeFunctions,
             /// <summary>Don't trim the [gl|wgl|glx|glu] prefixes from functions.</summary>
             NoTrimFunctionPrefix = 0x08,
             /// <summary>
@@ -168,7 +166,22 @@ namespace Bind
             /// for higher versions.
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
+            /// <summary>
+            /// Force all entry points to be DllImports.
+            /// Only useful on MacOS and iOS - on other platforms,
+            /// this will cause API extensions to fail.
+            /// </summary>
             ForceDllImports = 0x10000,
+            /// <summary>Don't trim the [fdisub]v? endings from functions.</summary>
+            NoTrimFunctionEnding = 0x20000,
+            /// <summary>
+            /// Suppress the generation of unsigned overloads.
+            /// Normally, when the specs define a uint parameter,
+            /// we generate both int and uint overloads. This setting
+            /// will keep only the int overloads, reducing the size
+            /// of the generated bindings.
+            /// </summary>
+            NoUnsignedOverloads = 0x40000,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |

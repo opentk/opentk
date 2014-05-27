@@ -258,7 +258,13 @@ namespace Bind.Structures
         {
             get
             {
-                return (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
+                bool unsigned = false;
+                unsigned |= CurrentType.Contains("uint");
+                unsigned |= CurrentType.Contains("ushort");
+                unsigned |= CurrentType.Contains("byte");
+                unsigned |= CurrentType.Contains("UInt");
+                unsigned |= CurrentType.Contains("Byte");
+                return unsigned;
             }
         }
 
