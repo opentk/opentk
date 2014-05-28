@@ -260,7 +260,7 @@ namespace Bind.Structures
         public bool Equals(Parameter other)
         {
             bool result =
-                base.Equals(other.Type) &&
+                Type.Equals(other.Type) &&
                 Name.Equals(other.Name);
 
             return result;
