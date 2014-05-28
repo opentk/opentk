@@ -37,6 +37,11 @@ namespace OpenTK.Compute
     {
         IntPtr value;
 
+        public static explicit operator IntPtr(ComputePlatform platform)
+        {
+            return platform.value;
+        }
+
         public static readonly ComputePlatform Zero =
             new ComputePlatform();
     }
