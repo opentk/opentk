@@ -190,7 +190,7 @@ namespace OpenTK.Platform.iPhoneOS
 
         [Export (selectorName)]
         [Preserve (Conditional = true)]
-        void RunIteration ()
+        void RunIteration (NSTimer timer)
         {
             view.RunIteration (null);
         }
