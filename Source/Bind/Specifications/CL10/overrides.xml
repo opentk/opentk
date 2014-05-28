@@ -50,11 +50,11 @@
     </function>
     <function name="CreateContext" version="1.0">
       <param type="cl_context_properties*" name="properties" flow="in" />
-      <param type="cl_device_type" name="device_type" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
       <param type="cl_device_id*" name="devices" flow="in" />
-      <param type="ContextNotifyDelegate" name="notify" flow="in" />
-      <param type="IntPtr" name="user_data" flow="in" />
+      <param type="IntPtr" name="pfn_notify" flow="in" />
+      <param type="intptr_t" name="user_data" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
       <returns type="cl_context" />
     </function>
     <function name="CreateContextFromType" version="1.0">
@@ -62,6 +62,7 @@
       <param type="cl_device_type" name="device_type" flow="in" />
       <param type="ContextNotifyDelegate" name="notify" flow="in" />
       <param type="intptr_t" name="user_data" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" count="1" />
       <returns type="cl_context" />
     </function>
     <function name="CreateSampler" version="1.0">
@@ -128,12 +129,20 @@
     <enum name="DeviceType"><name>DeviceTypeFlags</name></enum>
     <enum name="CommandQueuePropertiesFlags"><name>CommandQueueFlags</name></enum>
     <enum name="CommandQueueProperties"><name>CommandQueueFlags</name></enum>
+    <!-- Rename ContextProperties enum to avoid conflict with ContextProperties struct -->
+    <enum name="ContextProperties"><name>ComputeContextProperties</name></enum>
 
     <!-- ErrorCode returns -->
     <function name="GetPlatformIDs"><returns>ErrorCodes</returns></function>
     <function name="GetPlatformInfo"><returns>ErrorCodes</returns></function>
-    <function name="GetDeviceIDs"><returns>ErrorCodes</returns></function>
-    <function name="GetDeviceInfo"><returns>ErrorCodes</returns></function>
+    <function name="GetDeviceIDs">
+      <param name="num_devices"><count>1</count><flow>out</flow></param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="GetDeviceInfo">
+      <param name="param_value_size_ret"><count>1</count><flow>out</flow></param>
+      <returns>ErrorCodes</returns>
+    </function>
     <function name="CreateSubDevices"><returns>ErrorCodes</returns></function>
     <function name="RetainDevice"><returns>ErrorCodes</returns></function>
     <function name="ReleaseDevice"><returns>ErrorCodes</returns></function>
@@ -276,6 +285,10 @@
       <function name="SVMAlloc" version="2.0" />
       <function name="SVMFree" version="2.0" />
       <function name="CreateSamplerWithProperties" version="2.0" />
+    </add>
+    <add name="ComputeProgram">
+      <function name="BuildProgram" />
+      <function name="CreateKernel" />
     </add>
   </classes>
 
