@@ -4,6 +4,7 @@
     <!-- Remove broken signatures -->
     <function name="BuildProgram" />
     <function name="CompileProgram" />
+    <function name="CreateBuffer" />
     <function name="CreateCommandQueue" />
     <function name="CreateContext" />
     <function name="CreateContextFromType" />
@@ -51,6 +52,14 @@
       <param type="ProgramNotifyDelegate" name="notify" flow="in" />
       <param type="IntPtr" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
+    </function>
+    <function name="CreateBuffer" version="1.0">
+      <returns type="cl_mem" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_mem_flags" name="flags" flow="in" />
+      <param type="size_t" name="size" flow="in" />
+      <param type="void*" name="host_ptr" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
     </function>
     <function name="CreateCommandQueue" version="1.0">
       <returns type="cl_command_queue" />
@@ -159,8 +168,13 @@
   <replace name="cl">
 
     <enum name="ErrorCodes"><name>ErrorCode</name></enum>
-    <enum name="DeviceType"><name>DeviceTypeFlags</name></enum>
-    <enum name="CommandQueuePropertiesFlags"><name>CommandQueueFlags</name></enum>
+    <enum name="DeviceTypeFlags">
+      <type>long</type>
+    </enum>
+    <enum name="CommandQueuePropertiesFlags">
+      <name>CommandQueueFlags</name>
+      <type>long</type>
+    </enum>
     <enum name="CommandQueueProperties"><name>CommandQueueFlags</name></enum>
     <!-- Rename ContextProperties enum to avoid conflict with ContextProperties struct -->
     <enum name="ContextProperties"><name>ComputeContextProperties</name></enum>
@@ -322,6 +336,13 @@
     <add name="ComputeProgram">
       <function name="BuildProgram" />
       <function name="CreateKernel" />
+    </add>
+    <add name="ComputeKernel">
+      <function name="GetKernelInfo" />
+      <function name="GetKernelWorkGroupInfo" />
+      <function name="ReleaseKernel" />
+      <function name="RetainKernel" />
+      <function name="SetKernelArg" />
     </add>
   </classes>
 
