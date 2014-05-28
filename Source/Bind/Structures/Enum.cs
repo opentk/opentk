@@ -23,18 +23,20 @@ namespace Bind.Structures
         {
         }
 
-        Enum(Type type)
+        public Enum(Type type, Enum e)
             : base(type)
         {
+            Name = e.Name;
+            BaseType = e.BaseType;
+            foreach (var c in e.ConstantCollection)
+            {
+                ConstantCollection.Add(c);
+            }
         }
 
         public override object Clone()
         {
-            return new Enum(this)
-            {
-                Name = this.Name,
-                BaseType = this.BaseType
-            };
+            return new Enum(this, this);
         }
 
         // Returns true if the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...

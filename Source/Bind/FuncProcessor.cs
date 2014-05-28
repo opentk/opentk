@@ -315,7 +315,7 @@ namespace Bind
             // Translate enum types
             if (normal && e.Name != "GLenum" && e.Name != "Boolean" && e.Name != "Bool")
             {
-                type = (Type)e.Clone();
+                type = new Enum(type, e);
 
                 if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
                 {
@@ -338,7 +338,7 @@ namespace Bind
                 if (s.Contains("GLenum") /*&& !String.IsNullOrEmpty(category)*/)
                 {
                     var all = enums[Settings.CompleteEnumName];
-                    type = (Enum)all.Clone();
+                    type = new Enum(type, all);
 
                     if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
                     {
@@ -401,7 +401,7 @@ namespace Bind
                     {
                         if (enums.ContainsKey(name.Value))
                         {
-                            type = (Enum)enums[name.Value].Clone();
+                            type = new Enum(type, enums[name.Value]);
                         }
                         else
                         {
