@@ -34,7 +34,7 @@ namespace OpenTK.Compute.CL10
     /// </summary>
     public static partial class ComputeContextHandleExtensions
     {
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -46,7 +46,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -58,7 +58,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -71,7 +71,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -84,7 +84,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -97,7 +97,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -110,7 +110,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -123,7 +123,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -136,7 +136,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -149,7 +149,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, ref host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -1067,6 +1067,495 @@ namespace OpenTK.Compute.CL10
         public static unsafe ErrorCode GetSupportedImageFormats(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, OpenTK.Compute.CL10.MemObjectType image_type, Int32 num_entries, ImageFormat* image_formats, Int32* num_image_formats)
         {
             return CL.GetSupportedImageFormats(context, flags, image_type, num_entries, image_formats, num_image_formats);
+        }
+
+    }
+    /// <summary>
+    /// Defines extension methods to simply ComputeKernel usage.
+    /// </summary>
+    public static partial class ComputeKernelExtensions
+    {
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelInfo(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelInfo(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetKernelInfo(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, ref param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        {
+            return CL.GetKernelInfo(kernel, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelWorkGroupInfo(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelWorkGroupInfo(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetKernelWorkGroupInfo(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T4 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T4 param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, ref param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T4 param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T4 : struct
+        {
+            return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        public static ErrorCode ReleaseKernel(this ComputeKernel kernel)
+        {
+            return CL.ReleaseKernel(kernel);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        public static ErrorCode RetainKernel(this ComputeKernel kernel)
+        {
+            return CL.RetainKernel(kernel);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="arg_index"></param>
+        /// <param name="arg_size"></param>
+        /// <param name="arg_value"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode SetKernelArg(this ComputeKernel kernel, UInt32 arg_index, IntPtr arg_size, IntPtr arg_value)
+        {
+            return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="arg_index"></param>
+        /// <param name="arg_size"></param>
+        /// <param name="arg_value"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode SetKernelArg(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, IntPtr arg_value)
+        {
+            return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="arg_index"></param>
+        /// <param name="arg_size"></param>
+        /// <param name="arg_value"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode SetKernelArg<T3>(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, [InAttribute, OutAttribute] T3[] arg_value)
+            where T3 : struct
+        {
+            return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="arg_index"></param>
+        /// <param name="arg_size"></param>
+        /// <param name="arg_value"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode SetKernelArg<T3>(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, [InAttribute, OutAttribute] T3[,] arg_value)
+            where T3 : struct
+        {
+            return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="arg_index"></param>
+        /// <param name="arg_size"></param>
+        /// <param name="arg_value"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode SetKernelArg<T3>(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, [InAttribute, OutAttribute] T3[,,] arg_value)
+            where T3 : struct
+        {
+            return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
+        }
+
+        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="arg_index"></param>
+        /// <param name="arg_size"></param>
+        /// <param name="arg_value"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode SetKernelArg<T3>(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, [InAttribute, OutAttribute] ref T3 arg_value)
+            where T3 : struct
+        {
+            return CL.SetKernelArg(kernel, arg_index, arg_size, ref arg_value);
         }
 
     }

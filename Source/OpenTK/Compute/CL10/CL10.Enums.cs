@@ -1215,7 +1215,7 @@ namespace OpenTK.Compute.CL10
     /// <summary>
     /// Not used directly.
     /// </summary>
-    public enum CommandQueueFlags : int
+    public enum CommandQueueFlags : long
     {
         /// <summary>
         /// Original was CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE = (1 << 0)
