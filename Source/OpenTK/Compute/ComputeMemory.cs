@@ -36,5 +36,13 @@ namespace OpenTK.Compute
     public struct ComputeMemory
     {
         IntPtr value;
+
+        public static explicit operator IntPtr(ComputeMemory memory)
+        {
+            return memory.value;
+        }
+
+        public static readonly ComputeMemory Zero =
+            new ComputeMemory();
     }
 }

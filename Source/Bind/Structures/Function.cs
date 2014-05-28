@@ -34,7 +34,7 @@ namespace Bind.Structures
             : this(f.WrappedDelegate)
         {
             Parameters = new ParameterCollection(f.Parameters);
-            ReturnType = new Type(f.ReturnType);
+            ReturnType = (Type)f.ReturnType.Clone();
             TrimmedName = f.TrimmedName;
             Obsolete = f.Obsolete;
             CLSCompliant = f.CLSCompliant;

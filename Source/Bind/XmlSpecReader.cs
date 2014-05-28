@@ -357,7 +357,7 @@ namespace Bind
                     Enum e = new Enum()
                     {
                         Name = node.GetAttribute("name", String.Empty).Trim(),
-                        Type = node.GetAttribute("type", String.Empty).Trim()
+                        BaseType = node.GetAttribute("type", String.Empty).Trim()
                     };
 
                     if (String.IsNullOrEmpty(e.Name))

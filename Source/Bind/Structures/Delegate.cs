@@ -46,7 +46,7 @@ namespace Bind.Structures
             Extension = d.Extension;
             Name = d.Name;
             Parameters = new ParameterCollection(d.Parameters);
-            ReturnType = new Type(d.ReturnType);
+            ReturnType = (Type)d.ReturnType.Clone();
             Version = d.Version;
             //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
             Deprecated = d.Deprecated;

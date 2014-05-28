@@ -295,12 +295,12 @@ namespace Bind
             return GetPath("classes", apiname, apiversion, String.Empty, String.Empty);
         }
 
-        void TranslateType(Bind.Structures.Type type,
+        Bind.Structures.Type TranslateType(Bind.Structures.Type type,
             XPathNavigator function_override, XPathNavigator overrides,
             EnumProcessor enum_processor, EnumCollection enums,
             string category, string apiname)
         {
-            Bind.Structures.Enum @enum;
+            Bind.Structures.Enum e;
             string s;
 
             category = enum_processor.TranslateEnumName(category);
@@ -309,18 +309,17 @@ namespace Bind
             // Special case for Boolean which is there simply because C89 does not support bool types.
             // We don't really need that in C#
             bool normal =
-                enums.TryGetValue(type.CurrentType, out @enum) ||
-                enums.TryGetValue(enum_processor.TranslateEnumName(type.CurrentType), out @enum);
+                enums.TryGetValue(type.CurrentType, out e) ||
+                enums.TryGetValue(enum_processor.TranslateEnumName(type.CurrentType), out e);
 
             // Translate enum types
-            type.IsEnum = false;
-            if (normal && @enum.Name != "GLenum" && @enum.Name != "Boolean" && @enum.Name != "Bool")
+            if (normal && e.Name != "GLenum" && e.Name != "Boolean" && e.Name != "Bool")
             {
-                type.IsEnum = true;
+                type = (Type)e.Clone();
 
                 if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
                 {
-                    type.QualifiedType = "int";
+                    type.QualifiedType = e.BaseType;
                 }
                 else
                 {
@@ -328,7 +327,7 @@ namespace Bind
                     // Make sure we reference the enums rather than the functions.
                     if (normal)
                     {
-                        type.QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, @enum.Name);
+                        type.QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, e.Name);
                     }
                 }
             }
@@ -338,11 +337,12 @@ namespace Bind
                 // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
                 if (s.Contains("GLenum") /*&& !String.IsNullOrEmpty(category)*/)
                 {
-                    type.IsEnum = true;
+                    var all = enums[Settings.CompleteEnumName];
+                    type = (Enum)all.Clone();
 
                     if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
                     {
-                        type.QualifiedType = "int";
+                        type.QualifiedType = all.BaseType;
                     }
                     else
                     {
@@ -351,6 +351,8 @@ namespace Bind
                         // glcore, gles1 and gles2 use the All enum instead.
                         if (apiname == "gl" && enums.ContainsKey(category))
                         {
+                            var category_enum = enums[category];
+                            type = (Enum)category_enum.Clone();
                             type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
                                 Settings.NamespaceSeparator, enum_processor.TranslateEnumName(category));
                         }
@@ -397,7 +399,14 @@ namespace Bind
                     var name = enum_override.SelectSingleNode("name");
                     if (name != null)
                     {
-                        type.CurrentType = name.Value;
+                        if (enums.ContainsKey(name.Value))
+                        {
+                            type = (Enum)enums[name.Value].Clone();
+                        }
+                        else
+                        {
+                            type.CurrentType = name.Value;
+                        }
                     }
                 }
             }
@@ -419,6 +428,8 @@ namespace Bind
                 // an enum parameter with a non-enum type
                 type.QualifiedType = type.CurrentType;
             }
+
+            return type;
         }
 
         static string TranslateExtension(string extension)
@@ -617,7 +628,7 @@ namespace Bind
         {
             ApplyReturnTypeReplacement(d, function_override);
 
-            TranslateType(d.ReturnType, function_override, nav, enum_processor, enums, d.Category, apiname);
+            d.ReturnType = TranslateType(d.ReturnType, function_override, nav, enum_processor, enums, d.Category, apiname);
 
             if (d.ReturnType.CurrentType.ToLower() == "void" && d.ReturnType.Pointer != 0)
             {
@@ -673,18 +684,18 @@ namespace Bind
 
             for (int i = 0; i < d.Parameters.Count; i++)
             {
-                TranslateParameter(d.Parameters[i], function_override, nav, enum_processor, enums, d.Category, apiname);
+                d.Parameters[i] = TranslateParameter(d.Parameters[i], function_override, nav, enum_processor, enums, d.Category, apiname);
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
                     d.Parameters[i].WrapperType |= WrapperTypes.UncheckedParameter;
             }
         }
 
-        void TranslateParameter(Parameter p,
+        Parameter TranslateParameter(Parameter p,
             XPathNavigator function_override, XPathNavigator overrides,
             EnumProcessor enum_processor, EnumCollection enums,
             string category, string apiname)
         {
-            TranslateType(p, function_override, overrides, enum_processor, enums, category, apiname);
+            p.Type = TranslateType(p, function_override, overrides, enum_processor, enums, category, apiname);
 
             // Translate char* -> string. This simplifies the rest of the logic below
             if (p.CurrentType.ToLower().Contains("char") && p.Pointer > 0)
@@ -754,6 +765,8 @@ namespace Bind
             // This causes problems with bool arrays
             //if (CurrentType.ToLower().Contains("bool"))
             //    WrapperType = WrapperTypes.BoolParameter;
+
+            return p;
         }
 
         void TranslateAttributes(Delegate d,
@@ -1032,7 +1045,7 @@ namespace Bind
         static Function CreateReturnTypeConvenienceWrapper(Function d)
         {
             var f = new Function(d);
-            f.ReturnType = new Type(f.Parameters.Last());
+            f.ReturnType = (Type)f.Parameters.Last().Clone();
             f.ReturnType.Pointer = 0;
             f.Parameters.RemoveAt(f.Parameters.Count - 1);
             f.ReturnType.WrapperType |= WrapperTypes.ConvenienceReturnType;
@@ -1147,7 +1160,6 @@ namespace Bind
                             {
                                 p.QualifiedType = "IntPtr";
                                 p.Pointer = 0;
-                                p.IsEnum = false;
                             }
                         }
                     }

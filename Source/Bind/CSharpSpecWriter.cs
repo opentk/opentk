@@ -569,7 +569,7 @@ namespace Bind
 
                     if (@enum.IsFlagCollection)
                         sw.WriteLine("[Flags]");
-                    sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
+                    sw.WriteLine("public enum " + @enum.Name + " : " + @enum.BaseType);
                     sw.WriteLine("{");
                     sw.Indent();
                     WriteConstants(sw, @enum.ConstantCollection.Values);
@@ -677,7 +677,7 @@ namespace Bind
             sb.Append("public enum ");
             sb.Append(e.Name);
             sb.Append(" : ");
-            sb.AppendLine(e.Type);
+            sb.AppendLine(e.BaseType);
             sb.AppendLine("{");
 
             foreach (Constant c in constants)
@@ -815,7 +815,7 @@ namespace Bind
             {
                 if (type.IsEnum)
                 {
-                    t = "System.Int32";
+                    t = (type as Enum).BaseType;
                 }
             }
 

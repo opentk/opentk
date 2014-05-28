@@ -165,8 +165,8 @@ namespace Bind
                             --count == 0 ? ";" : ","));
                     }
                     sw.WriteLine();
-                    sw.WriteLine("{0} mValue;", @enum.Type);
-                    sw.WriteLine("{0}({1} value) {{ mValue = value; }}", @enum.Name, @enum.Type);
+                    sw.WriteLine("{0} mValue;", @enum.BaseType);
+                    sw.WriteLine("{0}({1} value) {{ mValue = value; }}", @enum.Name, @enum.BaseType);
                 }
                 sw.Unindent();
                 sw.WriteLine("}");

@@ -15,9 +15,27 @@ namespace Bind.Structures
 {
     #region class Enum
 
-    class Enum
+    sealed class Enum : Type
     {
         string _name, _type;
+
+        public Enum()
+        {
+        }
+
+        Enum(Type type)
+            : base(type)
+        {
+        }
+
+        public override object Clone()
+        {
+            return new Enum(this)
+            {
+                Name = this.Name,
+                BaseType = this.BaseType
+            };
+        }
 
         // Returns true if the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...
         public bool IsFlagCollection
@@ -31,11 +49,31 @@ namespace Bind.Structures
             set { _name = value; }
         }
 
+        public override string CurrentType
+        {
+            get
+            {
+                return Name;
+            }
+            set
+            {
+                Name = value;
+            }
+        }
+
         // Typically 'long' or 'int'. Default is 'int'.
-        public string Type
+        public string BaseType
         {
             get { return String.IsNullOrEmpty(_type) ? "int" : _type; }
             set { _type = value; }
+        }
+
+        public override bool IsEnum
+        {
+            get
+            {
+                return true;
+            }
         }
 
         SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
@@ -61,7 +99,7 @@ namespace Bind.Structures
         {
             return String.Format("enum {0} : {1} {{ {2} }}",
                 Name,
-                Type,
+                BaseType,
                 ConstantCollection);
         }
 

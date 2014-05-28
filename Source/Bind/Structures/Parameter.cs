@@ -15,7 +15,7 @@ namespace Bind.Structures
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
-    class Parameter : Type, IComparable<Parameter>, IEquatable<Parameter>
+    class Parameter : IComparable<Parameter>, IEquatable<Parameter>
     {
         string cache;
 
@@ -33,12 +33,18 @@ namespace Bind.Structures
         /// Creates a new parameter from the parameters passed (deep copy).
         /// </summary>
         /// <param name="p">The parameter to copy from.</param>
-        public Parameter(Parameter p)
+        protected Parameter(Parameter p)
             : base(p)
         {
             if (p == null)
                 return;
+            Copy(p);
+            //this.rebuild = false;
+        }
 
+        protected void Copy(Parameter p)
+        {
+            Type = (Type)p.Type.Clone();
             Name = p.Name;
             Unchecked = p.Unchecked;
             UnmanagedType = p.UnmanagedType;
@@ -46,10 +52,28 @@ namespace Bind.Structures
             Flow = p.Flow;
             cache = p.cache;
             ComputeSize = p.ComputeSize;
-            //this.rebuild = false;
+        }
+
+        public virtual object Clone()
+        {
+            return new Parameter(this);
         }
 
         #endregion
+
+        #region Public Members
+
+        public Type Type
+        {
+            get
+            {
+                return this;
+            }
+            set
+            {
+                Copy(value);
+            }
+        }
 
         #region RawName
 
@@ -280,14 +304,14 @@ namespace Bind.Structures
         {
             foreach (Parameter p in pc)
             {
-                Add(new Parameter(p));
+                Add((Parameter)p.Clone());
             }
         }
 
         public ParameterCollection(IEnumerable<Parameter> parameters)
         {
             foreach (Parameter p in parameters)
-                Add(new Parameter(p));
+                Add((Parameter)p.Clone());
         }
 
         #endregion
@@ -424,6 +448,24 @@ namespace Bind.Structures
                 if (p.CurrentType == type)
                     return true;
             return false;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region IType Members
+
+        public string CurrentType
+        {
+            get { return Type.CurrentType; }
+            set { Type.CurrentType = value; }
+        }
+
+        public string QualifiedType
+        {
+            get { return Type.CurrentType; }
+            set { Type.CurrentType = value; }
         }
 
         #endregion

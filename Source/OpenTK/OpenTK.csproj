@@ -791,6 +791,7 @@
     </Compile>
     <Compile Include="Compute\CL12\CL12.Extensions.cs" />
     <Compile Include="Compute\ComputeContextHandle.cs" />
+    <Compile Include="Compute\CL10\CL10.Extensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

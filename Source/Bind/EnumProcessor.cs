@@ -58,7 +58,7 @@ namespace Bind
         public EnumCollection Process(EnumCollection enums, string apiname)
         {
             var nav = new XPathDocument(Overrides).CreateNavigator();
-            enums = ProcessNames(enums, nav, apiname);
+            enums = ProcessEnums(enums, nav, apiname);
             enums = ProcessConstants(enums, nav, apiname);
             return enums;
         }
@@ -84,7 +84,7 @@ namespace Bind
 
         #region Private Members
 
-        EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav, string apiname)
+        EnumCollection ProcessEnums(EnumCollection enums, XPathNavigator nav, string apiname)
         {
             EnumCollection processed_enums = new EnumCollection();
             foreach (var e in enums.Values)
@@ -111,7 +111,7 @@ namespace Bind
                 var type_override = enum_override.SelectSingleNode("type");
                 if (type_override != null)
                 {
-                    e.Type = type_override.Value;
+                    e.BaseType = type_override.Value;
                 }
             }
         }
