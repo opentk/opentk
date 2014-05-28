@@ -49,7 +49,7 @@ namespace Bind
         static readonly Regex EndingsNotToTrim = new Regex(
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
             "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
-            "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
+            "|Groups|IDs|Indexed|Instanced|Kernels|Pixels|Queries|Status|Tess|Through" +
             "|Uniforms|Varyings|Weight|Width)$",
             RegexOptions.Compiled);
         static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
@@ -721,6 +721,7 @@ namespace Bind
                 p.WrapperType |= WrapperTypes.StringReferenceParameter;
                 p.WrapperType |= WrapperTypes.ArrayParameter;
                 p.WrapperType |= WrapperTypes.ReferenceParameter;
+                p.WrapperType |= WrapperTypes.PointerParameter;
             }
 
             if (p.Pointer > 0 && p.WrapperType == 0)
