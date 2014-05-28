@@ -36,5 +36,8 @@ namespace OpenTK.Compute
     public struct ComputePlatform
     {
         IntPtr value;
+
+        public static readonly ComputePlatform Zero =
+            new ComputePlatform();
     }
 }

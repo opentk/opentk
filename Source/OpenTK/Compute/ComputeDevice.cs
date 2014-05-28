@@ -40,12 +40,12 @@ namespace OpenTK.Compute
     {
         IntPtr value;
 
-        public static ComputeDevice Zero
+        public static explicit operator IntPtr(ComputeDevice device)
         {
-            get
-            {
-                return new ComputeDevice();
-            }
+            return device.value;
         }
+
+        public static readonly ComputeDevice Zero =
+            new ComputeDevice();
     }
 }
