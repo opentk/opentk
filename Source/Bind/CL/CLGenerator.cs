@@ -12,12 +12,12 @@ namespace Bind.CL
     class CLGenerator : Generator
     {
         public CLGenerator(Settings settings, string dirname)
-            : base(settings, "CL10")
+            : base(settings, dirname ?? "CL10")
         {
-            // Common settings for all OpenCL generators
             Settings.DefaultOutputPath = String.Format(
-                Settings.DefaultOutputPath, "Compute", dirname);
+                Settings.DefaultOutputPath, "Compute", "CL10");
 
+            // Common settings for all OpenCL generators
             Settings.DefaultTypeMapFile = "CL10/cl.tm";
             Settings.DefaultOverridesFile = "../CL10/overrides.xml";
 
