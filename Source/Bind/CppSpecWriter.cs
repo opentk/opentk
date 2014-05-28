@@ -387,12 +387,12 @@ typedef const char* GLstring;
             {
                 foreach (var p in d.Parameters)
                 {
-                    if (p.CurrentType.ToLower() == "string[]")
-                        p.CurrentType = "char**";
-                    if (p.CurrentType.ToLower() == "string")
-                        p.CurrentType = "char*";
+                    if (p.Type.CurrentType.ToLower() == "string[]")
+                        p.Type.CurrentType = "char**";
+                    if (p.Type.CurrentType.ToLower() == "string")
+                        p.Type.CurrentType = "char*";
 
-                    if (p.Reference)
+                    if (p.Type.Reference)
                     {
                        if (/*check_validity &&*/ p.Generic)
                         {
@@ -403,11 +403,11 @@ typedef const char* GLstring;
 
                         if (p.Flow != FlowDirection.Out)
                             sb.Append("const ");
-                        sb.Append(p.QualifiedType);
-                        sb.Append('*', p.Array);
+                        sb.Append(p.Type.QualifiedType);
+                        sb.Append('*', p.Type.Array);
                         sb.Append("&");
                     }
-                    else if (p.Array > 0)
+                    else if (p.Type.Array > 0)
                     {
                         // Hack: generic parameters with array types are
                         // not real (i.e. they are created by the generator
@@ -417,7 +417,7 @@ typedef const char* GLstring;
                         // classes, instead of the main generator.
                         // Note: the 1-dimensional array is handled through the pointer case below.
                         // (C# differentiates between arrays and pointers, C++ doesn't).
-                        if (check_validity && (p.Generic || p.Array == 1))
+                        if (check_validity && (p.Generic || p.Type.Array == 1))
                         {
                             valid = false;
                             return String.Empty;
@@ -425,17 +425,17 @@ typedef const char* GLstring;
 
                         if (p.Flow != FlowDirection.Out)
                             sb.Append("const ");
-                        sb.Append(p.Generic ? "void" : p.QualifiedType); // We don't need generic parameters in C++.
-                        sb.Append('*', p.Array);
+                        sb.Append(p.Generic ? "void" : p.Type.QualifiedType); // We don't need generic parameters in C++.
+                        sb.Append('*', p.Type.Array);
                     }
-                    else if (p.Pointer > 0)
+                    else if (p.Type.Pointer > 0)
                     {
                         if (p.Flow != FlowDirection.Out)
                             sb.Append("const ");
-                        sb.Append(p.Generic ? "void" : p.QualifiedType); // We don't need generic parameters in C++.
-                        sb.Append('*', p.Pointer);
+                        sb.Append(p.Generic ? "void" : p.Type.QualifiedType); // We don't need generic parameters in C++.
+                        sb.Append('*', p.Type.Pointer);
                     }
-                    else if (p.CurrentType == "IntPtr")
+                    else if (p.Type.CurrentType == "IntPtr")
                     {
                         if (p.Flow != FlowDirection.Out)
                             sb.Append("const ");
@@ -443,7 +443,7 @@ typedef const char* GLstring;
                     }
                     else
                     {
-                        sb.Append(p.QualifiedType);
+                        sb.Append(p.Type.QualifiedType);
                     }
 
                     sb.Append(" ");
@@ -654,7 +654,7 @@ typedef const char* GLstring;
             var sb = new StringBuilder();
             foreach (var p in f.Parameters)
             {
-                if (p.Reference)
+                if (p.Type.Reference)
                     sb.Append("&"); // Convert to pointer
                 sb.Append(p.Name);
                 sb.Append(", ");

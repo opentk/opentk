@@ -100,7 +100,7 @@ namespace Bind.Structures
             return String.Format("enum {0} : {1} {{ {2} }}",
                 Name,
                 BaseType,
-                ConstantCollection);
+                String.Join(";", ConstantCollection.Values.Select(v => v.Name).ToArray()));
         }
 
         public void Add(Constant constant)

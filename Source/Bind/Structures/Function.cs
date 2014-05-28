@@ -60,10 +60,10 @@ namespace Bind.Structures
         {
             foreach (Parameter p in Parameters)
             {
-                if (p.Pointer != 0 && p.CurrentType == "void")
+                if (p.Type.Pointer != 0 && p.Type.CurrentType == "void")
                 {
-                    p.CurrentType = "IntPtr";
-                    p.Pointer = 0;
+                    p.Type.CurrentType = "IntPtr";
+                    p.Type.Pointer = 0;
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace Bind.Structures
         public override string ToString()
         {
             return String.Format("{0} {1}{2}",
-                ReturnType,
+                ReturnType.CurrentType,
                 TrimmedName,
                 Parameters);
         }
@@ -261,7 +261,7 @@ namespace Bind.Structures
                     replace |=
                         (from p_old in existing.Parameters
                                         join p_new in f.Parameters on p_old.Name equals p_new.Name
-                                        where p_new.ElementCount == 0 && p_old.ElementCount != 0
+                                        where p_new.Type.ElementCount == 0 && p_old.Type.ElementCount != 0
                                         select true)
                             .Count() != 0;
                     if (replace)

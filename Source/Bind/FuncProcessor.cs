@@ -572,7 +572,7 @@ namespace Bind
                             switch (node.Name)
                             {
                                 case "type":
-                                    d.Parameters[i].CurrentType = (string)node.TypedValue;
+                                    d.Parameters[i].Type.CurrentType = (string)node.TypedValue;
                                     break;
                                 case "name":
                                     d.Parameters[i].Name = (string)node.TypedValue;
@@ -583,12 +583,12 @@ namespace Bind
                                 case "count":
                                     int count;
                                     if (Int32.TryParse(node.Value, out count))
-                                        d.Parameters[i].ElementCount = count;
+                                        d.Parameters[i].Type.ElementCount = count;
                                     break;
                                 case "pointer":
                                     int pointer;
                                     if (Int32.TryParse(node.Value, out pointer))
-                                        d.Parameters[i].Pointer = pointer;
+                                        d.Parameters[i].Type.Pointer = pointer;
                                     break;
                                 default:
                                     Console.Error.WriteLine("[Warning] Unknown parameter replacement '{0}'", node.Name);
@@ -667,7 +667,7 @@ namespace Bind
 
             for (int i = 0; i < f.Parameters.Count; i++)
             {
-                f.Parameters[i].CurrentType = GetCLSCompliantType(f.Parameters[i]);
+                f.Parameters[i].Type.CurrentType = GetCLSCompliantType(f.Parameters[i].Type);
             }
 
             f.ReturnType.CurrentType = GetCLSCompliantType(f.ReturnType);
@@ -685,8 +685,8 @@ namespace Bind
             for (int i = 0; i < d.Parameters.Count; i++)
             {
                 d.Parameters[i] = TranslateParameter(d.Parameters[i], function_override, nav, enum_processor, enums, d.Category, apiname);
-                if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
-                    d.Parameters[i].WrapperType |= WrapperTypes.UncheckedParameter;
+                if (d.Parameters[i].Type.CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
+                    d.Parameters[i].Type.WrapperType |= WrapperTypes.UncheckedParameter;
             }
         }
 
@@ -695,17 +695,17 @@ namespace Bind
             EnumProcessor enum_processor, EnumCollection enums,
             string category, string apiname)
         {
-            p.Type = TranslateType(p, function_override, overrides, enum_processor, enums, category, apiname);
+            p.Type = TranslateType(p.Type, function_override, overrides, enum_processor, enums, category, apiname);
 
             // Translate char* -> string. This simplifies the rest of the logic below
-            if (p.CurrentType.ToLower().Contains("char") && p.Pointer > 0)
+            if (p.Type.CurrentType.ToLower().Contains("char") && p.Type.Pointer > 0)
             {
-                p.CurrentType = "string";
-                p.Pointer--;
+                p.Type.CurrentType = "string";
+                p.Type.Pointer--;
             }
 
             // Find out the necessary wrapper types.
-            if (p.CurrentType.ToLower() == "string" && p.Pointer == 0)
+            if (p.Type.CurrentType.ToLower() == "string" && p.Type.Pointer == 0)
             {
                 // char* -> IntPtr
                 // Due to a bug in the Mono runtime, we need
@@ -713,11 +713,11 @@ namespace Bind
                 // StringBuilder crashes at runtime.
                 // For symmetry, and to avoid potential runtime bugs,
                 // we will also marshal [in] string types manually.
-                p.QualifiedType = "IntPtr";
-                p.WrapperType |= WrapperTypes.StringParameter;
+                p.Type.QualifiedType = "IntPtr";
+                p.Type.WrapperType |= WrapperTypes.StringParameter;
             }
 
-            if (p.CurrentType.ToLower() == "string" && p.Pointer >= 1)
+            if (p.Type.CurrentType.ToLower() == "string" && p.Type.Pointer >= 1)
             {
                 // string* -> [In] String[] && [In] ref String
                 // [Out] StringBuilder[] parameter is not currently supported
@@ -726,36 +726,36 @@ namespace Bind
                 {
                     throw new NotSupportedException("[Out] String* parameters are not currently supported.");
                 }
-                if (p.Pointer >= 2)
+                if (p.Type.Pointer >= 2)
                 {
                     throw new NotSupportedException("String arrays with arity >= 2 are not currently supported.");
                 }
 
-                p.QualifiedType = "IntPtr";
-                p.Pointer = 0;
-                p.Array = 0;
-                p.WrapperType |= WrapperTypes.StringArrayParameter;
-                p.WrapperType |= WrapperTypes.StringReferenceParameter;
-                p.WrapperType |= WrapperTypes.ArrayParameter;
-                p.WrapperType |= WrapperTypes.ReferenceParameter;
-                p.WrapperType |= WrapperTypes.PointerParameter;
+                p.Type.QualifiedType = "IntPtr";
+                p.Type.Pointer = 0;
+                p.Type.Array = 0;
+                p.Type.WrapperType |= WrapperTypes.StringArrayParameter;
+                p.Type.WrapperType |= WrapperTypes.StringReferenceParameter;
+                p.Type.WrapperType |= WrapperTypes.ArrayParameter;
+                p.Type.WrapperType |= WrapperTypes.ReferenceParameter;
+                p.Type.WrapperType |= WrapperTypes.PointerParameter;
             }
 
-            if (p.Pointer > 0 && p.WrapperType == 0)
+            if (p.Type.Pointer > 0 && p.Type.WrapperType == 0)
             {
-                if (p.QualifiedType.ToLower().StartsWith("void"))
+                if (p.Type.QualifiedType.ToLower().StartsWith("void"))
                 {
-                    p.QualifiedType = "IntPtr";
-                    p.Pointer = 0; // Generic parameters cannot have pointers
-                    p.WrapperType |= WrapperTypes.GenericParameter;
-                    p.WrapperType |= WrapperTypes.ArrayParameter;
-                    p.WrapperType |= WrapperTypes.ReferenceParameter;
+                    p.Type.QualifiedType = "IntPtr";
+                    p.Type.Pointer = 0; // Generic parameters cannot have pointers
+                    p.Type.WrapperType |= WrapperTypes.GenericParameter;
+                    p.Type.WrapperType |= WrapperTypes.ArrayParameter;
+                    p.Type.WrapperType |= WrapperTypes.ReferenceParameter;
                 }
                 else
                 {
-                    p.WrapperType |= WrapperTypes.ArrayParameter;
-                    p.WrapperType |= WrapperTypes.ReferenceParameter;
-                    p.WrapperType |= WrapperTypes.PointerParameter;
+                    p.Type.WrapperType |= WrapperTypes.ArrayParameter;
+                    p.Type.WrapperType |= WrapperTypes.ReferenceParameter;
+                    p.Type.WrapperType |= WrapperTypes.PointerParameter;
                 }
             }
 
@@ -815,16 +815,16 @@ namespace Bind
                 var overloads = new List<Function>();
                 foreach (var list in wrappers.Values)
                 {
-                    overloads.AddRange(list.Where(f => f.Parameters.Any(p => p.IsEnum)).Select(f =>
+                    overloads.AddRange(list.Where(f => f.Parameters.Any(p => p.Type.IsEnum)).Select(f =>
                     {
                         var fnew = new Function(f);
                         fnew.Obsolete = "Use strongly-typed overload instead";
                         // Note that we can only overload parameters, not the return type
                         foreach (var p in fnew.Parameters)
                         {
-                            if (p.IsEnum)
+                            if (p.Type.IsEnum)
                             {
-                                p.CurrentType = Settings.CompleteEnumName;
+                                p.Type.CurrentType = Settings.CompleteEnumName;
                             }
                         }
 
@@ -860,8 +860,8 @@ namespace Bind
                         bool modified = false;
                         for (int i = 0; i < f.Parameters.Count; i++)
                         {
-                            cls.Parameters[i].CurrentType = GetCLSCompliantType(cls.Parameters[i]);
-                            if (cls.Parameters[i].CurrentType != f.Parameters[i].CurrentType)
+                            cls.Parameters[i].Type.CurrentType = GetCLSCompliantType(cls.Parameters[i].Type);
+                            if (cls.Parameters[i].Type.CurrentType != f.Parameters[i].Type.CurrentType)
                                 modified = true;
                         }
 
@@ -908,20 +908,20 @@ namespace Bind
                             int k;
                             for (k = 0; k < wrappers[i].Parameters.Count; k++)
                             {
-                                if (wrappers[i].Parameters[k].CurrentType != wrappers[j].Parameters[k].CurrentType)
+                                if (wrappers[i].Parameters[k].Type.CurrentType != wrappers[j].Parameters[k].Type.CurrentType)
                                     break;
 
                                 if (wrappers[i].Parameters[k].DiffersOnlyOnReference(wrappers[j].Parameters[k]))
-                                    if (wrappers[i].Parameters[k].Reference)
+                                if (wrappers[i].Parameters[k].Type.Reference)
                                         function_i_is_problematic = true;
                                     else
                                         function_j_is_problematic = true;
 
                                 if (Settings.IsEnabled(Settings.Legacy.NoUnsignedOverloads))
                                 {
-                                    if (wrappers[i].Parameters[k].Unsigned)
+                                    if (wrappers[i].Parameters[k].Type.Unsigned)
                                         function_i_is_problematic = true;
-                                    if (wrappers[j].Parameters[k].Unsigned)
+                                    if (wrappers[j].Parameters[k].Type.Unsigned)
                                         function_j_is_problematic = true;
                                 }
                             }
@@ -1008,11 +1008,11 @@ namespace Bind
                     is_candidate &=
                         name.StartsWith("Get") || name.StartsWith("Gen") ||
                         name.StartsWith("Delete") || name.StartsWith("New");
-                    is_candidate &= p.Pointer > 0;
+                    is_candidate &= p.Type.Pointer > 0;
                     // if there is a specific count set, such as "4", then this function
                     // returns a vector of specific dimensions and it would be wrong
                     // to generate an overload that returns a value of different size.
-                    is_candidate &= p.ElementCount == 0 || p.ElementCount == 1;
+                    is_candidate &= p.Type.ElementCount == 0 || p.Type.ElementCount == 1;
                     is_candidate &= r.CurrentType == "void" && r.Pointer == 0;
 
                     Function f = null;
@@ -1053,7 +1053,7 @@ namespace Bind
             if (f.Parameters.Count > 0)
             {
                 var p_size = f.Parameters.Last();
-                if (p_size.CurrentType.ToLower().StartsWith("int") && p_size.Pointer == 0)
+                if (p_size.Type.CurrentType.ToLower().StartsWith("int") && p_size.Type.Pointer == 0)
                 {
                     f.Parameters.RemoveAt(f.Parameters.Count - 1);
                     f.ReturnType.WrapperType |= WrapperTypes.ConvenienceArrayReturnType;
@@ -1068,14 +1068,14 @@ namespace Bind
             var p_array = f.Parameters.Last();
             var p_size = f.Parameters[f.Parameters.Count - 2];
             f.Parameters.RemoveAt(f.Parameters.Count - 2);
-            p_array.WrapperType |= WrapperTypes.ConvenienceArrayType;
+            p_array.Type.WrapperType |= WrapperTypes.ConvenienceArrayType;
             // Since this is a 1-element overload, we don't need
             // array or reference wrappers.
-            p_array.WrapperType &= ~(
+            p_array.Type.WrapperType &= ~(
                 WrapperTypes.ReferenceParameter |
                 WrapperTypes.ArrayParameter);
-            p_array.Array = p_array.Pointer = 0;
-            p_array.Reference = false;
+            p_array.Type.Array = p_array.Type.Pointer = 0;
+            p_array.Type.Reference = false;
             return f;
         }
 
@@ -1109,48 +1109,48 @@ namespace Bind
 
                 // Handle all non-generic parameters first.
                 // Generics are handled in a second pass.
-                if ((parameter.WrapperType & WrapperTypes.GenericParameter) == 0)
+                if ((parameter.Type.WrapperType & WrapperTypes.GenericParameter) == 0)
                 {
-                    if ((parameter.WrapperType & WrapperTypes.ArrayParameter) != 0)
+                    if ((parameter.Type.WrapperType & WrapperTypes.ArrayParameter) != 0)
                     {
                         foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.ArrayParameter, func))
                         {
                             var p = wrapper.Parameters[i];
 
-                            if (p.ElementCount == 1)
+                            if (p.Type.ElementCount == 1)
                             {
-                                p.Reference = true;
+                                p.Type.Reference = true;
                             }
                             else
                             {
-                                p.Array++;
+                                p.Type.Array++;
                             }
-                            p.Pointer--;
+                            p.Type.Pointer--;
 
-                            if ((p.WrapperType & WrapperTypes.StringArrayParameter) != 0)
+                            if ((p.Type.WrapperType & WrapperTypes.StringArrayParameter) != 0)
                             {
-                                p.CurrentType = "String";
+                                p.Type.CurrentType = "String";
                             }
                         }
                     }
 
-                    if ((parameter.WrapperType & WrapperTypes.ReferenceParameter) != 0)
+                    if ((parameter.Type.WrapperType & WrapperTypes.ReferenceParameter) != 0)
                     {
                         foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.ReferenceParameter, func))
                         {
                             var p = wrapper.Parameters[i];
 
-                            p.Reference = true;
-                            p.Pointer--;
+                            p.Type.Reference = true;
+                            p.Type.Pointer--;
 
-                            if ((p.WrapperType & WrapperTypes.StringReferenceParameter) != 0)
+                            if ((p.Type.WrapperType & WrapperTypes.StringReferenceParameter) != 0)
                             {
-                                p.CurrentType = "String";
+                                p.Type.CurrentType = "String";
                             }
                         }
                     }
 
-                    if ((parameter.WrapperType & WrapperTypes.PointerParameter) != 0)
+                    if ((parameter.Type.WrapperType & WrapperTypes.PointerParameter) != 0)
                     {
                         foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.PointerParameter, func))
                         {
@@ -1158,20 +1158,20 @@ namespace Bind
 
                             if (Settings.IsEnabled(Settings.Legacy.NoPublicUnsafeFunctions))
                             {
-                                p.QualifiedType = "IntPtr";
-                                p.Pointer = 0;
+                                p.Type.QualifiedType = "IntPtr";
+                                p.Type.Pointer = 0;
                             }
                         }
                     }
 
-                    if (parameter.WrapperType == 0 ||
-                        (parameter.WrapperType & WrapperTypes.ConvenienceArrayType) != 0 ||
-                        (parameter.WrapperType & WrapperTypes.ConvenienceReturnType) != 0 ||
-                        (parameter.WrapperType & WrapperTypes.ConvenienceArrayReturnType) != 0)
+                    if (parameter.Type.WrapperType == 0 ||
+                        (parameter.Type.WrapperType & WrapperTypes.ConvenienceArrayType) != 0 ||
+                        (parameter.Type.WrapperType & WrapperTypes.ConvenienceReturnType) != 0 ||
+                        (parameter.Type.WrapperType & WrapperTypes.ConvenienceArrayReturnType) != 0)
                     {
                         // We don't need to do anything, just add this function directly
                         // to the list of wrappers.
-                        GetWrapper(wrappers, parameter.WrapperType, func);
+                        GetWrapper(wrappers, parameter.Type.WrapperType, func);
                     }
                 }
             }
@@ -1193,16 +1193,16 @@ namespace Bind
                 for (int i = 0; i < wrapper.Parameters.Count; i++)
                 {
                     var parameter = wrapper.Parameters[i];
-                    if ((parameter.WrapperType & WrapperTypes.GenericParameter) != 0)
+                    if ((parameter.Type.WrapperType & WrapperTypes.GenericParameter) != 0)
                     {
                         generic_wrapper = generic_wrapper ?? new Function(wrapper);
                         var p = generic_wrapper.Parameters[i];
 
-                        p.Reference = true;
-                        p.Pointer = 0;
-                        p.Array = 0;
+                        p.Type.Reference = true;
+                        p.Type.Pointer = 0;
+                        p.Type.Array = 0;
                         p.Generic = true;
-                        p.QualifiedType = "T" + i.ToString();
+                        p.Type.QualifiedType = "T" + i.ToString();
                         p.Flow = FlowDirection.Undefined;
                     }
                 }
@@ -1219,7 +1219,7 @@ namespace Bind
                     for (int i = 0; i < wrapper.Parameters.Count; i++)
                     {
                         var parameter = wrapper.Parameters[i];
-                        if ((parameter.WrapperType & WrapperTypes.GenericParameter) != 0)
+                        if ((parameter.Type.WrapperType & WrapperTypes.GenericParameter) != 0)
                         {
                             generic_wrapper = generic_wrapper ?? new Function(wrapper);
                             if (arity > 0)
@@ -1229,17 +1229,17 @@ namespace Bind
                             }
                             var p = generic_wrapper.Parameters[i];
 
-                            p.Reference = false;
-                            p.Pointer = 0;
-                            p.Array = arity;
+                            p.Type.Reference = false;
+                            p.Type.Pointer = 0;
+                            p.Type.Array = arity;
                             if (arity == 0)
                             {
-                                p.QualifiedType = "IntPtr";
+                                p.Type.QualifiedType = "IntPtr";
                             }
                             else
                             {
                                 p.Generic = true;
-                                p.QualifiedType = "T" + i.ToString();
+                                p.Type.QualifiedType = "T" + i.ToString();
                                 p.Flow = FlowDirection.Undefined;
                             }
                         }
@@ -1259,15 +1259,15 @@ namespace Bind
                 for (int i = 0; i < wrapper.Parameters.Count; i++)
                 {
                     var p = wrapper.Parameters[i];
-                    if ((p.WrapperType & WrapperTypes.StringParameter) != 0)
+                    if ((p.Type.WrapperType & WrapperTypes.StringParameter) != 0)
                     {
                         if (p.Flow == FlowDirection.Out)
                         {
-                            p.QualifiedType = "StringBuilder";
+                            p.Type.QualifiedType = "StringBuilder";
                         }
                         else
                         {
-                            p.QualifiedType = "String"; 
+                            p.Type.QualifiedType = "String"; 
                         }
                     }
                 }

@@ -303,7 +303,7 @@ namespace Bind
 
                         case "param":
                             Parameter p = new Parameter();
-                            p.CurrentType = param.GetAttribute("type", String.Empty).Trim();
+                            p.Type.CurrentType = param.GetAttribute("type", String.Empty).Trim();
                             p.Name = param.GetAttribute("name", String.Empty).Trim();
 
                             string element_count = param.GetAttribute("elementcount", String.Empty).Trim();
@@ -315,7 +315,7 @@ namespace Bind
                                     int count;
                                     if (Int32.TryParse(element_count, out count))
                                     {
-                                        p.ElementCount = count;
+                                        p.Type.ElementCount = count;
                                     }
                                 }
                             }
