@@ -133,10 +133,11 @@ namespace Bind.Structures
             if (ContainsKey(key))
             {
                 var e = this[key];
-                foreach (var token in value.ConstantCollection.Values)
+                foreach (var token in e.ConstantCollection.Values)
                 {
-                    Utilities.Merge(e, token);
+                    Utilities.Merge(value, token);
                 }
+                this[key] = value; // Make sure the Enum properties are up-to-date
             }
             else
             {

@@ -92,27 +92,28 @@ namespace Bind
                 // Note that we cannot modify a collection while iterating over it,
                 // so we keep a list of modified enums and remove/readd the
                 // modified items to refresh their keys.
-                string name = e.Name;
-                name = ReplaceName(nav, apiname, name);
-                name = TranslateEnumName(name);
-                e.Name = name;
+                ProcessEnum(nav, apiname, e);
                 processed_enums.Add(e.Name, e);
             }
             return processed_enums;
         }
 
-        static string ReplaceName(XPathNavigator nav, string apiname, string name)
+        static void ProcessEnum(XPathNavigator nav, string apiname, Enum e)
         {
-            var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, name));
+            var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
             if (enum_override != null)
             {
                 var name_override = enum_override.SelectSingleNode("name");
                 if (name_override != null)
                 {
-                    name = name_override.Value;
+                    e.Name = name_override.Value;
+                }
+                var type_override = enum_override.SelectSingleNode("type");
+                if (type_override != null)
+                {
+                    e.Type = type_override.Value;
                 }
             }
-            return name;
         }
 
         public string TranslateEnumName(string name)

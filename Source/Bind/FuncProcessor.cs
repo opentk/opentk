@@ -393,7 +393,13 @@ namespace Bind
                 else if (enum_override.Value == "StringBuilder")
                     type.QualifiedType = "StringBuilder";
                 else
-                    type.CurrentType = enum_override.Value;
+                {
+                    var name = enum_override.SelectSingleNode("name");
+                    if (name != null)
+                    {
+                        type.CurrentType = name.Value;
+                    }
+                }
             }
 
             if (type.CurrentType == "IntPtr" && String.IsNullOrEmpty(type.PreviousType))
