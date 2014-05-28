@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <signatures>
   <delete name="cl">
-    <!-- Remove broken signatures with callbacks -->
+    <!-- Remove broken signatures -->
     <function name="BuildProgram" />
     <function name="CompileProgram" />
+    <function name="CreateCommandQueue" />
     <function name="CreateContext" />
     <function name="CreateContextFromType" />
     <function name="CreateSampler" />
     <function name="EnqueueNativeKernel" />
     <function name="EnqueueSVMFree" />
+    <function name="GetContextInfo" />
+    <function name="GetDeviceInfo" />
+    <function name="GetPlatformIDs" />
     <function name="LinkProgram" />
     <function name="SetEventCallback" />
     <function name="SetMemObjectDestructorCallback" />
@@ -26,7 +30,7 @@
       <use token="SAMPLER_LOD_MIN" comment="Requires CL_KHR_mipmap_image. &lt;see cref='System.Single'&gt;; default 0.0" />
       <use token="SAMPLER_LOD_MAX" comment="Requires CL_KHR_mipmap_image. &lt;see cref='System.Single'&gt;; default 0.0" />
     </enum>
-    <!-- Add corrected callback signatures -->
+    <!-- Add corrected signatures -->
     <function name="BuildProgram" version="1.0">
       <param type="cl_program" name="program" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
@@ -48,13 +52,20 @@
       <param type="IntPtr" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
+    <function name="CreateCommandQueue" version="1.0">
+      <returns type="cl_command_queue" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_device_id" name="device" flow="in" />
+      <param type="cl_command_queue_properties" name="properties" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
     <function name="CreateContext" version="1.0">
       <param type="cl_context_properties*" name="properties" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
       <param type="cl_device_id*" name="devices" flow="in" />
       <param type="IntPtr" name="pfn_notify" flow="in" />
       <param type="intptr_t" name="user_data" flow="in" />
-      <param type="cl_int*" name="errcode_ret" flow="out" />
+      <param type="cl_int*" name="errcode_ret" flow="out" count="1" />
       <returns type="cl_context" />
     </function>
     <function name="CreateContextFromType" version="1.0">
@@ -70,7 +81,7 @@
       <param type="cl_bool" name="normalized_coords" flow="in" />
       <param type="cl_addressing_mode" name="addressing_mode" flow="in" />
       <param type="cl_filter_mode" name="filter_mode" flow="in" />
-      <param type="cl_int*" name="errcode_ret" flow="out" />
+      <param type="cl_int*" name="errcode_ret" flow="out" count="1" />
       <returns type="cl_sampler" />
     </function>
     <function name="EnqueueNativeKernel" version="1.0">
@@ -86,16 +97,27 @@
       <param type="cl_event*" name="event" flow="out" />
       <returns type="ErrorCodes" />
     </function>
-    <function name="EnqueueSVMFree" version="2.0">
-      <param type="cl_command_queue" name="command_queue" flow="in" />
-      <param type="cl_uint" name="num_svm_pointers" flow="in" />
-      <param type="void**" name="svm_pointers" flow="in" />
-      <param type="SvmFreeDelegate" name="free" flow="in" />
-      <param type="IntPtr" name="user_data" flow="in" />
-      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
-      <param type="cl_event*" name="event_wait_list" flow="in" />
-      <param type="cl_event*" name="event" flow="out" />
+    <function name="GetContextInfo" version="1.0">
       <returns type="ErrorCodes" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_context_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" count="1"/>
+    </function>
+    <function name="GetDeviceInfo" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_device_id" name="device" flow="in" />
+      <param type="cl_device_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" count="1" />
+    </function>
+    <function name="GetPlatformIDs" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_uint" name="num_entries" flow="in" />
+      <param type="cl_platform_id*" name="platforms" flow="out" />
+      <param type="cl_uint*" name="num_platforms" flow="out" count="1" />
     </function>
     <function name="LinkProgram" version="1.2">
       <param type="cl_context" name="context" flow="in" />
@@ -119,6 +141,17 @@
       <param type="cl_mem" name="memobj" flow="in" />
       <param type="MemObjectNotifyDelegate" name="pfn_notify" flow="in" />
       <param type="void*" name="user_data" flow="in" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="EnqueueSVMFree" version="2.0">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_uint" name="num_svm_pointers" flow="in" />
+      <param type="void**" name="svm_pointers" flow="in" />
+      <param type="SvmFreeDelegate" name="free" flow="in" />
+      <param type="IntPtr" name="user_data" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="out" />
       <returns type="ErrorCodes" />
     </function>
   </add>

@@ -162,26 +162,26 @@ namespace OpenTK.Compute.CL20
             return CL.CreateBuffer(context, errcode_ret, flags, ref host_ptr, size);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="device"></param>
-        /// <param name="errcode_ret"></param>
         /// <param name="properties"></param>
+        /// <param name="errcode_ret"></param>
         [CLSCompliant(false)]
-        public static CommandQueue CreateCommandQueue(this ComputeContextHandle context, ComputeDevice device, [OutAttribute] out ErrorCode errcode_ret, CommandQueueFlags properties)
+        public static CommandQueue CreateCommandQueue(this ComputeContextHandle context, ComputeDevice device, CommandQueueFlags properties, [OutAttribute] out ErrorCode errcode_ret)
         {
-            return CL.CreateCommandQueue(context, device, out errcode_ret, properties);
+            return CL.CreateCommandQueue(context, device, properties, out errcode_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="device"></param>
-        /// <param name="errcode_ret"></param>
         /// <param name="properties"></param>
+        /// <param name="errcode_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe CommandQueue CreateCommandQueue(this ComputeContextHandle context, ComputeDevice device, [OutAttribute] ErrorCode* errcode_ret, CommandQueueFlags properties)
+        public static unsafe CommandQueue CreateCommandQueue(this ComputeContextHandle context, ComputeDevice device, CommandQueueFlags properties, [OutAttribute] ErrorCode* errcode_ret)
         {
-            return CL.CreateCommandQueue(context, device, errcode_ret, properties);
+            return CL.CreateCommandQueue(context, device, properties, errcode_ret);
         }
 
         /// <summary>[requires: v2.0 or ]</summary>
@@ -984,19 +984,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="normalized_coords"></param>
         /// <param name="addressing_mode"></param>
         /// <param name="filter_mode"></param>
-        /// <param name="errcode_ret"></param>
-        [CLSCompliant(false)]
-        public static ComputeSampler CreateSampler(this ComputeContextHandle context, bool normalized_coords, OpenTK.Compute.CL20.AddressingMode addressing_mode, OpenTK.Compute.CL20.FilterMode filter_mode, [OutAttribute] Int32[] errcode_ret)
-        {
-            return CL.CreateSampler(context, normalized_coords, addressing_mode, filter_mode, errcode_ret);
-        }
-
-        /// <summary>[requires: v1.0 or ]</summary>
-        /// <param name="context"></param>
-        /// <param name="normalized_coords"></param>
-        /// <param name="addressing_mode"></param>
-        /// <param name="filter_mode"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
         public static ComputeSampler CreateSampler(this ComputeContextHandle context, bool normalized_coords, OpenTK.Compute.CL20.AddressingMode addressing_mode, OpenTK.Compute.CL20.FilterMode filter_mode, [OutAttribute] out Int32 errcode_ret)
         {
@@ -1008,7 +996,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="normalized_coords"></param>
         /// <param name="addressing_mode"></param>
         /// <param name="filter_mode"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
         public static unsafe ComputeSampler CreateSampler(this ComputeContextHandle context, bool normalized_coords, OpenTK.Compute.CL20.AddressingMode addressing_mode, OpenTK.Compute.CL20.FilterMode filter_mode, [OutAttribute] Int32* errcode_ret)
         {
@@ -1056,324 +1044,260 @@ namespace OpenTK.Compute.CL20
             return CL.ReleaseContext(context);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value, IntPtr param_value_size, [OutAttribute] IntPtr[] param_value_size_ret)
+        public static ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
         {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
+        public static unsafe ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
         {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, out param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
+        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[] param_value, IntPtr param_value_size, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T2 : struct
+        public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
-            where T2 : struct
+        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, out param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
-            where T2 : struct
+        public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T2 : struct
+        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
-            where T2 : struct
+        public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, out param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
-            where T2 : struct
+        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value_size, ref param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T2 : struct
+        public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
-        /// <param name="context"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,,] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
-            where T2 : struct
-        {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, out param_value_size_ret);
-        }
-
-        /// <summary>[requires: v2.0 or ]</summary>
-        /// <param name="context"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static unsafe ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
-            where T2 : struct
-        {
-            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v2.0 or ]</summary>
-        /// <param name="context"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] ref T2 param_value, IntPtr param_value_size, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T2 : struct
-        {
-            return CL.GetContextInfo(context, param_name, ref param_value, param_value_size, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v2.0 or ]</summary>
-        /// <param name="context"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] ref T2 param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
-            where T2 : struct
-        {
-            return CL.GetContextInfo(context, param_name, ref param_value, param_value_size, out param_value_size_ret);
-        }
-
-        /// <summary>[requires: v2.0 or ]</summary>
-        /// <param name="context"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static unsafe ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] ref T2 param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
-            where T2 : struct
-        {
-            return CL.GetContextInfo(context, param_name, ref param_value, param_value_size, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
+        public static ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
         {
-            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, out param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
+        public static unsafe ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
         {
-            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
-            where T2 : struct
+        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, out param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
-            where T2 : struct
+        public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[,] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
-            where T2 : struct
+        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, out param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
-            where T2 : struct
+        public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[,,] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
-            where T2 : struct
+        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, out param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[,,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
-            where T2 : struct
+        public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] ref T2 param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
-            where T2 : struct
+        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, ref param_value, param_value_size, out param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value_size, ref param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v1.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value"></param>
         /// <param name="param_value_size"></param>
-        /// <param name="param_value_size_ret"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] ref T2 param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
-            where T2 : struct
+        public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, ref param_value, param_value_size, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
 
         /// <summary>[requires: v2.0 or ]</summary>

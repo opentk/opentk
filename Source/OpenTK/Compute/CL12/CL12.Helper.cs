@@ -49,10 +49,15 @@ namespace OpenTK.Compute.CL12
         }
     }
 
-    public delegate void ContextNotifyDelegate();
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    public delegate void ContextNotifyDelegate([MarshalAs(UnmanagedType.LPStr)] string errinfo, IntPtr private_info, IntPtr cb, IntPtr user_data);
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void EventNotifyDelegate();
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void MemObjectNotifyDelegate();
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void ProgramNotifyDelegate();
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void UserNotifyDelegate();
 
     [StructLayout(LayoutKind.Sequential)]
