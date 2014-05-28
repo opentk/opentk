@@ -461,13 +461,13 @@
       <param type="cl_platform_id" name="platform" flow="in" />
       <returns type="cl_int" />
     </function>
-    <function name="GetDeviceIDs" version="1.2">
+    <function name="GetDeviceIDs" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_platform_id" name="platform" flow="in" />
       <param type="cl_device_type" name="device_type" flow="in" />
+      <param type="cl_uint" name="num_entries" flow="in" />
       <param type="cl_device_id*" name="devices" flow="in" />
       <param type="cl_uint*" name="num_devices" flow="in" />
-      <param type="cl_uint" name="num_entries" flow="in" />
-      <param type="cl_platform_id" name="platform" flow="in" />
-      <returns type="cl_int" />
     </function>
     <function name="GetDeviceInfo" version="1.2">
       <param type="cl_device_id" name="device" flow="in" />
@@ -745,17 +745,17 @@
       <returns type="cl_int" />
     </function>
     <function name="CreateKernel" version="1.2">
-      <param type="cl_int*" name="errcode_ret" flow="out" />
-      <param type="char*" name="kernel_name" flow="in" />
-      <param type="cl_program" name="program" flow="in" />
       <returns type="cl_kernel" />
+      <param type="cl_program" name="program" flow="in" />
+      <param type="char*" name="kernel_name" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
     </function>
     <function name="CreateKernelsInProgram" version="1.2">
-      <param type="cl_kernel*" name="kernels" flow="in" />
-      <param type="cl_uint" name="num_kernels" flow="in" />
-      <param type="cl_uint*" name="num_kernels_ret" flow="out" />
-      <param type="cl_program" name="program" flow="in" />
       <returns type="cl_int" />
+      <param type="cl_program" name="program" flow="in" />
+      <param type="cl_uint" name="num_kernels" flow="in" />
+      <param type="cl_kernel*" name="kernels" flow="in" />
+      <param type="cl_uint*" name="num_kernels_ret" flow="out" />
     </function>
     <function name="RetainKernel" version="1.2">
       <param type="cl_kernel" name="kernel" flow="in" />
