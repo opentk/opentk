@@ -985,18 +985,6 @@ namespace OpenTK.Compute.CL10
         /// <param name="param_value"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-        {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="device"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
@@ -1010,19 +998,6 @@ namespace OpenTK.Compute.CL10
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
-        {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="device"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1048,19 +1023,6 @@ namespace OpenTK.Compute.CL10
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
-            where T3 : struct
-        {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="device"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
             where T3 : struct
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
@@ -1099,19 +1061,6 @@ namespace OpenTK.Compute.CL10
         /// <param name="param_value"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
-        {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="device"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
         {
@@ -1129,19 +1078,6 @@ namespace OpenTK.Compute.CL10
             where T3 : struct
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="device"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
-        {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
 
         /// <summary>[requires: v1.0 or 1.0]</summary>

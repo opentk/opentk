@@ -34,661 +34,904 @@ namespace OpenTK.Compute.CL20
     /// </summary>
     public static partial class ComputeContextHandleExtensions
     {
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
-        /// <param name="flags"></param>
-        /// <param name="size"></param>
-        /// <param name="host_ptr"></param>
         /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="size"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateBuffer(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, IntPtr size, IntPtr host_ptr, [OutAttribute] out ErrorCode errcode_ret)
+        public static ComputeMemory CreateBuffer(this ComputeContextHandle context, [OutAttribute] out ErrorCode errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, IntPtr size)
         {
-            return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
+            return CL.CreateBuffer(context, out errcode_ret, flags, host_ptr, size);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
-        /// <param name="flags"></param>
-        /// <param name="size"></param>
-        /// <param name="host_ptr"></param>
         /// <param name="errcode_ret"></param>
-        [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateBuffer(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, IntPtr size, IntPtr host_ptr, [OutAttribute] ErrorCode* errcode_ret)
-        {
-            return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="context"></param>
         /// <param name="flags"></param>
-        /// <param name="size"></param>
         /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="size"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[] host_ptr, [OutAttribute] out ErrorCode errcode_ret)
+        public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, [OutAttribute] out ErrorCode errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, IntPtr size)
             where T3 : struct
         {
-            return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
+            return CL.CreateBuffer(context, out errcode_ret, flags, host_ptr, size);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
-        /// <param name="flags"></param>
-        /// <param name="size"></param>
-        /// <param name="host_ptr"></param>
         /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="size"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[] host_ptr, [OutAttribute] ErrorCode* errcode_ret)
+        public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, [OutAttribute] out ErrorCode errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, IntPtr size)
             where T3 : struct
         {
-            return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
+            return CL.CreateBuffer(context, out errcode_ret, flags, host_ptr, size);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
-        /// <param name="flags"></param>
-        /// <param name="size"></param>
-        /// <param name="host_ptr"></param>
         /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="size"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[,] host_ptr, [OutAttribute] out ErrorCode errcode_ret)
+        public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, [OutAttribute] out ErrorCode errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, IntPtr size)
             where T3 : struct
         {
-            return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
+            return CL.CreateBuffer(context, out errcode_ret, flags, host_ptr, size);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
-        /// <param name="flags"></param>
-        /// <param name="size"></param>
-        /// <param name="host_ptr"></param>
         /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="size"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[,] host_ptr, [OutAttribute] ErrorCode* errcode_ret)
+        public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, [OutAttribute] out ErrorCode errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, IntPtr size)
             where T3 : struct
         {
-            return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
+            return CL.CreateBuffer(context, out errcode_ret, flags, ref host_ptr, size);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
-        /// <param name="flags"></param>
-        /// <param name="size"></param>
-        /// <param name="host_ptr"></param>
         /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="size"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[,,] host_ptr, [OutAttribute] out ErrorCode errcode_ret)
+        public static unsafe ComputeMemory CreateBuffer(this ComputeContextHandle context, [OutAttribute] ErrorCode* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, IntPtr size)
+        {
+            return CL.CreateBuffer(context, errcode_ret, flags, host_ptr, size);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="size"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, [OutAttribute] ErrorCode* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, IntPtr size)
             where T3 : struct
         {
-            return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
+            return CL.CreateBuffer(context, errcode_ret, flags, host_ptr, size);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
-        /// <param name="flags"></param>
-        /// <param name="size"></param>
-        /// <param name="host_ptr"></param>
         /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="size"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[,,] host_ptr, [OutAttribute] ErrorCode* errcode_ret)
+        public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, [OutAttribute] ErrorCode* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, IntPtr size)
             where T3 : struct
         {
-            return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
+            return CL.CreateBuffer(context, errcode_ret, flags, host_ptr, size);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
-        /// <param name="flags"></param>
-        /// <param name="size"></param>
-        /// <param name="host_ptr"></param>
         /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="size"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] ref T3 host_ptr, [OutAttribute] out ErrorCode errcode_ret)
+        public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, [OutAttribute] ErrorCode* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, IntPtr size)
             where T3 : struct
         {
-            return CL.CreateBuffer(context, flags, size, ref host_ptr, out errcode_ret);
+            return CL.CreateBuffer(context, errcode_ret, flags, host_ptr, size);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
-        /// <param name="flags"></param>
-        /// <param name="size"></param>
-        /// <param name="host_ptr"></param>
         /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="size"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] ref T3 host_ptr, [OutAttribute] ErrorCode* errcode_ret)
+        public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, [OutAttribute] ErrorCode* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, IntPtr size)
             where T3 : struct
         {
-            return CL.CreateBuffer(context, flags, size, ref host_ptr, errcode_ret);
+            return CL.CreateBuffer(context, errcode_ret, flags, ref host_ptr, size);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="device"></param>
-        /// <param name="properties"></param>
         /// <param name="errcode_ret"></param>
+        /// <param name="properties"></param>
         [CLSCompliant(false)]
-        public static CommandQueue CreateCommandQueue(this ComputeContextHandle context, ComputeDevice device, CommandQueueFlags properties, [OutAttribute] out ErrorCode errcode_ret)
+        public static CommandQueue CreateCommandQueue(this ComputeContextHandle context, ComputeDevice device, [OutAttribute] out ErrorCode errcode_ret, CommandQueueFlags properties)
         {
-            return CL.CreateCommandQueue(context, device, properties, out errcode_ret);
+            return CL.CreateCommandQueue(context, device, out errcode_ret, properties);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="device"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="properties"></param>
-        /// <param name="errcode_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe CommandQueue CreateCommandQueue(this ComputeContextHandle context, ComputeDevice device, CommandQueueFlags properties, [OutAttribute] ErrorCode* errcode_ret)
+        public static unsafe CommandQueue CreateCommandQueue(this ComputeContextHandle context, ComputeDevice device, [OutAttribute] ErrorCode* errcode_ret, CommandQueueFlags properties)
         {
-            return CL.CreateCommandQueue(context, device, properties, errcode_ret);
+            return CL.CreateCommandQueue(context, device, errcode_ret, properties);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, ImageDescriptor[] image_desc, ImageFormat[] image_format)
+        {
+            return CL.CreateImage(context, errcode_ret, flags, host_ptr, image_desc, image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, ImageDescriptor[] image_desc, ImageFormat[] image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, errcode_ret, flags, host_ptr, image_desc, image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, ImageDescriptor[] image_desc, ImageFormat[] image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, errcode_ret, flags, host_ptr, image_desc, image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, ImageDescriptor[] image_desc, ImageFormat[] image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, errcode_ret, flags, host_ptr, image_desc, image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, ImageDescriptor[] image_desc, ImageFormat[] image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, errcode_ret, flags, ref host_ptr, image_desc, image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, ref ImageDescriptor image_desc, ref ImageFormat image_format)
+        {
+            return CL.CreateImage(context, out errcode_ret, flags, host_ptr, ref image_desc, ref image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, ref ImageDescriptor image_desc, ref ImageFormat image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, out errcode_ret, flags, host_ptr, ref image_desc, ref image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, ref ImageDescriptor image_desc, ref ImageFormat image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, out errcode_ret, flags, host_ptr, ref image_desc, ref image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, ref ImageDescriptor image_desc, ref ImageFormat image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, out errcode_ret, flags, host_ptr, ref image_desc, ref image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, ref ImageDescriptor image_desc, ref ImageFormat image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, out errcode_ret, flags, ref host_ptr, ref image_desc, ref image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateImage(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, ImageDescriptor* image_desc, ImageFormat* image_format)
+        {
+            return CL.CreateImage(context, errcode_ret, flags, host_ptr, image_desc, image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, ImageDescriptor* image_desc, ImageFormat* image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, errcode_ret, flags, host_ptr, image_desc, image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, ImageDescriptor* image_desc, ImageFormat* image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, errcode_ret, flags, host_ptr, image_desc, image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, ImageDescriptor* image_desc, ImageFormat* image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, errcode_ret, flags, host_ptr, image_desc, image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_desc"></param>
+        /// <param name="image_format"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateImage<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, ImageDescriptor* image_desc, ImageFormat* image_format)
+            where T3 : struct
+        {
+            return CL.CreateImage(context, errcode_ret, flags, ref host_ptr, image_desc, image_format);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
+        /// <param name="image_format"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage2D(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [OutAttribute] Int32[] errcode_ret)
+        public static ComputeMemory CreateImage2D(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, ImageFormat[] image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
         {
-            return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage2D(context, errcode_ret, flags, host_ptr, image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[] host_ptr, [OutAttribute] Int32[] errcode_ret)
-            where T6 : struct
+        public static ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, ImageFormat[] image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage2D(context, errcode_ret, flags, host_ptr, image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,] host_ptr, [OutAttribute] Int32[] errcode_ret)
-            where T6 : struct
+        public static ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, ImageFormat[] image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage2D(context, errcode_ret, flags, host_ptr, image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,,] host_ptr, [OutAttribute] Int32[] errcode_ret)
-            where T6 : struct
+        public static ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, ImageFormat[] image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage2D(context, errcode_ret, flags, host_ptr, image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] ref T6 host_ptr, [OutAttribute] Int32[] errcode_ret)
-            where T6 : struct
+        public static ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, ImageFormat[] image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, ref host_ptr, errcode_ret);
+            return CL.CreateImage2D(context, errcode_ret, flags, ref host_ptr, image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage2D(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [OutAttribute] out Int32 errcode_ret)
+        public static ComputeMemory CreateImage2D(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, ref ImageFormat image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
         {
-            return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
+            return CL.CreateImage2D(context, out errcode_ret, flags, host_ptr, ref image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[] host_ptr, [OutAttribute] out Int32 errcode_ret)
-            where T6 : struct
+        public static ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, ref ImageFormat image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
+            return CL.CreateImage2D(context, out errcode_ret, flags, host_ptr, ref image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,] host_ptr, [OutAttribute] out Int32 errcode_ret)
-            where T6 : struct
+        public static ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, ref ImageFormat image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
+            return CL.CreateImage2D(context, out errcode_ret, flags, host_ptr, ref image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,,] host_ptr, [OutAttribute] out Int32 errcode_ret)
-            where T6 : struct
+        public static ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, ref ImageFormat image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
+            return CL.CreateImage2D(context, out errcode_ret, flags, host_ptr, ref image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] ref T6 host_ptr, [OutAttribute] out Int32 errcode_ret)
-            where T6 : struct
+        public static ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, ref ImageFormat image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, ref host_ptr, out errcode_ret);
+            return CL.CreateImage2D(context, out errcode_ret, flags, ref host_ptr, ref image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage2D(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [OutAttribute] Int32* errcode_ret)
+        public static unsafe ComputeMemory CreateImage2D(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, ImageFormat* image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
         {
-            return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage2D(context, errcode_ret, flags, host_ptr, image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[] host_ptr, [OutAttribute] Int32* errcode_ret)
-            where T6 : struct
+        public static unsafe ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, ImageFormat* image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage2D(context, errcode_ret, flags, host_ptr, image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,] host_ptr, [OutAttribute] Int32* errcode_ret)
-            where T6 : struct
+        public static unsafe ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, ImageFormat* image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage2D(context, errcode_ret, flags, host_ptr, image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,,] host_ptr, [OutAttribute] Int32* errcode_ret)
-            where T6 : struct
+        public static unsafe ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, ImageFormat* image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage2D(context, errcode_ret, flags, host_ptr, image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
         /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] ref T6 host_ptr, [OutAttribute] Int32* errcode_ret)
-            where T6 : struct
+        public static unsafe ComputeMemory CreateImage2D<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, ImageFormat* image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, ref host_ptr, errcode_ret);
+            return CL.CreateImage2D(context, errcode_ret, flags, ref host_ptr, image_format, image_height, image_row_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage3D(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr host_ptr, [OutAttribute] Int32[] errcode_ret)
+        public static ComputeMemory CreateImage3D(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, IntPtr image_depth, ImageFormat[] image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
         {
-            return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage3D(context, errcode_ret, flags, host_ptr, image_depth, image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[] host_ptr, [OutAttribute] Int32[] errcode_ret)
-            where T8 : struct
+        public static ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, IntPtr image_depth, ImageFormat[] image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage3D(context, errcode_ret, flags, host_ptr, image_depth, image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,] host_ptr, [OutAttribute] Int32[] errcode_ret)
-            where T8 : struct
+        public static ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, IntPtr image_depth, ImageFormat[] image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage3D(context, errcode_ret, flags, host_ptr, image_depth, image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,,] host_ptr, [OutAttribute] Int32[] errcode_ret)
-            where T8 : struct
+        public static ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, IntPtr image_depth, ImageFormat[] image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage3D(context, errcode_ret, flags, host_ptr, image_depth, image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] ref T8 host_ptr, [OutAttribute] Int32[] errcode_ret)
-            where T8 : struct
+        public static ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, IntPtr image_depth, ImageFormat[] image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, errcode_ret);
+            return CL.CreateImage3D(context, errcode_ret, flags, ref host_ptr, image_depth, image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage3D(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr host_ptr, [OutAttribute] out Int32 errcode_ret)
+        public static ComputeMemory CreateImage3D(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, IntPtr image_depth, ref ImageFormat image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
         {
-            return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
+            return CL.CreateImage3D(context, out errcode_ret, flags, host_ptr, image_depth, ref image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[] host_ptr, [OutAttribute] out Int32 errcode_ret)
-            where T8 : struct
+        public static ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, IntPtr image_depth, ref ImageFormat image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
+            return CL.CreateImage3D(context, out errcode_ret, flags, host_ptr, image_depth, ref image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,] host_ptr, [OutAttribute] out Int32 errcode_ret)
-            where T8 : struct
+        public static ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, IntPtr image_depth, ref ImageFormat image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
+            return CL.CreateImage3D(context, out errcode_ret, flags, host_ptr, image_depth, ref image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,,] host_ptr, [OutAttribute] out Int32 errcode_ret)
-            where T8 : struct
+        public static ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, IntPtr image_depth, ref ImageFormat image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
+            return CL.CreateImage3D(context, out errcode_ret, flags, host_ptr, image_depth, ref image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] ref T8 host_ptr, [OutAttribute] out Int32 errcode_ret)
-            where T8 : struct
+        public static ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, IntPtr image_depth, ref ImageFormat image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, out errcode_ret);
+            return CL.CreateImage3D(context, out errcode_ret, flags, ref host_ptr, image_depth, ref image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage3D(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr host_ptr, [OutAttribute] Int32* errcode_ret)
+        public static unsafe ComputeMemory CreateImage3D(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, IntPtr host_ptr, IntPtr image_depth, ImageFormat* image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
         {
-            return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage3D(context, errcode_ret, flags, host_ptr, image_depth, image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[] host_ptr, [OutAttribute] Int32* errcode_ret)
-            where T8 : struct
+        public static unsafe ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[] host_ptr, IntPtr image_depth, ImageFormat* image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage3D(context, errcode_ret, flags, host_ptr, image_depth, image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,] host_ptr, [OutAttribute] Int32* errcode_ret)
-            where T8 : struct
+        public static unsafe ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,] host_ptr, IntPtr image_depth, ImageFormat* image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage3D(context, errcode_ret, flags, host_ptr, image_depth, image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,,] host_ptr, [OutAttribute] Int32* errcode_ret)
-            where T8 : struct
+        public static unsafe ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] T3[,,] host_ptr, IntPtr image_depth, ImageFormat* image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
+            return CL.CreateImage3D(context, errcode_ret, flags, host_ptr, image_depth, image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
         /// <param name="flags"></param>
-        /// <param name="image_format"></param>
-        /// <param name="image_width"></param>
-        /// <param name="image_height"></param>
+        /// <param name="host_ptr"></param>
         /// <param name="image_depth"></param>
+        /// <param name="image_format"></param>
+        /// <param name="image_height"></param>
         /// <param name="image_row_pitch"></param>
         /// <param name="image_slice_pitch"></param>
-        /// <param name="host_ptr"></param>
-        /// <param name="errcode_ret"></param>
+        /// <param name="image_width"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] ref T8 host_ptr, [OutAttribute] Int32* errcode_ret)
-            where T8 : struct
+        public static unsafe ComputeMemory CreateImage3D<T3>(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, [InAttribute, OutAttribute] ref T3 host_ptr, IntPtr image_depth, ImageFormat* image_format, IntPtr image_height, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr image_width)
+            where T3 : struct
         {
-            return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, errcode_ret);
+            return CL.CreateImage3D(context, errcode_ret, flags, ref host_ptr, image_depth, image_format, image_height, image_row_pitch, image_slice_pitch, image_width);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="device_list"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="kernel_names"></param>
+        /// <param name="num_devices"></param>
+        [CLSCompliant(false)]
+        public static ComputeProgram CreateProgramWithBuiltInKernels(this ComputeContextHandle context, ComputeDevice[] device_list, [OutAttribute] Int32[] errcode_ret, String kernel_names, Int32 num_devices)
+        {
+            return CL.CreateProgramWithBuiltInKernels(context, device_list, errcode_ret, kernel_names, num_devices);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="device_list"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="kernel_names"></param>
+        /// <param name="num_devices"></param>
+        [CLSCompliant(false)]
+        public static ComputeProgram CreateProgramWithBuiltInKernels(this ComputeContextHandle context, ref ComputeDevice device_list, [OutAttribute] out Int32 errcode_ret, String kernel_names, Int32 num_devices)
+        {
+            return CL.CreateProgramWithBuiltInKernels(context, ref device_list, out errcode_ret, kernel_names, num_devices);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="device_list"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="kernel_names"></param>
+        /// <param name="num_devices"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeProgram CreateProgramWithBuiltInKernels(this ComputeContextHandle context, ComputeDevice* device_list, [OutAttribute] Int32* errcode_ret, String kernel_names, Int32 num_devices)
+        {
+            return CL.CreateProgramWithBuiltInKernels(context, device_list, errcode_ret, kernel_names, num_devices);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="count"></param>
         /// <param name="strings"></param>
@@ -700,7 +943,7 @@ namespace OpenTK.Compute.CL20
             return CL.CreateProgramWithSource(context, count, strings, lengths, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="count"></param>
         /// <param name="strings"></param>
@@ -712,7 +955,7 @@ namespace OpenTK.Compute.CL20
             return CL.CreateProgramWithSource(context, count, strings, lengths, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="count"></param>
         /// <param name="strings"></param>
@@ -724,7 +967,7 @@ namespace OpenTK.Compute.CL20
             return CL.CreateProgramWithSource(context, count, strings, lengths, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="count"></param>
         /// <param name="strings"></param>
@@ -772,441 +1015,404 @@ namespace OpenTK.Compute.CL20
             return CL.CreateSampler(context, normalized_coords, addressing_mode, filter_mode, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        [CLSCompliant(false)]
+        public static ComputeEvent CreateUserEvent(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret)
+        {
+            return CL.CreateUserEvent(context, errcode_ret);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        [CLSCompliant(false)]
+        public static ComputeEvent CreateUserEvent(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret)
+        {
+            return CL.CreateUserEvent(context, out errcode_ret);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeEvent CreateUserEvent(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret)
+        {
+            return CL.CreateUserEvent(context, errcode_ret);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         public static ErrorCode RetainContext(this ComputeContextHandle context)
         {
             return CL.RetainContext(context);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         public static ErrorCode ReleaseContext(this ComputeContextHandle context)
         {
             return CL.ReleaseContext(context);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+        public static ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value, IntPtr param_value_size, [OutAttribute] IntPtr[] param_value_size_ret)
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
+        public static ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
+        public static unsafe ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[] param_value, IntPtr param_value_size, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
-            where T3 : struct
+        public static unsafe ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
-            where T3 : struct
+        public static unsafe ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,,] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
-            where T3 : struct
+        public static unsafe ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] T2[,,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] ref T2 param_value, IntPtr param_value_size, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, ref param_value, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, ref param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] ref T2 param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, ref param_value, out param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, ref param_value, param_value_size, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
-            where T3 : struct
+        public static unsafe ErrorCode GetContextInfo<T2>(this ComputeContextHandle context, OpenTK.Compute.CL20.ContextInfo param_name, [InAttribute, OutAttribute] ref T2 param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetContextInfo(context, param_name, param_value_size, ref param_value, param_value_size_ret);
+            return CL.GetContextInfo(context, param_name, ref param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+        public static ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
         {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
+        public static unsafe ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
         {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
+        public static ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
+        public static unsafe ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[,] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
-            where T3 : struct
+        public static unsafe ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[,,] param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
-            where T3 : struct
+        public static unsafe ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] T2[,,] param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
-            where T3 : struct
+        public static ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] ref T2 param_value, IntPtr param_value_size, [OutAttribute] out IntPtr param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, ref param_value, param_value_size, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
+        /// <param name="param_value_size"></param>
         /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
+        public static unsafe ErrorCode GetDeviceInfo<T2>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, [InAttribute, OutAttribute] ref T2 param_value, IntPtr param_value_size, [OutAttribute] IntPtr* param_value_size_ret)
+            where T2 : struct
         {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
+            return CL.GetDeviceInfo(device, param_name, ref param_value, param_value_size, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="device"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
-            where T3 : struct
-        {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="device"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
-            where T3 : struct
-        {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="device"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
-            where T3 : struct
-        {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, ref param_value, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="device"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
-            where T3 : struct
-        {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, ref param_value, out param_value_size_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
-        /// <param name="device"></param>
-        /// <param name="param_name"></param>
-        /// <param name="param_value_size"></param>
-        /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret"></param>
-        [CLSCompliant(false)]
-        public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL20.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
-            where T3 : struct
-        {
-            return CL.GetDeviceInfo(device, param_name, param_value_size, ref param_value, param_value_size_ret);
-        }
-
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
+        /// <param name="image_formats"></param>
         /// <param name="image_type"></param>
         /// <param name="num_entries"></param>
-        /// <param name="image_formats"></param>
         /// <param name="num_image_formats"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetSupportedImageFormats(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, OpenTK.Compute.CL20.MemObjectType image_type, Int32 num_entries, ImageFormat[] image_formats, Int32[] num_image_formats)
+        public static ErrorCode GetSupportedImageFormats(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat[] image_formats, OpenTK.Compute.CL20.MemObjectType image_type, Int32 num_entries, Int32[] num_image_formats)
         {
-            return CL.GetSupportedImageFormats(context, flags, image_type, num_entries, image_formats, num_image_formats);
+            return CL.GetSupportedImageFormats(context, flags, image_formats, image_type, num_entries, num_image_formats);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
+        /// <param name="image_formats"></param>
         /// <param name="image_type"></param>
         /// <param name="num_entries"></param>
-        /// <param name="image_formats"></param>
         /// <param name="num_image_formats"></param>
         [CLSCompliant(false)]
-        public static ErrorCode GetSupportedImageFormats(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, OpenTK.Compute.CL20.MemObjectType image_type, Int32 num_entries, ref ImageFormat image_formats, ref Int32 num_image_formats)
+        public static ErrorCode GetSupportedImageFormats(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_formats, OpenTK.Compute.CL20.MemObjectType image_type, Int32 num_entries, ref Int32 num_image_formats)
         {
-            return CL.GetSupportedImageFormats(context, flags, image_type, num_entries, ref image_formats, ref num_image_formats);
+            return CL.GetSupportedImageFormats(context, flags, ref image_formats, image_type, num_entries, ref num_image_formats);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
+        /// <param name="image_formats"></param>
         /// <param name="image_type"></param>
         /// <param name="num_entries"></param>
-        /// <param name="image_formats"></param>
         /// <param name="num_image_formats"></param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode GetSupportedImageFormats(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, OpenTK.Compute.CL20.MemObjectType image_type, Int32 num_entries, ImageFormat* image_formats, Int32* num_image_formats)
+        public static unsafe ErrorCode GetSupportedImageFormats(this ComputeContextHandle context, OpenTK.Compute.CL20.MemFlags flags, ImageFormat* image_formats, OpenTK.Compute.CL20.MemObjectType image_type, Int32 num_entries, Int32* num_image_formats)
         {
-            return CL.GetSupportedImageFormats(context, flags, image_type, num_entries, image_formats, num_image_formats);
+            return CL.GetSupportedImageFormats(context, flags, image_formats, image_type, num_entries, num_image_formats);
         }
 
         /// <summary>[requires: v1.2 or ]</summary>
@@ -1306,6 +1512,177 @@ namespace OpenTK.Compute.CL20
             return CL.SetMemObjectDestructorCallback(memobj, pfn_notify, ref user_data);
         }
 
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="device"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="properties"></param>
+        [CLSCompliant(false)]
+        public static CommandQueue CreateCommandQueueWithProperties(this ComputeContextHandle context, ComputeDevice device, [OutAttribute] Int32[] errcode_ret, CommandQueueFlags[] properties)
+        {
+            return CL.CreateCommandQueueWithProperties(context, device, errcode_ret, properties);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="device"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="properties"></param>
+        [CLSCompliant(false)]
+        public static CommandQueue CreateCommandQueueWithProperties(this ComputeContextHandle context, ComputeDevice device, [OutAttribute] out Int32 errcode_ret, ref CommandQueueFlags properties)
+        {
+            return CL.CreateCommandQueueWithProperties(context, device, out errcode_ret, ref properties);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="device"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="properties"></param>
+        [CLSCompliant(false)]
+        public static unsafe CommandQueue CreateCommandQueueWithProperties(this ComputeContextHandle context, ComputeDevice device, [OutAttribute] Int32* errcode_ret, CommandQueueFlags* properties)
+        {
+            return CL.CreateCommandQueueWithProperties(context, device, errcode_ret, properties);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="pipe_max_packets"></param>
+        /// <param name="pipe_packet_size"></param>
+        /// <param name="properties"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreatePipe(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.MemFlags flags, Int32 pipe_max_packets, Int32 pipe_packet_size, IntPtr[] properties)
+        {
+            return CL.CreatePipe(context, errcode_ret, flags, pipe_max_packets, pipe_packet_size, properties);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="pipe_max_packets"></param>
+        /// <param name="pipe_packet_size"></param>
+        /// <param name="properties"></param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreatePipe(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, OpenTK.Compute.CL20.MemFlags flags, Int32 pipe_max_packets, Int32 pipe_packet_size, ref IntPtr properties)
+        {
+            return CL.CreatePipe(context, out errcode_ret, flags, pipe_max_packets, pipe_packet_size, ref properties);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="flags"></param>
+        /// <param name="pipe_max_packets"></param>
+        /// <param name="pipe_packet_size"></param>
+        /// <param name="properties"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreatePipe(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.MemFlags flags, Int32 pipe_max_packets, Int32 pipe_packet_size, IntPtr* properties)
+        {
+            return CL.CreatePipe(context, errcode_ret, flags, pipe_max_packets, pipe_packet_size, properties);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="alignment"></param>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="size"></param>
+        [CLSCompliant(false)]
+        public static IntPtr SVMAlloc(this UInt32 alignment, ComputeContextHandle context, OpenTK.Compute.CL20.SvmMemFlags flags, IntPtr size)
+        {
+            return CL.SVMAlloc(alignment, context, flags, size);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="alignment"></param>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="size"></param>
+        [CLSCompliant(false)]
+        public static IntPtr SVMAlloc(this Int32 alignment, ComputeContextHandle context, OpenTK.Compute.CL20.SvmMemFlags flags, IntPtr size)
+        {
+            return CL.SVMAlloc(alignment, context, flags, size);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="svm_pointer"></param>
+        public static void SVMFree(this ComputeContextHandle context, IntPtr svm_pointer)
+        {
+            CL.SVMFree(context, svm_pointer);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="svm_pointer"></param>
+        [CLSCompliant(false)]
+        public static void SVMFree<T1>(this ComputeContextHandle context, [InAttribute, OutAttribute] T1[] svm_pointer)
+            where T1 : struct
+        {
+            CL.SVMFree(context, svm_pointer);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="svm_pointer"></param>
+        [CLSCompliant(false)]
+        public static void SVMFree<T1>(this ComputeContextHandle context, [InAttribute, OutAttribute] T1[,] svm_pointer)
+            where T1 : struct
+        {
+            CL.SVMFree(context, svm_pointer);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="svm_pointer"></param>
+        [CLSCompliant(false)]
+        public static void SVMFree<T1>(this ComputeContextHandle context, [InAttribute, OutAttribute] T1[,,] svm_pointer)
+            where T1 : struct
+        {
+            CL.SVMFree(context, svm_pointer);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="svm_pointer"></param>
+        public static void SVMFree<T1>(this ComputeContextHandle context, [InAttribute, OutAttribute] ref T1 svm_pointer)
+            where T1 : struct
+        {
+            CL.SVMFree(context, ref svm_pointer);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="normalized_coords"></param>
+        [CLSCompliant(false)]
+        public static ComputeSampler CreateSamplerWithProperties(this ComputeContextHandle context, [OutAttribute] Int32[] errcode_ret, OpenTK.Compute.CL20.SamplerProperties[] normalized_coords)
+        {
+            return CL.CreateSamplerWithProperties(context, errcode_ret, normalized_coords);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="normalized_coords"></param>
+        [CLSCompliant(false)]
+        public static ComputeSampler CreateSamplerWithProperties(this ComputeContextHandle context, [OutAttribute] out Int32 errcode_ret, ref OpenTK.Compute.CL20.SamplerProperties normalized_coords)
+        {
+            return CL.CreateSamplerWithProperties(context, out errcode_ret, ref normalized_coords);
+        }
+
+        /// <summary>[requires: v2.0 or ]</summary>
+        /// <param name="context"></param>
+        /// <param name="errcode_ret"></param>
+        /// <param name="normalized_coords"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeSampler CreateSamplerWithProperties(this ComputeContextHandle context, [OutAttribute] Int32* errcode_ret, OpenTK.Compute.CL20.SamplerProperties* normalized_coords)
+        {
+            return CL.CreateSamplerWithProperties(context, errcode_ret, normalized_coords);
+        }
+
     }
     /// <summary>
     /// Defines extension methods to simply ComputeProgram usage.
@@ -1351,7 +1728,7 @@ namespace OpenTK.Compute.CL20
             return CL.BuildProgram(program, num_devices, device_list, options, notify, user_data);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="program"></param>
         /// <param name="kernel_name"></param>
         /// <param name="errcode_ret"></param>
@@ -1361,7 +1738,7 @@ namespace OpenTK.Compute.CL20
             return CL.CreateKernel(program, kernel_name, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v2.0 or ]</summary>
         /// <param name="program"></param>
         /// <param name="kernel_name"></param>
         /// <param name="errcode_ret"></param>
