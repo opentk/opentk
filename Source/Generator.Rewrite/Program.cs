@@ -302,7 +302,7 @@ namespace OpenTK.Rewrite
             {
                 EmitStringArrayEpilogue(wrapper, body, il);
             }
-            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "String" && !p.ParameterType.IsArray && p.ParameterType.IsByReference))
+            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "String&" && !p.ParameterType.IsArray && p.ParameterType.IsByReference))
             {
                 EmitStringReferenceEpilogue(wrapper, body, il);
             }
@@ -669,7 +669,7 @@ namespace OpenTK.Rewrite
             for (int i = 0; i < wrapper.Parameters.Count; i++)
             {
                 var p = wrapper.Parameters[i].ParameterType;
-                if (p.Name == "String" && !p.IsByReference)
+                if (p.Name == "String" && p.IsByReference)
                 {
                     var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringRefPtr"));
 
@@ -787,17 +787,20 @@ namespace OpenTK.Rewrite
                 {
                     EmitStringParameter(method, p, body, il);
                 }
-                else if (p.Name == "String" && !p.IsArray && p.IsByReference)
-                {
-                    EmitStringReferenceParameter(method, p, body, il);
-                }
                 else if (p.IsByReference)
                 {
-                    body.Variables.Add(new VariableDefinition(new PinnedType(p)));
-                    var index = body.Variables.Count - 1;
-                    il.Emit(OpCodes.Stloc, index);
-                    il.Emit(OpCodes.Ldloc, index);
-                    il.Emit(OpCodes.Conv_I);
+                    if (p.Name != "String&")
+                    {
+                        body.Variables.Add(new VariableDefinition(new PinnedType(p)));
+                        var index = body.Variables.Count - 1;
+                        il.Emit(OpCodes.Stloc, index);
+                        il.Emit(OpCodes.Ldloc, index);
+                        il.Emit(OpCodes.Conv_I);
+                    }
+                    else
+                    {
+                        EmitStringReferenceParameter(method, p, body, il);
+                    }
                 }
                 else if (p.IsArray)
                 {
