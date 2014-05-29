@@ -1,133 +1,120 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <signatures>
-  <delete name="cl">
-    <!-- Remove broken signatures -->
-    <function name="BuildProgram" />
-    <function name="CompileProgram" />
-    <function name="CreateBuffer" />
-    <function name="CreateCommandQueue" />
-    <function name="CreateContext" />
-    <function name="CreateContextFromType" />
-    <function name="CreateSampler" />
-    <function name="EnqueueNativeKernel" />
-    <function name="EnqueueSVMFree" />
-    <function name="GetContextInfo" />
-    <function name="GetDeviceInfo" />
-    <function name="GetPlatformIDs" />
-    <function name="LinkProgram" />
-    <function name="SetEventCallback" />
-    <function name="SetMemObjectDestructorCallback" />
-  </delete>
-
-  <add name="cl">
+  <add name="cl" version="1.0">
     <enum name="CommandQueueFlags">
       <token name="DEFAULT" value="0" />
     </enum>
-    <enum name="SamplerProperties" version="2.0">
-      <use token="SAMPLER_NORMALIZED_COORDS" comment="&lt;see cref='System.Boolean'&gt;; default true" />
-      <use token="SAMPLER_ADDRESSING_MODE" comment="&lt;see cref='AddressingMode'&gt;; default Clamp" />
-      <use token="SAMPLER_FILTER_MODE" comment="&lt;see cref='FilterMode'&gt;; default LinearNearest" />
-      <use token="SAMPLER_MIP_FILTER_MODE" comment="Requires CL_KHR_mipmap_image. &lt;see cref='FilterMode'&gt;; default None" />
-      <use token="SAMPLER_LOD_MIN" comment="Requires CL_KHR_mipmap_image. &lt;see cref='System.Single'&gt;; default 0.0" />
-      <use token="SAMPLER_LOD_MAX" comment="Requires CL_KHR_mipmap_image. &lt;see cref='System.Single'&gt;; default 0.0" />
+  </add>
+
+  <add name="cl" version="1.1">
+    <enum name="ChannelOrder">
+      <token name="Rx" value="0x10BA" />
+      <token name="RGx" value="0x10BB" />
+      <token name="RGBx" value="0x10BC" />
     </enum>
-    <!-- Add corrected signatures -->
-    <function name="BuildProgram" version="1.0">
-      <param type="cl_program" name="program" flow="in" />
-      <param type="cl_uint" name="num_devices" flow="in" />
-      <param type="cl_device_id *" name="device_list" flow="in" />
-      <param type="char*" name="options" flow="in" />
-      <param type="ProgramNotifyDelegate" name="notify" flow="in" />
-      <param type="IntPtr" name="user_data" flow="in" />
-      <returns type="ErrorCodes" />
-    </function>
-    <function name="CompileProgram" version="1.0">
-      <param type="cl_program" name="program" flow="in" />
-      <param type="cl_uint" name="num_devices" flow="in" />
-      <param type="cl_device_id*" name="device_list" flow="in" />
-      <param type="char*" name="options" flow="in" />
-      <param type="cl_uint" name="num_input_headers" flow="in" />
-      <param type="cl_program*" name="input_headers" flow="in" />
-      <param type="char**" name="header_include_names" flow="in" />
-      <param type="ProgramNotifyDelegate" name="notify" flow="in" />
-      <param type="IntPtr" name="user_data" flow="in" />
-      <returns type="ErrorCodes" />
-    </function>
-    <function name="CreateBuffer" version="1.0">
-      <returns type="cl_mem" />
-      <param type="cl_context" name="context" flow="in" />
+    <enum name="ContextInfo">
+      <token name="CONTEXT_NUM_DEVICES" value="0x1083" />
+    </enum>
+    <enum name="KernelWorkGroupInfo">
+      <token name="KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE" value="0x11B3" />
+    </enum>
+    <function name="CreateSubBuffer">
+      <param type="cl_mem" name="buffer" flow="in" />
       <param type="cl_mem_flags" name="flags" flow="in" />
-      <param type="size_t" name="size" flow="in" />
-      <param type="void*" name="host_ptr" flow="in" />
+      <param type="cl_buffer_create_type" name="buffer_create_type" flow="in" />
+      <param type="void*" name="buffer_create_info" flow="in" />
       <param type="cl_int*" name="errcode_ret" flow="out" />
+      <returns type="cl_mem" />
     </function>
-    <function name="CreateCommandQueue" version="1.0">
-      <returns type="cl_command_queue" />
+    <function name="CreateUserEvent">
       <param type="cl_context" name="context" flow="in" />
-      <param type="cl_device_id" name="device" flow="in" />
-      <param type="cl_command_queue_properties" name="properties" flow="in" />
       <param type="cl_int*" name="errcode_ret" flow="out" />
+      <returns type="cl_event" />
     </function>
-    <function name="CreateContext" version="1.0">
-      <param type="cl_context_properties*" name="properties" flow="in" />
-      <param type="cl_uint" name="num_devices" flow="in" />
-      <param type="cl_device_id*" name="devices" flow="in" />
-      <param type="IntPtr" name="pfn_notify" flow="in" />
-      <param type="intptr_t" name="user_data" flow="in" />
-      <param type="cl_int*" name="errcode_ret" flow="out" count="1" />
-      <returns type="cl_context" />
-    </function>
-    <function name="CreateContextFromType" version="1.0">
-      <param type="cl_context_properties*" name="properties" flow="in" />
-      <param type="cl_device_type" name="device_type" flow="in" />
-      <param type="ContextNotifyDelegate" name="notify" flow="in" />
-      <param type="intptr_t" name="user_data" flow="in" />
-      <param type="cl_int*" name="errcode_ret" flow="out" count="1" />
-      <returns type="cl_context" />
-    </function>
-    <function name="CreateSampler" version="1.0">
-      <param type="cl_context" name="context" flow="in" />
-      <param type="cl_bool" name="normalized_coords" flow="in" />
-      <param type="cl_addressing_mode" name="addressing_mode" flow="in" />
-      <param type="cl_filter_mode" name="filter_mode" flow="in" />
-      <param type="cl_int*" name="errcode_ret" flow="out" count="1" />
-      <returns type="cl_sampler" />
-    </function>
-    <function name="EnqueueNativeKernel" version="1.0">
+    <enum name="DeviceInfo">
+      <token name="DEVICE_HOST_UNIFIED_MEMORY" value="0x1035" />
+      <token name="DEVICE_NATIVE_VECTOR_WIDTH_CHAR" value="0x1036" />
+      <token name="DEVICE_NATIVE_VECTOR_WIDTH_SHORT" value="0x1037" />
+      <token name="DEVICE_NATIVE_VECTOR_WIDTH_INT" value="0x1038" />
+      <token name="DEVICE_NATIVE_VECTOR_WIDTH_LONG" value="0x1039" />
+      <token name="DEVICE_NATIVE_VECTOR_WIDTH_FLOAT" value="0x103A" />
+      <token name="DEVICE_NATIVE_VECTOR_WIDTH_DOUBLE" value="0x103B" />
+      <token name="DEVICE_NATIVE_VECTOR_WIDTH_HALF" value="0x103C" />
+      <token name="DEVICE_OPENCL_C_VERSION" value="0x103D" />
+    </enum>
+    <function name="EnqueueReadBufferRect">
       <param type="cl_command_queue" name="command_queue" flow="in" />
-      <param type="UserNotifyDelegate" name="notify" flow="in" />
-      <param type="IntPtr" name="args" flow="in" />
-      <param type="size_t" name="cb_args" flow="in" />
-      <param type="cl_uint" name="num_mem_objects" flow="in" />
-      <param type="cl_mem*" name="mem_list" flow="in" />
-      <param type="void**" name="args_mem_loc" flow="in" />
+      <param type="cl_mem" name="buffer" flow="in" />
+      <param type="cl_bool" name="blocking_read" flow="in" />
+      <param type="size_t*" name="buffer_offset" flow="in" count="3" />
+      <param type="size_t*" name="host_offset" flow="in" count="3" />
+      <param type="size_t*" name="region" flow="in" count="3" />
+      <param type="size_t" name="buffer_row_pitch" flow="in" />
+      <param type="size_t" name="buffer_slice_pitch" flow="in" />
+      <param type="size_t" name="host_row_pitch" flow="in" />
+      <param type="size_t" name="host_slice_pitch" flow="in" />
+      <param type="void*" name="ptr" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
+      <returns type="cl_int" />
+    </function>
+    <function name="EnqueueWriteBufferRect">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="buffer" flow="in" />
+      <param type="cl_bool" name="blocking_write" flow="in" />
+      <param type="size_t*" name="buffer_offset" flow="in" count="3" />
+      <param type="size_t*" name="host_offset" flow="in" count="3" />
+      <param type="size_t*" name="region" flow="in" count="3" />
+      <param type="size_t" name="buffer_row_pitch" flow="in" />
+      <param type="size_t" name="buffer_slice_pitch" flow="in" />
+      <param type="size_t" name="host_row_pitch" flow="in" />
+      <param type="size_t" name="host_slice_pitch" flow="in" />
+      <param type="void*" name="ptr" flow="in" />
       <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
       <param type="cl_event*" name="event_wait_list" flow="in" />
       <param type="cl_event*" name="event" flow="out" />
+      <returns type="cl_int" />
+    </function>
+    <function name="EnqueueCopyBufferRect">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="src_buffer" flow="in" />
+      <param type="cl_mem" name="dst_buffer" flow="in" />
+      <param type="size_t*" name="src_origin" flow="in" count="3" />
+      <param type="size_t*" name="dst_origin" flow="in" count="3" />
+      <param type="size_t*" name="region" flow="in" count="3" />
+      <param type="size_t" name="src_row_pitch" flow="in" />
+      <param type="size_t" name="src_slice_pitch" flow="in" />
+      <param type="size_t" name="dst_row_pitch" flow="in" />
+      <param type="size_t" name="dst_slice_pitch" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="out" />
+      <returns type="cl_int" />
+    </function>
+    <function name="SetMemObjectDestructorCallback">
+      <param type="cl_mem" name="memobj" flow="in" />
+      <param type="MemObjectNotifyDelegate" name="pfn_notify" flow="in" />
+      <param type="void*" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
-    <function name="GetContextInfo" version="1.0">
-      <returns type="ErrorCodes" />
-      <param type="cl_context" name="context" flow="in" />
-      <param type="cl_context_info" name="param_name" flow="in" />
-      <param type="size_t" name="param_value_size" flow="in" />
-      <param type="void*" name="param_value" flow="in" />
-      <param type="size_t*" name="param_value_size_ret" flow="out" count="1"/>
-    </function>
-    <function name="GetDeviceInfo" version="1.0">
+    <function name="SetUserEventStatus">
+      <param type="cl_event" name="event" flow="in" />
+      <param type="cl_int" name="execution_status" flow="in" />
       <returns type="cl_int" />
-      <param type="cl_device_id" name="device" flow="in" />
-      <param type="cl_device_info" name="param_name" flow="in" />
-      <param type="size_t" name="param_value_size" flow="in" />
-      <param type="void*" name="param_value" flow="in" />
-      <param type="size_t*" name="param_value_size_ret" flow="out" count="1" />
     </function>
-    <function name="GetPlatformIDs" version="1.0">
-      <returns type="cl_int" />
-      <param type="cl_uint" name="num_entries" flow="in" />
-      <param type="cl_platform_id*" name="platforms" flow="out" />
-      <param type="cl_uint*" name="num_platforms" flow="out" count="1" />
-    </function>
+  </add>
+
+  <delete name="cl" version="1.1">
+    <function name="SetCommandQueueProperty" />
+  </delete>
+
+  <add name="cl" version="1.2">
+    <enum name="ChannelOrder">
+      <token name="DEPTH" value="0x10BD" />
+      <token name="DEPTH_STENCIL" value="0x10BE" />
+    </enum>
+
     <function name="LinkProgram" version="1.2">
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
@@ -146,12 +133,45 @@
       <param type="IntPtr" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
-    <function name="SetMemObjectDestructorCallback" version="1.2">
-      <param type="cl_mem" name="memobj" flow="in" />
-      <param type="MemObjectNotifyDelegate" name="pfn_notify" flow="in" />
-      <param type="void*" name="user_data" flow="in" />
-      <returns type="ErrorCodes" />
-    </function>
+  </add>
+
+  <add name="cl" version="2.0">
+    <enum name="BufferCreateType">
+      <token name="BUFFER_CREATE_TYPE_REGION" value="0x1220" />
+    </enum>
+    <enum name="SamplerInfo">
+      <token name="SAMPLER_REFERENCE_COUNT" value="0x1150" />
+      <token name="SAMPLER_CONTEXT" value="0x1151" />
+      <token name="SAMPLER_NORMALIZED_COORDS" value="0x1152" />
+      <token name="SAMPLER_enumRESSING_MODE" value="0x1153" />
+      <token name="SAMPLER_FILTER_MODE" value="0x1154" />
+      <token name="SAMPLER_MIP_FILTER_MODE" value="0x1155" />
+      <token name="SAMPLER_LOD_MIN" value="0x1156" />
+      <token name="SAMPLER_LOD_MAX" value="0x1157" />
+    </enum>
+    <enum name="SamplerProperties">
+      <use token="SAMPLER_NORMALIZED_COORDS" comment="&lt;see cref='System.Boolean'&gt;; default true" />
+      <use token="SAMPLER_ADDRESSING_MODE" comment="&lt;see cref='AddressingMode'&gt;; default Clamp" />
+      <use token="SAMPLER_FILTER_MODE" comment="&lt;see cref='FilterMode'&gt;; default LinearNearest" />
+      <use token="SAMPLER_MIP_FILTER_MODE" comment="Requires CL_KHR_mipmap_image. &lt;see cref='FilterMode'&gt;; default None" />
+      <use token="SAMPLER_LOD_MIN" comment="Requires CL_KHR_mipmap_image. &lt;see cref='System.Single'&gt;; default 0.0" />
+      <use token="SAMPLER_LOD_MAX" comment="Requires CL_KHR_mipmap_image. &lt;see cref='System.Single'&gt;; default 0.0" />
+    </enum>
+    <enum name="SvmMemFlags" type="long">
+      <token name="MEM_READ_WRITE" value="(1 &lt;&lt; 0)" />
+      <token name="MEM_WRITE_ONLY" value="(1 &lt;&lt; 1)" />
+      <token name="MEM_READ_ONLY" value="(1 &lt;&lt; 2)" />
+      <token name="MEM_USE_HOST_PTR" value="(1 &lt;&lt; 3)" />
+      <token name="MEM_ALLOC_HOST_PTR" value="(1 &lt;&lt; 4)" />
+      <token name="MEM_COPY_HOST_PTR" value="(1 &lt;&lt; 5)" />
+      <token name="MEM_HOST_WRITE_ONLY" value="(1 &lt;&lt; 7)" />
+      <token name="MEM_HOST_READ_ONLY" value="(1 &lt;&lt; 8)" />
+      <token name="MEM_HOST_NO_ACCESS" value="(1 &lt;&lt; 9)" />
+      <token name="MEM_HOST_NO_ACCESS" value="(1 &lt;&lt; 9)" />
+      <token name="MEM_SVM_FINE_GRAIN_BUFFER" value="(1 &lt;&lt; 10)" />
+      <token name="MEM_SVM_ATOMICS" value="(1 &lt;&lt; 11)" />
+    </enum>
+
     <function name="EnqueueSVMFree" version="2.0">
       <param type="cl_command_queue" name="command_queue" flow="in" />
       <param type="cl_uint" name="num_svm_pointers" flow="in" />
@@ -163,10 +183,21 @@
       <param type="cl_event*" name="event" flow="out" />
       <returns type="ErrorCodes" />
     </function>
+    <function name="SVMAlloc" version="2.0">
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_uint" name="alignment" flow="in" />
+      <param type="cl_svm_mem_flags" name="flags" flow="in" />
+      <param type="size_t" name="size" flow="in" />
+      <returns type="void*" />
+    </function>
+    <function name="SVMFree" version="2.0">
+      <param type="cl_context" name="context" flow="in" />
+      <param type="void*" name="svm_pointer" flow="in" />
+      <returns type="void" />
+    </function>
   </add>
 
-  <replace name="cl">
-
+  <replace name="cl" version="1.0|1.1|1.2|2.0">
     <enum name="ErrorCodes"><name>ErrorCode</name></enum>
     <enum name="DeviceTypeFlags">
       <type>long</type>
@@ -179,7 +210,109 @@
     <!-- Rename ContextProperties enum to avoid conflict with ContextProperties struct -->
     <enum name="ContextProperties"><name>ComputeContextProperties</name></enum>
 
-    <!-- ErrorCode returns -->
+    <function name="BuildProgram">
+      <param name="pfn_notify"><type>ProgramNotifyDelegate</type></param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="CompileProgram">
+      <param name="pfn_notify"><type>ProgramNotifyDelegate</type></param>
+    </function>
+    <function name="CreateBuffer">
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+    </function>
+    <function name="CreateCommandQueue">
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+    </function>
+    <function name="CreateContext">
+      <param name="pfn_notify"><type>ContextNotifyDelegate</type></param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+    </function>
+    <function name="CreateContextFromType">
+      <param name="pfn_notify"><type>ContextNotifyDelegate</type></param>
+      <param name="user_data">
+        <type>intptr_t</type>
+        <pointer>0</pointer>
+      </param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+    </function>
+    <function name="CreateKernel">
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+    </function>
+    <function name="CreateProgramWithBinary">
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+    </function>
+    <function name="CreateProgramWithSource">
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+    </function>
+    <function name="CreateContextFromType">
+      <param type="pfn_notify"><type>ContextNotifyDelegate</type></param>
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+    </function>
+    <function name="CreateSampler">
+      <param name="errcode_ret">
+        <type>ErrorCodes</type>
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+    </function>
+    <function name="EnqueueNativeKernel">
+      <param name="pfn_notify"><type>UserNotifyDelegate</type></param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="GetContextInfo">
+      <param name="param_value_size_ret">
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="GetDeviceInfo">
+      <param name="param_value_size_ret">
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="GetPlatformIDs">
+      <param name="num_platforms">
+        <count>1</count>
+        <flow>out</flow>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+
     <function name="GetPlatformIDs"><returns>ErrorCodes</returns></function>
     <function name="GetPlatformInfo"><returns>ErrorCodes</returns></function>
     <function name="GetDeviceIDs">
@@ -210,7 +343,6 @@
     <function name="GetSamplerInfo"><returns>ErrorCodes</returns></function>
     <function name="RetainProgram"><returns>ErrorCodes</returns></function>
     <function name="ReleaseProgram"><returns>ErrorCodes</returns></function>
-    <function name="BuildProgram"><returns>ErrorCodes</returns></function>
     <function name="CompileProgram"><returns>ErrorCodes</returns></function>
     <function name="UnloadPlatformCompiler"><returns>ErrorCodes</returns></function>
     <function name="GetProgramInfo"><returns>ErrorCodes</returns></function>
@@ -218,7 +350,10 @@
     <function name="CreateKernelsInProgram"><returns>ErrorCodes</returns></function>
     <function name="RetainKernel"><returns>ErrorCodes</returns></function>
     <function name="ReleaseKernel"><returns>ErrorCodes</returns></function>
-    <function name="SetKernelArg"><returns>ErrorCodes</returns></function>
+    <function name="SetKernelArg">
+      <param name="arg_value"><count>1</count></param>
+      <returns>ErrorCodes</returns>
+    </function>
     <function name="SetKernelsArgSVMPointer"><returns>ErrorCodes</returns></function>
     <function name="SetKernelExecInfo"><returns>ErrorCodes</returns></function>
     <function name="GetKernelInfo"><returns>ErrorCodes</returns></function>
@@ -232,79 +367,173 @@
     <function name="GetEventProfilingInfo"><returns>ErrorCodes</returns></function>
     <function name="Flush"><returns>ErrorCodes</returns></function>
     <function name="Finish"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueReadBuffer"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueReadBufferRect"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueWriteBuffer"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueWriteBufferRect"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueFillBuffer"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueCopyBuffer"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueCopyBufferRect"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueReadImage"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueWriteImage"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueFillImage"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueCopyImage"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueCopyImageToBuffer"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueCopyBufferToImage"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueUnmapMemObject"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueMigrateMemObjects"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueNDRangeKernel"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueNativeKernel"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueMarkerWithWaitList"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueBarrierWithWaitList"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueSVMFree"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueSVMMemcpy"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueSVMMemFill"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueSVMMap"><returns>ErrorCodes</returns></function>
-    <function name="EnqueueSVMUnmap"><returns>ErrorCodes</returns></function>
-
-    <!-- ErrorCode parameters -->
-    <function name="CreateContextFromType" extension="Core">
-      <param name="errcode_ret">
-        <type>ErrorCodes</type>
+    <function name="EnqueueReadBuffer">
+      <param name="event">
+        <flow>out</flow>
         <count>1</count>
       </param>
+      <returns>ErrorCodes</returns>
     </function>
-    <function name="CreateBuffer" extension="Core">
-      <param name="errcode_ret">
-        <type>ErrorCodes</type>
+    <function name="EnqueueReadBufferRect">
+      <param name="event">
+        <flow>out</flow>
         <count>1</count>
       </param>
+      <returns>ErrorCodes</returns>
     </function>
-    <function name="CreateContext" extension="Core">
-      <param name="errcode_ret">
-        <type>ErrorCodes</type>
+    <function name="EnqueueWriteBuffer">
+      <param name="event">
+        <flow>out</flow>
         <count>1</count>
       </param>
+      <returns>ErrorCodes</returns>
     </function>
-    <function name="CreateContextFromType" extension="Core">
-      <param name="errcode_ret">
-        <type>ErrorCodes</type>
+    <function name="EnqueueWriteBufferRect">
+      <param name="event">
+        <flow>out</flow>
         <count>1</count>
       </param>
+      <returns>ErrorCodes</returns>
     </function>
-    <function name="CreateCommandQueue" extension="Core">
-      <param name="errcode_ret">
-        <type>ErrorCodes</type>
+    <function name="EnqueueFillBuffer">
+      <param name="event">
+        <flow>out</flow>
         <count>1</count>
       </param>
+      <returns>ErrorCodes</returns>
     </function>
-    <function name="CreateKernel" extension="Core">
-      <param name="errcode_ret">
-        <type>ErrorCodes</type>
+    <function name="EnqueueCopyBuffer">
+      <param name="event">
+        <flow>out</flow>
         <count>1</count>
       </param>
+      <returns>ErrorCodes</returns>
     </function>
-    <function name="CreateProgramWithBinary" extension="Core">
-      <param name="errcode_ret">
-        <type>ErrorCodes</type>
+    <function name="EnqueueCopyBufferRect">
+      <param name="event">
+        <flow>out</flow>
         <count>1</count>
       </param>
+      <returns>ErrorCodes</returns>
     </function>
-    <function name="CreateProgramWithSource" extension="Core">
-      <param name="errcode_ret">
-        <type>ErrorCodes</type>
+    <function name="EnqueueReadImage">
+      <param name="event">
+        <flow>out</flow>
         <count>1</count>
       </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueWriteImage">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueFillImage">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueCopyImage">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueCopyImageToBuffer">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueCopyBufferToImage">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueUnmapMemObject">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueMigrateMemObjects">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueNDRangeKernel">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueNativeKernel">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueMarkerWithWaitList">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueBarrierWithWaitList">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueSVMFree">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueSVMMemcpy">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueSVMMemFill">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueSVMMap">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
+    </function>
+    <function name="EnqueueSVMUnmap">
+      <param name="event">
+        <flow>out</flow>
+        <count>1</count>
+      </param>
+      <returns>ErrorCodes</returns>
     </function>
   </replace>
 
@@ -333,9 +562,19 @@
       <function name="SVMFree" version="2.0" />
       <function name="CreateSamplerWithProperties" version="2.0" />
     </add>
+    <add name="ComputeEvent">
+      <function name="SetUserEventStatus" />
+    </add>
     <add name="ComputeProgram">
       <function name="BuildProgram" />
       <function name="CreateKernel" />
+    </add>
+    <add name="CommandQueue">
+      <function name="EnqueueCopyBuffer" />
+      <function name="EnqueueReadBuffer" />
+      <function name="EnqueueNDRangeKernel" />
+      <function name="EnqueueWriteBuffer" />
+      <function name="Finish" />
     </add>
     <add name="ComputeKernel">
       <function name="GetKernelInfo" />
@@ -343,6 +582,9 @@
       <function name="ReleaseKernel" />
       <function name="RetainKernel" />
       <function name="SetKernelArg" />
+    </add>
+    <add name="ComputeMemory">
+      <function name="ReleaseMemObject" />
     </add>
   </classes>
 
