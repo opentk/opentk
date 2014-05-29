@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<signatures>
+<signatures version="2">
   <add name="cl" version="1.0">
     <enum name="AddressingMode" type="int">
       <token name="ADDRESS_CLAMP" value="0x1132" />

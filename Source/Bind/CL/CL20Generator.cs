@@ -47,7 +47,7 @@ namespace Bind.CL
             Settings.DefaultEnumsFile = "CL20.Enums.cs";
             Settings.DefaultClassesFile = "CL20.Extensions.cs";
 
-            Version = "2.0";
+            Version = "1.0|1.1|1.2|2.0";
         }
     }
 }
