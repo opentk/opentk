@@ -37,11 +37,6 @@ namespace OpenTK.Compute
     {
         IntPtr value;
 
-        public static explicit operator IntPtr(ComputeMemory memory)
-        {
-            return memory.value;
-        }
-
         public static readonly ComputeMemory Zero =
             new ComputeMemory();
     }
