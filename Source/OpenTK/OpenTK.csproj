@@ -792,6 +792,7 @@
     <Compile Include="Compute\CL12\CL12.Extensions.cs" />
     <Compile Include="Compute\ComputeContextHandle.cs" />
     <Compile Include="Compute\CL10\CL10.Extensions.cs" />
+    <Compile Include="Extensions\ValueTypeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -824,5 +825,6 @@
   <ItemGroup>
     <Folder Include="Compute\CL20\" />
     <Folder Include="Compute\CL12\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

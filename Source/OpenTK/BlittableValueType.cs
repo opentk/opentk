@@ -223,8 +223,6 @@ namespace OpenTK
 
         /// <summary>
         /// Returns the total size of the specified type in bytes.
-        /// Use <see cref="BlittableValueType.StrideOf{T}(T)" /> to get the size
-        /// of a single array element.
         /// </summary>
         /// <typeparam name="T">The value type. Must be blittable.</typeparam>
         /// <param name="type">An instance of the value type.</param>
