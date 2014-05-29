@@ -30,11 +30,624 @@ namespace OpenTK.Compute.CL10
     using System.Runtime.InteropServices;
 
     /// <summary>
+    /// Defines extension methods to simply CommandQueue usage.
+    /// </summary>
+    public static partial class CommandQueueExtensions
+    {
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_buffer"></param>
+        /// <param name="dst_buffer"></param>
+        /// <param name="src_offset"></param>
+        /// <param name="dst_offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueCopyBuffer(this CommandQueue command_queue, ComputeMemory src_buffer, ComputeMemory dst_buffer, IntPtr src_offset, IntPtr dst_offset, IntPtr cb, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueCopyBuffer(command_queue, src_buffer, dst_buffer, src_offset, dst_offset, cb, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_buffer"></param>
+        /// <param name="dst_buffer"></param>
+        /// <param name="src_offset"></param>
+        /// <param name="dst_offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueCopyBuffer(this CommandQueue command_queue, ComputeMemory src_buffer, ComputeMemory dst_buffer, IntPtr src_offset, IntPtr dst_offset, IntPtr cb, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueCopyBuffer(command_queue, src_buffer, dst_buffer, src_offset, dst_offset, cb, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_buffer"></param>
+        /// <param name="dst_buffer"></param>
+        /// <param name="src_offset"></param>
+        /// <param name="dst_offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueCopyBuffer(this CommandQueue command_queue, ComputeMemory src_buffer, ComputeMemory dst_buffer, IntPtr src_offset, IntPtr dst_offset, IntPtr cb, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueCopyBuffer(command_queue, src_buffer, dst_buffer, src_offset, dst_offset, cb, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueReadBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueReadBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ref ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ref ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T5 : struct
+        {
+            return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ref ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="kernel"></param>
+        /// <param name="work_dim"></param>
+        /// <param name="global_work_offset"></param>
+        /// <param name="global_work_size"></param>
+        /// <param name="local_work_size"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, IntPtr[] global_work_offset, IntPtr[] global_work_size, IntPtr[] local_work_size, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueNDRangeKernel(command_queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="kernel"></param>
+        /// <param name="work_dim"></param>
+        /// <param name="global_work_offset"></param>
+        /// <param name="global_work_size"></param>
+        /// <param name="local_work_size"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, ref IntPtr global_work_offset, ref IntPtr global_work_size, ref IntPtr local_work_size, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueNDRangeKernel(command_queue, kernel, work_dim, ref global_work_offset, ref global_work_size, ref local_work_size, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="kernel"></param>
+        /// <param name="work_dim"></param>
+        /// <param name="global_work_offset"></param>
+        /// <param name="global_work_size"></param>
+        /// <param name="local_work_size"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, IntPtr* global_work_offset, IntPtr* global_work_size, IntPtr* local_work_size, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueNDRangeKernel(command_queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueWriteBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueWriteBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ref ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ref ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T5 : struct
+        {
+            return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ref ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        public static ErrorCode Finish(this CommandQueue command_queue)
+        {
+            return CL.Finish(command_queue);
+        }
+
+    }
+    /// <summary>
     /// Defines extension methods to simply ComputeContextHandle usage.
     /// </summary>
     public static partial class ComputeContextHandleExtensions
     {
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -46,7 +659,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -58,7 +671,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -71,7 +684,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -84,7 +697,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -97,7 +710,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -110,7 +723,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -123,7 +736,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -136,7 +749,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -149,7 +762,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, ref host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
@@ -162,7 +775,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateBuffer(context, flags, size, ref host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="device"></param>
         /// <param name="properties"></param>
@@ -173,7 +786,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateCommandQueue(context, device, properties, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="device"></param>
         /// <param name="properties"></param>
@@ -184,7 +797,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateCommandQueue(context, device, properties, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -199,7 +812,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -215,7 +828,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -231,7 +844,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -247,7 +860,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -263,7 +876,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, ref host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -278,7 +891,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -294,7 +907,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -310,7 +923,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -326,7 +939,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -342,7 +955,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, ref host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -357,7 +970,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -373,7 +986,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -389,7 +1002,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -405,7 +1018,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -421,7 +1034,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, ref host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -438,7 +1051,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -456,7 +1069,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -474,7 +1087,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -492,7 +1105,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -510,7 +1123,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -527,7 +1140,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -545,7 +1158,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -563,7 +1176,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -581,7 +1194,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -599,7 +1212,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -616,7 +1229,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -634,7 +1247,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -652,7 +1265,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -670,7 +1283,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_format"></param>
@@ -688,7 +1301,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="count"></param>
         /// <param name="strings"></param>
@@ -700,7 +1313,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateProgramWithSource(context, count, strings, lengths, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="count"></param>
         /// <param name="strings"></param>
@@ -712,7 +1325,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateProgramWithSource(context, count, strings, lengths, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="count"></param>
         /// <param name="strings"></param>
@@ -724,7 +1337,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateProgramWithSource(context, count, strings, lengths, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="count"></param>
         /// <param name="strings"></param>
@@ -736,74 +1349,74 @@ namespace OpenTK.Compute.CL10
             return CL.CreateProgramWithSource(context, count, ref strings, ref lengths, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="normalized_coords"></param>
         /// <param name="addressing_mode"></param>
         /// <param name="filter_mode"></param>
-        /// <param name="errcode_ret">[length: 1]</param>
+        /// <param name="errcode_ret"></param>
         [CLSCompliant(false)]
-        public static ComputeSampler CreateSampler(this ComputeContextHandle context, bool normalized_coords, OpenTK.Compute.CL10.AddressingMode addressing_mode, OpenTK.Compute.CL10.FilterMode filter_mode, [OutAttribute] out Int32 errcode_ret)
+        public static ComputeSampler CreateSampler(this ComputeContextHandle context, bool normalized_coords, OpenTK.Compute.CL10.AddressingMode addressing_mode, OpenTK.Compute.CL10.FilterMode filter_mode, [OutAttribute] out ErrorCode errcode_ret)
         {
             return CL.CreateSampler(context, normalized_coords, addressing_mode, filter_mode, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="normalized_coords"></param>
         /// <param name="addressing_mode"></param>
         /// <param name="filter_mode"></param>
-        /// <param name="errcode_ret">[length: 1]</param>
+        /// <param name="errcode_ret"></param>
         [CLSCompliant(false)]
-        public static unsafe ComputeSampler CreateSampler(this ComputeContextHandle context, bool normalized_coords, OpenTK.Compute.CL10.AddressingMode addressing_mode, OpenTK.Compute.CL10.FilterMode filter_mode, [OutAttribute] Int32* errcode_ret)
+        public static unsafe ComputeSampler CreateSampler(this ComputeContextHandle context, bool normalized_coords, OpenTK.Compute.CL10.AddressingMode addressing_mode, OpenTK.Compute.CL10.FilterMode filter_mode, [OutAttribute] ErrorCode* errcode_ret)
         {
             return CL.CreateSampler(context, normalized_coords, addressing_mode, filter_mode, errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         public static ErrorCode RetainContext(this ComputeContextHandle context)
         {
             return CL.RetainContext(context);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         public static ErrorCode ReleaseContext(this ComputeContextHandle context)
         {
             return CL.ReleaseContext(context);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
         {
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetContextInfo(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
         {
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
@@ -811,12 +1424,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
@@ -824,12 +1437,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
@@ -837,12 +1450,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
@@ -850,12 +1463,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
@@ -863,12 +1476,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
@@ -876,12 +1489,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
@@ -889,12 +1502,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetContextInfo(context, param_name, param_value_size, ref param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
@@ -902,36 +1515,36 @@ namespace OpenTK.Compute.CL10
             return CL.GetContextInfo(context, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
@@ -939,12 +1552,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
@@ -952,12 +1565,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
@@ -965,12 +1578,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
@@ -978,12 +1591,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
@@ -991,12 +1604,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
@@ -1004,12 +1617,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
@@ -1017,12 +1630,12 @@ namespace OpenTK.Compute.CL10
             return CL.GetDeviceInfo(device, param_name, param_value_size, ref param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
         /// <param name="param_value"></param>
-        /// <param name="param_value_size_ret">[length: 1]</param>
+        /// <param name="param_value_size_ret"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
@@ -1030,7 +1643,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetDeviceInfo(device, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_type"></param>
@@ -1043,7 +1656,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetSupportedImageFormats(context, flags, image_type, num_entries, image_formats, num_image_formats);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_type"></param>
@@ -1056,7 +1669,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetSupportedImageFormats(context, flags, image_type, num_entries, ref image_formats, ref num_image_formats);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
         /// <param name="image_type"></param>
@@ -1071,11 +1684,17 @@ namespace OpenTK.Compute.CL10
 
     }
     /// <summary>
+    /// Defines extension methods to simply ComputeEvent usage.
+    /// </summary>
+    public static partial class ComputeEventExtensions
+    {
+    }
+    /// <summary>
     /// Defines extension methods to simply ComputeKernel usage.
     /// </summary>
     public static partial class ComputeKernelExtensions
     {
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1087,7 +1706,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1099,7 +1718,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1111,7 +1730,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1124,7 +1743,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1137,7 +1756,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1150,7 +1769,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1163,7 +1782,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1176,7 +1795,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1189,7 +1808,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1202,7 +1821,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1215,7 +1834,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1228,7 +1847,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1241,7 +1860,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1254,7 +1873,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, ref param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="param_name"></param>
         /// <param name="param_value_size"></param>
@@ -1267,7 +1886,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelInfo(kernel, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1280,7 +1899,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1293,7 +1912,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1306,7 +1925,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1320,7 +1939,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1334,7 +1953,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1348,7 +1967,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1362,7 +1981,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1376,7 +1995,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1390,7 +2009,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1404,7 +2023,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1418,7 +2037,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1432,7 +2051,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1446,7 +2065,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1460,7 +2079,7 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, ref param_value, out param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="device"></param>
         /// <param name="param_name"></param>
@@ -1474,21 +2093,21 @@ namespace OpenTK.Compute.CL10
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         public static ErrorCode ReleaseKernel(this ComputeKernel kernel)
         {
             return CL.ReleaseKernel(kernel);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         public static ErrorCode RetainKernel(this ComputeKernel kernel)
         {
             return CL.RetainKernel(kernel);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="arg_index"></param>
         /// <param name="arg_size"></param>
@@ -1499,7 +2118,7 @@ namespace OpenTK.Compute.CL10
             return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="arg_index"></param>
         /// <param name="arg_size"></param>
@@ -1510,7 +2129,7 @@ namespace OpenTK.Compute.CL10
             return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="arg_index"></param>
         /// <param name="arg_size"></param>
@@ -1522,7 +2141,7 @@ namespace OpenTK.Compute.CL10
             return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="arg_index"></param>
         /// <param name="arg_size"></param>
@@ -1534,7 +2153,7 @@ namespace OpenTK.Compute.CL10
             return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="arg_index"></param>
         /// <param name="arg_size"></param>
@@ -1546,7 +2165,7 @@ namespace OpenTK.Compute.CL10
             return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="kernel"></param>
         /// <param name="arg_index"></param>
         /// <param name="arg_size"></param>
@@ -1560,50 +2179,231 @@ namespace OpenTK.Compute.CL10
 
     }
     /// <summary>
+    /// Defines extension methods to simply ComputeMemory usage.
+    /// </summary>
+    public static partial class ComputeMemoryExtensions
+    {
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="memobj"></param>
+        public static ErrorCode ReleaseMemObject(this ComputeMemory memobj)
+        {
+            return CL.ReleaseMemObject(memobj);
+        }
+
+    }
+    /// <summary>
     /// Defines extension methods to simply ComputeProgram usage.
     /// </summary>
     public static partial class ComputeProgramExtensions
     {
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="program"></param>
         /// <param name="num_devices"></param>
         /// <param name="device_list"></param>
         /// <param name="options"></param>
-        /// <param name="notify"></param>
+        /// <param name="pfn_notify"></param>
         /// <param name="user_data"></param>
         [CLSCompliant(false)]
-        public static ErrorCode BuildProgram(this ComputeProgram program, Int32 num_devices, ComputeDevice[] device_list, String options, ProgramNotifyDelegate notify, IntPtr user_data)
+        public static ErrorCode BuildProgram(this ComputeProgram program, Int32 num_devices, ComputeDevice[] device_list, String options, ProgramNotifyDelegate pfn_notify, IntPtr user_data)
         {
-            return CL.BuildProgram(program, num_devices, device_list, options, notify, user_data);
+            return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="program"></param>
         /// <param name="num_devices"></param>
         /// <param name="device_list"></param>
         /// <param name="options"></param>
-        /// <param name="notify"></param>
+        /// <param name="pfn_notify"></param>
         /// <param name="user_data"></param>
         [CLSCompliant(false)]
-        public static ErrorCode BuildProgram(this ComputeProgram program, Int32 num_devices, ref ComputeDevice device_list, String options, ProgramNotifyDelegate notify, IntPtr user_data)
+        public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice[] device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[] user_data)
+            where T5 : struct
         {
-            return CL.BuildProgram(program, num_devices, ref device_list, options, notify, user_data);
+            return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
         }
 
-        /// <summary>[requires: v1.0 or ]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="program"></param>
         /// <param name="num_devices"></param>
         /// <param name="device_list"></param>
         /// <param name="options"></param>
-        /// <param name="notify"></param>
+        /// <param name="pfn_notify"></param>
         /// <param name="user_data"></param>
         [CLSCompliant(false)]
-        public static unsafe ErrorCode BuildProgram(this ComputeProgram program, Int32 num_devices, ComputeDevice* device_list, String options, ProgramNotifyDelegate notify, IntPtr user_data)
+        public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice[] device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,] user_data)
+            where T5 : struct
         {
-            return CL.BuildProgram(program, num_devices, device_list, options, notify, user_data);
+            return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice[] device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,,] user_data)
+            where T5 : struct
+        {
+            return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice[] device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] ref T5 user_data)
+            where T5 : struct
+        {
+            return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, ref user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode BuildProgram(this ComputeProgram program, Int32 num_devices, ref ComputeDevice device_list, String options, ProgramNotifyDelegate pfn_notify, IntPtr user_data)
+        {
+            return CL.BuildProgram(program, num_devices, ref device_list, options, pfn_notify, user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ref ComputeDevice device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[] user_data)
+            where T5 : struct
+        {
+            return CL.BuildProgram(program, num_devices, ref device_list, options, pfn_notify, user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ref ComputeDevice device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,] user_data)
+            where T5 : struct
+        {
+            return CL.BuildProgram(program, num_devices, ref device_list, options, pfn_notify, user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ref ComputeDevice device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,,] user_data)
+            where T5 : struct
+        {
+            return CL.BuildProgram(program, num_devices, ref device_list, options, pfn_notify, user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ref ComputeDevice device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] ref T5 user_data)
+            where T5 : struct
+        {
+            return CL.BuildProgram(program, num_devices, ref device_list, options, pfn_notify, ref user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode BuildProgram(this ComputeProgram program, Int32 num_devices, ComputeDevice* device_list, String options, ProgramNotifyDelegate pfn_notify, IntPtr user_data)
+        {
+            return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice* device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[] user_data)
+            where T5 : struct
+        {
+            return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice* device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,] user_data)
+            where T5 : struct
+        {
+            return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice* device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,,] user_data)
+            where T5 : struct
+        {
+            return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list"></param>
+        /// <param name="options"></param>
+        /// <param name="pfn_notify"></param>
+        /// <param name="user_data"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice* device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] ref T5 user_data)
+            where T5 : struct
+        {
+            return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, ref user_data);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="program"></param>
         /// <param name="kernel_name"></param>
         /// <param name="errcode_ret"></param>
@@ -1613,7 +2413,7 @@ namespace OpenTK.Compute.CL10
             return CL.CreateKernel(program, kernel_name, out errcode_ret);
         }
 
-        /// <summary>[requires: v1.0 or 1.0]</summary>
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="program"></param>
         /// <param name="kernel_name"></param>
         /// <param name="errcode_ret"></param>

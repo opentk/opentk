@@ -1213,7 +1213,7 @@ namespace OpenTK.Compute.CL10
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.CreateCommandQueue, GL.SetCommandQueueProperty
     /// </summary>
     public enum CommandQueueFlags : long
     {
@@ -1674,7 +1674,7 @@ namespace OpenTK.Compute.CL10
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.CreateBuffer, GL.CreateCommandQueue and 5 other functions
     /// </summary>
     public enum ErrorCode : int
     {
@@ -2200,25 +2200,6 @@ namespace OpenTK.Compute.CL10
         /// Original was CL_SAMPLER_CONTEXT = 0x1151
         /// </summary>
         SamplerContext = ((int)0x1151)        ,
-        /// <summary>
-        /// Original was CL_SAMPLER_NORMALIZED_COORDS = 0x1152
-        /// </summary>
-        SamplerNormalizedCoords = ((int)0x1152)        ,
-        /// <summary>
-        /// Original was CL_SAMPLER_ADDRESSING_MODE = 0x1153
-        /// </summary>
-        SamplerAddressingMode = ((int)0x1153)        ,
-        /// <summary>
-        /// Original was CL_SAMPLER_FILTER_MODE = 0x1154
-        /// </summary>
-        SamplerFilterMode = ((int)0x1154)        ,
-    }
-
-    /// <summary>
-    /// Not used directly.
-    /// </summary>
-    public enum SamplerProperties : int
-    {
         /// <summary>
         /// Original was CL_SAMPLER_NORMALIZED_COORDS = 0x1152
         /// </summary>
