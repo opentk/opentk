@@ -35,7 +35,7 @@ namespace Bind.CL
     class CL20Generator : CLGenerator
     {
         public CL20Generator(Settings settings, string dirname)
-            : base(settings, dirname ?? "CL20")
+            : base(settings, dirname)
         {
             Settings.DefaultOutputPath = Path.Combine(
                 Settings.DefaultOutputPath, "../../Compute/CL20");

@@ -245,8 +245,6 @@
     <Compile Include="Structures\Documentation.cs" />
     <Compile Include="CL\CL20Generator.cs" />
     <None Include="Specifications\CL10\cl.tm" />
-    <None Include="Specifications\CL20\signatures.xml" />
-    <None Include="Specifications\CL12\signatures.xml" />
     <Compile Include="CL\CL12Generator.cs" />
     <Compile Include="Structures\Class.cs" />
     <Compile Include="Structures\GenericCollection.cs" />
@@ -279,7 +277,5 @@
   </ProjectExtensions>
   <ItemGroup>
     <Folder Include="Specifications\Docs\" />
-    <Folder Include="Specifications\CL20\" />
-    <Folder Include="Specifications\CL12\" />
   </ItemGroup>
 </Project>
