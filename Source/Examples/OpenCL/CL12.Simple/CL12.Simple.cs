@@ -5,69 +5,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.InteropServices;
+using OpenTK;
 using OpenTK.Compute;
 using OpenTK.Compute.CL12;
+using OpenTK.Extensions;
 
 namespace Examples.OpenCL.CL12
 {
-    using cl_context = IntPtr;
-    using cl_device_id = IntPtr;
-    using cl_command_queue = IntPtr;
-    using cl_program = IntPtr;
-    using cl_kernel = IntPtr;
-    using cl_mem = IntPtr;
-
     class Simple
     {
-        static void CheckErrors(ErrorCode error)
-        {
-            if (error != ErrorCode.Success)
-                throw new InvalidOperationException(error.ToString());
-        }
-
-        static void ContextNotify()
-        {
-        }
-
-        public static void Main()
-        {
-            ErrorCode error;
-
-            // Create OpenCL context
-            var context_notify = new ContextNotifyDelegate(ContextNotify);
-            var context = CL.CreateContextFromType((ContextProperties[])null,
-                DeviceTypeFlags.DeviceTypeDefault,
-                null,
-                IntPtr.Zero);
-
-            // Query available devices
-            IntPtr size;
-            error = context.GetContextInfo(ContextInfo.ContextDevices,
-                IntPtr.Zero, IntPtr.Zero, out size);
-            CheckErrors(error);
-
-            Console.WriteLine("Context {0} has {1} devices.", context.Handle, devices.Count);
-            ComputeDevice[] devices = new ComputeDevice[size.ToInt32()];
-            error = context.GetContextInfo(ContextInfo.ContextDevices,
-                size, devices, out size);
-            CheckErrors(error);
-
-            // Create a command queue
-            var queue = context.CreateCommandQueue(ComputeDevice.Zero,
-                CommandQueueFlags.Default, out error);
-            CheckErrors(error);
-
-            // Create a program
-            var program = context.CreateProgramWithSource(1,
-
-
-            #if false
-            const int cnBlockSize = 4;
-            const int cnBlocks    = 3;
-            IntPtr cnDimension = new IntPtr(cnBlocks * cnBlockSize);
-            string sProgramSource = @"
+        static string SourceCode = @"
 __kernel void
-vectorAdd(__global const float * a,
+VectorAdd(__global const float * a,
           __global const float * b,
           __global       float * c)
 {
@@ -77,111 +27,177 @@ vectorAdd(__global const float * a,
 }
 ";
 
+        static void CheckErrors(ErrorCode error)
+        {
+            if (error != ErrorCode.Success)
+                throw new InvalidOperationException(error.ToString());
+        }
+
+        static void ContextNotify(string errinfo, IntPtr private_info, IntPtr cb, IntPtr user_data)
+        {
+            Console.Error.WriteLine(errinfo);
+        }
+
+        public static void Main()
+        {
             ErrorCode error;
+            IntPtr length_ret;
+            var length = new IntPtr(1024);
+            var data = new byte[length.ToInt32()];
 
-            // create OpenCL device & context
-            cl_context hContext;
-            //unsafe { hContext = CL.CreateContextFromType((ContextProperties*)null, DeviceTypeFlags.DeviceTypeDefault, IntPtr.Zero, IntPtr.Zero, &error); }
+            // Query available platforms
+            int platform_count;
+            var platforms = new ComputePlatform[4];
+            error = CL.GetPlatformIDs(platforms.Length, platforms, out platform_count);
+            CheckErrors(error);
 
-            // query all devices available to the context
-            IntPtr nContextDescriptorSize;
-            CL.GetContextInfo(hContext, ContextInfo.ContextDevices, IntPtr.Zero, IntPtr.Zero, out nContextDescriptorSize);
-            cl_device_id[] aDevices = new cl_device_id[nContextDescriptorSize.ToInt32()];
-            /*unsafe
+            for (int j = 0; j < platform_count; j++)
             {
-                fixed (cl_device_id* ptr = aDevices)
+                var platform = platforms[j];
+                Console.WriteLine("Platform: {0} ({1})", j + 1, (IntPtr)platform);
+
+                // Create OpenCL context
+                var context_notify = new ContextNotifyDelegate(ContextNotify);
+                var context = CL.CreateContextFromType(
+                    new IntPtr[]
+                    {
+                        (IntPtr)ComputeContextProperties.ContextPlatform,
+                        (IntPtr)platform,
+                        IntPtr.Zero
+                    },
+                    DeviceTypeFlags.DeviceTypeAll,
+                    context_notify,
+                    IntPtr.Zero,
+                    out error);
+                CheckErrors(error);
+
+                // Query available devices
+                int device_count;
+                ComputeDevice[] devices = new ComputeDevice[4];
+                error = CL.GetDeviceIDs(platform, DeviceTypeFlags.DeviceTypeAll,
+                    devices.Length, devices, out device_count);
+                CheckErrors(error);
+
+                for (int i = 0; i < device_count; i++)
                 {
-                    IntPtr ret;
-                    CL.GetContextInfo(hContext, ContextInfo.ContextDevices, nContextDescriptorSize, new IntPtr(ptr), out ret);
-                }
-            }
-            
-            
-            // create a command queue for first device the context reported
-            cl_command_queue hCmdQueue = CL.CreateCommandQueue(hContext, aDevices[0], (CommandQueueFlags)0, out error);
-            // create & compile program
-            cl_program hProgram;
-            unsafe {  hProgram = CL.CreateProgramWithSource(hContext, 1, new string[] { sProgramSource }, null, &error); }
-            CL.BuildProgram(hProgram, 0, (IntPtr[])null, null, IntPtr.Zero, IntPtr.Zero);
+                    var device = devices[i];
 
-            // create kernel
-            cl_kernel hKernel = CL.CreateKernel(hProgram, "vectorAdd", out error);
-            // allocate host  vectors
-            float[] A = new  float[cnDimension.ToInt32()];
-            float[] B = new float[cnDimension.ToInt32()];
-            float[] C = new float[cnDimension.ToInt32()];
-            // initialize host memory
-            Random rand = new Random();
-            for (int i = 0; i < A.Length; i++)
-            {
-                A[i] = rand.Next() % 256;
-                B[i] = rand.Next() % 256;
-            }
-            
-            // allocate device memory
-            unsafe
-            {
-                fixed (float* pA = A)
-                fixed (float* pB = B)
-                fixed (float* pC = C)
-                {
-                    cl_mem hDeviceMemA, hDeviceMemB, hDeviceMemC;
-                    hDeviceMemA = CL.CreateBuffer(hContext,
+                    device.GetDeviceInfo(DeviceInfo.DeviceName, length, data, out length_ret);
+                    var name = Encoding.ASCII.GetString(data, 0, length_ret.ToInt32());
+
+                    device.GetDeviceInfo(DeviceInfo.DriverVersion, length, data, out length_ret);
+                    var version = Encoding.ASCII.GetString(data, 0, length_ret.ToInt32());
+
+                    device.GetDeviceInfo(DeviceInfo.DeviceType, length, data, out length_ret);
+                    var type = (DeviceTypeFlags)BitConverter.ToInt64(data, 0);
+
+                    Console.WriteLine(" Device: {0}", i + 1);
+                    Console.WriteLine("     id: {0}", (IntPtr)devices[i]);
+                    Console.WriteLine("   name: {0}", name);
+                    Console.WriteLine("version: {0}", version);
+                    Console.WriteLine("   type: {0}", type);
+                    Console.WriteLine();
+
+                    //error = context.GetContextInfo(ContextInfo.ContextDevices,
+                    //    (IntPtr)devices.Length, devices, out length_ret);
+                    //CheckErrors(error);
+
+                    // Create a command queue
+                    var command = context.CreateCommandQueue(device,
+                        CommandQueueFlags.Default, out error);
+                    CheckErrors(error);
+
+                    // Create a program
+                    IntPtr lengths = IntPtr.Zero; // use null-terminated strings
+                    var program = context.CreateProgramWithSource(1,
+                        ref SourceCode, ref lengths, out error);
+                    CheckErrors(error);
+                    error = program.BuildProgram(0, (ComputeDevice[])null, null, null, IntPtr.Zero);
+                    CheckErrors(error);
+
+                    // Allocate host vectors
+                    var A = new Vector3[] { Vector3.UnitX };
+                    var B = new Vector3[] { Vector3.UnitY };
+                    var C = new Vector3[] { Vector3.Zero };
+
+                    // Allocate device memory
+                    var AHandle = context.CreateBuffer(
                         MemFlags.MemReadOnly | MemFlags.MemCopyHostPtr,
-                        new IntPtr(cnDimension.ToInt32() * sizeof(float)),
-                        new IntPtr(pA),
+                        A.Size(),
+                        A,
                         out error);
-                    hDeviceMemB = CL.CreateBuffer(hContext,
-                       MemFlags.MemReadOnly | MemFlags.MemCopyHostPtr,
-                       new IntPtr(cnDimension.ToInt32() * sizeof(float)),
-                       new IntPtr(pA),
-                       out error);
-                    hDeviceMemC = CL.CreateBuffer(hContext,
+                    CheckErrors(error);
+
+                    var BHandle = context.CreateBuffer(
+                        MemFlags.MemReadOnly | MemFlags.MemCopyHostPtr,
+                        B.Size(),
+                        B,
+                        out error);
+                    CheckErrors(error);
+
+                    var CHandle = context.CreateBuffer(
                         MemFlags.MemWriteOnly,
-                        new IntPtr(cnDimension.ToInt32() * sizeof(float)),
+                        C.Size(),
                         IntPtr.Zero,
                         out error);
+                    CheckErrors(error);
 
-                    // setup parameter values
-                    CL.SetKernelArg(hKernel, 0, new IntPtr(sizeof(cl_mem)), new IntPtr(&hDeviceMemA));
-                    CL.SetKernelArg(hKernel, 1, new IntPtr(sizeof(cl_mem)), new IntPtr(&hDeviceMemB));
-                    CL.SetKernelArg(hKernel, 2, new IntPtr(sizeof(cl_mem)), new IntPtr(&hDeviceMemC));
+                    // Create kernel
+                    var kernel = program.CreateKernel("VectorAdd", out error);
+                    CheckErrors(error);
 
-                    // write data from host to device
-                    CL.EnqueueWriteBuffer(hCmdQueue, hDeviceMemA, true, IntPtr.Zero,
-                        new IntPtr(cnDimension.ToInt32() * sizeof(float)),
-                        new IntPtr(pA), 0, null, (IntPtr[])null);
-                    CL.EnqueueWriteBuffer(hCmdQueue, hDeviceMemB, true, IntPtr.Zero,
-                        new IntPtr(cnDimension.ToInt32() * sizeof(float)),
-                        new IntPtr(pB), 0, null, (IntPtr[])null);
+                    // Setup kernel arguments
+                    error = kernel.SetKernelArg(0,
+                        AHandle.Size(),
+                        ref AHandle);
+                    CheckErrors(error);
+                    error = kernel.SetKernelArg(1,
+                        BHandle.Size(),
+                        ref BHandle);
+                    CheckErrors(error);
+                    error = kernel.SetKernelArg(2,
+                        CHandle.Size(),
+                        ref CHandle);
+                    CheckErrors(error);
 
-                    // execute kernel
-                    error = (ErrorCode)CL.EnqueueNDRangeKernel(hCmdQueue, hKernel, 1, null, &cnDimension, null, 0, null, null);
-                    if (error != ErrorCode.Success)
-                        throw new Exception(error.ToString());
+                    // Write data from host to device
+                    ComputeEvent e;
+                    error = command.EnqueueWriteBuffer(AHandle, true, IntPtr.Zero,
+                        A.Size(), A, 0, null, out e);
+                    CheckErrors(error);
+                    error = command.EnqueueWriteBuffer(BHandle, true, IntPtr.Zero,
+                        B.Size(), B, 0, null, out e);
+                    CheckErrors(error);
 
-                    // copy results from device back to host
-                    IntPtr event_handle = IntPtr.Zero;
-                    error = (ErrorCode)CL.EnqueueReadBuffer(hCmdQueue, hDeviceMemC, true, IntPtr.Zero,
-                         new IntPtr(cnDimension.ToInt32() * sizeof(float)),
-                         new IntPtr(pC), 0, null, (IntPtr[])null);
-                    if (error != ErrorCode.Success)
-                        throw new Exception(error.ToString());
+                    // Execute kernel
+                    error = command.EnqueueNDRangeKernel(kernel,
+                        1, null, new IntPtr[] { A.Size() }, null,
+                        0, null, out e);
+                    CheckErrors(error);
 
-                    CL.Finish(hCmdQueue);
+                    // Read results from device
+                    error = command.EnqueueReadBuffer(CHandle, true, IntPtr.Zero,
+                        C.Size(), C, 0, null, out e);
+                    CheckErrors(error);
 
-                    CL.ReleaseMemObject(hDeviceMemA);
-                    CL.ReleaseMemObject(hDeviceMemB);
-                    CL.ReleaseMemObject(hDeviceMemC);
+                    command.Finish();
+
+                    AHandle.ReleaseMemObject();
+                    BHandle.ReleaseMemObject();
+                    CHandle.ReleaseMemObject();
+
+                    bool success = true;
+                    for (int test = 0; test < A.Length && success; test++)
+                    {
+                        Console.WriteLine("    {0} + {1} == {2}", A[test], B[test], C[test]);
+                        success &= A[test] + B[test] == C[test];
+                    }
+
+                    Console.Write("    ");
+                    Console.WriteLine(success ? "Test succeessful!" : "Test failed.");
                 }
+                Console.WriteLine();
             }
-
-            for (int i = 0; i < A.Length; i++)
-            {
-                System.Diagnostics.Trace.WriteLine(String.Format("{0} + {1} = {2}", A[i], B[i], C[i]));
-            }
-
-            #endif
         }
     }
 }
