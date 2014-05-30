@@ -351,8 +351,7 @@ namespace Bind
                         // glcore, gles1 and gles2 use the All enum instead.
                         if (apiname == "gl" && enums.ContainsKey(category))
                         {
-                            var category_enum = enums[category];
-                            type = (Enum)category_enum.Clone();
+                            type = new Enum(type, enums[category]);
                             type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
                                 Settings.NamespaceSeparator, enum_processor.TranslateEnumName(category));
                         }
@@ -687,6 +686,14 @@ namespace Bind
                 d.Parameters[i] = TranslateParameter(d.Parameters[i], function_override, nav, enum_processor, enums, d.Category, apiname);
                 if (d.Parameters[i].Type.CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
                     d.Parameters[i].Type.WrapperType |= WrapperTypes.UncheckedParameter;
+
+                // When replacing an enum parameter by a non-enum, we must
+                // reset Type.IsEnum to false. The only way to do this is
+                // by recreating a plain Type from the Enum.
+                if (d.Parameters[i].Type.IsEnum && !enums.ContainsKey((d.Parameters[i].Type as Enum).Name))
+                {
+                    d.Parameters[i].Type = new Type(d.Parameters[i].Type);
+                }
             }
         }
 
@@ -1045,7 +1052,7 @@ namespace Bind
         static Function CreateReturnTypeConvenienceWrapper(Function d)
         {
             var f = new Function(d);
-            f.ReturnType = (Type)f.Parameters.Last().Clone();
+            f.ReturnType = (f.Parameters.Last().Clone() as Parameter).Type;
             f.ReturnType.Pointer = 0;
             f.Parameters.RemoveAt(f.Parameters.Count - 1);
             f.ReturnType.WrapperType |= WrapperTypes.ConvenienceReturnType;
