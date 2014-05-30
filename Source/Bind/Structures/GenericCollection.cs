@@ -34,6 +34,7 @@ using System.Linq;
 namespace Bind.Structures
 {
     class GenericCollection<T> : IDictionary<string, List<T>>
+        where T : IComparable<T>, IEquatable<T>
     {
         readonly protected Dictionary<string, List<T>> Collection =
             new Dictionary<string, List<T>>();

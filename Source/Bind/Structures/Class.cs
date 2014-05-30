@@ -29,10 +29,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bind.Structures
 {
-    class Class
+    class Class : IComparable<Class>, IEquatable<Class>
     {
         public Class()
         {
@@ -41,6 +42,24 @@ namespace Bind.Structures
 
         public string Name { get; set; }
         public FunctionCollection Methods { get; private set; }
+
+        #region IComparable implementation
+
+        public int CompareTo(Class other)
+        {
+            return Name.CompareTo(other.Name);
+        }
+
+        #endregion
+
+        #region IEquatable implementation
+
+        public bool Equals(Class other)
+        {
+            return Name.Equals(other.Name);
+        }
+
+        #endregion
     }
 
     class ClassCollection : GenericCollection<Class>
@@ -50,9 +69,15 @@ namespace Bind.Structures
             if (!Collection.ContainsKey(item.Name))
             {
                 Add(item.Name, new List<Class>());
+                Collection[item.Name].Add(item);
             }
-
-            Collection[item.Name].Add(item);
+            else
+            {
+                foreach (var m in item.Methods.Values.SelectMany(m => m))
+                {
+                    Collection[item.Name][0].Methods.AddChecked(m);
+                }
+            }
         }
     }
 }
