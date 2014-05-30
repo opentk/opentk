@@ -219,7 +219,7 @@ namespace Bind
             sw.WriteLine("EntryPointNames = new byte[]", delegates.Count);
             sw.WriteLine("{");
             sw.Indent();
-            foreach (var d in delegates.Values.Select(d => d.First()))
+            foreach (var d in delegates.Values.Select(d => d.First()).OrderBy(d => d))
             {
                 if (d.RequiresSlot(Settings))
                 {
@@ -236,7 +236,7 @@ namespace Bind
             sw.WriteLine("{");
             sw.Indent();
             int offset = 0;
-            foreach (var d in delegates.Values.Select(d => d.First()))
+            foreach (var d in delegates.Values.Select(d => d.First()).OrderBy(d => d))
             {
                 if (d.RequiresSlot(Settings))
                 {
@@ -253,7 +253,7 @@ namespace Bind
             sw.WriteLine();
 
             int current_wrapper = 0;
-            foreach (string key in wrappers.Keys)
+            foreach (string key in wrappers.Keys.OrderBy(d => d))
             {
                 if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
                 {
@@ -271,7 +271,7 @@ namespace Bind
                 }
 
                 wrappers[key].Sort();
-                foreach (Function f in wrappers[key])
+                foreach (Function f in wrappers[key].OrderBy(d => d))
                 {
                     WriteWrapper(sw, f, enums);
                     current_wrapper++;
@@ -288,7 +288,7 @@ namespace Bind
             // Emit native signatures.
             // These are required by the patcher.
             int current_signature = 0;
-            foreach (var d in wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct())
+            foreach (var d in wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct().OrderBy(d => d))
             {
                 sw.WriteLine("[Slot({0})]", d.Slot);
                 sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
@@ -335,9 +335,15 @@ namespace Bind
             }
 
             sw.Write("public static {0}", GetDeclarationString(f, Settings.Compatibility));
+            if (f.Parameters.HasGenericParameters)
+            {
+                // Todo: remove this
+                sw.WriteLine();
+                sw.Write("");
+            }
             if (!f.IsExtensionMethod)
             {
-                sw.WriteLine("{ throw new NotImplementedException(); }");
+                sw.WriteLine(WriteOptions.NoIndent, " { throw new NotImplementedException(); }");
             }
             else
             {
@@ -479,7 +485,7 @@ namespace Bind
 
         void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
         {
-             // Make sure everything is sorted. This will avoid random changes between
+            // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
             constants = constants.OrderBy(c => c);
 
@@ -538,13 +544,20 @@ namespace Bind
                     // Add every function to every enum parameter it references
                     foreach (var parameter in wrapper.Parameters.Where(p => p.Type.IsEnum))
                     {
-                        var e = enums[parameter.Type.CurrentType];
-                        var list = enum_counts[e];
-                        list.Add(wrapper);
+                        if (enums.ContainsKey(parameter.Type.CurrentType))
+                        {
+                            var e = enums[parameter.Type.CurrentType];
+                            var list = enum_counts[e];
+                            list.Add(wrapper);
+                        }
+                        else
+                        {
+                            Console.Error.WriteLine("Invalid enum '{0}' in '{1}'", parameter.Type.CurrentType, wrapper);
+                        }
                     }
                 }
 
-                foreach (Enum @enum in enums.Values)
+                foreach (Enum @enum in enums.Values.OrderBy(e => e))
                 {
                     if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                     {
