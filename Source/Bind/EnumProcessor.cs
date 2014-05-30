@@ -98,7 +98,7 @@ namespace Bind
             return processed_enums;
         }
 
-        static void ProcessEnum(XPathNavigator nav, string apiname, Enum e)
+        void ProcessEnum(XPathNavigator nav, string apiname, Enum e)
         {
             var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
             if (enum_override != null)
@@ -114,6 +114,7 @@ namespace Bind
                     e.BaseType = type_override.Value;
                 }
             }
+            e.Name = TranslateEnumName(e.Name);
         }
 
         public string TranslateEnumName(string name)
