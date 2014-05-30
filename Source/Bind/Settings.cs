@@ -29,8 +29,6 @@ namespace Bind
         public string DefaultOverridesFile = "overrides.xml";
         public string DefaultLanguageTypeMapFile = "csharp.tm";
         public string DefaultKeywordEscapeCharacter = "@";
-        public string DefaultImportsFile = "Core.cs";
-        public string DefaultDelegatesFile = "Delegates.cs";
         public string DefaultEnumsFile = "Enums.cs";
         public string DefaultWrappersFile = "GL.cs";
         public string DefaultClassesFile = "Extensions.cs";
@@ -39,7 +37,7 @@ namespace Bind
 
         string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
             signaturesFile, overridesFile, typemap,
-            languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
+            languageTypeMapFile, keywordEscapeCharacter, enumsFile,
             wrappersFile, classesFile;
         Nullable<Legacy> compatibility;
         public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
@@ -52,8 +50,6 @@ namespace Bind
         public string OverridesFile { get { return overridesFile ?? DefaultOverridesFile; } set { overridesFile = value; } }
         public string LanguageTypeMapFile { get { return languageTypeMapFile ?? DefaultLanguageTypeMapFile; } set { languageTypeMapFile = value; } }
         public string KeywordEscapeCharacter { get { return keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter; } set { keywordEscapeCharacter = value; } }
-        public string ImportsFile { get { return importsFile ?? DefaultImportsFile; } set { importsFile = value; } }
-        public string DelegatesFile { get { return delegatesFile ?? DefaultDelegatesFile; } set { delegatesFile = value; } }
         public string EnumsFile { get { return enumsFile ?? DefaultEnumsFile; } set { enumsFile = value; } }
         public string WrappersFile { get { return wrappersFile ?? DefaultWrappersFile; } set { wrappersFile = value; } }
         public string ClassesFile { get { return classesFile ?? DefaultClassesFile; } set { classesFile = value; } }
@@ -111,9 +107,6 @@ namespace Bind
 
         // New enums namespace (don't use a nested class).
         public string EnumsNamespace = null;// = "Enums";
-
-        public string DelegatesClass = "Delegates";
-        public string ImportsClass = "Core";
 
         /// <summary>
         /// The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
