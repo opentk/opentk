@@ -571,7 +571,7 @@ namespace Bind
                             switch (node.Name)
                             {
                                 case "type":
-                                    d.Parameters[i].Type.CurrentType = (string)node.TypedValue;
+                                    d.Parameters[i].Type.QualifiedType = (string)node.TypedValue;
                                     break;
                                 case "name":
                                     d.Parameters[i].Name = (string)node.TypedValue;
