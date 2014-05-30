@@ -35,8 +35,8 @@ namespace Bind.Structures
 {
     class GenericCollection<T> : IDictionary<string, List<T>>
     {
-        readonly protected SortedDictionary<string, List<T>> Collection =
-            new SortedDictionary<string, List<T>>();
+        readonly protected Dictionary<string, List<T>> Collection =
+            new Dictionary<string, List<T>>();
 
         public virtual void Add(T item)
         {
@@ -130,7 +130,7 @@ namespace Bind.Structures
 
         public void CopyTo(KeyValuePair<string, List<T>>[] array, int arrayIndex)
         {
-            Collection.CopyTo(array, arrayIndex);
+            Array.Copy(Collection.ToArray(), 0, array, arrayIndex, array.Length);
         }
 
         public bool Remove(KeyValuePair<string, List<T>> item)

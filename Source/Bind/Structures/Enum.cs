@@ -15,7 +15,7 @@ namespace Bind.Structures
 {
     #region class Enum
 
-    sealed class Enum : Type
+    sealed class Enum : Type, IComparable<Enum>
     {
         string _name, _type;
 
@@ -78,7 +78,7 @@ namespace Bind.Structures
             }
         }
 
-        SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
+        Dictionary<string, Constant> _constant_collection = new Dictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection
         {
@@ -109,6 +109,18 @@ namespace Bind.Structures
         {
             ConstantCollection.Add(constant.Name, constant);
         }
+
+        #region IComparable<Enum> Members
+
+        public int CompareTo(Enum e)
+        {
+            int result = Name.CompareTo(e.Name);
+            if (result == 0)
+                result = base.CompareTo(e);
+            return result;
+        }
+
+        #endregion
     }
 
     #endregion
@@ -117,7 +129,7 @@ namespace Bind.Structures
 
     class EnumCollection : IDictionary<string, Enum>
     {
-        SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
+        Dictionary<string, Enum> Enumerations = new Dictionary<string, Enum>();
 
         // Return -1 for ext1, 1 for ext2 or 0 if no preference.
         int OrderOfPreference(string ext1, string ext2)
@@ -239,7 +251,7 @@ namespace Bind.Structures
 
         public void CopyTo(KeyValuePair<string, Enum>[] array, int arrayIndex)
         {
-            Enumerations.CopyTo(array, arrayIndex);
+            Array.Copy(Enumerations.ToArray(), 0, array, arrayIndex, array.Length);
         }
 
         public int Count
