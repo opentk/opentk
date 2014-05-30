@@ -67,8 +67,7 @@ namespace Bind.GL2
             path = Path.Combine(Settings.InputPath, dirName);
 
             Settings.OutputClass = "GL";
-            Settings.DefaultClassesFile = String.Format("{0}.{1}",
-                settings.OutputClass, settings.ClassesFile);
+            Settings.DefaultClassesFile = "GL.Extensions.cs";
 
             Delegates = new DelegateCollection();
             Enums = new EnumCollection();
