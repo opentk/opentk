@@ -18,10 +18,9 @@ namespace Bind.ES
             Settings.DefaultOutputPath = String.Format(
                 Settings.DefaultOutputPath, "Graphics", "ES11");
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
-            Settings.DefaultImportsFile = "ES11Core.cs";
-            Settings.DefaultDelegatesFile = "ES11Delegates.cs";
             Settings.DefaultEnumsFile = "ES11Enums.cs";
             Settings.DefaultWrappersFile = "ES11.cs";
+            Settings.DefaultClassesFile = "ES11.Extensions.cs";
             Settings.DefaultDocPath = Path.Combine(
                 Settings.DefaultDocPath, "ES20"); // no ES11 docbook sources available
 
