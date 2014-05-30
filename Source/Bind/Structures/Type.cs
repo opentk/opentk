@@ -23,7 +23,7 @@ namespace Bind.Structures
         {
         }
 
-        protected Type(Type t)
+        public Type(Type t)
         {
             Copy(t);
         }
