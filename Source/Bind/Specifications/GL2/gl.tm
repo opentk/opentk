@@ -356,3 +356,16 @@ PathHandleMissingGlyphs,*,*,	    GLenum,*,*
 # TessContour,*,*,		      GLenum,*,*
 # TessProperty,*,*,		      GLenum,*,*
 # TesselatorObj,*,*,		      GLUtesselator*,*,*
+
+# OpenCL types
+_cl_context, ComputeContextHandle
+_cl_event, ComputeEvent
+cl_command_queue, CommandQueue
+cl_context, ComputeContextHandle
+cl_device_id, ComputeDevice
+cl_event, ComputeEvent
+cl_kernel, ComputeKernel
+cl_mem, ComputeMemory
+cl_platform_id, ComputePlatform
+cl_program, ComputeProgram
+cl_sampler, ComputeSampler
