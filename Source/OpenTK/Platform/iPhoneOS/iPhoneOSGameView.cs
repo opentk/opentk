@@ -192,7 +192,11 @@ namespace OpenTK.Platform.iPhoneOS
         [Preserve (Conditional = true)]
         void RunIteration (NSTimer timer)
         {
+#if XAMCORE_2_0
             view.RunIteration (null);
+#else
+            view.RunIteration ();
+#endif
         }
     }
 
@@ -847,7 +851,11 @@ namespace OpenTK.Platform.iPhoneOS
         FrameEventArgs updateEventArgs = new FrameEventArgs();
         FrameEventArgs renderEventArgs = new FrameEventArgs();
 
+#if XAMCORE_2_0
         internal void RunIteration (NSTimer timer)
+#else
+        internal void RunIteration ()
+#endif
         {
             var curUpdateTime = stopwatch.Elapsed;
             if (prevUpdateTime == TimeSpan.Zero)
