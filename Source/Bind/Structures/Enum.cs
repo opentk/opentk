@@ -112,6 +112,15 @@ namespace Bind.Structures
 
         #region IComparable<Enum> Members
 
+        public override int CompareTo(Type other)
+        {
+            if (other is Enum)
+            {
+                return CompareTo((Enum)other);
+            }
+            return base.CompareTo(other);
+        }
+
         public int CompareTo(Enum e)
         {
             int result = Name.CompareTo(e.Name);

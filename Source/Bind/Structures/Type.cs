@@ -324,7 +324,7 @@ namespace Bind.Structures
 
         #region IComparable<Type> Members
 
-        public int CompareTo(Type other)
+        public virtual int CompareTo(Type other)
         {
             // Make sure that Pointer parameters are sorted last to avoid bug [#1098].
             // The rest of the comparisons help maintain a stable order (useful for source control).
