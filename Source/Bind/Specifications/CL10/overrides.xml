@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <signatures version="2">
   <add name="cl" version="1.0">
-    <enum name="CommandQueueFlags">
+    <enum name="CommandQueueFlags" type="long">
       <token name="DEFAULT" value="0" />
     </enum>
   </add>
