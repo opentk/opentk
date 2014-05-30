@@ -62,6 +62,7 @@ namespace Bind.GL2
                 dirName = "GL2";
 
             Settings = settings.Clone();
+            Settings.DefaultTypeMapFile = "GL2/gl.tm";
 
             path = Path.Combine(Settings.InputPath, dirName);
 
