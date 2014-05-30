@@ -135,6 +135,7 @@ namespace Bind
                 do
                 {
                     string line = sr.ReadLine();
+                    string key, value;
 
                     if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
                         continue;
@@ -144,12 +145,14 @@ namespace Bind
                     if (words[0].ToLower() == "void")
                     {
                         // Special case for "void" -> "". We make it "void" -> "void"
-                        GLTypes.Add(words[0], "void");
+                        key = words[0];
+                        value = "void";
                     }
                     else if (words[0] == "VoidPointer" || words[0] == "ConstVoidPointer")
                     {
                         // "(Const)VoidPointer" -> "void*"
-                        GLTypes.Add(words[0], "void*");
+                        key = words[0];
+                        value = "void*";
                     }
                     else if (words[0] == "CharPointer" || words[0] == "charPointerARB" ||
                              words[0] == "ConstCharPointer")
@@ -158,7 +161,8 @@ namespace Bind
                         // Hence we give it a push.
                         // Note: When both CurrentType == "String" and Pointer == true, the typematching is hardcoded to use
                         // String[] or StringBuilder[].
-                        GLTypes.Add(words[0], "String");
+                        key = words[0];
+                        value = "String";
                     }
                     /*else if (words[0].Contains("Pointer"))
                     {
@@ -166,19 +170,34 @@ namespace Bind
                     }*/
                     else if (words[1].Contains("GLvoid"))
                     {
-                        GLTypes.Add(words[0], "void");
+                        key = words[0];
+                        value = "void";
                     }
                     else if (words[1] == "const" && words[2] == "GLubyte")
                     {
-                        GLTypes.Add(words[0], "String");
+                        key = words[0];
+                        value = "String";
                     }
                     else if (words[1] == "struct")
                     {
-                        GLTypes.Add(words[0], words[2]);
+                        key = words[0];
+                        value = words[2];
                     }
                     else
                     {
-                        GLTypes.Add(words[0], words[1]);
+                        key = words[0];
+                        value = words[1];
+                    }
+
+                    if (!GLTypes.ContainsKey(key))
+                    {
+                        GLTypes.Add(key, value);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Replacing typemap: {0}:{1} with {0}:{2}",
+                            key, GLTypes[key], value);
+                        GLTypes[key] = value;
                     }
                 }
                 while (!sr.EndOfStream);
