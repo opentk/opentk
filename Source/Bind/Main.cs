@@ -57,7 +57,7 @@ namespace Bind
 
             Console.WriteLine("OpenGL binding generator {0} for OpenTK.",
                 Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
+            Console.WriteLine("http://www.opentk.com");
             Console.WriteLine();
 
             string dirName =  null;
@@ -187,6 +187,8 @@ namespace Bind
             {
                 foreach (var generator in Generators)
                 {
+                    Console.WriteLine("Executing {0}", generator.GetType());
+
                     long ticks = DateTime.Now.Ticks;
 
                     generator.Process();
@@ -249,6 +251,9 @@ namespace Bind
                         Generators.Add(new ESGenerator(desktop, dirName));
                         Generators.Add(new ES2Generator(desktop, dirName));
                         Generators.Add(new ES3Generator(desktop, dirName));
+                        Generators.Add(new CLGenerator(desktop, dirName));
+                        Generators.Add(new CL12Generator(desktop, dirName));
+                        Generators.Add(new CL20Generator(desktop, dirName));
 
                         var android = Settings.Clone();
                         android.Compatibility |= Settings.Legacy.UseDllImports;
