@@ -246,8 +246,7 @@ namespace OpenTK
             }
             else
             {
-                Debug.Print("SDL2 is {0}. Version is {1}.{2}.{3}",
-                    supported ? "supported" : "not supported",
+                Debug.Print("SDL2 is supported. Version is {0}.{1}.{2}",
                     version.Major, version.Minor, version.Patch);
             }
 
