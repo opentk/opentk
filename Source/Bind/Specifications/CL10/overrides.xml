@@ -7,6 +7,9 @@
   </add>
 
   <add name="cl" version="1.1">
+    <enum name="BufferCreateType">
+      <token name="BUFFER_CREATE_TYPE_REGION" value="0x1220" />
+    </enum>
     <enum name="ChannelOrder">
       <token name="Rx" value="0x10BA" />
       <token name="RGx" value="0x10BB" />
@@ -206,9 +209,10 @@
       <name>CommandQueueFlags</name>
       <type>long</type>
     </enum>
-    <enum name="CommandQueueProperties"><name>CommandQueueFlags</name></enum>
-    <!-- Rename ContextProperties enum to avoid conflict with ContextProperties struct -->
-    <enum name="ContextProperties"><name>ComputeContextProperties</name></enum>
+    <enum name="CommandQueueProperties">
+      <name>CommandQueueFlags</name>
+      <type>long</type>
+    </enum>
 
     <function name="BuildProgram">
       <param name="pfn_notify"><type>ProgramNotifyDelegate</type></param>
