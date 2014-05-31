@@ -56,111 +56,111 @@ namespace OpenTK.Compute.CL20
     public enum All : int
     {
         /// <summary>
-        /// Original was CL_DEVICE_TYPE_DEFAULT = (1 << 0)
+        /// Original was CL_DEVICE_TYPE_DEFAULT = (1 &lt;&lt; 0)
         /// </summary>
         DeviceTypeDefault = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_EXEC_KERNEL = (1 << 0)
+        /// Original was CL_EXEC_KERNEL = (1 &lt;&lt; 0)
         /// </summary>
         ExecKernel = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_FP_DENORM = (1 << 0)
+        /// Original was CL_FP_DENORM = (1 &lt;&lt; 0)
         /// </summary>
         FpDenorm = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_MAP_READ = (1 << 0)
+        /// Original was CL_MAP_READ = (1 &lt;&lt; 0)
         /// </summary>
         MapRead = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_MEM_READ_WRITE = (1 << 0)
+        /// Original was CL_MEM_READ_WRITE = (1 &lt;&lt; 0)
         /// </summary>
         MemReadWrite = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE = (1 << 0)
+        /// Original was CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE = (1 &lt;&lt; 0)
         /// </summary>
         QueueOutOfOrderExecModeEnable = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_DEVICE_TYPE_CPU = (1 << 1)
+        /// Original was CL_DEVICE_TYPE_CPU = (1 &lt;&lt; 1)
         /// </summary>
         DeviceTypeCpu = ((int)(1 << 1))        ,
         /// <summary>
-        /// Original was CL_EXEC_NATIVE_KERNEL = (1 << 1)
+        /// Original was CL_EXEC_NATIVE_KERNEL = (1 &lt;&lt; 1)
         /// </summary>
         ExecNativeKernel = ((int)(1 << 1))        ,
         /// <summary>
-        /// Original was CL_FP_INF_NAN = (1 << 1)
+        /// Original was CL_FP_INF_NAN = (1 &lt;&lt; 1)
         /// </summary>
         FpInfNan = ((int)(1 << 1))        ,
         /// <summary>
-        /// Original was CL_MAP_WRITE = (1 << 1)
+        /// Original was CL_MAP_WRITE = (1 &lt;&lt; 1)
         /// </summary>
         MapWrite = ((int)(1 << 1))        ,
         /// <summary>
-        /// Original was CL_MEM_WRITE_ONLY = (1 << 1)
+        /// Original was CL_MEM_WRITE_ONLY = (1 &lt;&lt; 1)
         /// </summary>
         MemWriteOnly = ((int)(1 << 1))        ,
         /// <summary>
-        /// Original was CL_QUEUE_PROFILING_ENABLE = (1 << 1)
+        /// Original was CL_QUEUE_PROFILING_ENABLE = (1 &lt;&lt; 1)
         /// </summary>
         QueueProfilingEnable = ((int)(1 << 1))        ,
         /// <summary>
-        /// Original was CL_MEM_SVM_FINE_GRAIN_BUFFER = (1 << 10)
+        /// Original was CL_MEM_SVM_FINE_GRAIN_BUFFER = (1 &lt;&lt; 10)
         /// </summary>
         MemSvmFineGrainBuffer = ((int)(1 << 10))        ,
         /// <summary>
-        /// Original was CL_MEM_SVM_ATOMICS = (1 << 11)
+        /// Original was CL_MEM_SVM_ATOMICS = (1 &lt;&lt; 11)
         /// </summary>
         MemSvmAtomics = ((int)(1 << 11))        ,
         /// <summary>
-        /// Original was CL_DEVICE_TYPE_GPU = (1 << 2)
+        /// Original was CL_DEVICE_TYPE_GPU = (1 &lt;&lt; 2)
         /// </summary>
         DeviceTypeGpu = ((int)(1 << 2))        ,
         /// <summary>
-        /// Original was CL_FP_ROUND_TO_NEAREST = (1 << 2)
+        /// Original was CL_FP_ROUND_TO_NEAREST = (1 &lt;&lt; 2)
         /// </summary>
         FpRoundToNearest = ((int)(1 << 2))        ,
         /// <summary>
-        /// Original was CL_MEM_READ_ONLY = (1 << 2)
+        /// Original was CL_MEM_READ_ONLY = (1 &lt;&lt; 2)
         /// </summary>
         MemReadOnly = ((int)(1 << 2))        ,
         /// <summary>
-        /// Original was CL_DEVICE_TYPE_ACCELERATOR = (1 << 3)
+        /// Original was CL_DEVICE_TYPE_ACCELERATOR = (1 &lt;&lt; 3)
         /// </summary>
         DeviceTypeAccelerator = ((int)(1 << 3))        ,
         /// <summary>
-        /// Original was CL_FP_ROUND_TO_ZERO = (1 << 3)
+        /// Original was CL_FP_ROUND_TO_ZERO = (1 &lt;&lt; 3)
         /// </summary>
         FpRoundToZero = ((int)(1 << 3))        ,
         /// <summary>
-        /// Original was CL_MEM_USE_HOST_PTR = (1 << 3)
+        /// Original was CL_MEM_USE_HOST_PTR = (1 &lt;&lt; 3)
         /// </summary>
         MemUseHostPtr = ((int)(1 << 3))        ,
         /// <summary>
-        /// Original was CL_FP_ROUND_TO_INF = (1 << 4)
+        /// Original was CL_FP_ROUND_TO_INF = (1 &lt;&lt; 4)
         /// </summary>
         FpRoundToInf = ((int)(1 << 4))        ,
         /// <summary>
-        /// Original was CL_MEM_ALLOC_HOST_PTR = (1 << 4)
+        /// Original was CL_MEM_ALLOC_HOST_PTR = (1 &lt;&lt; 4)
         /// </summary>
         MemAllocHostPtr = ((int)(1 << 4))        ,
         /// <summary>
-        /// Original was CL_FP_FMA = (1 << 5)
+        /// Original was CL_FP_FMA = (1 &lt;&lt; 5)
         /// </summary>
         FpFma = ((int)(1 << 5))        ,
         /// <summary>
-        /// Original was CL_MEM_COPY_HOST_PTR = (1 << 5)
+        /// Original was CL_MEM_COPY_HOST_PTR = (1 &lt;&lt; 5)
         /// </summary>
         MemCopyHostPtr = ((int)(1 << 5))        ,
         /// <summary>
-        /// Original was CL_MEM_HOST_WRITE_ONLY = (1 << 7)
+        /// Original was CL_MEM_HOST_WRITE_ONLY = (1 &lt;&lt; 7)
         /// </summary>
         MemHostWriteOnly = ((int)(1 << 7))        ,
         /// <summary>
-        /// Original was CL_MEM_HOST_READ_ONLY = (1 << 8)
+        /// Original was CL_MEM_HOST_READ_ONLY = (1 &lt;&lt; 8)
         /// </summary>
         MemHostReadOnly = ((int)(1 << 8))        ,
         /// <summary>
-        /// Original was CL_MEM_HOST_NO_ACCESS = (1 << 9)
+        /// Original was CL_MEM_HOST_NO_ACCESS = (1 &lt;&lt; 9)
         /// </summary>
         MemHostNoAccess = ((int)(1 << 9))        ,
         /// <summary>
@@ -1353,11 +1353,11 @@ namespace OpenTK.Compute.CL20
     public enum CommandQueueFlags : long
     {
         /// <summary>
-        /// Original was CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE = (1 << 0)
+        /// Original was CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE = (1 &lt;&lt; 0)
         /// </summary>
         QueueOutOfOrderExecModeEnable = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_QUEUE_PROFILING_ENABLE = (1 << 1)
+        /// Original was CL_QUEUE_PROFILING_ENABLE = (1 &lt;&lt; 1)
         /// </summary>
         QueueProfilingEnable = ((int)(1 << 1))        ,
         /// <summary>
@@ -1504,11 +1504,11 @@ namespace OpenTK.Compute.CL20
     public enum DeviceExecCapabilitiesFlags : long
     {
         /// <summary>
-        /// Original was CL_EXEC_KERNEL = (1 << 0)
+        /// Original was CL_EXEC_KERNEL = (1 &lt;&lt; 0)
         /// </summary>
         ExecKernel = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_EXEC_NATIVE_KERNEL = (1 << 1)
+        /// Original was CL_EXEC_NATIVE_KERNEL = (1 &lt;&lt; 1)
         /// </summary>
         ExecNativeKernel = ((int)(1 << 1))        ,
     }
@@ -1519,27 +1519,27 @@ namespace OpenTK.Compute.CL20
     public enum DeviceFpConfigFlags : long
     {
         /// <summary>
-        /// Original was CL_FP_DENORM = (1 << 0)
+        /// Original was CL_FP_DENORM = (1 &lt;&lt; 0)
         /// </summary>
         FpDenorm = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_FP_INF_NAN = (1 << 1)
+        /// Original was CL_FP_INF_NAN = (1 &lt;&lt; 1)
         /// </summary>
         FpInfNan = ((int)(1 << 1))        ,
         /// <summary>
-        /// Original was CL_FP_ROUND_TO_NEAREST = (1 << 2)
+        /// Original was CL_FP_ROUND_TO_NEAREST = (1 &lt;&lt; 2)
         /// </summary>
         FpRoundToNearest = ((int)(1 << 2))        ,
         /// <summary>
-        /// Original was CL_FP_ROUND_TO_ZERO = (1 << 3)
+        /// Original was CL_FP_ROUND_TO_ZERO = (1 &lt;&lt; 3)
         /// </summary>
         FpRoundToZero = ((int)(1 << 3))        ,
         /// <summary>
-        /// Original was CL_FP_ROUND_TO_INF = (1 << 4)
+        /// Original was CL_FP_ROUND_TO_INF = (1 &lt;&lt; 4)
         /// </summary>
         FpRoundToInf = ((int)(1 << 4))        ,
         /// <summary>
-        /// Original was CL_FP_FMA = (1 << 5)
+        /// Original was CL_FP_FMA = (1 &lt;&lt; 5)
         /// </summary>
         FpFma = ((int)(1 << 5))        ,
     }
@@ -1827,19 +1827,19 @@ namespace OpenTK.Compute.CL20
     public enum DeviceTypeFlags : long
     {
         /// <summary>
-        /// Original was CL_DEVICE_TYPE_DEFAULT = (1 << 0)
+        /// Original was CL_DEVICE_TYPE_DEFAULT = (1 &lt;&lt; 0)
         /// </summary>
         DeviceTypeDefault = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_DEVICE_TYPE_CPU = (1 << 1)
+        /// Original was CL_DEVICE_TYPE_CPU = (1 &lt;&lt; 1)
         /// </summary>
         DeviceTypeCpu = ((int)(1 << 1))        ,
         /// <summary>
-        /// Original was CL_DEVICE_TYPE_GPU = (1 << 2)
+        /// Original was CL_DEVICE_TYPE_GPU = (1 &lt;&lt; 2)
         /// </summary>
         DeviceTypeGpu = ((int)(1 << 2))        ,
         /// <summary>
-        /// Original was CL_DEVICE_TYPE_ACCELERATOR = (1 << 3)
+        /// Original was CL_DEVICE_TYPE_ACCELERATOR = (1 &lt;&lt; 3)
         /// </summary>
         DeviceTypeAccelerator = ((int)(1 << 3))        ,
         /// <summary>
@@ -2168,11 +2168,11 @@ namespace OpenTK.Compute.CL20
     public enum MapFlags : long
     {
         /// <summary>
-        /// Original was CL_MAP_READ = (1 << 0)
+        /// Original was CL_MAP_READ = (1 &lt;&lt; 0)
         /// </summary>
         MapRead = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_MAP_WRITE = (1 << 1)
+        /// Original was CL_MAP_WRITE = (1 &lt;&lt; 1)
         /// </summary>
         MapWrite = ((int)(1 << 1))        ,
     }
@@ -2183,27 +2183,27 @@ namespace OpenTK.Compute.CL20
     public enum MemFlags : long
     {
         /// <summary>
-        /// Original was CL_MEM_READ_WRITE = (1 << 0)
+        /// Original was CL_MEM_READ_WRITE = (1 &lt;&lt; 0)
         /// </summary>
         MemReadWrite = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_MEM_WRITE_ONLY = (1 << 1)
+        /// Original was CL_MEM_WRITE_ONLY = (1 &lt;&lt; 1)
         /// </summary>
         MemWriteOnly = ((int)(1 << 1))        ,
         /// <summary>
-        /// Original was CL_MEM_READ_ONLY = (1 << 2)
+        /// Original was CL_MEM_READ_ONLY = (1 &lt;&lt; 2)
         /// </summary>
         MemReadOnly = ((int)(1 << 2))        ,
         /// <summary>
-        /// Original was CL_MEM_USE_HOST_PTR = (1 << 3)
+        /// Original was CL_MEM_USE_HOST_PTR = (1 &lt;&lt; 3)
         /// </summary>
         MemUseHostPtr = ((int)(1 << 3))        ,
         /// <summary>
-        /// Original was CL_MEM_ALLOC_HOST_PTR = (1 << 4)
+        /// Original was CL_MEM_ALLOC_HOST_PTR = (1 &lt;&lt; 4)
         /// </summary>
         MemAllocHostPtr = ((int)(1 << 4))        ,
         /// <summary>
-        /// Original was CL_MEM_COPY_HOST_PTR = (1 << 5)
+        /// Original was CL_MEM_COPY_HOST_PTR = (1 &lt;&lt; 5)
         /// </summary>
         MemCopyHostPtr = ((int)(1 << 5))        ,
     }
@@ -2446,47 +2446,47 @@ namespace OpenTK.Compute.CL20
     public enum SvmMemFlags : long
     {
         /// <summary>
-        /// Original was CL_MEM_READ_WRITE = (1 << 0)
+        /// Original was CL_MEM_READ_WRITE = (1 &lt;&lt; 0)
         /// </summary>
         MemReadWrite = ((int)(1 << 0))        ,
         /// <summary>
-        /// Original was CL_MEM_WRITE_ONLY = (1 << 1)
+        /// Original was CL_MEM_WRITE_ONLY = (1 &lt;&lt; 1)
         /// </summary>
         MemWriteOnly = ((int)(1 << 1))        ,
         /// <summary>
-        /// Original was CL_MEM_SVM_FINE_GRAIN_BUFFER = (1 << 10)
+        /// Original was CL_MEM_SVM_FINE_GRAIN_BUFFER = (1 &lt;&lt; 10)
         /// </summary>
         MemSvmFineGrainBuffer = ((int)(1 << 10))        ,
         /// <summary>
-        /// Original was CL_MEM_SVM_ATOMICS = (1 << 11)
+        /// Original was CL_MEM_SVM_ATOMICS = (1 &lt;&lt; 11)
         /// </summary>
         MemSvmAtomics = ((int)(1 << 11))        ,
         /// <summary>
-        /// Original was CL_MEM_READ_ONLY = (1 << 2)
+        /// Original was CL_MEM_READ_ONLY = (1 &lt;&lt; 2)
         /// </summary>
         MemReadOnly = ((int)(1 << 2))        ,
         /// <summary>
-        /// Original was CL_MEM_USE_HOST_PTR = (1 << 3)
+        /// Original was CL_MEM_USE_HOST_PTR = (1 &lt;&lt; 3)
         /// </summary>
         MemUseHostPtr = ((int)(1 << 3))        ,
         /// <summary>
-        /// Original was CL_MEM_ALLOC_HOST_PTR = (1 << 4)
+        /// Original was CL_MEM_ALLOC_HOST_PTR = (1 &lt;&lt; 4)
         /// </summary>
         MemAllocHostPtr = ((int)(1 << 4))        ,
         /// <summary>
-        /// Original was CL_MEM_COPY_HOST_PTR = (1 << 5)
+        /// Original was CL_MEM_COPY_HOST_PTR = (1 &lt;&lt; 5)
         /// </summary>
         MemCopyHostPtr = ((int)(1 << 5))        ,
         /// <summary>
-        /// Original was CL_MEM_HOST_WRITE_ONLY = (1 << 7)
+        /// Original was CL_MEM_HOST_WRITE_ONLY = (1 &lt;&lt; 7)
         /// </summary>
         MemHostWriteOnly = ((int)(1 << 7))        ,
         /// <summary>
-        /// Original was CL_MEM_HOST_READ_ONLY = (1 << 8)
+        /// Original was CL_MEM_HOST_READ_ONLY = (1 &lt;&lt; 8)
         /// </summary>
         MemHostReadOnly = ((int)(1 << 8))        ,
         /// <summary>
-        /// Original was CL_MEM_HOST_NO_ACCESS = (1 << 9)
+        /// Original was CL_MEM_HOST_NO_ACCESS = (1 &lt;&lt; 9)
         /// </summary>
         MemHostNoAccess = ((int)(1 << 9))        ,
     }
