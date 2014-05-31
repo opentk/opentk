@@ -84,6 +84,54 @@ namespace OpenTK.Compute.CL10
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="command_queue"></param>
+        /// <param name="kernel"></param>
+        /// <param name="work_dim"></param>
+        /// <param name="global_work_offset"></param>
+        /// <param name="global_work_size"></param>
+        /// <param name="local_work_size"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, IntPtr[] global_work_offset, IntPtr[] global_work_size, IntPtr[] local_work_size, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueNDRangeKernel(command_queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="kernel"></param>
+        /// <param name="work_dim"></param>
+        /// <param name="global_work_offset"></param>
+        /// <param name="global_work_size"></param>
+        /// <param name="local_work_size"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, ref IntPtr global_work_offset, ref IntPtr global_work_size, ref IntPtr local_work_size, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueNDRangeKernel(command_queue, kernel, work_dim, ref global_work_offset, ref global_work_size, ref local_work_size, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="kernel"></param>
+        /// <param name="work_dim"></param>
+        /// <param name="global_work_offset"></param>
+        /// <param name="global_work_size"></param>
+        /// <param name="local_work_size"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="@event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, IntPtr* global_work_offset, IntPtr* global_work_size, IntPtr* local_work_size, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueNDRangeKernel(command_queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
         /// <param name="buffer"></param>
         /// <param name="blocking_read"></param>
         /// <param name="offset"></param>
@@ -143,6 +191,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
         }
@@ -160,6 +209,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
         }
@@ -177,6 +227,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
         }
@@ -194,6 +245,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
         }
@@ -211,6 +263,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
         }
@@ -228,6 +281,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
         }
@@ -245,6 +299,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
         }
@@ -262,6 +317,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
         }
@@ -279,6 +335,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
         }
@@ -296,6 +353,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ref ptr, num_events_in_wait_list, event_wait_list, out @event);
         }
@@ -313,6 +371,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ref ptr, num_events_in_wait_list, ref event_wait_list, out @event);
         }
@@ -330,56 +389,9 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
+        
         {
             return CL.EnqueueReadBuffer(command_queue, buffer, blocking_read, offset, cb, ref ptr, num_events_in_wait_list, event_wait_list, @event);
-        }
-
-        /// <summary>[requires: v1.0]</summary>
-        /// <param name="command_queue"></param>
-        /// <param name="kernel"></param>
-        /// <param name="work_dim"></param>
-        /// <param name="global_work_offset"></param>
-        /// <param name="global_work_size"></param>
-        /// <param name="local_work_size"></param>
-        /// <param name="num_events_in_wait_list"></param>
-        /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, IntPtr[] global_work_offset, IntPtr[] global_work_size, IntPtr[] local_work_size, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
-        {
-            return CL.EnqueueNDRangeKernel(command_queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, num_events_in_wait_list, event_wait_list, out @event);
-        }
-
-        /// <summary>[requires: v1.0]</summary>
-        /// <param name="command_queue"></param>
-        /// <param name="kernel"></param>
-        /// <param name="work_dim"></param>
-        /// <param name="global_work_offset"></param>
-        /// <param name="global_work_size"></param>
-        /// <param name="local_work_size"></param>
-        /// <param name="num_events_in_wait_list"></param>
-        /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, ref IntPtr global_work_offset, ref IntPtr global_work_size, ref IntPtr local_work_size, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
-        {
-            return CL.EnqueueNDRangeKernel(command_queue, kernel, work_dim, ref global_work_offset, ref global_work_size, ref local_work_size, num_events_in_wait_list, ref event_wait_list, out @event);
-        }
-
-        /// <summary>[requires: v1.0]</summary>
-        /// <param name="command_queue"></param>
-        /// <param name="kernel"></param>
-        /// <param name="work_dim"></param>
-        /// <param name="global_work_offset"></param>
-        /// <param name="global_work_size"></param>
-        /// <param name="local_work_size"></param>
-        /// <param name="num_events_in_wait_list"></param>
-        /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
-        [CLSCompliant(false)]
-        public static unsafe ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, IntPtr* global_work_offset, IntPtr* global_work_size, IntPtr* local_work_size, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
-        {
-            return CL.EnqueueNDRangeKernel(command_queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, num_events_in_wait_list, event_wait_list, @event);
         }
 
         /// <summary>[requires: v1.0]</summary>
@@ -443,6 +455,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
         }
@@ -460,6 +473,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
         }
@@ -477,6 +491,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
         }
@@ -494,6 +509,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
         }
@@ -511,6 +527,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
         }
@@ -528,6 +545,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
         }
@@ -545,6 +563,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, out @event);
         }
@@ -562,6 +581,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
         }
@@ -579,6 +599,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list, event_wait_list, @event);
         }
@@ -596,6 +617,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ref ptr, num_events_in_wait_list, event_wait_list, out @event);
         }
@@ -613,6 +635,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ref ptr, num_events_in_wait_list, ref event_wait_list, out @event);
         }
@@ -630,6 +653,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
+        
         {
             return CL.EnqueueWriteBuffer(command_queue, buffer, blocking_write, offset, cb, ref ptr, num_events_in_wait_list, event_wait_list, @event);
         }
@@ -680,6 +704,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[] host_ptr, [OutAttribute] out ErrorCode errcode_ret)
             where T3 : struct
+        
         {
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
@@ -693,6 +718,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[] host_ptr, [OutAttribute] ErrorCode* errcode_ret)
             where T3 : struct
+        
         {
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
@@ -706,6 +732,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[,] host_ptr, [OutAttribute] out ErrorCode errcode_ret)
             where T3 : struct
+        
         {
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
@@ -719,6 +746,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[,] host_ptr, [OutAttribute] ErrorCode* errcode_ret)
             where T3 : struct
+        
         {
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
@@ -732,6 +760,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[,,] host_ptr, [OutAttribute] out ErrorCode errcode_ret)
             where T3 : struct
+        
         {
             return CL.CreateBuffer(context, flags, size, host_ptr, out errcode_ret);
         }
@@ -745,6 +774,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] T3[,,] host_ptr, [OutAttribute] ErrorCode* errcode_ret)
             where T3 : struct
+        
         {
             return CL.CreateBuffer(context, flags, size, host_ptr, errcode_ret);
         }
@@ -758,6 +788,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] ref T3 host_ptr, [OutAttribute] out ErrorCode errcode_ret)
             where T3 : struct
+        
         {
             return CL.CreateBuffer(context, flags, size, ref host_ptr, out errcode_ret);
         }
@@ -771,6 +802,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateBuffer<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, IntPtr size, [InAttribute, OutAttribute] ref T3 host_ptr, [OutAttribute] ErrorCode* errcode_ret)
             where T3 : struct
+        
         {
             return CL.CreateBuffer(context, flags, size, ref host_ptr, errcode_ret);
         }
@@ -824,6 +856,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[] host_ptr, [OutAttribute] Int32[] errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
@@ -840,6 +873,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,] host_ptr, [OutAttribute] Int32[] errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
@@ -856,6 +890,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,,] host_ptr, [OutAttribute] Int32[] errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
@@ -872,6 +907,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] ref T6 host_ptr, [OutAttribute] Int32[] errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, ref host_ptr, errcode_ret);
         }
@@ -903,6 +939,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[] host_ptr, [OutAttribute] out Int32 errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
         }
@@ -919,6 +956,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,] host_ptr, [OutAttribute] out Int32 errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
         }
@@ -935,6 +973,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,,] host_ptr, [OutAttribute] out Int32 errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, host_ptr, out errcode_ret);
         }
@@ -951,6 +990,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] ref T6 host_ptr, [OutAttribute] out Int32 errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, ref image_format, image_width, image_height, image_row_pitch, ref host_ptr, out errcode_ret);
         }
@@ -982,6 +1022,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[] host_ptr, [OutAttribute] Int32* errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
@@ -998,6 +1039,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,] host_ptr, [OutAttribute] Int32* errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
@@ -1014,6 +1056,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] T6[,,] host_ptr, [OutAttribute] Int32* errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         }
@@ -1030,6 +1073,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateImage2D<T6>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, [InAttribute, OutAttribute] ref T6 host_ptr, [OutAttribute] Int32* errcode_ret)
             where T6 : struct
+        
         {
             return CL.CreateImage2D(context, flags, image_format, image_width, image_height, image_row_pitch, ref host_ptr, errcode_ret);
         }
@@ -1065,6 +1109,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[] host_ptr, [OutAttribute] Int32[] errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
@@ -1083,6 +1128,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,] host_ptr, [OutAttribute] Int32[] errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
@@ -1101,6 +1147,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,,] host_ptr, [OutAttribute] Int32[] errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
@@ -1119,6 +1166,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat[] image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] ref T8 host_ptr, [OutAttribute] Int32[] errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, errcode_ret);
         }
@@ -1154,6 +1202,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[] host_ptr, [OutAttribute] out Int32 errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
         }
@@ -1172,6 +1221,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,] host_ptr, [OutAttribute] out Int32 errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
         }
@@ -1190,6 +1240,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,,] host_ptr, [OutAttribute] out Int32 errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, out errcode_ret);
         }
@@ -1208,6 +1259,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ref ImageFormat image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] ref T8 host_ptr, [OutAttribute] out Int32 errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, ref image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, out errcode_ret);
         }
@@ -1243,6 +1295,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[] host_ptr, [OutAttribute] Int32* errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
@@ -1261,6 +1314,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,] host_ptr, [OutAttribute] Int32* errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
@@ -1279,6 +1333,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] T8[,,] host_ptr, [OutAttribute] Int32* errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         }
@@ -1297,20 +1352,9 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ComputeMemory CreateImage3D<T8>(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, [InAttribute, OutAttribute] ref T8 host_ptr, [OutAttribute] Int32* errcode_ret)
             where T8 : struct
+        
         {
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, errcode_ret);
-        }
-
-        /// <summary>[requires: v1.0]</summary>
-        /// <param name="context"></param>
-        /// <param name="count"></param>
-        /// <param name="strings"></param>
-        /// <param name="lengths"></param>
-        /// <param name="errcode_ret"></param>
-        [CLSCompliant(false)]
-        public static unsafe ComputeProgram CreateProgramWithSource(this ComputeContextHandle context, UInt32 count, IntPtr strings, IntPtr* lengths, [OutAttribute] ErrorCode* errcode_ret)
-        {
-            return CL.CreateProgramWithSource(context, count, strings, lengths, errcode_ret);
         }
 
         /// <summary>[requires: v1.0]</summary>
@@ -1351,6 +1395,18 @@ namespace OpenTK.Compute.CL10
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
+        /// <param name="count"></param>
+        /// <param name="strings"></param>
+        /// <param name="lengths"></param>
+        /// <param name="errcode_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeProgram CreateProgramWithSource(this ComputeContextHandle context, UInt32 count, IntPtr strings, IntPtr* lengths, [OutAttribute] ErrorCode* errcode_ret)
+        {
+            return CL.CreateProgramWithSource(context, count, strings, lengths, errcode_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="context"></param>
         /// <param name="normalized_coords"></param>
         /// <param name="addressing_mode"></param>
         /// <param name="filter_mode"></param>
@@ -1371,20 +1427,6 @@ namespace OpenTK.Compute.CL10
         public static unsafe ComputeSampler CreateSampler(this ComputeContextHandle context, bool normalized_coords, OpenTK.Compute.CL10.AddressingMode addressing_mode, OpenTK.Compute.CL10.FilterMode filter_mode, [OutAttribute] ErrorCode* errcode_ret)
         {
             return CL.CreateSampler(context, normalized_coords, addressing_mode, filter_mode, errcode_ret);
-        }
-
-        /// <summary>[requires: v1.0]</summary>
-        /// <param name="context"></param>
-        public static ErrorCode RetainContext(this ComputeContextHandle context)
-        {
-            return CL.RetainContext(context);
-        }
-
-        /// <summary>[requires: v1.0]</summary>
-        /// <param name="context"></param>
-        public static ErrorCode ReleaseContext(this ComputeContextHandle context)
-        {
-            return CL.ReleaseContext(context);
         }
 
         /// <summary>[requires: v1.0]</summary>
@@ -1420,6 +1462,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -1433,6 +1476,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1446,6 +1490,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -1459,6 +1504,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1472,6 +1518,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -1485,6 +1532,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetContextInfo(context, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1498,6 +1546,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetContextInfo(context, param_name, param_value_size, ref param_value, out param_value_size_ret);
         }
@@ -1511,6 +1560,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetContextInfo<T3>(this ComputeContextHandle context, OpenTK.Compute.CL10.ContextInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetContextInfo(context, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
@@ -1548,6 +1598,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -1561,6 +1612,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1574,6 +1626,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -1587,6 +1640,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1600,6 +1654,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -1613,6 +1668,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1626,6 +1682,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, ref param_value, out param_value_size_ret);
         }
@@ -1639,6 +1696,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetDeviceInfo<T3>(this ComputeDevice device, OpenTK.Compute.CL10.DeviceInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetDeviceInfo(device, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
@@ -1680,6 +1738,20 @@ namespace OpenTK.Compute.CL10
         public static unsafe ErrorCode GetSupportedImageFormats(this ComputeContextHandle context, OpenTK.Compute.CL10.MemFlags flags, OpenTK.Compute.CL10.MemObjectType image_type, Int32 num_entries, ImageFormat* image_formats, Int32* num_image_formats)
         {
             return CL.GetSupportedImageFormats(context, flags, image_type, num_entries, image_formats, num_image_formats);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="context"></param>
+        public static ErrorCode ReleaseContext(this ComputeContextHandle context)
+        {
+            return CL.ReleaseContext(context);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="context"></param>
+        public static ErrorCode RetainContext(this ComputeContextHandle context)
+        {
+            return CL.RetainContext(context);
         }
 
     }
@@ -1739,6 +1811,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1752,6 +1825,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -1765,6 +1839,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1778,6 +1853,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1791,6 +1867,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -1804,6 +1881,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1817,6 +1895,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1830,6 +1909,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -1843,6 +1923,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1856,6 +1937,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
@@ -1869,6 +1951,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, ref param_value, out param_value_size_ret);
         }
@@ -1882,6 +1965,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetKernelInfo<T3>(this ComputeKernel kernel, OpenTK.Compute.CL10.KernelInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T3 : struct
+        
         {
             return CL.GetKernelInfo(kernel, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
@@ -1935,6 +2019,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1949,6 +2034,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -1963,6 +2049,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1977,6 +2064,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -1991,6 +2079,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -2005,6 +2094,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -2019,6 +2109,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -2033,6 +2124,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, out param_value_size_ret);
         }
@@ -2047,6 +2139,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, param_value, param_value_size_ret);
         }
@@ -2061,6 +2154,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T4 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
@@ -2075,6 +2169,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T4 param_value, [OutAttribute] out IntPtr param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, ref param_value, out param_value_size_ret);
         }
@@ -2089,6 +2184,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode GetKernelWorkGroupInfo<T4>(this ComputeKernel kernel, ComputeDevice device, OpenTK.Compute.CL10.KernelWorkGroupInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T4 param_value, [OutAttribute] IntPtr* param_value_size_ret)
             where T4 : struct
+        
         {
             return CL.GetKernelWorkGroupInfo(kernel, device, param_name, param_value_size, ref param_value, param_value_size_ret);
         }
@@ -2113,17 +2209,6 @@ namespace OpenTK.Compute.CL10
         /// <param name="arg_size"></param>
         /// <param name="arg_value"></param>
         [CLSCompliant(false)]
-        public static ErrorCode SetKernelArg(this ComputeKernel kernel, UInt32 arg_index, IntPtr arg_size, IntPtr arg_value)
-        {
-            return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
-        }
-
-        /// <summary>[requires: v1.0]</summary>
-        /// <param name="kernel"></param>
-        /// <param name="arg_index"></param>
-        /// <param name="arg_size"></param>
-        /// <param name="arg_value"></param>
-        [CLSCompliant(false)]
         public static ErrorCode SetKernelArg(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, IntPtr arg_value)
         {
             return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
@@ -2137,6 +2222,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode SetKernelArg<T3>(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, [InAttribute, OutAttribute] T3[] arg_value)
             where T3 : struct
+        
         {
             return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
         }
@@ -2149,6 +2235,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode SetKernelArg<T3>(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, [InAttribute, OutAttribute] T3[,] arg_value)
             where T3 : struct
+        
         {
             return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
         }
@@ -2161,6 +2248,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode SetKernelArg<T3>(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, [InAttribute, OutAttribute] T3[,,] arg_value)
             where T3 : struct
+        
         {
             return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
         }
@@ -2173,8 +2261,20 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode SetKernelArg<T3>(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, [InAttribute, OutAttribute] ref T3 arg_value)
             where T3 : struct
+        
         {
             return CL.SetKernelArg(kernel, arg_index, arg_size, ref arg_value);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="kernel"></param>
+        /// <param name="arg_index"></param>
+        /// <param name="arg_size"></param>
+        /// <param name="arg_value"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode SetKernelArg(this ComputeKernel kernel, UInt32 arg_index, IntPtr arg_size, IntPtr arg_value)
+        {
+            return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
         }
 
     }
@@ -2219,6 +2319,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice[] device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[] user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
         }
@@ -2233,6 +2334,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice[] device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,] user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
         }
@@ -2247,6 +2349,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice[] device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,,] user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
         }
@@ -2261,6 +2364,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice[] device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] ref T5 user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, ref user_data);
         }
@@ -2288,6 +2392,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ref ComputeDevice device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[] user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, ref device_list, options, pfn_notify, user_data);
         }
@@ -2302,6 +2407,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ref ComputeDevice device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,] user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, ref device_list, options, pfn_notify, user_data);
         }
@@ -2316,6 +2422,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ref ComputeDevice device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,,] user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, ref device_list, options, pfn_notify, user_data);
         }
@@ -2330,6 +2437,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ref ComputeDevice device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] ref T5 user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, ref device_list, options, pfn_notify, ref user_data);
         }
@@ -2357,6 +2465,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice* device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[] user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
         }
@@ -2371,6 +2480,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice* device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,] user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
         }
@@ -2385,6 +2495,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice* device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] T5[,,] user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, user_data);
         }
@@ -2399,6 +2510,7 @@ namespace OpenTK.Compute.CL10
         [CLSCompliant(false)]
         public static unsafe ErrorCode BuildProgram<T5>(this ComputeProgram program, Int32 num_devices, ComputeDevice* device_list, String options, ProgramNotifyDelegate pfn_notify, [InAttribute, OutAttribute] ref T5 user_data)
             where T5 : struct
+        
         {
             return CL.BuildProgram(program, num_devices, device_list, options, pfn_notify, ref user_data);
         }

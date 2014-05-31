@@ -15397,6 +15397,9 @@ namespace OpenTK.Graphics.ES11
         [Slot(154)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetLightxOES(System.Int32 light, System.Int32 pname, [OutAttribute] int* @params);
+        [Slot(156)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetLightxvOES(System.Int32 light, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(157)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetMapxvOES(System.Int32 target, System.Int32 query, [OutAttribute] int* v);

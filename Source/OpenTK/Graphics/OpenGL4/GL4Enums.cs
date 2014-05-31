@@ -718,7 +718,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquationSeparate, GL.Arb.BlendFunc and 33 other functions
+    /// Used in GL.ClearBufferData, GL.ClearBufferSubData and 33 other functions
     /// </summary>
     public enum All : int
     {
@@ -747,7 +747,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Zero = ((int)0)        ,
         /// <summary>
-        /// Original was GL_Points = 0x0000
+        /// Original was GL_POINTS = 0x0000
         /// </summary>
         Points = ((int)0x0000)        ,
         /// <summary>
@@ -971,7 +971,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         QueryBufferBarrierBit = ((int)0x00008000)        ,
         /// <summary>
-        /// Original was GL_Lines = 0x0001
+        /// Original was GL_LINES = 0x0001
         /// </summary>
         Lines = ((int)0x0001)        ,
         /// <summary>
@@ -1007,7 +1007,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         MapInvalidateRangeBitExt = ((int)0x0004)        ,
         /// <summary>
-        /// Original was GL_Triangles = 0x0004
+        /// Original was GL_TRIANGLES = 0x0004
         /// </summary>
         Triangles = ((int)0x0004)        ,
         /// <summary>
@@ -14676,7 +14676,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquation, GL.BlendEquation and 1 other function
+    /// Used in GL.BlendEquation, GL.BlendEquationSeparate and 1 other function
     /// </summary>
     public enum BlendEquationMode : int
     {
@@ -15135,7 +15135,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.BindBufferBase, GL.BindBufferRange and 2 other functions
+    /// Used in GL.BindBuffersBase, GL.BindBuffersRange and 2 other functions
     /// </summary>
     public enum BufferRangeTarget : int
     {
@@ -15189,7 +15189,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.BindBuffer, GL.BufferData and 12 other functions
+    /// Used in GL.BufferStorage, GL.ClearBufferData and 12 other functions
     /// </summary>
     public enum BufferTarget : int
     {
@@ -16425,7 +16425,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.DrawElements, GL.DrawElementsBaseVertex and 8 other functions
+    /// Used in GL.DrawElementsBaseVertex, GL.DrawElementsInstancedBaseInstance and 8 other functions
     /// </summary>
     public enum DrawElementsType : int
     {
@@ -17072,7 +17072,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.FramebufferRenderbuffer, GL.FramebufferTexture and 7 other functions
+    /// Used in GL.FramebufferRenderbuffer, GL.FramebufferTexture1D and 7 other functions
     /// </summary>
     public enum FramebufferAttachment : int
     {
@@ -17841,7 +17841,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetDouble and 3 other functions
+    /// Used in GL.GetDouble, GL.GetFloat and 3 other functions
     /// </summary>
     public enum GetIndexedPName : int
     {
@@ -17955,7 +17955,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetDouble and 3 other functions
+    /// Used in GL.GetInteger64, GL.GetBoolean and 3 other functions
     /// </summary>
     public enum GetPName : int
     {
@@ -24499,7 +24499,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.DrawArrays, GL.DrawArraysIndirect and 19 other functions
+    /// Used in GL.DrawArraysIndirect, GL.DrawArraysInstancedBaseInstance and 19 other functions
     /// </summary>
     public enum PrimitiveType : int
     {
@@ -25108,7 +25108,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.BeginQuery, GL.BeginQueryIndexed and 4 other functions
+    /// Used in GL.BeginQueryIndexed, GL.EndQueryIndexed and 4 other functions
     /// </summary>
     public enum QueryTarget : int
     {
@@ -25974,7 +25974,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.CreateShader, GL.CreateShaderProgram and 9 other functions
+    /// Used in GL.CreateShaderProgram, GL.GetActiveSubroutineName and 9 other functions
     /// </summary>
     public enum ShaderType : int
     {
@@ -26366,7 +26366,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.TexBuffer, GL.TexBufferRange
+    /// Used in GL.TexBufferRange, GL.TexBuffer
     /// </summary>
     public enum TextureBufferTarget : int
     {
@@ -27184,7 +27184,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.BindTexture, GL.CompressedTexImage1D and 27 other functions
+    /// Used in GL.FramebufferTexture1D, GL.FramebufferTexture2D and 27 other functions
     /// </summary>
     public enum TextureTarget : int
     {
@@ -27505,7 +27505,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.ActiveTexture, GL.MultiTexCoordP1 and 3 other functions
+    /// Used in GL.MultiTexCoordP1, GL.MultiTexCoordP2 and 3 other functions
     /// </summary>
     public enum TextureUnit : int
     {
@@ -33350,7 +33350,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.GetVertexAttrib, GL.GetVertexAttribI and 1 other function
+    /// Used in GL.GetVertexAttribL, GL.GetVertexAttrib and 1 other function
     /// </summary>
     public enum VertexAttribParameter : int
     {

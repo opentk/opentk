@@ -1465,17 +1465,6 @@ namespace OpenTK.Compute.CL20
     }
 
     /// <summary>
-    /// Not used directly.
-    /// </summary>
-    public enum ComputeContextProperties : int
-    {
-        /// <summary>
-        /// Original was CL_CONTEXT_PLATFORM = 0x1084
-        /// </summary>
-        ContextPlatform = ((int)0x1084)        ,
-    }
-
-    /// <summary>
     /// Used in GL.GetContextInfo
     /// </summary>
     public enum ContextInfo : int
@@ -1496,6 +1485,17 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_CONTEXT_NUM_DEVICES = 0x1083
         /// </summary>
         ContextNumDevices = ((int)0x1083)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.CreateContext, GL.CreateContextFromType
+    /// </summary>
+    public enum ContextProperties : int
+    {
+        /// <summary>
+        /// Original was CL_CONTEXT_PLATFORM = 0x1084
+        /// </summary>
+        ContextPlatform = ((int)0x1084)        ,
     }
 
     /// <summary>

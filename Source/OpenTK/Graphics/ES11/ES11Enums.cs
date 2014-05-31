@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Apple.FenceSync, GL.Apple.GetInteger64 and 163 other functions
+    /// Used in GL.Oes.Accumx, GL.Oes.AlphaFuncx and 163 other functions
     /// </summary>
     public enum All : int
     {
@@ -7338,7 +7338,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.DrawElements, GL.Ext.MultiDrawElements
+    /// Used in GL.Ext.MultiDrawElements, GL.DrawElements
     /// </summary>
     public enum DrawElementsType : int
     {
@@ -14632,7 +14632,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.DrawArrays, GL.DrawElements and 2 other functions
+    /// Used in GL.Ext.MultiDrawArrays, GL.Ext.MultiDrawElements and 2 other functions
     /// </summary>
     public enum PrimitiveType : int
     {

@@ -864,6 +864,10 @@ namespace OpenTK.Compute.CL12
         /// </summary>
         CommandReleaseGlObjects = ((int)0x1200)        ,
         /// <summary>
+        /// Original was CL_BUFFER_CREATE_TYPE_REGION = 0x1220
+        /// </summary>
+        BufferCreateTypeRegion = ((int)0x1220)        ,
+        /// <summary>
         /// Original was CL_PROFILING_COMMAND_QUEUED = 0x1280
         /// </summary>
         ProfilingCommandQueued = ((int)0x1280)        ,
@@ -1114,6 +1118,17 @@ namespace OpenTK.Compute.CL12
         /// Original was CL_TRUE = 1
         /// </summary>
         True = ((int)1)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.CreateSubBuffer
+    /// </summary>
+    public enum BufferCreateType : int
+    {
+        /// <summary>
+        /// Original was CL_BUFFER_CREATE_TYPE_REGION = 0x1220
+        /// </summary>
+        BufferCreateTypeRegion = ((int)0x1220)        ,
     }
 
     /// <summary>
@@ -1414,17 +1429,6 @@ namespace OpenTK.Compute.CL12
     }
 
     /// <summary>
-    /// Not used directly.
-    /// </summary>
-    public enum ComputeContextProperties : int
-    {
-        /// <summary>
-        /// Original was CL_CONTEXT_PLATFORM = 0x1084
-        /// </summary>
-        ContextPlatform = ((int)0x1084)        ,
-    }
-
-    /// <summary>
     /// Used in GL.GetContextInfo
     /// </summary>
     public enum ContextInfo : int
@@ -1445,6 +1449,17 @@ namespace OpenTK.Compute.CL12
         /// Original was CL_CONTEXT_NUM_DEVICES = 0x1083
         /// </summary>
         ContextNumDevices = ((int)0x1083)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.CreateContext, GL.CreateContextFromType
+    /// </summary>
+    public enum ContextProperties : int
+    {
+        /// <summary>
+        /// Original was CL_CONTEXT_PLATFORM = 0x1084
+        /// </summary>
+        ContextPlatform = ((int)0x1084)        ,
     }
 
     /// <summary>

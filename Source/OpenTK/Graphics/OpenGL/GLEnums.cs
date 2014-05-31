@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetActiveAttrib, GL.GetTransformFeedbackVarying and 1 other function
+    /// Used in GL.Ext.GetTransformFeedbackVarying, GL.GetActiveAttrib and 1 other function
     /// </summary>
     public enum ActiveAttribType : int
     {
@@ -738,7 +738,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 9 other functions
+    /// Used in GL.Ext.GetBooleanIndexed, GL.ClearBufferData and 9 other functions
     /// </summary>
     public enum All : int
     {
@@ -771,7 +771,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         ClosePathNv = ((int)0x00)        ,
         /// <summary>
-        /// Original was GL_Points = 0x0000
+        /// Original was GL_POINTS = 0x0000
         /// </summary>
         Points = ((int)0x0000)        ,
         /// <summary>
@@ -1131,7 +1131,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         QueryBufferBarrierBit = ((int)0x00008000)        ,
         /// <summary>
-        /// Original was GL_Lines = 0x0001
+        /// Original was GL_LINES = 0x0001
         /// </summary>
         Lines = ((int)0x0001)        ,
         /// <summary>
@@ -1203,7 +1203,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         MapInvalidateRangeBitExt = ((int)0x0004)        ,
         /// <summary>
-        /// Original was GL_Triangles = 0x0004
+        /// Original was GL_TRIANGLES = 0x0004
         /// </summary>
         Triangles = ((int)0x0004)        ,
         /// <summary>
@@ -21195,7 +21195,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 5 other functions
+    /// Used in GL.BlendEquation, GL.BlendFuncSeparate and 5 other functions
     /// </summary>
     public enum ArbDrawBuffersBlend : int
     {
@@ -27054,7 +27054,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DisableClientState, GL.EnableClientState and 4 other functions
+    /// Used in GL.Ext.DisableClientState, GL.Ext.DisableClientStateIndexed and 4 other functions
     /// </summary>
     public enum ArrayCap : int
     {
@@ -27104,7 +27104,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgram, GL.Arb.GetProgramString and 5 other functions
+    /// Used in GL.Ext.ProgramParameter, GL.ProgramParameter and 5 other functions
     /// </summary>
     public enum AssemblyProgramParameterArb : int
     {
@@ -28343,7 +28343,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray and 27 other functions
+    /// Used in GL.Ext.DrawArrays, GL.Ext.DrawArraysInstanced and 27 other functions
     /// </summary>
     public enum BeginMode : int
     {
@@ -28417,7 +28417,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquation, GL.BlendEquation and 2 other functions
+    /// Used in GL.Ext.BlendEquation, GL.BlendEquation and 2 other functions
     /// </summary>
     public enum BlendEquationMode : int
     {
@@ -28681,7 +28681,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BlitFramebuffer, GL.Ext.BlitFramebuffer
+    /// Used in GL.Ext.BlitFramebuffer, GL.BlitFramebuffer
     /// </summary>
     public enum BlitFramebufferFilter : int
     {
@@ -28749,7 +28749,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.MapBufferRange, GL.Ext.MapNamedBufferRange
+    /// Used in GL.Ext.MapNamedBufferRange, GL.MapBufferRange
     /// </summary>
     [Flags]
     public enum BufferAccessMask : int
@@ -28888,7 +28888,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BindBufferBase, GL.BindBufferRange and 2 other functions
+    /// Used in GL.BindBuffersBase, GL.BindBuffersRange and 2 other functions
     /// </summary>
     public enum BufferRangeTarget : int
     {
@@ -28942,7 +28942,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Apple.BufferParameter, GL.Apple.FlushMappedBufferRange and 16 other functions
+    /// Used in GL.BufferStorage, GL.ClearBufferData and 16 other functions
     /// </summary>
     public enum BufferTarget : int
     {
@@ -29178,7 +29178,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BlitFramebuffer, GL.Clear and 1 other function
+    /// Used in GL.Ext.BlitFramebuffer, GL.BlitFramebuffer and 1 other function
     /// </summary>
     [Flags]
     public enum ClearBufferMask : int
@@ -29210,7 +29210,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.PushClientAttrib, GL.Ext.ClientAttribDefault and 1 other function
+    /// Used in GL.Ext.ClientAttribDefault, GL.Ext.PushClientAttribDefault and 1 other function
     /// </summary>
     [Flags]
     public enum ClientAttribMask : int
@@ -29354,7 +29354,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.ColorPointer, GL.SecondaryColorPointer and 5 other functions
+    /// Used in GL.Ext.ColorPointer, GL.Ext.SecondaryColorPointer and 5 other functions
     /// </summary>
     public enum ColorPointerType : int
     {
@@ -29443,7 +29443,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.ColorSubTable, GL.ColorTable and 10 other functions
+    /// Used in GL.Ext.ColorSubTable, GL.Ext.ColorTable and 10 other functions
     /// </summary>
     public enum ColorTableTarget : int
     {
@@ -30012,7 +30012,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DrawBuffer, GL.Ext.FramebufferDrawBuffer and 1 other function
+    /// Used in GL.Ext.FramebufferDrawBuffer, GL.Ext.FramebufferDrawBuffers and 1 other function
     /// </summary>
     public enum DrawBufferMode : int
     {
@@ -30250,7 +30250,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.DrawElementsInstanced, GL.DrawElements and 13 other functions
+    /// Used in GL.Ext.DrawElementsInstanced, GL.Ext.DrawRangeElements and 13 other functions
     /// </summary>
     public enum DrawElementsType : int
     {
@@ -30269,7 +30269,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ati.ArrayObject, GL.Ati.GetArrayObject and 7 other functions
+    /// Used in GL.Ext.DisableClientStateIndexed, GL.Ext.DisableVertexArray and 7 other functions
     /// </summary>
     public enum EnableCap : int
     {
@@ -34953,7 +34953,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.FogCoordPointer, GL.Ext.VertexArrayFogCoordOffset and 1 other function
+    /// Used in GL.Ext.VertexArrayFogCoordOffset, GL.FogCoordPointer and 1 other function
     /// </summary>
     public enum FogPointerType : int
     {
@@ -35033,7 +35033,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace and 26 other functions
+    /// Used in GL.Ext.FramebufferRenderbuffer, GL.Ext.FramebufferTexture1D and 26 other functions
     /// </summary>
     public enum FramebufferAttachment : int
     {
@@ -35384,7 +35384,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetFramebufferAttachmentParameter, GL.Ext.GetFramebufferAttachmentParameter and 1 other function
+    /// Used in GL.Ext.GetFramebufferAttachmentParameter, GL.Ext.NamedFramebufferParameter and 1 other function
     /// </summary>
     public enum FramebufferParameterName : int
     {
@@ -35467,7 +35467,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace and 25 other functions
+    /// Used in GL.Ext.BindFramebuffer, GL.Ext.CheckFramebufferStatus and 25 other functions
     /// </summary>
     public enum FramebufferTarget : int
     {
@@ -35505,7 +35505,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GenerateMipmap, GL.Ext.GenerateMipmap
+    /// Used in GL.Ext.GenerateMipmap, GL.GenerateMipmap
     /// </summary>
     public enum GenerateMipmapTarget : int
     {
@@ -35548,7 +35548,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetColorTableParameter, GL.Ext.GetColorTableParameter
+    /// Used in GL.Ext.GetColorTableParameter, GL.GetColorTableParameter
     /// </summary>
     public enum GetColorTableParameterPName : int
     {
@@ -35802,7 +35802,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetDouble and 4 other functions
+    /// Used in GL.Ext.GetIntegerIndexed, GL.GetDouble and 4 other functions
     /// </summary>
     public enum GetIndexedPName : int
     {
@@ -35968,7 +35968,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetDouble and 3 other functions
+    /// Used in GL.GetInteger64, GL.GetBoolean and 3 other functions
     /// </summary>
     public enum GetPName : int
     {
@@ -38415,7 +38415,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetPointer, GL.Ext.GetPointer
+    /// Used in GL.Ext.GetPointer, GL.GetPointer
     /// </summary>
     public enum GetPointervPName : int
     {
@@ -38639,7 +38639,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetTexLevelParameter, GL.GetTexParameter and 8 other functions
+    /// Used in GL.Ext.GetMultiTexLevelParameter, GL.Ext.GetMultiTexParameter and 8 other functions
     /// </summary>
     public enum GetTextureParameter : int
     {
@@ -39610,7 +39610,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Disable, GL.Enable and 4 other functions
+    /// Used in GL.Ext.DisableIndexed, GL.Ext.EnableIndexed and 4 other functions
     /// </summary>
     public enum IndexedEnableCap : int
     {
@@ -39625,7 +39625,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.IndexPointer, GL.Ext.IndexPointer and 2 other functions
+    /// Used in GL.Ext.IndexPointer, GL.Ext.VertexArrayIndexOffset and 2 other functions
     /// </summary>
     public enum IndexPointerType : int
     {
@@ -41083,7 +41083,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetLight, GL.Light and 1 other function
+    /// Used in GL.Ext.BindLightParameter, GL.GetLight and 1 other function
     /// </summary>
     public enum LightName : int
     {
@@ -41154,7 +41154,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetLight, GL.Light and 1 other function
+    /// Used in GL.Ext.BindLightParameter, GL.GetLight and 1 other function
     /// </summary>
     public enum LightParameter : int
     {
@@ -41523,7 +41523,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.ColorMaterial, GL.GetMaterial and 8 other functions
+    /// Used in GL.Ext.BindMaterialParameter, GL.Ext.IndexMaterial and 8 other functions
     /// </summary>
     public enum MaterialFace : int
     {
@@ -41542,7 +41542,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetMaterial, GL.Material and 5 other functions
+    /// Used in GL.Ext.BindMaterialParameter, GL.Ext.TextureMaterial and 5 other functions
     /// </summary>
     public enum MaterialParameter : int
     {
@@ -41577,7 +41577,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.MatrixMode, GL.Ext.MatrixFrustum and 11 other functions
+    /// Used in GL.Ext.MatrixFrustum, GL.Ext.MatrixLoad and 11 other functions
     /// </summary>
     public enum MatrixMode : int
     {
@@ -42089,7 +42089,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NormalPointer, GL.Ext.BinormalPointer and 5 other functions
+    /// Used in GL.Ext.BinormalPointer, GL.Ext.NormalPointer and 5 other functions
     /// </summary>
     public enum NormalPointerType : int
     {
@@ -45754,7 +45754,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetPixelMapx, GL.PixelMapx and 32 other functions
+    /// Used in GL.Oes.Accumx, GL.Oes.AlphaFuncx and 32 other functions
     /// </summary>
     public enum OesFixedPoint : int
     {
@@ -46109,7 +46109,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.CompressedTexSubImage1D, GL.Arb.CompressedTexSubImage2D and 67 other functions
+    /// Used in GL.Ext.ClearNamedBufferData, GL.Ext.ClearNamedBufferSubData and 67 other functions
     /// </summary>
     public enum PixelFormat : int
     {
@@ -46264,7 +46264,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D and 41 other functions
+    /// Used in GL.Ext.ColorTable, GL.Ext.ConvolutionFilter1D and 41 other functions
     /// </summary>
     public enum PixelInternalFormat : int
     {
@@ -47476,7 +47476,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.ClearTexImage, GL.ClearTexSubImage and 53 other functions
+    /// Used in GL.Ext.ClearNamedBufferData, GL.Ext.ClearNamedBufferSubData and 53 other functions
     /// </summary>
     public enum PixelType : int
     {
@@ -47735,7 +47735,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray and 38 other functions
+    /// Used in GL.Ext.DrawArrays, GL.Ext.DrawArraysInstanced and 38 other functions
     /// </summary>
     public enum PrimitiveType : int
     {
@@ -48144,7 +48144,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetProgramResource, GL.Ext.GetNamedProgram
+    /// Used in GL.Ext.GetNamedProgram, GL.GetProgramResource
     /// </summary>
     public enum ProgramProperty : int
     {
@@ -48352,7 +48352,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BeginQuery, GL.BeginQueryIndexed and 4 other functions
+    /// Used in GL.BeginQueryIndexed, GL.EndQueryIndexed and 4 other functions
     /// </summary>
     public enum QueryTarget : int
     {
@@ -48387,7 +48387,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.ReadBuffer, GL.Ext.FramebufferReadBuffer
+    /// Used in GL.Ext.FramebufferReadBuffer, GL.ReadBuffer
     /// </summary>
     public enum ReadBufferMode : int
     {
@@ -48514,7 +48514,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetRenderbufferParameter, GL.Ext.GetNamedRenderbufferParameter and 1 other function
+    /// Used in GL.Ext.GetNamedRenderbufferParameter, GL.Ext.GetRenderbufferParameter and 1 other function
     /// </summary>
     public enum RenderbufferParameterName : int
     {
@@ -48597,7 +48597,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.RenderbufferStorage, GL.RenderbufferStorageMultisample and 2 other functions
+    /// Used in GL.Ext.RenderbufferStorage, GL.Ext.RenderbufferStorageMultisample and 2 other functions
     /// </summary>
     public enum RenderbufferStorage : int
     {
@@ -48900,7 +48900,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BindRenderbuffer, GL.FramebufferRenderbuffer and 10 other functions
+    /// Used in GL.Ext.BindRenderbuffer, GL.Ext.FramebufferRenderbuffer and 10 other functions
     /// </summary>
     public enum RenderbufferTarget : int
     {
@@ -50629,7 +50629,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.CreateShader, GL.CreateShaderProgram and 9 other functions
+    /// Used in GL.CreateShaderProgram, GL.GetActiveSubroutineName and 9 other functions
     /// </summary>
     public enum ShaderType : int
     {
@@ -50825,7 +50825,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ati.StencilFuncSeparate, GL.StencilFunc and 2 other functions
+    /// Used in GL.StencilFunc, GL.StencilFuncSeparate and 2 other functions
     /// </summary>
     public enum StencilFunction : int
     {
@@ -50864,7 +50864,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ati.StencilOpSeparate, GL.StencilOp and 1 other function
+    /// Used in GL.StencilOp, GL.StencilOpSeparate and 1 other function
     /// </summary>
     public enum StencilOp : int
     {
@@ -51128,7 +51128,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.TexCoordPointer, GL.Ext.MultiTexCoordPointer and 4 other functions
+    /// Used in GL.Ext.MultiTexCoordPointer, GL.Ext.TexCoordPointer and 4 other functions
     /// </summary>
     public enum TexCoordPointerType : int
     {
@@ -51182,7 +51182,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.TexBuffer, GL.TexBufferRange
+    /// Used in GL.TexBufferRange, GL.TexBuffer
     /// </summary>
     public enum TextureBufferTarget : int
     {
@@ -51212,7 +51212,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetTexGen, GL.TexGend and 5 other functions
+    /// Used in GL.Ext.BindTexGenParameter, GL.Ext.GetMultiTexGen and 5 other functions
     /// </summary>
     public enum TextureCoordName : int
     {
@@ -51536,7 +51536,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetTexEnv, GL.TexEnv and 2 other functions
+    /// Used in GL.Ext.GetMultiTexEnv, GL.Ext.MultiTexEnv and 2 other functions
     /// </summary>
     public enum TextureEnvParameter : int
     {
@@ -51623,7 +51623,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetTexEnv, GL.TexEnv and 2 other functions
+    /// Used in GL.Ext.GetMultiTexEnv, GL.Ext.MultiTexEnv and 2 other functions
     /// </summary>
     public enum TextureEnvTarget : int
     {
@@ -51696,7 +51696,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetTexGen, GL.TexGend and 5 other functions
+    /// Used in GL.Ext.BindTexGenParameter, GL.Ext.GetMultiTexGen and 5 other functions
     /// </summary>
     public enum TextureGenParameter : int
     {
@@ -51849,7 +51849,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.TexParameter, GL.TexParameterI and 5 other functions
+    /// Used in GL.Ext.MultiTexParameter, GL.Ext.MultiTexParameterI and 5 other functions
     /// </summary>
     public enum TextureParameterName : int
     {
@@ -52056,7 +52056,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D and 123 other functions
+    /// Used in GL.Ext.BindMultiTexture, GL.Ext.BindTexture and 123 other functions
     /// </summary>
     public enum TextureTarget : int
     {
@@ -52385,7 +52385,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.ActiveTexture, GL.Arb.ClientActiveTexture and 55 other functions
+    /// Used in GL.Ext.BindMultiTexture, GL.Ext.BindTexGenParameter and 55 other functions
     /// </summary>
     public enum TextureUnit : int
     {
@@ -57477,7 +57477,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetInteger64, GL.ProgramParameter
+    /// Used in GL.ProgramParameter, GL.GetInteger64
     /// </summary>
     public enum Version32 : int
     {
@@ -59958,7 +59958,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetVertexAttrib, GL.GetVertexAttribI and 1 other function
+    /// Used in GL.GetVertexAttribL, GL.GetVertexAttrib and 1 other function
     /// </summary>
     public enum VertexAttribParameter : int
     {
@@ -60054,7 +60054,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ati.VertexAttribArrayObject, GL.VertexAttribPointer and 1 other function
+    /// Used in GL.Ext.VertexArrayVertexAttribOffset, GL.VertexAttribPointer and 1 other function
     /// </summary>
     public enum VertexAttribPointerType : int
     {
@@ -60203,7 +60203,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.VertexPointer, GL.Ext.VertexArrayVertexOffset and 5 other functions
+    /// Used in GL.Ext.VertexArrayVertexOffset, GL.Ext.VertexPointer and 5 other functions
     /// </summary>
     public enum VertexPointerType : int
     {
