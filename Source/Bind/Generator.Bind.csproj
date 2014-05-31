@@ -55,7 +55,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>full</DebugType>
-    <Commandlineparameters>-mode:cl10,cl12,cl20</Commandlineparameters>
+    <Commandlineparameters>-mode:all</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BaseAddress>285212672</BaseAddress>
@@ -70,6 +70,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>none</DebugType>
+    <Commandlineparameters>-mode:es11</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
     <BaseAddress>285212672</BaseAddress>
@@ -84,6 +85,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>none</DebugType>
+    <Commandlineparameters>-mode:all</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
     <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
@@ -91,6 +93,7 @@
     <WarningLevel>4</WarningLevel>
     <Optimize>True</Optimize>
     <DefineConstants>TRACE;</DefineConstants>
+    <Commandlineparameters>-mode:all</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>True</SignAssembly>
