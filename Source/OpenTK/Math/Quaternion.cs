@@ -68,6 +68,10 @@ namespace OpenTK
             : this(new Vector3(x, y, z), w)
         { }
 
+        /// <summary>
+        /// Construct a new Quaternion from a <see cref="Matrix3"/> instance.
+        /// </summary>
+        /// <param name="matrix">A rotation matrix</param>
         public Quaternion(ref Matrix3 matrix)
         {
             FromMatrix(ref matrix, out this);
