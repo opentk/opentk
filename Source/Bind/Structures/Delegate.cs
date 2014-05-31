@@ -302,12 +302,9 @@ namespace Bind.Structures
 
     #region DelegateCollection
 
-    class DelegateCollection : IDictionary<string, List<Delegate>>
+    class DelegateCollection : GenericCollection<Delegate>
     {
-        readonly SortedDictionary<string, List<Delegate>> Delegates =
-            new SortedDictionary<string, List<Delegate>>();
-
-        public void Add(Delegate d)
+        public override void Add(Delegate d)
         {
             if (!ContainsKey(d.Name))
             {
@@ -315,7 +312,7 @@ namespace Bind.Structures
             }
             else
             {
-                var list = Delegates[d.Name];
+                var list = Collection[d.Name];
                 var index = list.FindIndex(w => w.CompareTo(d) == 0);
                 if (index < 0)
                 {
@@ -339,14 +336,6 @@ namespace Bind.Structures
             }
         }
 
-        public void AddRange(IEnumerable<Delegate> delegates)
-        {
-            foreach (var d in delegates)
-            {
-                Add(d);
-            }
-        }
-
         public void AddRange(DelegateCollection delegates)
         {
             foreach (var d in delegates.Values.SelectMany(v => v))
@@ -354,121 +343,6 @@ namespace Bind.Structures
                 Add(d);
             }
         }
-
-        #region IDictionary Members
-
-        public void Add(string key, List<Delegate> value)
-        {
-            Delegates.Add(key, value.ToList());
-        }
-
-        public bool ContainsKey(string key)
-        {
-            return Delegates.ContainsKey(key);
-        }
-
-        public bool Remove(string key)
-        {
-            return Delegates.Remove(key);
-        }
-
-        public bool TryGetValue(string key, out List<Delegate> value)
-        {
-            return Delegates.TryGetValue(key, out value);
-        }
-
-        public List<Delegate> this[string index]
-        {
-            get
-            {
-                return Delegates[index];
-            }
-            set
-            {
-                Delegates[index] = value;
-            }
-        }
-
-        public ICollection<string> Keys
-        {
-            get
-            {
-                return Delegates.Keys;
-            }
-        }
-
-        public ICollection<List<Delegate>> Values
-        {
-            get
-            {
-                return Delegates.Values;
-            }
-        }
-
-        #endregion
-
-        #region ICollection implementation
-
-        public void Add(KeyValuePair<string, List<Delegate>> item)
-        {
-            Delegates.Add(item.Key, item.Value.ToList());
-        }
-
-        public void Clear()
-        {
-            Delegates.Clear();
-        }
-
-        public bool Contains(KeyValuePair<string, List<Delegate>> item)
-        {
-            return Delegates.Contains(item);
-        }
-
-        public void CopyTo(KeyValuePair<string, List<Delegate>>[] array, int arrayIndex)
-        {
-            Delegates.CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(KeyValuePair<string, List<Delegate>> item)
-        {
-            return Delegates.Remove(item.Key);
-        }
-
-        public int Count
-        {
-            get
-            {
-                return Delegates.Count;
-            }
-        }
-
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        #endregion
-
-        #region IEnumerable implementation
-
-        public IEnumerator<KeyValuePair<string, List<Delegate>>> GetEnumerator()
-        {
-            return Delegates.GetEnumerator();
-        }
-
-        #endregion
-
-        #region IEnumerable implementation
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return Delegates.GetEnumerator();
-        }
-
-        #endregion
     }
 
     #endregion
