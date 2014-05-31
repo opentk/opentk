@@ -1245,6 +1245,18 @@
 
     <!-- Arb -->
 
+    <!-- ARB_CL_event -->
+    <function name="CreateSyncFromCLevent" extension="ARB">
+      <param name="context">
+        <pointer>0</pointer>
+        <flow>in</flow>
+      </param>
+      <param name="event">
+        <pointer>0</pointer>
+        <flow>in</flow>
+      </param>
+    </function>
+
     <function name="ProgramParameteri" extension="Arb">
       <param name="pname">
         <type>AssemblyProgramParameterArb</type>
