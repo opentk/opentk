@@ -455,18 +455,36 @@ namespace OpenTK.Graphics.OpenGL4
         #endregion
     }
 
+    /// <summary>
+    /// Defines the callback prototype for
+    /// <see cref="GL.DebugMessageCallback"/>
+    /// Note: callback implementations must not
+    /// throw exceptions.
+    /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProc(
         DebugSource source, DebugType type, int id,
         DebugSeverity severity, int length, IntPtr message,
         IntPtr userParam);
 
+    /// <summary>
+    /// Defines the callback prototype for
+    /// <see cref="GL.Arb.DebugMessageCallback"/>
+    /// Note: callback implementations must not
+    /// throw exceptions.
+    /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProcArb(
         DebugSource source, DebugType type, int id,
         DebugSeverity severity, int length, IntPtr message,
         IntPtr userParam);
 
+    /// <summary>
+    /// Defines the callback prototype for
+    /// <see cref="GL.Khr.DebugMessageCallback"/>
+    /// Note: callback implementations must not
+    /// throw exceptions.
+    /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProcKhr(
         DebugSource source, DebugType type, int id,
