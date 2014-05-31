@@ -437,7 +437,11 @@ namespace Bind
 
                         // Note: we use param.Name, because the documentation sometimes
                         // uses different names than the specification.
-                        sw.Write("/// <param name=\"{0}\">", param.Name);
+                        string pname =
+                            param.Name.StartsWith("@") ?
+                            param.Name.Substring(1) :
+                            param.Name;
+                        sw.Write("/// <param name=\"{0}\">", pname);
                         if (!String.IsNullOrEmpty(length))
                         {
                             sw.Write(WriteOptions.NoIndent, "{0}", length);

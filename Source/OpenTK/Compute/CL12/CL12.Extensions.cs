@@ -43,7 +43,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="cb"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueCopyBuffer(this CommandQueue command_queue, ComputeMemory src_buffer, ComputeMemory dst_buffer, IntPtr src_offset, IntPtr dst_offset, IntPtr cb, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
         {
@@ -59,7 +59,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="cb"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueCopyBuffer(this CommandQueue command_queue, ComputeMemory src_buffer, ComputeMemory dst_buffer, IntPtr src_offset, IntPtr dst_offset, IntPtr cb, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
         {
@@ -75,7 +75,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="cb"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueCopyBuffer(this CommandQueue command_queue, ComputeMemory src_buffer, ComputeMemory dst_buffer, IntPtr src_offset, IntPtr dst_offset, IntPtr cb, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
         {
@@ -91,7 +91,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="local_work_size"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, IntPtr[] global_work_offset, IntPtr[] global_work_size, IntPtr[] local_work_size, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
         {
@@ -107,7 +107,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="local_work_size"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, ref IntPtr global_work_offset, ref IntPtr global_work_size, ref IntPtr local_work_size, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
         {
@@ -123,7 +123,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="local_work_size"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel, Int32 work_dim, IntPtr* global_work_offset, IntPtr* global_work_size, IntPtr* local_work_size, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
         {
@@ -139,7 +139,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
         {
@@ -155,7 +155,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
         {
@@ -171,7 +171,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueReadBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
         {
@@ -187,7 +187,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -205,7 +205,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -223,7 +223,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
@@ -241,7 +241,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -259,7 +259,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -277,7 +277,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
@@ -295,7 +295,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -313,7 +313,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -331,7 +331,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
@@ -349,7 +349,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -367,7 +367,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -385,7 +385,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueReadBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_read, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
@@ -403,7 +403,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
         {
@@ -419,7 +419,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
         {
@@ -435,7 +435,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueWriteBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
         {
@@ -451,7 +451,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -469,7 +469,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -487,7 +487,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
@@ -505,7 +505,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -523,7 +523,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -541,7 +541,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
@@ -559,7 +559,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -577,7 +577,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -595,7 +595,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] T5[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
@@ -613,7 +613,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -631,7 +631,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
             where T5 : struct
@@ -649,7 +649,7 @@ namespace OpenTK.Compute.CL12
         /// <param name="ptr"></param>
         /// <param name="num_events_in_wait_list"></param>
         /// <param name="event_wait_list"></param>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         [CLSCompliant(false)]
         public static unsafe ErrorCode EnqueueWriteBuffer<T5>(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_write, IntPtr offset, IntPtr cb, [InAttribute, OutAttribute] ref T5 ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
             where T5 : struct
@@ -1889,7 +1889,7 @@ namespace OpenTK.Compute.CL12
     public static partial class ComputeEventExtensions
     {
         /// <summary></summary>
-        /// <param name="@event"></param>
+        /// <param name="event"></param>
         /// <param name="execution_status"></param>
         public static ErrorCode SetUserEventStatus(this ComputeEvent @event, Int32 execution_status)
         {
