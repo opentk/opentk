@@ -422,14 +422,6 @@ namespace Bind
                     type));
             }
 
-            if (!type.IsEnum)
-            {
-                // Remove qualifier if type is not an enum
-                // Resolves issues when replacing / overriding
-                // an enum parameter with a non-enum type
-                type.QualifiedType = type.CurrentType;
-            }
-
             return type;
         }
 
