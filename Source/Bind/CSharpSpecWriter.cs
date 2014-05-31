@@ -230,6 +230,7 @@ namespace Bind
                 if (d.RequiresSlot(Settings))
                 {
                     var name = Settings.FunctionPrefix + d.Name;
+                    sw.WriteLine("// {0}", name);
                     sw.WriteLine("{0}, 0,", String.Join(", ",
                         System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
                 }
