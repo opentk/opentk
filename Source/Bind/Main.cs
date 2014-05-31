@@ -255,6 +255,7 @@ namespace Bind
                         Generators.Add(new CL12Generator(desktop, dirName));
                         Generators.Add(new CL20Generator(desktop, dirName));
 
+                        /* Temporarily disabled
                         var android = Settings.Clone();
                         android.Compatibility |= Settings.Legacy.UseDllImports;
                         android.DefaultOutputPath += ".Android";
@@ -268,6 +269,7 @@ namespace Bind
                         Generators.Add(new ESGenerator(ios, dirName));
                         Generators.Add(new ES2Generator(ios, dirName));
                         Generators.Add(new ES3Generator(ios, dirName));
+                        */
                     }
                     break;
                 
