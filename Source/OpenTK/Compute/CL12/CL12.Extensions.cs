@@ -1395,18 +1395,6 @@ namespace OpenTK.Compute.CL12
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
-        /// <param name="count"></param>
-        /// <param name="strings"></param>
-        /// <param name="lengths"></param>
-        /// <param name="errcode_ret"></param>
-        [CLSCompliant(false)]
-        public static unsafe ComputeProgram CreateProgramWithSource(this ComputeContextHandle context, UInt32 count, IntPtr strings, IntPtr* lengths, [OutAttribute] ErrorCode* errcode_ret)
-        {
-            return CL.CreateProgramWithSource(context, count, strings, lengths, errcode_ret);
-        }
-
-        /// <summary>[requires: v1.0]</summary>
-        /// <param name="context"></param>
         /// <param name="normalized_coords"></param>
         /// <param name="addressing_mode"></param>
         /// <param name="filter_mode"></param>
@@ -2344,7 +2332,6 @@ namespace OpenTK.Compute.CL12
         /// <param name="arg_index"></param>
         /// <param name="arg_size"></param>
         /// <param name="arg_value"></param>
-        [CLSCompliant(false)]
         public static ErrorCode SetKernelArg(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, IntPtr arg_value)
         {
             return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
@@ -2394,23 +2381,11 @@ namespace OpenTK.Compute.CL12
         /// <param name="arg_index"></param>
         /// <param name="arg_size"></param>
         /// <param name="arg_value"></param>
-        [CLSCompliant(false)]
         public static ErrorCode SetKernelArg<T3>(this ComputeKernel kernel, Int32 arg_index, IntPtr arg_size, [InAttribute, OutAttribute] ref T3 arg_value)
             where T3 : struct
         
         {
             return CL.SetKernelArg(kernel, arg_index, arg_size, ref arg_value);
-        }
-
-        /// <summary>[requires: v1.0]</summary>
-        /// <param name="kernel"></param>
-        /// <param name="arg_index"></param>
-        /// <param name="arg_size"></param>
-        /// <param name="arg_value"></param>
-        [CLSCompliant(false)]
-        public static ErrorCode SetKernelArg(this ComputeKernel kernel, UInt32 arg_index, IntPtr arg_size, IntPtr arg_value)
-        {
-            return CL.SetKernelArg(kernel, arg_index, arg_size, arg_value);
         }
 
     }
