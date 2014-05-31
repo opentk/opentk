@@ -226,11 +226,8 @@ namespace OpenTK.Graphics.ES30
 
         public static void ShaderSource(Int32 shader, System.String @string)
         {
-            unsafe
-            {
-                int length = @string.Length;
-                GL.ShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
-            }
+            int length = @string.Length;
+            GL.ShaderSource((UInt32)shader, 1, ref @string, ref length);
         }
 
         #endregion
