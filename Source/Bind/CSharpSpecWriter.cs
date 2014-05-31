@@ -169,7 +169,7 @@ namespace Bind
 
         void WriteClasses(BindStreamWriter sw, ClassCollection classes, EnumCollection enums)
         {
-            foreach (var c in classes.Values.SelectMany(m => m))
+            foreach (var c in classes.Values.SelectMany(m => m).OrderBy(m => m))
             {
                 sw.WriteLine("/// <summary>");
                 sw.WriteLine(String.Format("/// Defines extension methods to simply {0} usage.", c.Name));
@@ -177,7 +177,7 @@ namespace Bind
                 sw.WriteLine(String.Format("public static partial class {0}Extensions", c.Name));
                 sw.WriteLine("{");
                 sw.Indent();
-                foreach (var method in c.Methods.Values.SelectMany(m => m))
+                foreach (var method in c.Methods.Values.SelectMany(m => m).OrderBy(m => m))
                 {
                     WriteDocumentation(sw, method);
                     WriteMethod(sw, method, enums);
@@ -196,6 +196,12 @@ namespace Bind
             IDictionary<string, string> CSTypes)
         {
             Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
+
+            // Sort delegates by extension and by name
+            var delegates_sorted = delegates.Values
+                .Select(d => d.First())
+                .OrderBy(d => d.Extension)
+                .ThenBy(d => d.Name);
 
             sw.WriteLine("#pragma warning disable 3019"); // CLSCompliant attribute
             sw.WriteLine("#pragma warning disable 1591"); // Missing doc comments
@@ -219,7 +225,7 @@ namespace Bind
             sw.WriteLine("EntryPointNames = new byte[]", delegates.Count);
             sw.WriteLine("{");
             sw.Indent();
-            foreach (var d in delegates.Values.Select(d => d.First()).OrderBy(d => d))
+            foreach (var d in delegates.Values.Select(d => d.First()).OrderBy(d => d.Name))
             {
                 if (d.RequiresSlot(Settings))
                 {
@@ -236,7 +242,7 @@ namespace Bind
             sw.WriteLine("{");
             sw.Indent();
             int offset = 0;
-            foreach (var d in delegates.Values.Select(d => d.First()).OrderBy(d => d))
+            foreach (var d in delegates.Values.Select(d => d.First()).OrderBy(d => d.Name))
             {
                 if (d.RequiresSlot(Settings))
                 {
@@ -288,7 +294,8 @@ namespace Bind
             // Emit native signatures.
             // These are required by the patcher.
             int current_signature = 0;
-            foreach (var d in wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct().OrderBy(d => d))
+            //foreach (var d in wrappers.OrderBy(w => w.Key).Select(w => w.Value).SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct().OrderBy(d => d))
+            foreach (var d in delegates_sorted)
             {
                 sw.WriteLine("[Slot({0})]", d.Slot);
                 sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
@@ -337,7 +344,6 @@ namespace Bind
             sw.Write("public static {0}", GetDeclarationString(f, Settings.Compatibility));
             if (f.Parameters.HasGenericParameters)
             {
-                // Todo: remove this
                 sw.WriteLine();
                 sw.Write("");
             }
@@ -829,6 +835,13 @@ namespace Bind
                 if (type.IsEnum)
                 {
                     t = (type as Enum).BaseType;
+                    // Todo: remove this hack. It's here only
+                    // to make the git commits cleaner during
+                    // the OpenCL implementation process.
+                    if (t == "int")
+                    {
+                        t = "System.Int32";
+                    }
                 }
             }
 

@@ -196,9 +196,11 @@ namespace Bind
             // Entry points without a slot are assigned the magic slot index -1. 
             // Generator.Rewrite detects this and generates a static DllImport call
             // instead of a calli instruction for these functions.
+            // Todo: it would be best to allocate slots for core functions first
 
             int slot = -1;
-            foreach (var list in delegates.Values)
+            foreach (var list in delegates.Values
+                .OrderBy(d => d.First().Name))
             {
                 var func = list.First();
                 if (func.RequiresSlot(Settings))
