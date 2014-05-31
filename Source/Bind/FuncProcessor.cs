@@ -687,6 +687,16 @@ namespace Bind
                 {
                     d.Parameters[i].Type = new Type(d.Parameters[i].Type);
                 }
+
+                // Convert unsigned parameters to signed
+                if (Settings.IsEnabled(Settings.Legacy.NoUnsignedOverloads))
+                {
+                    if (d.Parameters[i].Type.Unsigned)
+                    {
+                        d.Parameters[i].Type.CurrentType =
+                            GetCLSCompliantType(d.Parameters[i].Type);
+                    }
+                }
             }
         }
 
