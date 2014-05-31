@@ -502,7 +502,10 @@ namespace Bind
                 if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                 {
                     sw.WriteLine("/// <summary>");
-                    sw.WriteLine("/// Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
+                    sw.WriteLine("/// Original was {0}{1} = {2}",
+                        Settings.ConstantPrefix,
+                        c.OriginalName,
+                        c.Value.Replace("<", "&lt;").Replace(">", "&gt;"));
                     sw.WriteLine("/// </summary>");
                 }
 
