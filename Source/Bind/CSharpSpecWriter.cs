@@ -197,11 +197,9 @@ namespace Bind
         {
             Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
 
-            // Sort delegates by extension and by name
             var delegates_sorted = delegates.Values
                 .Select(d => d.First())
-                .OrderBy(d => d.Extension)
-                .ThenBy(d => d.Name);
+                .OrderBy(d => d);
 
             sw.WriteLine("#pragma warning disable 3019"); // CLSCompliant attribute
             sw.WriteLine("#pragma warning disable 1591"); // Missing doc comments
@@ -225,7 +223,7 @@ namespace Bind
             sw.WriteLine("EntryPointNames = new byte[]", delegates.Count);
             sw.WriteLine("{");
             sw.Indent();
-            foreach (var d in delegates.Values.Select(d => d.First()).OrderBy(d => d.Name))
+            foreach (var d in delegates_sorted)
             {
                 if (d.RequiresSlot(Settings))
                 {
@@ -243,7 +241,7 @@ namespace Bind
             sw.WriteLine("{");
             sw.Indent();
             int offset = 0;
-            foreach (var d in delegates.Values.Select(d => d.First()).OrderBy(d => d.Name))
+            foreach (var d in delegates_sorted)
             {
                 if (d.RequiresSlot(Settings))
                 {
@@ -295,7 +293,6 @@ namespace Bind
             // Emit native signatures.
             // These are required by the patcher.
             int current_signature = 0;
-            //foreach (var d in wrappers.OrderBy(w => w.Key).Select(w => w.Value).SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct().OrderBy(d => d))
             foreach (var d in delegates_sorted)
             {
                 sw.WriteLine("[Slot({0})]", d.Slot);

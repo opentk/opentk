@@ -199,8 +199,7 @@ namespace Bind
             // Todo: it would be best to allocate slots for core functions first
 
             int slot = -1;
-            foreach (var list in delegates.Values
-                .OrderBy(d => d.First().Name))
+            foreach (var list in delegates.Values.OrderBy(d => d.First()))
             {
                 var func = list.First();
                 if (func.RequiresSlot(Settings))

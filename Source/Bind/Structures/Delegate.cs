@@ -277,7 +277,11 @@ namespace Bind.Structures
 
         public int CompareTo(Delegate other)
         {
-            int ret = Name.CompareTo(other.Name);
+            int ret = (Extension != "Core").CompareTo(other.Extension != "Core");
+            if (ret == 0)
+                ret = Extension.CompareTo(other.Extension);
+            if (ret == 0)
+                ret = Name.CompareTo(other.Name);
             if (ret == 0)
                 ret = Parameters.CompareTo(other.Parameters);
             if (ret == 0)
