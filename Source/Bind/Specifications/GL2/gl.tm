@@ -359,13 +359,14 @@ PathHandleMissingGlyphs,*,*,	    GLenum,*,*
 
 # OpenCL types
 _cl_context, OpenTK.Compute.ComputeContextHandle
-_cl_event, OpenTK.Compute.ComputeEvent
-cl_command_queue, OpenTK.Compute.CommandQueue
+_cl_event, OpenTK.Compute.ComputeEventHandle
 cl_context, OpenTK.Compute.ComputeContextHandle
-cl_device_id, OpenTK.Compute.ComputeDevice
-cl_event, OpenTK.Compute.ComputeEvent
-cl_kernel, OpenTK.Compute.ComputeKernel
-cl_mem, OpenTK.Compute.ComputeMemory
-cl_platform_id, OpenTK.Compute.ComputePlatform
-cl_program, OpenTK.Compute.ComputeProgram
-cl_sampler, OpenTK.Compute.ComputeSampler
+cl_event, OpenTK.Compute.ComputeEventHandle
+
+#cl_command_queue, OpenTK.Compute.CommandQueue
+#cl_device_id, OpenTK.Compute.ComputeDevice
+#cl_kernel, OpenTK.Compute.ComputeKernel
+#cl_mem, OpenTK.Compute.ComputeMemory
+#cl_platform_id, OpenTK.Compute.ComputePlatform
+#cl_program, OpenTK.Compute.ComputeProgram
+#cl_sampler, OpenTK.Compute.ComputeSampler
