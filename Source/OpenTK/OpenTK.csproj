@@ -764,33 +764,6 @@
     <Compile Include="Compute\CL20\CL20.Extensions.cs" />
     <Compile Include="Graphics\ES20\ES20Obsolete.cs" />
     <Compile Include="Graphics\ES30\ES30Obsolete.cs" />
-    <None Include="Compute\CommandQueue.cs">
-      <SubType>Code</SubType>
-    </None>
-    <None Include="Compute\CLHelper.cs">
-      <SubType>Code</SubType>
-    </None>
-    <None Include="Compute\Structs.cs">
-      <SubType>Code</SubType>
-    </None>
-    <None Include="Compute\ComputeDevice.cs">
-      <SubType>Code</SubType>
-    </None>
-    <None Include="Compute\ComputeKernel.cs">
-      <SubType>Code</SubType>
-    </None>
-    <None Include="Compute\ComputeMemory.cs">
-      <SubType>Code</SubType>
-    </None>
-    <None Include="Compute\ComputePlatform.cs">
-      <SubType>Code</SubType>
-    </None>
-    <None Include="Compute\ComputeProgram.cs">
-      <SubType>Code</SubType>
-    </None>
-    <None Include="Compute\ComputeSampler.cs">
-      <SubType>Code</SubType>
-    </None>
     <Compile Include="Compute\ComputeBindingsBase.cs" />
     <Compile Include="Compute\ComputeContextHandle.cs" />
     <Compile Include="Compute\ComputeEventHandle.cs">
