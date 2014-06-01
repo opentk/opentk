@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.Installer.Nuget", "In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Rewrite", "Source\Generator.Rewrite\Generator.Rewrite.csproj", "{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.CL12.Simple", "Source\Examples\OpenCL\CL12.Simple\Sample.CL12.Simple.csproj", "{FD370C71-801C-451D-850A-C60F6D5C7968}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,14 @@ Global
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Nsis|Any CPU.Build.0 = Release|Any CPU
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD370C71-801C-451D-850A-C60F6D5C7968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD370C71-801C-451D-850A-C60F6D5C7968}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD370C71-801C-451D-850A-C60F6D5C7968}.Documentation|Any CPU.ActiveCfg = Release|Any CPU
+		{FD370C71-801C-451D-850A-C60F6D5C7968}.Documentation|Any CPU.Build.0 = Release|Any CPU
+		{FD370C71-801C-451D-850A-C60F6D5C7968}.Nsis|Any CPU.ActiveCfg = Release|Any CPU
+		{FD370C71-801C-451D-850A-C60F6D5C7968}.Nsis|Any CPU.Build.0 = Release|Any CPU
+		{FD370C71-801C-451D-850A-C60F6D5C7968}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD370C71-801C-451D-850A-C60F6D5C7968}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Source\Examples\OpenTK.Examples.csproj
