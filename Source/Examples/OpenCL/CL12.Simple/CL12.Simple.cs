@@ -59,11 +59,9 @@ VectorAdd(__global const float * a,
                 // Create OpenCL context
                 var context_notify = new ContextNotifyDelegate(ContextNotify);
                 var context = CL.CreateContextFromType(
-                    new IntPtr[]
+                    new ContextProperty[]
                     {
-                        (IntPtr)ComputeContextProperties.ContextPlatform,
-                        (IntPtr)platform,
-                        IntPtr.Zero
+                        new ContextProperty(platform)
                     },
                     DeviceTypeFlags.DeviceTypeAll,
                     context_notify,
