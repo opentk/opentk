@@ -1349,7 +1349,7 @@ namespace OpenTK.Compute.CL10
     }
 
     /// <summary>
-    /// Used in GL.CreateContext, GL.CreateContextFromType
+    /// Not used directly.
     /// </summary>
     public enum ContextProperties : int
     {
