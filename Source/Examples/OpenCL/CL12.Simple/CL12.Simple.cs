@@ -72,7 +72,7 @@ VectorAdd(__global const float * a,
                 // Query available devices
                 int device_count;
                 ComputeDevice[] devices = new ComputeDevice[4];
-                error = ComputePlatform.GetDeviceIDs(platform, DeviceTypeFlags.DeviceTypeAll,
+                error = platform.GetDeviceIDs(DeviceTypeFlags.DeviceTypeAll,
                     devices.Length, devices, out device_count);
                 CheckErrors(error);
 

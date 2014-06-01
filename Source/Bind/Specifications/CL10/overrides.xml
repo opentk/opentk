@@ -577,6 +577,7 @@
     </add>
     <add name="ComputeDevice">
       <field name="Value" type="IntPtr" visibility="internal" />
+      <function name="GetDeviceIDs" />
     </add>
     <add name="ComputeEvent">
       <field name="Value" type="IntPtr" visibility="internal" />
