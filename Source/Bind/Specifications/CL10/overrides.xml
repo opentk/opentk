@@ -216,10 +216,11 @@
 
     <function name="BuildProgram">
       <param name="pfn_notify"><type>ProgramNotifyDelegate</type></param>
+      <param name="user_data">
+        <type>intptr_t</type>
+        <pointer>0</pointer>
+      </param>
       <returns>ErrorCodes</returns>
-    </function>
-    <function name="CompileProgram">
-      <param name="pfn_notify"><type>ProgramNotifyDelegate</type></param>
     </function>
     <function name="CreateBuffer">
       <param name="errcode_ret">
@@ -300,6 +301,10 @@
     <function name="EnqueueNativeKernel">
       <param name="pfn_notify"><type>UserNotifyDelegate</type></param>
       <returns>ErrorCodes</returns>
+      <param name="user_data">
+        <type>intptr_t</type>
+        <pointer>0</pointer>
+      </param>
     </function>
     <function name="GetContextInfo">
       <param name="param_value_size_ret">
