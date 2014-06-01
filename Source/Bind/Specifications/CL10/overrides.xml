@@ -236,14 +236,20 @@
       </param>
     </function>
     <function name="CreateContext">
+      <param name="properties"><type>IntPtr</type></param>
       <param name="pfn_notify"><type>ContextNotifyDelegate</type></param>
       <param name="errcode_ret">
         <type>ErrorCodes</type>
         <count>1</count>
         <flow>out</flow>
       </param>
+      <param name="user_data">
+        <type>intptr_t</type>
+        <pointer>0</pointer>
+      </param>
     </function>
     <function name="CreateContextFromType">
+      <param name="properties"><type>IntPtr</type></param>
       <param name="pfn_notify"><type>ContextNotifyDelegate</type></param>
       <param name="user_data">
         <type>intptr_t</type>
