@@ -42,6 +42,12 @@ namespace Bind.Structures
             //this.rebuild = false;
         }
 
+        protected Parameter(Type t, string name)
+        {
+            Type = (Type)t.Clone();
+            Name = name;
+        }
+
         protected void Copy(Parameter p)
         {
             Type = (Type)p.Type.Clone();

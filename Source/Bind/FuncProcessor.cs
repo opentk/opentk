@@ -154,18 +154,42 @@ namespace Bind
                     {
                         var c = new Class
                         {
-                            Name = @class.GetAttribute("name", String.Empty)
+                            Name = @class.GetAttribute("name", String.Empty),
                         };
                         foreach (XPathNavigator member in @class.Select("function"))
                         {
                             var name = member.GetAttribute("name", String.Empty);
+                            bool is_static;
+                            Boolean.TryParse(member.GetAttribute("static", String.Empty), out is_static);
+
                             var methods = wrappers["Core"].Where(w => w.Name == name);
                             foreach (var method in methods)
                             {
                                 var m = new Function(method);
-                                m.IsExtensionMethod = true;
+                                m.IsExtensionMethod = !is_static;
+                                m.IsStaticMethod = is_static;
                                 c.Methods.Add(m);
                             }
+                        }
+                        foreach (XPathNavigator member in @class.Select("field"))
+                        {
+                            var name = member.GetAttribute("name", String.Empty);
+                            var type = member.GetAttribute("type", String.Empty);
+                            Visibility vis;
+                            switch (member.GetAttribute("visibility", String.Empty))
+                            {
+                                case "public":
+                                    vis = Visibility.Public;
+                                    break;
+                                case "internal":
+                                    vis = Visibility.Internal;
+                                    break;
+                                default:
+                                    vis = Visibility.Private;
+                                    break;
+                            }
+
+                            c.Fields.Add(new Field(new Type { QualifiedType = type }, name, vis));
                         }
                         classes.Add(c);
                     }

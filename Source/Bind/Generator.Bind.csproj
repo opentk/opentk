@@ -55,7 +55,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>full</DebugType>
-    <Commandlineparameters>-mode:all</Commandlineparameters>
+    <Commandlineparameters>-mode:cl10,cl12,cl20</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BaseAddress>285212672</BaseAddress>
@@ -217,8 +217,6 @@
     </None>
     <None Include="Specifications\CL10\signatures.xml">
     </None>
-    <None Include="Specifications\CL10\overrides.xml">
-    </None>
     <None Include="Specifications\ES10\signatures.xml">
     </None>
     <None Include="Specifications\ES10\overrides.xml">
@@ -251,6 +249,8 @@
     <Compile Include="CL\CL12Generator.cs" />
     <Compile Include="Structures\Class.cs" />
     <Compile Include="Structures\GenericCollection.cs" />
+    <None Include="Specifications\CL10\overrides.xml" />
+    <Compile Include="Structures\Field.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">

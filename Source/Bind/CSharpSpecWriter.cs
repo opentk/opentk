@@ -142,6 +142,7 @@ namespace Bind
                 sw.WriteLine("using System;");
                 sw.WriteLine("using System.Text;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
+                sw.WriteLine("using OpenTK.Extensions;");
                 sw.WriteLine();
 
                 WriteClasses(sw, classes, enums);
@@ -171,13 +172,149 @@ namespace Bind
         {
             foreach (var c in classes.Values.SelectMany(m => m).OrderBy(m => m))
             {
+                // Todo: text templating...
+                sw.WriteLine();
                 sw.WriteLine("/// <summary>");
-                sw.WriteLine(String.Format("/// Defines extension methods to simply {0} usage.", c.Name));
+                sw.WriteLine("/// Defines methods to simplify {0} usage.", c.Name);
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine("public partial struct {0} : IComparable<{0}>, IEquatable<{0}>", c.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                foreach (var field in c.Fields.Values.SelectMany(f => f).OrderBy(m => m))
+                {
+                    WriteField(sw, field, enums);
+                }
+                foreach (var method in c.Methods.Values
+                    .SelectMany(m => m)
+                    .Where(m => m.IsStaticMethod)
+                    .OrderBy(m => m))
+                {
+                    WriteDocumentation(sw, method);
+                    WriteMethod(sw, method, enums);
+                }
+                sw.WriteLine();
+                sw.WriteLine("#region IComparable<{0}> Implementation", c.Name);
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine("/// Returns the sort order of the current instance compared to the specified <see cref=\"{0}\"/>.", c.Name);
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine("/// <param name=\"other\">The <see cref=\"{0}\"/> to compare with the current <see cref=\"{0}\"/>.</param>", c.Name);
+                sw.WriteLine("/// <returns>A value that indicates the relative order of the objects being compared.", c.Name);
+                sw.WriteLine("public int CompareTo({0} other)", c.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("int result = 0;");
+                foreach (var field in c.Fields.Values.SelectMany(f => f))
+                {
+                    sw.WriteLine("if (result == 0)");
+                    sw.Indent();
+                    sw.WriteLine("result = {0}.CompareTo(other.{0});", field.Name);
+                    sw.Unindent();
+                }
+                sw.WriteLine("return result;");
+                sw.Unindent();
+                sw.WriteLine("}");
+                sw.WriteLine();
+                sw.WriteLine("#endregion");
+
+                sw.WriteLine();
+                sw.WriteLine("#region IEquatable<{0}> Implementation", c.Name);
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine("/// Determines whether the specified <see cref=\"{0}\"/> is equal to the current <see cref=\"{0}\"/>.", c.Name);
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine("/// <param name=\"other\">The <see cref=\"{0}\"/> to compare with the current <see cref=\"{0}\"/>.</param>", c.Name);
+                sw.WriteLine("/// <returns><c>true</c> if the specified <see cref=\"{0}\"/> is equal to the current", c.Name);
+                sw.WriteLine("/// <see cref=\"{0}\"/>; otherwise, <c>false</c>.</returns>", c.Name);
+                sw.WriteLine("public bool Equals({0} other)", c.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("bool result = true;");
+                foreach (var field in c.Fields.Values.SelectMany(f => f))
+                {
+                    sw.WriteLine("result &= {0}.Equals(other.{0});", field.Name);
+                }
+                sw.WriteLine("return result;");
+                sw.Unindent();
+                sw.WriteLine("}");
+                sw.WriteLine();
+                sw.WriteLine("#endregion");
+
+                sw.WriteLine();
+                sw.WriteLine("#region Public Members");
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>Defines a zero (or null) <see cref=\"{0}\"/></summary>", c.Name);
+                sw.WriteLine("public static readonly {0} Zero = new {0}();", c.Name);
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>Tests two <see cref=\"{0}\"/> instances for equality.</summary>", c.Name);
+                sw.WriteLine("public static bool operator ==({0} left, {0} right)", c.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("return left.Equals(right);");
+                sw.Unindent();
+                sw.WriteLine("}");
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>Tests two <see cref=\"{0}\"/> instances for inequality.</summary>", c.Name);
+                sw.WriteLine("public static bool operator !=({0} left, {0} right)", c.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("return !left.Equals(right);");
+                sw.Unindent();
+                sw.WriteLine("}");
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine("/// Determines whether the specified <see cref=\"System.Object\"/> is equal to the current <see cref=\"{0}\"/>.", c.Name);
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine("/// <param name=\"other\">The <see cref=\"System.Object\"/> to compare with the current <see cref=\"{0}\"/>.</param>", c.Name);
+                sw.WriteLine("/// <returns><c>true</c> if the specified <see cref=\"{0}\"/> is equal to the current", c.Name);
+                sw.WriteLine("/// <see cref=\"{0}\"/>; otherwise, <c>false</c>.</returns>", c.Name);
+                sw.WriteLine("public override bool Equals(object other)");
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("return other is {0} && Equals(({0})other);", c.Name);
+                sw.Unindent();
+                sw.WriteLine("}");
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine("/// Serves as a hash function for a <see cref=\"{0}\"/> object.", c.Name);
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine("/// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a");
+                sw.WriteLine("/// hash table.</returns>");
+                sw.WriteLine("public override int GetHashCode()");
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("int hash = 0;");
+                foreach (var field in c.Fields.Values.SelectMany(f => f).OrderBy(f => f))
+                {
+                    sw.WriteLine("hash ^= {0}.GetHashCode();", field.Name);
+                }
+                sw.WriteLine("return hash;");
+                sw.Unindent();
+                sw.WriteLine("}");
+
+                sw.WriteLine();
+                sw.WriteLine("#endregion");
+
+                sw.Unindent();
+                sw.WriteLine("}");
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine(String.Format("/// Defines methods to simplify {0} usage.", c.Name));
                 sw.WriteLine("/// </summary>");
                 sw.WriteLine(String.Format("public static partial class {0}Extensions", c.Name));
                 sw.WriteLine("{");
                 sw.Indent();
-                foreach (var method in c.Methods.Values.SelectMany(m => m).OrderBy(m => m))
+                foreach (var method in c.Methods.Values
+                    .SelectMany(m => m)
+                    .Where(m => m.IsExtensionMethod)
+                    .OrderBy(m => m))
                 {
                     WriteDocumentation(sw, method);
                     WriteMethod(sw, method, enums);
@@ -315,6 +452,12 @@ namespace Bind
             }
             WriteMethod(sw, f, enums);
             sw.WriteLine();
+        }
+
+        private void WriteField(BindStreamWriter sw, Field f, EnumCollection enums)
+        {
+            sw.Write(GetDeclarationString(f, Settings.Compatibility));
+            sw.WriteLine(WriteOptions.NoIndent, ";");
         }
 
         private void WriteMethod(BindStreamWriter sw, Function f, EnumCollection enums)
@@ -756,6 +899,29 @@ namespace Bind
                         sb.AppendLine(String.Format("    where {0} : struct", p.Type.CurrentType));
                 }
             }
+
+            return sb.ToString();
+        }
+
+        string GetDeclarationString(Field f, Settings.Legacy settings)
+        {
+            var sb = new StringBuilder();
+
+            switch (f.Visibility)
+            {
+                case Visibility.Private:
+                    break;
+                case Visibility.Internal:
+                    sb.Append("internal ");
+                    break;
+                case Visibility.Public:
+                    sb.Append("public ");
+                    break;
+            }
+
+            sb.Append(GetDeclarationString(f.Type, settings));
+            sb.Append(" ");
+            sb.Append(f.Name);
 
             return sb.ToString();
         }

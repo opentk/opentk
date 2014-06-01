@@ -250,6 +250,12 @@ namespace Bind.Structures
         /// </summary>
         public bool IsExtensionMethod { get; set; }
 
+        /// <summary>
+        /// True, if this instance is a static method.
+        /// Only used for class generation.
+        /// </summary>
+        public bool IsStaticMethod { get; set; }
+
 
         // Slot index in the address table
         public int Slot { get; set; }

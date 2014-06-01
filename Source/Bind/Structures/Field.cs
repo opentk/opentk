@@ -1,6 +1,6 @@
-﻿#region License
+﻿// #region License
 //
-// Class.cs
+// Field.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -25,62 +25,54 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
-
+// #endregion
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Bind.Structures
 {
-    class Class : IComparable<Class>, IEquatable<Class>
+    enum Visibility
     {
-        public Class()
+        Private = 0,
+        Public,
+        Internal
+    }
+
+    class Field : Parameter, IComparable<Field>, IEquatable<Field>
+    {
+        public Visibility Visibility { get; set; }
+
+        public Field(Type type, string name, Visibility vis)
+            : base(type, name)
         {
-            Fields = new FieldCollection();
-            Methods = new FunctionCollection();
+            Visibility = vis;
         }
 
-        public string Name { get; set; }
-        public FieldCollection Fields { get; private set; }
-        public FunctionCollection Methods { get; private set; }
+        #region IComparable<Field> implementation
 
-        #region IComparable implementation
-
-        public int CompareTo(Class other)
+        public int CompareTo(Field other)
         {
-            return Name.CompareTo(other.Name);
+            int result = Visibility.CompareTo(other.Visibility);
+            if (result == 0)
+                result = base.CompareTo((Parameter)other);
+            return result;
         }
 
         #endregion
 
-        #region IEquatable implementation
+        #region IEquatable<Field> implementation
 
-        public bool Equals(Class other)
+        public bool Equals(Field other)
         {
-            return Name.Equals(other.Name);
+            return
+                Visibility == other.Visibility &&
+                base.Equals((Parameter)other);
         }
 
         #endregion
     }
 
-    class ClassCollection : GenericCollection<Class>
+    class FieldCollection : GenericCollection<Field>
     {
-        public override void Add(Class item)
-        {
-            if (!Collection.ContainsKey(item.Name))
-            {
-                Add(item.Name, new List<Class>());
-                Collection[item.Name].Add(item);
-            }
-            else
-            {
-                foreach (var m in item.Methods.Values.SelectMany(m => m))
-                {
-                    Collection[item.Name][0].Methods.AddChecked(m);
-                }
-            }
-        }
     }
 }
 
