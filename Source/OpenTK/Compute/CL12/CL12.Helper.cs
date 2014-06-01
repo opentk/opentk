@@ -138,46 +138,38 @@ namespace OpenTK.Compute.CL12
     {
     }
 
-    public struct ContextProperty : IEquatable<ContextProperty>
+    public partial struct ComputeContext
     {
-        IntPtr Property;
-        IntPtr Value;
+        public static implicit operator OpenTK.Compute.ComputeContextHandle(ComputeContext context)
+        {
+            return new ComputeContextHandle
+            {
+                Handle = context.Value
+            };
+        }
+    }
 
+    public partial struct ComputeEvent
+    {
+        public static implicit operator OpenTK.Compute.ComputeEventHandle(ComputeEvent context)
+        {
+            return new ComputeEventHandle
+            {
+                Handle = context.Value
+            };
+        }
+    }
+
+    public partial struct ContextProperty
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenTK.Compute.CL12.ContextProperty"/> struct.
+        /// </summary>
+        /// <param name="platform">Platform.</param>
         public ContextProperty(ComputePlatform platform)
         {
             Property = (IntPtr)ContextProperties.ContextPlatform;
-            Value = (IntPtr)platform;
-        }
-
-        #region Public Members
-
-        /// <summary>
-        /// Defines a zero (or null) <see cref="ContextProperty"/>
-        /// </summary>
-        public static readonly ContextProperty Zero =
-            new ContextProperty();
-
-        /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="OpenTK.Compute.CL12.ContextProperty"/>.
-        /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="OpenTK.Compute.CL12.ContextProperty"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
-        /// <see cref="OpenTK.Compute.CL12.ContextProperty"/>; otherwise, <c>false</c>.</returns>
-        public override bool Equals(object obj)
-        {
-            if (obj is ContextProperty)
-                return Equals((ContextProperty)obj);
-            return false;
-        }
-
-        /// <summary>
-        /// Serves as a hash function for a <see cref="OpenTK.Compute.CL12.ContextProperty"/> object.
-        /// </summary>
-        /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
-        /// hash table.</returns>
-        public override int GetHashCode()
-        {
-            return Property.GetHashCode() ^ Value.GetHashCode();
+            Value = platform.Value;
         }
 
         /// <summary>
@@ -188,34 +180,6 @@ namespace OpenTK.Compute.CL12
         {
             return string.Format("[ContextProperty: {0}:{1}]", (ContextProperties)Property, Value);
         }
-
-        /// <summary>Tests two <see cref="ContextProperty"/> instances for equality.</summary>
-        public static bool operator ==(ContextProperty left, ContextProperty right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(ContextProperty left, ContextProperty right)
-        {
-            return !left.Equals(right);
-        }
-
-        #endregion
-
-        #region IEquatable implementation
-
-        /// <summary>
-        /// Determines whether the specified <see cref="OpenTK.Compute.CL12.ContextProperty"/> is equal to the current <see cref="OpenTK.Compute.CL12.ContextProperty"/>.
-        /// </summary>
-        /// <param name="other">The <see cref="OpenTK.Compute.CL12.ContextProperty"/> to compare with the current <see cref="OpenTK.Compute.CL12.ContextProperty"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="OpenTK.Compute.CL12.ContextProperty"/> is equal to the current
-        /// <see cref="OpenTK.Compute.CL12.ContextProperty"/>; otherwise, <c>false</c>.</returns>
-        public bool Equals(ContextProperty other)
-        {
-            return Property == other.Property && Value == other.Value;
-        }
-
-        #endregion
     }
 }
 

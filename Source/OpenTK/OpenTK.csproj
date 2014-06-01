@@ -583,15 +583,6 @@
     <Compile Include="Math\BezierCurveCubic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Compute\CommandQueue.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CLHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Structs.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Compute\CL10\ErrorHelper.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -761,41 +752,51 @@
     <Compile Include="Compute\CL20\CL20.Enums.cs" />
     <Compile Include="Compute\CL20\CL20.cs" />
     <Compile Include="Compute\CL20\CL20.Helper.cs" />
-    <Compile Include="Compute\ComputeBindingsBase.cs" />
     <Compile Include="Compute\CL12\CL12.Enums.cs" />
     <Compile Include="Compute\CL12\CL12.cs" />
     <Compile Include="Compute\CL10\CL10.Enums.cs" />
     <Compile Include="Compute\CL10\CL10.cs" />
     <Compile Include="Compute\CL12\CL12.Helper.cs" />
     <Compile Include="Compute\CL10\CL10.Helper.cs" />
-    <Compile Include="Compute\ComputeEvent.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\ComputeDevice.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\ComputeKernel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\ComputeMemory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\ComputePlatform.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\ComputeProgram.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\ComputeSampler.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Compute\CL12\CL12.Extensions.cs" />
-    <Compile Include="Compute\ComputeContextHandle.cs" />
     <Compile Include="Compute\CL10\CL10.Extensions.cs" />
     <Compile Include="Extensions\ValueTypeExtensions.cs" />
     <Compile Include="Compute\CL20\CL20.Extensions.cs" />
     <Compile Include="Graphics\ES20\ES20Obsolete.cs" />
     <Compile Include="Graphics\ES30\ES30Obsolete.cs" />
+    <None Include="Compute\CommandQueue.cs">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="Compute\CLHelper.cs">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="Compute\Structs.cs">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="Compute\ComputeDevice.cs">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="Compute\ComputeKernel.cs">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="Compute\ComputeMemory.cs">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="Compute\ComputePlatform.cs">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="Compute\ComputeProgram.cs">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="Compute\ComputeSampler.cs">
+      <SubType>Code</SubType>
+    </None>
+    <Compile Include="Compute\ComputeBindingsBase.cs" />
+    <Compile Include="Compute\ComputeContextHandle.cs" />
+    <Compile Include="Compute\ComputeEventHandle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\IntPtrExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

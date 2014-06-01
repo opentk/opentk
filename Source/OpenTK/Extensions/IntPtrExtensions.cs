@@ -1,6 +1,6 @@
-﻿#region License
+﻿// #region License
 //
-// ComputeContextHandle.cs
+// IntPtrExtensions.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -25,17 +25,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
-
+// #endregion
 using System;
-using System.Runtime.InteropServices;
 
-namespace OpenTK.Compute
+namespace OpenTK.Extensions
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public struct ComputeContextHandle
+    /// <summary>
+    /// Defines extensions to simplify usage of <see cref="System.IntPtr"/>
+    /// </summary>
+    public static class IntPtrExtensions
     {
-        internal IntPtr Handle;
+        /// <summary>
+        /// Compares two <see cref="System.IntPtr"/> instances.
+        /// </summary>
+        /// <returns>A value indicating the relative order of the two instances.</returns>
+        /// <param name="left">The left <see cref="System.IntPtr"/> instance.</param>
+        /// <param name="right">The right <see cref="System.IntPtr"/> instance.</param>
+        public static int CompareTo(this IntPtr left, IntPtr right)
+        {
+            return ((long)left).CompareTo((long)right);
+        }
     }
 }
 

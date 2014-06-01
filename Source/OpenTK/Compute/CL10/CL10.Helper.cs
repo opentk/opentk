@@ -66,32 +66,5 @@ namespace OpenTK.Compute.CL10
     {
     }
 
-    /// <summary>
-    /// Defines a property for <see cref="CL.CreateContext"/> or
-    /// <see cref="CL.CreateContextFromType"/>
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct ContextProperty
-    {
-        IntPtr key;
-        IntPtr value;
-
-        /// <summary>
-        /// Specifies the <see cref="OpenTK.Compute.ComputePlatform"/>
-        /// </summary>
-        /// <param name="platform">Platform.</param>
-        public ContextProperty(ComputePlatform platform)
-        {
-            key = (IntPtr)ContextProperties.ContextPlatform;
-            value = (IntPtr)platform;
-        }
-
-        /// <summary>
-        /// Specifies a zero property for use as a property
-        /// array terminator.
-        /// </summary>
-        public static readonly ContextProperty Zero =
-            new ContextProperty();
-    }
 }
 
