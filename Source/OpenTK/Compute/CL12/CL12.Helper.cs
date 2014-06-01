@@ -47,53 +47,6 @@ namespace OpenTK.Compute.CL12
                 return sync_root;
             }
         }
-
-        #region Helper Overloads
-
-        static void EnsureNullTerminated(ref ContextProperty[] properties)
-        {
-            // The property array must always be terminated with ContextProperty.Zero
-            if (properties != null)
-            {
-                if (properties[properties.Length - 1] != ContextProperty.Zero)
-                {
-                    Array.Resize(ref properties, properties.Length + 1);
-                    properties[properties.Length - 1] = ContextProperty.Zero;
-                }
-            }
-        }
-
-        public static ComputeContext CreateContext(ContextProperty[] properties, ComputeDevice[] devices, ContextNotifyDelegate pfn_notify, [InAttribute, OutAttribute] IntPtr user_data, [OutAttribute] out ErrorCode errcode_ret)
-        {
-            EnsureNullTerminated(ref properties);
-            int device_length = devices != null ? devices.Length : 0;
-
-            unsafe
-            {
-                fixed (void* pproperties = properties)
-                fixed (void* pdevices = devices)
-                fixed (ErrorCode* perr = &errcode_ret)
-                {
-                    return CreateContext((IntPtr*)pproperties, device_length, (ComputeDevice*)pdevices, pfn_notify, user_data, perr);
-                }
-            }
-        }
-
-        public static ComputeContext CreateContextFromType(ContextProperty[] properties, DeviceTypeFlags device_type, ContextNotifyDelegate pfn_notify, [InAttribute, OutAttribute] IntPtr user_data, [OutAttribute] out ErrorCode errcode_ret)
-        {
-            EnsureNullTerminated(ref properties);
-
-            unsafe
-            {
-                fixed (void* p = properties)
-                fixed (ErrorCode* perr = &errcode_ret)
-                {
-                    return CreateContextFromType((IntPtr*)p, device_type, pfn_notify, user_data, perr);
-                }
-            }
-        }
-
-        #endregion
     }
 
     /// <summary>
@@ -140,6 +93,21 @@ namespace OpenTK.Compute.CL12
 
     public partial struct ComputeContext
     {
+        #region Helper Overloads
+
+        static void EnsureNullTerminated(ref ContextProperty[] properties)
+        {
+            // The property array must always be terminated with ContextProperty.Zero
+            if (properties != null)
+            {
+                if (properties[properties.Length - 1] != ContextProperty.Zero)
+                {
+                    Array.Resize(ref properties, properties.Length + 1);
+                    properties[properties.Length - 1] = ContextProperty.Zero;
+                }
+            }
+        }
+
         public static implicit operator OpenTK.Compute.ComputeContextHandle(ComputeContext context)
         {
             return new ComputeContextHandle
@@ -147,6 +115,38 @@ namespace OpenTK.Compute.CL12
                 Handle = context.Value
             };
         }
+
+        public static ComputeContext CreateContext(ContextProperty[] properties, ComputeDevice[] devices, ContextNotifyDelegate pfn_notify, [InAttribute, OutAttribute] IntPtr user_data, [OutAttribute] out ErrorCode errcode_ret)
+        {
+            EnsureNullTerminated(ref properties);
+            int device_length = devices != null ? devices.Length : 0;
+
+            unsafe
+            {
+                fixed (void* pproperties = properties)
+                fixed (void* pdevices = devices)
+                fixed (ErrorCode* perr = &errcode_ret)
+                {
+                    return CreateContext((IntPtr*)pproperties, device_length, (ComputeDevice*)pdevices, pfn_notify, user_data, perr);
+                }
+            }
+        }
+
+        public static ComputeContext CreateContextFromType(ContextProperty[] properties, DeviceTypeFlags device_type, ContextNotifyDelegate pfn_notify, [InAttribute, OutAttribute] IntPtr user_data, [OutAttribute] out ErrorCode errcode_ret)
+        {
+            EnsureNullTerminated(ref properties);
+
+            unsafe
+            {
+                fixed (void* p = properties)
+                fixed (ErrorCode* perr = &errcode_ret)
+                {
+                    return CreateContextFromType((IntPtr*)p, device_type, pfn_notify, user_data, perr);
+                }
+            }
+        }
+
+        #endregion
     }
 
     public partial struct ComputeEvent

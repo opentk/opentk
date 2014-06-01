@@ -48,17 +48,17 @@ VectorAdd(__global const float * a,
             // Query available platforms
             int platform_count;
             var platforms = new ComputePlatform[4];
-            error = CL.GetPlatformIDs(platforms.Length, platforms, out platform_count);
+            error = ComputePlatform.GetPlatformIDs(platforms.Length, platforms, out platform_count);
             CheckErrors(error);
 
             for (int j = 0; j < platform_count; j++)
             {
                 var platform = platforms[j];
-                Console.WriteLine("Platform: {0} ({1})", j + 1, (IntPtr)platform);
+                Console.WriteLine("Platform: {0}", j + 1);
 
                 // Create OpenCL context
                 var context_notify = new ContextNotifyDelegate(ContextNotify);
-                var context = CL.CreateContextFromType(
+                var context = ComputeContext.CreateContextFromType(
                     new ContextProperty[]
                     {
                         new ContextProperty(platform)
@@ -72,7 +72,7 @@ VectorAdd(__global const float * a,
                 // Query available devices
                 int device_count;
                 ComputeDevice[] devices = new ComputeDevice[4];
-                error = CL.GetDeviceIDs(platform, DeviceTypeFlags.DeviceTypeAll,
+                error = ComputePlatform.GetDeviceIDs(platform, DeviceTypeFlags.DeviceTypeAll,
                     devices.Length, devices, out device_count);
                 CheckErrors(error);
 
@@ -90,7 +90,6 @@ VectorAdd(__global const float * a,
                     var type = (DeviceTypeFlags)BitConverter.ToInt64(data, 0);
 
                     Console.WriteLine(" Device: {0}", i + 1);
-                    Console.WriteLine("     id: {0}", (IntPtr)devices[i]);
                     Console.WriteLine("   name: {0}", name);
                     Console.WriteLine("version: {0}", version);
                     Console.WriteLine("   type: {0}", type);
