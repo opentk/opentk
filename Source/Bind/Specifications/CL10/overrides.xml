@@ -548,7 +548,10 @@
   </replace>
 
   <classes name="cl">
-    <add name="ComputeContextHandle">
+    <add name="ComputeContext">
+      <field name="Value" type="IntPtr" visibility="internal" />
+      <function name="CreateContext" static="true" />
+      <function name="CreateContextFromType" static="true" />
       <function name="CreateBuffer" />
       <function name="CreateCommandQueue" />
       <function name="CreateImage" />
@@ -572,21 +575,15 @@
       <function name="SVMFree" version="2.0" />
       <function name="CreateSamplerWithProperties" version="2.0" />
     </add>
+    <add name="ComputeDevice">
+      <field name="Value" type="IntPtr" visibility="internal" />
+    </add>
     <add name="ComputeEvent">
+      <field name="Value" type="IntPtr" visibility="internal" />
       <function name="SetUserEventStatus" />
     </add>
-    <add name="ComputeProgram">
-      <function name="BuildProgram" />
-      <function name="CreateKernel" />
-    </add>
-    <add name="CommandQueue">
-      <function name="EnqueueCopyBuffer" />
-      <function name="EnqueueReadBuffer" />
-      <function name="EnqueueNDRangeKernel" />
-      <function name="EnqueueWriteBuffer" />
-      <function name="Finish" />
-    </add>
     <add name="ComputeKernel">
+      <field name="Value" type="IntPtr" visibility="internal" />
       <function name="GetKernelInfo" />
       <function name="GetKernelWorkGroupInfo" />
       <function name="ReleaseKernel" />
@@ -594,7 +591,32 @@
       <function name="SetKernelArg" />
     </add>
     <add name="ComputeMemory">
+      <field name="Value" type="IntPtr" visibility="internal" />
       <function name="ReleaseMemObject" />
+    </add>
+    <add name="ComputePlatform">
+      <field name="Value" type="IntPtr" visibility="internal" />
+      <function name="GetPlatformIDs" static="true" />
+    </add>
+    <add name="ComputeProgram">
+      <field name="Value" type="IntPtr" visibility="internal" />
+      <function name="BuildProgram" />
+      <function name="CreateKernel" />
+    </add>
+    <add name="CommandQueue">
+      <field name="Value" type="IntPtr" visibility="internal" />
+      <function name="EnqueueCopyBuffer" />
+      <function name="EnqueueReadBuffer" />
+      <function name="EnqueueNDRangeKernel" />
+      <function name="EnqueueWriteBuffer" />
+      <function name="Finish" />
+    </add>
+    <add name="ComputeSampler">
+      <field name="Value" type="IntPtr" visibility="internal" />
+    </add>
+    <add name="ContextProperty">
+      <field name="Property" type="IntPtr" />
+      <field name="Value" type="IntPtr" />
     </add>
   </classes>
 

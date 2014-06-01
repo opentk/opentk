@@ -33,8 +33,8 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Compute
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct ComputeEvent
+    public struct ComputeEventHandle
     {
-        IntPtr value;
+        internal IntPtr Handle;
     }
 }
