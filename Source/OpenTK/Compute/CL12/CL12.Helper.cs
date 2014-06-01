@@ -63,7 +63,7 @@ namespace OpenTK.Compute.CL12
             }
         }
 
-        public static ComputeContextHandle CreateContext(ContextProperty[] properties, ComputeDevice[] devices, ContextNotifyDelegate pfn_notify, [InAttribute, OutAttribute] IntPtr user_data, [OutAttribute] out ErrorCode errcode_ret)
+        public static ComputeContext CreateContext(ContextProperty[] properties, ComputeDevice[] devices, ContextNotifyDelegate pfn_notify, [InAttribute, OutAttribute] IntPtr user_data, [OutAttribute] out ErrorCode errcode_ret)
         {
             EnsureNullTerminated(ref properties);
             int device_length = devices != null ? devices.Length : 0;
@@ -79,7 +79,7 @@ namespace OpenTK.Compute.CL12
             }
         }
 
-        public static ComputeContextHandle CreateContextFromType(ContextProperty[] properties, DeviceTypeFlags device_type, ContextNotifyDelegate pfn_notify, [InAttribute, OutAttribute] IntPtr user_data, [OutAttribute] out ErrorCode errcode_ret)
+        public static ComputeContext CreateContextFromType(ContextProperty[] properties, DeviceTypeFlags device_type, ContextNotifyDelegate pfn_notify, [InAttribute, OutAttribute] IntPtr user_data, [OutAttribute] out ErrorCode errcode_ret)
         {
             EnsureNullTerminated(ref properties);
 
@@ -182,4 +182,3 @@ namespace OpenTK.Compute.CL12
         }
     }
 }
-
