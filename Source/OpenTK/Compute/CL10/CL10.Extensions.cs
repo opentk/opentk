@@ -2079,6 +2079,42 @@ namespace OpenTK.Compute.CL10
     /// </summary>
     public static partial class ComputeDeviceExtensions
     {
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="platform"></param>
+        /// <param name="device_type"></param>
+        /// <param name="num_entries"></param>
+        /// <param name="devices"></param>
+        /// <param name="num_devices"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetDeviceIDs(this ComputePlatform platform, DeviceTypeFlags device_type, Int32 num_entries, ComputeDevice[] devices, [OutAttribute] out Int32 num_devices)
+        {
+            return CL.GetDeviceIDs(platform, device_type, num_entries, devices, out num_devices);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="platform"></param>
+        /// <param name="device_type"></param>
+        /// <param name="num_entries"></param>
+        /// <param name="devices"></param>
+        /// <param name="num_devices"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetDeviceIDs(this ComputePlatform platform, DeviceTypeFlags device_type, Int32 num_entries, ref ComputeDevice devices, [OutAttribute] out Int32 num_devices)
+        {
+            return CL.GetDeviceIDs(platform, device_type, num_entries, ref devices, out num_devices);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="platform"></param>
+        /// <param name="device_type"></param>
+        /// <param name="num_entries"></param>
+        /// <param name="devices"></param>
+        /// <param name="num_devices"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetDeviceIDs(this ComputePlatform platform, DeviceTypeFlags device_type, Int32 num_entries, ComputeDevice* devices, [OutAttribute] Int32* num_devices)
+        {
+            return CL.GetDeviceIDs(platform, device_type, num_entries, devices, num_devices);
+        }
+
     }
 
     /// <summary>
