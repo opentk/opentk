@@ -3363,6 +3363,225 @@ namespace OpenTK.Compute.CL20
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetProgramBuildInfo(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetProgramBuildInfo(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetProgramBuildInfo(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T4[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T4 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T4 param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, ref param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        /// <param name="device"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetProgramBuildInfo<T4>(this ComputeProgram program, ComputeDevice device, OpenTK.Compute.CL20.ProgramBuildInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T4 param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T4 : struct
+        
+        {
+            return CL.GetProgramBuildInfo(program, device, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
         public static ErrorCode ReleaseProgram(this ComputeProgram program)
         {
             return CL.ReleaseProgram(program);
