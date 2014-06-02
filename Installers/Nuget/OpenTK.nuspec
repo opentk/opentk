@@ -46,5 +46,7 @@
         <file src="lib/net20/OpenTK.dll" target="lib/net20" />
         <file src="lib/net20/OpenTK.xml" target="lib/net20" />
         <file src="lib/net20/OpenTK.dll.config" target="lib/net20" />
+        <file src="OpenTK.targets" target="build" />
+        <file src="OpenTK.Next.targets" target="build" />
     </files>
 </package>
