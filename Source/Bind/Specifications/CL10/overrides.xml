@@ -608,6 +608,7 @@
       <field name="Value" type="IntPtr" visibility="internal" />
       <function name="BuildProgram" />
       <function name="CreateKernel" />
+      <function name="GetProgramBuildInfo" />
       <function name="ReleaseProgram" />
       <function name="RetainProgram" />
     </add>
