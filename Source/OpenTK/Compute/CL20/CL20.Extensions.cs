@@ -3361,6 +3361,20 @@ namespace OpenTK.Compute.CL20
             return CL.CreateKernel(program, kernel_name, errcode_ret);
         }
 
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        public static ErrorCode ReleaseProgram(this ComputeProgram program)
+        {
+            return CL.ReleaseProgram(program);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="program"></param>
+        public static ErrorCode RetainProgram(this ComputeProgram program)
+        {
+            return CL.RetainProgram(program);
+        }
+
     }
 
     /// <summary>
