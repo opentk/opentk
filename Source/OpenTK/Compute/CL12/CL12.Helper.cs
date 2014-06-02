@@ -73,7 +73,7 @@ namespace OpenTK.Compute.CL12
     /// Defines the callback prototype for <see cref="OpenTK.Compute.ComputeProgram"/> functions
     /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void ProgramNotifyDelegate();
+    public delegate void ProgramNotifyDelegate(ComputeProgram program, IntPtr user_data);
 
     // <summary>
     // Defines the callback prototype for <see cref="OpenTK.Compute.ComputeProgram"/> functions
@@ -89,6 +89,54 @@ namespace OpenTK.Compute.CL12
     [StructLayout(LayoutKind.Sequential)]
     public struct ImageFormat
     {
+    }
+
+    public static partial class CommandQueueExtensions
+    {
+        public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel,
+            ref IntPtr global_work_offset, ref IntPtr global_work_size)
+        {
+            int length = 1;
+
+            unsafe
+            {
+                fixed (IntPtr* pgoffset = &global_work_offset)
+                fixed (IntPtr* pgsize = &global_work_size)
+                {
+                    return command_queue.EnqueueNDRangeKernel(kernel, length, pgoffset, pgsize, (IntPtr*)null,
+                        0, (ComputeEvent*)null, null);
+                }
+            }
+        }
+
+        public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel,
+            ref IntPtr global_work_offset, ref IntPtr global_work_size, ref IntPtr local_work_size)
+        {
+            int length = 1;
+
+            unsafe
+            {
+                fixed (IntPtr* pgoffset = &global_work_offset)
+                fixed (IntPtr* pgsize = &global_work_size)
+                fixed (IntPtr* ploffset = &local_work_size)
+                {
+                    return command_queue.EnqueueNDRangeKernel(kernel, length, pgoffset, pgsize, ploffset,
+                        0, (ComputeEvent*)null, null);
+                }
+            }
+        }
+
+        public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel,
+            IntPtr[] global_work_offset, IntPtr[] global_work_size, IntPtr[] local_work_size)
+        {
+            int length =
+                (global_work_offset == null || global_work_size == null || local_work_size == null) ?
+                0 : global_work_offset.Length;
+
+            ComputeEvent e;
+            return command_queue.EnqueueNDRangeKernel(kernel, length, global_work_offset, global_work_size, local_work_size,
+                0, (ComputeEvent[])null, out e);
+        }
     }
 
     public partial struct ComputeContext
@@ -147,6 +195,31 @@ namespace OpenTK.Compute.CL12
         }
 
         #endregion
+    }
+
+    public static partial class ComputeContextExtensions
+    {
+        public static ComputeProgram CreateProgramWithSource(this ComputeContext context, string source, out ErrorCode error)
+        {
+            if (source == null)
+            {
+                throw new ArgumentException();
+            }
+
+            IntPtr zero = IntPtr.Zero; // use null-terminated strings
+            return context.CreateProgramWithSource(1, ref source, ref zero, out error);
+        }
+
+        public static ComputeProgram CreateProgramWithSource(this ComputeContext context, string[] source, out ErrorCode error)
+        {
+            if (source == null || source.Length == 0)
+            {
+                throw new ArgumentException();
+            }
+
+            var lengths = new IntPtr[source.Length]; // use null-terminated strings
+            return context.CreateProgramWithSource(source.Length, source, lengths, out error);
+        }
     }
 
     public partial struct ComputeEvent
