@@ -608,6 +608,8 @@
       <field name="Value" type="IntPtr" visibility="internal" />
       <function name="BuildProgram" />
       <function name="CreateKernel" />
+      <function name="ReleaseProgram" />
+      <function name="RetainProgram" />
     </add>
     <add name="CommandQueue">
       <field name="Value" type="IntPtr" visibility="internal" />
