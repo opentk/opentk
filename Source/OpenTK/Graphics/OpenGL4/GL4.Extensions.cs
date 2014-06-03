@@ -28,5 +28,6 @@ namespace OpenTK.Graphics.OpenGL4
     using System;
     using System.Text;
     using System.Runtime.InteropServices;
+    using OpenTK.Extensions;
 
 }

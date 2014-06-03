@@ -2326,6 +2326,33 @@ namespace OpenTK.Compute.CL12
             return hash;
         }
 
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="num_events"></param>
+        /// <param name="event_list"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode WaitForEvents(Int32 num_events, ComputeEvent[] event_list)
+        {
+            return CL.WaitForEvents(num_events, event_list);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="num_events"></param>
+        /// <param name="event_list"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode WaitForEvents(Int32 num_events, ref ComputeEvent event_list)
+        {
+            return CL.WaitForEvents(num_events, ref event_list);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="num_events"></param>
+        /// <param name="event_list"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode WaitForEvents(Int32 num_events, ComputeEvent* event_list)
+        {
+            return CL.WaitForEvents(num_events, event_list);
+        }
+
         #endregion
     }
 
@@ -2334,6 +2361,438 @@ namespace OpenTK.Compute.CL12
     /// </summary>
     public static partial class ComputeEventExtensions
     {
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventInfo(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventInfo(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetEventInfo(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, ref param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetEventInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.EventInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventInfo(@event, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventProfilingInfo(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventProfilingInfo(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetEventProfilingInfo(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, ref param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetEventProfilingInfo<T3>(this ComputeEvent @event, OpenTK.Compute.CL12.ProfilingInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetEventProfilingInfo(@event, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        public static ErrorCode ReleaseEvent(this ComputeEvent @event)
+        {
+            return CL.ReleaseEvent(@event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="event"></param>
+        public static Int32 RetainEvent(this ComputeEvent @event)
+        {
+            return CL.RetainEvent(@event);
+        }
+
+        /// <summary>[requires: v1.2 or ]</summary>
+        /// <param name="event"></param>
+        /// <param name="command_exec_callback_type"></param>
+        /// <param name="notify"></param>
+        /// <param name="user_data"></param>
+        public static ErrorCode SetEventCallback(this ComputeEvent @event, Int32 command_exec_callback_type, EventNotifyDelegate notify, IntPtr user_data)
+        {
+            return CL.SetEventCallback(@event, command_exec_callback_type, notify, user_data);
+        }
+
         /// <summary></summary>
         /// <param name="event"></param>
         /// <param name="execution_status"></param>
