@@ -586,7 +586,13 @@
     </add>
     <add name="ComputeEvent">
       <field name="Value" type="IntPtr" visibility="internal" />
+      <function name="WaitForEvents" static="true" />
+      <function name="GetEventInfo" />
+      <function name="GetEventProfilingInfo" />
+      <function name="SetEventCallback" />
       <function name="SetUserEventStatus" />
+      <function name="ReleaseEvent" />
+      <function name="RetainEvent" />
     </add>
     <add name="ComputeKernel">
       <field name="Value" type="IntPtr" visibility="internal" />
