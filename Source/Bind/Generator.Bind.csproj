@@ -70,7 +70,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>none</DebugType>
-    <Commandlineparameters>-mode:es11</Commandlineparameters>
+    <Commandlineparameters>-mode:all</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
     <BaseAddress>285212672</BaseAddress>
