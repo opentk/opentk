@@ -94,7 +94,7 @@ namespace OpenTK.Compute.CL12
     public static partial class CommandQueueExtensions
     {
         public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel,
-            ref IntPtr global_work_offset, ref IntPtr global_work_size)
+            ref IntPtr global_work_offset, ref IntPtr global_work_size, out ComputeEvent wait_event)
         {
             int length = 1;
 
@@ -102,15 +102,17 @@ namespace OpenTK.Compute.CL12
             {
                 fixed (IntPtr* pgoffset = &global_work_offset)
                 fixed (IntPtr* pgsize = &global_work_size)
+                fixed (ComputeEvent* pwait = &wait_event)
                 {
                     return command_queue.EnqueueNDRangeKernel(kernel, length, pgoffset, pgsize, (IntPtr*)null,
-                        0, (ComputeEvent*)null, null);
+                        0, (ComputeEvent*)null, pwait);
                 }
             }
         }
 
         public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel,
-            ref IntPtr global_work_offset, ref IntPtr global_work_size, ref IntPtr local_work_size)
+            ref IntPtr global_work_offset, ref IntPtr global_work_size, ref IntPtr local_work_size,
+            out ComputeEvent wait_event)
         {
             int length = 1;
 
@@ -119,23 +121,24 @@ namespace OpenTK.Compute.CL12
                 fixed (IntPtr* pgoffset = &global_work_offset)
                 fixed (IntPtr* pgsize = &global_work_size)
                 fixed (IntPtr* ploffset = &local_work_size)
+                fixed (ComputeEvent* pwait = &wait_event)
                 {
                     return command_queue.EnqueueNDRangeKernel(kernel, length, pgoffset, pgsize, ploffset,
-                        0, (ComputeEvent*)null, null);
+                        0, (ComputeEvent*)null, pwait);
                 }
             }
         }
 
         public static ErrorCode EnqueueNDRangeKernel(this CommandQueue command_queue, ComputeKernel kernel,
-            IntPtr[] global_work_offset, IntPtr[] global_work_size, IntPtr[] local_work_size)
+            IntPtr[] global_work_offset, IntPtr[] global_work_size, IntPtr[] local_work_size,
+            out ComputeEvent wait_event)
         {
             int length =
                 (global_work_offset == null || global_work_size == null || local_work_size == null) ?
                 0 : global_work_offset.Length;
 
-            ComputeEvent e;
             return command_queue.EnqueueNDRangeKernel(kernel, length, global_work_offset, global_work_size, local_work_size,
-                0, (ComputeEvent[])null, out e);
+                0, (ComputeEvent[])null, out wait_event);
         }
     }
 
