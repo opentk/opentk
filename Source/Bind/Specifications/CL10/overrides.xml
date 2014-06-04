@@ -620,6 +620,7 @@
     </add>
     <add name="CommandQueue">
       <field name="Value" type="IntPtr" visibility="internal" />
+      <function name="EnqueueBarrier" />
       <function name="EnqueueCopyBuffer" />
       <function name="EnqueueReadBuffer" />
       <function name="EnqueueNDRangeKernel" />
