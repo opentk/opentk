@@ -382,6 +382,7 @@
     <function name="GetEventProfilingInfo"><returns>ErrorCodes</returns></function>
     <function name="Flush"><returns>ErrorCodes</returns></function>
     <function name="Finish"><returns>ErrorCodes</returns></function>
+    <function name="EnqueueBarrier"><returns>ErrorCodes</returns></function>
     <function name="EnqueueReadBuffer">
       <param name="event">
         <flow>out</flow>
