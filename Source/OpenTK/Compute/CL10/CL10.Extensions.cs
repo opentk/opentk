@@ -122,6 +122,13 @@ namespace OpenTK.Compute.CL10
     {
         /// <summary>[requires: v1.0]</summary>
         /// <param name="command_queue"></param>
+        public static Int32 EnqueueBarrier(this CommandQueue command_queue)
+        {
+            return CL.EnqueueBarrier(command_queue);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
         /// <param name="src_buffer"></param>
         /// <param name="dst_buffer"></param>
         /// <param name="src_offset"></param>
