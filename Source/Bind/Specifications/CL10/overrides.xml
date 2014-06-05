@@ -101,9 +101,16 @@
       <param type="void*" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
+    <function name="SetEventCallback">
+      <param type="cl_event" name="event" flow="in" />
+      <param type="CommandExecutionStatus" name="command_exec_callback_type" flow="in" />
+      <param type="EventNotifyDelegate" name="notify" flow="in" />
+      <param type="IntPtr" name="user_data" flow="in" />
+      <returns type="ErrorCodes" />
+    </function>
     <function name="SetUserEventStatus">
       <param type="cl_event" name="event" flow="in" />
-      <param type="cl_int" name="execution_status" flow="in" />
+      <param type="CommandExecutionStatus" name="execution_status" flow="in" />
       <returns type="cl_int" />
     </function>
   </add>
@@ -117,7 +124,6 @@
       <token name="DEPTH" value="0x10BD" />
       <token name="DEPTH_STENCIL" value="0x10BE" />
     </enum>
-
     <function name="LinkProgram" version="1.2">
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
@@ -126,13 +132,6 @@
       <param type="cl_uint" name="num_input_programs" flow="in" />
       <param type="cl_program*" name="input_programs" flow="in" />
       <param type="ProgramNotifyDelegate" name="notify" flow="in" />
-      <param type="IntPtr" name="user_data" flow="in" />
-      <returns type="ErrorCodes" />
-    </function>
-    <function name="SetEventCallback" version="1.2">
-      <param type="cl_event" name="event" flow="in" />
-      <param type="cl_int" name="command_exec_callback_type" flow="in" />
-      <param type="EventNotifyDelegate" name="notify" flow="in" />
       <param type="IntPtr" name="user_data" flow="in" />
       <returns type="ErrorCodes" />
     </function>
@@ -204,6 +203,9 @@
     <enum name="ErrorCodes"><name>ErrorCode</name></enum>
     <enum name="DeviceTypeFlags">
       <type>long</type>
+    </enum>
+    <enum name="CommandExecutionStatus">
+      <name>CommandExecutionStatusFlags</name>
     </enum>
     <enum name="CommandQueuePropertiesFlags">
       <name>CommandQueueFlags</name>
@@ -378,7 +380,6 @@
     <function name="GetEventInfo"><returns>ErrorCodes</returns></function>
     <function name="ReleaseEvent"><returns>ErrorCodes</returns></function>
     <function name="SetUserEventStatus"><returns>ErrorCodes</returns></function>
-    <function name="SetEventCallback"><returns>ErrorCodes</returns></function>
     <function name="GetEventProfilingInfo"><returns>ErrorCodes</returns></function>
     <function name="Flush"><returns>ErrorCodes</returns></function>
     <function name="Finish"><returns>ErrorCodes</returns></function>
