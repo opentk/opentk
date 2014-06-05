@@ -58,10 +58,20 @@ namespace OpenTK.Compute.CL12
     public delegate void ContextNotifyDelegate([MarshalAs(UnmanagedType.LPStr)] string errinfo, IntPtr private_info, IntPtr cb, IntPtr user_data);
 
     /// <summary>
-    /// Defines the callback prototype for <see cref="OpenTK.Compute.ComputeEvent"/> functions
+    /// Defines the callback prototype for <see cref="ComputeEvent"/> methods.
     /// </summary>
+    /// <param name="e">
+    /// The <see cref="ComputeEvent"/> that generated this callback.
+    /// </param>
+    /// <param name="status">
+    /// A bitwise combination of <see cref="CommandExecutionStatusFlags"/>
+    /// indicating the cause of this callback.
+    /// </param>
+    /// <param name="user_data">
+    /// A user-defined data pointer.
+    /// </param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void EventNotifyDelegate();
+    public delegate void EventNotifyDelegate(ComputeEvent e, CommandExecutionStatusFlags status, IntPtr user_data);
 
     /// <summary>
     /// Defines the callback prototype for <see cref="OpenTK.Compute.ComputeMemory"/> functions
