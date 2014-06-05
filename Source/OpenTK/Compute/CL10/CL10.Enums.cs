@@ -1192,7 +1192,7 @@ namespace OpenTK.Compute.CL10
     /// <summary>
     /// Not used directly.
     /// </summary>
-    public enum CommandExecutionStatus : int
+    public enum CommandExecutionStatusFlags : int
     {
         /// <summary>
         /// Original was CL_COMPLETE = 0x0

@@ -2790,12 +2790,12 @@ namespace OpenTK.Compute.CL12
             return CL.RetainEvent(@event);
         }
 
-        /// <summary>[requires: v1.2 or ]</summary>
+        /// <summary></summary>
         /// <param name="event"></param>
         /// <param name="command_exec_callback_type"></param>
         /// <param name="notify"></param>
         /// <param name="user_data"></param>
-        public static ErrorCode SetEventCallback(this ComputeEvent @event, Int32 command_exec_callback_type, EventNotifyDelegate notify, IntPtr user_data)
+        public static OpenTK.Compute.CL12.ErrorCode SetEventCallback(this ComputeEvent @event, OpenTK.Compute.CL12.CommandExecutionStatusFlags command_exec_callback_type, EventNotifyDelegate notify, IntPtr user_data)
         {
             return CL.SetEventCallback(@event, command_exec_callback_type, notify, user_data);
         }
@@ -2803,7 +2803,7 @@ namespace OpenTK.Compute.CL12
         /// <summary></summary>
         /// <param name="event"></param>
         /// <param name="execution_status"></param>
-        public static ErrorCode SetUserEventStatus(this ComputeEvent @event, Int32 execution_status)
+        public static ErrorCode SetUserEventStatus(this ComputeEvent @event, OpenTK.Compute.CL12.CommandExecutionStatusFlags execution_status)
         {
             return CL.SetUserEventStatus(@event, execution_status);
         }

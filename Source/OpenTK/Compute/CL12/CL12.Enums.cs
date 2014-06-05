@@ -1289,9 +1289,9 @@ namespace OpenTK.Compute.CL12
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.SetEventCallback, GL.SetUserEventStatus
     /// </summary>
-    public enum CommandExecutionStatus : int
+    public enum CommandExecutionStatusFlags : int
     {
         /// <summary>
         /// Original was CL_COMPLETE = 0x0
