@@ -37208,13 +37208,13 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glGetVertexAttribLui64vARB(UInt32 index, System.Int32 pname, [OutAttribute] UInt64* @params);
         [Slot(333)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsImageHandleResidentARB(UInt64 handle);
+        static extern byte glIsImageHandleResidentARB(UInt64 handle);
         [Slot(334)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsNamedStringARB(Int32 namelen, IntPtr name);
+        static extern byte glIsNamedStringARB(Int32 namelen, IntPtr name);
         [Slot(343)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsTextureHandleResidentARB(UInt64 handle);
+        static extern byte glIsTextureHandleResidentARB(UInt64 handle);
         [Slot(349)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glMakeImageHandleNonResidentARB(UInt64 handle);
@@ -38120,46 +38120,46 @@ namespace OpenTK.Graphics.OpenGL4
         static extern void glInvalidateTexSubImage(UInt32 texture, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth);
         [Slot(329)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsBuffer(UInt32 buffer);
+        static extern byte glIsBuffer(UInt32 buffer);
         [Slot(330)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsEnabled(System.Int32 cap);
+        static extern byte glIsEnabled(System.Int32 cap);
         [Slot(331)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsEnabledi(System.Int32 target, UInt32 index);
+        static extern byte glIsEnabledi(System.Int32 target, UInt32 index);
         [Slot(332)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsFramebuffer(UInt32 framebuffer);
+        static extern byte glIsFramebuffer(UInt32 framebuffer);
         [Slot(335)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsProgram(UInt32 program);
+        static extern byte glIsProgram(UInt32 program);
         [Slot(336)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsProgramPipeline(UInt32 pipeline);
+        static extern byte glIsProgramPipeline(UInt32 pipeline);
         [Slot(337)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsQuery(UInt32 id);
+        static extern byte glIsQuery(UInt32 id);
         [Slot(338)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsRenderbuffer(UInt32 renderbuffer);
+        static extern byte glIsRenderbuffer(UInt32 renderbuffer);
         [Slot(339)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsSampler(UInt32 sampler);
+        static extern byte glIsSampler(UInt32 sampler);
         [Slot(340)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsShader(UInt32 shader);
+        static extern byte glIsShader(UInt32 shader);
         [Slot(341)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsSync(IntPtr sync);
+        static extern byte glIsSync(IntPtr sync);
         [Slot(342)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsTexture(UInt32 texture);
+        static extern byte glIsTexture(UInt32 texture);
         [Slot(344)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsTransformFeedback(UInt32 id);
+        static extern byte glIsTransformFeedback(UInt32 id);
         [Slot(345)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsVertexArray(UInt32 array);
+        static extern byte glIsVertexArray(UInt32 array);
         [Slot(346)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLineWidth(Single width);
@@ -38789,7 +38789,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glUniformSubroutinesuiv(System.Int32 shadertype, Int32 count, UInt32* indices);
         [Slot(573)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glUnmapBuffer(System.Int32 target);
+        static extern byte glUnmapBuffer(System.Int32 target);
         [Slot(574)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUseProgram(UInt32 program);
