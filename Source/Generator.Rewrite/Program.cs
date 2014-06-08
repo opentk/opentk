@@ -495,6 +495,14 @@ namespace OpenTK.Rewrite
                 {
                     // Nothing to do
                 }
+                else if (wrapper.ReturnType.Name == "Boolean" && native.ReturnType.Name == "Byte")
+                {
+                    // Nothing to do
+                    // It appears that a byte with 1 = true (GL_TRUE) and 0 = false (GL_FALSE)
+                    // can be reinterpreted as a bool without a problem.
+                    // Todo: maybe we should return (value == 0 ? false : true) just to be
+                    // on the safe side?
+                }
                 else
                 {
                     Console.Error.WriteLine("Return wrapper for '{1}' not implemented yet ({0})", native.Name, wrapper.ReturnType.Name);
