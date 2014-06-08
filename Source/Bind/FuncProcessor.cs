@@ -588,6 +588,12 @@ namespace Bind
                     d.ReturnType.QualifiedType = "int";
             }
 
+            if (d.ReturnType.CurrentType.ToLower().Contains("bool"))
+            {
+                d.ReturnType.QualifiedType = "byte";
+                d.ReturnType.WrapperType |= WrapperTypes.BoolParameter;
+            }
+
             d.ReturnType.CurrentType = GetCLSCompliantType(d.ReturnType);
         }
 
@@ -1211,6 +1217,11 @@ namespace Bind
             {
                 // Nothing else we can do, using generics will break the runtime
                 func.ReturnType.QualifiedType = "IntPtr";
+            }
+
+            if ((func.ReturnType.WrapperType & WrapperTypes.BoolParameter) != 0)
+            {
+                func.ReturnType.QualifiedType = "bool";
             }
         }
 
