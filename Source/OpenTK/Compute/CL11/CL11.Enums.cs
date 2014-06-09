@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenTK.Compute.CL20
+namespace OpenTK.Compute.CL11
 {
     /// <summary>
     /// Used in GL.CreateSampler
@@ -104,14 +104,6 @@ namespace OpenTK.Compute.CL20
         /// </summary>
         QueueProfilingEnable = ((int)(1 << 1)),
         /// <summary>
-        /// Original was CL_MEM_SVM_FINE_GRAIN_BUFFER = (1 &lt;&lt; 10)
-        /// </summary>
-        MemSvmFineGrainBuffer = ((int)(1 << 10)),
-        /// <summary>
-        /// Original was CL_MEM_SVM_ATOMICS = (1 &lt;&lt; 11)
-        /// </summary>
-        MemSvmAtomics = ((int)(1 << 11)),
-        /// <summary>
         /// Original was CL_DEVICE_TYPE_GPU = (1 &lt;&lt; 2)
         /// </summary>
         DeviceTypeGpu = ((int)(1 << 2)),
@@ -152,18 +144,6 @@ namespace OpenTK.Compute.CL20
         /// </summary>
         MemCopyHostPtr = ((int)(1 << 5)),
         /// <summary>
-        /// Original was CL_MEM_HOST_WRITE_ONLY = (1 &lt;&lt; 7)
-        /// </summary>
-        MemHostWriteOnly = ((int)(1 << 7)),
-        /// <summary>
-        /// Original was CL_MEM_HOST_READ_ONLY = (1 &lt;&lt; 8)
-        /// </summary>
-        MemHostReadOnly = ((int)(1 << 8)),
-        /// <summary>
-        /// Original was CL_MEM_HOST_NO_ACCESS = (1 &lt;&lt; 9)
-        /// </summary>
-        MemHostNoAccess = ((int)(1 << 9)),
-        /// <summary>
         /// Original was CL_BUILD_SUCCESS = 0
         /// </summary>
         BuildSuccess = ((int)0),
@@ -184,29 +164,9 @@ namespace OpenTK.Compute.CL20
         /// </summary>
         Complete = ((int)0x0),
         /// <summary>
-        /// Original was CL_DEVICE_PARTITION_BY_COUNTS_LIST_END = 0x0
-        /// </summary>
-        DevicePartitionByCountsListEnd = ((int)0x0),
-        /// <summary>
         /// Original was CL_NONE = 0x0
         /// </summary>
         None = ((int)0x0),
-        /// <summary>
-        /// Original was CL_MIGRATE_MEM_OBJECT_HOST = 0x0001
-        /// </summary>
-        MigrateMemObjectHost = ((int)0x0001),
-        /// <summary>
-        /// Original was CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED = 0x0002
-        /// </summary>
-        MigrateMemObjectContentUndefined = ((int)0x0002),
-        /// <summary>
-        /// Original was CL_QUEUE_ON_DEVICE = 0x0004
-        /// </summary>
-        QueueOnDevice = ((int)0x0004),
-        /// <summary>
-        /// Original was CL_QUEUE_ON_DEVICE_DEFAULT = 0x0008
-        /// </summary>
-        QueueOnDeviceDefault = ((int)0x0008),
         /// <summary>
         /// Original was CL_PLATFORM_PROFILE = 0x0900
         /// </summary>
@@ -496,18 +456,6 @@ namespace OpenTK.Compute.CL20
         /// </summary>
         ContextPlatform = ((int)0x1084),
         /// <summary>
-        /// Original was CL_DEVICE_PARTITION_EQUALLY = 0x1086
-        /// </summary>
-        DevicePartitionEqually = ((int)0x1086),
-        /// <summary>
-        /// Original was CL_DEVICE_PARTITION_BY_COUNTS = 0x1087
-        /// </summary>
-        DevicePartitionByCounts = ((int)0x1087),
-        /// <summary>
-        /// Original was CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN = 0x1088
-        /// </summary>
-        DevicePartitionByAffinityDomain = ((int)0x1088),
-        /// <summary>
         /// Original was CL_QUEUE_CONTEXT = 0x1090
         /// </summary>
         QueueContext = ((int)0x1090),
@@ -523,10 +471,6 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_QUEUE_PROPERTIES = 0x1093
         /// </summary>
         QueueProperties = ((int)0x1093),
-        /// <summary>
-        /// Original was CL_QUEUE_SIZE = 0x1094
-        /// </summary>
-        QueueSize = ((int)0x1094),
         /// <summary>
         /// Original was CL_R = 0x10B0
         /// </summary>
@@ -579,14 +523,6 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_RGBx = 0x10BC
         /// </summary>
         RGBx = ((int)0x10BC),
-        /// <summary>
-        /// Original was CL_DEPTH = 0x10BD
-        /// </summary>
-        Depth = ((int)0x10BD),
-        /// <summary>
-        /// Original was CL_DEPTH_STENCIL = 0x10BE
-        /// </summary>
-        DepthStencil = ((int)0x10BE),
         /// <summary>
         /// Original was CL_SNORM_INT8 = 0x10D0
         /// </summary>
@@ -716,14 +652,6 @@ namespace OpenTK.Compute.CL20
         /// </summary>
         ImageDepth = ((int)0x1116),
         /// <summary>
-        /// Original was CL_PIPE_PACKET_SIZE = 0x1120
-        /// </summary>
-        PipePacketSize = ((int)0x1120),
-        /// <summary>
-        /// Original was CL_PIPE_MAX_PACKETS = 0x1121
-        /// </summary>
-        PipeMaxPackets = ((int)0x1121),
-        /// <summary>
         /// Original was CL_ADDRESS_NONE = 0x1130
         /// </summary>
         AddressNone = ((int)0x1130),
@@ -767,18 +695,6 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_SAMPLER_FILTER_MODE = 0x1154
         /// </summary>
         SamplerFilterMode = ((int)0x1154),
-        /// <summary>
-        /// Original was CL_SAMPLER_MIP_FILTER_MODE = 0x1155
-        /// </summary>
-        SamplerMipFilterMode = ((int)0x1155),
-        /// <summary>
-        /// Original was CL_SAMPLER_LOD_MIN = 0x1156
-        /// </summary>
-        SamplerLodMin = ((int)0x1156),
-        /// <summary>
-        /// Original was CL_SAMPLER_LOD_MAX = 0x1157
-        /// </summary>
-        SamplerLodMax = ((int)0x1157),
         /// <summary>
         /// Original was CL_PROGRAM_REFERENCE_COUNT = 0x1160
         /// </summary>
@@ -840,26 +756,6 @@ namespace OpenTK.Compute.CL20
         /// </summary>
         KernelProgram = ((int)0x1194),
         /// <summary>
-        /// Original was CL_KERNEL_ARG_ADDRESS_QUALIFIER = 0x1196
-        /// </summary>
-        KernelArgAddressQualifier = ((int)0x1196),
-        /// <summary>
-        /// Original was CL_KERNEL_ARG_ACCESS_QUALIFIER = 0x1197
-        /// </summary>
-        KernelArgAccessQualifier = ((int)0x1197),
-        /// <summary>
-        /// Original was CL_KERNEL_ARG_TYPE_NAME = 0x1198
-        /// </summary>
-        KernelArgTypeName = ((int)0x1198),
-        /// <summary>
-        /// Original was CL_KERNEL_ARG_TYPE_QUALIFIER = 0x1199
-        /// </summary>
-        KernelArgTypeQualifier = ((int)0x1199),
-        /// <summary>
-        /// Original was CL_KERNEL_ARG_NAME = 0x119A
-        /// </summary>
-        KernelArgName = ((int)0x119A),
-        /// <summary>
         /// Original was CL_KERNEL_WORK_GROUP_SIZE = 0x11B0
         /// </summary>
         KernelWorkGroupSize = ((int)0x11B0),
@@ -875,14 +771,6 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE = 0x11B3
         /// </summary>
         KernelPreferredWorkGroupSizeMultiple = ((int)0x11B3),
-        /// <summary>
-        /// Original was CL_KERNEL_EXEC_INFO_SVM_PTRS = 0x11B6
-        /// </summary>
-        KernelExecInfoSvmPtrs = ((int)0x11B6),
-        /// <summary>
-        /// Original was CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM = 0x11B7
-        /// </summary>
-        KernelExecInfoSvmFineGrainSystem = ((int)0x11B7),
         /// <summary>
         /// Original was CL_EVENT_COMMAND_QUEUE = 0x11D0
         /// </summary>
@@ -1315,14 +1203,6 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_RGBx = 0x10BC
         /// </summary>
         RGBx = ((int)0x10BC),
-        /// <summary>
-        /// Original was CL_DEPTH = 0x10BD
-        /// </summary>
-        Depth = ((int)0x10BD),
-        /// <summary>
-        /// Original was CL_DEPTH_STENCIL = 0x10BE
-        /// </summary>
-        DepthStencil = ((int)0x10BE),
     }
 
     /// <summary>
@@ -1416,7 +1296,7 @@ namespace OpenTK.Compute.CL20
     }
 
     /// <summary>
-    /// Used in GL.CreateCommandQueue, GL.CreateCommandQueueWithProperties
+    /// Used in GL.CreateCommandQueue
     /// </summary>
     public enum CommandQueueFlags : long
     {
@@ -1432,14 +1312,6 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_DEFAULT = 0
         /// </summary>
         Default = ((int)0),
-        /// <summary>
-        /// Original was CL_QUEUE_ON_DEVICE = 0x0004
-        /// </summary>
-        QueueOnDevice = ((int)0x0004),
-        /// <summary>
-        /// Original was CL_QUEUE_ON_DEVICE_DEFAULT = 0x0008
-        /// </summary>
-        QueueOnDeviceDefault = ((int)0x0008),
     }
 
     /// <summary>
@@ -1463,10 +1335,6 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_QUEUE_PROPERTIES = 0x1093
         /// </summary>
         QueueProperties = ((int)0x1093),
-        /// <summary>
-        /// Original was CL_QUEUE_SIZE = 0x1094
-        /// </summary>
-        QueueSize = ((int)0x1094),
     }
 
     /// <summary>
@@ -1902,29 +1770,6 @@ namespace OpenTK.Compute.CL20
     }
 
     /// <summary>
-    /// Used in GL.CreateSubDevices
-    /// </summary>
-    public enum DevicePartitionProperty : int
-    {
-        /// <summary>
-        /// Original was CL_DEVICE_PARTITION_BY_COUNTS_LIST_END = 0x0
-        /// </summary>
-        DevicePartitionByCountsListEnd = ((int)0x0),
-        /// <summary>
-        /// Original was CL_DEVICE_PARTITION_EQUALLY = 0x1086
-        /// </summary>
-        DevicePartitionEqually = ((int)0x1086),
-        /// <summary>
-        /// Original was CL_DEVICE_PARTITION_BY_COUNTS = 0x1087
-        /// </summary>
-        DevicePartitionByCounts = ((int)0x1087),
-        /// <summary>
-        /// Original was CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN = 0x1088
-        /// </summary>
-        DevicePartitionByAffinityDomain = ((int)0x1088),
-    }
-
-    /// <summary>
     /// Used in GL.CreateContextFromType, GL.GetDeviceIDs
     /// </summary>
     public enum DeviceTypeFlags : long
@@ -1952,7 +1797,7 @@ namespace OpenTK.Compute.CL20
     }
 
     /// <summary>
-    /// Used in GL.CreateBuffer, GL.CreateCommandQueue and 10 other functions
+    /// Used in GL.CreateBuffer, GL.CreateCommandQueue and 5 other functions
     /// </summary>
     public enum ErrorCode : int
     {
@@ -2216,48 +2061,6 @@ namespace OpenTK.Compute.CL20
     }
 
     /// <summary>
-    /// Used in GL.GetKernelArgInfo
-    /// </summary>
-    public enum KernelArgInfo : int
-    {
-        /// <summary>
-        /// Original was CL_KERNEL_ARG_ADDRESS_QUALIFIER = 0x1196
-        /// </summary>
-        KernelArgAddressQualifier = ((int)0x1196),
-        /// <summary>
-        /// Original was CL_KERNEL_ARG_ACCESS_QUALIFIER = 0x1197
-        /// </summary>
-        KernelArgAccessQualifier = ((int)0x1197),
-        /// <summary>
-        /// Original was CL_KERNEL_ARG_TYPE_NAME = 0x1198
-        /// </summary>
-        KernelArgTypeName = ((int)0x1198),
-        /// <summary>
-        /// Original was CL_KERNEL_ARG_TYPE_QUALIFIER = 0x1199
-        /// </summary>
-        KernelArgTypeQualifier = ((int)0x1199),
-        /// <summary>
-        /// Original was CL_KERNEL_ARG_NAME = 0x119A
-        /// </summary>
-        KernelArgName = ((int)0x119A),
-    }
-
-    /// <summary>
-    /// Used in GL.SetKernelExecInfo
-    /// </summary>
-    public enum KernelExecInfo : int
-    {
-        /// <summary>
-        /// Original was CL_KERNEL_EXEC_INFO_SVM_PTRS = 0x11B6
-        /// </summary>
-        KernelExecInfoSvmPtrs = ((int)0x11B6),
-        /// <summary>
-        /// Original was CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM = 0x11B7
-        /// </summary>
-        KernelExecInfoSvmFineGrainSystem = ((int)0x11B7),
-    }
-
-    /// <summary>
     /// Used in GL.GetKernelInfo
     /// </summary>
     public enum KernelInfo : int
@@ -2308,7 +2111,7 @@ namespace OpenTK.Compute.CL20
     }
 
     /// <summary>
-    /// Used in GL.EnqueueMapBuffer, GL.EnqueueMapImage and 1 other function
+    /// Used in GL.EnqueueMapBuffer, GL.EnqueueMapImage
     /// </summary>
     public enum MapFlags : long
     {
@@ -2323,7 +2126,7 @@ namespace OpenTK.Compute.CL20
     }
 
     /// <summary>
-    /// Used in GL.CreateBuffer, GL.CreateImage2D and 5 other functions
+    /// Used in GL.CreateBuffer, GL.CreateImage2D and 3 other functions
     /// </summary>
     public enum MemFlags : long
     {
@@ -2389,21 +2192,6 @@ namespace OpenTK.Compute.CL20
     }
 
     /// <summary>
-    /// Used in GL.EnqueueMigrateMemObjects
-    /// </summary>
-    public enum MemMigrationFlags : int
-    {
-        /// <summary>
-        /// Original was CL_MIGRATE_MEM_OBJECT_HOST = 0x0001
-        /// </summary>
-        MigrateMemObjectHost = ((int)0x0001),
-        /// <summary>
-        /// Original was CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED = 0x0002
-        /// </summary>
-        MigrateMemObjectContentUndefined = ((int)0x0002),
-    }
-
-    /// <summary>
     /// Used in GL.GetSupportedImageFormats
     /// </summary>
     public enum MemObjectType : int
@@ -2420,21 +2208,6 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_MEM_OBJECT_IMAGE3D = 0x10F2
         /// </summary>
         MemObjectImage3D = ((int)0x10F2),
-    }
-
-    /// <summary>
-    /// Used in GL.GetPipeInfo
-    /// </summary>
-    public enum PipeInfo : int
-    {
-        /// <summary>
-        /// Original was CL_PIPE_PACKET_SIZE = 0x1120
-        /// </summary>
-        PipePacketSize = ((int)0x1120),
-        /// <summary>
-        /// Original was CL_PIPE_MAX_PACKETS = 0x1121
-        /// </summary>
-        PipeMaxPackets = ((int)0x1121),
     }
 
     /// <summary>
@@ -2566,100 +2339,6 @@ namespace OpenTK.Compute.CL20
         /// Original was CL_SAMPLER_FILTER_MODE = 0x1154
         /// </summary>
         SamplerFilterMode = ((int)0x1154),
-        /// <summary>
-        /// Original was CL_SAMPLER_MIP_FILTER_MODE = 0x1155
-        /// </summary>
-        SamplerMipFilterMode = ((int)0x1155),
-        /// <summary>
-        /// Original was CL_SAMPLER_LOD_MIN = 0x1156
-        /// </summary>
-        SamplerLodMin = ((int)0x1156),
-        /// <summary>
-        /// Original was CL_SAMPLER_LOD_MAX = 0x1157
-        /// </summary>
-        SamplerLodMax = ((int)0x1157),
-    }
-
-    /// <summary>
-    /// Used in GL.CreateSamplerWithProperties
-    /// </summary>
-    public enum SamplerProperties : int
-    {
-        /// <summary>
-        /// Original was CL_SAMPLER_NORMALIZED_COORDS = 0x1152
-        /// </summary>
-        SamplerNormalizedCoords = ((int)0x1152),
-        /// <summary>
-        /// Original was CL_SAMPLER_ADDRESSING_MODE = 0x1153
-        /// </summary>
-        SamplerAddressingMode = ((int)0x1153),
-        /// <summary>
-        /// Original was CL_SAMPLER_FILTER_MODE = 0x1154
-        /// </summary>
-        SamplerFilterMode = ((int)0x1154),
-        /// <summary>
-        /// Original was CL_SAMPLER_MIP_FILTER_MODE = 0x1155
-        /// </summary>
-        SamplerMipFilterMode = ((int)0x1155),
-        /// <summary>
-        /// Original was CL_SAMPLER_LOD_MIN = 0x1156
-        /// </summary>
-        SamplerLodMin = ((int)0x1156),
-        /// <summary>
-        /// Original was CL_SAMPLER_LOD_MAX = 0x1157
-        /// </summary>
-        SamplerLodMax = ((int)0x1157),
-    }
-
-    /// <summary>
-    /// Used in GL.SVMAlloc
-    /// </summary>
-    public enum SvmMemFlags : long
-    {
-        /// <summary>
-        /// Original was CL_MEM_READ_WRITE = (1 &lt;&lt; 0)
-        /// </summary>
-        MemReadWrite = ((int)(1 << 0)),
-        /// <summary>
-        /// Original was CL_MEM_WRITE_ONLY = (1 &lt;&lt; 1)
-        /// </summary>
-        MemWriteOnly = ((int)(1 << 1)),
-        /// <summary>
-        /// Original was CL_MEM_SVM_FINE_GRAIN_BUFFER = (1 &lt;&lt; 10)
-        /// </summary>
-        MemSvmFineGrainBuffer = ((int)(1 << 10)),
-        /// <summary>
-        /// Original was CL_MEM_SVM_ATOMICS = (1 &lt;&lt; 11)
-        /// </summary>
-        MemSvmAtomics = ((int)(1 << 11)),
-        /// <summary>
-        /// Original was CL_MEM_READ_ONLY = (1 &lt;&lt; 2)
-        /// </summary>
-        MemReadOnly = ((int)(1 << 2)),
-        /// <summary>
-        /// Original was CL_MEM_USE_HOST_PTR = (1 &lt;&lt; 3)
-        /// </summary>
-        MemUseHostPtr = ((int)(1 << 3)),
-        /// <summary>
-        /// Original was CL_MEM_ALLOC_HOST_PTR = (1 &lt;&lt; 4)
-        /// </summary>
-        MemAllocHostPtr = ((int)(1 << 4)),
-        /// <summary>
-        /// Original was CL_MEM_COPY_HOST_PTR = (1 &lt;&lt; 5)
-        /// </summary>
-        MemCopyHostPtr = ((int)(1 << 5)),
-        /// <summary>
-        /// Original was CL_MEM_HOST_WRITE_ONLY = (1 &lt;&lt; 7)
-        /// </summary>
-        MemHostWriteOnly = ((int)(1 << 7)),
-        /// <summary>
-        /// Original was CL_MEM_HOST_READ_ONLY = (1 &lt;&lt; 8)
-        /// </summary>
-        MemHostReadOnly = ((int)(1 << 8)),
-        /// <summary>
-        /// Original was CL_MEM_HOST_NO_ACCESS = (1 &lt;&lt; 9)
-        /// </summary>
-        MemHostNoAccess = ((int)(1 << 9)),
     }
 
     /// <summary>

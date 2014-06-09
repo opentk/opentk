@@ -770,6 +770,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Extensions\IntPtrExtensions.cs" />
+    <Compile Include="Compute\CL11\CL11.Enums.cs" />
+    <Compile Include="Compute\CL11\CL11.Extensions.cs" />
+    <Compile Include="Compute\CL11\CL11.cs" />
+    <Compile Include="Compute\CL11\CL11.Helper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -803,5 +807,6 @@
     <Folder Include="Compute\CL20\" />
     <Folder Include="Compute\CL12\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Compute\CL11\" />
   </ItemGroup>
 </Project>

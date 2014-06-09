@@ -2750,6 +2750,39 @@ namespace OpenTK.Compute.CL20
             return CL.CreateCommandQueue(context, device, properties, errcode_ret);
         }
 
+        /// <summary>[requires: v2.0]</summary>
+        /// <param name="context"></param>
+        /// <param name="device"></param>
+        /// <param name="properties"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static CommandQueue CreateCommandQueueWithProperties(this ComputeContext context, ComputeDevice device, OpenTK.Compute.CL20.CommandQueueFlags[] properties, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        {
+            return CL.CreateCommandQueueWithProperties(context, device, properties, out errcode_ret);
+        }
+
+        /// <summary>[requires: v2.0]</summary>
+        /// <param name="context"></param>
+        /// <param name="device"></param>
+        /// <param name="properties"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static CommandQueue CreateCommandQueueWithProperties(this ComputeContext context, ComputeDevice device, ref OpenTK.Compute.CL20.CommandQueueFlags properties, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        {
+            return CL.CreateCommandQueueWithProperties(context, device, ref properties, out errcode_ret);
+        }
+
+        /// <summary>[requires: v2.0]</summary>
+        /// <param name="context"></param>
+        /// <param name="device"></param>
+        /// <param name="properties"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static unsafe CommandQueue CreateCommandQueueWithProperties(this ComputeContext context, ComputeDevice device, OpenTK.Compute.CL20.CommandQueueFlags* properties, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+        {
+            return CL.CreateCommandQueueWithProperties(context, device, properties, errcode_ret);
+        }
+
         /// <summary>[requires: v1.2]</summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
@@ -2758,7 +2791,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref cl_image_desc image_desc, IntPtr host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        public static ComputeMemory CreateImage(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref ImageDescriptor image_desc, IntPtr host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
         {
             return CL.CreateImage(context, flags, ref image_format, ref image_desc, host_ptr, out errcode_ret);
         }
@@ -2771,7 +2804,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref ImageDescriptor image_desc, [InAttribute, OutAttribute] T4[] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
             where T4 : struct
         
         {
@@ -2786,7 +2819,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref ImageDescriptor image_desc, [InAttribute, OutAttribute] T4[,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
             where T4 : struct
         
         {
@@ -2801,7 +2834,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[,,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref ImageDescriptor image_desc, [InAttribute, OutAttribute] T4[,,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
             where T4 : struct
         
         {
@@ -2816,7 +2849,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] ref T4 host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref ImageDescriptor image_desc, [InAttribute, OutAttribute] ref T4 host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
             where T4 : struct
         
         {
@@ -2831,7 +2864,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref cl_image_desc image_desc, IntPtr host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        public static ComputeMemory CreateImage(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref ImageDescriptor image_desc, IntPtr host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
         {
             return CL.CreateImage(context, ref flags, ref image_format, ref image_desc, host_ptr, out errcode_ret);
         }
@@ -2844,7 +2877,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref ImageDescriptor image_desc, [InAttribute, OutAttribute] T4[] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
             where T4 : struct
         
         {
@@ -2859,7 +2892,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref ImageDescriptor image_desc, [InAttribute, OutAttribute] T4[,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
             where T4 : struct
         
         {
@@ -2874,7 +2907,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[,,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref ImageDescriptor image_desc, [InAttribute, OutAttribute] T4[,,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
             where T4 : struct
         
         {
@@ -2889,7 +2922,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] ref T4 host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref ImageDescriptor image_desc, [InAttribute, OutAttribute] ref T4 host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
             where T4 : struct
         
         {
@@ -2904,7 +2937,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, cl_image_desc* image_desc, IntPtr host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+        public static unsafe ComputeMemory CreateImage(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, ImageDescriptor* image_desc, IntPtr host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
         {
             return CL.CreateImage(context, flags, image_format, image_desc, host_ptr, errcode_ret);
         }
@@ -2917,7 +2950,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, cl_image_desc* image_desc, [InAttribute, OutAttribute] T4[] host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, ImageDescriptor* image_desc, [InAttribute, OutAttribute] T4[] host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
             where T4 : struct
         
         {
@@ -2932,7 +2965,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, cl_image_desc* image_desc, [InAttribute, OutAttribute] T4[,] host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, ImageDescriptor* image_desc, [InAttribute, OutAttribute] T4[,] host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
             where T4 : struct
         
         {
@@ -2947,7 +2980,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, cl_image_desc* image_desc, [InAttribute, OutAttribute] T4[,,] host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, ImageDescriptor* image_desc, [InAttribute, OutAttribute] T4[,,] host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
             where T4 : struct
         
         {
@@ -2962,7 +2995,7 @@ namespace OpenTK.Compute.CL20
         /// <param name="host_ptr">[length: 1]</param>
         /// <param name="errcode_ret">[length: 1]</param>
         [CLSCompliant(false)]
-        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, cl_image_desc* image_desc, [InAttribute, OutAttribute] ref T4 host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, ImageDescriptor* image_desc, [InAttribute, OutAttribute] ref T4 host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
             where T4 : struct
         
         {
@@ -3497,6 +3530,45 @@ namespace OpenTK.Compute.CL20
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, errcode_ret);
         }
 
+        /// <summary>[requires: v2.0]</summary>
+        /// <param name="context"></param>
+        /// <param name="mem_flags"></param>
+        /// <param name="pipe_packet_size"></param>
+        /// <param name="pipe_max_packets"></param>
+        /// <param name="properties"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreatePipe(this ComputeContext context, OpenTK.Compute.CL20.MemFlags mem_flags, Int32 pipe_packet_size, Int32 pipe_max_packets, IntPtr[] properties, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        {
+            return CL.CreatePipe(context, mem_flags, pipe_packet_size, pipe_max_packets, properties, out errcode_ret);
+        }
+
+        /// <summary>[requires: v2.0]</summary>
+        /// <param name="context"></param>
+        /// <param name="mem_flags"></param>
+        /// <param name="pipe_packet_size"></param>
+        /// <param name="pipe_max_packets"></param>
+        /// <param name="properties"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreatePipe(this ComputeContext context, OpenTK.Compute.CL20.MemFlags mem_flags, Int32 pipe_packet_size, Int32 pipe_max_packets, ref IntPtr properties, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        {
+            return CL.CreatePipe(context, mem_flags, pipe_packet_size, pipe_max_packets, ref properties, out errcode_ret);
+        }
+
+        /// <summary>[requires: v2.0]</summary>
+        /// <param name="context"></param>
+        /// <param name="mem_flags"></param>
+        /// <param name="pipe_packet_size"></param>
+        /// <param name="pipe_max_packets"></param>
+        /// <param name="properties"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreatePipe(this ComputeContext context, OpenTK.Compute.CL20.MemFlags mem_flags, Int32 pipe_packet_size, Int32 pipe_max_packets, IntPtr* properties, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+        {
+            return CL.CreatePipe(context, mem_flags, pipe_packet_size, pipe_max_packets, properties, errcode_ret);
+        }
+
         /// <summary>[requires: v1.2]</summary>
         /// <param name="context"></param>
         /// <param name="num_devices"></param>
@@ -3591,6 +3663,36 @@ namespace OpenTK.Compute.CL20
         public static unsafe ComputeSampler CreateSampler(this ComputeContext context, bool normalized_coords, OpenTK.Compute.CL20.AddressingMode addressing_mode, OpenTK.Compute.CL20.FilterMode filter_mode, [OutAttribute] ErrorCode* errcode_ret)
         {
             return CL.CreateSampler(context, normalized_coords, addressing_mode, filter_mode, errcode_ret);
+        }
+
+        /// <summary>[requires: v2.0]</summary>
+        /// <param name="context"></param>
+        /// <param name="sampler_properties"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeSampler CreateSamplerWithProperties(this ComputeContext context, OpenTK.Compute.CL20.SamplerProperties[] sampler_properties, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        {
+            return CL.CreateSamplerWithProperties(context, sampler_properties, out errcode_ret);
+        }
+
+        /// <summary>[requires: v2.0]</summary>
+        /// <param name="context"></param>
+        /// <param name="sampler_properties"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeSampler CreateSamplerWithProperties(this ComputeContext context, ref OpenTK.Compute.CL20.SamplerProperties sampler_properties, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        {
+            return CL.CreateSamplerWithProperties(context, ref sampler_properties, out errcode_ret);
+        }
+
+        /// <summary>[requires: v2.0]</summary>
+        /// <param name="context"></param>
+        /// <param name="sampler_properties"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeSampler CreateSamplerWithProperties(this ComputeContext context, OpenTK.Compute.CL20.SamplerProperties* sampler_properties, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+        {
+            return CL.CreateSamplerWithProperties(context, sampler_properties, errcode_ret);
         }
 
         /// <summary>[requires: v1.1]</summary>
@@ -4048,12 +4150,12 @@ namespace OpenTK.Compute.CL20
 
         /// <summary>[requires: v2.0]</summary>
         /// <param name="context"></param>
-        /// <param name="alignment"></param>
         /// <param name="flags"></param>
         /// <param name="size"></param>
-        public static IntPtr SVMAlloc(this ComputeContext context, Int32 alignment, OpenTK.Compute.CL20.SvmMemFlags flags, IntPtr size)
+        /// <param name="alignment"></param>
+        public static IntPtr SVMAlloc(this ComputeContext context, OpenTK.Compute.CL20.SvmMemFlags flags, IntPtr size, Int32 alignment)
         {
-            return CL.SVMAlloc(context, alignment, flags, size);
+            return CL.SVMAlloc(context, flags, size, alignment);
         }
 
         /// <summary>[requires: v2.0]</summary>

@@ -164,9 +164,21 @@ namespace OpenTK.Compute.CL12
         /// </summary>
         Complete = ((int)0x0),
         /// <summary>
+        /// Original was CL_DEVICE_PARTITION_BY_COUNTS_LIST_END = 0x0
+        /// </summary>
+        DevicePartitionByCountsListEnd = ((int)0x0),
+        /// <summary>
         /// Original was CL_NONE = 0x0
         /// </summary>
         None = ((int)0x0),
+        /// <summary>
+        /// Original was CL_MIGRATE_MEM_OBJECT_HOST = 0x0001
+        /// </summary>
+        MigrateMemObjectHost = ((int)0x0001),
+        /// <summary>
+        /// Original was CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED = 0x0002
+        /// </summary>
+        MigrateMemObjectContentUndefined = ((int)0x0002),
         /// <summary>
         /// Original was CL_PLATFORM_PROFILE = 0x0900
         /// </summary>
@@ -455,6 +467,18 @@ namespace OpenTK.Compute.CL12
         /// Original was CL_CONTEXT_PLATFORM = 0x1084
         /// </summary>
         ContextPlatform = ((int)0x1084),
+        /// <summary>
+        /// Original was CL_DEVICE_PARTITION_EQUALLY = 0x1086
+        /// </summary>
+        DevicePartitionEqually = ((int)0x1086),
+        /// <summary>
+        /// Original was CL_DEVICE_PARTITION_BY_COUNTS = 0x1087
+        /// </summary>
+        DevicePartitionByCounts = ((int)0x1087),
+        /// <summary>
+        /// Original was CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN = 0x1088
+        /// </summary>
+        DevicePartitionByAffinityDomain = ((int)0x1088),
         /// <summary>
         /// Original was CL_QUEUE_CONTEXT = 0x1090
         /// </summary>
@@ -763,6 +787,26 @@ namespace OpenTK.Compute.CL12
         /// Original was CL_KERNEL_PROGRAM = 0x1194
         /// </summary>
         KernelProgram = ((int)0x1194),
+        /// <summary>
+        /// Original was CL_KERNEL_ARG_ADDRESS_QUALIFIER = 0x1196
+        /// </summary>
+        KernelArgAddressQualifier = ((int)0x1196),
+        /// <summary>
+        /// Original was CL_KERNEL_ARG_ACCESS_QUALIFIER = 0x1197
+        /// </summary>
+        KernelArgAccessQualifier = ((int)0x1197),
+        /// <summary>
+        /// Original was CL_KERNEL_ARG_TYPE_NAME = 0x1198
+        /// </summary>
+        KernelArgTypeName = ((int)0x1198),
+        /// <summary>
+        /// Original was CL_KERNEL_ARG_TYPE_QUALIFIER = 0x1199
+        /// </summary>
+        KernelArgTypeQualifier = ((int)0x1199),
+        /// <summary>
+        /// Original was CL_KERNEL_ARG_NAME = 0x119A
+        /// </summary>
+        KernelArgName = ((int)0x119A),
         /// <summary>
         /// Original was CL_KERNEL_WORK_GROUP_SIZE = 0x11B0
         /// </summary>
@@ -1786,6 +1830,29 @@ namespace OpenTK.Compute.CL12
     }
 
     /// <summary>
+    /// Used in GL.CreateSubDevices
+    /// </summary>
+    public enum DevicePartitionProperty : int
+    {
+        /// <summary>
+        /// Original was CL_DEVICE_PARTITION_BY_COUNTS_LIST_END = 0x0
+        /// </summary>
+        DevicePartitionByCountsListEnd = ((int)0x0),
+        /// <summary>
+        /// Original was CL_DEVICE_PARTITION_EQUALLY = 0x1086
+        /// </summary>
+        DevicePartitionEqually = ((int)0x1086),
+        /// <summary>
+        /// Original was CL_DEVICE_PARTITION_BY_COUNTS = 0x1087
+        /// </summary>
+        DevicePartitionByCounts = ((int)0x1087),
+        /// <summary>
+        /// Original was CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN = 0x1088
+        /// </summary>
+        DevicePartitionByAffinityDomain = ((int)0x1088),
+    }
+
+    /// <summary>
     /// Used in GL.CreateContextFromType, GL.GetDeviceIDs
     /// </summary>
     public enum DeviceTypeFlags : long
@@ -2077,6 +2144,33 @@ namespace OpenTK.Compute.CL12
     }
 
     /// <summary>
+    /// Used in GL.GetKernelArgInfo
+    /// </summary>
+    public enum KernelArgInfo : int
+    {
+        /// <summary>
+        /// Original was CL_KERNEL_ARG_ADDRESS_QUALIFIER = 0x1196
+        /// </summary>
+        KernelArgAddressQualifier = ((int)0x1196),
+        /// <summary>
+        /// Original was CL_KERNEL_ARG_ACCESS_QUALIFIER = 0x1197
+        /// </summary>
+        KernelArgAccessQualifier = ((int)0x1197),
+        /// <summary>
+        /// Original was CL_KERNEL_ARG_TYPE_NAME = 0x1198
+        /// </summary>
+        KernelArgTypeName = ((int)0x1198),
+        /// <summary>
+        /// Original was CL_KERNEL_ARG_TYPE_QUALIFIER = 0x1199
+        /// </summary>
+        KernelArgTypeQualifier = ((int)0x1199),
+        /// <summary>
+        /// Original was CL_KERNEL_ARG_NAME = 0x119A
+        /// </summary>
+        KernelArgName = ((int)0x119A),
+    }
+
+    /// <summary>
     /// Used in GL.GetKernelInfo
     /// </summary>
     public enum KernelInfo : int
@@ -2205,6 +2299,21 @@ namespace OpenTK.Compute.CL12
         /// Original was CL_MEM_CONTEXT = 0x1106
         /// </summary>
         MemContext = ((int)0x1106),
+    }
+
+    /// <summary>
+    /// Used in GL.EnqueueMigrateMemObjects
+    /// </summary>
+    public enum MemMigrationFlags : int
+    {
+        /// <summary>
+        /// Original was CL_MIGRATE_MEM_OBJECT_HOST = 0x0001
+        /// </summary>
+        MigrateMemObjectHost = ((int)0x0001),
+        /// <summary>
+        /// Original was CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED = 0x0002
+        /// </summary>
+        MigrateMemObjectContentUndefined = ((int)0x0002),
     }
 
     /// <summary>
