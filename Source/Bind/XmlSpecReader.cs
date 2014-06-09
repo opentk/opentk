@@ -303,6 +303,11 @@ namespace Bind
                     Obsolete = node.GetAttribute("obsolete", String.Empty).Trim()
                 };
 
+                // If a function does not specify a specific version,
+                // use the parent apiversion instead.
+                if (String.IsNullOrEmpty(d.Version))
+                    d.Version = apiversion;
+
                 // Ensure all core functions are under the "Core" extension.
                 // This is used later on by the FuncProcessor and BindStreamWriter
                 // implementations.
