@@ -124,7 +124,99 @@
       <token name="DEPTH" value="0x10BD" />
       <token name="DEPTH_STENCIL" value="0x10BE" />
     </enum>
-    <function name="LinkProgram" version="1.2">
+    <function name="CompileProgram">
+      <param type="cl_program" name="program" flow="in" />
+      <param type="cl_uint" name="num_devices" flow="in" />
+      <param type="cl_device_id*" name="device_list" flow="in" count="num_devices" />
+      <param type="cl_uint" name="num_input_headers" flow="in" />
+      <param type="cl_program*" name="input_headers" flow="in" count="num_input_headers" />
+      <param type="char**" name="header_include_names" flow="in" count="num_input_headers" />
+      <param type="ProgramNotifyDelegate" name="pfn_notify" flow="in" />
+      <param type="IntPtr" name="user_data" flow="in" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="CreateImage">
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_mem_flags*" name="flags" flow="in" />
+      <param type="cl_image_format*" name="image_format" flow="in" count="1" />
+      <param type="cl_image_desc*" name="image_desc" flow="in" count="1" />
+      <param type="void*" name="host_ptr" flow="in" count="1" />
+      <param type="ErrorCodes*" name="errcode_ret" flow="out" count="1" />
+      <returns type="cl_mem" />
+    </function>
+    <function name="CreateProgramWithBuiltInKernels">
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_uint" name="num_devices" flow="in" />
+      <param type="cl_device_id*" name="device_list" flow="in" count="num_devices" />
+      <param type="char*" name="kernel_names" flow="in" />
+      <param type="ErrorCodes*" name="errcode_ret" flow="out" count="1" />
+      <returns type="cl_program" />
+    </function>
+    <function name="CreateSubDevices">
+      <param type="cl_device_id" name="in_device" flow="in" />
+      <param type="cl_device_partition_property*" name="properties" flow="in" />
+      <param type="cl_uint" name="num_devices" flow="in" />
+      <param type="cl_device_id*" name="out_devices" flow="out" />
+      <param type="cl_uint*" name="num_devices_ret" flow="out" count="1" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="EnqueueBarrierWithWaitList">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
+    </function>
+    <function name="EnqueueFillBuffer">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="buffer" flow="in" />
+      <param type="void*" name="pattern" flow="in" />
+      <param type="size_t" name="pattern_size" flow="in" />
+      <param type="size_t" name="pattern_size" flow="in" />
+      <param type="size_t" name="size" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
+    </function>
+    <function name="EnqueueFillImage">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="buffer" flow="in" />
+      <param type="void*" name="fill_color" flow="in" />
+      <param type="size_t*" name="origin" flow="in" count="3" />
+      <param type="size_t*" name="region" flow="in" count="3" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
+    </function>
+    <function name="EnqueueMarkerWithWaitList">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
+    </function>
+    <function name="EnqueueMigrateMemObjects">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_uint" name="num_mem_objects" flow="in" />
+      <param type="cl_mem*" name="mem_objects" flow="in" />
+      <param type="cl_mem_migration_flags" name="flags" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
+    </function>
+    <function name="GetKernelArgInfo">
+      <param type="cl_kernel" name="kernel" flow="in" />
+      <param type="cl_uint" name="arg_indx" flow="in" />
+      <param type="cl_kernel_arg_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" count="1" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="GetExtensionFunctionAddressForPlatform">
+      <param type="cl_platform_id" name="platform" flow="in" />
+      <param type="char*" name="func_name" flow="in" />
+      <returns type="void*" />
+    </function>
+    <function name="LinkProgram">
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
       <param type="cl_device_id*" name="device_list" flow="in" />
@@ -133,6 +225,18 @@
       <param type="cl_program*" name="input_programs" flow="in" />
       <param type="ProgramNotifyDelegate" name="notify" flow="in" />
       <param type="IntPtr" name="user_data" flow="in" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="ReleaseDevice">
+      <param type="cl_device_id" name="device" flow="in" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="RetainDevice">
+      <param type="cl_device_id" name="device" flow="in" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="UnloadPlatformCompiler">
+      <param type="cl_platform_id" name="platform" />
       <returns type="ErrorCodes" />
     </function>
   </add>
@@ -624,10 +728,27 @@
       <field name="Value" type="IntPtr" visibility="internal" />
       <function name="EnqueueBarrier" />
       <function name="EnqueueCopyBuffer" />
-      <function name="EnqueueReadBuffer" />
+      <function name="EnqueueCopyBufferToImage" />
+      <function name="EnqueueCopyImage" />
+      <function name="EnqueueCopyImageToBuffer" />
+      <function name="EnqueueMapBuffer" />
+      <function name="EnqueueMapImage" />
+      <function name="EnqueueMarker" />
+      <function name="EnqueueNativeKernel" />
       <function name="EnqueueNDRangeKernel" />
+      <function name="EnqueueReadBuffer" />
+      <function name="EnqueueReadImage" />
+      <function name="EnqueueTask" />
+      <function name="EnqueueUnmapMemObject" />
+      <function name="EnqueueWaitForEvents" />
       <function name="EnqueueWriteBuffer" />
+      <function name="EnqueueWriteImage" />
       <function name="Finish" />
+      <function name="Flush" />
+      <function name="GetCommandQueueInfo" />
+      <function name="ReleaseCommandQueue" />
+      <function name="RetainCommandQueue" />
+      <function name="SetCommandQueueProperty" />
     </add>
     <add name="ComputeSampler">
       <field name="Value" type="IntPtr" visibility="internal" />
