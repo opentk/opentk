@@ -18,22 +18,6 @@ using Bind.GL2;
 
 namespace Bind
 {
-    enum GeneratorMode
-    {
-        All = 0,
-        Default = All,
-        GL2,
-        GL3,
-        GL4,
-        ES10,
-        ES11,
-        ES20,
-        ES30,
-        CL10,
-        CL12,
-        CL20,
-    }
-
     enum GeneratorLanguage
     {
         CSharp,
@@ -308,8 +292,18 @@ namespace Bind
                     break;
 
                 case "cl":
+                    Generators.Add(new CLGenerator(Settings.Clone(), dirName));
+                    Generators.Add(new CL11Generator(Settings.Clone(), dirName));
+                    Generators.Add(new CL12Generator(Settings.Clone(), dirName));
+                    Generators.Add(new CL20Generator(Settings.Clone(), dirName));
+                    break;
+
                 case "cl10":
                     Generators.Add(new CLGenerator(Settings.Clone(), dirName));
+                    break;
+
+                case "cl11":
+                    Generators.Add(new CL11Generator(Settings.Clone(), dirName));
                     break;
 
                 case "cl12":
