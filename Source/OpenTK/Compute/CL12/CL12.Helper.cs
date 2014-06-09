@@ -1,6 +1,6 @@
 ﻿#region License
 //
-// CL20.Helper.cs
+// CL12.Helper.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
