@@ -74,13 +74,13 @@ namespace OpenTK.Compute.CL20
     public delegate void EventNotifyDelegate(ComputeEvent e, CommandExecutionStatusFlags status, IntPtr user_data);
 
     /// <summary>
-    /// Defines the callback prototype for <see cref="OpenTK.Compute.ComputeMemory"/> functions
+    /// Defines the callback prototype for <see cref="ComputeMemory"/> functions
     /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void MemObjectNotifyDelegate();
+    public delegate void MemObjectNotifyDelegate(ComputeMemory memobj, IntPtr user_data);
 
     /// <summary>
-    /// Defines the callback prototype for <see cref="OpenTK.Compute.ComputeProgram"/> functions
+    /// Defines the callback prototype for <see cref="ComputeProgram"/> functions
     /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void ProgramNotifyDelegate(ComputeProgram program, IntPtr user_data);
@@ -90,12 +90,6 @@ namespace OpenTK.Compute.CL20
     /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void SVMFreeDelegate();
-
-    // <summary>
-    // Defines the callback prototype for <see cref="OpenTK.Compute.ComputeProgram"/> functions
-    // </summary>
-    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void UserNotifyDelegate();
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ImageDescriptor
@@ -121,9 +115,25 @@ namespace OpenTK.Compute.CL20
         }
     }
 
+    /// <summary>
+    /// Defines the data structure for
+    /// <see cref="CL.CreateImage2D"/> and
+    /// <see cref="CL.CreateImage3D"/>.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct ImageFormat
     {
+        /// <summary>
+        /// Specifies the <see cref="ChannelOrder"/>
+        /// of the image data channels.
+        /// </summary>
+        public ChannelOrder ChannelOrder;
+
+        /// <summary>
+        /// Specifies the <see cref="ChannelType"/>
+        /// of each data channel.
+        /// </summary>
+        public ChannelType ChannelDataType;
     }
 
     public static partial class CommandQueueExtensions
