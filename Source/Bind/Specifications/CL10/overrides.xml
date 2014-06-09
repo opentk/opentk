@@ -355,7 +355,7 @@
       <param type="cl_command_queue" name="command_queue" flow="in" />
       <param type="cl_uint" name="num_svm_pointers" flow="in" />
       <param type="void**" name="svm_pointers" flow="in" count="num_svm_pointers" />
-      <param type="SvmFreeDelegate" name="free" flow="in" />
+      <param type="SVMFreeDelegate" name="free" flow="in" />
       <param type="IntPtr" name="user_data" flow="in" />
       <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
       <param type="cl_event*" name="event_wait_list" flow="in" count="num_events_in_wait_list" />

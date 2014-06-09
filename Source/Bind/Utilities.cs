@@ -118,6 +118,7 @@ namespace Bind
                 "3TC", "DXT", "BPTC", "RGTC",
                 "3DC", "ATC", "ETC",
                 "ANGLE",  "MESAX", "MESA",
+                "SVM",
             };
 
             Extensions = new Regex(
