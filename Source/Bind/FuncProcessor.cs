@@ -832,6 +832,14 @@ namespace Bind
                 {
                     d.Obsolete = obsolete;
                 }
+
+                var deprecated = function_override.GetAttribute("deprecated", String.Empty);
+                if (!String.IsNullOrEmpty(deprecated))
+                {
+                    d.DeprecatedVersion = deprecated;
+                    d.Deprecated = true;
+                }
+
             }
         }
 
