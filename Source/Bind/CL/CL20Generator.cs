@@ -39,8 +39,8 @@ namespace Bind.CL
         {
             Settings.DefaultOutputPath = Path.Combine(
                 Settings.DefaultOutputPath, "../../Compute/CL20");
-            //Settings.DefaultDocPath = Path.Combine(Settings.DefaultDocPath,
-            //    "CL20");
+            Settings.DefaultDocPath =
+                Path.Combine(Settings.DefaultDocPath, "../CL20");
 
             Settings.DefaultOutputNamespace = "OpenTK.Compute.CL20";
             Settings.DefaultWrappersFile = "CL20.cs";

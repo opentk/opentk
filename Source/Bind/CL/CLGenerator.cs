@@ -16,6 +16,8 @@ namespace Bind.CL
         {
             Settings.DefaultOutputPath = String.Format(
                 Settings.DefaultOutputPath, "Compute", "CL10");
+            Settings.DefaultDocPath =
+                Path.Combine(Settings.DefaultDocPath, "CL10");
 
             // Common settings for all OpenCL generators
             Settings.DefaultTypeMapFile = "CL10/cl.tm";
