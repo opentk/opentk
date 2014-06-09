@@ -59,6 +59,25 @@ namespace OpenTK.Compute.CL20
     [StructLayout(LayoutKind.Sequential)]
     public struct ImageDescriptor
     {
+        public MemObjectType ImageType;
+        public IntPtr Width;
+        public IntPtr Height;
+        public IntPtr ArraySize;
+        public IntPtr RowPitch;
+        public IntPtr SlicePitch;
+        public int NumMipLevels;
+        public int NumSamples;
+        public ComputeMemory Buffer;
+
+        /// <summary>
+        /// Gets or sets the <see cref="ComputeMemory"/> object for this instance.
+        /// This is an alias to <see cref="ImageDescriptor.Buffer"/>
+        /// </summary>
+        public ComputeMemory MemObject
+        {
+            get { return Buffer; }
+            set { Buffer = value; }
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]

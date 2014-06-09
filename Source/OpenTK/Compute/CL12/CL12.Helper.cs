@@ -94,6 +94,15 @@ namespace OpenTK.Compute.CL12
     [StructLayout(LayoutKind.Sequential)]
     public struct ImageDescriptor
     {
+        public MemObjectType ImageType;
+        public IntPtr Width;
+        public IntPtr Height;
+        public IntPtr ArraySize;
+        public IntPtr RowPitch;
+        public IntPtr SlicePitch;
+        public int NumMipLevels;
+        public int NumSamples;
+        public ComputeMemory Buffer;
     }
 
     [StructLayout(LayoutKind.Sequential)]
