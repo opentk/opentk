@@ -658,7 +658,7 @@ namespace Bind
 
                 sw.Write(str);
                 if (!String.IsNullOrEmpty(str))
-                    sw.WriteLine(",");
+                    sw.WriteLine(WriteOptions.NoIndent, ",");
             }
         }
 
