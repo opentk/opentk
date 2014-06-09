@@ -124,6 +124,23 @@
       <token name="DEPTH" value="0x10BD" />
       <token name="DEPTH_STENCIL" value="0x10BE" />
     </enum>
+    <enum name="DevicePartitionProperty">
+      <token name="DEVICE_PARTITION_BY_COUNTS_LIST_END" value="0x0" />
+      <token name="DEVICE_PARTITION_EQUALLY" value="0x1086" />
+      <token name="DEVICE_PARTITION_BY_COUNTS" value="0x1087" />
+      <token name="DEVICE_PARTITION_BY_AFFINITY_DOMAIN" value="0x1088" />
+    </enum>
+    <enum name="KernelArgInfo">
+      <token name="KERNEL_ARG_ADDRESS_QUALIFIER" value="0x1196" />
+      <token name="KERNEL_ARG_ACCESS_QUALIFIER" value="0x1197" />
+      <token name="KERNEL_ARG_TYPE_NAME" value="0x1198" />
+      <token name="KERNEL_ARG_TYPE_QUALIFIER" value="0x1199" />
+      <token name="KERNEL_ARG_NAME" value="0x119A" />
+    </enum>
+    <enum name="MemMigrationFlags">
+      <token name="MIGRATE_MEM_OBJECT_HOST" value="0x0001" />
+      <token name="MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED" value="0x0002" />
+    </enum>
     <function name="CompileProgram">
       <param type="cl_program" name="program" flow="in" />
       <param type="cl_uint" name="num_devices" flow="in" />
@@ -170,7 +187,6 @@
       <param type="cl_command_queue" name="command_queue" flow="in" />
       <param type="cl_mem" name="buffer" flow="in" />
       <param type="void*" name="pattern" flow="in" />
-      <param type="size_t" name="pattern_size" flow="in" />
       <param type="size_t" name="pattern_size" flow="in" />
       <param type="size_t" name="size" flow="in" />
       <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
@@ -255,11 +271,28 @@
     <enum name="BufferCreateType">
       <token name="BUFFER_CREATE_TYPE_REGION" value="0x1220" />
     </enum>
+    <enum name="CommandQueueInfo">
+      <token name="QUEUE_SIZE" value="0x1094" />
+    </enum>
+    <enum name="CommandQueuePropertiesFlags" type="long">
+      <token name="QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE" value="0x0001" />
+      <token name="QUEUE_PROFILING_ENABLE" value="0x0002" />
+      <token name="QUEUE_ON_DEVICE" value="0x0004" />
+      <token name="QUEUE_ON_DEVICE_DEFAULT" value="0x0008" />
+    </enum>
+    <enum name="KernelExecInfo">
+      <token name="KERNEL_EXEC_INFO_SVM_PTRS" value="0x11B6" />
+      <token name="KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM" value="0x11B7" />
+    </enum>
+    <enum name="PipeInfo">
+      <token name="PIPE_PACKET_SIZE" value="0x1120" />
+      <token name="PIPE_MAX_PACKETS" value="0x1121" />
+    </enum>
     <enum name="SamplerInfo">
       <token name="SAMPLER_REFERENCE_COUNT" value="0x1150" />
       <token name="SAMPLER_CONTEXT" value="0x1151" />
       <token name="SAMPLER_NORMALIZED_COORDS" value="0x1152" />
-      <token name="SAMPLER_enumRESSING_MODE" value="0x1153" />
+      <token name="SAMPLER_ADDRESSING_MODE" value="0x1153" />
       <token name="SAMPLER_FILTER_MODE" value="0x1154" />
       <token name="SAMPLER_MIP_FILTER_MODE" value="0x1155" />
       <token name="SAMPLER_LOD_MIN" value="0x1156" />
@@ -291,7 +324,7 @@
     <function name="CreateCommandQueueWithProperties" version="2.0">
       <param type="cl_context" name="context" flow="in" />
       <param type="cl_device_id" name="device" flow="in" />
-      <param type="cl_queue_properties*" name="properties" flow="in" />
+      <param type="cl_command_queue_properties*" name="properties" flow="in" />
       <param type="ErrorCodes*" name="errcode_ret" flow="out" count="1" />
       <returns type="cl_command_queue" />
     </function>

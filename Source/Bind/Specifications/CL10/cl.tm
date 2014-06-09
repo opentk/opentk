@@ -20,8 +20,10 @@ size_t, IntPtr
 intptr_t, IntPtr
 
 # Structures
-cl_image_format, ImageFormat
 cl_context_properties, IntPtr
+cl_image_format, ImageFormat
+cl_image_desc, ImageDescriptor
+cl_pipe_properties, IntPtr
 
 # Enumerations
 cl_device_type, DeviceTypeFlags
@@ -45,7 +47,6 @@ cl_command_queue_properties, CommandQueueFlags
 #cl_mem_info, MemInfo
 #cl_mem_flags, MemFlags
 #cl_mem_object_type, MemObjectType
-#cl_pipe_properties, IntPtr
 #cl_platform_info, PlatformInfo
 #cl_profiling_info, ProfilingInfo
 #cl_program_build_info, ProgramBuildInfo
