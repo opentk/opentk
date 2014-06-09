@@ -45,6 +45,22 @@
       <token name="DEVICE_NATIVE_VECTOR_WIDTH_HALF" value="0x103C" />
       <token name="DEVICE_OPENCL_C_VERSION" value="0x103D" />
     </enum>
+    <function name="EnqueueCopyBufferRect">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="src_buffer" flow="in" />
+      <param type="cl_mem" name="dst_buffer" flow="in" />
+      <param type="size_t*" name="src_origin" flow="in" count="3" />
+      <param type="size_t*" name="dst_origin" flow="in" count="3" />
+      <param type="size_t*" name="region" flow="in" count="3" />
+      <param type="size_t" name="src_row_pitch" flow="in" />
+      <param type="size_t" name="src_slice_pitch" flow="in" />
+      <param type="size_t" name="dst_row_pitch" flow="in" />
+      <param type="size_t" name="dst_slice_pitch" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="out" />
+      <returns type="cl_int" />
+    </function>
     <function name="EnqueueReadBufferRect">
       <param type="cl_command_queue" name="command_queue" flow="in" />
       <param type="cl_mem" name="buffer" flow="in" />
@@ -74,22 +90,6 @@
       <param type="size_t" name="host_row_pitch" flow="in" />
       <param type="size_t" name="host_slice_pitch" flow="in" />
       <param type="void*" name="ptr" flow="in" />
-      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
-      <param type="cl_event*" name="event_wait_list" flow="in" />
-      <param type="cl_event*" name="event" flow="out" />
-      <returns type="cl_int" />
-    </function>
-    <function name="EnqueueCopyBufferRect">
-      <param type="cl_command_queue" name="command_queue" flow="in" />
-      <param type="cl_mem" name="src_buffer" flow="in" />
-      <param type="cl_mem" name="dst_buffer" flow="in" />
-      <param type="size_t*" name="src_origin" flow="in" count="3" />
-      <param type="size_t*" name="dst_origin" flow="in" count="3" />
-      <param type="size_t*" name="region" flow="in" count="3" />
-      <param type="size_t" name="src_row_pitch" flow="in" />
-      <param type="size_t" name="src_slice_pitch" flow="in" />
-      <param type="size_t" name="dst_row_pitch" flow="in" />
-      <param type="size_t" name="dst_slice_pitch" flow="in" />
       <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
       <param type="cl_event*" name="event_wait_list" flow="in" />
       <param type="cl_event*" name="event" flow="out" />
@@ -288,25 +288,109 @@
       <token name="MEM_SVM_ATOMICS" value="(1 &lt;&lt; 11)" />
     </enum>
 
-    <function name="EnqueueSVMFree" version="2.0">
+    <function name="CreateCommandQueueWithProperties" version="2.0">
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_device_id" name="device" flow="in" />
+      <param type="cl_queue_properties*" name="properties" flow="in" />
+      <param type="ErrorCodes*" name="errcode_ret" flow="out" count="1" />
+      <returns type="cl_command_queue" />
+    </function>
+    <function name="CreatePipe" version="2.0">
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_mem_flags" name="mem_flags" flow="in" />
+      <param type="cl_uint" name="pipe_packet_size" flow="in" />
+      <param type="cl_uint" name="pipe_max_packets" flow="in" />
+      <param type="cl_pipe_properties*" name="properties" flow="in" />
+      <param type="ErrorCodes*" name="errcode_ret" flow="out" count="1" />
+      <returns type="cl_mem" />
+    </function>
+    <function name="CreateSamplerWithProperties" version="2.0">
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_sampler_properties*" name="sampler_properties" flow="in" />
+      <param type="ErrorCodes*" name="errcode_ret" flow="out" count="1" />
+      <returns type="cl_sampler" />
+    </function>
+    <function name="GetPipeInfo">
+      <param type="cl_mem" name="pipe" flow="in" />
+      <param type="cl_pipe_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="out" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" count="1" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="EnqueueSVMFree">
       <param type="cl_command_queue" name="command_queue" flow="in" />
       <param type="cl_uint" name="num_svm_pointers" flow="in" />
-      <param type="void**" name="svm_pointers" flow="in" />
+      <param type="void**" name="svm_pointers" flow="in" count="num_svm_pointers" />
       <param type="SvmFreeDelegate" name="free" flow="in" />
       <param type="IntPtr" name="user_data" flow="in" />
       <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
-      <param type="cl_event*" name="event_wait_list" flow="in" />
-      <param type="cl_event*" name="event" flow="out" />
+      <param type="cl_event*" name="event_wait_list" flow="in" count="num_events_in_wait_list" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
       <returns type="ErrorCodes" />
     </function>
-    <function name="SVMAlloc" version="2.0">
+    <function name="EnqueueSVMMap">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_bool" name="blocking_map" flow="in" />
+      <param type="cl_map_flags" name="flags" flow="in" />
+      <param type="void*" name="svm_ptr" flow="in" count="1" /> <!-- flow="in" even if the C API is non-const -->
+      <param type="size_t" name="size" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" count="num_events_in_wait_list" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="EnqueueSVMMemcpy">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_bool" name="blocking_copy" flow="in" />
+      <param type="void*" name="dst_ptr" flow="in" count="1" /> <!-- flow="in" even if the C API is non-const -->
+      <param type="void*" name="src_ptr" flow="in" count="1" />
+      <param type="size_t" name="size" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" count="num_events_in_wait_list" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="EnqueueSVMMemFill">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="void*" name="svm_ptr" flow="in" count="1" /> <!-- flow="in" even if the C API is non-const -->
+      <param type="void*" name="pattern" flow="in" count="1" />
+      <param type="size_t" name="pattern_size" flow="in" />
+      <param type="size_t" name="size" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" count="num_events_in_wait_list" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="EnqueueSVMUnmap">
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="void*" name="svm_ptr" flow="in" count="1" /> <!-- flow="in" even if the C API is non-const -->
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" count="num_events_in_wait_list" />
+      <param type="cl_event*" name="event" flow="out" count="1" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="SetKernelArgSVMPointer">
+      <param type="cl_kernel" name="kernel" flow="in" />
+      <param type="cl_uint" name="arg_index" flow="in" />
+      <param type="void*" name="arg_value" flow="in" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="SetKernelExecInfo">
+      <param type="cl_kernel" name="kernel" flow="in" />
+      <param type="cl_kernel_exec_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <returns type="ErrorCodes" />
+    </function>
+    <function name="SVMAlloc">
       <param type="cl_context" name="context" flow="in" />
-      <param type="cl_uint" name="alignment" flow="in" />
       <param type="cl_svm_mem_flags" name="flags" flow="in" />
       <param type="size_t" name="size" flow="in" />
+      <param type="cl_uint" name="alignment" flow="in" />
       <returns type="void*" />
     </function>
-    <function name="SVMFree" version="2.0">
+    <function name="SVMFree">
       <param type="cl_context" name="context" flow="in" />
       <param type="void*" name="svm_pointer" flow="in" />
       <returns type="void" />
