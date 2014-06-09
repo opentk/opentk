@@ -136,14 +136,24 @@ namespace Bind
             XDocument doc = null;
             try
             {
-                doc = XDocument.Parse(text);
+                using (var sr = new StringReader(text))
+                {
+                    var settings = new XmlReaderSettings
+                    {
+                        ProhibitDtd = true,
+                        XmlResolver = null
+                    };
+
+                    doc = XDocument.Load(XmlReader.Create(sr, settings));
+                }
+
                 Cached = ToInlineDocs(doc, processor);
                 return Cached;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                Console.WriteLine(doc.ToString());
+                Console.WriteLine((doc ?? new XDocument()).ToString());
                 return null;
             }
         }
