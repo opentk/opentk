@@ -241,6 +241,16 @@
     </function>
   </add>
 
+  <replace name="cl" version="1.2">
+    <function name="CreateImage2D" deprecated="1.2" />
+    <function name="CreateImage3D" deprecated="1.2" />
+    <function name="EnqueueBarrier" deprecated="1.2" />
+    <function name="EnqueueMarker" deprecated="1.2" />
+    <function name="EnqueueWaitForEvents" deprecated="1.2" />
+    <function name="GetExtensionFunctionAddress" deprecated="1.2" />
+    <function name="UnloadCompiler" deprecated="1.2" />
+  </replace>
+
   <add name="cl" version="2.0">
     <enum name="BufferCreateType">
       <token name="BUFFER_CREATE_TYPE_REGION" value="0x1220" />
@@ -302,6 +312,12 @@
       <returns type="void" />
     </function>
   </add>
+
+  <replace name="cl" version="2.0">
+    <function name="CreateCommandQueue" deprecated="2.0" />
+    <function name="CreateSampler" deprecated="2.0" />
+    <function name="EnqueueTask" deprecated="2.0" />
+  </replace>
 
   <replace name="cl" version="1.0|1.1|1.2|2.0">
     <enum name="ErrorCodes"><name>ErrorCode</name></enum>
