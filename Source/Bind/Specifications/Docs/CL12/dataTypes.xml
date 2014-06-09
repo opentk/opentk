@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Data Types</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Data Types</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="DataTypes">
+        <refname>Data Types</refname>
+
+        <refpurpose>
+            OpenCL data types.
+        </refpurpose>
+    </refnamediv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+          These are the data types available in the OpenCL C programming language. Click on a
+          category name in the table below to see information about specific data types.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Data type category</entry>
+                        <entry>Included data types</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry>
+                            <citerefentry href="scalarDataTypes"><refentrytitle>Scalar data types</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            <type>bool</type>, <type>char</type>, <type>cl_char</type>,
+                            <type>unsigned char</type>, <type>uchar</type>, <type>cl_uchar</type>,
+                            <type>short</type>, <type>cl_short</type>, <type>unsigned short</type>,
+                            <type>ushort</type>, <type>int</type>, <type>unsigned int</type>,
+                            <type>uint</type>, <type>long</type>, <type>unsigned long</type>,
+                            <type>ulong</type>, <type>float</type>, <type>half</type>, <type>size_t</type>,
+                            <type>ptrdiff_t</type>, <type>intptr_t</type>, <type>uintptr_t</type>,
+                            <type>void</type>, <type>double</type>, and <type>half</type> floating point types.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <citerefentry href="vectorDataTypes"><refentrytitle>Vector data types</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            <type>char<replaceable>n</replaceable></type>, <type>uchar<replaceable>n</replaceable></type>,
+                            <type>short<replaceable>n</replaceable></type>, <type>ushort<replaceable>n</replaceable></type>,
+                            <type>int<replaceable>n</replaceable></type>, <type>uint<replaceable>n</replaceable></type>,
+                            <type>long<replaceable>n</replaceable></type>, <type>ulong<replaceable>n</replaceable></type>,
+                            <type>float<replaceable>n</replaceable></type>, double<replaceable>n</replaceable>, and optional half<replaceable>n</replaceable> types.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <citerefentry href="abstractDataTypes"><refentrytitle>Abstract data types</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            <type>cl_platform_id</type>, <type>cl_device_id</type>,
+                            <type>cl_context</type>, <type>cl_command_queue</type>,
+                            <type>cl_mem</type>, <type>cl_program</type>,
+                            <type>cl_kernel</type>, <type>cl_event</type>, and
+                            <type>cl_sampler</type>.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <citerefentry href="reservedDataTypes"><refentrytitle>Reserved Data Types</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            <type>bool<replaceable>n</replaceable></type>,
+                            <type>half<replaceable>n</replaceable></type>, <type>quad</type>,
+                            <type>quad<replaceable>n</replaceable></type>,
+                            <type>complex half</type>, <type>complex half<replaceable>n</replaceable></type>,
+                            <type>imaginary half</type>, <type>imaginary half<replaceable>n</replaceable></type>,
+                            <type>complex float</type>, <type>complex float<replaceable>n</replaceable></type>,
+                            <type>imaginary float</type>, <type>imaginary float<replaceable>n</replaceable></type>,
+                            <type>complex double</type>, <type>complex double<replaceable>n</replaceable></type>,
+                            <type>imaginary double</type>, <type>imaginary double<replaceable>n</replaceable></type>,
+                            <type>complex quad</type>, <type>complex quad<replaceable>n</replaceable></type>,
+                            <type>imaginary quad</type>, <type>imaginary quad<replaceable>n</replaceable></type>,
+                            <type>float<replaceable>n</replaceable></type>x<emphasis>m</emphasis>,
+                            <type>double<replaceable>n</replaceable></type>x<emphasis>m</emphasis>,
+                            <type>long double</type>, <type>long double<replaceable>n</replaceable></type>,
+                            <type>long long</type>, <type>long long<replaceable>n</replaceable></type>,
+                            <type>unsigned long long</type>, <type>ulong long</type>, and
+                            <type>ulong long<replaceable>n</replaceable></type>.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <citerefentry href="otherDataTypes"><refentrytitle>Other data types</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            <type>image2d_t</type>, <type>image3d_t</type>, <type>image2d_array_t</type>,
+                            <type>image1d_t</type>, <type>image31_buffer_t</type>, <type>image1d_array_t</type>,
+                            <type>sampler_t</type>, and <type>event_t</type>.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+    <!-- ================================ NOTES  -->
+   <refsect1 id="notes"><title>Alignment of Types</title>
+        <para>
+          A data item declared to be a data type in memory is always aligned to the size of the
+          data type in bytes. For example, a <type>float4</type> variable will be aligned to a
+          16-byte boundary, and a <type>char2</type> variable will be aligned to a 2-byte boundary.
+        </para>
+
+        <para>
+          For 3-component vector data types, the size of the data type is 4 *
+          sizeof(component). This means that a 3-component vector data type
+          will be aligned to a 4 * sizeof(component) boundary. The <citerefentry
+          href="vloadn"><refentrytitle>vload3</refentrytitle></citerefentry> and <citerefentry
+          href="vstoren"><refentrytitle>vstore3</refentrytitle></citerefentry> built-in functions
+          can be used to read and write, respectively, 3-component vector data types from an
+          array of packed scalar data type.
+        </para>
+
+        <para>
+          A built-in data type that is not a power of two bytes in size must be aligned to the next
+          larger power of two. This rule applies to built-in types only, not <code>structs</code>
+          or <code>unions</code>.
+        </para>
+
+        <para>
+          The OpenCL compiler is responsible for aligning data items to the appropriate
+          alignment as required by the data type. For arguments to a <citerefentry
+          href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry>
+          function declared to be a pointer to a data type, the OpenCL compiler can
+          assume that the pointee is always appropriately aligned as required by the
+          data type. The behavior of an unaligned load or store is undefined, except
+          for the <citerefentry><refentrytitle>vloadn</refentrytitle></citerefentry>,
+          <citerefentry><refentrytitle>vload_halfn</refentrytitle></citerefentry>,
+          <citerefentry><refentrytitle>vstoren</refentrytitle></citerefentry>, and
+          <citerefentry><refentrytitle>vstore_halfn</refentrytitle></citerefentry> functions. The
+          vector load functions can read a vector from an address aligned to the element type
+          of the vector. The vector store functions can write a vector to an address aligned
+          to the element type of the vector.
+        </para>
+
+        <para>
+          The user is responsible for ensuring that data passed into and out of OpenCL buffers are
+          natively aligned relative to the start of the buffer as described above. This implies
+          that OpenCL buffers created with <constant>CL_MEM_USE_HOST_PTR</constant> need to provide
+          an appropriately aligned host memory pointer that is aligned to the data types used to
+          access these buffers in a kernel(s). As well, the user is responsible to ensure that
+          data passed into and out of OpenCL images are properly aligned to the granularity of
+          the data representing a single pixel (e.g.  <varname>image_num_channels</varname>
+          * sizeof(<varname>image_channel_data_type</varname>)) except for
+          <constant>CL_RGB</constant> and <constant>CL_RGBx</constant> images where
+          the data must be aligned to the granularity of a single channel in a pixel
+          (i.e. sizeof(<varname>image_channel_data_type</varname>)).
+        </para>
+
+        <para>
+          OpenCL makes no requirement about the alignment of OpenCL application defined data
+          types outside of buffers and images, except that the underlying vector primitives (e.g.
+          <type>__cl_float4</type>) where defined shall be directly accessible as such
+          using appropriate named fields in the <constant>cl_type</constant> union. Nevertheless,
+          it is recommended that the <code>cl_platform.h</code> header should attempt to
+          naturally align OpenCL defined application data types (e.g. <type>cl_float4</type>)
+          according to their type.
+        </para>
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="scalarDataTypes">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry>
+        </para>
+    </refsect1> -->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 17-Oct-2011 -->
+</refentry>
+

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Atomic Functions</keyword>
+        </keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>Atomic Functions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>Atomic Functions</refname>
+        <refpurpose>
+The atomic functions are shown below.
+Click an item in the table below for details about that function.
+        </refpurpose>
+    </refnamediv>
+
+<refsect1 id="springboard"><title></title>
+
+<informaltable frame="all"><tgroup cols="4" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="1*" colname="col1" />
+    <colspec colnum="2" colwidth="1*" colname="col2" />
+    <colspec colnum="3" colwidth="1*" colname="col3" />
+    <colspec colnum="4" colwidth="1*" colname="col4" />
+    <tbody>
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atomic_add</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_sub</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_xchg</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_inc</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atomic_dec</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_cmpxchg</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_min</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_max</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atomic_and</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_or</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_xor</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+            </entry>
+        </row>
+
+    </tbody>
+
+    </tgroup></informaltable>
+
+    <para>
+      The <citerefentry><refentrytitle>cl_khr_int64_base_atomics</refentrytitle></citerefentry>
+      extension enables additional atomic functions using types <type>long</type>
+      and <type>unsigned long</type>.  An application that wants to use
+      this extension will need to include the <code>#pragma OPENCL EXTENSION
+      <citerefentry><refentrytitle>cl_khr_int64_base_atomics</refentrytitle></citerefentry> :
+      enable</code> in the OpenCL program source.
+    </para>
+
+<informaltable frame="all"><tgroup cols="4" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="1*" colname="col1" />
+    <colspec colnum="2" colwidth="1*" colname="col2" />
+    <colspec colnum="3" colwidth="1*" colname="col3" />
+    <colspec colnum="4" colwidth="1*" colname="col4" />
+    <tbody>
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atom_add</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_sub</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_xchg</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_inc</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atom_dec</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_cmpxchg</refentrytitle></citerefentry>
+            </entry>
+        </row>
+    </tbody>
+    </tgroup></informaltable>
+
+    <para>
+      The <citerefentry><refentrytitle>cl_khr_int64_extended_atomics</refentrytitle></citerefentry>
+      extension enables additional atomic functions using types <type>long</type>
+      and <type>unsigned long</type>.  An application that wants to use
+      this extension will need to include the <code>#pragma OPENCL EXTENSION
+      <citerefentry><refentrytitle>cl_khr_int64_extended_atomics</refentrytitle></citerefentry>
+      : enable</code> in the OpenCL program source.
+    </para>
+
+<informaltable frame="all"><tgroup cols="3" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="1*" colname="col1" />
+    <colspec colnum="2" colwidth="1*" colname="col2" />
+    <colspec colnum="3" colwidth="1*" colname="col3" />
+    <tbody>
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atom_min</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_max</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_xor</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atom_and</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_or</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+    </tbody>
+
+    </tgroup></informaltable>
+
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          These functions provide atomic operations on 32-bit signed, unsigned
+          integers and single precision floating-point to locations in <citerefentry
+          href="global"><refentrytitle>__global</refentrytitle></citerefentry> or <citerefentry
+          href="local"><refentrytitle>__local</refentrytitle></citerefentry> memory.  Only the
+          <function>atomic_xchg</function> operation is supported for single precision
+          floating-point data type.
+        </para>
+
+        <para>
+          The atomic built-in functions that use the <constant>atom_</constant> prefix and are
+          described in the <olink uri="atom_add">OpenCL Extension Specification</olink> and are
+          enabled by: cl_khr_global_int32_base_atomics, cl_khr_global_int32_extended_atomics,
+          cl_khr_local_int32_base_atomics, and cl_khr_local_int32_extended_atomics in sections
+          9.5 and 9.6 of the OpenCL 1.0 specification are also supported.  .
+        </para>
+
+        <para>
+          The 64-bit transactions are atomic for the device executing these atomic functions. There
+          is no guarantee of atomicity if the atomic operations to the same memory location
+          are being performed by kernels executing on multiple devices.
+        </para>
+    </refsect1>
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 <!-- link to section 9.5 of spec -->
+            <olink uri="atomicFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>sampler_t</refentrytitle></citerefentry>
+        </para>
+    </refsect1>  -->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Oct-2011 -->
+</refentry>
+

@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY sharingD3D10Inc SYSTEM "sharingD3D10Inc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>clCreateFromD3D10Texture3DKHR</keyword></keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clCreateFromD3D10Texture3DKHR</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateFromD3D10Texture3DKHR">
+        <refname>clCreateFromD3D10Texture3DKHR</refname>
+        <refpurpose>Creates an OpenCL 3D image object from a subresource of a Direct3D 10 3D texture.</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                <link xlink:href="abstractDataTypes.html">cl_mem</link>
+                    <function>clCreateFromD3D10Texture3DKHR</function></funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef>ID3D10Texture3D<parameter>*resource</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">UINT</link><parameter>subresource</parameter></paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <parameter>*errcode_ret</parameter>
+                </paramdef>
+           </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><varname>context</varname></term>
+            <listitem>
+                <para>
+                    A valid OpenCL context created from a Direct3D 10 device.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>flags</varname></term>
+            <listitem>
+                <para>
+                  A bit-field that is used to specify usage information.  May be
+                  <constant>CL_MEM_READ_ONLY</constant>, <constant>CL_MEM_WRITE_ONLY</constant>,
+                  or <constant>CL_MEM_READ_WRITE</constant>. (See the table for
+                  <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>
+                  for more information.)
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>resource</varname></term>
+            <listitem>
+                <para>
+                    A pointer to the Direct3D 10 3D texture to share.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>subresource</varname></term>
+            <listitem>
+                <para>
+                    The subresource of <varname>resource</varname> to share.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>errcode_ret</varname></term>
+            <listitem>
+                <para>
+                    An appropriate error code. If <varname>errcode_ret</varname> is NULL, no error code is returned.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          The width, height and depth of the returned OpenCL 3D image object are determined
+          by the width, height and depth of subresource <varname>subresource</varname> of
+          <varname>resource</varname>. The channel type and order of the returned OpenCL 3D
+          image object is determined by the format of <varname>resource</varname> as shown
+          below in the table of Direct3D 10 and corresponding OpenCL image formats.
+        </para>
+
+        <para>
+          This call will increment the internal Direct3D reference count on
+          <varname>resource</varname>. The internal Direct3D reference count on
+          <varname>resource</varname> will be decremented when the OpenCL reference count on
+          the returned OpenCL memory object drops to zero.
+        </para>
+
+        <para>
+           Following is a list of Direct3D 10 and corresponding OpenCL image formats.
+        </para>
+
+        <informaltable frame="all">
+                    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colname="col1" colnum="1" />
+                        <colspec colname="col2" colnum="2" />
+                        <thead>
+                            <row>
+                                <entry>DXGI format</entry>
+                                <entry>CL image format (channel order, channel data type)</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row><entry>DXGI_FORMAT_R32G32B32A32_FLOAT</entry>
+                                <entry>CL_RGBA, CL_FLOAT</entry></row>
+                            <row><entry>DXGI_FORMAT_R32G32B32A32_UINT</entry>
+                                <entry>CL_RGBA, CL_UNSIGNED_INT32</entry></row>
+                            <row><entry>DXGI_FORMAT_R32G32B32A32_SINT</entry>
+                                <entry>CL_RGBA, CL_SIGNED_INT32</entry></row>
+
+                            <row><entry></entry>
+                                <entry></entry></row>
+
+                            <row><entry>DXGI_FORMAT_R16G16B16A16_FLOAT</entry>
+                                <entry>CL_RGBA, CL_HALF_FLOAT</entry></row>
+                            <row><entry>DXGI_FORMAT_R16G16B16A16_UNORM</entry>
+                                <entry>CL_RGBA, CL_UNORM_INT16</entry></row>
+                            <row><entry>DXGI_FORMAT_R16G16B16A16_UINT</entry>
+                                <entry>CL_RGBA, CL_UNSIGNED_INT16</entry></row>
+                            <row><entry>DXGI_FORMAT_R16G16B16A16_SNORM</entry>
+                                <entry>CL_RGBA, CL_SNORM_INT16</entry></row>
+                            <row><entry>DXGI_FORMAT_R16G16B16A16_SINT</entry>
+                                <entry>CL_RGBA, CL_SIGNED_INT16</entry></row>
+
+                            <row><entry></entry>
+                                <entry></entry></row>
+
+                            <row><entry>DXGI_FORMAT_R8G8B8A8_UNORM</entry>
+                                <entry>CL_RGBA, CL_UNORM_INT8</entry></row>
+                            <row><entry>DXGI_FORMAT_R8G8B8A8_UINT</entry>
+                                <entry>CL_RGBA, CL_UNSIGNED_INT8</entry></row>
+                            <row><entry>DXGI_FORMAT_R8G8B8A8_SNORM</entry>
+                                <entry>CL_RGBA, CL_SNORM_INT8</entry></row>
+                            <row><entry>DXGI_FORMAT_R8G8B8A8_SINT</entry>
+                                <entry>CL_RGBA, CL_SIGNED_INT8</entry></row>
+
+                            <row><entry></entry>
+                                <entry></entry></row>
+
+                            <row><entry>DXGI_FORMAT_R32G32_FLOAT</entry>
+                                <entry>CL_RG, CL_FLOAT</entry></row>
+                            <row><entry>DXGI_FORMAT_R32G32_UINT</entry>
+                                <entry>CL_RG, CL_UNSIGNED_INT32</entry></row>
+                            <row><entry>DXGI_FORMAT_R32G32_SINT</entry>
+                                <entry>CL_RG, CL_SIGNED_INT32</entry></row>
+
+                            <row><entry></entry>
+                                <entry></entry></row>
+
+                            <row><entry>DXGI_FORMAT_R16G16_FLOAT</entry>
+                                <entry>CL_RG, CL_HALF_FLOAT</entry></row>
+                            <row><entry>DXGI_FORMAT_R16G16_UNORM</entry>
+                                <entry>CL_RG, CL_UNORM_INT16</entry></row>
+                            <row><entry>DXGI_FORMAT_R16G16_UINT</entry>
+                                <entry>CL_RG, CL_UNSIGNED_INT16</entry></row>
+                            <row><entry>DXGI_FORMAT_R16G16_SNORM</entry>
+                                <entry>CL_RG, CL_SNORM_INT16</entry></row>
+                            <row><entry>DXGI_FORMAT_R16G16_SINT</entry>
+                                <entry>CL_RG, CL_SIGNED_INT16</entry></row>
+
+                            <row><entry></entry>
+                                <entry></entry></row>
+
+                            <row><entry>DXGI_FORMAT_R8G8_UNORM</entry>
+                                <entry>CL_RG, CL_UNORM_INT8</entry></row>
+                            <row><entry>DXGI_FORMAT_R8G8_UINT</entry>
+                                <entry>CL_RG, CL_UNSIGNED_INT8</entry></row>
+                            <row><entry>DXGI_FORMAT_R8G8_SNORM</entry>
+                                <entry>CL_RG, CL_SNORM_INT8</entry></row>
+                            <row><entry>DXGI_FORMAT_R8G8_SINT</entry>
+                                <entry>CL_RG, CL_SIGNED_INT8</entry></row>
+
+                            <row><entry></entry>
+                                <entry></entry></row>
+
+                            <row><entry>DXGI_FORMAT_R32_FLOAT</entry>
+                                <entry>CL_R, CL_FLOAT</entry></row>
+                            <row><entry>DXGI_FORMAT_R32_UINT</entry>
+                                <entry>CL_R, CL_UNSIGNED_INT32</entry></row>
+                            <row><entry>DXGI_FORMAT_R32_SINT</entry>
+                                <entry>CL_R, CL_SIGNED_INT32</entry></row>
+
+                            <row><entry></entry>
+                                <entry></entry></row>
+
+                            <row><entry>DXGI_FORMAT_R16_FLOAT</entry>
+                                <entry>CL_R, CL_HALF_FLOAT</entry></row>
+                            <row><entry>DXGI_FORMAT_R16_UNORM</entry>
+                                <entry>CL_R, CL_UNORM_INT16</entry></row>
+                            <row><entry>DXGI_FORMAT_R16_UINT</entry>
+                                <entry>CL_R, CL_UNSIGNED_INT16</entry></row>
+                            <row><entry>DXGI_FORMAT_R16_SNORM</entry>
+                                <entry>CL_R, CL_SNORM_INT16</entry></row>
+                            <row><entry>DXGI_FORMAT_R16_SINT</entry>
+                                <entry>CL_R, CL_SIGNED_INT16</entry></row>
+
+                            <row><entry></entry>
+                                <entry></entry></row>
+
+                            <row><entry>DXGI_FORMAT_R8_UNORM</entry>
+                                <entry>CL_R, CL_UNORM_INT8</entry></row>
+                            <row><entry>DXGI_FORMAT_R8_UINT</entry>
+                                <entry>CL_R, CL_UNSIGNED_INT8</entry></row>
+                            <row><entry>DXGI_FORMAT_R8_SNORM</entry>
+                                <entry>CL_R, CL_SNORM_INT8</entry></row>
+                            <row><entry>DXGI_FORMAT_R8_SINT</entry>
+                                <entry>CL_R, CL_SIGNED_INT8</entry></row>
+                        </tbody>
+                    </tgroup>
+                </informaltable>
+
+        &sharingD3D10Inc;
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> returns a valid non-zero OpenCL buffer
+          object and <varname>errcode_ret</varname> is set to <errorname>CL_SUCCESS</errorname>
+          if the buffer object is created successfully. Otherwise, it returns a NULL value with
+          one of the following error values returned in <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not
+              a valid context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if values specified in
+              <varname>flags</varname> are not valid or if <varname>subresource</varname>
+              is not a valid subresource index for <varname>resource</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_D3D10_RESOURCE_KHR</errorname> if <varname>resource</varname>
+              is not a Direct3D 10 texture resource, if <varname>resource</varname>
+              was created with the <constant>D3D10_USAGE</constant> flag
+              <constant>D3D10_USAGE_IMMUTABLE</constant>, if a <varname>resource</varname>
+              is a multisampled texture, if <type>cl_mem</type> from subresource
+              <varname>subresource</varname> of <varname>resource</varname> has already
+              been created using <function>clCreateFromD3D10Texture3DKHR</function>, or if
+              <varname>context</varname> was not created against the same Direct3D 10 device
+              from which <varname>resource</varname> was created.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</errorname> if the Direct3D 10
+              texture format of <varname>resource</varname> is not a value listed in the above
+              table of Direct3D 10 and corresponding OpenCL image formats, or if the Direct3D 10
+              texture format of <varname>resource</varname> does not map to a supported OpenCL
+              image format.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clCreateFromD3D10Texture3DKHR">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetDeviceIDsFromD3D10KHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromD3D10BufferKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromD3D10Texture2DKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueAcquireD3D10ObjectsKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueReleaseD3D10ObjectsKHR</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 22-Oct-2011 -->
+</refentry>
+

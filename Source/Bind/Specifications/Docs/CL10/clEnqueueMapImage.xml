@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>         
+                clEnqueueMapImage 
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>       
+            clEnqueueMapImage 
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+  
+    </refmeta>
+
+
+<!-- ================================ SYNOPSIS -->  
+
+    <refnamediv id="clEnqueueMapImage ">
+        <refname>     
+            clEnqueueMapImage 
+        </refname> 
+
+        <refpurpose>          
+            Enqueues a command to map a region of an image object into the host address space and returns a pointer to this mapped region.
+        </refpurpose> 
+    </refnamediv> 
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>              
+                    <link xlink:href="scalarDataTypes.html">void</link> * <function>clEnqueueMapImage </function>
+                </funcdef>
+					<paramdef><link xlink:href="abstractDataTypes.html">cl_command_queue</link><parameter>command_queue</parameter></paramdef>
+					<paramdef><link xlink:href="abstractDataTypes.html">cl_mem</link><parameter>image</parameter></paramdef>
+					<paramdef><link xlink:href="enums.html#cl_bool">cl_bool</link><parameter>blocking_map</parameter></paramdef>
+					<paramdef><link xlink:href="enums.html#cl_bool">cl_map_flags</link><parameter>map_flags</parameter></paramdef>
+					<paramdef>const <link xlink:href="scalarDataTypes.html">size_t</link><parameter>origin</parameter>[3]</paramdef>
+					<paramdef>const <link xlink:href="scalarDataTypes.html">size_t</link><parameter>region</parameter>[3]</paramdef>
+					<paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>*image_row_pitch</parameter></paramdef>
+					<paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>*image_slice_pitch</parameter></paramdef>
+					<paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_events_in_wait_list</parameter></paramdef>
+					<paramdef>const <link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event_wait_list</parameter></paramdef>
+					<paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event</parameter></paramdef>
+					<paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef> 
+            </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>
+
+
+<!-- ================================ PARAMETERS --> 
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+
+            <varlistentry>
+                <term>
+                    <varname>
+						command_queue
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> 
+						Must be a valid command-queue. 
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>
+						image
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para>
+						A valid image object. The OpenCL context associated with <varname>command_queue</varname> and <varname>image</varname> must be the same.
+                    </para>
+               </listitem>
+            </varlistentry>
+			
+            <varlistentry>
+                <term>
+                    <varname>
+						blocking_map
+					</varname>
+				</term>
+				
+				<listitem>
+					<para>
+						Indicates if the map operation is <varname>blocking</varname> or <varname>non-blocking</varname>. If <varname>blocking_map</varname> is <constant>CL_TRUE</constant>, <function>clEnqueueMapImage </function> does not return until the specified region in <varname>image</varname> can be mapped.
+					</para>
+					
+					<para>
+						If <varname>blocking_map</varname> is <constant>CL_FALSE</constant> i.e. map operation is non-blocking, the pointer to the mapped region returned by <function>clEnqueueMapImage</function> cannot be used until the map command has completed. The <varname>event</varname> argument returns an event object which can be used to query the execution status of the map command. When the map command is completed, the application can access the contents of the mapped region using the pointer returned by <function>clEnqueueMapImage</function>.
+					</para>
+				</listitem>
+			</varlistentry>
+			
+            <varlistentry>
+                <term>
+                    <varname>
+						map_flags
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para>
+						Is a bit-field and can be set to <constant>CL_MAP_READ</constant> to indicate that the region specified by (<varname>origin</varname>, <varname>region</varname>) in the image object is being mapped for reading, and/or <constant>CL_MAP_WRITE</constant> to indicate that the region specified by (<varname>origin</varname>, <varname>region</varname>) in the image object is being mapped for writing.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>
+						origin,
+					</varname>
+					<varname>
+						region
+					</varname>
+                </term>
+
+                <listitem>
+                    <para> 
+						Define the (<emphasis>x, y, z</emphasis>) offset in pixels and (<varname>width</varname>, <varname>height</varname>, <varname>depth</varname>) in pixels of the 2D or 3D rectangle region that is to be mapped. If <varname>image</varname> is a 2D image object, the <emphasis>z</emphasis> value given by <varname>origin</varname>[2] must be 0 and the <varname>depth</varname> value given by <varname>region</varname>[2] must be 1.
+                    </para>
+               </listitem>
+            </varlistentry>
+			
+			<varlistentry>
+                <term>
+                    <varname>
+						image_row_pitch
+                    </varname>
+                </term>
+                <listitem>
+                    <para>
+						Returns the scan-line pitch in bytes for the mapped region. This must be a non-NULL value.
+                    </para>
+               </listitem>
+            </varlistentry>
+			
+			<varlistentry>
+                <term>
+                    <varname>
+						image_slice_pitch
+                    </varname>
+                </term>
+                <listitem>
+                    <para>
+						Returns the size in bytes of each 2D slice for the mapped region. For a 2D image, zero is returned if this argument is not NULL. For a 3D image, <varname>image_slice_pitch</varname> must be a non-NULL value.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>
+						event_wait_list
+					,</varname>
+					<varname>
+						num_events_in_wait_list
+					</varname>
+				</term>
+				
+				<listitem>
+					<para>
+						Specify events that need to complete before <function>clEnqueueMapImage</function> can be executed. If <varname>event_wait_list</varname> is NULL, then <function>clEnqueueMapImage</function> does not wait on any event to complete. If <varname>event_wait_list</varname> is NULL, <varname>num_events_in_wait_list</varname> must be 0. If <varname>event_wait_list</varname> is not NULL, the list of events pointed to by <varname>event_wait_list</varname> must be valid and<varname>num_events_in_wait_list</varname> must be greater than 0. The events specified in <varname>event_wait_list</varname> act as synchronization points. The context associated with events in <varname>event_wait_list</varname> and <varname>command_queue</varname> must be the same.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>
+						event
+					</varname>
+				</term>
+				
+				<listitem>
+					<para>
+						Returns an event object that identifies this particular copy command and can be used to query or queue a wait for this particular command to complete. <varname>event</varname> can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete. 		
+					</para>
+				</listitem>
+			</varlistentry>	
+             <varlistentry>
+                <term>
+                    <varname>
+						errcode_ret
+					</varname>
+				</term>
+			
+			<listitem>
+				<para>
+					Returns an appropriate error code. If <varname>errcode_ret</varname> is NULL, no error code is returned.
+				</para>
+			</listitem>
+			</varlistentry>
+        </variablelist>
+    </refsect1>
+
+    
+<!-- ================================ NOTES  -->        
+ 
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+			If the buffer or image object is created with <constant>CL_MEM_USE_HOST_PTR</constant> set in <varname>mem_flags</varname>, the following will be true:
+        </para>
+		<itemizedlist mark="disc">
+			<listitem>
+				The <varname>host_ptr</varname> specified in <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry>, or <citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry> is guaranteed to contain the latest bits in the region being mapped when the  <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry> or <function>clEnqueueMapImage</function> command has completed.
+			</listitem>
+			<listitem>
+				The pointer value returned by <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry> or <function>clEnqueueMapImage</function> will be derived from the <varname>host_ptr</varname> specified when the buffer or image object is created.
+			</listitem>
+		</itemizedlist>
+		<para>
+		The contents of the regions of a memory object mapped for writing (i.e. <constant>CL_MAP_WRITE</constant> is set
+in <varname>map_flags</varname> argument to <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry> or <function>clEnqueueMapImage</function>) are considered to be
+undefined until this region is unmapped. Reads and writes by a kernel executing on a device to a
+memory region(s) mapped for writing are undefined.
+        </para>
+		<para>
+Multiple command-queues can map a region or overlapping regions of a memory object for
+reading (i.e. <varname>map_flags</varname> = <constant>CL_MAP_READ</constant>). The contents of the regions of a memory object
+mapped for reading can also be read by kernels executing on a device(s). The behavior of writes
+by a kernel executing on a device to a mapped region of a memory object is undefined.
+Mapping (and unmapping) overlapped regions of a buffer or image memory object for writing is
+undefined.
+        </para>
+		<para>
+The behavior of OpenCL function calls that enqueue commands that write or copy to regions of a
+memory object that are mapped is undefined.
+		</para>
+    </refsect1>
+    
+
+<!-- ================================ ERRORS  -->       
+
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+			<function>clEnqueueMapImage</function> will return a pointer to the mapped region if the function is executed successfully. 
+			The <varname>errcode_ret</varname> is set to <errorname>CL_SUCCESS</errorname>.
+		</para>
+		<para>
+			A NULL pointer is returned otherwise with one of the following error values returned in
+			<varname>errcode_ret</varname>:
+		</para>
+		<itemizedlist mark="disc">
+			<listitem>
+				<errorname>CL_INVALID_COMMAND_QUEUE</errorname> if <varname>command_queue</varname> is not a valid command-queue.
+			</listitem>
+			
+			<listitem>			
+				<errorname>CL_INVALID_CONTEXT</errorname> if the context associated with <varname>command_queue</varname> and <varname>image</varname>
+				are not the same or if the context associated with <varname>command_queue</varname> and events
+				in <varname>event_wait_list</varname> are not the same.
+			</listitem>
+			
+			<listitem>
+				<errorname>CL_INVALID_MEM_OBJECT</errorname> if <varname>image</varname> is not a valid image object.
+			</listitem>
+			
+			
+			<listitem>
+				<errorname>CL_INVALID_VALUE</errorname> if region being mapped given by (<varname>origin</varname>, <varname>origin</varname>+<varname>region</varname>) is out of bounds or if
+				values specified in <varname>map_flags</varname> are not valid.
+			</listitem>						
+			
+			<listitem>
+				<errorname>CL_INVALID_VALUE</errorname> if <varname>image</varname> is a 2D image object and <varname>origin</varname>[2] is not equal to 0 or
+				<varname>region</varname>[2] is not equal to 1.
+			</listitem>
+			
+			<listitem>
+				<errorname>CL_INVALID_VALUE</errorname> if <varname>image_row_pitch</varname> is NULL.
+			</listitem>
+
+			<listitem>
+				<errorname>CL_INVALID_VALUE</errorname> if <varname>image</varname> is a 3D image object and <varname>image_slice_pitch</varname> is NULL.
+			</listitem>
+			
+			<listitem>	
+				<errorname>CL_INVALID_EVENT_WAIT_LIST</errorname> if <varname>event_wait_list</varname> is NULL and
+				<varname>num_events_in_wait_list</varname> greater than 0, or <varname>event_wait_list</varname> is not NULL and
+				<varname>num_events_in_wait_list</varname> is 0, or if event objects in <varname>event_wait_list</varname> are not valid events.
+			</listitem>
+			<listitem>
+				<errorname>CL_MAP_FAILURE</errorname> if there is a failure to map the requested region into the host address
+				space. This error cannot occur for image objects created with <constant>CL_MEM_USE_HOST_PTR</constant>
+				or <constant>CL_MEM_ALLOC_HOST_PTR</constant>.
+			</listitem>
+			<listitem>
+				<errorname>CL_MEM_OBJECT_ALLOCATION_FAILURE</errorname> if there is a failure to allocate memory for
+				data store associated with <varname>image</varname>.
+			</listitem>
+			
+			<listitem>
+				<varname>errcode_ret</varname> returns <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by the
+				OpenCL implementation on the host.
+			</listitem>			
+		</itemizedlist>
+			<para>
+				The pointer returned maps a 2D or 3D region starting at <varname>origin</varname> and is atleast (<varname>image_row_pitch</varname> *
+<varname>region[1]</varname> + <varname>region[0]</varname>) pixels in size for a 2D image, and is atleast (<varname>image_slice_pitch</varname> *
+<varname>region</varname>[2] + <varname>image_row_pitch</varname> * <varname>region[1]</varname> + <varname>region[0]</varname>) pixels in size for a 3D image. The result
+of a memory access outside this region is undefined.
+			</para>
+    </refsect1>
+    
+
+<!-- ================================ EXAMPLE  -->  
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--    
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>   
+    </refsect2>  
+--> 
+
+
+<!-- ================================ SPECIFICATION  -->        
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->     
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+			
+				      
+            <olink uri="clEnqueueMapImage ">OpenCL Specification</olink>
+        </para>
+    </refsect1>     
+
+
+<!-- ================================ ALSO SEE  -->     
+   
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueUnmapMemObject</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->  
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

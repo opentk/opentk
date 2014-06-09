@@ -1,0 +1,23 @@
+        <para>
+            The relational and equality operators (&lt;, &lt;=, &gt;, &gt;=, !=, ==) can be used 
+            with scalar and vector built-in types and produce a scalar or vector signed integer 
+            result respectively.
+        </para>
+        <para>
+            The built-in relational functions can be used with built-in scalar or vector types as 
+            arguments and return a scalar or vector integer result. If an implementation extends this 
+            specification to support IEEE-754 flags or exceptions, then all built-in Relational 
+            shall proceed without raising the <varname>invalid</varname> floating-point exception when one or more of the
+            operands are NaNs.
+        </para>
+        <para> 
+            The built-in relational functions are extended with
+            <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry> 
+            to include appropriate versions of functions that take <type>double</type>, and 
+            <type>double{2|3|4|8|16}</type> as arguments and return values. They are also extended with
+            <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> to include appropriate versions 
+            of functions that take <type>half</type>, and <type>half{2|3|4|8|16}</type> as arguments and return values. 
+            The relational and equality operators (&lt;, &lt;=, &gt;, &gt;=, !=, ==) can be used 
+            with <type>double<replaceable>n</replaceable></type> vector types and shall produce a vector
+            <type>long<replaceable>n</replaceable></type> result.
+        </para>

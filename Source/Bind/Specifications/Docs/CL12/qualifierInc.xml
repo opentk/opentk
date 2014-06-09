@@ -1,0 +1,47 @@
+<!-- common stuff for global, local, constant, and private -->
+
+    <para>
+      OpenCL implements the following disjoint address spaces: <function>__global</function>,
+      <function>__local</function>, <function>__constant</function>, and
+      <function>__private</function> The address space qualifier may be used in variable
+      declarations to specify the region of memory that is used to allocate the object. The
+      C syntax for type qualifiers is extended in OpenCL to include an address space name as
+      a valid type qualifier. If the type of an object is qualified by an address space name,
+      the object is allocated in the specified address name; otherwise, the object is allocated
+      in the generic address space.
+    </para>
+
+    <para>
+      The address space names without the __prefix i.e. <function>global</function>,
+      <function>local</function>, <function>constant</function> and <function>private</function>
+      may be substituted for the corresponding address space names with the __prefix.
+    </para>
+
+    <para>
+      The generic address space name for arguments to a function in a program, or local variables
+      of a function is  <function>__private</function>. All function arguments shall be in the
+      <function>__private</function> address space.
+    </para>
+
+    <para>
+      <citerefentry
+      href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry>
+      function arguments declared to be a pointer of a type can point to one of the following
+      address spaces only: <function>__global</function>, <function>__local</function> or
+      <function>__constant</function>.  A pointer to address space A can only be assigned to
+      a pointer to the same address space A. Casting a pointer to address space A to a pointer
+      to address space B is illegal.
+    </para>
+
+    <para>
+      Function arguments of type
+      <type><citerefentry href="otherDataTypes"><refentrytitle>image2d_t</refentrytitle></citerefentry></type>,
+      <type><citerefentry href="otherDataTypes"><refentrytitle>image3d_t</refentrytitle></citerefentry></type>,
+      <type><citerefentry href="otherDataTypes"><refentrytitle>image2d_array_t</refentrytitle></citerefentry></type>,
+      <type><citerefentry href="otherDataTypes"><refentrytitle>image1d_t</refentrytitle></citerefentry></type>,
+      <type><citerefentry href="otherDataTypes"><refentrytitle>image1d_buffer_t</refentrytitle></citerefentry></type>, and
+      <type><citerefentry href="otherDataTypes"><refentrytitle>image1d_array_t</refentrytitle></citerefentry></type>
+      refer to image memory objects allocated in the <function>__global</function> address space.
+    </para>
+
+<!-- 14-Oct-2011 -->

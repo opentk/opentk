@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>                            
+                clCreateFromGLTexture2D
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>clCreateFromGLTexture2D</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateFromGLTexture2D">             
+        <refname>clCreateFromGLTexture2D</refname>
+
+        <refpurpose>
+            Creates an OpenCL 2D image object from an OpenGL 2D texture object, or a single face of an
+OpenGL cubemap texture object.
+        </refpurpose>
+    </refnamediv>
+
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                        cl_mem
+                    <function>                   
+                        clCreateFromGLTexture2D
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef>GLenum<parameter>texture_target</parameter></paramdef>
+                <paramdef>GLint<parameter>miplevel</parameter></paramdef>
+                <paramdef>GLuint<parameter>texture</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>* errcode_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        context
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A valid OpenCL context created from an OpenGL context.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        flags
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A bit-field that is used to specify usage information. Refer to
+the table at
+<citerefentry><refentrytitle><function>clCreateBuffer</function></refentrytitle></citerefentry>
+for a description of flags. Only CL_MEM_READ_ONLY, CL_MEM_WRITE_ONLY and CL_MEM_READ_WRITE
+values specified in the table at <citerefentry><refentrytitle><function>clCreateBuffer</function></refentrytitle></citerefentry>
+may be used.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        texture_target
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        Must be one of GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X,
+GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
+GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, or GL_TEXTURE_RECTANGLE. <varname>texture_target</varname> is
+used only to define the image type of <varname>texture</varname>. No reference to a bound GL texture object is made or implied by this parameter.
+                    </para>
+
+                    <para>
+Using GL_TEXTURE_RECTANGLE for texture_target requires OpenGL 3.1. Alternatively, GL_TEXTURE_RECTANGLE_ARB may be specified if the OpenGL extension GL_ARB_texture_rectangle is supported.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        miplevel
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        The mipmap level to be used. Implementations may return CL_INVALID_OPERATION for miplevel values greater than 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        texture
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        The name of a GL 2D, cubemap or rectangle texture object. The texture object must be a complete texture as per OpenGL rules on texture completeness. The <varname>texture</varname> format and
+dimensions defined by OpenGL for the specified <varname>miplevel</varname> of the texture will be used to create the 2D image object. Only GL texture objects with an internal format that maps to appropriate image channel order and data type specified in the table of supported Image Channel Order Values and the table of supported Image Channel Data Types at <citerefentry><refentrytitle><type>cl_image_format</type></refentrytitle></citerefentry> may be used to create a 2D image object.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        errcode_ret
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                         Returns an appropriate error code as described below.
+If <varname>errcode_ret</varname> is NULL, no error code is returned.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns a valid non-zero OpenCL image object and <varname>errcode_ret</varname> is
+set to <errorname>CL_SUCCESS</errorname> if the image object is
+created successfully. Otherwise, it returns a NULL
+value with one of the following error values returned in <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+
+            <listitem>
+                <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname>
+                is not a valid context or was not created from a GL context.
+.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if values specified in
+<varname>flags</varname> are not valid or if value specified in
+<varname>texture_target</varname> is not one of the values specified
+in the description of <varname>texture_target</varname>.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_MIPLEVEL</errorname> if <varname>miplevel</varname> is less
+than the value of <varname>level<subscript>base</subscript></varname> (for OpenGL
+implementations) or zero (for OpenGL ES implementations); or greater than the value of
+<varname>q</varname> (for both OpenGL and OpenGL ES).
+<varname>level<subscript>base</subscript></varname> and <varname>q</varname>
+are defined for the texture in section 3.8.10 (Texture Completeness) of the OpenGL 2.1 specification and section 3.7.10 of the OpenGL ES 2.0 specification.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_MIPLEVEL</errorname> if <varname>miplevel</varname>
+is greater than zero and the OpenGL implementation does not support creating from non-zero mipmap levels.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_GL_OBJECT</errorname> if <varname>texture</varname>
+is not a GL texture object whose type matches
+<varname>texture_target</varname>, if the specified <varname>miplevel</varname> of
+<varname>texture</varname> is not defined,
+or if the width or height
+of the specified <varname>miplevel</varname> is zero.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</errorname> if the
+OpenGL texture internal format
+does not map to a supported OpenCL image format.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure
+to allocate resources required by the
+OpenCL implementation on the host.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="clCreateFromGLTexture2D">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clCreateFromGLTexture3D</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

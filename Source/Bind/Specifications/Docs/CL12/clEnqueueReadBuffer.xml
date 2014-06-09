@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clEnqueueReadBuffer</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clEnqueueReadBuffer
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clEnqueueReadBuffer">
+        <refname>
+            clEnqueueReadBuffer
+        </refname>
+
+        <refpurpose>
+            Enqueue commands to read from a buffer object to host memory.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clEnqueueReadBuffer</function>
+                </funcdef>
+
+                    <paramdef><link xlink:href="abstractDataTypes.html">cl_command_queue</link><parameter>command_queue</parameter></paramdef>
+                    <paramdef><link xlink:href="abstractDataTypes.html">cl_mem</link><parameter>buffer</parameter></paramdef>
+                    <paramdef><link xlink:href="enums.html#cl_bool">cl_bool</link><parameter>blocking_read</parameter></paramdef>
+                    <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                    <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>size</parameter></paramdef>
+                    <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*ptr</parameter></paramdef>
+                    <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_events_in_wait_list</parameter></paramdef>
+                    <paramdef>const <link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event_wait_list</parameter></paramdef>
+                    <paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term><varname>command_queue</varname></term>
+                <listitem>
+                    <para> <!-- parameter description -->
+                        Refers to the command-queue in which the read command will be
+                        queued. <varname>command_queue</varname> and <varname>buffer</varname>
+                        must be created with the same OpenCL context.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>buffer</varname></term>
+                <listitem>
+                    <para>Refers to a valid buffer object.</para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>blocking_read</varname></term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> Indicates if the read operations are
+                      <varname>blocking</varname> or non-blocking.
+                    </para>
+
+                    <para>
+                      If <varname>blocking_read</varname> is <constant>CL_TRUE</constant>
+                      i.e. the read command is blocking, <function>clEnqueueReadBuffer</function>
+                      does not return until the buffer data has been read and copied into memory
+                      pointed to by <varname>ptr</varname>.
+                    </para>
+
+                    <para>
+                      If <varname>blocking_read</varname> is <constant>CL_FALSE</constant>
+                      i.e. the read command is <varname>non-blocking</varname>,
+                      <function>clEnqueueReadBuffer</function> queues a
+                      <varname>non-blocking</varname> read command and returns. The contents of
+                      the buffer that <varname>ptr</varname> points to cannot be used until the
+                      read command has completed. The <varname>event</varname> argument returns
+                      an event object which can be used to query the execution status of the
+                      read command. When the read command has completed, the contents of the
+                      buffer that <varname>ptr</varname> points to can be used by the application.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>offset</varname></term>
+                <listitem>
+                    <para>The offset in bytes in the buffer object to read from.</para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>size</varname></term>
+                <listitem>
+                    <para>The size in bytes of data being read.</para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>ptr </varname> </term>
+                <listitem>
+                    <para> <!-- parameter description -->
+                        The pointer to buffer in host memory where data is to be read into.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+               <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        event_wait_list
+                    </varname>
+                </term>
+                <term>
+                    <varname> <!-- parameter name -->
+                        num_events_in_wait_list
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      <!-- parameter description --> <varname>event_wait_list</varname>
+                      and <varname>num_events_in_wait_list</varname> specify events that
+                      need to complete before this particular command can be executed.
+                      If <varname>event_wait_list</varname> is NULL, then this particular command
+                      does not wait on any event to complete. If <varname>event_wait_list</varname>
+                      is NULL, <varname>num_events_in_wait_list</varname> must be 0. If
+                      <varname>event_wait_list</varname> is not NULL, the list of events
+                      pointed to by <varname>event_wait_list</varname> must be valid
+                      and <varname>num_events_in_wait_list</varname> must be greater
+                      than 0. The events specified in <varname>event_wait_list</varname>
+                      act as synchronization points. The context associated with events in
+                      <varname>event_wait_list</varname> and <varname>command_queue</varname> must
+                      be the same. The memory associated with <varname>event_wait_list</varname>
+                      can be reused or freed after the function returns.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> event </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> Returns an event object that identifies
+                      this particular read command and can be used to query or queue a wait
+                      for this particular command to complete.  <varname>event</varname> can be
+                      NULL in which case it will not be possible for the application to query
+                      the status of this command or queue a wait for this command to complete.
+                      If the <varname>event_wait_list</varname> and the event arguments are
+                      not NULL, the <varname>event</varname> argument should not refer to an
+                      element of the <varname>event_wait_list</varname> array.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <!-- END PARAMETER TABLE  -->
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Calling <function>clEnqueueReadBuffer</function> to read a region of the buffer object
+          with the <varname>ptr</varname> argument value set to <varname>host_ptr</varname>
+          + <varname>offset</varname>, where <varname>host_ptr</varname> is a pointer to
+          the memory region specified when the buffer object being read is created with
+          <constant>CL_MEM_USE_HOST_PTR</constant>, must meet the following requirements in
+          order to avoid undefined behavior:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              All commands that use this buffer object or a memory object (buffer or image)
+              created from this buffer object have finished execution before the read command
+              begins execution.
+            </listitem>
+
+            <listitem>
+              The buffer object or memory objects created from this buffer object are not mapped.
+            </listitem>
+
+            <listitem>
+              The buffer object or memory objects created from this buffer object are not used
+              by any command-queue until the read command has finished execution.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          <function>clEnqueueReadBuffer</function> returns <errorname>CL_SUCCESS</errorname> if
+          the function is executed successfully. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_COMMAND_QUEUE</errorname> if <varname>command_queue</varname>
+              is not a valid command-queue.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if the context associated with
+              <varname>command_queue</varname> and <varname>buffer</varname> are not the same
+              or if the context associated with <varname>command_queue</varname> and events in
+              <varname>event_wait_list</varname> are not the same.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_MEM_OBJECT</errorname> if <varname>buffer</varname> is not
+              a valid buffer object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if the region being read specified by
+              (<varname>offset</varname>, <varname>size</varname>) is out of bounds or if
+              <varname>ptr</varname> is a NULL value or if size is 0.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EVENT_WAIT_LIST</errorname>
+              if <varname>event_wait_list</varname> is NULL and
+              <varname>num_events_in_wait_list</varname> greater than
+              0, or <varname>event_wait_list</varname> is not NULL and
+              <varname>num_events_in_wait_list</varname> is 0, or if event objects in
+              <varname>event_wait_list</varname> are not valid events.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MISALIGNED_SUB_BUFFER_OFFSET</errorname> if
+              <varname>buffer</varname> is a sub-buffer object and <varname>offset</varname>
+              specified when the sub-buffer object is created is not aligned to
+              <constant>CL_DEVICE_MEM_BASE_ADDR_ALIGN</constant> value for device associated
+              with <varname>queue</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST</errorname> if the read
+              and write operations are blocking and the execution status of any of the events
+              in <varname>event_wait_list</varname> is a negative integer value.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MEM_OBJECT_ALLOCATION_FAILURE</errorname> if there is a failure to
+              allocate memory for data store associated with <varname>buffer</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> if
+              <function>clEnqueueReadBuffer</function> is called on <varname>buffer</varname>
+              which has been created with <constant>CL_MEM_HOST_WRITE_ONLY</constant> or
+              <constant>CL_MEM_HOST_NO_ACCESS</constant>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clEnqueueReadBuffer">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueWriteBufferRect</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueReadBufferRect</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 20-Oct-2011 -->
+</refentry>
+

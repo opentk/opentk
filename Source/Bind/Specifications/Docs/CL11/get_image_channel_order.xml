@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>get_image_channel_order</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>get_image_channel_order</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="get_image_channel_order">             
+        <refname>get_image_channel_order</refname>
+
+        <refpurpose>
+            Return the image channel data order.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>                   
+                        get_image_channel_order
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="otherDataTypes.html">image2d_t</link><parameter>image</parameter></paramdef>    
+            </funcprototype>
+        </funcsynopsis>     
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>                   
+                        get_image_channel_order
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="otherDataTypes.html">image3d_t</link><parameter>image</parameter></paramdef>    
+            </funcprototype>
+        </funcsynopsis>     
+        
+    </refsynopsisdiv>       
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            Return the image channel order. Valid values are:<literallayout>
+CLK_A
+CLK_R
+CLK_Rx
+CLK_RG
+CLK_RGx
+CLK_RA
+CLK_RGB
+CLK_RGBx
+CLK_RGBA
+CLK_ARGB
+CLK_BGRA
+CLK_INTENSITY
+CLK_LUMINANCE</literallayout>
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+        The values returned by <function>get_image_channel_order</function> as
+shown above with the CLK_ prefixes correspond to the CL_ prefixes used to describe
+the image channel order and data type in the table of supported names and values in 
+<citerefentry><refentrytitle>clCreateSubBuffer</refentrytitle></citerefentry> and 
+list of supported Image Channel Order Values for <citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry>.
+For example, both
+CL_UNORM_INT8 and CLK_UNORM_INT8 refer to an image channel data type that is an
+unnormalized unsigned 8-bit integer.
+        </para>
+        <para>
+      The following table describes the mapping of the number of channels of an image element to the appropriate components in the float4, int4 or uint4 vector data type for the color values returned by <function>read_image{f|i|ui}</function> or supplied to <function>write_image{f|i|ui}</function>. The unmapped components will be set to <constant>0.0</constant> for red, green and blue channels and will be set to <constant>1.0</constant> for the alpha channel.
+        </para>
+        <para>
+        <informaltable frame="all">
+            <tgroup cols="2" align="center" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <thead>
+                    <row>
+                        <entry>Channel Order</entry>
+                        <entry>float4, int4 or unsigned int4 components of channel data</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry><constant>CL_R</constant>, <constant>CL_Rx</constant></entry>
+                        <entry><constant>(r, 0.0, 0.0, 1.0)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_A</constant></entry>
+                        <entry><constant>(0.0, 0.0, 0.0, a)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_RG</constant>, <constant>CL_RGx</constant></entry>
+                        <entry><constant>(r, g, 0.0, 1.0)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_RA</constant></entry>
+                        <entry><constant>(r, 0.0, 0.0, a)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_RGB</constant>, <constant>CL_RGBx</constant></entry>
+                        <entry><constant>(r, g, b, 1.0)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_RGBA, CL_BGRA, CL_ARGB</constant></entry>
+                        <entry><constant>(r, g, b, a)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_INTENSITY</constant></entry>
+                        <entry><constant>(I, I, I, I)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_LUMINANCE</constant></entry>
+                        <entry><constant>(L, L, L, 1.0)</constant></entry>
+                    </row>
+                </tbody>    
+            </tgroup>
+        </informaltable>
+        </para>
+        <para>
+        A kernel that uses a sampler with the CL_ADDRESS_CLAMP addressing mode with
+multiple images may result in additional samplers being used internally by an implementation. If
+the same sampler is used with multiple images called via 
+<citerefentry href="read_imagef2d"><refentrytitle>read_image{f | i | ui}</refentrytitle></citerefentry>, then it is
+possible that an implementation may need to allocate an additional sampler to handle the
+different border color values that may be needed depending on the image formats being used.
+These implementation allocated samplers will count against the maximum sampler values
+supported by the device and given by CL_DEVICE_MAX_SAMPLERS. Enqueuing a kernel that
+requires more samplers than the implementation can support will result in a
+CL_OUT_OF_RESOURCES error being returned.
+        </para>
+    </refsect1>
+    
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="imageFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry> 
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

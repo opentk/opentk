@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>                            
+                clamp
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>clamp</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clamp">             
+        <refname>clamp</refname>
+
+        <refpurpose>
+            Clamp <varname>x</varname> to range given by <varname>min</varname>, <varname>max</varname>
+        </refpurpose>
+    </refnamediv>
+
+	<refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>                   
+                        clamp
+                    </function>
+                </funcdef>
+				<paramdef>gentype<parameter>x</parameter></paramdef>	
+				<paramdef>gentype<parameter>minval</parameter></paramdef>	
+				<paramdef>gentype<parameter>maxval</parameter></paramdef>	
+            </funcprototype>
+        </funcsynopsis>     
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>                   
+                        clamp
+                    </function>
+                </funcdef>
+				<paramdef>gentype<parameter>x</parameter></paramdef>	
+				<paramdef>float<parameter>minval</parameter></paramdef>	
+				<paramdef>float<parameter>maxval</parameter></paramdef>	
+            </funcprototype>
+        </funcsynopsis>     
+	</refsynopsisdiv>	
+	
+<!-- Optional Double and Half prototypes -->
+ <refsect2 id="double">
+        <title></title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+gentype <function>clamp</function> (<type>gentype</type> <varname>x</varname>, 
+               <type>double</type> <varname>minval</varname>, 
+               <type>double</type> <varname>maxval</varname>)   // if double extension enabled 
+</entry>
+                    </row>
+					<row>
+                        <entry>
+gentype <function>clamp</function> (<type>gentype</type> <varname>x</varname>, 
+               <type>half</type> <varname>minval</varname>, 
+               <type>half</type> <varname>maxval</varname>)   // if half extension enabled 
+</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>			
+	
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>Returns <function>fmin</function>(<function>fmax</function>(<varname>x</varname>, <varname>minval</varname>), <varname>maxval</varname>).</para>
+<para>Results are undefined if <varname>minval</varname> &gt; <varname>maxval</varname>.</para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+		Built-in common functions operate component-wise and the description is per-component. We use the generic type name <type>gentype</type> to indicate that the
+function can take <type>float</type>, <type>float2</type>, <type>float4</type>, <type>float8</type>, or <type>float16</type> as the type for the arguments.
+		</para>
+        <para>
+		The built-in common functions are implemented using the round to nearest even rounding mode.
+		</para>
+		<para>
+		If extended with <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry>, generic type name <type>gentype</type> may indicate <type>double</type> and <type>double{2|4|8|16}</type> as arguments and return values. If extended with <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>, generic type name <type>gentype</type> may indicate <type>half</type> and <type>half{2|4|8|16}</type> as arguments and return values. 
+		</para>
+    </refsect1>
+	
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="commonFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="commonFunctions"><refentrytitle>Common Functions</refentrytitle></citerefentry> 
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

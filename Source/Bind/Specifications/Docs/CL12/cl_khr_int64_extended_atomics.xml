@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_int64_extended_atomics</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_int64_extended_atomics</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_int64_extended_atomics">
+        <refname>cl_khr_int64_extended_atomics</refname>
+
+        <refpurpose>
+            Optional extensions that implement atomic operations on 64-bit signed and unsigned integers to locations in __global and __local memory.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_int64_extended_atomics : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Description</title>
+        <para>
+          An application that wants to use this extension will need to include the
+          <function>#pragma OPENCL EXTENSION cl_khr_int64_extended_atomics : enable</function>
+          directive in the OpenCL program source.
+        </para>
+
+        <para>
+          The atomic functions supported by the <function>cl_khr_int64_extended_atomics</function>
+          extension are described in the following table. All of the functions listed in the
+          following table are performed in one atomic transaction.
+        </para>
+
+        <para>
+          These transactions are atomic for the device executing these atomic functions. There
+          is no guarantee of atomicity if the atomic operations to the same memory location
+          are being performed by kernels executing on multiple devices.
+        </para>
+
+        <para>
+          Atomic operations on 64-bit integers and 32-bit integers (and float) are also atomic
+          w.r.t. each other.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <thead>
+                    <row>
+                        <entry>Function</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry><citerefentry><refentrytitle>atom_min</refentrytitle></citerefentry></entry>
+                        <entry>Compute
+                           <link xlink:href="commonMin.html">min</link>
+                            (<varname>old</varname>, <varname>val</varname>)</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>atom_max</refentrytitle></citerefentry></entry>
+                        <entry>Compute
+                            <link xlink:href="commonMin.html">max</link>
+                            (<varname>old</varname>, <varname>val</varname>)></entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>atom_and</refentrytitle></citerefentry></entry>
+                        <entry>Compute (<varname>old</varname> &amp; <varname>val</varname>)</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>atom_or</refentrytitle></citerefentry></entry>
+                        <entry>Compute (<varname>old</varname> | <varname>val</varname>)</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>atom_xor</refentrytitle></citerefentry></entry>
+                        <entry>Compute (<varname>old</varname> ^ <varname>val</varname>)</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <!-- refsect1 id="notes"><title>Notes</title>
+        <para>
+
+        </para>
+    </refsect1 -->
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_int64_extended_atomics">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_int64_base_atomics</refentrytitle></citerefentry>,
+            <citerefentry href="atomicFunctions"><refentrytitle>Atomic Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 18-Oct-2011 -->
+</refentry>
+

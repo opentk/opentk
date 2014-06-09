@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>printf Function</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            printf Function
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="printfFunction">
+        <refname>
+            printf Function
+        </refname>
+
+        <refpurpose>
+            The OpenCL C programming language implements the <function>printf</function> function.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+ <function>printf</function>
+                </funcdef>
+                    <paramdef>constant
+                    <link xlink:href="scalarDataTypes.html">char</link>
+                    * restrict<parameter>format</parameter>, ...
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            The <function>printf</function> built-in function writes output to
+            an implementation-defined stream such as stdout under control of the
+            string pointed to by <varname>format</varname> that specifies how
+            subsequent arguments are converted for output. If there are insufficient
+            arguments for the format, the behavior is undefined. If the format is
+            exhausted while arguments remain, the excess arguments are evaluated
+            (as always) but are otherwise ignored. The <function>printf</function>
+            function returns when the end of the format string is encountered.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>printf</function> returns 0 if it was executed successfully
+            and -1 otherwise.
+        </para>
+
+        <bridgehead><function>printf</function> output synchronization</bridgehead>
+
+        <para>
+          When the event that is associated with a particular kernel invocation is completed,
+          the output of all <function>printf</function>() calls executed by this kernel
+          invocation is flushed to the implementation-defined output stream.  Calling
+          <citerefentry><refentrytitle>clFinish</refentrytitle></citerefentry> on a command
+          queue flushes all pending output by <function>printf</function> in previously enqueued
+          and completed commands to the implementation-defined output stream. In the case that
+          <function>printf</function> is executed from multiple work-items concurrently, there
+          is no guarantee of ordering with respect to written data.  For example, it is valid
+          for the output of a work-item with a global id (0,0,1) to appear intermixed with the
+          output of a work-item with a global id (0,0,4) and so on.
+        </para>
+
+        <bridgehead><function>printf</function> format string</bridgehead>
+
+        <para>
+          The format shall be a character sequence, beginning and ending in its initial shift
+          state. The format is composed of zero or more directives: ordinary characters (not
+          %), which are copied unchanged to the output stream; and conversion specifications,
+          each of which results in fetching zero or more subsequent arguments, converting them,
+          if applicable, according to the corresponding conversion specifier, and then writing
+          the result to the output stream. As format is in the constant address space it must
+          be resolvable at compile time and thus cannot be dynamically created by the executing
+          program, itself.
+        </para>
+
+        <para>
+          Each conversion specification is introduced by the character %. After the %, the
+          following appear in sequence:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                Zero or more <varname>flags</varname> (in any order) that modify the meaning
+                of the conversion specification.
+            </listitem>
+
+            <listitem>
+                An optional minimum <varname>field width</varname>. If the converted value has
+                fewer characters than the field width, it is padded with spaces (by default)
+                on the left (or right, if the left adjustment flag, described later, has been
+                given) to the field width. The field width takes the form of a nonnegative decimal
+                integer.) Note that 0 is taken as a flag, not as the beginning of a field width.
+            </listitem>
+
+            <listitem>
+                An optional <varname>precision</varname> that gives the minimum number of digits
+                to appear for the d, i, o, u, x, and X conversions, the number of digits to
+                appear after the decimal point character for a, A, e, E, f, and F conversions,
+                the maximum number of significant digits for the g and G conversions, or the
+                maximum number of bytes to be written for s conversions. The precision takes
+                the form of a period (.) followed by an optional decimal integer; if only the
+                period is specified, the precision is taken as zero. If a precision appears
+                with any other conversion specifier, the behavior is undefined.
+            </listitem>
+
+            <listitem>
+                An optional <varname>vector specifier</varname>.
+            </listitem>
+
+            <listitem>
+              A <varname>length modifier</varname> that specifies the size of the argument. The
+              <varname>length modifier</varname> is required with a vector specifier and together
+              specifies the vector type. Implicit conversions between vector types are disallowed
+              (as per section 6.2.1). If the <varname>vector specifier</varname> is not specified,
+              the <varname>length modifier</varname> is optional.
+            </listitem>
+
+            <listitem>
+                A <varname>conversion specifier</varname> character that specifies the type of
+                conversion to be applied.
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            The flag characters and their meanings are:
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" /> <colspec colname="col2" colnum="2" />
+                <tbody>
+                    <row>
+                        <entry><emphasis>-</emphasis></entry>
+                        <entry>
+                            The result of the conversion is left-justified within the field. (It
+                            is right-justified if this flag is not specified.)
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><emphasis>+</emphasis></entry>
+                        <entry>
+                            The result of a signed conversion always begins with a plus or
+                            minus sign. (It begins with a sign only when a negative value
+                            is converted if this flag is not specified.) The results of all
+                            floating conversions of a negative zero, and of negative values
+                            that round to zero, include a minus sign.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><emphasis>space</emphasis></entry>
+                        <entry>
+                          If the first character of a signed conversion is not a sign, or if
+                          a signed conversion results in no characters, a space is prefixed to
+                          the result. If the <emphasis>space</emphasis> and + flags both appear,
+                          the <varname>space</varname> flag is ignored.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><emphasis>#</emphasis></entry>
+                        <entry>
+                            The result is converted to an "alternative form". For o conversion,
+                            it increases the precision, if and only if necessary, to force the
+                            first digit of the result to be a zero (if the value and precision
+                            are both 0, a single 0 is printed). For x (or X) conversion, a
+                            nonzero result has 0x (or 0X) prefixed to it. For a, A, e, E, f,
+                            F, g, and G conversions, the result of converting a floating-point
+                            number always contains a decimal-point character, even if no digits
+                            follow it. (Normally, a decimal-point character appears in the
+                            result of these conversions only if a digit follows it.) For g and
+                            G conversions, trailing zeros are not removed from the result. For
+                            other conversions, the behavior is undefined.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><emphasis>0</emphasis></entry>
+                        <entry>
+                            For d, i, o, u, x, X, a, A, e, E, f, F, g, and G conversions, leading
+                            zeros (following any indication of sign or base) are used to pad to
+                            the field width rather than performing space padding, except when
+                            converting an infinity or NaN.  If the <emphasis>0</emphasis> and
+                            <emphasis>-</emphasis> flags both appear, the 0 flag is ignored. For
+                            d, i, o, u, x, and X conversions, if a precision is specified, the
+                            0 flag is ignored.  For other conversions, the behavior is undefined.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            The vector specifier and its meaning is:
+        </para>
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <tbody>
+                    <row>
+                        <entry>v<replaceable>n</replaceable></entry>
+                        <entry>
+                            Specifies that a following a, A, e, E, f, F, g, G, d, i, o, u,
+                            x, or X conversion specifier applies to a vector argument, where
+                            <replaceable>n</replaceable> is the size of the vector and must be 2,
+                            3, 4, 8 or 16.  The vector value is displayed in the following general
+                            form:
+
+                            <para> value1 C value2 C ... C value<replaceable>n</replaceable> </para>
+
+                            <para>
+                              where C is a separator character. The value for this separator
+                              character is a comma.
+                            </para>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          If the vector specifier is not used, the length modifiers and their meanings are:
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <tbody>
+                    <row>
+                        <entry>hh</entry>
+                        <entry>
+                            Specifies that a following d, i, o, u, x, or X conversion specifier
+                            applies to a char or uchar argument (the argument will have been promoted
+                            according to the integer promotions, but its value shall be converted to
+                            <type>char</type> or <type>uchar</type> before printing).
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>h</entry>
+                        <entry>
+                            Specifies that a following d, i, o, u, x, or X conversion specifier
+                            applies to a <type>short</type> or <type>ushort</type> argument (the
+                            argument will have been promoted according to the integer promotions,
+                            but its value shall be converted to <type>short</type> or <type>unsigned
+                            short</type> before printing).
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>l (ell)</entry>
+                        <entry>
+                          Specifies that a following d, i, o, u, x, or X conversion specifier
+                          applies to a long or ulong argument. The l modifier is supported
+                          by the full profile. For the embedded profile, the l modifier is
+                          supported only if 64-bit integers are supported by the device.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+If the vector specifier is used, the length modifiers and their meanings are:
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <tbody>
+                    <row>
+                        <entry>hh</entry>
+                        <entry>
+                          Specifies that a following d, i, o, u, x, or X conversion
+                          specifier applies to a char<replaceable>n</replaceable> or
+                          uchar<replaceable>n</replaceable> argument (the argument will not
+                          be promoted).
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>h</entry>
+                        <entry>
+                          Specifies that a following d, i, o, u, x, or X conversion
+                          specifier applies to a short<replaceable>n</replaceable> or
+                          ushort<replaceable>n</replaceable> argument (the argument will not
+                          be promoted); that a following a, A, e, E, f, F, g, or G conversion
+                          specifier applies to a half<replaceable>n</replaceable> argument if the
+                          <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>
+                          extension is supported.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>hl</entry>
+                        <entry>
+                          This modifier can only be used with the vector specifier.  Specifies
+                          that a following d, i, o, u, x, or X conversion specifier applies to a
+                          int<replaceable>n</replaceable> or uint<replaceable>n</replaceable>
+                          argument; that a following a, A, e, E, f, F, g, or G conversion
+                          specifier applies to a float<replaceable>n</replaceable> argument.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>l (ell)</entry>
+                        <entry>
+                          Specifies that a following d, i, o, u, x, or X conversion
+                          specifier applies to a long<replaceable>n</replaceable> or
+                          ulong<replaceable>n</replaceable> argument; that a following
+                          a, A, e, E, f, F, g, or G conversion specifier applies to
+                          a double<replaceable>n</replaceable> argument. The l modifier
+                          is supported by the full profile. For the embedded profile, the l
+                          modifier is supported only if 64-bit integers or double-precision
+                          floating-point are supported by the device.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          If a vector specifier appears without a length modifier, the behavior is undefined.
+          The vector data type described by the vector specifier and length modifier must match
+          the data type of the argument; otherwise the behavior is undefined.
+        </para>
+
+        <para>
+          If a length modifier appears with any conversion specifier other than as specified
+          above, the behavior is undefined
+        </para>
+
+        <para>
+          The conversion specifiers and their meanings are:
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <tbody>
+                    <row>
+                        <entry>d,i</entry>
+                        <entry>
+                          The int, char<replaceable>n</replaceable>,
+                          short<replaceable>n</replaceable>, int<replaceable>n</replaceable>
+                          or long<replaceable>n</replaceable> argument is converted to signed
+                          decimal in the style <emphasis>[−]dddd</emphasis>. The precision
+                          specifies the minimum number of digits to appear; if the value being
+                          converted can be represented in fewer digits, it is expanded with
+                          leading zeros. The default precision is 1. The result of converting
+                          a zero value with a precision of zero is no characters.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>o,u,x,X</entry>
+                        <entry>
+                          The unsigned int, uchar<replaceable>n</replaceable>,
+                          ushort<replaceable>n</replaceable>, uint<replaceable>n</replaceable>
+                          or ulong<replaceable>n</replaceable> argument is converted to unsigned
+                          octal (o), unsigned decimal (u), or unsigned hexadecimal notation (x
+                          or X) in the style <emphasis>dddd</emphasis>; the letters abcdef are
+                          used for x conversion and the letters ABCDEF for X conversion. The
+                          precision specifies the minimum number of digits to appear; if the
+                          value being converted can be represented in fewer digits, it is
+                          expanded with leading zeros. The default precision is 1. The result
+                          of converting a zero value with a precision of zero is no characters.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>f,F</entry>
+                        <entry>
+                          A double, half<replaceable>n</replaceable>,
+                          float<replaceable>n</replaceable> or double<replaceable>n</replaceable>
+                          argument representing a floating-point number is converted to decimal
+                          notation in the style <replaceable>[−]ddd.ddd</replaceable>,
+                          where the number of digits after the decimal-point character is
+                          equal to the precision specification. If the precision is missing,
+                          it is taken as 6; if the precision is zero and the # flag is not
+                          specified, no decimal-point character appears. If a decimal-point
+                          character appears, at least one digit appears before it. The
+                          value is rounded to the appropriate number of digits. A double,
+                          half<replaceable>n</replaceable>, float<replaceable>n</replaceable>
+                          or double<replaceable>n</replaceable> argument representing an infinity
+                          is converted in one of the styles [-]inf or [-]infinity — which style
+                          is implementation-defined. A double, half<replaceable>n</replaceable>,
+                          float<replaceable>n</replaceable> or double<replaceable>n</replaceable>
+                          argument representing a NaN is converted in one of the styles [-
+                          ]nan or [-]nan(<replaceable>n-char-sequence</replaceable>) — which style, and the meaning
+                          of any n-charsequence, is implementation-defined. The F conversion
+                          specifier produces INF, INFINITY, or NAN instead of inf, infinity, or
+                          nan, respectively.  When applied to infinite and NaN values, the -,
+                          +, and <replaceable>space</replaceable> flag characters have their
+                          usual meaning; the # and 0 flag characters have no effect.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>e,E</entry>
+                        <entry>
+                          A double, half<replaceable>n</replaceable>,
+                          float<replaceable>n</replaceable> or double<replaceable>n</replaceable>
+                          argument representing a floating-point number is converted in the style
+                          <replaceable>[−]d.ddd</replaceable> e±<replaceable>dd</replaceable>,
+                          where there is one digit (which is nonzero if the argument is nonzero)
+                          before the decimal-point character and the number of digits after it is
+                          equal to the precision; if the precision is missing, it is taken as 6; if
+                          the precision is zero and the # flag is not specified, no decimal-point
+                          character appears. The value is rounded to the appropriate number of
+                          digits. The E conversion specifier produces a number with E instead
+                          of e introducing the exponent. The exponent always contains at least
+                          two digits, and only as many more digits as necessary to represent
+                          the exponent. If the value is zero, the exponent is zero. A double,
+                          half<replaceable>n</replaceable>, float<replaceable>n</replaceable>
+                          or double<replaceable>n</replaceable> argument representing an infinity
+                          or NaN is converted in the style of an f or F conversion specifier
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>g,G</entry>
+                        <entry>
+                          A double, half<replaceable>n</replaceable>,
+                          float<replaceable>n</replaceable> or double<replaceable>n</replaceable>
+                          argument representing a floating-point number is converted in
+                          style f or e (or in style F or E in the case of a G conversion
+                          specifier), depending on the value converted and the precision. Let
+                          <replaceable>P</replaceable> equal the precision if nonzero, 6 if
+                          the precision is omitted, or 1 if the precision is zero.  Then, if a
+                          conversion with style E would have an exponent of <varname>X</varname>:
+                          — if <varname>P</varname> > <varname>X</varname> ≥ −4, the
+                          conversion is with style f (or F) and precision <varname>P</varname>
+                          − (<varname>X</varname> + 1). — otherwise, the conversion is with
+                          style e (or E) and precision <varname>P</varname> − 1.  Finally,
+                          unless the # flag is used, any trailing zeros are removed from the
+                          fractional portion of the result and the decimal-point character
+                          is removed if there is no fractional portion remaining.  A double,
+                          half<replaceable>n</replaceable>, float<replaceable>n</replaceable> or
+                          double<replaceable>n</replaceable> e argument representing an infinity
+                          or NaN is converted in the style of an f or F conversion specifier.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>a,A</entry>
+                        <entry>
+                          A double, half<replaceable>n</replaceable>,
+                          float<replaceable>n</replaceable> or double<replaceable>n</replaceable>
+                          argument representing a floating-point number is converted in the style
+                          <replaceable>[−]0xh.hhhh</replaceable> p±<replaceable>d</replaceable>,
+                          where there is one hexadecimal digit (which is nonzero if the argument
+                          is a normalized floating-point number and is otherwise unspecified)
+                          before the decimal-point character) and the number of hexadecimal digits
+                          after it is equal to the precision; if the precision is missing, then
+                          the precision is sufficient for an exact representation of the value;
+                          if the precision is zero and the # flag is not specified, no decimal
+                          point character appears. The letters abcdef are used for a conversion
+                          and the letters ABCDEF for A conversion. The A conversion specifier
+                          produces a number with X and P instead of x and p. The exponent
+                          always contains at least one digit, and only as many more digits as
+                          necessary to represent the decimal exponent of 2. If the value is zero,
+                          the exponent is zero.  A double, half<replaceable>n</replaceable>,
+                          float<replaceable>n</replaceable> or double<replaceable>n</replaceable>
+                          argument representing an infinity or NaN is converted in the style
+                          of an f or F conversion specifier. Binary implementations can choose
+                          the hexadecimal digit to the left of the decimal-point character so
+                          that subsequent digits align to nibble (4-bit) boundaries.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          NOTE:  The conversion specifiers e,E,g,G,a,A convert a float or half argument that is
+          a scalar type to a double only if the double data type is supported.  If the double
+          data type is not supported, the argument will be a float instead of a double and the
+          half type will be converted to a float.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <tbody>
+                    <row>
+                        <entry>c</entry>
+                        <entry>
+                            The int argument is converted to an unsigned char, and the resulting character is written.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>s</entry>
+                        <entry>
+                            The argument shall be a literal string. No special provisions are made
+                            for multibyte characters. The behavior of <function>printf</function>
+                            with the s conversion specifier is undefined if the argument value
+                            is not a pointer to a literal string. Characters from the literal
+                            string array are written up to (but not including) the terminating
+                            null character. If the precision is specified, no more than that many
+                            bytes are written. If the precision is not specified or is greater
+                            than the size of the array, the array shall contain a null character.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>p</entry>
+                        <entry>
+                            The argument shall be a pointer to void. The pointer can refer to
+                            a memory region in the global, constant, local or private address
+                            space. The value of the pointer is converted to a sequence of
+                            printing characters in an implementation-defined manner.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>%</entry>
+                        <entry>
+                            A % character is written. No argument is converted. The complete conversion
+                            specification shall be %%.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          If a conversion specification is invalid, the behavior is undefined. If any argument
+          is not the correct type for the corresponding conversion specification, the behavior
+          is undefined.
+        </para>
+
+        <para>
+          In no case does a nonexistent or small field width cause truncation of a field; if
+          the result of a conversion is wider than the field width, the field is expanded to
+          contain the conversion result.
+        </para>
+
+        <para>
+          For a and A conversions, the value is correctly rounded to a hexadecimal floating
+          number with the given precision.
+        </para>
+
+        <bridgehead>Differences between OpenCL C and C99 <function>printf</function></bridgehead>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                The l modifier followed by a c conversion specifier or s conversion specifier
+                is not supported by OpenCL C.
+            </listitem>
+
+            <listitem>
+                The ll, j, z, t, and L length modifiers are not supported by OpenCL C.
+            </listitem>
+
+            <listitem>
+                The n conversion specifier is not supported by OpenCL C but is reserved.
+            </listitem>
+
+            <listitem>
+                OpenCL C adds the optional v<replaceable>n</replaceable> vector specifier to support printing of vector types.
+            </listitem>
+
+            <listitem>
+                The conversion specifiers f, F, e, E, g, G, a, A convert a float argument to
+                a double only if the double data type is supported. Refer to the description
+                of <constant>CL_DEVICE_DOUBLE_FP_CONFIG</constant>. If the double data type is
+                not supported, the argument will be a float instead of a double.
+            </listitem>
+
+            <listitem>
+                For the embedded profile, the l length modifier is supported only if 64-bit integers are supported.
+            </listitem>
+
+            <listitem>
+                In OpenCL C, <function>printf</function> returns 0 if it was executed successfully
+                and -1 otherwise vs. C99 where <function>printf</function> returns the number
+                of characters printed or a negative value if an output or encoding error occurred.
+            </listitem>
+
+            <listitem>
+                In OpenCL C, the conversion specifier s can only be used for arguments that are literal strings.
+            </listitem>
+        </itemizedlist>
+   </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--    -->
+
+    <refsect2 id="example1">
+        <title>
+            Examples
+        </title>
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+     float4 f = (float4)(1.0f, 2.0f, 3.0f, 4.0f);
+     uchar4 uc = (uchar4)(0xFA, 0xFB, 0xFC, 0xFD);
+
+     printf("f4 = %2.2v4hlf\n", f);
+     printf("uc = %#v4hhx\n", uc);
+
+// The above two calls print the following:
+
+     f4 = 1.00,2.00,3.00,4.00
+     uc = 0xfa,0xfb,0xfc,0xfd
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          A few examples of valid use cases of <function>printf</function> for the conversion
+          specifier s are given below. The argument value must be a pointer to a literal string.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+     kernel void my_kernel( ... )
+     {
+         printf("%s\n", "this is a test string\n");
+     }
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          A few examples of invalid use cases of <function>printf</function> for the conversion
+          specifier s are given below:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+     kernel void my_kernel(global char *s, ... )
+     {
+         printf("%s\n", s);
+
+         constant char *p = "this is a test string\n";
+         printf("%s\n", p);
+         printf("%s\n", &amp;p[3]);
+     }
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          A few examples of invalid use cases of printf where data types given by the vector
+          specifier and length modifier do not match the argument type are given below:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+     kernel void my_kernel(global char *s, … )
+     {
+          uint2 ui = (uint2)(0x12345678, 0x87654321);
+          printf("unsigned short value = (%#v2hx)\n", ui)
+          printf("unsigned char value = (%#v2hhx)\n", ui)
+     }
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+
+            <olink uri="printfFunction">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clFlush</refentrytitle></citerefentry>
+        </para>
+    </refsect1>-->
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Nov-2011 -->
+</refentry>
+

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+	<refentryinfo>
+		<keywordset><keyword>clSetCommandQueueProperty</keyword></keywordset>
+	</refentryinfo>
+    <refmeta>
+        <refentrytitle>clSetCommandQueueProperty</refentrytitle>
+		<refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+	
+
+<!-- ================================ SYNOPSIS -->	
+
+  <refnamediv id="clSetCommandQueueProperty">
+<refname>clSetCommandQueueProperty</refname> 
+           <refpurpose>Enable or disable the properties of a command-queue.</refpurpose> 
+    </refnamediv> 
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef><link xlink:href="scalarDataTypes.html">cl_int</link> <function>clSetCommandQueueProperty</function></funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_command_queue</link><parameter>command_queue</parameter></paramdef>
+<paramdef><link xlink:href="enums.html#cl_command_queue_properties">cl_command_queue_properties</link><parameter>properties</parameter></paramdef>
+<paramdef><link xlink:href="enums.html#cl_bool">cl_bool</link><parameter>enable</parameter></paramdef>					
+<paramdef><link xlink:href="enums.html#cl_command_queue_properties">cl_command_queue_properties</link><parameter>*old_properties</parameter></paramdef>	
+            </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->	
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><varname>command_queue</varname></term>
+            <listitem>
+                <para>Specifies the command-queue being queried.</para>
+	        </listitem>
+		</varlistentry>
+        <varlistentry>
+            <term><varname>properties</varname></term>
+            <listitem>
+                <para>Specifies the new command-queue properties to be applied to <varname>command_queue</varname>. Only command-queue properties specified for <citerefentry><refentrytitle>clCreateCommandQueue</refentrytitle></citerefentry> can be set in <varname>properties</varname>; otherwise the value specified in <varname>properties</varname> is considered to be not valid.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><varname>enable</varname></term>
+            <listitem>
+                <para>Determines whether the values specified by <varname>properties</varname> are enabled (if <varname>enable</varname> is <constant>CL_TRUE</constant>) or disabled (if <varname>enable</varname> is <constant>CL_FALSE</constant>) for the command-queue. The allowed property values are the same as those specified for <citerefentry><refentrytitle>clCreateCommandQueue</refentrytitle></citerefentry>.</para>
+            </listitem>
+        </varlistentry>		
+
+		<varlistentry>
+            <term><varname>old_properties</varname></term>
+            <listitem>
+                <para>Returns the command-queue properties before they were changed by
+<function>clSetCommandQueueProperty</function>. If <varname>old_properties</varname> is NULL, it is ignored.</para>
+            </listitem>
+        </varlistentry>	
+
+
+        </variablelist>
+    </refsect1>
+	
+
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            As specified for  <citerefentry><refentrytitle>clCreateCommandQueue</refentrytitle></citerefentry>, the <constant>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</constant> command-queue property determines whether the commands in a command-queue are executed in-order or out-of-order. Changing this command-queue property will cause the OpenCL implementation to block until all previously queued commands in <varname>command_queue</varname> have completed. This can be an expensive operation and therefore changes to the <constant>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</constant> property should be only done when absolutely necessary.
+		</para>
+		<para>
+		It is possible that a device(s) becomes unavailable after a context and command-queues that use this device(s) have been created and commands have been queued to command-queues. In this
+case the behavior of OpenCL API calls that use this context (and command-queues) are
+considered to be implementation-defined. The user callback function, if specified when the
+context is created, can be used to record appropriate information in the <varname>errinfo</varname>, <varname>private_info</varname> arguments passed to the callback function when the device becomes unavailable.
+		</para>
+    </refsect1>		
+	
+	
+<!-- ================================ ERRORS  -->
+    <refsect1 id="errors"><title>Errors</title>
+	<para>Returns <errorname>CL_SUCCESS</errorname> if the command-queue properties are successfully updated. Otherwise, it returns the following:</para>
+<itemizedlist mark="disc">
+		<listitem>
+            Returns <errorname>CL_INVALID_COMMAND_QUEUE</errorname> if <varname>command_queue</varname> is not a valid command-queue.
+		</listitem>
+		<listitem>
+			Returns <errorname>CL_INVALID_VALUE</errorname> if the values specified in  <varname>properties</varname> are not valid.
+		</listitem>
+		<listitem>
+			Returns <errorname>CL_INVALID_QUEUE_PROPERTIES</errorname> if the values specified in  <varname>properties</varname> are not supported by the device.
+		</listitem>
+		</itemizedlist>
+    </refsect1>
+	
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->		
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->		
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clSetCommandQueueProperty">OpenCL Specification</olink>
+        </para>
+    </refsect1>  	
+
+<!-- ================================ ALSO SEE  -->	
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+<citerefentry><refentrytitle>clCreateCommandQueue</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetCommandQueueInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clReleaseCommandQueue</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clRetainCommandQueue</refentrytitle></citerefentry> 
+        </para>
+    </refsect1>
+	
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+			Copyright &#169; 
+    </refsect3>
+
+</refentry>
+

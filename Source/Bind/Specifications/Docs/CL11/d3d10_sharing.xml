@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_d3d10_sharing</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>cl_khr_d3d10_sharing</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_d3d10_sharing">             
+        <refname>cl_khr_d3d10_sharing</refname>
+
+        <refpurpose>
+            Provide interoperability between OpenCL and Direct3D 10.
+        </refpurpose>
+    </refnamediv>
+
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_d3d10_sharing : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="description"><title>Description</title>
+        <para>
+            This extension is to provide interoperability between OpenCL and Direct3D 10. This
+is designed to function analogously to the OpenGL interoperability as enabled by 
+<citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry>. If this extension is supported by an implementation, the string cl_khr_d3d10_sharing will
+be present in the CL_PLATFORM_EXTENSIONS or CL_DEVICE_EXTENSIONS string described
+in table 4.3.
+        </para>
+        <para>
+            The interfaces for this extension are provided in the header file <code>cl_d3d10.h.</code>.
+        </para>
+
+        <para>
+            If the <function>cl_khr_d3d10_sharing</function> extension is supported, then the following functions
+            are enabled:
+        </para>
+         <itemizedlist mark="disc">
+            <listitem>
+                <citerefentry><refentrytitle>clGetDeviceIDsFromD3D10KHR</refentrytitle></citerefentry>
+            </listitem>
+            <listitem>
+                <citerefentry><refentrytitle>clCreateFromD3D10BufferKHR</refentrytitle></citerefentry>
+            </listitem>
+            <listitem>
+                <citerefentry><refentrytitle>clCreateFromD3D10Texture2DKHR</refentrytitle></citerefentry>
+            </listitem>
+            <listitem>
+                <citerefentry><refentrytitle>clCreateFromD3D10Texture3DKHR</refentrytitle></citerefentry>
+            </listitem>
+            <listitem>
+                <citerefentry><refentrytitle>clEnqueueAcquireD3D10ObjectsKHR</refentrytitle></citerefentry>
+            </listitem>
+            <listitem>
+                <citerefentry><refentrytitle>clEnqueueReleaseD3D10ObjectsKHR</refentrytitle></citerefentry>
+            </listitem>
+        </itemizedlist>
+        
+        <para>
+            The OpenCL functions enabled by the <function>cl_khr_d3d10_sharing</function> extension allow applications 
+            to use Direct3D 10 resources as OpenCL memory objects. This allows efficient sharing of data 
+            between OpenCL and Direct3D 10. The OpenCL API may be used to execute kernels that read and/or 
+            write memory objects that are also Direct3D 10 resources. An OpenCL image object may be created 
+            from a Direct3D 10 texture resource. An OpenCL buffer object may be created from a Direct3D 10 
+            buffer resource. OpenCL memory objects may be created from Direct3D 10 objects if and only if the 
+            OpenCL context has been created from a Direct3D 10 device.
+        </para>
+    </refsect1>
+    
+    
+<!-- ================================ NOTES  -->
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="notes"><title>Notes</title>
+
+        <para>
+            When the <function>cl_khr_d3d10_sharing</function> extension is enabled, this extends the list of allowable
+            values in certain parameters of certain functions, as follows:
+        </para>
+        <itemizedlist mark="disc">
+            <listitem>
+                <code>CL_CONTEXT_D3D10_DEVICE_KHR</code> is accepted as a property name in the <varname>properties</varname> 
+                parameter of <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry> and
+                <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <code>CL_CONTEXT_D3D10_PREFER_SHARED_RESOURCES_KHR</code> is accepted as a value in the 
+                <varname>param_name</varname> parameter of 
+                <citerefentry><refentrytitle>clGetContextInfo</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <code>CL_MEM_D3D10_RESOURCE_KHR</code> is accepted as a value in the 
+                <varname>param_name</varname> parameter of 
+                <citerefentry><refentrytitle>clGetMemObjectInfo</refentrytitle></citerefentry>.
+            </listitem>
+            
+            <listitem>
+                <code>CL_IMAGE_D3D10_SUBRESOURCE_KHR</code> is accepted as a value in the 
+                <varname>param_name</varname> parameter of 
+                <citerefentry><refentrytitle>clGetImageInfo</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <code>CL_COMMAND_ACQUIRE_D3D10_OBJECTS_KHR</code> and <code>CL_COMMAND_RELEASE_D3D10_OBJECTS_KHR</code>
+                are returned in the <varname>param_value</varname> parameter of 
+                <citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry> when <varname>param_name</varname> 
+                is <code>CL_EVENT_COMMAND_TYPE</code>.
+            </listitem>
+            <listitem>
+                <code>CL_INVALID_D3D10_DEVICE_KHR</code> is returned by
+                <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry> and
+                <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry> if the Direct3D 10 
+                device specified for interoperability is not compatible with the devices against which the context is to 
+                be created.
+            </listitem>
+            
+        </itemizedlist>
+        
+        
+        
+        <bridgehead>Lifetime of Shard Objects</bridgehead>
+        <para>
+        An OpenCL memory object created from a Direct3D 10 resource remains valid as long as the
+corresponding Direct3D 10 resource has not been deleted. If the Direct3D 10 resource is deleted
+through the Direct3D 10 API, subsequent use of the OpenCL memory object will result in
+undefined behavior, including but not limited to possible OpenCL errors, data corruption, and
+program termination.
+        </para>
+        <para>
+The successful creation of a cl_context against a Direct3D 10 device specified via the context
+create parameter CL_CONTEXT_D3D10_DEVICE_KHR will increment the internal Direct3D
+reference count on the specified Direct3D 10 device. The internal Direct3D reference count on
+that Direct3D 10 device will be decremented when the OpenCL reference count on the returned
+OpenCL context drops to zero.
+        </para>
+        <para>
+The OpenCL context and corresponding command-queues are dependent on the existence of the
+Direct3D 10 device from which the OpenCL context was created. If the Direct3D 10 device is
+deleted through the Direct3D 10 API, subsequent use of the OpenCL context will result in
+undefined behavior, including but not limited to possible OpenCL errors, data corruption, and
+program termination.
+        </para>
+        
+    </refsect1>
+
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="cl_khr_d3d10_sharing">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetDeviceIDsFromD3D10KHR</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clCreateFromD3D10BufferKHR</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clCreateFromD3D10Texture2DKHR</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clCreateFromD3D10Texture3DKHR</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueAcquireD3D10ObjectsKHR</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueReleaseD3D10ObjectsKHR</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

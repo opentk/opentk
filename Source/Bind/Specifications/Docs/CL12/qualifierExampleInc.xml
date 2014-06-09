@@ -1,0 +1,52 @@
+<!-- common example(s) for global, local, constant, and private -->
+
+    <para>
+      There is no generic address space name for program scope variables. All program scope
+      variables must be declared in the <function>__constant</function> address space. For example:
+    </para>
+
+    <informaltable frame="none">
+      <tgroup cols="1" align="left" colsep="0" rowsep="0">
+        <colspec colname="col1" colnum="1" />
+        <tbody>
+          <row>
+            <entry>
+// declares a pointer p in the __private address space that
+// points to an int object in address space __global
+       __global int *p;
+
+// declares an array of 4 floats in the __private address space.
+       float x[4];
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+
+    <para>
+      There is no address space for function return values. Using an address space qualifier in
+      a function return type declaration will generate a compilation error, unless the return
+      type is declared as a pointer type and the qualifier is used on the points-to address space.
+    </para>
+
+    <para>
+      For example:
+    </para>
+
+    <informaltable frame="none">
+      <tgroup cols="1" align="left" colsep="0" rowsep="0">
+        <colspec colname="col1" colnum="1" />
+        <tbody>
+          <row>
+            <entry>
+__private int f() { ... } // should generate an error
+__local int *f() { ... } // allowed
+__local int * __private f() { ... }; // should generate an error.
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+
+<!-- 14-Oct-2011 -->
+

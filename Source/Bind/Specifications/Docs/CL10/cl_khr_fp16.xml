@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>                            
+                cl_khr_fp16
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>cl_khr_fp16</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_fp16">             
+        <refname>cl_khr_fp16</refname>
+
+        <refpurpose>
+            Optional half floating-point support.
+        </refpurpose>
+    </refnamediv>
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_fp16 : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+OpenCL 1.0 supports half as a storage format only in the core specification. This extension adds
+support for half scalar and vector types as built-in types that can be used for arithmetic
+operations, conversions etc. An application that wants to use <type>half</type> and <constant>halfn</constant> types will need
+to include the directive shown above.
+The list of built-in scalar, and vector data types defined in tables 6.1, and 6.2 are extended to
+include the types in the table below.
+        </para>
+
+        <para>
+The built-in vector data types for <constant>halfn</constant> are also declared as appropriate types in the OpenCL
+API (and header files) that can be used by an application. The following table describes the
+built-in vector data types for <constant>halfn</constant> as defined in the OpenCL C programming language and the
+corresponding data type available to the application:
+
+            <informaltable frame="all">
+                <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                    <colspec colname="col1" colnum="1" />
+                    <colspec colname="col2" colnum="2" />
+                    <colspec colname="col3" colnum="3" />
+
+                    <thead>
+                        <row>
+                            <entry>Type in OpenCL Language</entry>
+                            <entry>Description</entry>
+                            <entry>API type for application</entry>
+                        </row>
+                    </thead>
+
+                    <tbody>
+                        <row>
+                            <entry>half2</entry>
+                            <entry>2-component half-precision floating-point vector</entry>
+                            <entry>cl_half2</entry>
+                        </row>
+
+                        <row>
+                            <entry>half4</entry>
+                            <entry>4-component half-precision floating-point vector</entry>
+                            <entry>cl_half4</entry>
+                        </row>
+
+                        <row>
+                            <entry>half8</entry>
+                            <entry>8-component half-precision floating-point vector</entry>
+                            <entry>cl_half8</entry>
+                        </row>
+
+                        <row>
+                            <entry>half16</entry>
+                            <entry>16-component half-precision floating-point vector</entry>
+                            <entry>cl_half16</entry>
+                        </row>
+
+                    </tbody>
+                </tgroup>
+            </informaltable>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="cl_khr_fp16">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

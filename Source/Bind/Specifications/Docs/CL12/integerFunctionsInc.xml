@@ -1,0 +1,40 @@
+
+        <para>
+          <!-- core spec. p. 263, section 6.12.3 --> Built-in integer functions take
+          scalar or vector arguments. The vector versions of the integer functions operate
+          component-wise. The description is per component.
+        </para>
+
+        <para>
+          We use the generic type name <type>gentype</type> to indicate that the function
+          can take <type>char</type>, <type>char{2|3|4|8|16}</type>, <type>uchar</type>,
+          <type>uchar{2|3|4|8|16}</type>, <type>short</type>, <type>short{2|3|4|8|16}</type>,
+          <type>ushort</type>, <type>ushort{2|3|4|8|16}</type>, <type>int</type>,
+          <type>int{2|3|4|8|16}</type>, <type>uint</type>, <type>uint{2|3|4|8|16}</type>,
+          <type>long</type>, <type>long{2|3|4|8|16}</type>, <type>ulong</type>, or
+          <type>ulong{2|3|4|8|16}</type> as the type for the arguments.  We use the generic type
+          name <type>ugentype</type> to refer to unsigned versions of <type>gentype</type>. For
+          example, if <type>gentype</type> is <type>char4</type>, <type>ugentype</type> is
+          <type>uchar4</type>.
+        </para>
+
+        <para><!-- core spec p. 253 references section 6.3.a, which doesn't seem to exist in the spec -->
+          We also use the generic type name <type>sgentype</type> to indicate that the function can
+          take a scalar data type i.e. <type>char</type>, <type>uchar</type>, <type>short</type>,
+          <type>ushort</type>, <type>int</type>, <type>uint</type>, <type>long</type>, or
+          <type>ulong</type> as the type for the arguments.  For built-in integer functions that
+          take <type>gentype</type> and <type>sgentype</type> arguments, the <type>gentype</type>
+          argument must be a vector or scalar version of the <type>sgentype</type> argument. For
+          example, if <type>sgentype</type> is <type>uchar</type>, <type>gentype</type>
+          must be <type>uchar</type> or <type>uchar{2|3|4|8|16}</type>.  For vector versions,
+          <type>sgentype</type> is implicitly widened to <type>gentype</type> as described in section 6.3.a
+          of the OpenCL specification.
+        </para>
+
+        <para>
+          For any specific use of a function, the actual type has to be the same for all
+          arguments and the return type unless otherwise specified.
+        </para>
+
+<!-- 12-Oct-2011 -->
+

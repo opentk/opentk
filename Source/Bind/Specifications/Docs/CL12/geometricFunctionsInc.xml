@@ -1,0 +1,18 @@
+
+    <para><!-- core spec. p. 259, section 6.12.5 -->
+      Built-in geometric functions operate component-wise.  The description
+      is per-component.  <type>float<replaceable>n</replaceable></type> is
+      <type>float</type>, <type>float2</type>, <type>float3</type>, or <type>float4</type> and
+      <type>double<replaceable>n</replaceable></type> is <type>double</type>, <type>double2</type>,
+      <type>double3</type>, or <type>double4</type>. The built-in geometric functions are
+      implemented using the round to nearest even rounding mode.
+    </para>
+
+    <para><!-- core spec. p. 259, section 6.12.5, footnote 53 associated with the section header -->
+        The geometric functions can be implemented using contractions such
+        as <citerefentry><refentrytitle>mad</refentrytitle></citerefentry> or
+        <citerefentry><refentrytitle>fma</refentrytitle></citerefentry>.
+    </para>
+
+<!-- 17-Oct-2011 -->
+

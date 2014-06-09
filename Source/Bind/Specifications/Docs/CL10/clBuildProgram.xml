@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>         
+                clBuildProgram
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>       
+            clBuildProgram
+        </refentrytitle>
+
+<!-- ******************************************************************************* -->
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+  
+    </refmeta>
+
+
+<!-- ================================ SYNOPSIS -->  
+
+    <refnamediv id="clBuildProgram">
+        <refname>     
+            clBuildProgram
+        </refname> 
+
+        <refpurpose>          
+            Builds (compiles and links) a program executable from the program source or binary.
+        </refpurpose> 
+    </refnamediv> 
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clBuildProgram</function>
+                </funcdef>
+<paramdef><link xlink:href="abstractDataTypes.html">cl_program</link><parameter>program</parameter></paramdef>
+<paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_devices</parameter></paramdef>
+<paramdef>const <link xlink:href="abstractDataTypes.html">cl_device_id</link><parameter>*device_list</parameter></paramdef>
+<paramdef>const <link xlink:href="scalarDataTypes.html">char</link><parameter>*options</parameter></paramdef>
+<paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>(*pfn_notify)(cl_program, <link xlink:href="scalarDataTypes.html">void</link> *user_data)</parameter></paramdef>
+<paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*user_data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>
+
+
+<!-- ================================ PARAMETERS --> 
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+
+            <varlistentry>
+                <term>
+                    <varname>
+						program
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> 
+						The program object
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>
+						device_list
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para>
+						A pointer to a list of devices that are in <varname>program</varname>. If <varname>device_list</varname> is NULL value, the program executable is built for all devices associated with <varname>program</varname> for which a source or binary has been loaded. If <varname>device_list</varname> is a non-NULL value, the program executable is built for devices specified in this list for which a source or binary has been loaded.
+                    </para> 
+               </listitem>
+            </varlistentry>
+			
+            <varlistentry>
+                <term>
+                    <varname>
+						num_devices
+					</varname>
+				</term>
+				
+				<listitem>
+					<para>
+						The number of devices listed in <varname>device_list</varname>.
+					</para>
+				</listitem>
+			</varlistentry>
+	
+        <varlistentry>
+            <term><varname>options</varname></term>
+            <listitem>
+				<para>
+                    A pointer to a string that describes the build options to be used for building the program executable. The list of supported options is described in "Build Options" below. 
+                </para>
+            </listitem>
+        </varlistentry>
+			
+            <varlistentry>
+                <term>
+                    <varname>
+						pfn_notify
+					</varname>
+				</term>
+				
+				<listitem>
+					<para>
+						A function pointer to a notification routine. The notification routine is a callback function that an application can register and which will be called when the program executable has been built (successfully or unsuccessfully). If <varname>pfn_notify</varname> is not NULL, <function>clBuildProgram</function> does not need to wait for the build to complete and can return immediately. If <varname>pfn_notify</varname> is NULL, <function>clBuildProgram</function> does not return until the build has completed. This callback function may be called asynchronously by the OpenCL implementation. It is the application's responsibility to ensure that the callback function is thread-safe.
+					</para>
+				</listitem>
+			</varlistentry>	
+
+            <varlistentry>
+                <term>
+                    <varname>
+						user_data
+					</varname>
+				</term>
+				
+				<listitem>
+					<para>
+						Passed as an argument when <varname>pfn_notify</varname> is called. <varname>user_data</varname> can be NULL.
+                    </para>
+
+               </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+    
+<!-- ================================ NOTES  -->        
+ 
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+			OpenCL allows program executables to be built using the source or the binary.
+        </para>
+		<para>
+		The build options are categorized as pre-processor options, options for math intrinsics, options that control optimization and miscellaneous options. This specification defines a standard set of options that must be supported by an OpenCL compiler when building program executables
+online or offline. These may be extended by a set of vendor- or platform-specific options.
+		</para>
+		
+		<bridgehead>Preprocessor Options</bridgehead>
+		These options control the OpenCL preprocessor which is run on each program source before
+actual compilation. -D options are processed in the order they are given in the options argument to <function>clBuildProgram</function>.
+   		<variablelist>
+            <varlistentry>
+                <term>-D name</term>
+                <listitem>
+                    <para> 
+						Predefine <varname>name</varname> as a macro, with definition 1.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>-D name=definition</term>
+                <listitem>
+                    <para> 
+						The contents of <varname>definition</varname> are tokenized and processed as if they appeared during translation phase three in a `#define' directive. In particular, the definition will be truncated by embedded newline characters.
+                    </para>
+               </listitem>
+            </varlistentry>
+					
+            <varlistentry>
+                <term>-I dir</term>
+                <listitem>
+                    <para> 
+						Add the directory <varname>dir</varname> to the list of directories to be searched for header files.
+                    </para>
+               </listitem>
+            </varlistentry>
+		</variablelist>
+<literallayout>
+</literallayout>		
+
+		<bridgehead>Math Intrinsics Options</bridgehead>
+		These options control compiler behavior regarding floating-point arithmetic. These options trade
+off between speed and correctness.
+		<variablelist>
+            <varlistentry>
+                <term>-cl-single-precision-constant</term>
+                <listitem>
+                    <para> 
+						Treat double precision floating-point constant as single precision constant.
+                    </para>
+               </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>-cl-denorms-are-zero</term>
+                <listitem>
+                    <para> 
+						This option controls how single precision and double precision denormalized numbers are handled. If specified as a build option, the single precision denormalized numbers may be flushed to zero and if the optional extension for double precision is supported, double precision denormalized numbers may also be flushed to zero. This is intended to be a performance hint and the OpenCL compiler can choose not to flush denorms to zero if the device supports single precision (or double precision) denormalized numbers.
+<para>
+This option is ignored for single precision numbers if the device does not support single precision denormalized numbers i.e. CL_FP_DENORM bit is not set in
+CL_DEVICE_SINGLE_FP_CONFIG.
+</para>
+<para>
+This option is ignored for double precision numbers if the device does not support double precision or if it does support double precison but CL_FP_DENORM bit is not set in CL_DEVICE_DOUBLE_FP_CONFIG.
+</para>
+<para>
+This flag only applies for scalar and vector single precision floating-point variables and computations on these floating-point variables inside a program. It does not apply to reading from or writing to image objects.
+</para>
+                    </para>
+               </listitem>
+            </varlistentry>
+		</variablelist>
+<literallayout>
+</literallayout>	
+
+		<bridgehead>Optimization Options</bridgehead>
+		These options control various sorts of optimizations. Turning on optimization flags makes the
+compiler attempt to improve the performance and/or code size at the expense of compilation time
+and possibly the ability to debug the program.
+		<variablelist>
+            <varlistentry>
+                <term>-cl-opt-disable</term>
+                <listitem>
+                    <para> 
+						This option disables all optimizations. The default is optimizations are enabled.
+                    </para>
+               </listitem>
+            </varlistentry>
+			
+            <varlistentry>
+                <term>-cl-strict-aliasing</term>
+                <listitem>
+                    <para> 
+						This option allows the compiler to assume the strictest aliasing rules.
+                    </para>
+               </listitem>
+            </varlistentry>
+	</variablelist>
+	<para>
+			The following options control compiler behavior regarding floating-point arithmetic. These options trade off between performance and correctness and must be specifically enabled. These options are not turned on by default since it can result in incorrect output for programs which depend on an exact implementation of IEEE 754 rules/specifications for math functions.
+</para>
+	<variablelist>
+            <varlistentry>
+                <term>-cl-mad-enable</term>
+                <listitem>
+                    <para> 
+						Allow <code>a * b + c</code> to be replaced by a <code>mad</code>. The <code>mad</code> computes <code>a * b + c</code> with reduced accuracy. For example, some OpenCL devices implement <code>mad</code> as truncate the result of <code>a * b</code> before adding it to <code>c</code>.
+                    </para>
+               </listitem>
+            </varlistentry>
+			
+            <varlistentry>
+                <term>-cl-no-signed-zeros</term>
+                <listitem>
+                    <para> 
+						Allow optimizations for floating-point arithmetic that ignore the signedness of zero. IEEE 754 arithmetic specifies the behavior of distinct <code>+0.0</code> and <code>-0.0</code> values, which then prohibits simplification of expressions such as <code>x+0.0</code> or <code>0.0*x</code> (even with -clfinite-math only). This option implies that the sign of a zero result isn't significant.
+                    </para>
+               </listitem>
+            </varlistentry>
+			
+            <varlistentry>
+                <term>-cl-unsafe-math-optimizations</term>
+                <listitem>
+                    <para> 
+						Allow optimizations for floating-point arithmetic that (a) assume that arguments and results are valid, (b) may violate IEEE 754 standard and (c) may violate the OpenCL numerical compliance requirements as defined in section 7.4 for single-precision floating-point, section 9.3.9 for double-precision floating-point, and edge case behavior in section 7.5. This option includes the -cl-no-signed-zeros and -cl-mad-enable options.
+                    </para>
+               </listitem>
+            </varlistentry>
+			
+            <varlistentry>
+                <term>-cl-finite-math-only</term>
+                <listitem>
+                    <para> 
+						Allow optimizations for floating-point arithmetic that assume that arguments and results
+are not NaNs or &plusmn;&infin;. This option may violate the OpenCL numerical compliance
+requirements defined in in section 7.4 for single-precision floating-point,
+section 9.3.9 for double-precision floating-point, and edge case behavior in section 7.5.
+                    </para>
+               </listitem>
+            </varlistentry>
+			
+            <varlistentry>
+                <term>-cl-fast-relaxed-math</term>
+                <listitem>
+                    <para> 
+						Sets the optimization options -cl-finite-math-only and -cl-unsafe-math-optimizations.
+This allows optimizations for floating-point arithmetic that may violate the IEEE 754
+standard and the OpenCL numerical compliance requirements defined in the specification in section 7.4 for single-precision floating-point, section 9.3.9 for double-precision floating-point,
+and edge case behavior in section 7.5. This option causes the preprocessor macro
+<code>__FAST_RELAXED_MATH__</code> to be defined in the OpenCL program.
+                    </para>
+               </listitem>
+            </varlistentry>
+		</variablelist>
+<literallayout>
+</literallayout>	
+		<bridgehead>Options to Request or Suppress Warnings</bridgehead>
+		Warnings are diagnostic messages that report constructions which are not inherently erroneous
+but which are risky or suggest there may have been an error. The following languageindependent
+options do not enable specific warnings but control the kinds of diagnostics
+produced by the OpenCL compiler.
+		<variablelist>				
+            <varlistentry>
+                <term>-w</term>
+                <listitem>
+                    <para> 
+						Inhibit all warning messages.
+                    </para>
+               </listitem>
+            </varlistentry>		
+			<varlistentry>
+                <term>-Werror</term>
+                <listitem>
+                    <para> 
+						Make all warnings into errors.
+                    </para>
+               </listitem>
+            </varlistentry>		
+		</variablelist>		
+    </refsect1>
+
+<!-- ================================ ERRORS  -->       
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+			<function>clBuildProgram</function> returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully. Otherwise, it returns one of the following errors:
+		</para>		
+		<itemizedlist mark="disc">
+			<listitem>
+				<errorname>CL_INVALID_PROGRAM</errorname> if <varname>program</varname> is not a valid program object.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_VALUE</errorname> if <varname>device_list</varname> is NULL and <varname>num_devices</varname> is greater than zero, or if <varname>device_list</varname> is not NULL and <varname>num_devices</varname> is zero.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_VALUE</errorname> if <varname>pfn_notify</varname> is NULL but <varname>user_data</varname> is not NULL.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_DEVICE</errorname> if OpenCL devices listed in <varname>device_list</varname> are not in the list of devices associated with <varname>program</varname>.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_BINARY</errorname> if <varname>program</varname> is created with <citerefentry><refentrytitle>clCreateWithProgramWithBinary</refentrytitle></citerefentry> and
+devices listed in <varname>device_list</varname> do not have a valid program binary loaded.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_BUILD_OPTIONS</errorname> if the build options specified by <varname>options</varname> are invalid.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_OPERATION</errorname> if the build of a program executable for any of the devices
+				listed in <varname>device_list</varname> by a previous call to clBuildProgram for <varname>program</varname> has not
+				completed.
+			</listitem>
+			<listitem>
+				<errorname>CL_COMPILER_NOT_AVAILABLE</errorname> if <varname>program</varname> is created with
+				clCreateProgramWithSource and a compiler is not available i.e.
+				<errorname>CL_DEVICE_COMPILER_AVAILABLE</errorname> specified in the table of OpenCL Device Queries for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry> is set to <errorname>CL_FALSE</errorname>.
+			</listitem>
+			<listitem>
+				<errorname>CL_BUILD_PROGRAM_FAILURE</errorname> if there is a failure to build the program executable.
+				This error will be returned if <function>clBuildProgram</function> does not return until the build has
+				completed.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_OPERATION</errorname> if there are kernel objects attached to <varname>program</varname>.
+			</listitem>
+			<listitem>
+				<errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by the
+				OpenCL implementation on the host.				
+			</listitem>
+		</itemizedlist>
+	</refsect1>
+
+    
+
+<!-- ================================ EXAMPLE  -->  
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--    
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>   
+    </refsect2>  
+--> 
+
+
+<!-- ================================ SPECIFICATION  -->        
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->     
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+			
+				      
+            <olink uri="clBuildProgram">OpenCL Specification</olink>
+        </para>
+    </refsect1>     
+
+
+<!-- ================================ ALSO SEE  -->     
+   
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->  
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

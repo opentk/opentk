@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+<!ENTITY imageFunctionsInc SYSTEM "imageFunctionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Image Read and Write Functions</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Image Read, Write, and Query Functions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>Image Read and Write Functions</refname>
+        <refpurpose>Built-in functions to read, write, and query image memory objects. Click an item in the table below for details about that function.</refpurpose>
+    </refnamediv>
+
+  <refsect1 id="springboard">
+    <title></title>
+    <informaltable frame="all">
+      <tgroup cols="2" align="left" colsep="1" rowsep="1">
+        <colspec colnum="1" colwidth="2*" colname="col1" />
+        <colspec colnum="2" colwidth="8*" colname="col2" />
+
+        <tbody>
+
+<!-- 1D FUNCTIONS -->
+
+          <row>
+            <entry><citerefentry href="read_imagef1d"> <refentrytitle>read_imagef</refentrytitle></citerefentry> for 1D</entry>
+            <entry>
+                Do an element lookup in the 1D image object with or without a sampler,
+                returning floating-point values.
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry href="read_imagei1d"> <refentrytitle>read_image{i|ui}</refentrytitle></citerefentry> for 1D</entry>
+            <entry>
+                Do an element lookup in the 1D image object with or without a sampler,
+                returning unnormalized signed integer and unsigned integer values.
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry href="read_imageh1d"> <refentrytitle>read_imageh</refentrytitle></citerefentry> for 1D</entry>
+            <entry>
+                OPTIONAL function to do an element lookup in the 1D image object
+                with or without a sampler, returning floating-point values. Enabled with
+                <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>.
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry href="write_image1d"> <refentrytitle>write_image {f|i|ui|h}</refentrytitle>
+            </citerefentry> for 1D
+            </entry>
+            <entry>
+                Write <varname>color</varname> value to location in the 2D image object.
+                The <type>half</type> type is enabled with
+                <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>.
+            </entry>
+          </row>
+
+<!-- 2D FUNCTIONS -->
+
+          <row>
+            <entry><citerefentry href="read_imagef2d"> <refentrytitle>read_imagef</refentrytitle></citerefentry> for 2D</entry>
+            <entry>
+                Do an element lookup in the 2D image object with or without a sampler,
+                returning floating-point values.
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry href="read_imagei2d"> <refentrytitle>read_image{i|ui}</refentrytitle></citerefentry> for 2D
+            </entry>
+            <entry>
+                Do an element lookup in the 2D image object with or without a sampler,
+                returning unnormalized signed integer and unsigned integer values.
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry href="read_imageh2d"> <refentrytitle>read_imageh</refentrytitle></citerefentry> for 2D</entry>
+            <entry>
+                OPTIONAL function to do an element lookup in the 2D image object with
+                or without a sampler, returning floating-point values. Enabled with
+                <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>.
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry href="write_image2d">
+                <refentrytitle>write_image {f|i|ui|h}</refentrytitle>
+            </citerefentry> for 2D
+            </entry>
+            <entry>
+                Write <varname>color</varname> value to location in the 2D image object.
+                The <type>half</type> type is enabled with
+                <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>.
+            </entry>
+          </row>
+
+<!-- 3D FUNCTIONS -->
+
+          <row>
+            <entry><citerefentry href="read_imagef3d">
+                <refentrytitle>read_imagef</refentrytitle></citerefentry> for 3D
+            </entry>
+            <entry>
+                Do an element lookup in the 3D image object with or without a sampler,
+                returning floating-point values.
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry href="read_imagei3d">
+                <refentrytitle>read_image{i|ui}</refentrytitle></citerefentry> for 3D
+            </entry>
+            <entry>
+                Do an element lookup in the 3D image object with or without a sampler,
+                returning unnormalized signed integer and unsigned integer values.
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry href="read_imageh3d">
+                <refentrytitle>read_imageh</refentrytitle></citerefentry> for 3D
+            </entry>
+            <entry>
+                OPTIONAL function to do an element lookup in the 3D image object with or
+                without a sampler, returning floating-point values. Enabled with
+                <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>.
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry href="write_image3d">
+                <refentrytitle>write_image {f|i|ui|h}</refentrytitle>
+            </citerefentry>  for 3D
+            </entry>
+            <entry>
+                Write <varname>color</varname> value to location in the 2D image object.
+                The <type>half</type> type is enabled with
+                <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>.
+            </entry>
+          </row>
+
+<!--        <row>
+            <entry><citerefentry href="cl_khr_3d_image_writes">
+                <refentrytitle>write_image{f|i|ui}</refentrytitle></citerefentry> for 3D</entry>
+            <entry>OPTIONAL function to write <varname>color</varname> value in a 3D object. Enabled with <citerefentry><refentrytitle>cl_khr_3d_image_writes</refentrytitle></citerefentry>.</entry>
+        </row> -->
+
+
+<!-- IMAGE QUERY FUNCTIONS -->
+
+          <row>
+            <entry><citerefentry> <refentrytitle>get_image_width</refentrytitle> </citerefentry></entry>
+            <entry>Return the image width in pixels</entry>
+          </row>
+
+          <row>
+            <entry><citerefentry> <refentrytitle>get_image_height</refentrytitle> </citerefentry></entry>
+            <entry>Return the image height in pixels.</entry>
+          </row>
+
+          <row>
+            <entry><citerefentry> <refentrytitle>get_image_depth</refentrytitle> </citerefentry></entry>
+            <entry>Return the 3D image depth in pixels</entry>
+          </row>
+
+          <row>
+            <entry><citerefentry> <refentrytitle>get_image_channel_data_type</refentrytitle> </citerefentry></entry>
+            <entry>Return the image channel data type</entry>
+          </row>
+
+          <row>
+            <entry><citerefentry> <refentrytitle>get_image_channel_order</refentrytitle> </citerefentry></entry>
+            <entry>Return the image channel order</entry>
+          </row>
+
+          <row>
+            <entry><citerefentry> <refentrytitle>get_image_dim</refentrytitle> </citerefentry></entry>
+            <entry>Return the image dimensions</entry>
+          </row>
+
+          <row>
+            <entry><citerefentry> <refentrytitle>get_image_array_size</refentrytitle> </citerefentry></entry>
+            <entry>Return the number of images in an image array</entry>
+          </row>
+        </tbody>
+
+      </tgroup>
+    </informaltable>
+  </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        &imageFunctionsInc;
+
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="imageFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>sampler_t</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_3d_image_writes</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 16-Oct-2011 -->
+</refentry>
+
