@@ -525,7 +525,7 @@ namespace Bind
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
-                    if (f.Category.StartsWith("VERSION") || f.Category == f.Version)
+                    if (f.Category.StartsWith("VERSION") || f.Category == f.Version || String.IsNullOrEmpty(f.Category))
                         category = String.Format("[requires: {0}]", "v" + f.Version);
                     else
                         category = String.Format("[requires: {0}]", "v" + f.Version + " or " + f.Category);
