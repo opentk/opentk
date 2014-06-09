@@ -177,6 +177,576 @@ namespace OpenTK.Compute.CL20
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="command_queue"></param>
+        /// <param name="src_buffer"></param>
+        /// <param name="dst_image"></param>
+        /// <param name="src_offset"></param>
+        /// <param name="dst_origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueCopyBufferToImage(this CommandQueue command_queue, ComputeMemory src_buffer, ComputeMemory dst_image, IntPtr src_offset, IntPtr*[] dst_origin, IntPtr*[] region, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueCopyBufferToImage(command_queue, src_buffer, dst_image, src_offset, dst_origin, region, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_buffer"></param>
+        /// <param name="dst_image"></param>
+        /// <param name="src_offset"></param>
+        /// <param name="dst_origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueCopyBufferToImage(this CommandQueue command_queue, ComputeMemory src_buffer, ComputeMemory dst_image, IntPtr src_offset, ref IntPtr* dst_origin, ref IntPtr* region, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueCopyBufferToImage(command_queue, src_buffer, dst_image, src_offset, ref dst_origin, ref region, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_buffer"></param>
+        /// <param name="dst_image"></param>
+        /// <param name="src_offset"></param>
+        /// <param name="dst_origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueCopyBufferToImage(this CommandQueue command_queue, ComputeMemory src_buffer, ComputeMemory dst_image, IntPtr src_offset, IntPtr** dst_origin, IntPtr** region, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueCopyBufferToImage(command_queue, src_buffer, dst_image, src_offset, dst_origin, region, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_image"></param>
+        /// <param name="dst_image"></param>
+        /// <param name="src_origin">[length: 3]</param>
+        /// <param name="dst_origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueCopyImage(this CommandQueue command_queue, ComputeMemory src_image, ComputeMemory dst_image, IntPtr*[] src_origin, IntPtr*[] dst_origin, IntPtr*[] region, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueCopyImage(command_queue, src_image, dst_image, src_origin, dst_origin, region, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_image"></param>
+        /// <param name="dst_image"></param>
+        /// <param name="src_origin">[length: 3]</param>
+        /// <param name="dst_origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueCopyImage(this CommandQueue command_queue, ComputeMemory src_image, ComputeMemory dst_image, ref IntPtr* src_origin, ref IntPtr* dst_origin, ref IntPtr* region, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueCopyImage(command_queue, src_image, dst_image, ref src_origin, ref dst_origin, ref region, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_image"></param>
+        /// <param name="dst_image"></param>
+        /// <param name="src_origin">[length: 3]</param>
+        /// <param name="dst_origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueCopyImage(this CommandQueue command_queue, ComputeMemory src_image, ComputeMemory dst_image, IntPtr** src_origin, IntPtr** dst_origin, IntPtr** region, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueCopyImage(command_queue, src_image, dst_image, src_origin, dst_origin, region, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_image"></param>
+        /// <param name="dst_buffer"></param>
+        /// <param name="src_origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="dst_offset"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueCopyImageToBuffer(this CommandQueue command_queue, ComputeMemory src_image, ComputeMemory dst_buffer, IntPtr*[] src_origin, IntPtr*[] region, IntPtr dst_offset, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueCopyImageToBuffer(command_queue, src_image, dst_buffer, src_origin, region, dst_offset, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_image"></param>
+        /// <param name="dst_buffer"></param>
+        /// <param name="src_origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="dst_offset"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueCopyImageToBuffer(this CommandQueue command_queue, ComputeMemory src_image, ComputeMemory dst_buffer, ref IntPtr* src_origin, ref IntPtr* region, IntPtr dst_offset, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueCopyImageToBuffer(command_queue, src_image, dst_buffer, ref src_origin, ref region, dst_offset, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="src_image"></param>
+        /// <param name="dst_buffer"></param>
+        /// <param name="src_origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="dst_offset"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueCopyImageToBuffer(this CommandQueue command_queue, ComputeMemory src_image, ComputeMemory dst_buffer, IntPtr** src_origin, IntPtr** region, IntPtr dst_offset, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueCopyImageToBuffer(command_queue, src_image, dst_buffer, src_origin, region, dst_offset, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_map"></param>
+        /// <param name="map_flags"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        /// <param name="errcode_ret"></param>
+        [CLSCompliant(false)]
+        public static IntPtr EnqueueMapBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_map, OpenTK.Compute.CL20.MapFlags map_flags, IntPtr offset, IntPtr cb, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, ComputeEvent[] @event, [OutAttribute] Int32[] errcode_ret)
+        {
+            return CL.EnqueueMapBuffer(command_queue, buffer, blocking_map, map_flags, offset, cb, num_events_in_wait_list, event_wait_list, @event, errcode_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_map"></param>
+        /// <param name="map_flags"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        /// <param name="errcode_ret"></param>
+        [CLSCompliant(false)]
+        public static IntPtr EnqueueMapBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_map, OpenTK.Compute.CL20.MapFlags map_flags, IntPtr offset, IntPtr cb, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, ref ComputeEvent @event, [OutAttribute] out Int32 errcode_ret)
+        {
+            return CL.EnqueueMapBuffer(command_queue, buffer, blocking_map, map_flags, offset, cb, num_events_in_wait_list, ref event_wait_list, ref @event, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="buffer"></param>
+        /// <param name="blocking_map"></param>
+        /// <param name="map_flags"></param>
+        /// <param name="offset"></param>
+        /// <param name="cb"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        /// <param name="errcode_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe IntPtr EnqueueMapBuffer(this CommandQueue command_queue, ComputeMemory buffer, bool blocking_map, OpenTK.Compute.CL20.MapFlags map_flags, IntPtr offset, IntPtr cb, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, ComputeEvent* @event, [OutAttribute] Int32* errcode_ret)
+        {
+            return CL.EnqueueMapBuffer(command_queue, buffer, blocking_map, map_flags, offset, cb, num_events_in_wait_list, event_wait_list, @event, errcode_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_map"></param>
+        /// <param name="map_flags"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="image_row_pitch"></param>
+        /// <param name="image_slice_pitch"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        /// <param name="errcode_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe IntPtr EnqueueMapImage(this CommandQueue command_queue, ComputeMemory image, bool blocking_map, OpenTK.Compute.CL20.MapFlags map_flags, IntPtr*[] origin, IntPtr*[] region, IntPtr[] image_row_pitch, IntPtr[] image_slice_pitch, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, ComputeEvent[] @event, [OutAttribute] Int32[] errcode_ret)
+        {
+            return CL.EnqueueMapImage(command_queue, image, blocking_map, map_flags, origin, region, image_row_pitch, image_slice_pitch, num_events_in_wait_list, event_wait_list, @event, errcode_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_map"></param>
+        /// <param name="map_flags"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="image_row_pitch"></param>
+        /// <param name="image_slice_pitch"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        /// <param name="errcode_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe IntPtr EnqueueMapImage(this CommandQueue command_queue, ComputeMemory image, bool blocking_map, OpenTK.Compute.CL20.MapFlags map_flags, ref IntPtr* origin, ref IntPtr* region, ref IntPtr image_row_pitch, ref IntPtr image_slice_pitch, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, ref ComputeEvent @event, [OutAttribute] out Int32 errcode_ret)
+        {
+            return CL.EnqueueMapImage(command_queue, image, blocking_map, map_flags, ref origin, ref region, ref image_row_pitch, ref image_slice_pitch, num_events_in_wait_list, ref event_wait_list, ref @event, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_map"></param>
+        /// <param name="map_flags"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="image_row_pitch"></param>
+        /// <param name="image_slice_pitch"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        /// <param name="errcode_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe IntPtr EnqueueMapImage(this CommandQueue command_queue, ComputeMemory image, bool blocking_map, OpenTK.Compute.CL20.MapFlags map_flags, IntPtr** origin, IntPtr** region, IntPtr* image_row_pitch, IntPtr* image_slice_pitch, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, ComputeEvent* @event, [OutAttribute] Int32* errcode_ret)
+        {
+            return CL.EnqueueMapImage(command_queue, image, blocking_map, map_flags, origin, region, image_row_pitch, image_slice_pitch, num_events_in_wait_list, event_wait_list, @event, errcode_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static Int32 EnqueueMarker(this CommandQueue command_queue, ComputeEvent[] @event)
+        {
+            return CL.EnqueueMarker(command_queue, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static Int32 EnqueueMarker(this CommandQueue command_queue, ref ComputeEvent @event)
+        {
+            return CL.EnqueueMarker(command_queue, ref @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe Int32 EnqueueMarker(this CommandQueue command_queue, ComputeEvent* @event)
+        {
+            return CL.EnqueueMarker(command_queue, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNativeKernel(this CommandQueue command_queue, IntPtr user_func, IntPtr args, IntPtr cb_args, Int32 num_mem_objects, ComputeMemory[] mem_list, IntPtr args_mem_loc, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] ComputeEvent[] @event)
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, mem_list, args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNativeKernel(this CommandQueue command_queue, IntPtr user_func, IntPtr args, IntPtr cb_args, Int32 num_mem_objects, ref ComputeMemory mem_list, IntPtr args_mem_loc, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, ref mem_list, args_mem_loc, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueNativeKernel(this CommandQueue command_queue, IntPtr user_func, IntPtr args, IntPtr cb_args, Int32 num_mem_objects, ComputeMemory* mem_list, IntPtr args_mem_loc, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, mem_list, args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] T2[] args, IntPtr cb_args, Int32 num_mem_objects, ComputeMemory[] mem_list, [InAttribute, OutAttribute] T6[] args_mem_loc, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] ComputeEvent[] @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, mem_list, args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] T2[] args, IntPtr cb_args, Int32 num_mem_objects, ref ComputeMemory mem_list, [InAttribute, OutAttribute] T6[] args_mem_loc, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, ref mem_list, args_mem_loc, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] T2[] args, IntPtr cb_args, Int32 num_mem_objects, ComputeMemory* mem_list, [InAttribute, OutAttribute] T6[] args_mem_loc, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, mem_list, args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] T2[,] args, IntPtr cb_args, Int32 num_mem_objects, ComputeMemory[] mem_list, [InAttribute, OutAttribute] T6[,] args_mem_loc, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] ComputeEvent[] @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, mem_list, args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] T2[,] args, IntPtr cb_args, Int32 num_mem_objects, ref ComputeMemory mem_list, [InAttribute, OutAttribute] T6[,] args_mem_loc, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, ref mem_list, args_mem_loc, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] T2[,] args, IntPtr cb_args, Int32 num_mem_objects, ComputeMemory* mem_list, [InAttribute, OutAttribute] T6[,] args_mem_loc, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, mem_list, args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] T2[,,] args, IntPtr cb_args, Int32 num_mem_objects, ComputeMemory[] mem_list, [InAttribute, OutAttribute] T6[,,] args_mem_loc, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] ComputeEvent[] @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, mem_list, args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] T2[,,] args, IntPtr cb_args, Int32 num_mem_objects, ref ComputeMemory mem_list, [InAttribute, OutAttribute] T6[,,] args_mem_loc, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, ref mem_list, args_mem_loc, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] T2[,,] args, IntPtr cb_args, Int32 num_mem_objects, ComputeMemory* mem_list, [InAttribute, OutAttribute] T6[,,] args_mem_loc, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, args, cb_args, num_mem_objects, mem_list, args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] ref T2 args, IntPtr cb_args, Int32 num_mem_objects, ComputeMemory[] mem_list, [InAttribute, OutAttribute] ref T6 args_mem_loc, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] ComputeEvent[] @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, ref args, cb_args, num_mem_objects, mem_list, ref args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] ref T2 args, IntPtr cb_args, Int32 num_mem_objects, ref ComputeMemory mem_list, [InAttribute, OutAttribute] ref T6 args_mem_loc, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, ref args, cb_args, num_mem_objects, ref mem_list, ref args_mem_loc, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="user_func"></param>
+        /// <param name="args"></param>
+        /// <param name="cb_args"></param>
+        /// <param name="num_mem_objects"></param>
+        /// <param name="mem_list"></param>
+        /// <param name="args_mem_loc"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueNativeKernel<T2,T6>(this CommandQueue command_queue, IntPtr user_func, [InAttribute, OutAttribute] ref T2 args, IntPtr cb_args, Int32 num_mem_objects, ComputeMemory* mem_list, [InAttribute, OutAttribute] ref T6 args_mem_loc, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T2 : struct
+            where T6 : struct
+        
+        {
+            return CL.EnqueueNativeKernel(command_queue, user_func, ref args, cb_args, num_mem_objects, mem_list, ref args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
         /// <param name="kernel"></param>
         /// <param name="work_dim"></param>
         /// <param name="global_work_offset"></param>
@@ -489,6 +1059,585 @@ namespace OpenTK.Compute.CL20
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, IntPtr*[] origin, IntPtr*[] region, IntPtr row_pitch, IntPtr slice_pitch, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, IntPtr*[] origin, IntPtr*[] region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] T7[] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, IntPtr*[] origin, IntPtr*[] region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] T7[,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, IntPtr*[] origin, IntPtr*[] region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] T7[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, IntPtr*[] origin, IntPtr*[] region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] ref T7 ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ref ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, ref IntPtr* origin, ref IntPtr* region, IntPtr row_pitch, IntPtr slice_pitch, IntPtr ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, ref origin, ref region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, ref IntPtr* origin, ref IntPtr* region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] T7[] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, ref origin, ref region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, ref IntPtr* origin, ref IntPtr* region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] T7[,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, ref origin, ref region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, ref IntPtr* origin, ref IntPtr* region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] T7[,,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, ref origin, ref region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, ref IntPtr* origin, ref IntPtr* region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] ref T7 ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, ref origin, ref region, row_pitch, slice_pitch, ref ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, IntPtr** origin, IntPtr** region, IntPtr row_pitch, IntPtr slice_pitch, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, IntPtr** origin, IntPtr** region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] T7[] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, IntPtr** origin, IntPtr** region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] T7[,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, IntPtr** origin, IntPtr** region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] T7[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_read"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="row_pitch"></param>
+        /// <param name="slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueReadImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_read, IntPtr** origin, IntPtr** region, IntPtr row_pitch, IntPtr slice_pitch, [InAttribute, OutAttribute] ref T7 ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueReadImage(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ref ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="kernel"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static Int32 EnqueueTask(this CommandQueue command_queue, ComputeKernel kernel, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, ComputeEvent[] @event)
+        {
+            return CL.EnqueueTask(command_queue, kernel, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="kernel"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static Int32 EnqueueTask(this CommandQueue command_queue, ComputeKernel kernel, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, ref ComputeEvent @event)
+        {
+            return CL.EnqueueTask(command_queue, kernel, num_events_in_wait_list, ref event_wait_list, ref @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="kernel"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe Int32 EnqueueTask(this CommandQueue command_queue, ComputeKernel kernel, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, ComputeEvent* @event)
+        {
+            return CL.EnqueueTask(command_queue, kernel, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueUnmapMemObject(this CommandQueue command_queue, ComputeMemory memobj, IntPtr mapped_ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueUnmapMemObject(this CommandQueue command_queue, ComputeMemory memobj, IntPtr mapped_ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueUnmapMemObject(this CommandQueue command_queue, ComputeMemory memobj, IntPtr mapped_ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] T2[] mapped_ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] T2[] mapped_ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] T2[] mapped_ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] T2[,] mapped_ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] T2[,] mapped_ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] T2[,] mapped_ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] T2[,,] mapped_ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] T2[,,] mapped_ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] T2[,,] mapped_ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, mapped_ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] ref T2 mapped_ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, ref mapped_ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] ref T2 mapped_ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, ref mapped_ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="memobj"></param>
+        /// <param name="mapped_ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueUnmapMemObject<T2>(this CommandQueue command_queue, ComputeMemory memobj, [InAttribute, OutAttribute] ref T2 mapped_ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T2 : struct
+        
+        {
+            return CL.EnqueueUnmapMemObject(command_queue, memobj, ref mapped_ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="num_events"></param>
+        /// <param name="event_list"></param>
+        [CLSCompliant(false)]
+        public static Int32 EnqueueWaitForEvents(this CommandQueue command_queue, Int32 num_events, ComputeEvent[] event_list)
+        {
+            return CL.EnqueueWaitForEvents(command_queue, num_events, event_list);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="num_events"></param>
+        /// <param name="event_list"></param>
+        [CLSCompliant(false)]
+        public static Int32 EnqueueWaitForEvents(this CommandQueue command_queue, Int32 num_events, ref ComputeEvent event_list)
+        {
+            return CL.EnqueueWaitForEvents(command_queue, num_events, ref event_list);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="num_events"></param>
+        /// <param name="event_list"></param>
+        [CLSCompliant(false)]
+        public static unsafe Int32 EnqueueWaitForEvents(this CommandQueue command_queue, Int32 num_events, ComputeEvent* event_list)
+        {
+            return CL.EnqueueWaitForEvents(command_queue, num_events, event_list);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
         /// <param name="buffer"></param>
         /// <param name="blocking_write"></param>
         /// <param name="offset"></param>
@@ -753,9 +1902,528 @@ namespace OpenTK.Compute.CL20
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, IntPtr*[] origin, IntPtr*[] region, IntPtr input_row_pitch, IntPtr input_slice_pitch, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, IntPtr*[] origin, IntPtr*[] region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] T7[] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, IntPtr*[] origin, IntPtr*[] region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] T7[,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, IntPtr*[] origin, IntPtr*[] region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] T7[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, IntPtr*[] origin, IntPtr*[] region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] ref T7 ptr, Int32 num_events_in_wait_list, ComputeEvent[] event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ref ptr, num_events_in_wait_list, event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, ref IntPtr* origin, ref IntPtr* region, IntPtr input_row_pitch, IntPtr input_slice_pitch, IntPtr ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, ref origin, ref region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, ref IntPtr* origin, ref IntPtr* region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] T7[] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, ref origin, ref region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, ref IntPtr* origin, ref IntPtr* region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] T7[,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, ref origin, ref region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, ref IntPtr* origin, ref IntPtr* region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] T7[,,] ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, ref origin, ref region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, ref IntPtr* origin, ref IntPtr* region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] ref T7 ptr, Int32 num_events_in_wait_list, ref ComputeEvent event_wait_list, [OutAttribute] out ComputeEvent @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, ref origin, ref region, input_row_pitch, input_slice_pitch, ref ptr, num_events_in_wait_list, ref event_wait_list, out @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, IntPtr** origin, IntPtr** region, IntPtr input_row_pitch, IntPtr input_slice_pitch, IntPtr ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, IntPtr** origin, IntPtr** region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] T7[] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, IntPtr** origin, IntPtr** region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] T7[,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, IntPtr** origin, IntPtr** region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] T7[,,] ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="image"></param>
+        /// <param name="blocking_write"></param>
+        /// <param name="origin">[length: 3]</param>
+        /// <param name="region">[length: 3]</param>
+        /// <param name="input_row_pitch"></param>
+        /// <param name="input_slice_pitch"></param>
+        /// <param name="ptr"></param>
+        /// <param name="num_events_in_wait_list"></param>
+        /// <param name="event_wait_list"></param>
+        /// <param name="event"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode EnqueueWriteImage<T7>(this CommandQueue command_queue, ComputeMemory image, bool blocking_write, IntPtr** origin, IntPtr** region, IntPtr input_row_pitch, IntPtr input_slice_pitch, [InAttribute, OutAttribute] ref T7 ptr, Int32 num_events_in_wait_list, ComputeEvent* event_wait_list, [OutAttribute] ComputeEvent* @event)
+            where T7 : struct
+        
+        {
+            return CL.EnqueueWriteImage(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ref ptr, num_events_in_wait_list, event_wait_list, @event);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
         public static ErrorCode Finish(this CommandQueue command_queue)
         {
             return CL.Finish(command_queue);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        public static ErrorCode Flush(this CommandQueue command_queue)
+        {
+            return CL.Flush(command_queue);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetCommandQueueInfo(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetCommandQueueInfo(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] out IntPtr param_value_size_ret)
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetCommandQueueInfo(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret)
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] T3[,,] param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr[] param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] out IntPtr param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, ref param_value, out param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        /// <param name="param_name"></param>
+        /// <param name="param_value_size"></param>
+        /// <param name="param_value"></param>
+        /// <param name="param_value_size_ret"></param>
+        [CLSCompliant(false)]
+        public static unsafe ErrorCode GetCommandQueueInfo<T3>(this CommandQueue command_queue, OpenTK.Compute.CL20.CommandQueueInfo param_name, IntPtr param_value_size, [InAttribute, OutAttribute] ref T3 param_value, [OutAttribute] IntPtr* param_value_size_ret)
+            where T3 : struct
+        
+        {
+            return CL.GetCommandQueueInfo(command_queue, param_name, param_value_size, ref param_value, param_value_size_ret);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        public static ErrorCode ReleaseCommandQueue(this CommandQueue command_queue)
+        {
+            return CL.ReleaseCommandQueue(command_queue);
+        }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="command_queue"></param>
+        public static ErrorCode RetainCommandQueue(this CommandQueue command_queue)
+        {
+            return CL.RetainCommandQueue(command_queue);
         }
 
     }
@@ -1080,6 +2748,225 @@ namespace OpenTK.Compute.CL20
         public static unsafe CommandQueue CreateCommandQueue(this ComputeContext context, ComputeDevice device, OpenTK.Compute.CL20.CommandQueueFlags properties, [OutAttribute] ErrorCode* errcode_ret)
         {
             return CL.CreateCommandQueue(context, device, properties, errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref cl_image_desc image_desc, IntPtr host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        {
+            return CL.CreateImage(context, flags, ref image_format, ref image_desc, host_ptr, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, flags, ref image_format, ref image_desc, host_ptr, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, flags, ref image_format, ref image_desc, host_ptr, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[,,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, flags, ref image_format, ref image_desc, host_ptr, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags[] flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] ref T4 host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, flags, ref image_format, ref image_desc, ref host_ptr, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref cl_image_desc image_desc, IntPtr host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        {
+            return CL.CreateImage(context, ref flags, ref image_format, ref image_desc, host_ptr, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, ref flags, ref image_format, ref image_desc, host_ptr, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, ref flags, ref image_format, ref image_desc, host_ptr, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] T4[,,] host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, ref flags, ref image_format, ref image_desc, host_ptr, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeMemory CreateImage<T4>(this ComputeContext context, ref OpenTK.Compute.CL20.MemFlags flags, ref ImageFormat image_format, ref cl_image_desc image_desc, [InAttribute, OutAttribute] ref T4 host_ptr, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, ref flags, ref image_format, ref image_desc, ref host_ptr, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateImage(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, cl_image_desc* image_desc, IntPtr host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+        {
+            return CL.CreateImage(context, flags, image_format, image_desc, host_ptr, errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, cl_image_desc* image_desc, [InAttribute, OutAttribute] T4[] host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, flags, image_format, image_desc, host_ptr, errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, cl_image_desc* image_desc, [InAttribute, OutAttribute] T4[,] host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, flags, image_format, image_desc, host_ptr, errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, cl_image_desc* image_desc, [InAttribute, OutAttribute] T4[,,] host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, flags, image_format, image_desc, host_ptr, errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="flags"></param>
+        /// <param name="image_format">[length: 1]</param>
+        /// <param name="image_desc">[length: 1]</param>
+        /// <param name="host_ptr">[length: 1]</param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeMemory CreateImage<T4>(this ComputeContext context, OpenTK.Compute.CL20.MemFlags* flags, ImageFormat* image_format, cl_image_desc* image_desc, [InAttribute, OutAttribute] ref T4 host_ptr, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+            where T4 : struct
+        
+        {
+            return CL.CreateImage(context, flags, image_format, image_desc, ref host_ptr, errcode_ret);
         }
 
         /// <summary>[requires: v1.0]</summary>
@@ -1610,6 +3497,42 @@ namespace OpenTK.Compute.CL20
             return CL.CreateImage3D(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, ref host_ptr, errcode_ret);
         }
 
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list">[length: num_devices]</param>
+        /// <param name="kernel_names"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeProgram CreateProgramWithBuiltInKernels(this ComputeContext context, Int32 num_devices, ComputeDevice[] device_list, String kernel_names, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        {
+            return CL.CreateProgramWithBuiltInKernels(context, num_devices, device_list, kernel_names, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list">[length: num_devices]</param>
+        /// <param name="kernel_names"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static ComputeProgram CreateProgramWithBuiltInKernels(this ComputeContext context, Int32 num_devices, ref ComputeDevice device_list, String kernel_names, [OutAttribute] out OpenTK.Compute.CL20.ErrorCode errcode_ret)
+        {
+            return CL.CreateProgramWithBuiltInKernels(context, num_devices, ref device_list, kernel_names, out errcode_ret);
+        }
+
+        /// <summary>[requires: v1.2]</summary>
+        /// <param name="context"></param>
+        /// <param name="num_devices"></param>
+        /// <param name="device_list">[length: num_devices]</param>
+        /// <param name="kernel_names"></param>
+        /// <param name="errcode_ret">[length: 1]</param>
+        [CLSCompliant(false)]
+        public static unsafe ComputeProgram CreateProgramWithBuiltInKernels(this ComputeContext context, Int32 num_devices, ComputeDevice* device_list, String kernel_names, [OutAttribute] OpenTK.Compute.CL20.ErrorCode* errcode_ret)
+        {
+            return CL.CreateProgramWithBuiltInKernels(context, num_devices, device_list, kernel_names, errcode_ret);
+        }
+
         /// <summary>[requires: v1.0]</summary>
         /// <param name="context"></param>
         /// <param name="count"></param>
@@ -1670,7 +3593,7 @@ namespace OpenTK.Compute.CL20
             return CL.CreateSampler(context, normalized_coords, addressing_mode, filter_mode, errcode_ret);
         }
 
-        /// <summary></summary>
+        /// <summary>[requires: v1.1]</summary>
         /// <param name="context"></param>
         /// <param name="errcode_ret"></param>
         [CLSCompliant(false)]
@@ -1679,7 +3602,7 @@ namespace OpenTK.Compute.CL20
             return CL.CreateUserEvent(context, errcode_ret);
         }
 
-        /// <summary></summary>
+        /// <summary>[requires: v1.1]</summary>
         /// <param name="context"></param>
         /// <param name="errcode_ret"></param>
         [CLSCompliant(false)]
@@ -1688,7 +3611,7 @@ namespace OpenTK.Compute.CL20
             return CL.CreateUserEvent(context, out errcode_ret);
         }
 
-        /// <summary></summary>
+        /// <summary>[requires: v1.1]</summary>
         /// <param name="context"></param>
         /// <param name="errcode_ret"></param>
         [CLSCompliant(false)]
@@ -2008,7 +3931,7 @@ namespace OpenTK.Compute.CL20
             return CL.GetSupportedImageFormats(context, flags, image_type, num_entries, image_formats, num_image_formats);
         }
 
-        /// <summary>[requires: v1.2 or ]</summary>
+        /// <summary>[requires: v1.2]</summary>
         /// <param name="context"></param>
         /// <param name="num_devices"></param>
         /// <param name="device_list"></param>
@@ -2023,7 +3946,7 @@ namespace OpenTK.Compute.CL20
             return CL.LinkProgram(context, num_devices, device_list, options, num_input_programs, input_programs, notify, user_data);
         }
 
-        /// <summary>[requires: v1.2 or ]</summary>
+        /// <summary>[requires: v1.2]</summary>
         /// <param name="context"></param>
         /// <param name="num_devices"></param>
         /// <param name="device_list"></param>
@@ -2038,7 +3961,7 @@ namespace OpenTK.Compute.CL20
             return CL.LinkProgram(context, num_devices, ref device_list, options, num_input_programs, ref input_programs, notify, user_data);
         }
 
-        /// <summary>[requires: v1.2 or ]</summary>
+        /// <summary>[requires: v1.2]</summary>
         /// <param name="context"></param>
         /// <param name="num_devices"></param>
         /// <param name="device_list"></param>
@@ -2067,7 +3990,7 @@ namespace OpenTK.Compute.CL20
             return CL.RetainContext(context);
         }
 
-        /// <summary></summary>
+        /// <summary>[requires: v1.1]</summary>
         /// <param name="memobj"></param>
         /// <param name="pfn_notify"></param>
         /// <param name="user_data"></param>
@@ -2076,7 +3999,7 @@ namespace OpenTK.Compute.CL20
             return CL.SetMemObjectDestructorCallback(memobj, pfn_notify, user_data);
         }
 
-        /// <summary></summary>
+        /// <summary>[requires: v1.1]</summary>
         /// <param name="memobj"></param>
         /// <param name="pfn_notify"></param>
         /// <param name="user_data"></param>
@@ -2088,7 +4011,7 @@ namespace OpenTK.Compute.CL20
             return CL.SetMemObjectDestructorCallback(memobj, pfn_notify, user_data);
         }
 
-        /// <summary></summary>
+        /// <summary>[requires: v1.1]</summary>
         /// <param name="memobj"></param>
         /// <param name="pfn_notify"></param>
         /// <param name="user_data"></param>
@@ -2100,7 +4023,7 @@ namespace OpenTK.Compute.CL20
             return CL.SetMemObjectDestructorCallback(memobj, pfn_notify, user_data);
         }
 
-        /// <summary></summary>
+        /// <summary>[requires: v1.1]</summary>
         /// <param name="memobj"></param>
         /// <param name="pfn_notify"></param>
         /// <param name="user_data"></param>
@@ -2112,7 +4035,7 @@ namespace OpenTK.Compute.CL20
             return CL.SetMemObjectDestructorCallback(memobj, pfn_notify, user_data);
         }
 
-        /// <summary></summary>
+        /// <summary>[requires: v1.1]</summary>
         /// <param name="memobj"></param>
         /// <param name="pfn_notify"></param>
         /// <param name="user_data"></param>
@@ -2123,7 +4046,7 @@ namespace OpenTK.Compute.CL20
             return CL.SetMemObjectDestructorCallback(memobj, pfn_notify, ref user_data);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v2.0]</summary>
         /// <param name="context"></param>
         /// <param name="alignment"></param>
         /// <param name="flags"></param>
@@ -2133,7 +4056,7 @@ namespace OpenTK.Compute.CL20
             return CL.SVMAlloc(context, alignment, flags, size);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v2.0]</summary>
         /// <param name="context"></param>
         /// <param name="svm_pointer"></param>
         public static void SVMFree(this ComputeContext context, IntPtr svm_pointer)
@@ -2141,7 +4064,7 @@ namespace OpenTK.Compute.CL20
             CL.SVMFree(context, svm_pointer);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v2.0]</summary>
         /// <param name="context"></param>
         /// <param name="svm_pointer"></param>
         [CLSCompliant(false)]
@@ -2152,7 +4075,7 @@ namespace OpenTK.Compute.CL20
             CL.SVMFree(context, svm_pointer);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v2.0]</summary>
         /// <param name="context"></param>
         /// <param name="svm_pointer"></param>
         [CLSCompliant(false)]
@@ -2163,7 +4086,7 @@ namespace OpenTK.Compute.CL20
             CL.SVMFree(context, svm_pointer);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v2.0]</summary>
         /// <param name="context"></param>
         /// <param name="svm_pointer"></param>
         [CLSCompliant(false)]
@@ -2174,7 +4097,7 @@ namespace OpenTK.Compute.CL20
             CL.SVMFree(context, svm_pointer);
         }
 
-        /// <summary>[requires: v2.0 or ]</summary>
+        /// <summary>[requires: v2.0]</summary>
         /// <param name="context"></param>
         /// <param name="svm_pointer"></param>
         public static void SVMFree<T1>(this ComputeContext context, [InAttribute, OutAttribute] ref T1 svm_pointer)
@@ -2851,7 +4774,7 @@ namespace OpenTK.Compute.CL20
             return CL.RetainEvent(@event);
         }
 
-        /// <summary></summary>
+        /// <summary>[requires: v1.1]</summary>
         /// <param name="event"></param>
         /// <param name="command_exec_callback_type"></param>
         /// <param name="notify"></param>
@@ -2861,7 +4784,7 @@ namespace OpenTK.Compute.CL20
             return CL.SetEventCallback(@event, command_exec_callback_type, notify, user_data);
         }
 
-        /// <summary></summary>
+        /// <summary>[requires: v1.1]</summary>
         /// <param name="event"></param>
         /// <param name="execution_status"></param>
         public static ErrorCode SetUserEventStatus(this ComputeEvent @event, OpenTK.Compute.CL20.CommandExecutionStatusFlags execution_status)
