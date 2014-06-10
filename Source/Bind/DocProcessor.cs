@@ -114,10 +114,16 @@ namespace Bind
             text = remove_xmlns.Replace(text, String.Empty);
             text = remove_unknown_entities.Replace(text, String.Empty);
 
+            if (file.Contains("RasterPos"))
+            {
+                System.Diagnostics.Debugger.Break();
+            }
+
             Match m = remove_mathml.Match(text);
             while (m.Length > 0)
             {
                 string removed = text.Substring(m.Index, m.Length);
+
                 text = text.Remove(m.Index, m.Length);
                 int equation = removed.IndexOf("eqn");
                 if (equation > 0)
@@ -138,6 +144,19 @@ namespace Bind
 
                     string eqn_substring = removed.Substring(eqn_start, eqn_end);
                     text = text.Insert(m.Index, "<![CDATA[" + eqn_substring + "]]>");
+                }
+                else
+                {
+                    string mml = String.Empty;
+                    try
+                    {
+                        removed = removed.Replace("mml:", String.Empty); // avoid undeclared namespace
+                        mml = XElement.Parse(removed).Value;
+                        text = text.Insert(m.Index, mml);
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 }
 
             next:
