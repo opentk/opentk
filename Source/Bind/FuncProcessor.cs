@@ -881,6 +881,42 @@ namespace Bind
                 }
                 wrappers.AddRange(overloads);
             }
+
+            if (Settings.IsEnabled(Settings.Legacy.KeepStringArrayOverloads))
+            {
+                // For each 'ref string' parameter, force an additional string[] overload
+                var overloads = new List<Function>();
+                foreach (var list in wrappers.Values)
+                {
+                    overloads.AddRange(list.Where(f =>
+                        f.Parameters.Any(p => (p.Type.WrapperType & WrapperTypes.StringReferenceParameter) != 0))
+                        .Select(f =>
+                        {
+                            var fnew = new Function(f);
+                            foreach (var p in fnew.Parameters)
+                            {
+                                if ((p.Type.WrapperType & WrapperTypes.StringReferenceParameter) != 0)
+                                {
+                                    p.Type.CurrentType = "String";
+                                    p.Type.Array = 1; // Higher ranks are not supported by the marshaler
+
+                                    // We only care about string[], so disable reference / pointer overloads
+                                    // (these are handle through CreateNormalWrappers above)
+                                    p.Type.Reference = false;
+                                    p.Type.Pointer = 0;
+                                    p.Type.WrapperType &= ~WrapperTypes.StringReferenceParameter;
+                                    p.Type.WrapperType &= ~WrapperTypes.ReferenceParameter;
+                                    p.Type.WrapperType &= ~WrapperTypes.PointerParameter;
+                                    p.Type.WrapperType |= WrapperTypes.StringArrayParameter;
+                                }
+                            }
+
+                            return fnew;
+                        }));
+                }
+                wrappers.AddRange(overloads);
+            }
+
             return wrappers;
         }
 
