@@ -55,9 +55,12 @@ namespace OpenTK.Platform.SDL2
 
         #region IPlatformFactory implementation
 
-        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
         {
-            return new Sdl2NativeWindow(x, y, width, height, title, options, device);
+            return new Sdl2NativeWindow(
+                x, y, width, height, title,
+                mode, options, device,
+                major, minor, flags);
         }
 
         public override IDisplayDeviceDriver CreateDisplayDeviceDriver()

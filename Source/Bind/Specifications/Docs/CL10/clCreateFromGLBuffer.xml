@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>                            
+                clCreateFromGLBuffer
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>clCreateFromGLBuffer</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateFromGLBuffer">             
+        <refname>clCreateFromGLBuffer</refname>
+
+        <refpurpose>
+            Creates an OpenCL buffer object from an OpenGL buffer object.
+        </refpurpose>
+    </refnamediv>
+
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                        cl_mem
+                     <function>                   
+                        clCreateFromGLBuffer
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef>GLuint<parameter>bufobj</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>* errcode_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        context
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A valid OpenCL context created from an OpenGL context.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        flags
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A bit-field that is used to specify usage information.
+Refer to the table at
+<citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry><!-- table 5.3 -->
+for a description of <varname>flags</varname>. Only
+CL_MEM_READ_ONLY, CL_MEM_WRITE_ONLY and CL_MEM_READ_WRITE values specified in the table at  <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry> <!-- table 5.3 -->
+can be used.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        bufobj
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        The name of a GL buffer object. The data store of the GL buffer object must have have been previously created by calling OpenGL function <function>glBufferData</function>, although its contents need not be initialized. The size of the data store will be used to determine the size of the CL buffer object.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        errcode_ret
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                         Returns an appropriate error code as described below. If <varname>errcode_ret</varname> is NULL, no error code is returned.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+
+        </variablelist>
+    </refsect1>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+The size of the GL buffer object data store at the time <function>clCreateFromGLBuffer</function> is called will be used as the size of buffer object returned by <function>clCreateFromGLBuffer</function>. If the state of a GL buffer object is modified through the GL API (e.g.  <function>glBufferData</function>) while there exists a corresponding CL buffer object, subsequent use of the CL buffer object will result in undefined behavior.
+        </para>
+
+        <para>
+The <citerefentry><refentrytitle>clRetainMemObject</refentrytitle></citerefentry> and <citerefentry><refentrytitle>clReleaseMemObject</refentrytitle></citerefentry> functions can be used to retain and release
+the buffer object. 
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+             Returns a valid non-zero OpenCL buffer object and <varname>errcode_ret</varname> is set
+to CL_SUCCESS if the buffer object is created successfully. Otherwise, it returns a NULL value
+with one of the following error values returned in <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not a valid context or was not created from a GL context.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if values specified in <varname>flags</varname> are not valid.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_GL_OBJECT</errorname> if <varname>bufobj</varname> is not a GL buffer object or is a GL buffer object but does not have an existing data store.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by the OpenCL implementation on the host.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="clCreateFromGLBuffer">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clReleaseMemObject</refentrytitle></citerefentry>, 
+			<citerefentry><refentrytitle>clRetainMemObject</refentrytitle></citerefentry>			
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

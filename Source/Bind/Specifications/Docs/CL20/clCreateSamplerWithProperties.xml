@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCreateSamplerWithProperties</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clCreateSamplerWithProperties
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateSamplerWithProperties">
+        <refname>
+            clCreateSamplerWithProperties
+        </refname>
+
+        <refpurpose>
+            Creates a sampler object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="abstractDataTypes.html">cl_sampler</link> <function>clCreateSamplerWithProperties</function>
+                </funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+
+                <paramdef>const <link xlink:href="enums.html#cl_sampler_properties">cl_sampler_properties</link><parameter>*sampler_properties</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> context </varname> </term>
+                <listitem>
+                    <para>
+                        Must be a valid OpenCL context.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>sampler_properties</varname> </term>
+                <listitem>
+                    <para>
+                        Specifies a list of sampler property names and 
+                        their corresponding values. 
+                        Each sampler property name is immediately followed 
+                        by the corresponding desired value. The 
+                        list is terminated with 0. The list of supported 
+                        properties is described in the table below. If a 
+                        supported property and its value is not specified in 
+                        <varname>sampler_properties</varname>, its default value will be 
+                        used. <varname>sampler_properties</varname> can be 
+                        NULL in which case the default values for supported sampler 
+                        properties will be used.
+                    </para>
+
+        <!-- Table 5.14, from the API spec -->
+        <informaltable frame="all">
+            <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <colspec colname="col3" colnum="3" />
+                <thead>
+                    <row>
+                        <entry>cl_sampler_properties enum</entry>
+                        <entry>Property Value</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry><constant>CL_SAMPLER_NORMALIZED_COORDS</constant></entry>
+                        <entry><type>cl_bool</type></entry>
+                        <entry>
+                            <para>
+                                A boolean value that specifies 
+                                whether the image coordinates 
+                                specified are normalized or not.
+                            </para>
+
+                            <para>
+                                The default value (i.e. the value used 
+                                if this property is not specified in
+                                <varname>sampler_properties</varname>) is <constant>CL_TRUE</constant>.
+                            </para>
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><constant>CL_SAMPLER_ADDRESSING_MODE</constant></entry>
+                        <entry><type>cl_addressing_mode</type></entry>
+                        <entry>
+                            <para>
+                                Specifies how out-of-range image 
+                                coordinates are handled when reading 
+                                from an image.
+                            </para>
+
+                            <para>
+                                Valid values are:
+                            </para>
+
+                            <itemizedlist>
+                                <listitem>
+                                    <constant>CL_ADDRESS_MIRRORED_REPEAT</constant>
+                                </listitem>
+
+                                <listitem>
+                                    <constant>CL_ADDRESS_REPEAT</constant>
+                                </listitem>
+
+                                <listitem>
+                                    <constant>CL_ADDRESS_CLAMP_TO_EDGE</constant>
+                                </listitem>
+
+                                <listitem>
+                                    <constant>CL_ADDRESS_CLAMP</constant>
+                                </listitem>
+
+                                <listitem>
+                                    <constant>CL_ADDRESS_NONE</constant>
+                                </listitem>
+                            </itemizedlist>
+
+                            <para>
+                                The default is <constant>CL_ADDRESS_CLAMP</constant>.
+                            </para>
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><constant>CL_SAMPLER_FILTER_MODE</constant></entry>
+                        <entry><type>cl_filter_mode</type></entry>
+                        <entry>
+                            <para>
+                                Specifies the type of filter that must 
+                                be applied when reading an image. 
+                                Valid values are:
+                            </para>
+
+                            <itemizedlist>
+                                <listitem>
+                                    <constant>CL_FILTER_NEAREST</constant>
+                                </listitem>
+
+                                <listitem>
+                                    <constant>CL_FILTER_LINEAR</constant>
+                                </listitem>
+
+                            </itemizedlist>
+
+                            <para>
+                                The default is <constant>CL_FILTER_NEAREST</constant>.
+                            </para>
+                        </entry>
+                    </row>
+                </tbody>  
+            </tgroup>
+        </informaltable>
+
+        <!-- Table 5.14, additions from the extension spec -->
+
+        <para>
+            If the <citerefentry><refentrytitle>cl_khr_mipmap_image</refentrytitle></citerefentry> 
+            extension is supported, the following sampler 
+            properties can be specified when a sampler object is 
+            created using <function>clCreateSamplerWithProperties</function>:
+        </para>
+              
+        <informaltable frame="all">
+            <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <colspec colname="col3" colnum="3" />
+                <thead>
+                    <row>
+                        <entry>cl_sampler_properties enum</entry>
+                        <entry>Property Value</entry>
+                        <entry>Default Value</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry><constant>CL_SAMPLER_MIP_FILTER_MODE</constant></entry>
+                        <entry><type>cl_filter_mode</type></entry>
+                        <entry><constant>CL_FILTER_NONE</constant></entry>
+                    </row>
+
+                    <row>
+                        <entry><constant>CL_SAMPLER_LOD_MIN</constant></entry>
+                        <entry><type>float</type></entry>
+                        <entry><constant>0.0f</constant></entry>
+                    </row>
+
+                    <row>
+                        <entry><constant>CL_SAMPLER_LOD_MAX</constant></entry>
+                        <entry><type>float</type></entry>
+                        <entry><constant>MAXFLOAT</constant></entry>
+                    </row>
+                </tbody>  
+            </tgroup>
+        </informaltable>
+
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> errcode_ret </varname> </term>
+                <listitem>
+                    <para>
+                      Returns an appropriate error code. If
+                      <varname>errcode_ret</varname> is NULL, no error code is returned.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          <!-- should this paragraph be replicated in other sampler-related pages? [API spec
+          section 5.7] --> A sampler object describes how to sample an image when the
+          image is read in the kernel. The built-in functions to read from an image in a kernel
+          take a sampler as an argument. The sampler arguments to the image read function can
+          be sampler objects created using OpenCL functions and passed as argument values to
+          the kernel or can be samplers declared inside a kernel.
+        </para>
+
+        <para>
+            For more information about working with samplers, see
+            <citerefentry><refentrytitle>sampler_t</refentrytitle></citerefentry>
+        </para>
+
+        <para>
+            If the <citerefentry><refentrytitle>cl_khr_mipmap_image</refentrytitle></citerefentry> 
+            extension is supported, the sampler properties 
+            <constant>CL_SAMPLER_MIP_FILTER_MODE</constant>, 
+            <constant>CL_SAMPLER_LOD_MIN</constant> and 
+            <constant>CL_SAMPLER_LOD_MAX</constant> cannot be 
+            specified with any samplers initialized in the OpenCL 
+            program source. Only the default values for these 
+            properties will be used. To create a sampler 
+            with specific values for these properties, a 
+            sampler object must be created with 
+            <function>clCreateSamplerWithProperties</function> 
+            and passed as an argument to a kernel.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns a valid non-zero sampler object and <varname>errcode_ret</varname> is set to
+            <errorname>CL_SUCCESS</errorname> if the sampler object is created successfully.
+            Otherwise, it returns a NULL value with one of the following error values returned in
+            <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname>
+                is not a valid context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if the property 
+                name in <varname>sampler_properties</varname> is not a supported 
+                property name, if the value specified for a supported property 
+                name is not valid, or if the 
+                same property name is specified more than once.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> if images are not
+              supported by any device associated with <varname>context</varname>
+              (i.e. <constant>CL_DEVICE_IMAGE_SUPPORT</constant>
+              specified in the table of OpenCL Device Queries for
+              <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+              is <errorname>CL_FALSE</errorname>).
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCreateSamplerWithProperties">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clRetainSampler</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseSampler</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetSamplerInfo</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>sampler_t</refentrytitle></citerefentry>,     
+            <citerefentry><refentrytitle>cl_khr_mipmap_image</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 25-Dec-2013, rev. 19 -->
+</refentry>
+

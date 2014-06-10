@@ -52,12 +52,29 @@ namespace OpenTK.Platform
             Toolkit.Init();
 
             // Create regular platform backend
-            if (Configuration.RunningOnSdl2) Default = new SDL2.Sdl2Factory();
-            else if (Configuration.RunningOnWindows) Default = new Windows.WinFactory();
-            else if (Configuration.RunningOnMacOS) Default = new MacOS.MacOSFactory();
-            else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
-            else Default = new UnsupportedPlatform();
+            #if SDL2
+            Default = Configuration.RunningOnSdl2 ? new SDL2.Sdl2Factory() : null;
+            #endif
+            #if WIN32
+            Default = Default ?? (Configuration.RunningOnWindows ? new Windows.WinFactory() : null);
+            #endif
+            #if CARBON
+            Default = Default ?? (Configuration.RunningOnMacOS ? new MacOS.MacOSFactory() : null);
+            #endif
+            #if X11
+            Default = Default ?? (Configuration.RunningOnX11 ? new X11.X11Factory() : null);
+            #endif
+            #if ANDROID
+            Default = Default ?? (Configuration.RunningOnAndroid ? new Android.AndroidFactory() : null);
+            Embedded = Default;
+            #endif
+            #if IPHONE
+            Default = Default ?? (Configuration.RunningOniOS ? new iPhoneOS.iPhoneOSFactory() : null);
+            Embedded = Default;
+            #endif
+            Default = Default ?? new UnsupportedPlatform();
 
+            #if CARBON || COCOA || SDL2 || WIN32 || X11
             // Create embedded platform backend for EGL / OpenGL ES.
             // Todo: we could probably delay this until the embedded
             // factory is actually accessed. This might improve startup
@@ -70,15 +87,22 @@ namespace OpenTK.Platform
             }
             else if (Egl.Egl.IsSupported)
             {
-                if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
-                else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
-                else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
-                else Embedded = new UnsupportedPlatform();
+                #if WIN32
+                Embedded = Configuration.RunningOnWindows ? new Egl.EglWinPlatformFactory() : null;
+                #endif
+                #if CARBON || COCOA
+                Embedded = Embedded ?? (Configuration.RunningOnMacOS ? new Egl.EglMacPlatformFactory() : null);
+                #endif
+                #if X11
+                Embedded = Embedded ?? (Configuration.RunningOnX11 ? new Egl.EglX11PlatformFactory() : null);
+                #endif
+                Embedded = Embedded ?? new UnsupportedPlatform();
             }
             else
             {
                 Embedded = new UnsupportedPlatform();
             }
+            #endif
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
                 Default = Embedded;
@@ -105,9 +129,9 @@ namespace OpenTK.Platform
         #region IPlatformFactory Members
 
         public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
-            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
         {
-            return default_implementation.CreateNativeWindow(x, y, width, height, title, mode, options, device);
+            return default_implementation.CreateNativeWindow(x, y, width, height, title, mode, options, device, major, minor, flags);
         }
 
         public IDisplayDeviceDriver CreateDisplayDeviceDriver()
@@ -165,7 +189,7 @@ namespace OpenTK.Platform
             
             #region IPlatformFactory Members
 
-            public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+            public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }

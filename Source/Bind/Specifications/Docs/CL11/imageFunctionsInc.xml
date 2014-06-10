@@ -1,0 +1,26 @@
+        <para>  
+        The built-in functions defined in this section can only be used with image memory objects
+created with <citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry>, or <citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry>. An image memory object can be
+accessed by specific function calls that read from and/or write to specific locations in the image.
+        </para>
+        
+        <para>
+Image memory objects that are being read by a kernel should be declared with the
+<citerefentry href="accessQualifiers"><refentrytitle>__read_only</refentrytitle></citerefentry> qualifier. <citerefentry><refentrytitle>write_image</refentrytitle></citerefentry> calls to image memory objects declared with the
+<citerefentry href="accessQualifiers"><refentrytitle>__read_only</refentrytitle></citerefentry> qualifier will generate a compilation error. Image memory objects that are
+being written to by a kernel should be declared with the <citerefentry href="accessQualifiers"><refentrytitle>__write_only</refentrytitle></citerefentry> qualifier.
+<citerefentry><refentrytitle>read_image</refentrytitle></citerefentry> calls to image memory objects declared with the <citerefentry href="accessQualifiers"><refentrytitle>__write_only</refentrytitle></citerefentry> qualifier will
+generate a compilation error. <citerefentry><refentrytitle>read_image</refentrytitle></citerefentry> 
+and <citerefentry><refentrytitle>write_image</refentrytitle></citerefentry> calls to the same image memory
+object in a kernel are not supported.
+        </para>
+        
+        <para>
+The <citerefentry><refentrytitle>read_image</refentrytitle></citerefentry> calls returns a four component floating-point, integer or unsigned integer color
+value. The color values returned by <citerefentry><refentrytitle>read_image</refentrytitle></citerefentry> are identified as <replaceable>x, y, z, w</replaceable> where <replaceable>x</replaceable> refers to
+the red component, <replaceable>y</replaceable> refers to the green component, <replaceable>z</replaceable> refers to the blue component and <replaceable>w</replaceable> refers to the alpha component.
+        </para>
+        <para>
+        The image read functions take a sampler argument. The sampler can be passed as an argument
+to the kernel using <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry>, or it can be a constant variable of type <citerefentry><refentrytitle>sampler_t</refentrytitle></citerefentry> declared in the program source.
+        </para>

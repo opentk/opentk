@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY atomicFunctionsInc SYSTEM "atomicFunctionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>memory_order</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>memory_order</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="memory_order">
+        <refname>memory_order</refname>
+
+        <refpurpose>
+            Enumeration to identify memory ordering constraints.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+memory_order
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+<!-- general atomic functions info -->
+
+        <para>
+            The OpenCL C programming language implements a subset of the C11 atomics (refer to section 
+            7.17 of the C11 specification) and synchronization operations. These operations play a special 
+            role in making assignments in one work-item visible to another.
+            A synchronization operation on 
+            one or more memory locations is either an acquire operation, a release operation, or both an 
+            acquire and release operation. (The C11 consume operation is not supported.)
+            A synchronization operation without an associated memory 
+            location is a fence and can be either an acquire fence, a release fence or both an acquire and 
+            release fence. In addition, there are relaxed atomic operations, which are not synchronization 
+            operations, and atomic read-modify-write operations which have special characteristics
+        </para>
+
+<!-- start of memory_order-specific text -->
+
+        <para>
+            The enumerated type <type>memory_order</type> specifies the detailed regular (non-atomic) memory 
+            synchronization operations as defined in section 5.1.2.4 of the C11 specification and may 
+            provide for operation ordering. Its enumeration constants are as follows:
+        </para>
+
+        <para>
+<literallayout><code>     <constant>memory_order_relaxed</constant>
+     <constant>memory_order_acquire</constant>
+     <constant>memory_order_release</constant>
+     <constant>memory_order_acq_rel</constant>
+     <constant>memory_order_seq_cst</constant></code></literallayout>
+        </para>
+
+        <para>
+            The <type>memory_order</type> can be used when performing 
+            atomic operations to global or local memory.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+example code
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="memory_order">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+<!-- Enter comma-delimited list of all other pages in the system to link to, using
+     <citerefentry /><refentrytitle /> to make it a link. For any case where the text of the link needs to differ
+     from the filename of the html file this links to, use the "href" attribute in <citerefentry />. For example:
+     <citerefentry href="thatPage"><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry> -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="atomicFunctions"><refentrytitle>Atomic Functions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>memory_scope</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 15-Dec-2013, rev. 19 -->
+</refentry>
+

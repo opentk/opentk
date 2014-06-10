@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+	<refentryinfo>
+		<keywordset><keyword>restrictions</keyword></keywordset>
+	</refentryinfo>
+    <refmeta>
+        <refentrytitle>restrictions</refentrytitle>
+		<refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+	
+<!-- ================================ SYNOPSIS -->	
+
+  <refnamediv id="restrictionsref">
+<refname>Restrictions</refname> 
+           <refpurpose> </refpurpose> 
+</refnamediv> 
+ 
+    <refsect1 id="restrictions"><title></title>
+		<itemizedlist mark="disc">
+		
+		<listitem>
+			<para>The use of pointers is somewhat restricted. The following rules apply:</para>
+			<itemizedlist mark="opencircle">
+				<listitem>
+				<para>Arguments to <citerefentry href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry> functions declared in a program that are pointers must be declared with the __global, __constant or __local qualifier.</para>
+				</listitem>
+				<listitem>
+<para>A pointer declared with the <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>, <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>, or <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry> qualifier can
+only be assigned to a pointer declared with the __constant, __local, or __global qualifier respectively.</para>
+				</listitem>
+				<listitem>
+<para>Pointers to functions are not allowed.</para>
+				</listitem>
+				<listitem>
+<para>Arguments to <citerefentry href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry> functions in a program cannot be declared as a pointer to a pointer(s). Variables inside a function or arguments to non __kernel functions in a
+program can be declared as a pointer to a pointer(s).</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+		<para>Variables that are declared to be of type <citerefentry href="otherDataTypes"><refentrytitle>image2d_t</refentrytitle></citerefentry> or <citerefentry href="otherDataTypes"><refentrytitle>image3d_t</refentrytitle></citerefentry> refer to image
+memory objects. These can only be specified as arguments to a function. Elements of an
+image cannot be directly accessed. Specific built-in <citerefentry href="imageFunctions"><refentrytitle>image read and write functions</refentrytitle></citerefentry> are provided to read from
+and write to any location in the image. Pointers to image2d_t or image3d_t are not allowed.
+image2d_t or image3d_t data types cannot be declared in a struct. image2d_t and
+image3d_t cannot be used to declare local variables or as the return type of a function.
+An image2d_t or image3d_t argument to a function cannot be modified.</para>
+
+<para>Samplers cannot be declared as arrays, pointers, or be used as the type for local variables
+inside a function or as the return value of a function defined in a program. Samplers
+cannot be passed as arguments to functions called by a <citerefentry href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry> function. A sampler
+argument to a __kernel function cannot be modified.	</para>
+		</listitem>
+		
+		<listitem>
+		<para>Bit-fields are currently not supported.</para>
+		</listitem>
+		
+		<listitem>
+		<para>Variable length arrays and structures with flexible (or unsized) arrays are not supported.</para>
+		</listitem>
+		
+		<listitem>
+		<para>Variadic macros and functions are not supported.</para>
+		</listitem>
+		
+		<listitem>
+		<para>The C99 standard headers <code>assert.h</code>, <code>ctype.h</code>, <code>complex.h</code>, <code>errno.h</code>,
+<code>fenv.h</code>, <code>float.h</code>, <code>inttypes.h</code>, <code>limits.h</code>, <code>locale.h</code>, <code>setjmp.h</code>,
+<code>signal.h</code>, <code>stdarg.h</code>, <code>stdio.h</code>, <code>stdlib.h</code>, <code>string.h</code>, <code>tgmath.h</code>,
+<code>time.h</code>, <code>wchar.h</code>, and <code>wctype.h</code> are not available and cannot be included by a program.</para>
+		</listitem>
+		
+		<listitem>
+		<para>The <code>extern</code>, <code>static</code>, <code>auto</code>, and <code>register</code> storage-class specifiers are not supported.</para>
+		</listitem>
+		
+		<listitem>
+		<para>Predefined identifiers are not supported.</para>
+		</listitem>
+
+		<listitem>
+		<para>Recursion is not supported.</para>
+		</listitem>
+
+		<listitem>
+		<para>The function using the <citerefentry href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry> qualifier can only have return type <type>void</type> in the source code.</para>
+		</listitem>
+
+		<listitem>
+		<para>Arguments to <citerefentry href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry> functions in a program cannot be declared with the built-in scalar types <type>bool</type>, <type>half</type>, <type>size_t</type>, <type>ptrdiff_t</type>, <type>intptr_t</type>, and <type>uintptr_t</type>. The size in bytes of these types except <type>half</type> are implementation-defined and in addition can also be different for the OpenCL device and the host processor making it difficult to
+allocate buffer objects to be passed as arguments to a kernel declared as pointer to these types. <type>half</type> is not supported as <type>half</type> can be used as a storage format only and is not a data type on which floating-point arithmetic can be performed.</para>
+		</listitem>
+
+		<listitem>
+		<para>Whether or not irreducible control flow is illegal is implementation defined.</para>
+		</listitem>
+		
+		<listitem>
+		<para>Built-in types that are less than 32-bits in size i.e. <type>char</type>, <type>uchar</type>, <type>char2</type>, <type>uchar2</type>, <type>short</type>, <type>ushort</type>, and <type>half</type> have the following restriction:</para>
+
+<para>Writes to a pointer (or arrays) of type <type>char</type>, <type>uchar</type>, <type>char2</type>, <type>uchar2</type>, <type>short</type>, <type>ushort</type>, and <type>half</type> or to elements of a struct that are of type <type>char</type>, <type>uchar</type>, <type>char2</type>, <type>uchar2</type>, <type>short</type>, and <type>ushort</type> are not supported. </para>
+
+<para>The kernel example below shows what memory operations are not supported on built-in types less than 32-bits in size.</para>
+<literallayout><code>
+          kernel void
+          do_proc (__global char *pA, short b,
+                         __global short *pB)
+          {
+                char            x[100];
+                __private char  *px = x;
+                int             id = (int)get_global_id(0);
+                short           f;
+                f = pB[id] + b; // is allowed
+                px[1] = pA[1];  // error. px cannot be written.
+                pB[id] = b;   // error. pB cannot be written
+          }</code></literallayout>
+		</listitem>
+
+		<listitem>
+		<para>Arguments to <citerefentry href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry> functions in a program cannot be declared to be of type <citerefentry href="otherDataTypes"><refentrytitle>event_t</refentrytitle></citerefentry>.</para>
+		</listitem>
+		
+		<listitem>
+		<para>Elements of a struct or union must belong to the same address space. Declaring a struct or union whose elements are in different address spaces is illegal.</para>
+		</listitem>
+
+		
+		</itemizedlist>
+    </refsect1>
+	
+
+
+<!-- ================================ SPECIFICATION  -->		
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->		
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="restrictions">OpenCL Specification</olink>
+        </para>
+    </refsect1>  	
+
+<!-- ================================ ALSO SEE  -->	
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry>, 
+			<citerefentry href="functionQualifiers"><refentrytitle>Function Qualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+			Copyright &#169; 
+    </refsect3>
+
+</refentry>
+

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>shuffle, shuffle2</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>shuffle</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="shuffle">             
+        <refname>shuffle</refname>
+
+        <refpurpose>
+            Constructs a permutation of elements from one (or two) input vectors.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype<replaceable>n</replaceable>
+                    <function>                   
+                        shuffle
+                    </function>
+                </funcdef>
+                <paramdef>gentype<replaceable>m</replaceable><parameter>x</parameter></paramdef>    
+                <paramdef>ugentype<replaceable>n</replaceable><parameter>mask</parameter></paramdef>    
+            </funcprototype>
+        </funcsynopsis>     
+        
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype<replaceable>n</replaceable>
+                    <function>                   
+                        shuffle2
+                    </function>
+                </funcdef>
+                <paramdef>gentype<replaceable>m</replaceable><parameter>x</parameter></paramdef>    
+                <paramdef>gentype<replaceable>m</replaceable><parameter>y</parameter></paramdef>    
+                <paramdef>ugentype<replaceable>n</replaceable><parameter>mask</parameter></paramdef>    
+            </funcprototype>
+        </funcsynopsis>  
+    </refsynopsisdiv>   
+        
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            The <function>shuffle</function> and <function>shuffle2</function>  built-in functions 
+            construct a permutation of elements from one or two input vectors respectively that are of the same 
+            type, returning a vector with the same element type as the input and length that is the same as the 
+            shuffle mask. The size of each element in the <varname>mask</varname> must match the size of each 
+            element in the result. For <function>shuffle</function>, only the
+            <citerefentry><refentrytitle>ilogb</refentrytitle></citerefentry>(2<replaceable>m</replaceable>-1) 
+            least significant bits of each <varname>mask</varname> element are considered. For <function>shuffle2</function>, 
+            only the <citerefentry><refentrytitle>ilogb</refentrytitle></citerefentry>(2<replaceable>m</replaceable>-1)+1 
+            least significant bits of each <varname>mask</varname> element are considered. Other bits in the <varname>mask</varname> 
+            shall be ignored.
+        </para>
+        <para>
+            The elements of the input vectors are numbered from left to right across one or both of the vectors. 
+            For this purpose, the number of elements in a vector is given by
+            <citerefentry><refentrytitle>vec_step</refentrytitle></citerefentry>(gentype<replaceable>m</replaceable>). 
+            The shuffle <varname>mask</varname> operand specifies, for each element of the result vector, which element of 
+            the one or two input vectors the result element gets.
+        </para>     
+        <para>
+            We use the generic type name <type>gentype<replaceable>n</replaceable></type> (or 
+            <type>gentype<replaceable>m</replaceable></type>) to indicate the built-in data types <type>char{2|4|8|16}</type>,
+            <type>uchar{2|4|8|16}</type>, <type>short{2|4|8|16}</type>, <type>ushort{2|4|8|16}</type>, 
+            <type>int{2|4|8|16}</type>, <type>uint{2|4|8|16}</type>, <type>long{2|4|8|16}</type>, <type>ulong{2|4|8|16}</type>,
+            or <type>float{2|4|8|16}</type> as the type for the arguments unless otherwise stated. 
+            We use the generic name <type>ugentype<replaceable>n</replaceable></type> to indicate the built-in unsigned integer 
+            data types.
+        </para>
+        <para>
+            The generic type name <type>gentype<replaceable>n</replaceable></type> (or 
+            <type>gentype<replaceable>m</replaceable></type>) may indicate the data type <type>half{2|4|8|16}</type> if 
+            the <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> extension is supported, and may 
+            indicate the data type <type>double{2|4|8|16}</type> if 
+            the <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry> extension is supported.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  
+
+    <refsect1 id="notes"><title>Notes</title>
+
+
+    </refsect1>-->
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+uint4 mask = (uint4)(3, 2, 1, 0);
+float4 a;
+float4 r = shuffle(a, mask);
+// r.s0123 = a.wzyx
+
+uint8 mask = (uint8)(0, 1, 2, 3, 4, 5, 6, 7);
+
+float4 a, b;
+float8 r = shuffle2(a, b, mask);
+// r.s0123 = a.xyzw
+// r.s4567 = b.xyzw
+
+uint4 mask;
+float8 a;
+float4 b;
+b = shuffle(a, mask);
+
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+        Examples that are not valid are:
+        </para>
+                <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+uint8 mask;
+short16 a;
+short8 b;
+b = shuffle(a, mask);
+        
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    
+    </refsect2>
+
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="miscVectorFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="miscVectorFunctions"><refentrytitle>Miscellaneous Vector Functions</refentrytitle></citerefentry> 
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

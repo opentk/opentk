@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_d3d11_sharing</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_d3d11_sharing</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_d3d11_sharing">
+        <refname>cl_khr_d3d11_sharing</refname>
+
+        <refpurpose>
+            Provide interoperability between OpenCL and Direct3D 11.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_d3d11_sharing : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="description"><title>Description</title>
+        <para>
+          The goal of this extension is to provide interoperability between
+          OpenCL and Direct3D 11. This is designed to function analogously
+          to the <citerefentry href="cl_khr_gl_sharing"><refentrytitle>OpenGL
+          interoperability</refentrytitle></citerefentry> as defined in sections 9.7 and 9.8.
+          If this extension is supported by an implementation, the string "cl_khr_d3d11_sharing"
+          will be present in the <constant>CL_PLATFORM_EXTENSIONS</constant>
+          or <constant>CL_DEVICE_EXTENSIONS</constant> string described in
+          the table of allowed values for <varname>param_name</varname> for
+          <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry> or
+          <citerefentry><refentrytitle>clGetPlatformInfo</refentrytitle></citerefentry>.
+        </para>
+
+        <para>
+          As currently proposed, the interfaces for this extension are provided in the header file
+          <code>cl_d3d11.h</code>.
+        </para>
+
+        <para>
+            If the <function>cl_khr_d3d11_sharing</function> extension is supported, then the following functions
+            are enabled:
+        </para>
+
+         <itemizedlist mark="disc">
+            <listitem>
+                <citerefentry><refentrytitle>clGetDeviceIDsFromD3D11KHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clCreateFromD3D11BufferKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clCreateFromD3D11Texture2DKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clCreateFromD3D11Texture3DKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clEnqueueAcquireD3D11ObjectsKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clEnqueueReleaseD3D11ObjectsKHR</refentrytitle></citerefentry>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+          The OpenCL functions enabled by the <function>cl_khr_d3d11_sharing</function> extension
+          allow applications to use Direct3D 11 resources as OpenCL memory objects. This allows
+          efficient sharing of data between OpenCL and Direct3D 11. The OpenCL API may be used
+          to execute kernels that read and/or write memory objects that are also Direct3D 11
+          resources. An OpenCL image object may be created from a Direct3D 11 texture resource. An
+          OpenCL buffer object may be created from a Direct3D 11 buffer resource. OpenCL memory
+          objects may be created from Direct3D 11 objects if and only if the OpenCL context
+          has been created from a Direct3D 11 device.
+        </para>
+
+        <bridgehead>Lifetime of Shared [D3D11] Objects</bridgehead>
+
+        <para>
+            An OpenCL memory object created from a Direct3D 11 resource remains valid as long as the 
+            corresponding Direct3D 11 resource has not been deleted. If the Direct3D 11 resource is deleted 
+            through the Direct3D 11 API, subsequent use of the OpenCL memory object will result in 
+            undefined behavior, including but not limited to possible OpenCL errors, data corruption, and 
+            program termination.
+        </para>
+
+        <para>
+            The successful creation of a cl_context against a Direct3D 11 device specified via the context 
+            create parameter <constant>CL_CONTEXT_D3D11_DEVICE_KHR</constant> will increment the internal Direct3D 
+            reference count on the specified Direct3D 11 device. The internal Direct3D reference count on 
+            that Direct3D 11 device will be decremented when the OpenCL reference count on the returned 
+            OpenCL context drops to zero.
+        </para>
+
+        <para>
+            The OpenCL context and corresponding command-queues are dependent on the existence of the 
+            Direct3D 11 device from which the OpenCL context was created. If the Direct3D 11 device is 
+            deleted through the Direct3D 11 API, subsequent use of the OpenCL context will result in 
+            undefined behavior, including but not limited to possible OpenCL errors, data corruption, and 
+            program termination.
+        </para>
+
+<!-- !!!
+The following is from the ext. spec. pp. 98-99 and contains only redundant information that
+is properly documented in the reference pages for the relevant functions. Its appearance
+here has questionable value, and introduces considerable additional labor to maintain.
+
+        <para>
+            When the <function>cl_khr_d3d11_sharing</function> extension is enabled, this extends the list of allowable
+            values in certain parameters of certain functions, as follows:
+        </para>
+        <itemizedlist mark="disc">
+            <listitem>
+                <constant>CL_D3D11_DEVICE_KHR</constant> and <constant>CL_D3D11_DXGI_ADAPTER_KHR</constant> are accepted
+                as a Direct3D 11 device source in the <varname>d3d_device_source</varname> parameter of
+                <citerefentry><refentrytitle>clGetDeviceIDsFromD3D11KHR</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <constant>CL_PREFERRED_DEVICES_FOR_D3D11_KHR</constant> and
+                <constant>CL_ALL_DEVICES_FOR_D3D11_KHR</constant> are accepted
+                as a set of Direct3D 11 devices in the <varname>d3d_device_set</varname> parameter of
+                <citerefentry><refentrytitle>clGetDeviceIDsFromD3D11KHR</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <constant>CL_CONTEXT_D3D11_DEVICE_KHR</constant> is accepted
+                as a property name in the <varname>properties</varname> parameter of
+                <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry> and
+                <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>.
+            </listitem>
+           <listitem>
+                <constant>CL_CONTEXT_D3D11_PREFER_SHARED_RESOURCES_KHR</constant> is accepted
+                as a property name in the <varname>param_name</varname> parameter of
+                <citerefentry><refentrytitle>clCreateContextInfo</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <constant>CL_MEM_D3D11_RESOURCE_KHR</constant> is accepted
+                as the property being queried in the <varname>param_name</varname> parameter of
+                <citerefentry><refentrytitle>clGetMemObjectInfo</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <constant>CL_IMAGE_D3D11_SUBRESOURCE_KHR</constant> is accepted
+                as the property being queried in the <varname>param_name</varname> parameter of
+                <citerefentry><refentrytitle>clGetImageInfo</refentrytitle></citerefentry>.
+            </listitem>
+             <listitem>
+                <constant>CL_COMMAND_ACQUIRE_D3D11_OBJECTS_KHR</constant> and
+                <constant>CL_COMMAND_RELEASE_D3D11_OBJECTS_KHR</constant> are
+                returned in the <varname>param_value</varname> parameter of
+                <citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry>
+                when param_name is <constant>CL_EVENT_COMMAND_TYPE</constant>.
+            </listitem>
+            <listitem>
+                <constant>CL_INVALID_D3D11_DEVICE_KHR</constant> is
+                returned by
+                <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry> and
+                <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>
+                if the Direct3D 11 device specified for interoperability is not
+                compatible with the devices against which the context is to be created.
+            </listitem>
+            <listitem>
+                <constant>CL_INVALID_D3D11_RESOURCE_KHR</constant> is
+                returned by
+                <citerefentry><refentrytitle>clCreateFromD3D11BufferKHR</refentrytitle></citerefentry>
+                when <varname>resource</varname> is not a Direct3D 11 buffer object, and by
+                 <citerefentry><refentrytitle>clCreateFromD3D11Texture2DKHR</refentrytitle></citerefentry> and
+                 <citerefentry><refentrytitle>clCreateFromD3D11Texture3DKHR</refentrytitle></citerefentry>
+                when <varname>resource</varname> is not a Direct3D 11 texture object.
+            </listitem>
+            <listitem>
+                <constant>CL_D3D11_RESOURCE_ALREADY_ACQUIRED_KHR</constant> is
+                returned by
+                <citerefentry><refentrytitle>clEnqueueAcquireD3D11ObjectsKHR</refentrytitle></citerefentry>
+                when any of <varname>mem_objects</varname> are currently acquired by OpenCL.
+            </listitem>
+            <listitem>
+                <constant>CL_D3D11_RESOURCE_NOT_ACQUIRED_KHR</constant> is
+                returned by
+                <citerefentry><refentrytitle>clEnqueueReleaseD3D11ObjectsKHR</refentrytitle></citerefentry>
+                when any of <varname>mem_objects</varname> are not currently acquired by OpenCL.
+            </listitem>
+        </itemizedlist>
+-->
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_d3d11_sharing">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetDeviceIDsFromD3D11KHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromD3D11BufferKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromD3D11Texture2DKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromD3D11Texture3DKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueAcquireD3D10ObjectsKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueReleaseD3D11ObjectsKHR</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 4-Jun-2013 -->
+</refentry>
+

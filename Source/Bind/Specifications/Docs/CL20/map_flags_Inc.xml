@@ -1,0 +1,85 @@
+
+    <!-- table 5.5, applies to clEnqueueMapBuffer.xml, clEnqueueMapImage.xml, clEnqueueSVMMap.xml -->
+
+    <informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+        <colspec colname="col1" colnum="1" />
+        <colspec colname="col2" colnum="2" />
+        <thead>
+            <row>
+            <entry>cl_map_flags</entry>
+            <entry>Description</entry>
+            </row>
+        </thead>
+
+        <tbody>
+            <row>
+                <entry><constant>CL_MAP_READ</constant></entry>
+                <entry>
+                    <para>
+                        This flag specifies that the region being mapped in the memory
+                        object is being mapped for reading.
+                    </para>
+
+                    <para>
+                        The pointer returned by 
+                        <function>clEnqueueMap{Buffer|Image}</function>
+                        is guaranteed to contain
+                        the latest bits in the region being
+                        mapped when the 
+                        <function>clEnqueueMap{Buffer|Image}</function>
+                        command has completed.
+                    </para>
+                </entry>
+            </row>
+
+            <row>
+                <entry><constant>CL_MAP_WRITE</constant></entry>
+                <entry>
+                    <para>
+                        This flag specifies that the region being mapped in the memory
+                        object is being mapped for writing.
+                    </para>
+
+                    <para>
+                        The pointer returned by 
+                        <function>clEnqueueMap{Buffer|Image}</function>
+                        is guaranteed to contain the latest bits in
+                        the region being mapped when the 
+                        <function>clEnqueueMap{Buffer|Image}</function>
+                        command has completed.
+                    </para>
+                </entry>
+            </row>
+
+            <row>
+                <entry><constant>CL_MAP_WRITE_INVALIDATE_REGION</constant></entry>
+                <entry>
+                    <para>
+                        This flag specifies that the region being mapped in the memory
+                        object is being mapped for writing.
+                    </para>
+
+                    <para>
+                        The contents of the region being mapped are to be discarded.
+                        This is typically the case
+                        when the region being mapped is overwritten by the host. This
+                        flag allows the implementation
+                        to no longer guarantee that the pointer returned by
+                        <function>clEnqueueMap{Buffer|Image}</function>
+                        contains the latest bits in the region being
+                        mapped which can be a significant performance enhancement.
+                    </para>
+
+                    <para>
+                        <constant>CL_MAP_READ</constant> or <constant>CL_MAP_WRITE</constant>
+                        and <constant> CL_MAP_WRITE_INVALIDATE_REGION</constant>
+                        are mutually exclusive.
+                    </para>
+                </entry>
+            </row>
+        </tbody>
+    </tgroup>
+</informaltable>
+
+<!-- 30-May-2013 -->
+

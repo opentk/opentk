@@ -15,13 +15,12 @@ namespace Bind.ES
         public ESGenerator(Settings settings, string dirName)
             : base(settings, dirName)
         {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "../ES11");
+            Settings.DefaultOutputPath = String.Format(
+                Settings.DefaultOutputPath, "Graphics", "ES11");
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
-            Settings.DefaultImportsFile = "ES11Core.cs";
-            Settings.DefaultDelegatesFile = "ES11Delegates.cs";
             Settings.DefaultEnumsFile = "ES11Enums.cs";
             Settings.DefaultWrappersFile = "ES11.cs";
+            Settings.DefaultClassesFile = "ES11.Extensions.cs";
             Settings.DefaultDocPath = Path.Combine(
                 Settings.DefaultDocPath, "ES20"); // no ES11 docbook sources available
 
@@ -35,7 +34,6 @@ namespace Bind.ES
             // overloads using the "All" enum in addition to strongly-typed enums.
             // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
             Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
-            //Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
         }
     }
 }

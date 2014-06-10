@@ -1,0 +1,32 @@
+
+    <para>
+        These all operate component-wise. 
+        The description is per-component.
+      The generic type name <type>gentype</type> is used to indicate that the function can
+      take <type>float</type>, <type>float2</type>, <type>float3</type>, <type>float4</type>,
+      <type>float8</type>, <type>float16</type>, <type>double</type>, <type>double2</type>,
+      <type>double3</type>, <type>double4</type>, <type>double8</type>, or <type>double16</type>
+      as the type for the arguments.
+    </para>
+
+    <para>
+      The generic type name <type>gentypef</type> is used to indicate that the function can
+      take <type>float</type>, <type>float2</type>, <type>float3</type>, <type>float4</type>,
+      <type>float8</type>, or <type>float16</type> as the type for the arguments.
+    </para>
+
+    <para>
+      The generic type name <type>gentyped</type> is used to indicate that the function can take
+      <type>double</type>, <type>double2</type>, <type>double3</type>, <type>double4</type>,
+      <type>double8</type>, or <type>double16</type> as the type for the arguments.
+    </para>
+
+    <para>
+      The built-in common functions are implemented using the round to nearest even rounding mode.
+    </para>
+
+<!-- don't mention the half option here because it doesn't apply to all the files that include
+this file.  Instead, mention it in each individual .xml file where it applies. -->
+
+<!-- 29-May-2013 -->
+

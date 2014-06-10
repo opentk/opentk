@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -24,6 +24,8 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 #endregion
+
+#if WIN32
 
 using System;
 using System.Collections.Generic;
@@ -79,3 +81,5 @@ namespace OpenTK.Platform.Egl
         #endregion
     }
 }
+
+#endif

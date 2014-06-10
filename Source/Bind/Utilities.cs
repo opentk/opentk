@@ -89,6 +89,10 @@ namespace Bind
         /// Function takes a String[] parameter
         /// </summary>
         StringArrayParameter = 1 << 13,
+        /// <summary>
+        /// Function takes a ref String parameter
+        /// </summary>
+        StringReferenceParameter = 1 << 14,
     }
 
     #endregion
@@ -114,6 +118,7 @@ namespace Bind
                 "3TC", "DXT", "BPTC", "RGTC",
                 "3DC", "ATC", "ETC",
                 "ANGLE",  "MESAX", "MESA",
+                "SVM",
             };
 
             Extensions = new Regex(
@@ -311,6 +316,10 @@ namespace Bind
                 System.Globalization.NumberStyles.Float,
                 System.Globalization.CultureInfo.InvariantCulture,
                 out version);
+
+            if (settings.IsEnabled(Settings.Legacy.ForceDllImports))
+                return false;
+
             return
                 !settings.IsEnabled(Settings.Legacy.UseDllImports) ||
                 (settings.IsEnabled(Settings.Legacy.UseWindowsCompatibleGL) && version > 1.1) ||

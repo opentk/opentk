@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+   "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY qualifierInc SYSTEM "qualifierInc.xml">
+<!ENTITY qualifierExampleInc SYSTEM "qualifierExampleInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>__private</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>__private</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="__private">
+        <refname>__private</refname>
+
+        <refpurpose>
+            Address Space Qualifier.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__private
+private
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+        &qualifierInc;
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Variables inside a <function>__kernel</function> function not declared with an
+          address space qualifier, all variables inside non-kernel functions, and all function
+          arguments are in the <function>__private</function> or <function>private</function>
+          address space. Variables declared as pointers are considered to point to the
+          <function>__private</function> address space if an address space qualifier is not
+          specified.
+        </para>
+
+        <para>
+          The <function>__global</function>, <function>__constant</function>,
+          <function>__local</function>, <function>__private</function>,
+          <function>global</function>, <function>constant</function>, <function>local</function>,
+          and <function>private</function> names are reserved for use as address space qualifiers
+          and shall not be used otherwise.
+        </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        &qualifierExampleInc;
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+// declares a pointer p in the __private address space that
+// points to an int object in address space __global
+__global int *p;
+
+// declares an array of 4 floats in the __private address space.
+float x[4];
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="addressSpaceQualifier">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>,
+            <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>,
+            <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 14-Oct-2011 -->
+</refentry>
+

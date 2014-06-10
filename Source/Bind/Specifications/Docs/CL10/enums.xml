@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+	<refentryinfo>
+		<keywordset>
+			<keyword>Enumerated Types</keyword>
+		</keywordset>
+	</refentryinfo>
+    <refmeta>
+        <refentrytitle>Enumerated Types</refentrytitle>
+		<refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+  	<refnamediv id="Enumerators">
+		<refname>Enumerated Types</refname> 
+		<refpurpose>Following are the enumerated types and their permitted values.</refpurpose>
+    </refnamediv> 
+    <refsect1 id="synopsis"><title></title>
+	<informaltable frame="void"><caption></caption><tgroup cols="2" align="left" colsep="0" rowsep="0">
+	<colspec colname="col1" colnum="1" />
+	<colspec colname="col2" colnum="2" />
+	<thead>
+		<row>
+		<entry>Enumerated Type</entry>
+		<entry>Permitted Values</entry>
+		</row>
+	</thead>
+	<tbody>
+		<row>
+			<entry><constant><anchor id="cl_addressing_mode"/>cl_addressing_mode</constant></entry>
+			<entry><literallayout><constant>CL_ADDRESS_NONE</constant>
+				<constant>CL_ADDRESS_CLAMP_TO_EDGE</constant>
+				<constant>CL_ADDRESS_CLAMP</constant>
+				<constant>CL_ADDRESS_REPEAT</constant> </literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_bool"/>cl_bool</constant></entry>
+			<entry><literallayout><constant>CL_FALSE</constant> 		
+			<constant>CL_TRUE</constant> </literallayout></entry>
+		</row>		
+		<row>
+			<entry><constant><anchor id="cl_build_status"/>cl_build_status</constant></entry>
+			<entry><literallayout><constant>CL_BUILD_ERROR</constant>
+			<constant>CL_BUILD_IN_PROGRESS</constant>
+			<constant>CL_BUILD_NONE</constant>
+			<constant>CL_BUILD_SUCCESS</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_channel_order"/>cl_channel_order</constant></entry>
+			<entry><literallayout><constant>CL_A</constant>
+			<constant>CL_R</constant>
+			<constant>CL_RG</constant>
+			<constant>CL_RA</constant>
+			<constant>CL_RGB</constant>
+			<constant>CL_RGBA</constant>
+			<constant>CL_BGRA</constant>
+			<constant>CL_ARGB</constant>
+			<constant>CL_INTENSITY</constant>
+			<constant>CL_LUMINANCE</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_channel_type"/>cl_channel_type</constant></entry>
+			<entry><literallayout><constant>CL_FLOAT</constant>
+			<constant>CL_HALF_FLOAT</constant>
+<constant>CL_SIGNED_INT16</constant>
+<constant>CL_SIGNED_INT32</constant>
+<constant>CL_SIGNED_INT8</constant>
+<constant>CL_SNORM_INT8</constant>
+<constant>CL_SNORM_INT16</constant>
+<constant>CL_UNORM_INT_101010</constant>
+<constant>CL_UNORM_INT16</constant>
+<constant>CL_UNORM_INT8</constant>
+<constant>CL_UNORM_SHORT_555</constant>
+<constant>CL_UNORM_SHORT_565</constant>
+<constant>CL_UNSIGNED_INT16</constant>
+<constant>CL_UNSIGNED_INT32</constant>
+<constant>CL_UNSIGNED_INT8</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_command_queue_info"/>cl_command_queue_info</constant></entry>
+			<entry><literallayout><constant>CL_QUEUE_CONTEXT</constant>
+<constant>CL_QUEUE_DEVICE</constant>
+<constant>CL_QUEUE_PROPERTIES</constant>
+<constant>CL_QUEUE_REFERENCE_COUNT</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_command_queue_properties"/>cl_command_queue_properties </constant></entry>
+			<entry><literallayout><constant>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</constant>
+<constant>CL_QUEUE_PROFILING_ENABLE</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_command_type"/>cl_command_type</constant></entry>
+			<entry><literallayout><constant>CL_COMMAND_ACQUIRE_GL_OBJECTS</constant>
+<constant>CL_COMMAND_COPY_BUFFER</constant>
+<constant>CL_COMMAND_COPY_BUFFER_TO_IMAGE</constant>
+<constant>CL_COMMAND_COPY_IMAGE</constant>
+<constant>CL_COMMAND_COPY_IMAGE_TO_BUFFER</constant>
+<constant>CL_COMMAND_MAP_BUFFER</constant>
+<constant>CL_COMMAND_MAP_IMAGE</constant>
+<constant>CL_COMMAND_MARKER</constant> 
+<constant>CL_COMMAND_NATIVE_KERNEL</constant>
+<constant>CL_COMMAND_NDRANGE_KERNEL</constant>
+<constant>CL_COMMAND_READ_BUFFER</constant>
+<constant>CL_COMMAND_READ_IMAGE</constant>
+<constant>CL_COMMAND_RELEASE_GL_OBJECTS</constant>
+<constant>CL_COMMAND_TASK</constant>
+<constant>CL_COMMAND_UNMAP_MEM_OBJECT</constant> 
+<constant>CL_COMMAND_WRITE_BUFFER</constant> 
+<constant>CL_COMMAND_WRITE_IMAGE</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_context_info"/>cl_context_info</constant></entry>
+			<entry><literallayout><constant>CL_CONTEXT_DEVICES</constant>  
+<constant>CL_CONTEXT_PROPERTIES</constant> 
+<constant>CL_CONTEXT_REFERENCE_COUNT</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_context_properties"/>cl_context_properties</constant></entry>
+			<entry><literallayout><constant>CL_CONTEXT_PLATFORM</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_device_exec_capabilities"/>cl_device_exec_capabilities</constant></entry>
+			<entry><literallayout><constant>CL_EXEC_KERNEL</constant> 
+<constant>CL_EXEC_NATIVE_KERNEL</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_device_fp_config"/>cl_device_fp_config </constant></entry>
+			<entry><literallayout><constant>CL_FP_DENORM</constant> 
+<constant>CL_FP_FMA</constant> 
+<constant>CL_FP_INF_NAN</constant> 
+<constant>CL_FP_ROUND_TO_INF</constant> 
+<constant>CL_FP_ROUND_TO_NEAREST</constant> 
+<constant>CL_FP_ROUND_TO_ZERO </constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_device_info"/>cl_device_info</constant></entry>
+			<entry><literallayout><constant>CL_DEVICE_ADDRESS_BITS</constant>                       
+<constant>CL_DEVICE_AVAILABLE</constant>                          
+<constant>CL_DEVICE_COMPILER_AVAILABLE</constant>                 
+<constant>CL_DEVICE_ENDIAN_LITTLE</constant>                      
+<constant>CL_DEVICE_ERROR_CORRECTION_SUPPORT</constant>           
+<constant>CL_DEVICE_EXECUTION_CAPABILITIES</constant>             
+<constant>CL_DEVICE_EXTENSIONS</constant>
+<constant>CL_DEVICE_GLOBAL_MEM_CACHE_SIZE</constant>              
+<constant>CL_DEVICE_GLOBAL_MEM_CACHE_TYPE</constant>              
+<constant>CL_DEVICE_GLOBAL_MEM_CACHELINE_SIZE</constant>          
+<constant>CL_DEVICE_GLOBAL_MEM_SIZE</constant>                    
+<constant>CL_DEVICE_IMAGE_SUPPORT</constant>                      
+<constant>CL_DEVICE_IMAGE2D_MAX_HEIGHT</constant>                 
+<constant>CL_DEVICE_IMAGE2D_MAX_WIDTH</constant>                  
+<constant>CL_DEVICE_IMAGE3D_MAX_DEPTH</constant>                  
+<constant>CL_DEVICE_IMAGE3D_MAX_HEIGHT</constant>                 
+<constant>CL_DEVICE_IMAGE3D_MAX_WIDTH</constant>                  
+<constant>CL_DEVICE_LOCAL_MEM_SIZE</constant>                     
+<constant>CL_DEVICE_LOCAL_MEM_TYPE</constant>                     
+<constant>CL_DEVICE_MAX_CLOCK_FREQUENCY</constant>                
+<constant>CL_DEVICE_MAX_COMPUTE_UNITS</constant>                  
+<constant>CL_DEVICE_MAX_CONSTANT_ARGS</constant>                  
+<constant>CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE</constant>           
+<constant>CL_DEVICE_MAX_MEM_ALLOC_SIZE</constant>                 
+<constant>CL_DEVICE_MAX_PARAMETER_SIZE</constant>                 
+<constant>CL_DEVICE_MAX_READ_IMAGE_ARGS</constant>                
+<constant>CL_DEVICE_MAX_SAMPLERS</constant>                       
+<constant>CL_DEVICE_MAX_WORK_GROUP_SIZE</constant>                
+<constant>CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS</constant>           
+<constant>CL_DEVICE_MAX_WORK_ITEM_SIZES</constant>                
+<constant>CL_DEVICE_MAX_WRITE_IMAGE_ARGS</constant>               
+<constant>CL_DEVICE_MEM_BASE_ADDR_ALIGN</constant>                
+<constant>CL_DEVICE_MIN_DATA_TYPE_ALIGN_SIZE</constant>           
+<constant>CL_DEVICE_NAME</constant>                               
+<constant>CL_DEVICE_PLATFORM</constant>
+<constant>CL_DEVICE_PREFERRED_VECTOR_WIDTH_CHAR</constant>        
+<constant>CL_DEVICE_PREFERRED_VECTOR_WIDTH_DOUBLE</constant>      
+<constant>CL_DEVICE_PREFERRED_VECTOR_WIDTH_FLOAT</constant>       
+<constant>CL_DEVICE_PREFERRED_VECTOR_WIDTH_INT</constant>         
+<constant>CL_DEVICE_PREFERRED_VECTOR_WIDTH_LONG</constant>        
+<constant>CL_DEVICE_PREFERRED_VECTOR_WIDTH_SHORT</constant>       
+<constant>CL_DEVICE_PROFILE</constant>                           
+<constant>CL_DEVICE_PROFILING_TIMER_RESOLUTION</constant>         
+<constant>CL_DEVICE_QUEUE_PROPERTIES</constant>                   
+<constant>CL_DEVICE_SINGLE_FP_CONFIG</constant>                   
+<constant>CL_DEVICE_TYPE</constant>                              
+<constant>CL_DEVICE_VENDOR_ID</constant>                          
+<constant>CL_DEVICE_VENDOR</constant>                            
+<constant>CL_DEVICE_VERSION</constant>                      
+<constant>CL_DRIVER_VERSION</constant></literallayout></entry>
+		</row>		
+		<row>
+			<entry><constant><anchor id="cl_device_local_mem_type"/>cl_device_local_mem_type</constant></entry>
+			<entry><literallayout><constant>CL_GLOBAL</constant>
+<constant>CL_LOCAL</constant></literallayout></entry>
+		</row>		
+		<row>
+			<entry><constant><anchor id="cl_device_mem_cache_type"/>cl_device_mem_cache_type</constant></entry>
+			<entry><literallayout><constant>CL_NONE</constant>
+<constant>CL_READ_ONLY_CACHE</constant>
+<constant>CL_READ_WRITE_CACHE</constant></literallayout></entry>
+		</row>			
+		<row>
+			<entry><constant><anchor id="cl_device_type"/>cl_device_type</constant></entry>
+			<entry><literallayout><constant>CL_DEVICE_TYPE_DEFAULT</constant>   
+<constant>CL_DEVICE_TYPE_CPU</constant>                     
+<constant>CL_DEVICE_TYPE_GPU</constant>                      
+<constant>CL_DEVICE_TYPE_ACCELERATOR</constant>        
+<constant>CL_DEVICE_TYPE_ALL</constant></literallayout></entry>
+		</row>	
+		<row>
+			<entry><constant><anchor id="cl_event_info"/>cl_event_info</constant></entry>
+			<entry><literallayout><constant>CL_EVENT_COMMAND_QUEUE</constant> 
+<constant>CL_EVENT_COMMAND_TYPE</constant>
+<constant>CL_EVENT_REFERENCE_COUNT</constant>
+<constant>CL_EVENT_COMMAND_EXECUTION_STATUS</constant></literallayout></entry>
+		</row>	
+
+		<row>
+			<entry><constant><anchor id="cl_filter_mode"/>cl_filter_mode</constant></entry>
+			<entry><literallayout><constant>CL_FILTER_NEAREST</constant> 
+<constant>CL_FILTER_LINEAR</constant></literallayout></entry>
+		</row>	
+		
+		<row>
+			<entry><constant><anchor id="cl_gl_object_type"/>cl_gl_object_type</constant></entry>
+			<entry><literallayout><constant>CL_GL_OBJECT_BUFFER</constant> 
+<constant>CL_GL_OBJECT_TEXTURE2D</constant>
+<constant>CL_GL_OBJECT_TEXTURE3D</constant>
+<constant>CL_GL_OBJECT_RENDERBUFFER</constant></literallayout></entry>
+		</row>	
+		<row>
+			<entry><constant><anchor id="cl_gl_texture_info"/>cl_gl_texture_info</constant></entry>
+			<entry><literallayout><constant>CL_GL_TEXTURE_TARGET</constant> 
+<constant>CL_GL_MIPMAP_LEVEL</constant></literallayout></entry>
+		</row>	
+
+		<row>
+			<entry><constant><anchor id="cl_image_info"/>cl_image_info</constant></entry>
+			<entry><literallayout><constant>CL_IMAGE_FORMAT</constant> 
+<constant>CL_IMAGE_ELEMENT_SIZE</constant> 
+<constant>CL_IMAGE_ROW_PITCH</constant> 
+<constant>CL_IMAGE_SLICE_PITCH</constant> 
+<constant>CL_IMAGE_WIDTH</constant> 
+<constant>CL_IMAGE_HEIGHT</constant> 
+<constant>CL_IMAGE_DEPTH</constant></literallayout></entry>
+		</row>	
+
+		<row>
+			<entry><constant><anchor id="cl_kernel_info"/>cl_kernel_info</constant></entry>
+			<entry><literallayout><constant>CL_KERNEL_FUNCTION_NAME</constant> 
+<constant>CL_KERNEL_NUM_ARGS</constant> 
+<constant>CL_KERNEL_REFERENCE_COUNT</constant> 
+<constant>CL_KERNEL_CONTEXT</constant> 
+<constant>CL_KERNEL_PROGRAM</constant></literallayout></entry>
+		</row>	
+
+		<row>
+			<entry><constant><anchor id="cl_kernel_work_group_info"/>cl_kernel_work_group_info</constant></entry>
+			<entry><literallayout><constant>CL_KERNEL_WORK_GROUP_SIZE</constant> 
+<constant>CL_KERNEL_COMPILE_WORK_GROUP_SIZE</constant> 
+<constant>CL_KERNEL_LOCAL_MEM_SIZE</constant></literallayout></entry>
+		</row>	
+
+		<row>
+			<entry><constant><anchor id="cl_map_flags"/>cl_map_flags</constant></entry>
+			<entry><literallayout><constant>CL_MAP_READ</constant> 
+<constant>CL_MAP_WRITE</constant></literallayout></entry>
+		</row>	
+
+
+		<row>
+			<entry><constant><anchor id="cl_mem_flags"/>cl_mem_flags</constant></entry>
+			<entry><literallayout><constant>CL_MEM_READ_WRITE</constant> 
+<constant>CL_MEM_WRITE_ONLY</constant> 
+<constant>CL_MEM_READ_ONLY</constant> 
+<constant>CL_MEM_USE_HOST_PTR</constant> 
+<constant>CL_MEM_ALLOC_HOST_PTR</constant> 
+<constant>CL_MEM_COPY_HOST_PTR</constant></literallayout></entry>
+		</row>	
+
+		<row>
+			<entry><constant><anchor id="cl_mem_info"/>cl_mem_info</constant></entry>
+			<entry><literallayout><constant>CL_MEM_TYPE</constant>  
+<constant>CL_MEM_FLAGS</constant> 
+<constant>CL_MEM_SIZE</constant> 
+<constant>CL_MEM_HOST_PTR</constant> 
+<constant>CL_MEM_MAP_COUNT</constant> 
+<constant>CL_MEM_REFERENCE_COUNT</constant> 
+<constant>CL_MEM_CONTEXT</constant></literallayout></entry>
+		</row>	
+
+		<row>
+			<entry><constant><anchor id="cl_mem_object_type"/>cl_mem_object_type</constant></entry>
+			<entry><literallayout><constant>CL_MEM_OBJECT_BUFFER</constant> 
+<constant>CL_MEM_OBJECT_IMAGE2D</constant> 
+<constant>CL_MEM_OBJECT_IMAGE3D</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_platform_info"/>cl_platform_info</constant></entry>
+			<entry><literallayout><constant>CL_PLATFORM_PROFILE</constant>
+<constant>CL_PLATFORM_VERSION</constant> 
+<constant>CL_PLATFORM_NAME</constant> 
+<constant>CL_PLATFORM_VENDOR</constant> 
+<constant>CL_PLATFORM_EXTENSIONS</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_profiling_info"/>cl_profiling_info</constant></entry>
+<entry><literallayout><constant>CL_PROFILING_COMMAND_QUEUED</constant> 
+<constant>CL_PROFILING_COMMAND_SUBMIT</constant> 
+<constant>CL_PROFILING_COMMAND_START</constant> 
+<constant>CL_PROFILING_COMMAND_END</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_program_build_info"/>cl_program_build_info</constant></entry>
+<entry><literallayout><constant>CL_PROGRAM_BUILD_STATUS</constant> 
+<constant>CL_PROGRAM_BUILD_OPTIONS</constant> 
+<constant>CL_PROGRAM_BUILD_LOG</constant></literallayout></entry>
+		</row>
+		<row>
+			<entry><constant><anchor id="cl_sampler_info"/>cl_sampler_info</constant></entry>
+<entry><literallayout><constant>CL_SAMPLER_REFERENCE_COUNT</constant> 
+<constant>CL_SAMPLER_CONTEXT</constant> 
+<constant>CL_SAMPLER_NORMALIZED_COORDS</constant> 
+<constant>CL_SAMPLER_ADDRESSING_MODE</constant> 
+<constant>CL_SAMPLER_FILTER_MODE</constant></literallayout></entry>
+		</row>
+
+	</tbody>	
+	</tgroup></informaltable>	
+    </refsect1>
+     
+
+    <refsect3 id="Copyright"><title></title>
+		Copyright &#169;  
+    </refsect3>
+</refentry>

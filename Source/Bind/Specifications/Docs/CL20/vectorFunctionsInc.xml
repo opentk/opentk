@@ -1,0 +1,35 @@
+        <!-- core spec. p. 265, section 6.13.7 -->
+
+        <para>
+          Vector Data Load and Store Functions allow
+          you to read and write vector types from a pointer to memory.
+        </para>
+
+        <para>
+            The suffix <varname>n</varname> in the function names 
+            (i.e. vload<varname>n</varname>, vstore<varname>n</varname> etc.) 
+            represent <varname>n</varname>-element 
+            vectors, where <varname>n</varname> = 2, 3, 4, 8 or 16.
+        </para>
+
+        <para>
+          <!-- OpenCL C spec section 6.13.7, re Table 6.15, applies to all vload*/vstore* functions -->
+          The results of vector data
+          load and store functions are undefined if the address being read from or written to is
+          not correctly aligned. The pointer argument <varname>p</varname> can be a pointer to
+          <citerefentry><refentrytitle>global</refentrytitle></citerefentry>,
+          <citerefentry><refentrytitle>local</refentrytitle></citerefentry>, or
+          <citerefentry><refentrytitle>private</refentrytitle></citerefentry>
+          memory for store functions. The pointer argument
+          <varname>p</varname> can be a pointer to global, local, 
+          constant or private memory for load functions.
+        </para>
+
+        <para>
+            NOTE: The vector data load and store functions 
+            variants that take pointer arguments which 
+            point to the generic address space are also supported.
+        </para>
+
+<!-- 25-Dec-2013, rev. 19 -->
+

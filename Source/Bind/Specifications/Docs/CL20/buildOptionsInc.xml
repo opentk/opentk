@@ -1,0 +1,474 @@
+<!-- buildOptionsInc.xml, section 5.6.4 -->
+
+    <bridgehead>Compiler Options</bridgehead>
+
+    <para>
+      The compiler options are categorized as pre-processor options, options for math intrinsics,
+      options that control optimization and miscellaneous options. This specification defines
+      a standard set of options that must be supported by the OpenCL C compiler when building
+      program executables online or offline. These may be extended by a set of vendor- or
+      platform specific options.
+    </para>
+
+    <bridgehead>Preprocessor Options</bridgehead>
+
+    <para>
+      These options control the OpenCL C preprocessor which is run on each program source before
+      actual compilation.
+    </para>
+
+    <para>
+      -D options are processed in the order they are given in the 
+      <varname>options</varname> argument to
+      <function>clBuildProgram</function> or <function>clCompileProgram</function>.
+    </para>
+
+    <variablelist>
+        <varlistentry>
+            <term>-D name</term>
+            <listitem>
+                <para>
+                  Predefine <varname>name</varname> as a macro, with definition 1.
+                </para>
+           </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term>-D name=definition</term>
+            <listitem>
+                <para>
+                  The contents of <varname>definition</varname> are tokenized and processed as
+                  if they appeared during translation phase three in a '#define' directive. In
+                  particular, the definition will be truncated by embedded newline characters.
+                </para>
+           </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term>-I dir</term>
+            <listitem>
+                <para>
+                  Add the directory <varname>dir</varname> to the list of directories to be
+                  searched for header files.
+                </para>
+           </listitem>
+        </varlistentry>
+    </variablelist>
+
+    <bridgehead>Math Intrinsics Options</bridgehead>
+
+    These options control compiler behavior regarding floating-point arithmetic. These options trade
+    off between speed and correctness.
+
+    <variablelist>
+        <varlistentry>
+            <term>-cl-single-precision-constant</term>
+            <listitem>
+                <para>
+                  Treat double precision floating-point constant as single precision constant.
+                </para>
+           </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term>-cl-denorms-are-zero</term>
+            <listitem>
+                <para>
+                  This option controls how single precision and double precision denormalized
+                  numbers are handled. If specified as a build option, the single precision
+                  denormalized numbers may be flushed to zero; double precision denormalized
+                  numbers may also be flushed to zero if the optional extension for double
+                  precsion is supported.  This is intended to be a performance hint and the
+                  OpenCL compiler can choose not to flush denorms to zero if the device supports
+                  single precision (or double precision) denormalized numbers.
+                </para>
+
+                <para>
+                  This option is ignored for single precision numbers if the
+                  device does not support single precision denormalized numbers
+                  i.e. <constant>CL_FP_DENORM</constant> bit is not set in
+                  <constant>CL_DEVICE_SINGLE_FP_CONFIG</constant>.
+                </para>
+
+                <para>
+                  This option is ignored for double precision numbers if the device
+                  does not support double precision or if it does support double
+                  precison but not double precision denormalized 
+                  numbers i.e. <constant>CL_FP_DENORM</constant> bit is not set in
+                  <constant>CL_DEVICE_DOUBLE_FP_CONFIG</constant>.
+                </para>
+
+                <para>
+                  This flag only applies for scalar and vector single precision floating-point
+                  variables and computations on these floating-point variables inside a
+                  program. It does not apply to reading from or writing to image objects.
+                </para>
+           </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term>-cl-fp32-correctly-rounded-divide-sqrt</term>
+            <listitem>
+                <para>
+                  The <code>-cl-fp32-correctly-rounded-divide-sqrt</code> build option to
+                  <function>clBuildProgram</function> or <function>clCompileProgram</function>
+                  allows an application to specify that single precision floating-point divide
+                  (x/y and 1/x) and sqrt used in the program source are correctly rounded.
+                  If this build option is not specified, the minimum numerical accuracy of
+                  single precision floating-point divide and sqrt are as defined in section
+                  7.4 of the OpenCL specification.
+                </para>
+
+                <para>
+                  This build option can only be specified if the
+                  <constant>CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT</constant> is set
+                  in <constant>CL_DEVICE_SINGLE_FP_CONFIG</constant> (as defined in
+                  in the table of allowed values for <varname>param_name</varname> for
+                  <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>) for
+                  devices that the program is being build.  <function>clBuildProgram</function>
+                  or <function>clCompileProgram</function> will fail to compile the program for
+                  a device if the <code>-cl-fp32-correctly-rounded-divide-sqrt</code> option is specified
+                  and <constant>CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT</constant> is not set for
+                  the device.
+                </para>
+           </listitem>
+        </varlistentry>
+    </variablelist>
+
+    <bridgehead>Optimization Options</bridgehead>
+
+    <para>
+      These options control various sorts of optimizations. Turning on optimization flags
+      makes the compiler attempt to improve the performance and/or code size at the expense of
+      compilation time and possibly the ability to debug the program.
+    </para>
+
+    <variablelist>
+        <varlistentry>
+            <term>-cl-opt-disable</term>
+            <listitem>
+                <para>
+                  This option disables all optimizations. The default is optimizations are enabled.
+                </para>
+        </listitem> </varlistentry>
+    </variablelist>
+
+    <para>
+      The following options control compiler behavior regarding floating-point arithmetic. These
+      options trade off between performance and correctness and must be specifically enabled.
+      These options are not turned on by default since it can result in incorrect output for
+      programs which depend on an exact implementation of IEEE 754 rules/specifications for
+      math functions.
+    </para>
+
+    <variablelist>
+        <varlistentry>
+            <term>-cl-mad-enable</term>
+            <listitem>
+                <para>
+                  Allow <code>a * b + c</code> to be replaced by a <code>mad</code>. The
+                  <code>mad</code> computes <code>a * b + c</code> with reduced accuracy. For
+                  example, some OpenCL devices implement <code>mad</code> as truncate the result
+                  of <code>a * b</code> before adding it to <code>c</code>.
+                </para>
+            </listitem> 
+        </varlistentry>
+
+        <varlistentry>
+            <term>-cl-no-signed-zeros</term>
+            <listitem>
+                <para>
+                  Allow optimizations for floating-point arithmetic that ignore the signedness of
+                  zero. IEEE 754 arithmetic specifies the distinct behavior of <code>+0.0</code>
+                  and <code>-0.0</code> values, which then prohibits simplification of expressions
+                  such as <code>x+0.0</code> or <code>0.0*x</code> (even with <code>-clfinite-math</code>
+                  only). This option implies that the sign of a zero result isn't significant.
+                </para>
+        </listitem> </varlistentry>
+
+        <varlistentry>
+            <term>-cl-unsafe-math-optimizations</term>
+            <listitem>
+                <para>
+                  Allow optimizations for floating-point arithmetic that (a) assume that
+                  arguments and results are valid, (b) may violate IEEE 754 standard and (c)
+                  may violate the OpenCL numerical compliance requirements as defined in section
+                  7.4 for single precision and double precision floating-point, and edge case
+                  behavior in section 7.5.  This option includes the <code>-cl-no-signed-zeros</code> and
+                  <code>-cl-mad-enable</code> options.
+                </para>
+        </listitem> </varlistentry>
+
+        <varlistentry>
+            <term>-cl-finite-math-only</term>
+            <listitem>
+                <para>
+                  Allow optimizations for floating-point arithmetic that assume that arguments and
+                  results are not NaNs or &#x000B1;&#x0221E;. This option may violate the OpenCL
+                  numerical compliance requirements defined in section 7.4 for single precision
+                  and double precision floating point, and edge case behavior in section 7.5.
+                </para>
+        </listitem> </varlistentry>
+
+        <varlistentry>
+            <term>-cl-fast-relaxed-math</term>
+            <listitem>
+                <para>
+                  Sets the optimization options <code>-cl-finite-math-only</code> and
+                  <code>-cl-unsafe-math-optimizations</code>.  This allows optimizations for floating-point
+                  arithmetic that may violate the IEEE 754 standard and the OpenCL numerical
+                  compliance requirements defined in the specification in section 7.4 for
+                  single-precision and double precision floating-point, and edge case
+                  behavior in section 7.5. This option also relaxes the precision of commonly 
+                    used math functions (refer to 
+                    table 7.2 defined in section 7.4). 
+                    This option causes the preprocessor macro
+                  <code>__FAST_RELAXED_MATH__</code> to be defined in the OpenCL program.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term>-cl-uniform-work-group-size</term>
+            <listitem>
+                <para>
+                    This requires that the global work-size be 
+                    a multiple of the work-group size specified to 
+                    <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>.
+                    Allow optimizations that are made possible by this restriction.
+                </para>
+            </listitem>
+        </varlistentry>
+
+    </variablelist>
+
+    <bridgehead>Options to Request or Suppress Warnings</bridgehead>
+
+    Warnings are diagnostic messages that report constructions which are not inherently erroneous
+    but which are risky or suggest there may have been an error. The following language independent
+    options do not enable specific warnings but control the kinds of diagnostics
+    produced by the OpenCL compiler.
+
+    <variablelist>
+        <varlistentry>
+            <term>-w</term>
+            <listitem>
+                <para>
+                  Inhibit all warning messages.
+                </para>
+           </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term>-Werror</term>
+            <listitem>
+                <para>
+                  Make all warnings into errors.
+                </para>
+           </listitem>
+        </varlistentry>
+    </variablelist>
+
+    <bridgehead>Options Controlling the OpenCL C Version</bridgehead>
+
+    The following option controls the version of OpenCL C that the compiler accepts.
+
+    <variablelist>
+        <varlistentry>
+            <term>-cl-std=</term>
+            <listitem>
+                <para>
+                  Determine the OpenCL C language version to use. A value for this option must
+                  be provided. Valid values are:
+                </para>
+
+                <para>
+                  <code>CL1.1</code> - Support all OpenCL C programs that use the OpenCL C language features
+                  defined in section 6 of the OpenCL 1.1 specification.
+                </para>
+
+                <para>
+                  <code>CL1.2</code> - Support all OpenCL C programs that use the OpenCL C language features
+                  defined in section 6 of the OpenCL 1.2 specification.
+                </para>
+
+                <para>
+                  <code>CL2.0</code> - Support all OpenCL C programs that use the OpenCL C language features
+                  defined in section 6 of the OpenCL 2.0 specification.
+                </para>
+           </listitem>
+        </varlistentry>
+    </variablelist>
+
+    <para>
+      Calls to <function>clBuildProgram</function> or <function>clCompileProgram</function> with
+      the <code>-cl-std=CL1.1</code> option will fail to compile the program for any devices with
+      <constant>CL_DEVICE_OPENCL_C_VERSION</constant> = OpenCL C 1.0.  
+    </para>
+
+    <para>
+      Calls to <function>clBuildProgram</function> or <function>clCompileProgram</function> with
+      the <code>-cl-std=CL1.2</code> option will fail to compile the program for any devices with
+      <constant>CL_DEVICE_OPENCL_C_VERSION</constant> = OpenCL C 1.0 or OpenCL C 1.1.
+    </para>
+
+    <para>
+      Calls to <function>clBuildProgram</function> or <function>clCompileProgram</function> with
+      the <code>-cl-std=CL2.0</code> option will fail to compile the program for any devices with
+      <constant>CL_DEVICE_OPENCL_C_VERSION</constant> = OpenCL C 1.0, OpenCL C 1.1, or OpenCL C 1.2.
+    </para>
+
+    <para>
+        If the <code>–cl-std</code> build option is not specified, the 
+        highest OpenCL C 1.x language version supported 
+        by each device is used when compiling the program 
+        for each device. Applications are required 
+        to specify the <code>–cl-std=CL2.0</code> option if they want 
+        to compile or build their programs with 
+        OpenCL C 2.0.
+    </para>
+
+    <bridgehead>Options enabled by the cl_khr_spir extension</bridgehead>
+
+    <variablelist>
+        <varlistentry>
+            <term>-x spir</term>
+            <listitem>
+                <para>
+                    Indicates that the binary is in SPIR format.
+                </para>
+           </listitem>
+        </varlistentry>
+    </variablelist>
+
+    <variablelist>
+        <varlistentry>
+            <term>-spir-std</term>
+            <listitem>
+                <para>
+                    Specifies the version of the SPIR specification that 
+                    describes the format and meaning of the binary. For 
+                    example, if the binary is as described in 
+                    SPIR version 1.2, then <code>-spir-std=1.2</code> must 
+                    be specified. Failing to specify these compile options 
+                    may result in implementation defined behavior.
+                </para>
+           </listitem>
+        </varlistentry>
+    </variablelist>
+
+    <bridgehead>Options for Querying Kernel Argument Information</bridgehead>
+
+    <variablelist>
+        <varlistentry>
+            <term>-cl-kernel-arg-info</term>
+            <listitem>
+                <para>
+                  This option allows the compiler to store information about the
+                  arguments of a kernel(s) in the program executable.  The argument
+                  information stored includes the argument name, its type,
+                  the address and access qualifiers used.  Refer to description of
+                  <citerefentry><refentrytitle>clGetKernelArgInfo</refentrytitle></citerefentry>
+                  on how to query this information.
+                </para>
+            </listitem>
+        </varlistentry>
+    </variablelist>
+
+    <bridgehead>Options for debugging your program</bridgehead>
+
+    <variablelist>
+        <varlistentry>
+            <term>-g</term>
+            <listitem>
+                <para>
+                    This option can currently be used to generate 
+                    additional errors for the built-in functions
+                    that allow you to enqueue commands on a device 
+                    (refer to section 6.13.17).
+                </para>
+            </listitem>
+        </varlistentry>
+    </variablelist>
+
+    <bridgehead>Linker Options</bridgehead>
+
+    This specification defines a standard set of linker options that must be supported by the
+    OpenCL C compiler when linking compiled programs online or offline. These linker options
+    are categorized as library linking options and program linking options. These may be
+    extended by a set of vendor- or platform-specific options.
+
+    <bridgehead>Library Linking Options</bridgehead>
+
+    The following options can be specified when creating a library of compiled binaries.
+
+    <variablelist>
+        <varlistentry>
+            <term>-create-library</term>
+            <listitem>
+                <para>
+                  Create a library of compiled binaries specified
+                  in <varname>input_programs</varname> argument to
+                  <citerefentry><refentrytitle>clLinkProgram</refentrytitle></citerefentry>.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term>-enable-link-options</term>
+            <listitem>
+                <para>
+                  Allows the linker to modify the library behavior based on one or more link
+                  options (described in Program Linking Options, below) when this library is
+                  linked with a program executable. This option must be specified with the
+                  <code>-create-library</code> option.
+                </para>
+            </listitem>
+        </varlistentry>
+    </variablelist>
+
+    <bridgehead>Program Linking Options</bridgehead>
+
+    The following options can be specified when linking a program executable.
+
+    <itemizedlist mark="disc">
+        <listitem> <code>-cl-denorms-are-zero</code> </listitem>
+        <listitem> <code>-cl-no-signed-zeroes</code> </listitem>
+        <listitem> <code>-cl-unsafe-math-optimizations</code> </listitem>
+        <listitem> <code>-cl-finite-math-only</code> </listitem>
+        <listitem> <code>-cl-fast-relaxed-mat</code> </listitem>
+    </itemizedlist>
+
+    The linker may apply these options to all compiled program objects specified to
+    <citerefentry><refentrytitle>clLinkProgram</refentrytitle></citerefentry>. The linker
+    may apply these options only to libraries which were created with the 
+    <code>-enable-link-option</code>.
+
+    <bridgehead>Separate Compilation and Linking of Programs</bridgehead>
+
+    <para>
+      OpenCL programs are compiled and linked to support the following:
+    </para>
+
+    <itemizedlist mark="disc">
+        <listitem>
+          Separate compilation and link stages.  Program sources can be compiled to generate
+          a compiled binary object and linked in a separate stage with other compiled program
+          objects to the program exectuable.
+        </listitem>
+
+        <listitem>
+          Embedded headers.  In OpenCL 1.0 and 1.1, the <code>-I</code> build option could be used to
+          specify the list of directories to be searched for headers files that are included
+          by a program source(s).  OpenCL 1.2 extends this by allowing the header sources to
+          come from program objects instead of just header files.
+        </listitem>
+
+        <listitem>
+          Libraries.  The linker can be used to link compiled objects and libraries into a
+          program executable or to create a library of compiled binaries.
+        </listitem>
+    </itemizedlist>
+
+<!-- 23-Dec-2013, rev. 19 -->
+

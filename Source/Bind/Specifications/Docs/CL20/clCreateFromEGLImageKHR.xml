@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCreateFromEGLImageKHR</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clCreateFromEGLImageKHR</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateFromEGLImageKHR">
+        <refname>clCreateFromEGLImageKHR</refname>
+
+        <refpurpose>
+            Creates an EGLImage target from an EGLImage source.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef><link xlink:href="abstractDataTypes.html">cl_mem</link>
+                     <function>
+                        clCreateFromEGLImageKHR
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef>CLeglDisplayKHR<parameter>display</parameter></paramdef>
+                <paramdef>CLeglImageKHR<parameter>image</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef>const cl_egl_image_properties_khr<parameter>* properties</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>* errcode_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname>context</varname> </term>
+                <listitem>
+                    <para> <!-- parameter description -->
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>display</varname> </term>
+                <listitem>
+                    <para>
+                        Should be of type <type>EGLDisplay</type>, cast into the type <type>CLeglDisplayKHR</type>.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>image</varname> </term>
+                <listitem>
+                    <para>
+                        Should be of type <type>EGLImageKHR</type>, cast into 
+                        the type <type>CLeglImageKHR</type>. Assuming no 
+                        errors are generated in this function, the resulting 
+                        image object will be an EGLImage target of 
+                        the specified EGLImage <varname>image</varname>. The resulting 
+                        <type>cl_mem</type> is an image object which may be used 
+                        normally by all OpenCL operations. This maps to an 
+                        <type>image2d_t</type> type in OpenCL kernel code.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> flags </varname> </term>
+                <listitem>
+                    <para>
+                        A bit-field that is used to specify usage 
+                        information about the memory object being created.
+                        The possible values for <varname>flags</varname> are:
+                        <constant>CL_MEM_FLAGS_READ_ONLY</constant>, 
+                        <constant>CL_MEM_FLAGS_WRITE_ONLY</constant> and 
+                        <constant>CL_MEM_FLAGS_READ_WRITE</constant>.
+                    </para>
+
+                    <para>
+                        For OpenCL 1.2 <varname>flags</varname> also accepts: 
+                        <constant>CL_MEM_HOST_WRITE_ONLY</constant>, 
+                        <constant>CL_MEM_HOST_READ_ONLY</constant> or 
+                        <constant>CL_MEM_HOST_NO_ACCESS</constant>.
+                    </para>
+
+                    <para>
+                        This extension only requires support for 
+                        <constant>CL_MEM_FLAGS_READ_ONLY</constant>, 
+                        and for OpenCL 1.2 
+                        <constant>CL_MEM_HOST_NO_ACCESS</constant>. 
+                        For OpenCL 1.1, a 
+                        <errorname>CL_INVALID_OPERATION</errorname> 
+                        will be returned 
+                        for images which do not support host mapping.
+                    </para>
+
+                    <para>
+                        If the value passed in <varname>flags</varname> is not 
+                        supported by the OpenCL implementation it will return 
+                        <errorname>CL_INVALID_VALUE</errorname>. The 
+                        accepted <varname>flags</varname> may be dependent upon 
+                        the texture format used.
+                    </para>
+
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>properties</varname> </term>
+                <listitem>
+                    <para>
+                        Specifies a list of property names and their
+                        corresponding values. Each property name 
+                        is immediately followed by the corresponding 
+                        desired value. The list is terminated with 0. No 
+                        properties are currently supported with this 
+                        version of the extension. 
+                        <varname>properties</varname> can be NULL.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> errcode_ret </varname> </term>
+                <listitem>
+                    <para>
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+            <function>clCreateFromEGLImageKHR</function> creates an 
+            EGLImage target of type <type>cl_mem</type> from the 
+            EGLImage source provided as <varname>image</varname>.
+        </para>
+
+<bridgehead>Lifetime of Shared Objects</bridgehead>
+
+        <para>
+            An OpenCL memory object created from an EGL image 
+            remains valid according to the lifetime 
+            behaviour as described in EGL_KHR_image_base.
+        </para>
+
+        <para>
+            "Any EGLImage siblings exist in any client API context"
+        </para>
+
+        <para>
+            For OpenCL this means that while the application 
+            retains a reference on the <type>cl_mem</type> (EGL 
+            sibling) the image remains valid.
+        </para>
+
+<bridgehead>Synchronizing OpenCL and EGL Access to Shared Objects</bridgehead>
+
+        <para>
+            In order to ensure data integrity, the application is responsible for synchronizing access to shared 
+            CL/EGL objects by their respective APIs. Failure to provide such synchronization may result in 
+            race conditions and other undefined behavior including non-portability between 
+            implementations.
+        </para>
+
+        <para>
+            Prior to calling
+            <citerefentry><refentrytitle>clEnqueueAcquireEGLObjectsKHR</refentrytitle></citerefentry>,
+            the application must ensure that any 
+            pending operations which access the objects specified in 
+            <varname>mem_objects</varname> have completed. This may 
+            be accomplished in a portable way by ceasing all client 
+            operations on the resource, and issuing 
+            and waiting for completion of a <function>glFinish</function> 
+            command on all GL contexts with pending references to 
+            these objects. Implementations may offer more efficient 
+            synchronization methods, such as 
+            synchronisation primitives or fence operations.
+        </para>
+
+        <para>
+            <!-- [sic] the spec, ver 2.0, rev. 19, refers to non-existent clEnqueueReleaseEGLImageObjects() -->
+            Similarly, after calling 
+            <function>clEnqueueReleaseEGLImageObjects</function>,
+            the application is responsible for
+            ensuring that any pending OpenCL operations which access 
+            the objects specified in <varname>mem_objects</varname>
+            have completed prior to executing subsequent 
+            commands in other APIs which reference these 
+            objects. This may be accomplished in a portable way by calling 
+            <citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry> 
+            with the event
+            object returned by 
+            <citerefentry><refentrytitle>clEnqueueReleaseGLObjects</refentrytitle></citerefentry> ,
+             or by calling 
+            <citerefentry><refentrytitle>clFinish</refentrytitle></citerefentry>.
+            As above, some 
+            implementations may offer more efficient methods.
+        </para>
+
+        <para>
+            Attempting to access the data store of an EGLImage object after it has been acquired by OpenCL 
+            and before it has been released will result in undefined behavior. Similarly, attempting to access 
+            a shared EGLImage object from OpenCL before it has been acquired by the OpenCL command 
+            queue or after it has been released, will result in undefined behavior.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not
+              a valid OpenCL context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>properties</varname> 
+                contains invalid values, if <varname>display</varname> is not a valid 
+                display object or if <varname>flags</varname> are 
+                not in the set defined above.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EGL_OBJECT_KHR</errorname> if <varname>image</varname> 
+                    is not a valid EGLImage object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_IMAGE_FORMAT_NOT_SUPPORTED</errorname> 
+                if the OpenCL implementation is not able to 
+                create a <type>cl_mem</type> compatible with the provided 
+                <type>CLeglImageKHR</type> for an implementation-dependent 
+                reason (this could be caused by, but not limited to, reasons such as 
+                unsupported texture formats, etc).
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> if there are 
+                no devices in <varname>context</varname> that support images (i.e.
+                <constant>CL_DEVICE_IMAGE_SUPPORT</constant> specified in 
+                table 4.3 (see <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>) is 
+                <constant>CL_FALSE</constant>) or if the 
+                flags passed are not supported for that image type.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCreateFromEGLImageKHR">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_egl_image</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_egl_event</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Dec-2013, rev. 19 -->
+</refentry>
+

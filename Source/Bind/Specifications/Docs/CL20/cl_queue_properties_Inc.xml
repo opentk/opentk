@@ -1,0 +1,86 @@
+
+<!-- table 5.1 - List of supported cl_queue_property values and description -->
+
+<informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+    <colspec colname="col1" colnum="1" />
+    <colspec colname="col2" colnum="2" />
+    <thead>
+        <row>
+        <entry>Queue Properties</entry>
+        <entry>Property Value</entry>
+        <entry>Description</entry>
+        </row>
+    </thead>
+    <tbody>
+        <row>
+            <entry><constant>CL_QUEUE_PROPERTIES</constant></entry>
+            <entry><type>cl_command_queue_-
+properties</type></entry>
+            <entry><para>This is a bitfield and can be set to a 
+                    combination of the following values:</para>
+
+                    <para><constant>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</constant> - 
+                    Determines whether the 
+                    commands queued in the command-queue 
+                    are executed in-order or out-of-order. If 
+                    set, the commands in the command-queue 
+                    are executed out-of-order. Otherwise, 
+                    commands are executed in-order.</para>
+
+                    <para><constant>CL_QUEUE_PROFILING_ENABLE</constant> -
+                    Enable or disable profiling of commands in 
+                    the command-queue. If set, the profiling of 
+                    commands is enabled. Otherwise profiling 
+                    of commands is disabled.</para>
+
+                    <para><constant>CL_QUEUE_ON_DEVICE</constant> - Indicates that this 
+                    is a device queue. If <constant>CL_QUEUE_ON_DEVICE</constant>
+                    is set, <constant>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</constant>
+                    must also be set. Only out-of-order device queues are supported.</para>
+
+                    <para><constant>CL_QUEUE_ON_DEVICE_DEFAULT</constant> -
+                    indicates that this is the default device 
+                    queue. This can only be used with 
+                    <constant>CL_QUEUE_ON_DEVICE</constant>.
+                    The application should create the default device queue if needed.
+                    There can only be one default device queue per context. 
+                    <function>clCreateCommandQueueWithProperties</function> 
+                    with <constant>CL_QUEUE_PROPERTIES</constant> set to 
+                    <constant>CL_QUEUE_ON_DEVICE</constant> | 
+                    <constant>CL_QUEUE_ON_DEVICE_DEFAULT</constant>
+                    will return the default device queue thas 
+                    already been created and increment its retain count by 1.
+                    </para>
+
+                    <para>If <constant>CL_QUEUE_PROPERTIES</constant> is not 
+                    specified an in-order host command queue
+                    is created for the specified device.</para>
+
+            </entry>
+        </row>
+        <row>
+            <entry><constant>CL_QUEUE_SIZE</constant></entry>
+            <entry><type>cl_uint</type></entry>
+            <entry><para>Specifies the size of the device queue in 
+                    bytes.</para>
+
+                    <para>This can only be specified if 
+                    <constant>CL_QUEUE_ON_DEVICE</constant> is set in 
+                    <constant>CL_QUEUE_PROPERTIES</constant>. This must be a 
+                    value &le; <constant>CL_DEVICE_QUEUE_ON_DEVICE_MAX_SIZE</constant>.</para>
+
+                    <para>For best performance, this should be &le; 
+                    <constant>CL_DEVICE_QUEUE_ON_DEVICE_PREFERRED_SIZE</constant>.</para>
+
+                    <para>If <constant>CL_QUEUE_SIZE</constant> is not specified, the 
+                    device queue is created with 
+                    <constant>CL_DEVICE_QUEUE_ON_DEVICE_PREFERRED_SIZE</constant>
+                    as the size of the queue.</para></entry>
+        </row>
+    </tbody>
+
+    </tgroup>
+</informaltable>
+
+<!-- 11-Dec-2013, rev. 19 -->
+

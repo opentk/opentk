@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_spir</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_spir</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_spir">
+        <refname>cl_khr_spir</refname>
+
+        <refpurpose>
+            Extension adds support to create an OpenCL program object from a Standard Portable 
+Intermediate Representation (SPIR) instance.
+        </refpurpose>
+    </refnamediv>
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_spir : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            Additions to section 5.8.1 –Creating Program Objects:
+        </para>
+
+        <para>
+            This extension adds the device property
+            <constant>CL_DEVICE_SPIR_VERSIONS</constant> to Table 4.3 (see 
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>).
+        </para>
+
+        <para>
+            Additions to section 5.8.1 –Creating Program Objects:
+        </para>
+
+        <para>
+            <citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry> 
+            can be used to load a SPIR binary. Once a program object has 
+            been created from a SPIR binary, 
+            <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>  
+            can be called to build a program executable 
+            or <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry> 
+            can be called to compile the SPIR binary.
+        </para>
+
+        <para>
+            Modify the <constant>CL_PROGRAM_BINARY_TYPE</constant> entry in table 5.14 
+            (see <citerefentry><refentrytitle>clGetProgramBuildInfo</refentrytitle></citerefentry>)
+            to add a potential value <constant>CL_PROGRAM_BINARY_TYPE_INTERMEDIATE</constant>.
+        </para>
+
+        <para>
+            Additions to section 5.8.4 –Compiler Options.:
+        </para>
+
+        <para>
+            The compile option <code>-x spir</code> must be specified 
+            to indicate that the binary is in SPIR format, and
+            the compile option <code>-spir-std</code> must be used 
+            to specify the version of the SPIR specification that 
+            describes the format and meaning of the binary. For 
+            example, if the binary is as described in 
+            SPIR version 1.2, then <code>-spir-std=1.2</code> must 
+            be specified. Failing to specify these compile options 
+            may result in implementation defined behavior.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_spir">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Dec-2013, rev. 19 -->
+</refentry>
+

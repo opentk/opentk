@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Atomic Functions</keyword>
+        </keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>Atomic Functions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>Atomic Functions</refname>
+        <refpurpose>
+The atomic functions are shown below.
+Click an item in the table below for details about that function.
+        </refpurpose>
+    </refnamediv>
+
+<refsect1 id="springboard"><title></title>
+
+<informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="1*" colname="col1" />
+    <colspec colnum="2" colwidth="1*" colname="col2" />
+    <tbody>
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atomic_init</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_work_item_fence</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atomic_store</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry href="atomic_store"><refentrytitle>atomic_store_explicit</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atomic_load</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry href="atomic_load"><refentrytitle>atomic_load_explicit</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atomic_exchange</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry href="atomic_exchange"><refentrytitle>atomic_exchange_explicit</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry href="atomic_compare_exchange"><refentrytitle>atomic_compare_exchange_strong</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry href="atomic_compare_exchange"><refentrytitle>atomic_compare_exchange_strong_explicit</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry href="atomic_compare_exchange"><refentrytitle>atomic_compare_exchange_weak</refentrytitle></citerefentry>
+            </entry>
+
+            <entry>
+                <citerefentry href="atomic_compare_exchange"><refentrytitle>atomic_compare_exchange_weak_explicit</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atomic_fetch_key</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry href="atomic_fetch_key"><refentrytitle>atomic_fetch_key_explicit</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atomic_flag_test_and_set</refentrytitle></citerefentry>
+            </entry>
+
+            <entry>
+                <citerefentry href="atomic_flag_test_and_set"><refentrytitle>atomic_flag_test_and_set_explicit</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atomic_flag_clear</refentrytitle></citerefentry>
+            </entry>
+
+            <entry>
+                <citerefentry href="atomic_flag_clear"><refentrytitle>atomic_flag_clear_explicit</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+    </tbody>
+
+    </tgroup></informaltable>
+
+    <bridgehead>64-bit Atomics</bridgehead>
+
+    <para>
+        The optional extension 
+        <citerefentry><refentrytitle>cl_khr_int64_base_atomics</refentrytitle></citerefentry>
+        implements atomic operations on 64-bit signed 
+        and unsigned integers to locations in <code>__global</code>
+        and <code>__local</code> memory.
+    </para>
+
+<informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="1*" colname="col1" />
+    <colspec colnum="2" colwidth="1*" colname="col2" />
+    <tbody>
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atom_add</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_sub</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atom_xchg</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_inc</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atom_dec</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_cmpxchg</refentrytitle></citerefentry>
+            </entry>
+        </row>
+    </tbody>
+    </tgroup></informaltable>
+
+    <para>
+      The <citerefentry><refentrytitle>cl_khr_int64_extended_atomics</refentrytitle></citerefentry>
+      extension enables additional atomic functions using types <type>long</type>
+      and <type>unsigned long</type>.  An application that wants to use
+      this extension will need to include the <code>#pragma OPENCL EXTENSION
+      <citerefentry><refentrytitle>cl_khr_int64_extended_atomics</refentrytitle></citerefentry>
+      : enable</code> in the OpenCL program source.
+    </para>
+
+<informaltable frame="all"><tgroup cols="3" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="1*" colname="col1" />
+    <colspec colnum="2" colwidth="1*" colname="col2" />
+    <colspec colnum="3" colwidth="1*" colname="col3" />
+    <tbody>
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atom_min</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_max</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_xor</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry><refentrytitle>atom_and</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atom_or</refentrytitle></citerefentry>
+            </entry>
+        </row>
+
+    </tbody>
+
+    </tgroup></informaltable>
+
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            As of OpenCL version 1.1, 
+            <code>cl_khr_global_int32_base_atomics</code>, 
+            <code>cl_khr_global_int32_extended_atomics</code>, 
+            <code>cl_khr_local_int32_base_atomics</code> and 
+            <code>cl_khr_local_int32_extended_atomics</code> 
+            extensions are core features. The built-in atomic function names are changed to use the 
+            <code>atomic_ prefix</code> instead of <code>atom_</code>.
+        </para>
+
+        <para>
+            The list of supported atomic type names are:
+        </para>
+
+        <itemizedlist>
+            <listitem><type>atomic_int</type></listitem>
+            <listitem><type>atomic_uint</type></listitem>
+            <listitem><type>atomic_long</type></listitem>
+            <listitem><type>atomic_ulong</type></listitem>
+            <listitem><type>atomic_float</type></listitem>
+            <listitem><type>atomic_double</type></listitem>
+            <listitem><type>atomic_intptr_t</type></listitem>
+            <listitem><type>atomic_uintptr_t</type></listitem>
+            <listitem><type>atomic_size_t</type></listitem>
+            <listitem><type>atomic_ptrdiff_t</type></listitem>
+        </itemizedlist>
+
+        <para>
+            The <type>atomic_long</type> and <type>atomic_ulong</type> types are supported if the 
+            <citerefentry><refentrytitle>cl_khr_int64_base_atomics</refentrytitle></citerefentry> and 
+            <citerefentry><refentrytitle>cl_khr_int64_extended_atomics</refentrytitle></citerefentry> 
+            extensions are supported.
+        </para>
+
+        <para>
+            The <type>atomic_double</type> type is only supported if double precision is supported and the 
+            <citerefentry><refentrytitle>cl_khr_int64_base_atomics</refentrytitle></citerefentry> and 
+            <citerefentry><refentrytitle>cl_khr_int64_extended_atomics</refentrytitle></citerefentry> 
+            extensions are supported.
+        </para>
+
+        <para>
+            If the device address space is 64-bits, the data types 
+            <type>atomic_intptr_t</type>, <type>atomic_uintptr_t</type>, 
+            <type>atomic_size_t</type> and <type>atomic_ptrdiff_t</type> are supported if the 
+            <citerefentry><refentrytitle>cl_khr_int64_base_atomics</refentrytitle></citerefentry> and 
+            <citerefentry><refentrytitle>cl_khr_int64_extended_atomics</refentrytitle></citerefentry> 
+            extensions are supported.
+        </para>
+
+        <para>
+            Arguments to a kernel can be declared to be a pointer to the above atomic types or the 
+            <type>atomic_flag</type> type.
+        </para>
+
+        <para>
+            The representation of atomic integer, floating-point 
+            and pointer types have the same size as their 
+            corresponding regular types. The <type>atomic_flag</type> 
+            type must be implemented as a 32-bit integer.
+        </para>
+
+    </refsect1>
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+            <olink uri="atomicFunctions">OpenCL Specification</olink>
+        </para>
+
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>memory_order</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>memory_scope</refentrytitle></citerefentry>,
+            <citerefentry href="atomic_flag"><refentrytitle>atomic_flag type</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 16-Dec-2013, rev. 19 -->
+</refentry>
+

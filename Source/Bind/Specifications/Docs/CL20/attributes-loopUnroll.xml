@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Specifying Attribute For Unrolling Loops</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Specifying Attribute For Unrolling Loops</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="AttributesofBlocksandControl-Flow-Statements">
+        <refname>Specifying Attribute For Unrolling Loops</refname>
+
+        <refpurpose>
+            Specifying Attribute For Unrolling Loops.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__attribute__((opencl_unroll_hint))
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+__attribute__((opencl_unroll_hint(n)))
+                        </entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            The <code>__attribute__((opencl_unroll_hint))</code> 
+            and <code>__attribute__((opencl_unroll_hint(n)))</code> 
+            attribute qualifiers can be used to specify that a loop 
+            (<code>for</code>, <code>while</code> and <code>do</code> loops)
+            can be unrolled. This attribute qualifier can be 
+            used to specify full unrolling or partial unrolling 
+            by a specified amount. This is a compiler hint 
+            and the compiler may ignore this directive.
+        </para>
+
+        <para>
+            <code>n</code> is the loop unrolling factor and must 
+            be a positive integral compile time constant expression. 
+            An unroll factor of 1 disables unrolling. If 
+            <code>n</code> is not specified, the compiler determines the 
+            unrolling factor for the loop.
+        </para>
+
+        <para>
+            NOTE: The <code>__attribute__((opencl_unroll_hint(n)))</code> 
+            attribute qualifier must 
+            appear immediately before the loop to be affected.
+        </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+
+    <refsect2 id="example1">
+        <title>
+            Examples
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__attribute__((opencl_unroll_hint(2)))
+while (*s != 0)
+    *p++ = *s++;
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            This tells the compiler to unroll the above while loop by a factor of 2.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__attribute__((opencl_unroll_hint))
+for (int i=0; i&lt;2; i++)
+{
+    …
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            In the example above, the compiler will determine how much to unroll the loop.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__attribute__((opencl_unroll_hint(1)))
+for (int i=0; i&lt;32; i++)
+{
+    …
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            The above is an example where the loop should not be unrolled.
+        </para>
+
+        <para>
+            Below are some examples of invalid usage of 
+            <code>__attribute__((opencl_unroll_hint(n)))</code>.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__attribute__((opencl_unroll_hint(-1)))
+while (…)
+{
+    …
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            The above example is an invalid usage of the loop unroll 
+            factor as the loop unroll factor is negative.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__attribute__((opencl_unroll_hint))
+if (…)
+{
+    …
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            The above example is invalid because the unroll 
+            attribute qualifier is used on a non-loop 
+            construct.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+kernel void
+my_kernel( … )
+{
+    int x;
+    __attribute__((opencl_unroll_hint(x))
+    for (int i=0; i&lt;x; i++)
+    {
+        …
+    }
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            The above example is invalid because the loop unroll 
+            factor is not a compile-time constant expression.
+        </para>
+    </refsect2>
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="attributes-loopUnroll">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="attribute"><refentrytitle>__attribute__</refentrytitle></citerefentry>,
+            <citerefentry href="attributes-types"><refentrytitle>Type Attributes</refentrytitle></citerefentry>,
+            <citerefentry href="attributes-variables"><refentrytitle>Variable Attributes</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 12-Dec-2013, rev. 19 -->
+</refentry>
+

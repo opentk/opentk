@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Vector Data Types</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Vector Data Types</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="VectorDataTypes">
+        <refname>Vector Data Types</refname>
+
+        <refpurpose>
+            Built-in vector data types.
+        </refpurpose>
+    </refnamediv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+      <para>
+        The <type>char</type>, <type>unsigned char</type>, <type>short</type>, <type>unsigned
+        short</type>, <type>integer</type>, <type>unsigned integer</type>, <type>long</type>,
+        <type>unsigned long</type>, and <type>float</type> vector data types are supported. The
+        vector data type is defined with the type name i.e. <type>char</type>, <type>uchar</type>,
+        <type>short</type>, <type>ushort</type>, <type>int</type>, <type>uint</type>,
+        <type>float</type>, <type>long</type>, or <type>ulong</type> followed by a literal value
+        <emphasis>n</emphasis> that defines the number of elements in the vector. Supported
+        values of <emphasis>n</emphasis> are 2, 3, 4, 8, and 16 for all vector data types.
+      </para>
+
+      <para>
+        The built-in vector data types are also declared as appropriate types in the OpenCL API
+        (and header files) that can be used by an application. The following table describes
+        the built-in vector data type in the OpenCL C programming language and the corresponding
+        data type available to the application:
+      </para>
+
+        <informaltable frame="all">
+            <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <colspec colname="col3" colnum="3" />
+
+                <thead>
+                    <row>
+                        <entry>Type in OpenCL Language</entry>
+                        <entry>Description</entry>
+                        <entry>API type for application</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry><type>char<replaceable>n</replaceable></type></entry>
+                        <entry>A vector of <replaceable>n</replaceable> 8-bit signed two's complement integer values.</entry>
+                        <entry><type>cl_char<replaceable>n</replaceable></type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>uchar<replaceable>n</replaceable></type></entry>
+                        <entry>A vector of <replaceable>n</replaceable> 8-bit unsigned integer values.</entry>
+                        <entry><type>cl_uchar<replaceable>n</replaceable></type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>short<replaceable>n</replaceable></type></entry>
+                        <entry>A vector of <replaceable>n</replaceable> 16-bit signed two's complement integer values.</entry>
+                        <entry><type>cl_short<replaceable>n</replaceable></type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>ushort<replaceable>n</replaceable></type></entry>
+                        <entry>A vector of <replaceable>n</replaceable> 16-bit unsigned integer values.</entry>
+                        <entry><type>cl_ushort<replaceable>n</replaceable></type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>int<replaceable>n</replaceable></type></entry>
+                        <entry>A vector of <replaceable>n</replaceable> 32-bit signed two's complement integer values.</entry>
+                        <entry><type>cl_int<replaceable>n</replaceable></type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>uint<replaceable>n</replaceable></type></entry>
+                        <entry>A vector of <replaceable>n</replaceable> 32-bit unsigned integer values.</entry>
+                        <entry><type>cl_uint<replaceable>n</replaceable></type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>long<replaceable>n</replaceable></type></entry>
+                        <entry>A vector of <replaceable>n</replaceable> 64-bit signed two's complement integer values.</entry>
+                        <entry><type>cl_long<replaceable>n</replaceable></type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>ulong<replaceable>n</replaceable></type></entry>
+                        <entry>A vector of <replaceable>n</replaceable> 64-bit unsigned integer values.</entry>
+                        <entry><type>cl_ulong<replaceable>n</replaceable></type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>float<replaceable>n</replaceable></type></entry>
+                        <entry>A vector of <replaceable>n</replaceable> 32-bit floating-point values.</entry>
+                        <entry><type>cl_float<replaceable>n</replaceable></type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>double<replaceable>n</replaceable></type></entry>
+                        <entry>A vector of <replaceable>n</replaceable> 64-bit floating-point values.</entry>
+                        <entry><type>cl_double<replaceable>n</replaceable></type></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Built-in vector data types are supported by the OpenCL implementation even if the
+          underlying compute device does not support any or all of the vector data types. These
+          are to be converted by the device compiler to appropriate instructions that use
+          underlying built-in types supported natively by the compute device.
+        </para>
+
+        <para>
+          The <type>double</type> vector type is an optional type that is supported if
+          <constant>CL_DEVICE_DOUBLE_FP_CONFIG</constant> for a device is not zero. See
+          <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+
+    <refsect1 id="optional"><title>Optional Half Floating Point</title>
+        <para>
+          The <type>half</type> floating-point is supported as an optional
+          extension.  An application that wants to use <type>half</type>
+          and <type>half<replaceable>n</replaceable></type> will need to include the
+          <citerefentry href="cl_khr_fp16"><refentrytitle>#pragma OPENCL EXTENSION cl_khr_fp16
+          : enable</refentrytitle></citerefentry> directive. This will extended the list of
+          built-in vector and scalar data types to include the following:
+        </para>
+
+        <para>
+          <informaltable frame="all">
+            <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" /> <colspec colname="col2" colnum="2" />
+                <colspec colname="col3" colnum="3" />
+
+                <thead>
+                    <row>
+                        <entry>Type in OpenCL Language</entry>
+                        <entry>Description</entry>
+                        <entry>API type for application</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry><type>half2</type></entry>
+                        <entry>A 2-component half-precision floating-point vector.</entry>
+                        <entry><type>cl_half2</type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>half3</type></entry>
+                        <entry>A 3-component half-precision floating-point vector.</entry>
+                        <entry><type>cl_half3</type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>half4</type></entry>
+                        <entry>A 4-component half-precision floating-point vector.</entry>
+                        <entry><type>cl_half4</type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>half8</type></entry>
+                        <entry>An 8-component half-precision floating-point vector.</entry>
+                        <entry><type>cl_half8</type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>half16</type></entry>
+                        <entry>A 16-component half-precision floating-point vector.</entry>
+                        <entry><type>cl_half16</type></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+          </informaltable>
+        </para>
+
+        <para>
+          The relational, equality, logical and logical unary operators can be used with
+          <type>half</type> scalar and <type>half<replaceable>n</replaceable></type>
+          vector types and shall produce a scalar <type>int</type> and vector
+          <type>short<replaceable>n</replaceable></type> result respectively.
+        </para>
+
+        <para>
+            The OpenCL compiler accepts an h and H suffix on floating point literals,
+            indicating the literal is typed as a <type>half</type>.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="vectorDataTypes">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="scalarDataTypes"><refentrytitle>Scalar Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="reservedDataTypes"><refentrytitle>Reserved Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="otherDataTypes"><refentrytitle>Other Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="abstractDataTypes"><refentrytitle>Abstract Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="enums"><refentrytitle>Enumerated Data Types</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 4-Jun-2013 -->
+</refentry>
+

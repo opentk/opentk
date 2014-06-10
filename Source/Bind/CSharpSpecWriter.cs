@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -49,7 +49,7 @@ namespace Bind
         public void WriteBindings(IBind generator)
         {
             Generator = generator;
-            WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
+            WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums, generator.Classes);
         }
 
         #endregion
@@ -69,7 +69,8 @@ namespace Bind
 
         #region WriteBindings
 
-        void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
+        void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums,
+            ClassCollection classes)
         {
             Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
             if (!Directory.Exists(Settings.OutputPath))
@@ -77,6 +78,7 @@ namespace Bind
 
             string temp_enums_file = Path.GetTempFileName();
             string temp_wrappers_file = Path.GetTempFileName();
+            string temp_classes_file = Path.GetTempFileName();
 
             // Enums
             using (BindStreamWriter sw = new BindStreamWriter(temp_enums_file))
@@ -129,18 +131,198 @@ namespace Bind
                 sw.WriteLine("}");
             }
 
+            // Classes
+            using (var sw = new BindStreamWriter(temp_classes_file))
+            {
+                WriteLicense(sw);
+                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
+                sw.WriteLine("{");
+                sw.Indent();
+
+                sw.WriteLine("using System;");
+                sw.WriteLine("using System.Text;");
+                sw.WriteLine("using System.Runtime.InteropServices;");
+                sw.WriteLine("using OpenTK.Extensions;");
+                sw.WriteLine();
+
+                WriteClasses(sw, classes, enums);
+
+                sw.Unindent();
+                sw.WriteLine("}");
+            }
+
             string output_enums = Path.Combine(Settings.OutputPath, Settings.EnumsFile);
-            string output_delegates = Path.Combine(Settings.OutputPath, Settings.DelegatesFile);
-            string output_core = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
             string output_wrappers = Path.Combine(Settings.OutputPath, Settings.WrappersFile);
+            string output_classes = Path.Combine(Settings.OutputPath, Settings.ClassesFile);
 
             if (File.Exists(output_enums)) File.Delete(output_enums);
-            if (File.Exists(output_delegates)) File.Delete(output_delegates);
-            if (File.Exists(output_core)) File.Delete(output_core);
             if (File.Exists(output_wrappers)) File.Delete(output_wrappers);
+            if (File.Exists(output_classes)) File.Delete(output_classes);
 
             File.Move(temp_enums_file, output_enums);
             File.Move(temp_wrappers_file, output_wrappers);
+            File.Move(temp_classes_file, output_classes);
+        }
+
+        #endregion
+
+        #region WriteClasses
+
+        void WriteClasses(BindStreamWriter sw, ClassCollection classes, EnumCollection enums)
+        {
+            foreach (var c in classes.Values.SelectMany(m => m).OrderBy(m => m))
+            {
+                // Todo: text templating...
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine("/// Defines methods to simplify {0} usage.", c.Name);
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine("public partial struct {0} : IComparable<{0}>, IEquatable<{0}>", c.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                foreach (var field in c.Fields.Values.SelectMany(f => f).OrderBy(m => m))
+                {
+                    WriteField(sw, field, enums);
+                }
+                sw.WriteLine();
+                sw.WriteLine("#region IComparable<{0}> Implementation", c.Name);
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine("/// Returns the sort order of the current instance compared to the specified <see cref=\"{0}\"/>.", c.Name);
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine("/// <param name=\"other\">The <see cref=\"{0}\"/> to compare with the current <see cref=\"{0}\"/>.</param>", c.Name);
+                sw.WriteLine("/// <returns>A value that indicates the relative order of the objects being compared.", c.Name);
+                sw.WriteLine("public int CompareTo({0} other)", c.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("int result = 0;");
+                foreach (var field in c.Fields.Values.SelectMany(f => f))
+                {
+                    sw.WriteLine("if (result == 0)");
+                    sw.Indent();
+                    sw.WriteLine("result = {0}.CompareTo(other.{0});", field.Name);
+                    sw.Unindent();
+                }
+                sw.WriteLine("return result;");
+                sw.Unindent();
+                sw.WriteLine("}");
+                sw.WriteLine();
+                sw.WriteLine("#endregion");
+
+                sw.WriteLine();
+                sw.WriteLine("#region IEquatable<{0}> Implementation", c.Name);
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine("/// Determines whether the specified <see cref=\"{0}\"/> is equal to the current <see cref=\"{0}\"/>.", c.Name);
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine("/// <param name=\"other\">The <see cref=\"{0}\"/> to compare with the current <see cref=\"{0}\"/>.</param>", c.Name);
+                sw.WriteLine("/// <returns><c>true</c> if the specified <see cref=\"{0}\"/> is equal to the current", c.Name);
+                sw.WriteLine("/// <see cref=\"{0}\"/>; otherwise, <c>false</c>.</returns>", c.Name);
+                sw.WriteLine("public bool Equals({0} other)", c.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("bool result = true;");
+                foreach (var field in c.Fields.Values.SelectMany(f => f))
+                {
+                    sw.WriteLine("result &= {0}.Equals(other.{0});", field.Name);
+                }
+                sw.WriteLine("return result;");
+                sw.Unindent();
+                sw.WriteLine("}");
+                sw.WriteLine();
+                sw.WriteLine("#endregion");
+
+                sw.WriteLine();
+                sw.WriteLine("#region Public Members");
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>Defines a zero (or null) <see cref=\"{0}\"/></summary>", c.Name);
+                sw.WriteLine("public static readonly {0} Zero = new {0}();", c.Name);
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>Tests two <see cref=\"{0}\"/> instances for equality.</summary>", c.Name);
+                sw.WriteLine("public static bool operator ==({0} left, {0} right)", c.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("return left.Equals(right);");
+                sw.Unindent();
+                sw.WriteLine("}");
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>Tests two <see cref=\"{0}\"/> instances for inequality.</summary>", c.Name);
+                sw.WriteLine("public static bool operator !=({0} left, {0} right)", c.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("return !left.Equals(right);");
+                sw.Unindent();
+                sw.WriteLine("}");
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine("/// Determines whether the specified <see cref=\"System.Object\"/> is equal to the current <see cref=\"{0}\"/>.", c.Name);
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine("/// <param name=\"other\">The <see cref=\"System.Object\"/> to compare with the current <see cref=\"{0}\"/>.</param>", c.Name);
+                sw.WriteLine("/// <returns><c>true</c> if the specified <see cref=\"{0}\"/> is equal to the current", c.Name);
+                sw.WriteLine("/// <see cref=\"{0}\"/>; otherwise, <c>false</c>.</returns>", c.Name);
+                sw.WriteLine("public override bool Equals(object other)");
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("return other is {0} && Equals(({0})other);", c.Name);
+                sw.Unindent();
+                sw.WriteLine("}");
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine("/// Serves as a hash function for a <see cref=\"{0}\"/> object.", c.Name);
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine("/// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a");
+                sw.WriteLine("/// hash table.</returns>");
+                sw.WriteLine("public override int GetHashCode()");
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("int hash = 0;");
+                foreach (var field in c.Fields.Values.SelectMany(f => f).OrderBy(f => f))
+                {
+                    sw.WriteLine("hash ^= {0}.GetHashCode();", field.Name);
+                }
+                sw.WriteLine("return hash;");
+                sw.Unindent();
+                sw.WriteLine("}");
+
+                sw.WriteLine();
+                foreach (var method in c.Methods.Values
+                    .SelectMany(m => m)
+                    .Where(m => m.IsStaticMethod)
+                    .OrderBy(m => m))
+                {
+                    WriteDocumentation(sw, method);
+                    WriteMethod(sw, method, enums);
+                }
+
+                sw.WriteLine("#endregion");
+
+                sw.Unindent();
+                sw.WriteLine("}");
+
+                sw.WriteLine();
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine(String.Format("/// Defines methods to simplify {0} usage.", c.Name));
+                sw.WriteLine("/// </summary>");
+                sw.WriteLine(String.Format("public static partial class {0}Extensions", c.Name));
+                sw.WriteLine("{");
+                sw.Indent();
+                foreach (var method in c.Methods.Values
+                    .SelectMany(m => m)
+                    .Where(m => m.IsExtensionMethod)
+                    .OrderBy(m => m))
+                {
+                    WriteDocumentation(sw, method);
+                    WriteMethod(sw, method, enums);
+                }
+                sw.Unindent();
+                sw.WriteLine("}");
+            }
         }
 
         #endregion
@@ -152,6 +334,10 @@ namespace Bind
             IDictionary<string, string> CSTypes)
         {
             Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
+
+            var delegates_sorted = delegates.Values
+                .Select(d => d.First())
+                .OrderBy(d => d);
 
             sw.WriteLine("#pragma warning disable 3019"); // CLSCompliant attribute
             sw.WriteLine("#pragma warning disable 1591"); // Missing doc comments
@@ -175,11 +361,12 @@ namespace Bind
             sw.WriteLine("EntryPointNames = new byte[]", delegates.Count);
             sw.WriteLine("{");
             sw.Indent();
-            foreach (var d in delegates.Values.Select(d => d.First()))
+            foreach (var d in delegates_sorted)
             {
                 if (d.RequiresSlot(Settings))
                 {
                     var name = Settings.FunctionPrefix + d.Name;
+                    sw.WriteLine("// {0}", name);
                     sw.WriteLine("{0}, 0,", String.Join(", ",
                         System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
                 }
@@ -192,7 +379,7 @@ namespace Bind
             sw.WriteLine("{");
             sw.Indent();
             int offset = 0;
-            foreach (var d in delegates.Values.Select(d => d.First()))
+            foreach (var d in delegates_sorted)
             {
                 if (d.RequiresSlot(Settings))
                 {
@@ -209,7 +396,7 @@ namespace Bind
             sw.WriteLine();
 
             int current_wrapper = 0;
-            foreach (string key in wrappers.Keys)
+            foreach (string key in wrappers.Keys.OrderBy(d => d))
             {
                 if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
                 {
@@ -227,7 +414,7 @@ namespace Bind
                 }
 
                 wrappers[key].Sort();
-                foreach (Function f in wrappers[key])
+                foreach (Function f in wrappers[key].OrderBy(d => d))
                 {
                     WriteWrapper(sw, f, enums);
                     current_wrapper++;
@@ -244,7 +431,7 @@ namespace Bind
             // Emit native signatures.
             // These are required by the patcher.
             int current_signature = 0;
-            foreach (var d in wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct())
+            foreach (var d in delegates_sorted)
             {
                 sw.WriteLine("[Slot({0})]", d.Slot);
                 sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
@@ -268,6 +455,12 @@ namespace Bind
             sw.WriteLine();
         }
 
+        private void WriteField(BindStreamWriter sw, Field f, EnumCollection enums)
+        {
+            sw.Write(GetDeclarationString(f, Settings.Compatibility));
+            sw.WriteLine(WriteOptions.NoIndent, ";");
+        }
+
         private void WriteMethod(BindStreamWriter sw, Function f, EnumCollection enums)
         {
             if (!String.IsNullOrEmpty(f.Obsolete))
@@ -279,15 +472,38 @@ namespace Bind
                 sw.WriteLine("[Obsolete(\"Deprecated in OpenGL {0}\")]", f.DeprecatedVersion);
             }
 
-            sw.WriteLine("[AutoGenerated(Category = \"{0}\", Version = \"{1}\", EntryPoint = \"{2}\")]",
-                f.Category, f.Version, Settings.FunctionPrefix + f.WrappedDelegate.EntryPoint);
+            if (!(f.IsExtensionMethod || f.IsStaticMethod))
+            {
+                sw.WriteLine("[AutoGenerated(Category = \"{0}\", Version = \"{1}\", EntryPoint = \"{2}\")]",
+                    f.Category, f.Version, Settings.FunctionPrefix + f.WrappedDelegate.EntryPoint);
+            }
 
             if (!f.CLSCompliant)
             {
                 sw.WriteLine("[CLSCompliant(false)]");
             }
 
-            sw.WriteLine("public static {0} {{ throw new NotImplementedException(); }}", GetDeclarationString(f, Settings.Compatibility));
+            sw.Write("public static {0}", GetDeclarationString(f, Settings.Compatibility));
+            if (f.Parameters.HasGenericParameters)
+            {
+                sw.WriteLine();
+                sw.Write("");
+            }
+            if (!(f.IsExtensionMethod || f.IsStaticMethod))
+            {
+                sw.WriteLine(WriteOptions.NoIndent, " { throw new NotImplementedException(); }");
+            }
+            else
+            {
+                sw.WriteLine();
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.Write(GetInvocationString(f, Settings.Compatibility));
+                sw.WriteLine(WriteOptions.NoIndent, ";");
+                sw.Unindent();
+                sw.WriteLine("}");
+                sw.WriteLine();
+            }
         }
 
         void WriteDocumentation(BindStreamWriter sw, Function f)
@@ -309,7 +525,7 @@ namespace Bind
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
-                    if (f.Category.StartsWith("VERSION"))
+                    if (f.Category.StartsWith("VERSION") || f.Category == f.Version || String.IsNullOrEmpty(f.Category))
                         category = String.Format("[requires: {0}]", "v" + f.Version);
                     else
                         category = String.Format("[requires: {0}]", "v" + f.Version + " or " + f.Category);
@@ -348,7 +564,7 @@ namespace Bind
                     // - then by index
                     var docparam =
                         (docs.Parameters
-                            .Where(p => p.Name == param.RawName)
+                            .Where(p => p.Name == param.RawName.Trim('@'))
                             .FirstOrDefault()) ??
                         (docs.Parameters.Count > i ?
                             docs.Parameters[i] : null);
@@ -365,7 +581,11 @@ namespace Bind
 
                         // Note: we use param.Name, because the documentation sometimes
                         // uses different names than the specification.
-                        sw.Write("/// <param name=\"{0}\">", param.Name);
+                        string pname =
+                            param.Name.StartsWith("@") ?
+                            param.Name.Substring(1) :
+                            param.Name;
+                        sw.Write("/// <param name=\"{0}\">", pname);
                         if (!String.IsNullOrEmpty(length))
                         {
                             sw.Write(WriteOptions.NoIndent, "{0}", length);
@@ -417,7 +637,7 @@ namespace Bind
 
         void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
         {
-             // Make sure everything is sorted. This will avoid random changes between
+            // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
             constants = constants.OrderBy(c => c);
 
@@ -426,7 +646,10 @@ namespace Bind
                 if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                 {
                     sw.WriteLine("/// <summary>");
-                    sw.WriteLine("/// Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
+                    sw.WriteLine("/// Original was {0}{1} = {2}",
+                        Settings.ConstantPrefix,
+                        c.OriginalName,
+                        c.Value.Replace("<", "&lt;").Replace(">", "&gt;"));
                     sw.WriteLine("/// </summary>");
                 }
 
@@ -435,7 +658,7 @@ namespace Bind
 
                 sw.Write(str);
                 if (!String.IsNullOrEmpty(str))
-                    sw.WriteLine(",");
+                    sw.WriteLine(WriteOptions.NoIndent, ",");
             }
         }
 
@@ -474,15 +697,22 @@ namespace Bind
                 foreach (var wrapper in wrappers.Values.SelectMany(w => w))
                 {
                     // Add every function to every enum parameter it references
-                    foreach (var parameter in wrapper.Parameters.Where(p => p.IsEnum))
+                    foreach (var parameter in wrapper.Parameters.Where(p => p.Type.IsEnum))
                     {
-                        var e = enums[parameter.CurrentType];
-                        var list = enum_counts[e];
-                        list.Add(wrapper);
+                        if (enums.ContainsKey(parameter.Type.CurrentType))
+                        {
+                            var e = enums[parameter.Type.CurrentType];
+                            var list = enum_counts[e];
+                            list.Add(wrapper);
+                        }
+                        else
+                        {
+                            Console.Error.WriteLine("Invalid enum '{0}' in '{1}'", parameter.Type.CurrentType, wrapper);
+                        }
                     }
                 }
 
-                foreach (Enum @enum in enums.Values)
+                foreach (Enum @enum in enums.Values.OrderBy(e => e))
                 {
                     if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                     {
@@ -507,7 +737,7 @@ namespace Bind
 
                     if (@enum.IsFlagCollection)
                         sw.WriteLine("[Flags]");
-                    sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
+                    sw.WriteLine("public enum " + @enum.Name + " : " + @enum.BaseType);
                     sw.WriteLine("{");
                     sw.Indent();
                     WriteConstants(sw, @enum.ConstantCollection.Values);
@@ -593,7 +823,7 @@ namespace Bind
             sb.Append(" ");
             sb.Append(Settings.FunctionPrefix);
             sb.Append(d.Name);
-            sb.Append(GetDeclarationString(d.Parameters, Settings.Legacy.ConstIntEnums));
+            sb.Append(GetDeclarationString(d.Parameters, Settings.Legacy.ConstIntEnums, d));
 
             return sb.ToString();
         }
@@ -615,7 +845,7 @@ namespace Bind
             sb.Append("public enum ");
             sb.Append(e.Name);
             sb.Append(" : ");
-            sb.AppendLine(e.Type);
+            sb.AppendLine(e.BaseType);
             sb.AppendLine("{");
 
             foreach (Constant c in constants)
@@ -651,7 +881,7 @@ namespace Bind
                 {
                     if (p.Generic)
                     {
-                        sb.Append(p.CurrentType);
+                        sb.Append(p.Type.CurrentType);
                         sb.Append(",");
                     }
                 }
@@ -659,7 +889,7 @@ namespace Bind
                 sb.Append(">");
             }
 
-            sb.Append(GetDeclarationString(f.Parameters, settings));
+            sb.Append(GetDeclarationString(f.Parameters, settings, f));
 
             if (f.Parameters.HasGenericParameters)
             {
@@ -667,9 +897,32 @@ namespace Bind
                 foreach (Parameter p in f.Parameters)
                 {
                     if (p.Generic)
-                        sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
+                        sb.AppendLine(String.Format("    where {0} : struct", p.Type.CurrentType));
                 }
             }
+
+            return sb.ToString();
+        }
+
+        string GetDeclarationString(Field f, Settings.Legacy settings)
+        {
+            var sb = new StringBuilder();
+
+            switch (f.Visibility)
+            {
+                case Visibility.Private:
+                    break;
+                case Visibility.Internal:
+                    sb.Append("internal ");
+                    break;
+                case Visibility.Public:
+                    sb.Append("public ");
+                    break;
+            }
+
+            sb.Append(GetDeclarationString(f.Type, settings));
+            sb.Append(" ");
+            sb.Append(f.Name);
 
             return sb.ToString();
         }
@@ -683,7 +936,7 @@ namespace Bind
             else if (p.Flow == FlowDirection.Undefined)
                 sb.Append("[InAttribute, OutAttribute] ");
 
-            if (p.Reference)
+            if (p.Type.Reference)
             {
                 if (p.Flow == FlowDirection.Out)
                     sb.Append("out ");
@@ -693,18 +946,18 @@ namespace Bind
 
             if (!override_unsafe_setting && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))
             {
-                if (p.Pointer != 0)
+                if (p.Type.Pointer != 0)
                 {
                     sb.Append("IntPtr");
                 }
                 else
                 {
-                    sb.Append(GetDeclarationString(p as Type, settings));
+                    sb.Append(GetDeclarationString(p.Type as Type, settings));
                 }
             }
             else
             {
-                sb.Append(GetDeclarationString(p as Type, settings));
+                sb.Append(GetDeclarationString(p.Type as Type, settings));
             }
             if (!String.IsNullOrEmpty(p.Name))
             {
@@ -715,8 +968,12 @@ namespace Bind
             return sb.ToString();
         }
 
-        string GetDeclarationString(ParameterCollection parameters, Settings.Legacy settings)
+        string GetDeclarationString(ParameterCollection parameters, Settings.Legacy settings, Delegate d)
         {
+            if (d.IsExtensionMethod && parameters.Count == 0)
+                throw new InvalidOperationException();
+
+            bool is_net_extension = d.IsExtensionMethod;
             StringBuilder sb = new StringBuilder();
 
             sb.Append("(");
@@ -724,6 +981,12 @@ namespace Bind
             {
                 foreach (Parameter p in parameters)
                 {
+                    if (is_net_extension)
+                    {
+                        sb.Append("this ");
+                        is_net_extension = false;
+                    }
+
                     sb.Append(GetDeclarationString(p, false, settings));
                     sb.Append(", ");
                 }
@@ -744,7 +1007,14 @@ namespace Bind
             {
                 if (type.IsEnum)
                 {
-                    t = "System.Int32";
+                    t = (type as Enum).BaseType;
+                    // Todo: remove this hack. It's here only
+                    // to make the git commits cleaner during
+                    // the OpenCL implementation process.
+                    if (t == "int")
+                    {
+                        t = "System.Int32";
+                    }
                 }
             }
 
@@ -754,6 +1024,39 @@ namespace Bind
                 array_levels[type.Array]);
         }
 
+        string GetInvocationString(Function f, Settings.Legacy compatibility)
+        {
+            var sb = new StringBuilder();
+            if (f.ReturnType.CurrentType != "void")
+            {
+                sb.Append("return ");
+            }
+
+            sb.Append(Settings.OutputClass);
+            sb.Append(".");
+            sb.Append(f.Name);
+            sb.Append("(");
+            if (f.Parameters.Count > 0)
+            {
+                foreach (var p in f.Parameters)
+                {
+                    if (p.Type.Reference && p.Flow == FlowDirection.Out)
+                    {
+                        sb.Append("out ");
+                    }
+                    else if (p.Type.Reference)
+                    {
+                        sb.Append("ref ");
+                    }
+                    sb.Append(p.Name);
+                    sb.Append(", ");
+                }
+                sb.Remove(sb.Length - 2, 2);
+            }
+            sb.Append(")");
+
+            return sb.ToString();
+        }
         #endregion
     }
 }

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>                            
+                __local
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>__local</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="__local">             
+        <refname>__local</refname>
+
+        <refpurpose>
+            Address Space Qualifier.
+        </refpurpose>
+    </refnamediv>
+
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__local
+local
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+OpenCL implements the following disjoint address spaces: <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>, <function>__local</function>, <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry> and <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry>.
+		</para>
+        <para>       
+The address space qualifier may be used in variable
+declarations to specify the region of memory that is used to allocate the object. The C syntax for
+type qualifiers is extended in OpenCL to include an address space name as a valid type qualifier.
+If the type of an object is qualified by an address space name, the object is allocated in the
+specified address name; otherwise, the object is allocated in the generic address space.
+        </para>
+
+        <para>
+The address space names without the __ prefix i.e.
+<function>global</function>,
+<function>local</function>,
+<function>constant</function> and
+<function>private</function>
+may be substituted for the corresponding address space names with the __prefix.
+        </para>
+
+        <para>
+The generic address space name for arguments to a
+function in a program, or local variables of a
+function is <function>__private</function>.
+All arguments to a <function>__kernel</function> function
+shall be in the <function>__private</function>
+address space.
+        </para>
+
+        <para>
+<citerefentry  href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry> function arguments declared
+to be a pointer of a type can point to one of the
+following address spaces only:
+<function>__global</function>,
+<function>__local</function> or
+<function>__constant</function>.
+A pointer to
+address space A can only be assigned to a pointer
+to the same address space A. Casting a
+pointer to address space A to a pointer to address space B is illegal.
+        </para>
+
+        <para>
+The <function>__kernel</function> function arguments declared to be of type
+<type><citerefentry  href="otherDataTypes"><refentrytitle>image2d_t</refentrytitle></citerefentry></type> or <type><citerefentry  href="otherDataTypes"><refentrytitle>image3d_t</refentrytitle></citerefentry></type>
+always point to the <function>__global</function> address space. All program scope variables must be declared in the <function>__constant</function> address space.
+        </para>
+        <para>
+The <function>__local</function> or <function>local</function> address space name
+is used to describe variables that need to be allocated in local memory and are shared by all work-items of a work-group. This qualifier can be used with arguments to functions (including <function>__kernel</function> functions) declared as pointers, or with variables defined inside a <function>__kernel</function> function.
+        </para>
+    </refsect1>
+
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+// declares a pointer p in the __private address space that
+// points to an int object in address space __global
+__global int *p;
+
+// declares an array of 4 floats in the __private address space.
+float x[4];
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="addressSpaceQualifier">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>, 
+            <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>, 
+            <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

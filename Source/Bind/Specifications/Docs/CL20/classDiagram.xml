@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>class diagram</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Class Diagram</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="classDiagram">
+        <refname>Class diagram</refname>
+
+        <refpurpose>
+            OpenCL UML Class Diagram
+        </refpurpose>
+
+    </refnamediv>
+
+<!-- ================================ IMAGE -->
+
+    <refnamediv id="image">
+        <imageobject>
+            <imagedata fileref="classDiagram.jpg" format="jpg" />
+        </imageobject>
+    </refnamediv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The diagram above represents the OpenCL specification as a class diagram using the
+          Unified Modeling Language* (UML) notation. The diagram shows both nodes and edges
+          which are classes and their relationships. As a simplification it shows only classes,
+          and no attributes or operations. As for relationships it shows aggregations (annotated
+          with a solid diamond), associations (no annotation), and inheritance (annotated with
+          an open arrowhead). The cardinality of a relationship is shown on each end of it. A
+          cardinality of "*" represents "many", a cardinality of "1" represents "one and only
+          one" and a cardinality of "0:1" represents "optionally one". The navigability of a
+          relationship is shown using a regular arrowhead.
+        </para>
+
+        <para>
+          *Unified Modeling Language (http://www.uml.org/) is a trademark of Object Management
+          Group (OMG).
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES
+
+    <refsect1 id="notes"><title>Notes</title>
+
+    </refsect1>-->
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="classDiagram">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="mathFunctions"><refentrytitle>Math Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1> -->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 4-Jun-2013 -->
+</refentry>
+

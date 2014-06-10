@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_gl_msaa_sharing</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_gl_msaa_sharing</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_gl_msaa_sharing">
+        <refname>cl_khr_gl_msaa_sharing</refname>
+
+        <refpurpose>
+            Extends the CL/GL sharing to support GL multi-sampled texture (color or depth).
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_gl_msaa_sharing : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">float4</link>
+                    <function>
+                        read_imagef
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>sample</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <function>
+                        read_imagei
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>sample</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">uint4</link>
+                    <function>
+                        read_imageui
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>sample</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">float4</link>
+                    <function>
+                        read_imagef
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>sample</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <function>
+                        read_imagei
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>sample</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">uint4</link>
+                    <function>
+                        read_imageui
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>sample</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">float</link>
+                    <function>
+                        read_imagef
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>sample</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">float</link>
+                    <function>
+                        read_imagef
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>sample</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_width
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_width
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_width
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_width
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_depth_t  </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_height
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_height
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_height
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_height
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_channel_data_type
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_channel_data_type
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_channel_data_type
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_channel_data_type
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_channel_order
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_channel_order
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_channel_order
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_channel_order
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <function>
+                        get_image_dim
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <function>
+                        get_image_dim
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <function>
+                        get_image_dim
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <function>
+                        get_image_dim
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <function>
+                        get_image_array_size
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_num_samples
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_num_samples
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_num_samples
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        get_image_num_samples
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image2d_array_msaa_depth_t </link>
+                    <parameter>image</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          This extension name is <function>cl_khr_gl_msaa_sharing</function>. This extension requires 
+          <citerefentry><refentrytitle>cl_khr_gl_depth_images</refentrytitle></citerefentry>.
+        </para>
+
+        <para>
+            Multi-sample CL image objects (MSAA) can only be read 
+            from a kernel. Multi-sample CL image objects 
+            cannot be used as arguments to 
+            <citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry> , 
+            <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry> and 
+            <citerefentry><refentrytitle>clEnqueueFillImage</refentrytitle></citerefentry> and will return a 
+            <errorname>CL_INVALID_OPERATION</errorname> error.
+        </para>
+
+        <para>
+            Add the following entry to table 9.5 (see 
+            <citerefentry><refentrytitle>clGetGLTextureInfo</refentrytitle></citerefentry>):
+        </para>
+
+        <informaltable frame="all">
+        <tgroup cols="3" align="left" colsep="1" rowsep="1">
+            <colspec colname="col1" colnum="1" />
+            <colspec colname="col2" colnum="2" />
+            <colspec colname="col2" colnum="2" />
+            <thead>
+                <row>
+                    <entry>cl_gl_texture_info</entry>
+                    <entry>Return Type</entry>
+                    <entry>Info. returned in <varname>param_value</varname></entry>
+                </row>
+            </thead>
+
+            <tbody>
+                <row>
+                    <entry><constant>CL_GL_NUM_SAMPLES</constant></entry>
+                    <entry><type>GLsizei</type></entry>
+                    <entry><para>The samples argument passed to
+                        glTexImage2DMultisample or 
+                        glTexImage3DMultisample.</para>
+
+                        <para>If <varname>image</varname> is not a MSAA texture, 1 is 
+                        returned.</para></entry>
+                </row>
+            </tbody>
+        </tgroup>
+        </informaltable>
+
+        <para>
+            Add the following new data types to table 6.3 in section 6.1.3 of the OpenCL 2.0 specification
+            (see <citerefentry><refentrytitle>otherDataTypes</refentrytitle></citerefentry>):
+        </para>
+
+        <informaltable frame="all">
+        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+            <colspec colname="col1" colnum="1" />
+            <colspec colname="col2" colnum="2" />
+            <thead>
+                <row>
+                    <entry>Type</entry>
+                    <entry>Description</entry>
+                </row>
+            </thead>
+
+            <tbody>
+                <row>
+                    <entry><type>image2d_msaa_t</type></entry>
+                    <entry>A 2D multi-sample color image. Refer to section 
+                        6.13.14 for a detailed description of the built-in 
+                        functions that use this type.</entry>
+                </row>
+
+                <row>
+                    <entry><type>image2d_array_msaa_t</type></entry>
+                    <entry>A 2D multi-sample color image array. Refer to 
+                        section 6.13.14 for a detailed description of the 
+                        built-in functions that use this type.</entry>
+                </row>
+
+                <row>
+                    <entry><type>image2d_msaa_depth_t</type></entry>
+                    <entry>A 2D multi-sample depth image. Refer to section 
+                        6.13.14 for a detailed description of the built-in 
+                        functions that use this type.</entry>
+                </row>
+
+                <row>
+                    <entry><type>image2d_array_msaa_depth_t</type></entry>
+                    <entry>A 2D multi-sample depth image array. Refer to 
+                        section 6.13.14 for a detailed description of the 
+                        built-in functions that use this type.</entry>
+                </row>
+            </tbody>
+        </tgroup>
+        </informaltable>
+
+        <para>
+            NOTE: When a multisample image is accessed in a 
+            kernel, the access takes one vector of 
+            integers describing which pixel to fetch and 
+            an integer corresponding to the sample numbers 
+            describing which sample within the pixel to 
+            fetch. sample identifies the sample position in the 
+            multi-sample image.
+        </para>
+
+        <para>
+            For best performance, we recommend that 
+            <varname>sample</varname> be a literal value so it is known at 
+            compile time and the OpenCL compiler can 
+            perform appropriate optimizations for multisample reads on the device.
+        </para>
+
+        <para>
+            No standard sampling instructions are allowed on 
+            the multisample image. Accessing a coordinate 
+            outside the image and/or a sample that is outside 
+            the number of samples associated with each 
+            pixel in the image is undefined
+        </para>
+
+        <para>
+            <function>read_imagef</function> uses the coordinate 
+            (<varname>coord.x, coord.y</varname>) and <varname>sample</varname> to 
+            do an element lookup in the 2D image or depth image object 
+            specified by <varname>image</varname>.
+        </para>
+
+        <para>
+            <function>read_imagef</function> returns floating-point values in the 
+            range [0.0 ... 1.0] for image objects created with 
+            <varname>image_channel_data_type</varname> set to one of the 
+            predefined packed formats or <constant>CL_UNORM_INT8</constant>, or
+            <constant>CL_UNORM_INT16</constant>.
+        </para>
+
+        <para>
+            <function>read_imagef</function> returns floating-point values in the 
+            range [-1.0 ... 1.0] for image objects created with 
+            <varname>image_channel_data_type</varname> set to <constant>CL_SNORM_INT8</constant>, 
+            or <constant>CL_SNORM_INT16</constant>.
+        </para>
+
+        <para>
+            <function>read_imagef</function> returns floating-point values for image 
+            objects created with <varname>image_channel_data_type</varname> set to 
+            <constant>CL_HALF_FLOAT</constant> or <constant>CL_FLOAT</constant>. 
+        </para>
+
+        <para>
+            Values returned by <function>read_imagef</function> for image objects 
+            with <varname>image_channel_data_type</varname> values not specified 
+            in the description above are undefined.
+        </para>
+
+        <para>
+            <function>read_imagei</function> uses the coordinate 
+            (<varname>coord.x, coord.y</varname>) and <varname>sample</varname> to 
+            do an element lookup in the 2D image object 
+            specified by <varname>image</varname>.
+        </para>
+
+        <para>
+            <function>read_imagei</function> and <function>read_imageui</function> return 
+            unnormalized signed integer and unsigned integer 
+            values respectively. Each channel will be stored in a 
+            32-bit integer. 
+        </para>
+
+        <para><function>read_imagei</function> can only be used with image objects 
+            created with <varname>image_channel_data_type</varname> set to one of 
+            the following values:</para> 
+
+          <itemizedlist>
+            <listitem><constant>CL_SIGNED_INT8,</constant></listitem>
+            <listitem><constant>CL_SIGNED_INT16,</constant></listitem>
+            <listitem><constant>CL_SIGNED_INT32</constant></listitem>
+          </itemizedlist>
+
+        <para>
+            If the <varname>image_channel_data_type</varname> is not one of the 
+            above values, the values returned by <function>read_imagei</function>
+            are undefined. 
+        </para>
+
+        <para>
+            <function>read_imageui</function> can only be used with image objects 
+            created with <varname>image_channel_data_type</varname> set to one of 
+            the following values: 
+        </para>
+
+          <itemizedlist>
+            <listitem><constant>CL_UNSIGNED_INT8,</constant></listitem>
+            <listitem><constant>CL_UNSIGNED_INT16,</constant></listitem>
+            <listitem><constant>CL_UNSIGNED_INT32</constant></listitem>.
+          </itemizedlist>
+
+        <para>
+            If the <varname>image_channel_data_type</varname> is not one of the 
+            above values, the values returned by <function>read_imageui</function>
+            are undefined.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_gl_msaa_sharing">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <citerefentry href="imageFunctions"><refentrytitle>Image Read and Write Functions</refentrytitle></citerefentry>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+    </refsect3>
+
+<!-- 22-Dec-2013, rev. 19 -->
+</refentry>
+

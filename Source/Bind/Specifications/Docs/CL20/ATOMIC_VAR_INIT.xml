@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>ATOMIC_VAR_INIT</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>ATOMIC_VAR_INIT</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="ATOMIC_VAR_INIT">
+        <refname>ATOMIC_VAR_INIT</refname>
+
+        <refpurpose>
+Expands to a token sequence suitable for initializing an atomic object.
+        </refpurpose>
+    </refnamediv>
+
+<!-- ================================ DESCRIPTION  -->
+<!-- Use <function /> to refer ONLY to the function that this page describes. All other functions should use
+-->
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="ATOMIC_VAR_INIT"><title></title>
+        <para>
+          The <function>ATOMIC_VAR_INIT</function> macro is defined as:
+        </para>
+
+        <para>
+          <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+              <colspec colname="col1" colnum="1" /> <tbody>
+                <row>
+                  <entry>
+    <code>   #define ATOMIC_VAR_INIT(C value)</code>
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </para>
+
+        <para>
+The <function>ATOMIC_VAR_INIT</function> macro expands to a token sequence suitable for initializing an atomic 
+object of a type that is initialization-compatible with value. An atomic object with automatic 
+storage duration that is not explicitly initialized using <function>ATOMIC_VAR_INIT</function> is initially in an 
+indeterminate state; however, the default (zero) initialization for objects with static storage 
+duration is guaranteed to produce a valid state.
+        </para>
+
+        <para>
+This macro can only be used to initialize atomic 
+objects that are declared in program scope in the global 
+address space.
+        </para>
+
+        <para>
+Concurrent access to the variable being initialized, even via an atomic operation, constitutes a 
+data-race.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+
+    <refsect2 id="example1">
+        <title>
+            Examples
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+global atomic_int guide = ATOMIC_VAR_INIT(42);
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+Concurrent access to the variable being initialized, even via an atomic operation, constitutes a 
+data-race.
+        </para>
+    </refsect2>
+
+
+<!-- ================================ NOTES
+
+    <refsect1 id="notes"><title>Notes</title>
+    </refsect1>-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="ATOMIC_VAR_INIT">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 25-May-2013 -->
+</refentry>
+

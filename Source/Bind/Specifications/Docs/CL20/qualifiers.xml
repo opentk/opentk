@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Qualifiers</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Qualifiers</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="Qualifiers">
+        <refname>Qualifiers</refname>
+
+        <refpurpose>
+            OpenCL qualifiers.
+        </refpurpose>
+    </refnamediv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+          These are the qualifiers available in the OpenCL C programming language. Click on a
+          category name in the table below to see information about specific qualifiers.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <tbody>
+                    <row>
+                        <entry>
+                            <citerefentry href="accessQualifiers"><refentrytitle>Access Qualifiers</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+<literallayout>__read_only, read_only
+__write_only, write_only
+__read_write, read_write</literallayout>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <function>Address Space Qualifiers</function>
+                        </entry>
+                        <entry>
+<literallayout><citerefentry href="local"><refentrytitle>__local, local</refentrytitle></citerefentry>
+<citerefentry href="global"><refentrytitle>__global, global</refentrytitle></citerefentry>
+<citerefentry href="constant"><refentrytitle>__constant, constant</refentrytitle></citerefentry>
+<citerefentry href="private"><refentrytitle>__private, private</refentrytitle></citerefentry>
+<citerefentry href="genericAddressSpace"><refentrytitle>__generic, generic</refentrytitle></citerefentry></literallayout>
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <citerefentry href="functionQualifiers"><refentrytitle>Function Qualifiers</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+<literallayout>__kernel, kernel
+__attribute__ with work_group_size_hint, reqd_work_group_size, vec_type_hint</literallayout>
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <citerefentry href="attributes-types"><refentrytitle>Attribute Qualifiers for  Type</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            __attribute__ with aligned, packed
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <citerefentry href="attributes-variables"><refentrytitle>Attribute Qualifiers for Variables</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            __attribute__ with aligned, packed, endian
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <citerefentry href="attributes-blocksAndControlFlow"><refentrytitle>Attribute Qualifiers for Blocks and Control Flow Statements</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            __attribute__
+                        </entry>
+                    </row>
+                    
+                    <row>
+                        <entry>
+                            <citerefentry href="storageQualifiers"><refentrytitle>Storage-class Qualifiers</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            typedef, extern, static
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <function>C99 Type Qualifiers</function>
+                        </entry>
+                        <entry>const, restrict, volatile
+
+                            <para>
+                                The type qualifiers const, restrict and volatile as 
+                                defined by the C99 specification are supported.
+                                These qualifiers cannot be used with 
+                                <citerefentry href="otherDataTypes"><refentrytitle>image2d_t</refentrytitle></citerefentry>, 
+                                <citerefentry href="otherDataTypes"><refentrytitle>image3d_t</refentrytitle></citerefentry>,
+                                <citerefentry href="otherDataTypes"><refentrytitle>image2d_array_t</refentrytitle></citerefentry>, 
+                                <citerefentry href="otherDataTypes"><refentrytitle>image1d_t</refentrytitle></citerefentry>, 
+                                <citerefentry href="otherDataTypes"><refentrytitle>image1d_buffer_t</refentrytitle></citerefentry> 
+                                and <citerefentry href="otherDataTypes"><refentrytitle>image1d_array_t</refentrytitle></citerefentry> 
+                                types. Types other than pointer types shall not use the restrict qualifier.
+                            </para>
+
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="addressSpaceQualifiers">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="addressSpaceQualifierFuncs"><refentrytitle>Address Space Qualifier Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 9-Jun-2013 -->
+</refentry>
+

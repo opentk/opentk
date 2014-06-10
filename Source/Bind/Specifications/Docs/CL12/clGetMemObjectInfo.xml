@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>
+                clGetMemObjectInfo
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clGetMemObjectInfo
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetMemObjectInfo">
+        <refname>
+            clGetMemObjectInfo
+        </refname>
+
+        <refpurpose>
+            Get information that is common to all memory objects (buffer and image objects).
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>clGetMemObjectInfo</function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_mem</link>
+                    <parameter>memobj</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="enums.html#cl_mem_info">cl_mem_info</link>
+                    <parameter>param_name</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>param_value_size</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <parameter>*param_value</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>*param_value_size_ret</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> memobj </varname> </term>
+                <listitem>
+                    <para>
+                        Specifies the memory object being queried.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_name </varname> </term>
+                <listitem>
+                    <para>
+                        Specifies the information to query. The list of supported
+                        <varname>param_name</varname> types and the
+                        information returned in <varname>param_value</varname> by
+                        <function>clGetMemObjectInfo</function> is described
+                        in the table below.
+                    </para>
+
+                    <!-- table 5.11 -->
+                    <informaltable frame="all">
+                        <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                            <colspec colname="col1" colnum="1" />
+                            <colspec colname="col2" colnum="2" />
+                            <colspec colname="col3" colnum="3" />
+                            <thead>
+                                <row>
+                                    <entry>cl_mem_info</entry>
+                                    <entry>Return Type</entry>
+                                    <entry>Info. returned in <varname>param_value</varname></entry>
+                                </row>
+                            </thead>
+
+                            <tbody>
+                                <row>
+                                    <entry><constant>CL_MEM_TYPE</constant></entry>
+                                    <entry>cl_mem_object_type</entry>
+                                    <entry>
+                                        Returns one of the following values:
+
+                                        <para>
+                                          <constant>CL_MEM_OBJECT_BUFFER</constant>
+                                          if <varname>memobj</varname> is created with
+                                          <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>
+                                          or
+                                          <citerefentry><refentrytitle>clCreateSubBuffer</refentrytitle></citerefentry>.
+                                        </para>
+
+                                        <para>
+                                          cl_image_desc.image_type argument value if
+                                          <varname>memobj</varname> is created with
+                                          <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry>.
+                                        </para>
+                                    </entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_FLAGS</constant></entry>
+                                    <entry>cl_mem_flags</entry>
+                                    <entry>
+                                      Returns the <varname>flags</varname> argument value
+                                      specified when <varname>memobj</varname> is created with
+                                      <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>,
+                                      <citerefentry><refentrytitle>clCreateSubBuffer</refentrytitle></citerefentry>,
+                                      or
+                                      <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry>.
+                                      If <varname>memobj</varname> is a sub-buffer the memory
+                                      access qualifiers inherited from parent buffer is also
+                                      returned
+                                    </entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_SIZE</constant></entry>
+                                    <entry>size_t</entry>
+                                    <entry>
+                                        Return actual size of the data store associated with <varname>memobj</varname> in bytes.
+                                    </entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_HOST_PTR</constant></entry>
+                                    <entry>void *</entry>
+                                    <entry>
+
+                                    <para>
+                                      If <varname>memobj</varname> is created with
+                                      <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>
+                                      or
+                                      <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry>
+                                      and <constant>CL_MEM_USE_HOST_PTR</constant> is
+                                      specified in <varname>mem_flags</varname>, return the
+                                      <varname>host_ptr</varname> argument value specified when
+                                      <varname>memobj</varname> is created. Otherwise a NULL
+                                      value is returned.
+                                    </para>
+
+                                    <para>
+                                      If <varname>memobj</varname> is created with
+                                      <citerefentry><refentrytitle>clCreateSubBuffer</refentrytitle></citerefentry>,
+                                      return the <varname>host_ptr</varname>
+                                      + <varname>origin</varname> value
+                                      specified when <varname>memobj</varname>
+                                      is created. <varname>host_ptr</varname>
+                                      is the argument value specified to
+                                      <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>
+                                      and <constant>CL_MEM_USE_HOST_PTR</constant> is specified
+                                      in <varname>mem_flags</varname> for memory object from
+                                      which <varname>memobj</varname> is created. Otherwise a
+                                      NULL value is returned.
+                                    </para> </entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_MAP_COUNT</constant></entry>
+                                    <entry>cl_uint</entry>
+                                    <entry>
+                                        Map count. The map count returned should be considered immediately stale. It is
+                                        unsuitable for general use in applications. This feature is provided for debugging.
+                                    </entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_REFERENCE_COUNT</constant></entry>
+                                    <entry>cl_uint</entry>
+                                    <entry>
+                                        Return <varname>memobj</varname> reference count. The reference count returned should
+                                        be considered immediately stale. It is unsuitable for general use in
+                                        applications. This feature is provided for identifying memory leaks.
+                                    </entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_CONTEXT</constant></entry>
+                                    <entry>cl_context</entry>
+                                    <entry>
+                                        Return context specified when memory object is created.
+                                        If <varname>memobj</varname> is created using
+                                        <citerefentry><refentrytitle>clCreateSubBuffer</refentrytitle></citerefentry>, the context
+                                        associated with the memory object specified as the <varname>buffer</varname> argument to
+                                        <citerefentry><refentrytitle>clCreateSubBuffer</refentrytitle></citerefentry> is returned.
+                                    </entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_ASSOCIATED_-
+MEMOBJECT</constant></entry>
+                                    <entry>cl_mem</entry>
+                                    <entry>
+                                        Return memory object from which <varname>memobj</varname> is created.
+
+                                        <para>
+                                          This returns the memory object specified
+                                          as <varname>buffer</varname> argument to
+                                          <citerefentry><refentrytitle>clCreateSubBuffer</refentrytitle></citerefentry>.
+                                        </para>
+
+                                        <para>
+                                            Otherwise a NULL value is returned.
+                                        </para>
+                                    </entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_OFFSET</constant></entry>
+                                    <entry>size_t</entry>
+                                    <entry>
+                                        Return offset if <varname>memobj</varname> is a sub-buffer object created using
+                                        <citerefentry><refentrytitle>clCreateSubBuffer</refentrytitle></citerefentry>.
+
+                                        <para>
+                                            This returns 0 if <varname>memobj</varname> is not a subbuffer object.
+                                        </para>
+                                    </entry>
+                                </row>
+
+                                <row><!-- ext. spec p. 67, section 9.9.4;  and p. 70, section 9.9.6; and p. 77, section 9.9.7.5; and p. 108, section 9.11.7.5 -->
+                                    <entry><constant>CL_MEM_D3D10_RESOURCE_KHR</constant></entry>
+                                    <entry>ID3D10Resource *</entry>
+                                    <entry>
+                                         The property being queried (if the
+                                        <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry>
+                                        extension is enabled). If <varname>memobj</varname> was created using
+                                        <citerefentry><refentrytitle>clCreateFromD3D10BufferKHR</refentrytitle></citerefentry>,
+                                        <citerefentry><refentrytitle>clCreateFromD3D10Texture2DKHR</refentrytitle></citerefentry>,
+                                        or <citerefentry><refentrytitle>clCreateFromD3D10Texture3DKHR</refentrytitle></citerefentry>,
+                                        returns the <varname>resource</varname> argument specified
+                                        when <varname>memobj</varname> was created.
+                                    </entry>
+                                </row>
+
+                                <row><!-- ext. spec p. 84, section 9.10.4; and p. 86, section 9.10.6; and p. 91, section 9.10.7.3 -->
+                                    <entry><constant>CL_MEM_DX9_MEDIA_-
+ADAPTER_TYPE_KHR</constant></entry>
+                                    <entry>cl_dx9_media_-
+                                        adapter_type_khr</entry>
+                                    <entry>
+                                        Returns the <type>cl_dx9_media_adapter_type_khr</type> argument
+                                        value specified when <varname>memobj</varname> is created using
+                                        <citerefentry><refentrytitle>clCreateFromDX9MediaSurfaceKHR</refentrytitle></citerefentry>
+                                        (If the <citerefentry><refentrytitle>cl_khr_dx9_media_sharing</refentrytitle></citerefentry>
+                                        extension is supported)</entry>
+                                </row>
+
+                                <row><!-- ext. spec p. 84, section 9.10.4; and p. 87, section 9.10.6; ??and p. 91, section 9.10.7.3 -->
+                                    <entry><constant>CL_MEM_DX9_MEDIA_-
+SURFACE_INFO_KHR</constant></entry>
+                                    <entry>cl_dx9_-
+                                        surface_info_khr</entry>
+                                    <entry>
+                                        Returns the cl_dx9_surface_info_khr
+                                        argument value specified when <varname>memobj</varname> is created using
+                                        <citerefentry><refentrytitle>clCreateFromDX9MediaSurfaceKHR</refentrytitle></citerefentry>
+                                        (If the <citerefentry><refentrytitle>cl_khr_dx9_media_sharing</refentrytitle></citerefentry>
+                                        extension is supported)
+                                    </entry>
+                                </row>
+
+                                <row><!-- ext. spec p. 98, section 9.11.4; and p. 101, section 9.11.6 -->
+                                    <entry><constant>CL_MEM_D3D11_RESOURCE_KHR</constant></entry>
+                                    <entry>ID3D11Resource *</entry>
+                                    <entry>If the cl_khr_d3d11_sharing extension is supported,
+                                        If <varname>memobj</varname> was created using
+                                        <citerefentry><refentrytitle>clCreateFromD3D11BufferKHR</refentrytitle></citerefentry>,
+                                        <citerefentry><refentrytitle>clCreateFromD3D11Texture2DKHR</refentrytitle></citerefentry>, or
+                                        <citerefentry><refentrytitle>clCreateFromD3D11Texture3DKHR</refentrytitle></citerefentry>,
+                                        returns the <varname>resource</varname> argument specified when <varname>memobj</varname> was created.
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </informaltable>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value </varname> </term>
+                <listitem>
+                    <para>
+                        A pointer to memory where the appropriate result being queried is returned.
+                        If <varname>param_value</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value_size </varname> </term>
+                <listitem>
+                    <para>
+                        Used to specify the size in bytes of memory pointed to by <varname>param_value</varname>.
+                        This size must be &ge; size of return type as described in the table above.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value_size_ret </varname> </term>
+                <listitem>
+                    <para>
+                        Returns the actual size in bytes of data being queried by <varname>param_value</varname>.
+                        If <varname>param_value_size_ret</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully.
+            Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if <varname>param_name</varname> is not valid, or if size
+                in bytes specified by <varname>param_value_size</varname> is &lt; the size of return type as
+                described in the table above and <varname>param_value</varname> is not NULL.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_MEM_OBJECT</errorname> if <varname>memobj</varname>
+                is a not a valid memory object.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to
+                allocate resources required by the
+                OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to
+                allocate resources required by the
+                OpenCL implementation on the host.
+            </listitem>
+
+            <listitem>
+              <!-- ext. spec pp. 69,70, section 9.9.6 -->
+              <errorname>CL_INVALID_D3D10_RESOURCE_KHR</errorname> If the
+              <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry>
+              extension is enabled and if <varname>param_name</varname>
+              is <constant>CL_MEM_D3D10_RESOURCE_KHR</constant>
+              and <varname>memobj</varname> was not created by the function
+              <citerefentry><refentrytitle>clCreateFromD3D10BufferKHR</refentrytitle></citerefentry>,
+              <citerefentry><refentrytitle>clCreateFromD3D10Texture2DKHR</refentrytitle></citerefentry>,
+              or
+              <citerefentry><refentrytitle>clCreateFromD3D10Texture3DKHR</refentrytitle></citerefentry>.
+            </listitem>
+
+            <listitem>
+              <!-- ext. spec p. 85, section 9.10.4; and p. 86, section 9.10.6
+              --> <errorname>CL_INVALID_DX9_MEDIA_SURFACE_KHR</errorname>
+              if <varname>param_name</varname> is
+              <constant>CL_MEM_DX9_MEDIA_SURFACE_INFO_KHR</constant>
+              and  <varname>memobj</varname> was not created by the function
+              <citerefentry><refentrytitle>clCreateFromDX9MediaSurfaceKHR</refentrytitle></citerefentry>
+              from a Direct3D9 surface. (If the
+              <citerefentry><refentrytitle>cl_khr_dx9_media_sharing</refentrytitle></citerefentry>
+              extension is supported)
+            </listitem>
+
+            <listitem>
+              <!-- ext. spec p. 100, section 9.11.6
+              --> <errorname>CL_INVALID_D3D11_RESOURCE_KHR</errorname>
+              If the cl_khr_d3d11_sharing extension is supported, if
+              <varname>param_name</varname> is <constant>CL_MEM_D3D11_RESOURCE_KHR</constant>
+              and <varname>memobj</varname> was not created by the function
+              <citerefentry><refentrytitle>clCreateFromD3D11BufferKHR</refentrytitle></citerefentry>,
+              <citerefentry><refentrytitle>clCreateFromD3D11Texture2DKHR</refentrytitle></citerefentry>,
+              or
+              <citerefentry><refentrytitle>clCreateFromD3D11Texture3DKHR</refentrytitle></citerefentry>."
+            </listitem>
+     </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clGetMemObjectInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetImageInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 26-Oct-2011 -->
+</refentry>
+

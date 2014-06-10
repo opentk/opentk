@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -222,6 +222,29 @@ namespace OpenTK
             {
                 Marshal.FreeHGlobal(Marshal.ReadIntPtr(ptr, length * IntPtr.Size));
             }
+            Marshal.FreeHGlobal(ptr);
+        }
+
+        /// <summary>
+        /// Marshals a <c>System.String</c> reference to unmanaged memory by calling
+        /// Marshal.AllocHGlobal.
+        /// </summary>
+        /// <returns>An unmanaged pointer to a null-terminated strings</returns>
+        /// <param name="str_array">The string reference to marshal.</param>
+        protected static IntPtr MarshalStringRefToPtr(ref string str)
+        {
+            IntPtr ptr = Marshal.AllocHGlobal(IntPtr.Size);
+            Marshal.WriteIntPtr(ptr, MarshalStringToPtr(str));
+            return ptr;
+        }
+
+        /// <summary>
+        /// Frees a marshalled string that allocated by <c>MarshalStringRefToPtr</c>.
+        /// </summary>
+        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringRefToPtr</c></param>
+        protected static void FreeStringRefPtr(IntPtr ptr)
+        {
+            FreeStringPtr(Marshal.ReadIntPtr(ptr));
             Marshal.FreeHGlobal(ptr);
         }
 

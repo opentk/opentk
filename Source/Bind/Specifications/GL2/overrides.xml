@@ -1245,6 +1245,18 @@
 
     <!-- Arb -->
 
+    <!-- ARB_CL_event -->
+    <function name="CreateSyncFromCLevent" extension="ARB">
+      <param name="context">
+        <pointer>0</pointer>
+        <flow>in</flow>
+      </param>
+      <param name="event">
+        <pointer>0</pointer>
+        <flow>in</flow>
+      </param>
+    </function>
+
     <function name="ProgramParameteri" extension="Arb">
       <param name="pname">
         <type>AssemblyProgramParameterArb</type>
@@ -4899,6 +4911,9 @@
     <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
+    <function name="EnableClientState" extension="Core" obsolete="Use ArrayCap overload instead">
+      <param name="array"><type>EnableCap</type></param>
+    </function>
     <function name="ExtGetBuffersQCOM" extension="QCOM" obsolete="Use out overload instead">
       <param name="numBuffers"><count>0</count></param>
     </function>
@@ -4917,23 +4932,126 @@
   </overload>
 
   <replace name="gles1">
+    <function name="BindBuffer">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="usage"><type>BufferUsageHint</type></param>
+    </function>
+    <function name="BufferData">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="usage"><type>BufferUsageHint</type></param>
+    </function>
+    <function name="BufferSubData">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
     <!-- AMD_performance_monitors is not const-correct -->
     <function name="DeletePerfMonitors" extension="AMD">
       <param name="monitors"><flow>in</flow></param>
     </function>
+    <function name="DrawArrays">
+      <param name="mode"><type>PrimitiveType</type></param>
+    </function>
+    <function name="DrawElements">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+    <function name="EnableClientState">
+      <param name="array"><type>ArrayCap</type></param>
+    </function>
+    <function name="GetBufferParameter">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferParameterName</type></param>
+    </function>
   </replace>
   
   <add name="gles1">
-    <enum name="BeginMode">
-      <token name="Points" value="0X0000" />
-      <token name="Lines" value="0X0001" />
-      <token name="LineLoop" value="0X0002" />
-      <token name="LineStrip" value="0X0003" />
-      <token name="Triangles" value="0X0004" />
-      <token name="TriangleStrip" value="0X0005" />
-      <token name="TriangleFan" value="0X0006" />
+    <enum name="ArrayCap">
+      <use token="VERTEX_ARRAY" />
+      <use token="NORMAL_ARRAY" />
+      <use token="COLOR_ARRAY" />
+      <use token="TEXTURE_COORD_ARRAY" />
+      <use token="POINT_SIZE_ARRAY_OES" />
     </enum>
-    
+    <enum name="BeginMode">
+      <token name="POINTS" value="0x0000" />
+      <token name="LINES" value="0x0001" />
+      <token name="LINE_LOOP" value="0x0002" />
+      <token name="LINE_STRIP" value="0x0003" />
+      <token name="TRIANGLES" value="0x0004" />
+      <token name="TRIANGLE_STRIP" value="0x0005" />
+      <token name="TRIANGLE_FAN" value="0x0006" />
+    </enum>
+    <enum name="BufferTarget">
+      <token name="ARRAY_BUFFER" value="0x8892" />
+      <token name="ELEMENT_ARRAY_BUFFER" value="0x8893" />
+    </enum>
+    <enum name="BufferUsage">
+      <reuse enum="BufferUsageHint" />
+    </enum>
+    <enum name="BufferUsageHint">
+      <token name="DYNAMIC_DRAW" value="0x88e8" />
+      <token name="STATIC_DRAW" value="0x88e4" />
+      <token name="STREAM_DRAW" value="0x88e0" />
+    </enum>
+    <enum name="BufferParameterName">
+      <token name="BUFFER_SIZE" value="0x8764" />
+      <token name="BUFFER_USAGE" value="0x8765" />
+    </enum>
+    <enum name="DrawElementsType">
+      <token name="UNSIGNED_BYTE" value="0x1401" />
+      <token name="UNSIGNED_SHORT" value="0x1403" />
+    </enum>
+    <enum name="DataType">
+      <use token="BYTE" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="SHORT" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="FLOAT" />
+      <use token="FIXED" />
+    </enum>
+    <enum name="EnableCap">
+      <token name="RESCALE_NORMAL" value="0x803A" />
+      <token name="MULTISAMPLE" value="0x809D" />
+      <token name="SAMPLE_ALPHA_TO_COVERAGE" value="0x809E" />
+      <token name="SAMPLE_ALPHA_TO_ONE" value="0x809F" />
+      <token name="SAMPLE_COVERAGE" value="0x80A0" />
+    </enum>
+    <enum name="GetPName">
+      <use token="VERTEX_ARRAY_POINTER" />
+      <use token="NORMAL_ARRAY_POINTER" />
+      <use token="COLOR_ARRAY_POINTER" />
+      <use token="TEXTURE_COORD_ARRAY_POINTER" />
+      <use token="SAMPLE_BUFFERS" />
+      <use token="SAMPLES" />
+      <use token="SAMPLE_COVERAGE_VALUE" />
+      <use token="SAMPLE_COVERAGE_INVERT" />
+      <use token="POINT_SIZE_MIN" />
+      <use token="POINT_SIZE_MAX" />
+      <use token="POINT_FADE_THRESHOLD_SIZE" />
+      <use token="POINT_DISTANCE_ATTENUATION" />
+      <use token="MAX_TEXTURE_UNITS" />
+    </enum>
+    <enum name="GetTextureParameterName">
+      <reuse enum="TextureParameterName" />
+    </enum>
+    <enum name="GetTextureParameter">
+      <use token="NUM_COMPRESSED_TEXTURE_FORMATS" />
+      <use token="COMPRESSED_TEXTURE_FORMATS" />
+      <use token="IMPLEMENTATION_COLOR_READ_TYPE_OES" />
+      <use token="IMPLEMENTATION_COLOR_READ_FORMAT_OES" />
+    </enum>
+    <enum name="PixelType">
+      <use token="UNSIGNED_SHORT_565" />
+    </enum>
+    <enum name="PrimitiveType">
+      <reuse enum="BeginMode" />
+    </enum>
+    <enum name="TextureParameterName">
+      <use token="TEXTURE_MAG_FILTER" />
+      <use token="TEXTURE_MIN_FILTER" />
+      <use token="TEXTURE_WRAP_S" />
+      <use token="TEXTURE_WRAP_T" />
+    </enum>
+
     <!-- Enums from old ESCL parser -->
     <!-- Required for OpenTK 1.0 compatibility -->
     <enum name="Amdcompressed3Dctexture">
@@ -4960,6 +5078,19 @@
       <token name="STATIC_DRAW" value="0x88E4" />
       <token name="TEXTURE_COORD_ARRAY_BUFFER_BINDING" value="0x889A" />
       <token name="VERTEX_ARRAY_BUFFER_BINDING" value="0x8896" />
+    </enum>
+    <enum name="Extensions" obsolete="This enumeration is obsolete">
+      <token name="OES_compressed_paletted_texture" value="1" />
+      <token name="OES_read_format" value="1" />
+      <token name="OES_VERSION_1_0" value="1" />
+      <token name="OES_byte_coordinates" value="1" />
+      <token name="OES_draw_texture" value="1" />
+      <token name="OES_fixed_point" value="1" />
+      <token name="OES_matrix_get" value="1" />
+      <token name="OES_point_size_array" value="1" />
+      <token name="OES_single_precision" value="1" />
+      <token name="OES_matrix_palette" value="1" />
+      <token name="OES_matrix_palette" value="1" />
     </enum>
     <enum name="EXTTextureFilterAnisotropic">
       <token name="EXT_texture_filter_anisotropic" value="1" />
@@ -5002,6 +5133,10 @@
       <token name="CLIP_PLANE5_IMG" value="0x3005" />
       <token name="IMG_user_clip_plane" value="1" />
       <token name="MAX_CLIP_PLANES_IMG" value="0x0D32" />
+    </enum>
+    <enum name="LegacyCoreVersions">
+      <token name="OES_VERSION_1_0" value="1" />
+      <token name="OES_VERSION_1_1" value="1" />
     </enum>
     <enum name="NVFence">
       <token name="ALL_COMPLETED_NV" value="0x84F2" />
@@ -5225,6 +5360,18 @@
       <token name="VERSION_ES_CM_1_0" value="1" />
       <token name="VERSION_ES_CM_1_1" value="1" />
     </enum>
+    <enum name="PixelInternalFormat" obsolete="This enumeration is obsolete">
+      <token name="PALETTE4_R5_G6_B5_OES" value="0x8B92" />
+      <token name="PALETTE4_RGB5_A1_OES" value="0x8B94" />
+      <token name="PALETTE4_RGB8_OES" value="0x8B90" />
+      <token name="PALETTE4_RGBA4_OES" value="0x8B93" />
+      <token name="PALETTE4_RGBA8_OES" value="0x8B91" />
+      <token name="PALETTE8_R5_G6_B5_OES" value="0x8B97" />
+      <token name="PALETTE8_RGB5_A1_OES" value="0x8B99" />
+      <token name="PALETTE8_RGB8_OES" value="0x8B95" />
+      <token name="PALETTE8_RGBA4_OES" value="0x8B98" />
+      <token name="PALETTE8_RGBA8_OES" value="0x8B96" />
+    </enum>
     <enum name="QcomdriverControl">
       <token name="QCOM_driver_control" value="1" />
     </enum>
@@ -5294,6 +5441,125 @@
       <token name="TEXTURE7" value="0x84C7" />
       <token name="TEXTURE8" value="0x84C8" />
       <token name="TEXTURE9" value="0x84C9" />
+    </enum>
+    <enum name="Unknown" obsolete="This enumeration is not supported">
+      <use token="IMG_TEXTURE_FORMAT_BGRA8888" />
+      <use token="INVALID_FRAMEBUFFER_OPERATION_OES" />
+      <use token="UNSIGNED_INT_OES" />
+      <use token="COLOR_EXT" />
+      <use token="DEPTH_EXT" />
+      <use token="STENCIL_EXT" />
+      <use token="FUNC_ADD_OES" />
+      <use token="MIN_EXT" />
+      <use token="MAX_EXT" />
+      <use token="BLEND_EQUATION_OES" />
+      <use token="BLEND_EQUATION_RGB_OES" />
+      <use token="FUNC_SUBTRACT_OES" />
+      <use token="FUNC_REVERSE_SUBTRACT_OES" />
+      <use token="RGB8_OES" />
+      <use token="RGBA4_OES" />
+      <use token="RGB5_A1_OES" />
+      <use token="RGBA8_OES" />
+      <use token="BLEND_DST_RGB_OES" />
+      <use token="BLEND_SRC_RGB_OES" />
+      <use token="BLEND_DST_ALPHA_OES" />
+      <use token="BLEND_SRC_ALPHA_OES" />
+      <use token="BGRA" />
+      <use token="BGRA_EXT" />
+      <use token="BGRA_IMG" />
+      <use token="TEXTURE_MAX_LEVEL_APPLE" />
+      <use token="DEPTH_COMPONENT16_OES" />
+      <use token="DEPTH_COMPONENT24_OES" />
+      <use token="UNSIGNED_SHORT4444_REV" />
+      <use token="UNSIGNED_SHORT4444_REV_EXT" />
+      <use token="UNSIGNED_SHORT4444_REV_IMG" />
+      <use token="UNSIGNED_SHORT1555_REV_EXT" />
+      <use token="MIRRORED_REPEAT_OES" />
+      <use token="MAX_RENDERBUFFER_SIZE_OES" />
+      <use token="DEPTH_STENCIL_OES" />
+      <use token="UNSIGNED_INT248_OES" />
+      <use token="MAX_TEXTURE_LOD_BIAS_EXT" />
+      <use token="TEXTURE_MAX_ANISOTROPY_EXT" />
+      <use token="MAX_TEXTURE_MAX_ANISOTROPY_EXT" />
+      <use token="TEXTURE_FILTER_CONTROL_EXT" />
+      <use token="TEXTURE_LOD_BIAS_EXT" />
+      <use token="INCR_WRAP_OES" />
+      <use token="DECR_WRAP_OES" />
+      <use token="VERTEX_ARRAY_BINDING_OES" />
+      <use token="BLEND_EQUATION_ALPHA_OES" />
+      <use token="WRITE_ONLY_OES" />
+      <use token="BUFFER_ACCESS_OES" />
+      <use token="BUFFER_MAPPED_OES" />
+      <use token="BUFFER_MAP_POINTER_OES" />
+      <use token="DEPTH24_STENCIL8_OES" />
+      <use token="COMPRESSED_RGB_PVRTC4_BPPV1_IMG" />
+      <use token="COMPRESSED_RGB_PVRTC2_BPPV1_IMG" />
+      <use token="COMPRESSED_RGBA_PVRTC4_BPPV1_IMG" />
+      <use token="COMPRESSED_RGBA_PVRTC2_BPPV1_IMG" />
+      <use token="DRAW_FRAMEBUFFER_BINDING_APPLE" />
+      <use token="FRAMEBUFFER_BINDING_OES" />
+      <use token="RENDERBUFFER_BINDING_OES" />
+      <use token="READ_FRAMEBUFFER_APPLE" />
+      <use token="DRAW_FRAMEBUFFER_APPLE" />
+      <use token="READ_FRAMEBUFFER_BINDING_APPLE" />
+      <use token="RENDERBUFFER_SAMPLES_APPLE" />
+      <use token="FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_OES" />
+      <use token="FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_OES" />
+      <use token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_OES" />
+      <use token="FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_OES" />
+      <use token="FRAMEBUFFER_COMPLETE_OES" />
+      <use token="FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES" />
+      <use token="FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES" />
+      <use token="FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES" />
+      <use token="FRAMEBUFFER_INCOMPLETE_FORMATS_OES" />
+      <use token="FRAMEBUFFER_UNSUPPORTED_OES" />
+      <use token="COLOR_ATTACHMENT0_OES" />
+      <use token="DEPTH_ATTACHMENT_OES" />
+      <use token="STENCIL_ATTACHMENT_OES" />
+      <use token="FRAMEBUFFER_OES" />
+      <use token="RENDERBUFFER_OES" />
+      <use token="RENDERBUFFER_WIDTH_OES" />
+      <use token="RENDERBUFFER_HEIGHT_OES" />
+      <use token="RENDERBUFFER_INTERNAL_FORMAT_OES" />
+      <use token="STENCIL_INDEX8_OES" />
+      <use token="RENDERBUFFER_RED_SIZE_OES" />
+      <use token="RENDERBUFFER_GREEN_SIZE_OES" />
+      <use token="RENDERBUFFER_BLUE_SIZE_OES" />
+      <use token="RENDERBUFFER_ALPHA_SIZE_OES" />
+      <use token="RENDERBUFFER_DEPTH_SIZE_OES" />
+      <use token="RENDERBUFFER_STENCIL_SIZE_OES" />
+      <use token="FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_APPLE" />
+      <use token="MAX_SAMPLES_APPLE" />
+      <use token="RGB565_OES" />
+      <use token="BUFFER_OBJECT_EXT" />
+      <use token="VERTEX_ARRAY_OBJECT_EXT" />
+      <use token="APPLE_FRAMEBUFFER_MULTISAMPLE" />
+      <use token="APPLE_TEXTURE2_D_LIMITED_NPOT" />
+      <use token="APPLE_TEXTURE_FORMAT_BGRA8888" />
+      <use token="APPLE_TEXTURE_MAX_LEVEL" />
+      <use token="EXT_BLEND_MINMAX" />
+      <use token="EXT_DEBUG_LABEL" />
+      <use token="EXT_DEBUG_MARKER" />
+      <use token="EXT_DISCARD_FRAMEBUFFER" />
+      <use token="EXT_READ_FORMAT_BGRA" />
+      <use token="EXT_TEXTURE_FILTER_ANISOTROPIC" />
+      <use token="EXT_TEXTURE_LOD_BIAS" />
+      <use token="IMG_READ_FORMAT" />
+      <use token="IMG_TEXTURE_COMPRESSION_PVRTC" />
+      <use token="OES_BLEND_EQUATION_SEPARATE" />
+      <use token="OES_BLEND_FUNC_SEPARATE" />
+      <use token="OES_BLEND_SUBTRACT" />
+      <use token="OES_DEPTH24" />
+      <use token="OES_ELEMENT_INDEX_UINT" />
+      <use token="OES_FBO_RENDER_MIPMAP" />
+      <use token="OES_FRAMEBUFFER_OBJECT" />
+      <use token="OES_MAPBUFFER" />
+      <use token="OES_PACKED_DEPTH_STENCIL" />
+      <use token="OES_RGB8_RGBA8" />
+      <use token="OES_STENCIL8" />
+      <use token="OES_STENCIL_WRAP" />
+      <use token="OES_TEXTURE_MIRRORED_REPEAT" />
+      <use token="OES_VERTEX_ARRAY_OBJECT" />
     </enum>
 </add>
 
@@ -5449,7 +5715,7 @@
       <param name="bufferMode"><type>TransformFeedbackMode</type></param>
     </function>
 
-	<!-- Shader Queries [6.1.12] -->
+    <!-- Shader Queries [6.1.12] -->
     <function name="GetShader">
       <param name="pname"><type>ShaderParameter</type></param> 
     </function>
@@ -5664,7 +5930,7 @@
     </function>
     <function name="RenderbufferStorage">
       <param name="target"><type>RenderbufferTarget</type></param>
-      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+      <param name="internalformat"><type>RenderbufferStorage</type></param>
     </function>
     <function name="RenderbufferStorageMultisample">
       <param name="target"><type>RenderbufferTarget</type></param>
@@ -5816,7 +6082,10 @@
     </function>
     <function name="ExtGetShaders" extension="QCOM" obsolete="Use out overload instead">
       <param name="numShaders"><count>0</count></param>
-    </function> 
+    </function>
+    <function name="RenderbufferStorage">
+      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+    </function>
   </overload>
 
   <!--  gles2 overloads for backwards compatibility (2.0 only) -->
@@ -6545,6 +6814,12 @@
       <use token="ALPHA" />
     </enum>
 
+    <enum name="FramebufferAttachment">
+      <use token="COLOR_ATTACHMENT0" />
+      <use token="DEPTH_ATTACHMENT" />
+      <use token="STENCIL_ATTACHMENT" />
+    </enum>
+
     <enum name="FramebufferTarget">
       <token name="Framebuffer" value="0X8d40" />
     </enum>
@@ -6567,6 +6842,10 @@
       <token name="Rgb5A1" value="0X8057" />
       <token name="Rgb565" value="0X8d62" />
       <token name="StencilIndex8" value="0X8d48" />
+    </enum>
+
+    <enum name="RenderbufferStorage">
+      <reuse enum="RenderbufferInternalFormat" />
     </enum>
 
     <enum name="RenderbufferParameterName">
@@ -7373,6 +7652,9 @@
       <use token="RENDERBUFFER_STENCIL_SIZE" />
       <use token="RENDERBUFFER_SAMPLES" />
       <use token="RENDERBUFFER_INTERNAL_FORMAT" />
+    </enum>
+    <enum name="RenderbufferStorage">
+      <reuse enum="RenderbufferInternalFormat" />
     </enum>
     <enum name="SamplerParameterName">
       <use token="TEXTURE_WRAP_S" />

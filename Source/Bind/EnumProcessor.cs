@@ -58,7 +58,7 @@ namespace Bind
         public EnumCollection Process(EnumCollection enums, string apiname)
         {
             var nav = new XPathDocument(Overrides).CreateNavigator();
-            enums = ProcessNames(enums, nav, apiname);
+            enums = ProcessEnums(enums, nav, apiname);
             enums = ProcessConstants(enums, nav, apiname);
             return enums;
         }
@@ -84,7 +84,7 @@ namespace Bind
 
         #region Private Members
 
-        EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav, string apiname)
+        EnumCollection ProcessEnums(EnumCollection enums, XPathNavigator nav, string apiname)
         {
             EnumCollection processed_enums = new EnumCollection();
             foreach (var e in enums.Values)
@@ -92,27 +92,29 @@ namespace Bind
                 // Note that we cannot modify a collection while iterating over it,
                 // so we keep a list of modified enums and remove/readd the
                 // modified items to refresh their keys.
-                string name = e.Name;
-                name = ReplaceName(nav, apiname, name);
-                name = TranslateEnumName(name);
-                e.Name = name;
+                ProcessEnum(nav, apiname, e);
                 processed_enums.Add(e.Name, e);
             }
             return processed_enums;
         }
 
-        static string ReplaceName(XPathNavigator nav, string apiname, string name)
+        void ProcessEnum(XPathNavigator nav, string apiname, Enum e)
         {
-            var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, name));
+            var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
             if (enum_override != null)
             {
                 var name_override = enum_override.SelectSingleNode("name");
                 if (name_override != null)
                 {
-                    name = name_override.Value;
+                    e.Name = name_override.Value;
+                }
+                var type_override = enum_override.SelectSingleNode("type");
+                if (type_override != null)
+                {
+                    e.BaseType = type_override.Value;
                 }
             }
-            return name;
+            e.Name = TranslateEnumName(e.Name);
         }
 
         public string TranslateEnumName(string name)

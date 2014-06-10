@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clRetainDevice</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clRetainDevice
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clRetainDevice">
+        <refname>
+            clRetainDevice
+        </refname>
+
+        <refpurpose>
+          Increments the <varname>device</varname> reference count.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>clRetainDevice</function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_device_id</link>
+                    <parameter>device</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+<!-- For each <varlistentry />, place the parameter name in <term /><varname />, then the definition in
+     <listitem /><para />. When refering to anything
+     that has a page in this system, use <citerefentry /><refentrytitle /> to make it a link.
+
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+    </refsect1>
+-->
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Increments the <varname>device</varname> reference count if
+          <varname>device</varname> is a valid sub-device created by a call to
+          <citerefentry><refentrytitle>clCreateSubDevices</refentrytitle></citerefentry>.
+          If <varname>device</varname> is a root level device i.e. a <type>cl_device_id</type>
+          returned by <citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry>,
+          the <varname>device</varname> reference count remains unchanged.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully
+            or the device is a root-level device. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_DEVICE</errorname> if <varname>device</varname> is not a valid
+                sub-device created by a call to
+                <citerefentry><refentrytitle>clCreateSubDevices</refentrytitle></citerefentry>.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate resources required by the
+                OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by
+                the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+
+            <olink uri="clRetainDevice">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateSubDevices</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseDevice</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 5-May-2013 -->
+</refentry>
+

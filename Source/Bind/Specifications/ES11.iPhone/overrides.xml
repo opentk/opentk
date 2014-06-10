@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2013 Xamarin Inc -->
+<signatures>
+
+  <replace>
+    <function name="GetString" extension="Core">
+      <returns>String</returns>
+    </function>
+    <function name="Clear" extension="Core">
+      <param name="mask"><type>ClearBufferMask</type></param>
+    </function>
+  </replace>
+  <add>
+    <enum name="All">
+       <token name="ImgTextureFormatBgra8888" value="0X0001" />
+    </enum>
+    <enum name="Unknown">
+       <token name="ImgTextureFormatBgra8888" value="0X0001" />
+    </enum>
+  </add>
+  
+</signatures>

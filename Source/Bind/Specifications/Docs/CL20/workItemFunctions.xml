@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Work-Item Built-In Functions</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Work-Item Built-In Functions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>Work-Item Built-In Functions</refname>
+        <refpurpose>Click an item in the table below for details about that function.</refpurpose>
+    </refnamediv>
+
+    <refsect1 id="springboard"><title></title>
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colnum="1" colwidth="2*" colname="col1" />
+                <colspec colnum="2" colwidth="8*" colname="col2" />
+                <tbody>
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_work_dim</refentrytitle></citerefentry></entry>
+                        <entry>Number of dimensions in use</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_global_size</refentrytitle></citerefentry></entry>
+                        <entry>Number of global work items</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_global_id</refentrytitle></citerefentry></entry>
+                        <entry>Global work item ID value</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_local_size</refentrytitle></citerefentry></entry>
+                        <entry>Number of local work items</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_enqueued_local_size</refentrytitle></citerefentry></entry>
+                        <entry>
+                            Same as <code>get_local_size(dimindx)</code> if the kernel is executed with a 
+                            uniform work-group size
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_local_id</refentrytitle></citerefentry></entry>
+                        <entry>Local work item ID</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_num_groups</refentrytitle></citerefentry></entry>
+                        <entry>Number of work groups</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_group_id</refentrytitle></citerefentry></entry>
+                        <entry>Work group ID</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_global_offset</refentrytitle></citerefentry></entry>
+                        <entry>Work offset</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_global_linear_id</refentrytitle></citerefentry></entry>
+                        <entry>Work-items 1-dimensional global ID</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_local_linear_id</refentrytitle></citerefentry></entry>
+                        <entry>Work-items 1-dimensional local ID</entry>
+                    </row>
+                </tbody>
+
+            </tgroup>
+        </informaltable>
+
+        <bridgehead>Functions enabled with the cl_khr_subgroups extension</bridgehead>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colnum="1" colwidth="2*" colname="col1" />
+                <colspec colnum="2" colwidth="8*" colname="col2" />
+                <tbody>
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_sub_group_size</refentrytitle></citerefentry></entry>
+                        <entry>Number of work-items in the subgroup</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_max_sub_group_size</refentrytitle></citerefentry></entry>
+                        <entry>Maximum size of a subgroup</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_num_sub_groups</refentrytitle></citerefentry></entry>
+                        <entry>Number of subgroup</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_enqueued_num_sub_groups</refentrytitle></citerefentry></entry>
+                        <entry>Number of enqueued subgroups</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_sub_group_id</refentrytitle></citerefentry></entry>
+                        <entry>The sub-group ID</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_sub_group_local_id</refentrytitle></citerefentry></entry>
+                        <entry>The unique work-item ID within the current subgroup</entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          Built-in work-item functions can be used to query the
+          number of dimensions, the global and local work size specified to
+          <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,
+          and the global and local identifier of each work-item when this
+          kernel is being executed on a device.
+        </para>
+    </refsect1>
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+            <olink uri="workItemFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_subgroups</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Dec-2013, rev. 19 -->
+</refentry>
+

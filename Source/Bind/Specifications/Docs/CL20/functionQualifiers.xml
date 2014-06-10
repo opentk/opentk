@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Function Qualifiers</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Function Qualifiers</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="FunctionQualifiers">
+        <refname>Function Qualifiers</refname>
+
+        <refpurpose>
+            Qualifiers for kernel functions.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__kernel
+kernel
+
+__attribute__((vec_type_hint(&lt;type&gt;)))
+__attribute__((work_group_size_hint(<emphasis>X</emphasis>, <emphasis>Y</emphasis>, <emphasis>Z</emphasis>)))
+__attribute__((reqd_work_group_size(<emphasis>X</emphasis>, <emphasis>Y</emphasis>, <emphasis>Z</emphasis>)))
+__attribute__((nosvm))
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The <function>__kernel</function> (or <function>kernel</function>) qualifier declares a
+          function to be a kernel that can be executed by an application on an OpenCL device(s).
+          The following rules apply to functions that are declared with this qualifier:
+        </para>
+
+        <itemizedlist mark='bullet'>
+            <listitem>
+               <para>
+                 It can be executed on the device only
+               </para>
+            </listitem>
+
+            <listitem>
+               <para>
+                 It can be called by the host
+               </para>
+            </listitem>
+
+            <listitem>
+               <para>
+                 It is just a regular function call if a <function>__kernel</function> function
+                 is called by another kernel function.
+               </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+          Kernel functions with variables declared inside the function with the
+          <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>
+          or <citerefentry><refentrytitle>local</refentrytitle></citerefentry>
+          qualifier can be called by the host using appropriate APIs such as
+          <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>.
+        </para>
+
+        <para>
+          The <function>__kernel</function> and <function>kernel</function> names are reserved
+          for use as functions qualifiers and shall not be used otherwise.
+        </para>
+
+        <bridgehead>Optional Attribute Qualifiers</bridgehead>
+
+        <para>
+          The <function>__kernel</function> qualifier can be used with the keyword <citerefentry
+          href="attribute"><refentrytitle>__attribute__</refentrytitle></citerefentry> to
+          declare additional information about the kernel function as described below.
+        </para>
+
+        <para>
+          The optional <code>__attribute__((vec_type_hint(&lt;type&gt;)))</code>
+          is a hint to the compiler and is intended to be a representation of the computational
+          <emphasis>width</emphasis> of the <function>__kernel</function>, and should serve as the
+          basis for calculating processor bandwidth utilization when the compiler is looking to
+          autovectorize the code.  In the <code>__attribute__((vec_type_hint(&lt;type&gt;)))</code>
+          qualifier &lt;type&gt; is one of the built-in vector types or the constituent scalar
+          element types.  If <code>vec_type_hint (&lt;type&gt;)</code> is not specified, the
+          kernel is assumed to have the <code>__attribute__((vec_type_hint(int)))</code> qualifier.
+        </para>
+
+        <para>
+          Implicit in autovectorization is the assumption that any libraries called from
+          the <function>__kernel</function> must be recompilable at run time to handle cases
+          where the compiler decides to merge or separate workitems. This probably means that
+          such libraries can never be hard coded binaries or that hard coded binaries must be
+          accompanied either by source or some retargetable intermediate representation. This
+          may be a code security question for some.
+        </para>
+
+        <para>
+          For example, where the developer specified a width of <type>float4</type>, the compiler
+          should assume that the computation usually uses up 4 lanes of a float vector, and would
+          decide to merge work-items or possibly even separate one work-item into many threads
+          to better match the hardware capabilities. A conforming implementation is not required
+          to autovectorize code, but shall support the hint. A compiler may autovectorize, even
+          if no hint is provided. If an implementation merges <constant>N</constant> work-items
+          into one thread, it is responsible for correctly handling cases where the number of
+          global or local work-items in any dimension modulo <constant>N</constant> is not zero.
+        </para>
+
+        <para>
+          If for example, a <function>__kernel</function> function is declared with
+          <code>__attribute__(( vec_type_hint (float4)))</code> (meaning that most
+          operations in the <function>__kernel</function> are explicitly vectorized using
+          <type>float4</type>) and the kernel is running using Intel&#174; Advanced Vector
+          Instructions (Intel&#174; AVX) which implements a 8-float-wide vector unit, the
+          autovectorizer might choose to merge two work-items to one thread, running a second
+          work-item in the high half of the 256-bit AVX register.
+        </para>
+
+        <para>
+          As another example, a Power4 machine has two scalar double precision floating-point
+          units with an 6-cycle deep pipe. An autovectorizer for the Power4 machine might choose
+          to interleave six kernels declared with the <code>__attribute__(( vec_type_hint
+          (double2)))</code> qualifier into one hardware thread, to ensure that there is
+          always 12-way parallelism available to saturate the FPUs. It might also choose to
+          merge 4 or 8 work-items (or some other number) if it concludes that these are better
+          choices, due to resource utilization concerns or some preference for divisibility by 2.
+        </para>
+
+        <para>
+          The optional <code>__attribute__((work_group_size_hint(<emphasis>X</emphasis>,
+          <emphasis>Y</emphasis>, <emphasis>Z</emphasis>)))</code> is a hint to the
+          compiler and is intended to specify the work-group size that may be used i.e. value
+          most likely to be specified by the <varname>local_work_size</varname> argument to
+          <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>.
+          For example the <code>__attribute__((work_group_size_hint(1, 1, 1)))</code> is
+          a hint to the compiler that the kernel will most likely be executed with a work-group
+          size of 1.
+        </para>
+
+        <para>
+          The optional <code>__attribute__((reqd_work_group_size(<emphasis>X</emphasis>,
+          <emphasis>Y</emphasis>, <emphasis>Z</emphasis>)))</code> is the work-group
+          size that must be used as the <varname>local_work_size</varname> argument to
+          <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>.  This
+          allows the compiler to optimize the generated code appropriately for this kernel.
+        </para>
+
+        <para>
+          If <varname>Z</varname> is one, the <varname>work_dim</varname> argument to
+          <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+          can be 2 or 3. If <varname>Y</varname> and <varname>Z</varname>
+          are one, the <varname>work_dim</varname> argument to
+          <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+          can be 1, 2 or 3.
+        </para>
+
+        <para>
+            The optional <code>__attribute__((nosvm))</code> 
+            qualifier can be used with a pointer variable to 
+            inform the compiler that the pointer does not 
+            refer to a shared virtual memory region.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+<!--
+    <refsect1 id="notes"><title>Notes</title>
+    </refsect1>
+-->
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+// autovectorize assuming float4 as the
+// basic computation width
+__kernel __attribute__((vec_type_hint(float4)))
+void foo( __global float4 *p ) { .... }
+
+// autovectorize assuming double as the
+// basic computation width
+__kernel __attribute__((vec_type_hint(double)))
+void foo( __global float4 *p ){ .... }
+
+// autovectorize assuming int (default)
+// as the basic computation width
+__kernel
+void foo( __global float4 *p ){ .... }
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="functionQualifiers">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="attribute"><refentrytitle>__attribute__</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>qualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Dec-2013, rev. 19 -->
+</refentry>
+

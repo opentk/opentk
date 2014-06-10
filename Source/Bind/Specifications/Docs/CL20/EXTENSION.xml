@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>EXTENSION</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>EXTENSION</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="EXTENSION">
+        <refname>EXTENSION</refname>
+
+        <refpurpose>
+            A #pragma directive to set the behavior for OpenCL extensions.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION <varname>extension_name</varname> : <varname>behavior</varname>
+#pragma OPENCL EXTENSION all : <varname>behavior</varname>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+      <title>Parameters</title>
+      <variablelist>
+
+        <varlistentry>
+            <term>
+                <varname> <!-- parameter name -->
+                    extension_name
+                </varname>
+            </term>
+
+            <listitem>
+            <para> <!-- parameter description -->
+                The name of the extension. The <varname>extension_name</varname> will have names of
+                the form <function>cl_khr_</function>&lt;<varname>name</varname>&gt; for an extension
+                approved by the OpenCL working group and will have names of the form
+                <function>cl_</function>&lt;<varname>vendor_name</varname>&gt;_&lt;<varname>name</varname>&gt;
+                for vendor extensions. The token <function>all</function> means that the behavior applies
+                to all extensions supported by the compiler. The table below shows the legal values for
+                <varname>extension_name</varname>:
+            </para>
+
+            <informaltable frame="all">
+                <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                    <colspec colname="col1" colnum="1" />
+                    <colspec colname="col2" colnum="2" />
+
+                    <thead>
+                        <row>
+                            <entry>Extension name</entry>
+                            <entry>Description</entry>
+                        </row>
+                    </thead>
+
+                    <tbody>
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_3d_image_writes</refentrytitle></citerefentry></entry>
+                            <entry>Writes to 3D image objects</entry>
+                        </row>
+
+                        <row>
+                            <entry>
+                            <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry></entry>
+                            <entry>Sharing memory objects wth Direct3D 10</entry>
+                        </row>
+
+                        <row>
+                            <entry>
+                            <citerefentry><refentrytitle>cl_khr_d3d11_sharing</refentrytitle></citerefentry></entry>
+                            <entry>Sharing memory objects wth Direct3D 11</entry>
+                        </row>
+
+                        <row>
+                            <entry>
+                            <citerefentry><refentrytitle>cl_khr_dx9_media_sharing</refentrytitle></citerefentry></entry>
+                            <entry>Sharing memory objects wth Direct3D 9</entry>
+                        </row>
+
+                        <row>
+                            <entry>
+                            <citerefentry><refentrytitle>cl_khr_egl_event</refentrytitle></citerefentry></entry>
+                            <entry>Create OpenCL event objects linked to EGL fence sync objects</entry>
+                        </row>
+
+                        <row>
+                            <entry>
+                            <citerefentry><refentrytitle>cl_khr_egl_image</refentrytitle></citerefentry></entry>
+                            <entry>Create derived resources from EGLImages</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry></entry>
+                            <entry>Half-precision floating-point</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry></entry>
+                            <entry>Dobule-precision floating-point</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_gl_depth_images</refentrytitle></citerefentry></entry>
+                            <entry>GL depth or depth-stencil compatibility</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_gl_event</refentrytitle></citerefentry></entry>
+                            <entry>CL event objects from GL sync objects</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_gl_msaa_sharing</refentrytitle></citerefentry></entry>
+                            <entry>GL multi-sampled (MSAA) compatibility</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry></entry>
+                            <entry>OpenGL sharing</entry>
+                        </row>
+
+                        <row>
+                            <entry>
+                            <citerefentry><refentrytitle>cl_khr_icd</refentrytitle></citerefentry></entry>
+                            <entry>Access Khronos OpenCL installable client driver loader (ICD Loader</entry>
+                        </row>
+
+                        <row>
+                            <entry>
+                            <citerefentry><refentrytitle>cl_khr_initialize_memory</refentrytitle></citerefentry></entry>
+                            <entry>Initialize local or private memory</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_int64_base_atomics</refentrytitle></citerefentry></entry>
+                            <entry>64-bit integer base atomic operations</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_int64_extended_atomics</refentrytitle></citerefentry></entry>
+                            <entry>64-bit integer extended atomic operations</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_spir</refentrytitle></citerefentry></entry>
+                            <entry>Standard Portable Intermediate Representation (SPIR) support</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_srgb_image_writes</refentrytitle></citerefentry></entry>
+                            <entry>For writing to sRGB images</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_subgroups</refentrytitle></citerefentry></entry>
+                            <entry>Implementation-controlled subgroups</entry>
+                        </row>
+
+                        <row>
+                            <entry><citerefentry><refentrytitle>cl_khr_terminate_context</refentrytitle></citerefentry></entry>
+                            <entry>Termiate an OpenCL context on a device</entry>
+                        </row>
+
+                        <row>
+                            <entry>cl_apple_gl_sharing</entry>
+                            <entry>MacOS X OpenGL sharing</entry>
+                        </row>
+
+                    </tbody>
+                </tgroup>
+            </informaltable>
+        </listitem>
+      </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        behavior
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        One of the following values:
+                    </para>
+
+                    <informaltable frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colname="col1" colnum="1" />
+                            <colspec colname="col2" colnum="2" />
+
+                            <thead>
+                                <row>
+                                    <entry>behavior</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+
+                            <tbody>
+                                <row>
+                                    <entry>enable</entry>
+                                    <entry>
+                                        Behave as specified by the extension <varname>extension_name</varname>.
+                                        Report an error on the <function>#pragma OPENCL EXTENSION</function> 
+                                        if the <varname>extension_name</varname> is not supported, or if 
+                                        <function>all</function> is specified.
+                                    </entry>
+                                </row>
+
+                                <row>
+                                    <entry>disable</entry>
+                                    <entry>
+                                        Behave (including issuing errors and warnings) as if the extension
+                                        <varname>extension_name</varname> is not part of the language definition.
+                                        If <function>all</function> is specified, then behavior must revert 
+                                        back to that of the non-extended core version of the language 
+                                        being compiled to. Warn on the <function>#pragma OPENCL EXTENSION</function> 
+                                        if the extension <varname>extension_name</varname> is not supported.
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </informaltable>
+                </listitem>
+            </varlistentry>
+
+            <!-- END PARAMETER TABLE  -->
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The <function>#pragma OPENCL EXTENSION</function> directive is a simple, low-level
+          mechanism to set the behavior for each extension. It does not define policies such
+          as which combinations are appropriate; those must be defined elsewhere. The order of
+          directives matter in setting the behavior for each extension. Directives that occur
+          later override those seen earlier. The <function>all</function> variant sets the
+          behavior for all extensions, overriding all previously issued extension directives,
+          but only if the <varname>behavior</varname> is set to <function>disable</function>.
+        </para>
+
+        <para>
+          The initial state of the compiler is as if the directive <function>#pragma OPENCL
+          EXTENSION all : disable</function> was issued, telling the compiler that all error and
+          warning reporting must be done according to this specification, ignoring any extensions.
+        </para>
+
+        <para>
+          Every extension which affects the OpenCL language semantics, syntax or adds built-in
+          functions to the language must create a preprocessor  <code>#define</code> that
+          matches the extension name string. This <code>#define</code> would be available in
+          the language if and only if the extension is supported on a given implementation.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          This document describes the list of optional features supported by OpenCL 2.0.
+          Optional extensions may be supported by some OpenCL devices.  Optional extensions are
+          not required to be supported by a conformant OpenCL implementation, but are expected
+          to be widely available; they define functionality that is likely to move into the
+          required feature set in a future revision of the OpenCL specification
+        </para>
+
+        <para>
+          OpenCL extensions approved by the OpenCL working group can be promoted to required core
+          features in later revisions of OpenCL. When this occurs, the extension specifications
+          are merged into the core specification. Functions and enumerants that are part of
+          such promoted extensions will have the <code>KHR</code> affix removed. OpenCL implementations of
+          such later revisions must also export the name strings of promoted extensions in the
+          <constant>CL_PLATFORM_EXTENSIONS</constant> or <constant>CL_DEVICE_EXTENSIONS</constant>
+          string, and support the KHR-affixed versions of functions and enumerants as a
+          transition aid.
+        </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+          An extension which adds the extension string "cl_khr_3d_image_writes" should also add a
+          preprocessor <code>#define</code> called <constant>cl_khr_3d_image_writes</constant>. A
+          kernel can now use this preprocessor <code>#define</code> to do something like the
+          following:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#ifdef cl_khr_3d_image_writes
+      // do something using the extension
+#else
+      // do something else or #error!
+#endif
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="EXTENSION">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetExtensionFunctionAddressForPlatform</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 20-Dec-2013, rev. 19 -->
+</refentry>
+

@@ -146,3 +146,5 @@ UpgradeLog*.XML
 # SQL Server files
 App_Data/*.mdf
 App_Data/*.ldf
+
+*.userprefs

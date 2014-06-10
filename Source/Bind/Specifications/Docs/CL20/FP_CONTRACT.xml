@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<!-- perhaps separate this page into two pages? One for FP_CONTRACT and one
+     for FP_FAST_FMA*. 
+-->
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>FP_CONTRACT, FP_FAST_FMAF, FP_FAST_FMA_HALF</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>FP_CONTRACT, FP_FAST_FMAF, FP_FAST_FMA_HALF</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="FP_CONTRACT">
+        <refname>FP_CONTRACT, FP_FAST_FMAF, FP_FAST_FMA_HALF</refname>
+
+        <refpurpose>
+Control expression contraction; fast fma()
+        </refpurpose>
+    </refnamediv>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry><literallayout>
+#pragma OPENCL FP_CONTRACT <varname>on-off-switch</varname>
+
+<varname>on-off-switch</varname> is one of:
+     ON, OFF or DEFAULT.
+     The DEFAULT value is ON.
+
+FP_FAST_FMAF
+FP_FAST_FMA
+FP_FAST_FMA_HALF        </literallayout>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+
+<!-- ================================ DESCRIPTION  -->
+<!-- Use <function /> to refer ONLY to the function that this page describes. All other functions should use
+-->
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="fpcontract"><title>FP_CONTRACT</title>
+        <para>
+          The <function>FP_CONTRACT</function> pragma takes the form:
+        </para>
+
+        <para>
+          <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+              <colspec colname="col1" colnum="1" /> <tbody>
+                <row>
+                  <entry>
+#pragma OPENCL FP_CONTRACT on-off-switch
+                  </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </para>
+
+        <para>
+          <function>FP_CONTRACT</function> can be used to allow (if the state is
+          <constant>on</constant>) or disallow (if the state is <constant>off</constant>)
+          the implementation to contract expressions. Each pragma can occur either outside
+          external declarations or preceding all explicit declarations and statements inside
+          a compound statement.
+        </para>
+
+        <para>
+          The parameter <varname>on-off-switch</varname> is one of ON, OFF or DEFAULT. The
+          DEFAULT value is ON.
+        </para>
+
+        <para>
+          When outside external declarations, the pragma takes effect from its occurrence until
+          another <function>FP_CONTRACT</function> pragma is encountered, or until the end of
+          the translation unit. When inside a compound statement, the pragma takes effect from
+          its occurrence until another <function>FP_CONTRACT</function> pragma is encountered
+          (including within a nested compound statement), or until the end of the compound
+          statement; at the end of a compound statement the state for the pragma is restored
+          to its condition just before the compound statement. If this pragma is used in any
+          other context, the behavior is undefined.
+        </para>
+    </refsect1>
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="fpfastfma">
+        <title>FP_FAST_FMAF, FP_FAST_FMA, and FP_FAST_FMA_HALF</title>
+        <para>
+          The <constant>FP_FAST_FMAF</constant> macro indicates whether the
+          <citerefentry><refentrytitle>fma</refentrytitle></citerefentry> function
+          is fast compared with direct code for single precision floating-point. If
+          defined, the <constant>FP_FAST_FMAF</constant> macro shall indicate that the
+          <citerefentry><refentrytitle>fma</refentrytitle></citerefentry>() function generally
+          executes about as fast as, or faster than, a multiply and an add of float operands.
+        </para>
+
+        <para>
+          The <constant>FP_FAST_FMA</constant> macro indicates whether the
+          <citerefentry><refentrytitle>fma</refentrytitle></citerefentry> family of functions
+          are fast compared with direct code for double precision floating-point. If
+          defined, the <constant>FP_FAST_FMA</constant> macro shall indicate that the
+          <citerefentry><refentrytitle>fma</refentrytitle></citerefentry>() function generally
+          executes about as fast as, or faster than, a multiply and an add of double operands.
+        </para>
+
+        <para>
+          The <constant>FP_FAST_FMA_HALF</constant> macro indicates whether the
+          <citerefentry><refentrytitle>fma</refentrytitle></citerefentry>() family of
+          functions are fast compared with direct code for half precision floating-point. If
+          defined, the <constant>FP_FAST_FMA_HALF</constant> macro shall indicate that the
+          <citerefentry><refentrytitle>fma</refentrytitle></citerefentry>() function generally
+          executes about as fast as, or faster than, a multiply and an add of half operands
+        </para>
+</refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="FP_CONTRACT">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="mathFunctions"><refentrytitle>Math Functions</refentrytitle></citerefentry>,
+            <citerefentry href="mathConstants"><refentrytitle>Symbolic Math Constants</refentrytitle></citerefentry>,
+            <citerefentry href="macroLimits"><refentrytitle>Macros and Limits</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-May-2013 -->
+</refentry>
+

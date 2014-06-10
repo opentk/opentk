@@ -1,0 +1,64 @@
+
+    <para>
+      General information about sharing memory objects with Direct3D 10 follows.
+    </para>
+
+    <!-- section 9.8.1 Overview -->
+    <para>
+        The goal of this extension is to provide interoperability between
+        OpenCL and Direct3D 10. This is designed to function analogously
+        to the <citerefentry href="cl_khr_gl_sharing"><refentrytitle>OpenGL
+        interoperability</refentrytitle></citerefentry> as defined in sections 9.7 and 9.8. If
+        this extension is supported by an implementation, the string "cl_khr_d3d10_sharing"
+        will be present in the <constant>CL_PLATFORM_EXTENSIONS</constant>
+        (see <citerefentry><refentrytitle>clGetPlatformInfo</refentrytitle></citerefentry>)
+        or <constant>CL_DEVICE_EXTENSIONS</constant> 
+        (see <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>).
+    </para>
+
+    <para>
+        As currently proposed the interfaces for this extension would be provided in
+        <code>cl_d3d10.h</code>.
+    </para>
+
+    <para>
+        <!-- 9.8.7 Sharing Memory Objects with Direct3D 10 -->
+        The OpenCL functions enabled by the <function>cl_khr_d3d10_sharing</function> extension
+        allow applications to use Direct3D 10 resources as OpenCL memory objects. This allows
+        efficient sharing of data between OpenCL and Direct3D 10. The OpenCL API may be used
+        to execute kernels that read and/or write memory objects that are also Direct3D 10
+        resources. An OpenCL image object may be created from a Direct3D 10 texture resource. An
+        OpenCL buffer object may be created from a Direct3D 10 buffer resource. OpenCL memory
+        objects may be created from Direct3D 10 objects if and only if the OpenCL context
+        has been created from a Direct3D 10 device.
+    </para>
+
+    <!-- 9.8.7.2 Lifetime of Shared Objects -->
+    <bridgehead>Lifetime of Shared [D3D10] Objects</bridgehead>
+
+    <para>
+        An OpenCL memory object created from a Direct3D 10 resource remains valid as long as the 
+        corresponding Direct3D 10 resource has not been deleted. If the Direct3D 10 resource is deleted 
+        through the Direct3D 10 API, subsequent use of the OpenCL memory object will result in 
+        undefined behavior, including but not limited to possible OpenCL errors, data corruption, and 
+        program termination.
+    </para>
+
+    <para>
+        The successful creation of a cl_context against a Direct3D 10 device specified via the context 
+        create parameter <constant>CL_CONTEXT_D3D10_DEVICE_KHR</constant> will increment the internal Direct3D 
+        reference count on the specified Direct3D 10 device. The internal Direct3D reference count on 
+        that Direct3D 10 device will be decremented when the OpenCL reference count on the returned 
+        OpenCL context drops to zero.
+    </para>
+
+    <para>
+        The OpenCL context and corresponding command-queues are dependent on the existence of the 
+        Direct3D 10 device from which the OpenCL context was created. If the Direct3D 10 device is 
+        deleted through the Direct3D 10 API, subsequent use of the OpenCL context will result in 
+        undefined behavior, including but not limited to possible OpenCL errors, data corruption, and 
+        program termination.
+    </para>
+
+<!-- 25-Dec-2013, rev. 19 -->
+

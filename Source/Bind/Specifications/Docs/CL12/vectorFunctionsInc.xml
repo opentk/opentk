@@ -1,0 +1,36 @@
+        <para>
+          <!-- core spec. p. 265, section 6.12.7 --> Vector Data Load and Store Functions allow
+          you to read and write vector types from a pointer to memory.
+        </para>
+
+        <para>
+          The generic type <type>gentype</type> is used to indicate the built-in data types
+          <type>char</type>, <type>uchar</type>, <type>short</type>, <type>ushort</type>,
+          <type>int</type>, <type>uint</type>, <type>long</type>, <type>ulong</type>,
+          <type>float</type>, or <type>double</type>.
+        </para>
+
+        <para>
+          The generic type name <type>gentype<replaceable>n</replaceable></type>
+          represents <replaceable>n</replaceable>-element vectors of <type>gentype</type>
+          elements. The suffix <replaceable>n</replaceable> is also used in the
+          function names (i.e.  <function>vload<replaceable>n</replaceable></function>,
+          <function>vstore<replaceable>n</replaceable></function>, etc.), where
+          <replaceable>n</replaceable> = 2, 3, 4, 8, or 16.
+        </para>
+
+        <para>
+          <!-- core spec p. 271, section 6.12.7, re Table 6.15 --> The results of vector data
+          load and store functions are undefined if the address being read from or written to is
+          not correctly aligned. The pointer argument <varname>p</varname> can be a pointer to
+          <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>,
+          <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>, or
+          <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry>
+          memory for store functions. The pointer argument
+          <varname>p</varname> can be a pointer to __global, __local, <citerefentry
+          href="constant"><refentrytitle>__constant</refentrytitle></citerefentry> or __private
+          memory for load functions.
+        </para>
+
+<!-- 12-Oct-2011 -->
+

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>enqueue_marker</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>enqueue_marker</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="enqueue_marker">
+        <refname>enqueue_marker</refname>
+
+        <refpurpose>
+            Enqueue a marker command to <varname>queue</varname>.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        enqueue_marker
+                    </function>
+                </funcdef>
+            <paramdef>
+                <link xlink:href="otherDataTypes.html">queue_t</link>
+                <parameter>queue</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="scalarDataTypes.html">uint</link>
+                <parameter>num_events_in_wait_list</parameter>
+            </paramdef>
+            <paramdef>
+                const <link xlink:href="otherDataTypes.html">clk_event_t</link>
+                *<parameter>event_wait_list</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="otherDataTypes.html">clk_event_t</link>
+                *<parameter>event_ret</parameter>
+            </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            Enqueue a marker command to <varname>queue</varname>. 
+            The marker command waits for a list of
+            events to complete, or if the list is 
+            empty it waits for all previously enqueued
+            commands in <varname>queue</varname> 
+            to complete before the marker completes.
+        </para>
+
+        <para>
+            <varname>event_ret</varname> must not be NULL as otherwise this is a no-op.
+        </para>
+
+        <para>
+            If an event is returned, <function>enqueue_marker</function>
+            performs an implicit retain on the returned event.
+        </para>
+    </refsect1>
+
+<!--================================ NOTES  
+
+    <refsect1 id="notes"><title>Notes</title>
+
+
+    </refsect1>-->
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <function>enqueue_marker</function> returns <errorname>CL_SUCCESS</errorname> if the
+            marked command is enqueued successfully and returns <errorname>CL_ENQUEUE_FAILURE</errorname>
+            otherwise. If the <code>–g</code> compile option is specified in compiler options passed to 
+            <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>, the following
+            errors may be returned instead of <errorname>CL_ENQUEUE_FAILURE</errorname> to indicate 
+            why <citerefentry><refentrytitle>enqueue_marker</refentrytitle></citerefentry> 
+            failed to enqueue the marker command:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CLK_INVALID_QUEUE</errorname> if <varname>queue</varname> is not
+                a valid device queue.
+            </listitem>
+
+            <listitem>
+                <errorname>CLK_INVALID_EVENT_WAIT_LIST</errorname> if <varname>event_wait_list</varname>
+                is NULL and <varname>num_events_in_wait_list</varname> is greater than zero, or if
+                <varname>event_wait_list</varname> is not NULL and 
+                <varname>num_events_in_wait_list</varname> is zero, 
+                or if event objects in <varname>event_wait_list</varname> are not valid events.
+            </listitem>
+
+            <listitem>
+                <errorname>CLK_DEVICE_QUEUE_FULL</errorname> if <varname>queue</varname> is full.
+            </listitem>
+
+            <listitem>
+                <errorname>CLK_EVENT_ALLOCATION_FAILURE</errorname> if 
+                <varname>event_ret</varname> is not NULL and an event could not be allocated.
+            </listitem>
+
+            <listitem>
+                <errorname>CLK_OUT_OF_RESOURCES</errorname>
+                if there is a failure to queue the block in <varname>queue</varname> because of
+                insufficient resources needed to execute the kernel.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="enqueue_marker">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="eventFunctions"><refentrytitle>Event Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>-->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 20-Dec-2013, rev. 19 -->
+</refentry>
+

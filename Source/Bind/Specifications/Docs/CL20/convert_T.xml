@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Explicit conversions with convert_T()</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Explicit conversions with convert_T()</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="convert_T">
+        <refname>Explicit conversions with convert_T()</refname>
+
+        <refpurpose>
+            Explicit type conversions using convert_<varname>T</varname>()
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+convert_<replaceable>destType</replaceable>(<replaceable>sourceType</replaceable>)
+<replaceable>destType</replaceable> convert_<replaceable>destType</replaceable>&lt;_sat&gt;&lt;<replaceable>roundingMode</replaceable>&gt; (<replaceable>sourceType</replaceable>)
+<replaceable>destTypen</replaceable> convert_<replaceable>destTypen</replaceable>&lt;_sat&gt;&lt;<replaceable>roundingMode</replaceable>&gt; (<replaceable>sourceType</replaceable>)
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          Explicit conversions may be performed using the <code>convert_destType(sourceType)</code>
+          suite of functions.  These provide a full set of type conversions between
+          supported types (see <citerefentry href="scalarDataTypes"><refentrytitle>Scalar Data
+          Types</refentrytitle></citerefentry>)<!--section 6.1.1--> except for the following types:
+          <type>bool</type>, <type>half</type>, <type>size_t</type>, <type>ptrdiff_t</type>,
+          <type>intptr_t</type>, <type>uintptr_t</type>, and  <type>void</type>.
+        </para>
+
+        <para>
+           The number of elements in the source and destination vectors must match.
+        </para>
+
+        <para>
+          The behavior of the conversion may be modified by one or two optional modifiers that
+          specify saturation for out-of-range inputs and rounding behavior.
+        </para>
+
+        <para>
+          The full form of the scalar convert function is:
+          <literallayout>          <code><replaceable>destType</replaceable>
+          convert_<replaceable>destType</replaceable>&lt;_sat&gt;&lt;<replaceable>_roundingMode</replaceable>&gt;(<replaceable>sourceType</replaceable>)</code></literallayout>
+        </para>
+
+        <para>
+          The full form of the vector convert function is:
+          <literallayout>          <code><replaceable>destTypen</replaceable>
+          convert_<replaceable>destTypen</replaceable>&lt;_sat&gt;&lt;<replaceable>_roundingMode</replaceable>&gt;(<replaceable>sourceTypen</replaceable>)</code></literallayout>
+        </para>
+
+        <bridgehead>Data Types</bridgehead>
+
+        <para>
+          Conversions are available for the following scalar types:  <type>char</type>,
+          <type>uchar</type>, <type>short</type>, <type>ushort</type>, <type>int</type>,
+          <type>uint</type>, <type>long</type>, <type>ulong</type>, <type>float</type>, and
+          built-in vector types derived therefrom. The operand and result type must have the
+          same number of elements. The operand and result type may be the same type in which
+          case the conversion has no effect on the type or value of an expression.
+        </para>
+
+        <para>
+          Conversions between integer types follow the conversion rules specified in sections
+          6.3.1.1 and 6.3.1.3 of the C99 specification except for out-of-range behavior and
+          saturated conversions which are described in section 6.2.3.3 below.
+        </para>
+
+        <bridgehead>Rounding Modes</bridgehead>
+
+        <para>
+          Conversions to and from floating-point type shall conform to IEEE-754 rounding rules.
+          Conversions may have an optional rounding mode modifier described in the table below.
+        </para>
+
+        <para>
+            <informaltable frame="all">
+                <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                    <colspec colname="col1" colnum="1" />
+                    <colspec colname="col2" colnum="2" />
+
+                    <thead>
+                        <row>
+                            <entry>Modifier</entry>
+                            <entry>Rounding Mode Description</entry>
+                        </row>
+                    </thead>
+
+                    <tbody>
+                        <row>
+                            <entry><para><code>_rte</code></para></entry>
+                            <entry><para>Round to nearest even</para></entry>
+                        </row>
+
+                        <row>
+                            <entry><para><code>_rtz</code></para></entry>
+                            <entry><para>Round towards zero</para></entry>
+                        </row>
+
+                        <row>
+                            <entry><para><code>_rtp</code></para></entry>
+                            <entry><para>Round toward positive infinity</para></entry>
+                        </row>
+
+                        <row>
+                            <entry><para><code>_rtn</code></para></entry>
+                            <entry><para>Round toward negative infinity</para></entry>
+                        </row>
+
+                        <row>
+                            <entry><para>no modifier specified</para></entry>
+                            <entry>
+                                <para>
+                                  Use the default rounding mode for this destination type,
+                                  <code>_rtz</code> for conversion to integers or the default
+                                  rounding mode for conversion to floating-point types.
+                                </para>
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </informaltable>
+        </para>
+
+        <para>
+          By default, conversions to integer type use the <code>_rtz</code> (round toward zero)
+          rounding mode and conversions to floating-point type use the default rounding mode. The
+          only default floating-point rounding mode supported is round to nearest even, i.e
+          the default rounding mode will be <code>_rte</code> for floating-point types.
+        </para>
+
+        <para>
+          For conversions to floating-point format, when a finite source value exceeds the
+          maximum representable finite floating-point destination value, the rounding mode will
+          affect whether the result is the maximum finite floating point value or infinity of
+          same sign as the source value, per IEEE-754 rules for rounding.
+        </para>
+
+        <para>
+            <bridgehead>Out-of-Range Behavior and Saturated Conversions</bridgehead>
+        </para>
+
+        <para>
+          When the conversion operand is either greater than the greatest representable
+          destination value or less than the least representable destination value, it is
+          said to be out-of-range. The result of out-of-range conversion is determined by the
+          conversion rules specified by the C99 specification in section 6.3.  When converting
+          from a floating-point type to integer type, the behavior is implementation-defined.
+        </para>
+
+        <para>
+          Conversions to integer type may opt to convert using the optional saturated mode by
+          appending the <code>_sat</code> modifier to the conversion function name. When in
+          saturated mode, values that are outside the representable range shall clamp to the
+          nearest representable value in the destination format. (NaN should be converted to 0).
+        </para>
+
+        <para>
+          Conversions to floating-point type shall conform to IEEE-754 rounding rules. The
+          <code>_sat</code> modifier may not be used for conversions to floating-point formats.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+<!--
+    <refsect1 id="notes"><title>Notes</title>
+    </refsect1>
+-->
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example0">
+        <title>
+Examples
+        </title>
+
+        <para>
+          In the following example, <function>convert_int4</function> converts a
+          <type>uchar4</type> vector <code>u</code> to an <type>int4</type> vector <code>c</code>:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+uchar4 u;
+int4   c = convert_int4(u);
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          In the following example, <function>convert_int</function> converts a float scalar
+          <code>f</code> to an int scalar <code>i</code>:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+float   f;
+int    i = convert_int(f);
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+    <refsect2 id="example1">
+        <title>
+        </title>
+
+        <para>
+            Example:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+short4  s;
+
+// negative values clamped to 0
+ushort4 u = convert_ushort4_sat( s );
+
+// values &gt; CHAR_MAX converted to CHAR_MAX
+// values &lt; CHAR_MIN converted to CHAR_MIN
+char4 c = convert_char4_sat( s );
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+    <refsect2 id="example2">
+        <title>
+        </title>
+
+        <para>
+            Example:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+float4 f;
+
+// values implementation defined for
+// f &gt; INT_MAX, f &lt; INT_MIN or NaN
+int4   i = convert_int4( f );
+
+// values &gt; INT_MAX clamp to INT_MAX, values &lt; INT_MIN clamp
+// to INT_MIN. NaN should produce 0.
+
+// The _rtz rounding mode is
+// used to produce the integer values.
+int4   i2 = convert_int4_sat( f );
+
+// similar to convert_int4, except that
+// floating-point values are rounded to the nearest
+// integer instead of truncated
+int4   i3 = convert_int4_rte( f );
+
+// similar to convert_int4_sat, except that
+// floating-point values are rounded to the
+// nearest integer instead of truncated
+int4   i4 = convert_int4_sat_rte( f );
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+    <refsect2 id="example3">
+        <title>
+        </title>
+
+        <para>
+            Example:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+int4   i;
+
+// convert ints to floats using the default rounding mode.
+float4 f = convert_float4( i );
+
+// convert ints to floats. integer values that cannot
+// be exactly represented as floats should round up to the
+// next representable float.
+float4 f = convert_float4_rtp( i );
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="convert_T">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="scalarDataTypes"><refentrytitle>Scalar Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="vectorDataTypes"><refentrytitle>Vector Data Types</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 7-Jun-2013 -->
+</refentry>
+

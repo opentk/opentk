@@ -1,6 +1,7 @@
 #region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
+Copyright 2013 Xamarin Inc
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -322,7 +323,7 @@ namespace OpenTK
         /// </summary>
         public void Invert()
         {
-            this = Matrix4.Invert(this);
+            Invert(ref this);
         }
 
         #endregion
@@ -695,9 +696,7 @@ namespace OpenTK
         public static void CreateTranslation(float x, float y, float z, out Matrix4 result)
         {
             result = Identity;
-            result.Row3.X = x;
-            result.Row3.Y = y;
-            result.Row3.Z = z;
+            result.Row3 = new Vector4(x, y, z, 1);
         }
 
         /// <summary>
@@ -708,9 +707,7 @@ namespace OpenTK
         public static void CreateTranslation(ref Vector3 vector, out Matrix4 result)
         {
             result = Identity;
-            result.Row3.X = vector.X;
-            result.Row3.Y = vector.Y;
-            result.Row3.Z = vector.Z;
+            result.Row3 = new Vector4(vector.X, vector.Y, vector.Z, 1);
         }
 
         /// <summary>
@@ -1005,23 +1002,11 @@ namespace OpenTK
             float b = (top + bottom) / (top - bottom);
             float c = -(zFar + zNear) / (zFar - zNear);
             float d = -(2.0f * zFar * zNear) / (zFar - zNear);
-
-            result.Row0.X = x;
-            result.Row0.Y = 0;
-            result.Row0.Z = 0;
-            result.Row0.W = 0;
-            result.Row1.X = 0;
-            result.Row1.Y = y;
-            result.Row1.Z = 0;
-            result.Row1.W = 0;
-            result.Row2.X = a;
-            result.Row2.Y = b;
-            result.Row2.Z = c;
-            result.Row2.W = -1;
-            result.Row3.X = 0;
-            result.Row3.Y = 0;
-            result.Row3.Z = d;
-            result.Row3.W = 0;
+            
+            result = new Matrix4(x, 0, 0,  0,
+                                 0, y, 0,  0,
+                                 a, b, c, -1,
+                                 0, 0, d,  0);
         }
         
         /// <summary>
@@ -1436,137 +1421,86 @@ namespace OpenTK
         /// Calculate the inverse of the given matrix
         /// </summary>
         /// <param name="mat">The matrix to invert</param>
-        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular</param>
-        /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
-        public static void Invert(ref Matrix4 mat, out Matrix4 result)
-        {
-            int[] colIdx = { 0, 0, 0, 0 };
-            int[] rowIdx = { 0, 0, 0, 0 };
-            int[] pivotIdx = { -1, -1, -1, -1 };
-
-            // convert the matrix to an array for easy looping
-            float[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W}, 
-                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W}, 
-                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W}, 
-                                {mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
-            int icol = 0;
-            int irow = 0;
-            for (int i = 0; i < 4; i++)
-            {
-                // Find the largest pivot value
-                float maxPivot = 0.0f;
-                for (int j = 0; j < 4; j++)
-                {
-                    if (pivotIdx[j] != 0)
-                    {
-                        for (int k = 0; k < 4; ++k)
-                        {
-                            if (pivotIdx[k] == -1)
-                            {
-                                float absVal = System.Math.Abs(inverse[j, k]);
-                                if (absVal > maxPivot)
-                                {
-                                    maxPivot = absVal;
-                                    irow = j;
-                                    icol = k;
-                                }
-                            }
-                            else if (pivotIdx[k] > 0)
-                            {
-                                result = mat;
-                                return;
-                            }
-                        }
-                    }
-                }
-
-                ++(pivotIdx[icol]);
-
-                // Swap rows over so pivot is on diagonal
-                if (irow != icol)
-                {
-                    for (int k = 0; k < 4; ++k)
-                    {
-                        float f = inverse[irow, k];
-                        inverse[irow, k] = inverse[icol, k];
-                        inverse[icol, k] = f;
-                    }
-                }
-
-                rowIdx[i] = irow;
-                colIdx[i] = icol;
-
-                float pivot = inverse[icol, icol];
-                // check for singular matrix
-                if (pivot == 0.0f)
-                {
-                    throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
-                }
-
-                // Scale row so it has a unit diagonal
-                float oneOverPivot = 1.0f / pivot;
-                inverse[icol, icol] = 1.0f;
-                for (int k = 0; k < 4; ++k)
-                    inverse[icol, k] *= oneOverPivot;
-
-                // Do elimination of non-diagonal elements
-                for (int j = 0; j < 4; ++j)
-                {
-                    // check this isn't on the diagonal
-                    if (icol != j)
-                    {
-                        float f = inverse[j, icol];
-                        inverse[j, icol] = 0.0f;
-                        for (int k = 0; k < 4; ++k)
-                            inverse[j, k] -= inverse[icol, k] * f;
-                    }
-                }
-            }
-
-            for (int j = 3; j >= 0; --j)
-            {
-                int ir = rowIdx[j];
-                int ic = colIdx[j];
-                for (int k = 0; k < 4; ++k)
-                {
-                    float f = inverse[k, ir];
-                    inverse[k, ir] = inverse[k, ic];
-                    inverse[k, ic] = f;
-                }
-            }
-
-            result.Row0.X = inverse[0, 0];
-            result.Row0.Y = inverse[0, 1];
-            result.Row0.Z = inverse[0, 2];
-            result.Row0.W = inverse[0, 3];
-            result.Row1.X = inverse[1, 0];
-            result.Row1.Y = inverse[1, 1];
-            result.Row1.Z = inverse[1, 2];
-            result.Row1.W = inverse[1, 3];
-            result.Row2.X = inverse[2, 0];
-            result.Row2.Y = inverse[2, 1];
-            result.Row2.Z = inverse[2, 2];
-            result.Row2.W = inverse[2, 3];
-            result.Row3.X = inverse[3, 0];
-            result.Row3.Y = inverse[3, 1];
-            result.Row3.Z = inverse[3, 2];
-            result.Row3.W = inverse[3, 3];
-        }
-
-        /// <summary>
-        /// Calculate the inverse of the given matrix
-        /// </summary>
-        /// <param name="mat">The matrix to invert</param>
         /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static Matrix4 Invert(Matrix4 mat)
         {
-            Matrix4 result;
-            Invert(ref mat, out result);
+            Matrix4 result = new Matrix4();
+            mat.Invert(ref result);
             return result;
         }
 
-        #endregion
+	    public void Invert(ref Matrix4 result)
+	    {
+	        float m41 = Row3.X, m42 = Row3.Y, m43 = Row3.Z, m44 = Row3.W;
+            if (m41 == 0 && m42 == 0 && m43 == 0 && m44 == 1.0f)
+            {
+                InvertAffine(ref result);
+                return;
+            }
+
+            float d = Determinant;
+            if (d == 0.0f)
+                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+
+            float d1 = 1 / d;
+            float m11 = Row0.X, m12 = Row0.Y, m13 = Row0.Z, m14 = Row0.W,
+            m21 = Row1.X, m22 = Row1.Y, m23 = Row1.Z, m24 = Row1.W,
+            m31 = Row2.X, m32 = Row2.Y, m33 = Row2.Z, m34 = Row2.W;
+
+            result.Row0.X = d1 * (m22 * m33 * m44 + m23 * m34 * m42 + m24 * m32 * m43 - m22 * m34 * m43 - m23 * m32 * m44 - m24 * m33 * m42);
+            result.Row0.Y = d1 * (m12 * m34 * m43 + m13 * m32 * m44 + m14 * m33 * m42 - m12 * m33 * m44 - m13 * m34 * m42 - m14 * m32 * m43);
+            result.Row0.Z = d1 * (m12 * m23 * m44 + m13 * m24 * m42 + m14 * m22 * m43 - m12 * m24 * m43 - m13 * m22 * m44 - m14 * m23 * m42);
+            result.Row0.W = d1 * (m12 * m24 * m33 + m13 * m22 * m34 + m14 * m23 * m32 - m12 * m23 * m34 - m13 * m24 * m32 - m14 * m22 * m33);
+            result.Row1.X = d1 * (m21 * m34 * m43 + m23 * m31 * m44 + m24 * m33 * m41 - m21 * m33 * m44 - m23 * m34 * m41 - m24 * m31 * m43);
+            result.Row1.Y = d1 * (m11 * m33 * m44 + m13 * m34 * m41 + m14 * m31 * m43 - m11 * m34 * m43 - m13 * m31 * m44 - m14 * m33 * m41);
+            result.Row1.Z = d1 * (m11 * m24 * m43 + m13 * m21 * m44 + m14 * m23 * m41 - m11 * m23 * m44 - m13 * m24 * m41 - m14 * m21 * m43);
+            result.Row1.W = d1 * (m11 * m23 * m34 + m13 * m24 * m31 + m14 * m21 * m33 - m11 * m24 * m33 - m13 * m21 * m34 - m14 * m23 * m31);
+            result.Row2.X = d1 * (m21 * m32 * m44 + m22 * m34 * m41 + m24 * m31 * m42 - m21 * m34 * m42 - m22 * m31 * m44 - m24 * m32 * m41);
+            result.Row2.Y = d1 * (m11 * m34 * m42 + m12 * m31 * m44 + m14 * m32 * m41 - m11 * m32 * m44 - m12 * m34 * m41 - m14 * m31 * m42);
+            result.Row2.Z = d1 * (m11 * m22 * m44 + m12 * m24 * m41 + m14 * m21 * m42 - m11 * m24 * m42 - m12 * m21 * m44 - m14 * m22 * m41);
+            result.Row2.W = d1 * (m11 * m24 * m32 + m12 * m21 * m34 + m14 * m22 * m31 - m11 * m22 * m34 - m12 * m24 * m31 - m14 * m21 * m32);
+            result.Row3.X = d1 * (m21 * m33 * m42 + m22 * m31 * m43 + m23 * m32 * m41 - m21 * m32 * m43 - m22 * m33 * m41 - m23 * m31 * m42);
+            result.Row3.Y = d1 * (m11 * m32 * m43 + m12 * m33 * m41 + m13 * m31 * m42 - m11 * m33 * m42 - m12 * m31 * m43 - m13 * m32 * m41);
+            result.Row3.Z = d1 * (m11 * m23 * m42 + m12 * m21 * m43 + m13 * m22 * m41 - m11 * m22 * m43 - m12 * m23 * m41 - m13 * m21 * m42);
+            result.Row3.W = d1 * (m11 * m22 * m33 + m12 * m23 * m31 + m13 * m21 * m32 - m11 * m23 * m32 - m12 * m21 * m33 - m13 * m22 * m31);
+        }
+
+        void InvertAffine(ref Matrix4 result)
+        {
+            float m11 = Row0.X, m12 = Row0.Y, m13 = Row0.Z, m14 = Row0.W,
+            m21 = Row1.X, m22 = Row1.Y, m23 = Row1.Z, m24 = Row1.W,
+            m31 = Row2.X, m32 = Row2.Y, m33 = Row2.Z, m34 = Row2.W;
+
+            float d = m11 * m22 * m33 + m21 * m32 * m13 + m31 * m12 * m23 -
+            m11 * m32 * m23 - m31 * m22 * m13 - m21 * m12 * m33;
+
+            if (d == 0.0f)
+                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+
+            float d1 = 1 / d;
+
+            // sub 3x3 inv
+            result.Row0.X = d1 * (m22 * m33 - m23 * m32);
+            result.Row0.Y = d1 * (m13 * m32 - m12 * m33);
+            result.Row0.Z = d1 * (m12 * m23 - m13 * m22);
+            result.Row1.X = d1 * (m23 * m31 - m21 * m33);
+            result.Row1.Y = d1 * (m11 * m33 - m13 * m31);
+            result.Row1.Z = d1 * (m13 * m21 - m11 * m23);
+            result.Row2.X = d1 * (m21 * m32 - m22 * m31);
+            result.Row2.Y = d1 * (m12 * m31 - m11 * m32);
+            result.Row2.Z = d1 * (m11 * m22 - m12 * m21);
+
+            // - sub 3x3 inv * b
+            result.Row0.W = - result.Row0.X * m14 - result.Row0.Y * m24 - result.Row0.Z * m34;
+            result.Row1.W = - result.Row1.X * m14 - result.Row1.Y * m24 - result.Row1.Z * m34;
+            result.Row2.W = - result.Row2.X * m14 - result.Row2.Y * m24 - result.Row2.Z * m34;
+
+            // last row remains 0 0 0 1
+            result.Row3.X = result.Row3.Y = result.Row3.Z = 0.0f;
+            result.Row3.W = 1.0f;
+	    }
+	    #endregion
 
         #region Transpose
 

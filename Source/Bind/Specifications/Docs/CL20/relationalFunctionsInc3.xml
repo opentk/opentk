@@ -1,0 +1,11 @@
+    <!-- return types: from API spec., p. 89, 6.13.6 Relational Functions; 
+         and OpenCL C spec., p. 20, 9.4.5 Half - Relational Functions.
+         These words apply to: isequal, isgreater, isgreaterequal, isless, 
+         islessequal, and islessgreater. -->
+
+    <para>
+      The function returns 0 if either argument is not a number (NaN).
+    </para>
+
+<!-- 13-Dec-2013, rev. 19 -->
+

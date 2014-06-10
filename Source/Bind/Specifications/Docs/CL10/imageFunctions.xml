@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+	<refentryinfo>
+		<keywordset>
+			<keyword>Image Read and Write Functions</keyword>
+		</keywordset>
+	</refentryinfo>
+    <refmeta>
+        <refentrytitle>Image Read and Write Functions</refentrytitle>
+		<refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+  	<refnamediv>
+		<refname>Image Read and Write Functions</refname> 
+		<refpurpose>Click an item in the table below for details about that function.</refpurpose> 
+	</refnamediv>
+	 
+<refsect1 id="springboard"><title></title>
+	<informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+	<colspec colnum="1" colwidth="2*" colname="col1" />
+	<colspec colnum="2" colwidth="8*" colname="col2" />
+	<tbody>
+		<row>
+			<entry><citerefentry href="read_imagef2d">
+				<refentrytitle>read_imagef</refentrytitle></citerefentry> for 1D and 2D</entry>
+			<entry>Do an element lookup in the 1D or 2D image object, returning floating-point values</entry>
+		</row>
+		<row>
+			<entry><citerefentry href="read_imagei2d">
+				<refentrytitle>read_image{i|ui}</refentrytitle></citerefentry> for 1D and 2D</entry>
+			<entry>Do an element lookup in the 1D or 2D image object, returning unnormalized signed integer and unsigned integer values</entry>
+		</row>
+		<row>
+			<entry><citerefentry href="read_imageh2d">
+				<refentrytitle>read_imageh</refentrytitle></citerefentry> for 1D and 2D</entry>
+			<entry>OPTIONAL function to do an element lookup in the 1D or 2D image object, returning floating-point values. Enabled with <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>.</entry>
+		</row>
+		<row>			
+			<entry><citerefentry href="write_image">
+				<refentrytitle>write_image {f|i|ui}</refentrytitle>
+			</citerefentry>  for 1D and 2D</entry>
+			<entry>Write <varname>color</varname> value to location in the 1D or 2D image object</entry>
+		</row>
+		<row>
+			<entry><citerefentry href="write_imageh2d">
+				<refentrytitle>write_imageh</refentrytitle></citerefentry> for 1D and 2D</entry>
+			<entry>OPTIONAL function to write <varname>color</varname> value in a 1D or 3D object. Enabled with <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>.</entry>
+		</row>
+		<row>
+			<entry><citerefentry href="read_imagef3d">
+				<refentrytitle>read_imagef</refentrytitle></citerefentry> for 3D</entry>
+			<entry>Do an element lookup in the 3D image object, returning floating-point values</entry>
+		</row>
+		<row>
+			<entry><citerefentry href="read_imagei3d">
+				<refentrytitle>read_imagei</refentrytitle></citerefentry> for 3D</entry>
+			<entry>Do an element lookup in the 3D image object, returning unnormalized signed integer and unsigned integer values</entry>
+		</row>
+		<row>
+			<entry><citerefentry href="read_imageh3d">
+				<refentrytitle>read_imageh</refentrytitle></citerefentry> for 3D</entry>
+			<entry>Do an element lookup in the 3D image object, returning half floating point values. Enabled with <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>.</entry>
+		</row>
+		<row>
+			<entry><citerefentry href="write_imageh3d">
+				<refentrytitle>write_imageh</refentrytitle></citerefentry> for 3D</entry>
+			<entry>OPTIONAL function to write <varname>color</varname> value in a 3D object. Enabled with <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>.</entry>
+		</row>
+		<row>
+			<entry><citerefentry href="cl_khr_3d_image_writes">
+				<refentrytitle>write_image{f i ui}</refentrytitle></citerefentry> for 3D</entry>
+			<entry>OPTIONAL function to write <varname>color</varname> value in a 3D object. Enabled with <citerefentry><refentrytitle>cl_khr_3d_image_writes</refentrytitle></citerefentry>.</entry>
+		</row>
+		<row>				
+			<entry><citerefentry>
+				<refentrytitle>get_image_width</refentrytitle>
+			</citerefentry></entry>
+			<entry>Return the 2D or 3D image width in pixels</entry>
+		</row>
+		<row>
+			<entry><citerefentry>
+				<refentrytitle>get_image_height</refentrytitle>
+			</citerefentry></entry>
+			<entry>Return the 2D or 3D image height in pixels.</entry>
+		</row>
+		<row>				
+			<entry><citerefentry>
+				<refentrytitle>get_image_depth</refentrytitle>
+			</citerefentry></entry>
+			<entry>Return the 3D image depth in pixels</entry>
+		</row>
+		<row>			
+			<entry><citerefentry>
+				<refentrytitle>get_image_channel_data_type</refentrytitle>
+			</citerefentry></entry>
+			<entry>Return the image channel data type</entry>
+		</row>
+		<row>			
+			<entry><citerefentry>
+				<refentrytitle>get_image_channel_order</refentrytitle>
+			</citerefentry></entry>
+			<entry>Return the image channel order</entry>
+		</row>
+		<row>			
+			<entry><citerefentry>
+				<refentrytitle>get_image_dim</refentrytitle>
+			</citerefentry></entry>
+			<entry>Return the image dimensions</entry>
+		</row>
+	</tbody>	
+		
+	</tgroup></informaltable>	
+    </refsect1>
+	
+    <refsect1 id="description"><title>Description</title>
+        <para>
+			The built-in image function calls to read and write images are supported.. 
+        </para>
+		<para>
+		The generic type <type>gentype</type> is used to indicate the built-in data types
+<type>char</type>, <type>uchar</type>, <type>short</type>, <type>ushort</type>, <type>int</type>, <type>uint</type>, <type>long</type>, <type>ulong</type>, or <type>float</type>. 
+        </para>
+		<para>
+The generic type name <type>gentype<replaceable>n</replaceable></type> is used to indicate the built-in data types <type>char{2|4|8|16}</type>, <type>uchar{2|4|8|16}</type>, <type>short{2|4|8|16}</type>, <type>ushort{2|4|8|16}</type>, <type>int{2|4|8|16}</type>, <type>uint{2|4|8|16}</type>, <type>long{2|4|8|16}</type>, <type>ulong{2|4|8|16}</type>, or <type>float{2|4|8|16}</type> as the type for the arguments unless otherwise stated. 
+        </para>
+		<para>
+The suffix used in gentype<replaceable>n</replaceable> or the function name (i.e. <citerefentry href="vloadn" ><refentrytitle>vload<replaceable>n</replaceable></refentrytitle></citerefentry>, <citerefentry href="vstoren" ><refentrytitle>vstore<replaceable>n</replaceable></refentrytitle></citerefentry>, etc.) represents the number of elements in the built-in vector type (<replaceable>n</replaceable> = 2, 4, 8, or 16).
+        </para>
+		<para>
+The image read and write functions are extended with <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> to include appropriate versions of functions that take <type>half4</type> as arguments and return values. 
+		</para>
+    </refsect1>
+	
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="imageFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1> 	
+<!-- ================================ ALSO SEE  -->
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>sampler_t</refentrytitle></citerefentry>, <citerefentry><refentrytitle>cl_khr_3d_image_writes</refentrytitle></citerefentry>
+        </para>
+    </refsect1>	
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

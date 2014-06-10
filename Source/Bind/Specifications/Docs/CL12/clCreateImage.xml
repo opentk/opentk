@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY clCreate_memflagsInc SYSTEM "clCreate_memflagsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCreateImage</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clCreateImage
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateImage">
+        <refname>
+            clCreateImage
+        </refname>
+
+        <refpurpose>
+            Creates a 1D image, 1D image buffer, 1D image array, 2D image, 2D image array or 3D image object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="abstractDataTypes.html">cl_mem</link> <function>clCreateImage</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef>const <link xlink:href="cl_image_format.html">cl_image_format</link><parameter>*image_format</parameter></paramdef>
+                <paramdef>const <link xlink:href="imageDescriptor.html">cl_image_desc</link><parameter>*image_desc</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*host_ptr</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> context </varname> </term>
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A valid OpenCL context on which the image object is to be created.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> flags </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> A bit-field that is used to specify allocation
+                      and usage information about the image memory object being created and is
+                      described in the table below.
+                    </para>
+
+                    <para>
+                      For all image types except <constant>CL_MEM_OBJECT_IMAGE1D_BUFFER</constant>,
+                      if value specified for <varname>flags</varname> is 0, the default is used
+                      which is <constant>CL_MEM_READ_WRITE</constant>.
+                    </para>
+
+                    <para>
+                      For <constant>CL_MEM_OBJECT_IMAGE1D_BUFFER</constant> image type, if the
+                      <constant>CL_MEM_READ_WRITE</constant>, <constant>CL_MEM_READ_ONLY</constant>
+                      or <constant>CL_MEM_WRITE_ONLY</constant> values are not specified in
+                      <varname>flags</varname>, they are inherited from the corresponding
+                      memory access qualifers associated with <varname>buffer</varname>.
+                      The <constant>CL_MEM_USE_HOST_PTR</constant>,
+                      <constant>CL_MEM_ALLOC_HOST_PTR</constant> and
+                      <constant>CL_MEM_COPY_HOST_PTR</constant> values cannot
+                      be specified in <varname>flags</varname> but are inherited
+                      from the corresponding memory access qualifiers associated with
+                      <varname>buffer</varname>.  If <constant>CL_MEM_COPY_HOST_PTR</constant>
+                      is specified in the memory access qualifier values associated with
+                      <varname>buffer</varname> it does not imply any additional copies
+                      when the sub-buffer is created from <varname>buffer</varname>.
+                      If the <constant>CL_MEM_HOST_WRITE_ONLY</constant>,
+                      <constant>CL_MEM_HOST_READ_ONLY</constant> or
+                      <constant>CL_MEM_HOST_NO_ACCESS</constant> values are not specified in
+                      <varname>flags</varname>, they are inherited from the corresponding memory
+                      access qualifiers associated with <varname>buffer</varname>.
+                    </para>
+
+                    &clCreate_memflagsInc;
+
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> image_format </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> A pointer to a structure that
+                      describes format properties of the image to be allocated. See
+                      <citerefentry><refentrytitle>cl_image_format</refentrytitle></citerefentry>
+                      for a detailed description of the image format descriptor.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> image_desc </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> A pointer to a structure that
+                      describes type and dimensions of the image to be allocated.  See
+                      <citerefentry><refentrytitle>imageDescriptor</refentrytitle></citerefentry>
+                      for more information.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> host_ptr </varname> </term>
+                <listitem>
+                    <para>
+                      A pointer to the image data that may already be allocated by the application.
+                      Refer to table below for a description of how large the buffer that
+                      <varname>host_ptr</varname> points to must be.
+                    </para>
+
+                    <informaltable frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colname="col1" colnum="1" />
+                            <colspec colname="col2" colnum="2" />
+                            <thead>
+                                <row>
+                                    <entry>Image Type</entry>
+                                    <entry>Size of buffer that <varname>host_ptr</varname> points to</entry>
+                                </row>
+                            </thead>
+
+                            <tbody>
+                                <row>
+                                    <entry><constant>CL_MEM_OBJECT_IMAGE1D</constant></entry>
+                                    <entry><constant>&ge; image_row_pitch</constant></entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_OBJECT_IMAGE1D_BUFFER</constant></entry>
+                                    <entry><constant>&ge; image_row_pitch</constant></entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_OBJECT_IMAGE2D</constant></entry>
+                                    <entry><constant>&ge; image_row_pitch * image_height</constant></entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_OBJECT_IMAGE3D</constant></entry>
+                                    <entry><constant>&ge; image_slice_pitch * image_depth</constant></entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_OBJECT_IMAGE1D_ARRAY</constant></entry>
+                                    <entry><constant>&ge; image_slice_pitch * image_array_size</constant></entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_MEM_OBJECT_IMAGE2D_ARRAY</constant></entry>
+                                    <entry><constant>&ge; image_slice_pitch * image_array_size</constant></entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </informaltable>
+
+                    <para>
+                      For a 3D image or 2D image array, the image data specified by
+                      <varname>host_ptr</varname> is stored as a linear sequence of adjacent 2D
+                      image slices or 2D images respectively. Each 2D image is a linear sequence
+                      of  adjacent scanlines. Each scanline is a linear sequence of image elements.
+                    </para>
+
+                    <para>
+                      For a 2D image, the image data specified by <varname>host_ptr</varname>
+                      is stored as a linear sequence of adjacent scanlines. Each scanline is
+                      a linear sequence of image elements.
+                    </para>
+
+                    <para>
+                      For a 1D image array, the image data specified by <varname>host_ptr</varname>
+                      is stored as a linear sequence of adjacent 1D images respectively. Each 1D
+                      image or 1D image buffer is a single scanline which is a linear sequence
+                      of adjacent elements.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> errcode_ret </varname> </term>
+                <listitem>
+                    <para>
+                      Will return an appropriate error code. If <varname>errcode_ret</varname>
+                      is NULL, no error code is returned.
+                    </para>
+               </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION
+     <refsect1 id="description"><title>Description</title>
+
+    </refsect1>-->
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          <function>clCreateImage</function> returns a valid non-zero image object and
+          <varname>errcode_ret</varname> is set to <errorname>CL_SUCCESS</errorname> if the
+          image object is created successfully. Otherwise, it returns a NULL value with one of
+          the following error values returned in <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not a valid context.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if values specified in <varname>flags</varname> are not valid.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</errorname> if values specified in
+              <varname>image_format</varname> are not valid or if <varname>image_format</varname>
+              is NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_IMAGE_DESCRIPTOR</errorname> if values specified in
+              <varname>image_desc</varname> are not valid or if <varname>image_desc</varname>
+              is NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_IMAGE_SIZE</errorname> if image dimensions specified
+              in <varname>image_desc</varname> exceed the minimum maximum image dimensions
+              described in the table of allowed values for <varname>param_name</varname>
+              for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+              for all devices in <varname>context</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_HOST_PTR</errorname> if <varname>host_ptr</varname> in
+              <varname>image_desc</varname> is NULL and <constant>CL_MEM_USE_HOST_PTR</constant> or
+              <constant>CL_MEM_COPY_HOST_PTR</constant> are set in <varname>flags</varname> or if
+              <varname>host_ptr</varname> is not NULL but <constant>CL_MEM_COPY_HOST_PTR</constant>
+              or <constant>CL_MEM_USE_HOST_PTR</constant> are not set in <varname>flags</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if a 1D image buffer is being created
+              and the buffer object was created with <constant>CL_MEM_WRITE_ONLY</constant>
+              and <varname>flags</varname> specifies <constant>CL_MEM_READ_WRITE</constant>
+              or <constant>CL_MEM_READ_ONLY</constant>, or if the buffer object was
+              created with <constant>CL_MEM_READ_ONLY</constant> and <varname>flags</varname> specifies
+              <constant>CL_MEM_READ_WRITE</constant> or <constant>CL_MEM_WRITE_ONLY</constant>, or
+              if <varname>flags</varname> specifies <constant>CL_MEM_USE_HOST_PTR</constant>
+              or <constant>CL_MEM_ALLOC_HOST_PTR</constant> or
+              <constant>CL_MEM_COPY_HOST_PTR</constant>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if a 1D image buffer is being created and
+              the buffer object was created with <constant>CL_MEM_HOST_WRITE_ONLY</constant>
+              and <varname>flags</varname> specifies <constant>CL_MEM_HOST_READ_ONLY</constant>,
+              or if the buffer object was created with <constant>CL_MEM_HOST_READ_ONLY</constant>
+              and <varname>flags</varname> specifies <constant>CL_MEM_HOST_WRITE_ONLY</constant>,
+              or if the buffer object was created with <constant>CL_MEM_HOST_NO_ACCESS</constant>
+              and <varname>flags</varname> specifies <constant>CL_MEM_HOST_READ_ONLY</constant>
+              or <constant>CL_MEM_HOST_WRITE_ONLY</constant>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_IMAGE_FORMAT_NOT_SUPPORTED</errorname> if the
+              <varname>image_format</varname> is not supported.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MEM_OBJECT_ALLOCATION_FAILURE</errorname> if there is a failure to
+              allocate memory for image object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> if there are
+              no devices in <varname>context</varname> that support
+              images (i.e. <constant>CL_DEVICE_IMAGE_SUPPORT</constant>
+              (specified in the table of OpenCL Device Queries for
+              <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>)
+              is <constant>CL_FALSE</constant>).
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCreateImage">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="imageDescriptor"><refentrytitle>cl_image_desc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_image_format</refentrytitle></citerefentry>,
+            <citerefentry href="classDiagram"><refentrytitle>Cardinality Diagram</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Nov-2011 -->
+</refentry>
+

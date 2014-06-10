@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>                            
+                clGetEventInfo
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>clGetEventInfo</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetEventInfo">             
+        <refname>clGetEventInfo</refname>
+
+        <refpurpose>
+            Returns information about the event object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+					<link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>                   
+                        clGetEventInfo
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>event</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_event_info">cl_event_info</link><parameter>param_name</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>param_value_size</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*param_value</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>*param_value_size_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+
+<!-- ================================ PARAMETERS -->
+
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        event
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        Specifies the event object being queried.
+                    </para>
+               </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        param_value
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                         A pointer to memory where the appropriate result being queried is returned. If <varname>param_value</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        param_value_size
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                         Specifies the size in bytes of memory pointed to by <varname>param_value</varname>. This size must be greater than or equal to the size of the return type as described in the table below.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        param_value_size_ret
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        Returns the actual size in bytes of data copied to <varname>param_value</varname>. If
+<varname>param_value_size_ret</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <!-- ================================ PARAMETER TABLE (OPTIONAL) -->
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        param_name
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        Specifies the information to query. The list of supported <varname>param_name</varname> types and the information returned in <varname>param_value</varname> by <function>clGetEventInfo</function> is described in the table below:
+
+                    </para>
+
+                    <informaltable frame="all">
+                        <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                            <colspec colname="col1" colnum="1" />
+                            <colspec colname="col2" colnum="2" />
+                            <colspec colname="col3" colnum="3" />
+
+                            <thead>
+                                <row>
+                                    <entry>cl_event_info</entry>
+                                    <entry>Return Type</entry>
+                                    <entry>Information returned in <varname>param_value</varname></entry>
+                                </row>
+                            </thead>
+
+                            <tbody>
+
+                                <row>
+                                    <entry><constant>CL_EVENT_COMMAND_QUEUE</constant></entry>
+                                    <entry>cl_command_queue</entry>
+                                    <entry>
+                                        Return the command-queue associated with <varname>event</varname>.
+                                    </entry>
+                                </row>
+
+                                <row>
+                                    <entry><constant>CL_EVENT_COMMAND_TYPE</constant></entry>
+                                    <entry>cl_command_type</entry>
+                                    <entry><literallayout>Return the command associated with event. Can be one of the following values:
+CL_COMMAND_NDRANGE_KERNEL
+CL_COMMAND_TASK
+CL_COMMAND_NATIVE_KERNEL
+CL_COMMAND_READ_BUFFER
+CL_COMMAND_WRITE_BUFFER
+CL_COMMAND_COPY_BUFFER
+CL_COMMAND_READ_IMAGE
+CL_COMMAND_WRITE_IMAGE
+CL_COMMAND_COPY_IMAGE
+CL_COMMAND_COPY_BUFFER_TO_IMAGE
+CL_COMMAND_COPY_IMAGE_TO_BUFFER
+CL_COMMAND_MAP_BUFFER
+CL_COMMAND_MAP_IMAGE
+CL_COMMAND_UNMAP_MEM_OBJECT
+CL_COMMAND_MARKER
+CL_COMMAND_ACQUIRE_GL_OBJECTS
+CL_COMMAND_RELEASE_GL_OBJECTS</literallayout>
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><constant>CL_EVENT_COMMAND_ EXECUTION_STATUS</constant></entry>
+                                    <entry>cl_int</entry>
+                                    <entry>
+                                        Return the execution status of the command identified by <varname>event</varname>. The valid values are:
+<para>CL_QUEUED (command has been enqueued in the command-queue),</para>
+<para>CL_SUBMITTED (enqueued command has been submitted by the host to the device associated with the command-queue),</para>
+<para>CL_RUNNING (device is currently executing this command),</para>
+<para>CL_COMPLETE (the command has completed), or</para>
+<para>Error code given by a negative integer value. (command was abnormally terminated – this
+may be caused by a bad memory access etc.)</para>
+
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry><constant>CL_EVENT_REFERENCE_COUNT</constant></entry>
+                                    <entry>cl_uint</entry>
+                                    <entry>
+                                        Return the <varname>event</varname> reference count. The reference count returned should be considered immediately stale. It is unsuitable for general use in applications. This feature is provided for identifying memory leaks.
+                                    </entry>
+                                </row>
+
+                            </tbody>
+                        </tgroup>
+                    </informaltable>
+                </listitem>
+            </varlistentry>
+            <!-- END PARAMETER TABLE  -->
+        </variablelist>
+    </refsect1>
+
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            Using <function>clGetEventInfo</function> to determine if a command identified by event has finished execution (i.e. <constant>CL_EVENT_COMMAND_EXECUTION_STATUS</constant> returns <constant>CL_COMPLETE</constant>) is not a synchronization point. There are no guarantees that the memory objects being modified by command associated with <varname>event</varname> will be visible to other enqueued commands.
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the function executed successfully, or one of the errors below:
+        </para>
+
+        <itemizedlist mark="disc">
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if <varname>param_name</varname> is not valid, or if size in bytes specified by <varname>param_value_size</varname> is less than size of return type as described in the table above and <varname>param_value</varname> is not NULL.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_EVENT</errorname> if <varname>event</varname> is not a valid event object.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="clGetEventInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!--  ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para> 
+			<citerefentry><refentrytitle>clReleaseEvent</refentrytitle></citerefentry>, 
+			<citerefentry><refentrytitle>clRetainEvent</refentrytitle></citerefentry>, 
+			<citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry> 
+        </para>
+    </refsect1> 
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

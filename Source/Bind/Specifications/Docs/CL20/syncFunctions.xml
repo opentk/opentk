@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Synchronization and Memory Fence Functions</keyword>
+        </keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>Synchronization and Memory Fence Functions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>Synchronization and Memory Fence Functions</refname>
+        <refpurpose>Click an item in the table below for details about that function.</refpurpose>
+    </refnamediv>
+
+    <refsect1 id="springboard">
+      <title></title>
+      <informaltable frame="all">
+        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+          <colspec colnum="1" colwidth="2*" colname="col1" />
+          <colspec colnum="2" colwidth="8*" colname="col2" />
+          <tbody>
+
+            <row>
+              <entry><citerefentry><refentrytitle>work_group_barrier</refentrytitle></citerefentry></entry>
+              <entry>Barrier for all work-items in a work-group</entry>
+            </row>
+
+            <row>
+              <entry><citerefentry><refentrytitle>barrier</refentrytitle></citerefentry></entry>
+              <entry>Obsolete name for <citerefentry><refentrytitle>work_group_barrier</refentrytitle></citerefentry></entry>
+            </row>
+
+            <row>
+              <entry><citerefentry> <refentrytitle>sub_group_barrier</refentrytitle></citerefentry></entry>
+              <entry>
+                If the <citerefentry><refentrytitle>cl_khr_subgroups</refentrytitle></citerefentry>
+                extension is enabled, barrier for all work-items in a sub-group
+              </entry>
+            </row>
+
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </refsect1>
+<!--
+    <refsect1 id="description"><title>Description</title>
+        <para>
+        </para>
+    </refsect1>
+-->
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="syncFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>syncFunctions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 27-Dec-2013, rev. 19 -->
+</refentry>
+

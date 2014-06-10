@@ -1,0 +1,203 @@
+
+<!-- Do we need a header here to separate this text from any previous notes or descriptions? -->
+
+    <para>
+      <!-- ext. spec p. 83, section  9.10.1 --> The goal of this extension is to allow applications
+      to use media surfaces as OpenCL memory objects. This allows efficient sharing of data
+      between OpenCL and selected adapter APIs (only DX9 for now). If this extension is supported,
+      an OpenCL image object can be created from a media surface and the OpenCL API can be used
+      to execute kernels that read and/or write memory objects that are media surfaces. Note
+      that OpenCL memory objects may be created from the adapter media surface if and only if
+      the OpenCL context has been created from that adapter.
+    </para>
+
+    <para>
+      <!-- ext. spec p. 83, section  9.10.1 --> If this extension is supported by
+      an implementation, the string "cl_khr_media_sharing" will be present in the
+      <constant>CL_PLATFORM_EXTENSIONS</constant> or <constant>CL_DEVICE_EXTENSIONS</constant>
+      string described in the table of allowed values for <varname>param_name</varname> for
+      <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>.
+    </para>
+
+    <para>
+      <!-- ext. spec p. 83, section  9.10.2 --> As currently proposed the interfaces for this
+      extension would be provided in <code>cl_dx9_media_sharing.h</code>.
+    </para>
+
+    <para>
+      <!-- ext. spec p. 95, section 9.10.7.5 --> This section includes the D3D surface formats
+      that are supported when the adapter type is one of the Direct 3D lineage . Using a D3D
+      surface format not listed here is an error.  To extend the use of this extension to support
+      media adapters beyond DirectX9 tables similar to the ones in this section will need to be
+      defined for the surface formats supported by the new media adapter.  All implementations
+      that support this extension are required to support the NV12 surface format, the other
+      surface formats supported are the same surface formats that the adapter you are sharing
+      with supports as long as they are listed in the two tables below.
+    </para><!-- table 9.10.3 and table 9.10.4. -->
+
+    <informaltable frame="all">
+        <tgroup cols="2" align="center" colsep="1" rowsep="1">
+            <colspec colname="col1" colnum="1" />
+            <colspec colname="col2" colnum="2" />
+            <thead>
+                <row>
+                    <entry>FOUR CC code</entry>
+                    <entry>CL image format (channel order, channel data type)</entry>
+                </row>
+            </thead>
+
+            <tbody>
+                <row>
+                    <entry>FOURCC('N', 'V', '1', '2'), Plane 0</entry>
+                    <entry><constant>CL_R, CL_UNORM_INT8</constant></entry>
+                </row>
+
+                <row>
+                    <entry>FOURCC('N', 'V', '1', '2'), Plane 1</entry>
+                    <entry><constant>CL_RG, CL_UNORM_INT8</constant></entry>
+                </row>
+
+                <row>
+                    <entry>FOURCC('Y', 'V', '1', '2'), Plane 0</entry>
+                    <entry><constant>CL_R, CL_UNORM_INT8</constant></entry>
+                </row>
+
+                <row>
+                    <entry>FOURCC('Y', 'V', '1', '2'), Plane 1</entry>
+                    <entry><constant>CL_R, CL_UNORM_INT8</constant></entry>
+                </row>
+
+                <row>
+                    <entry>FOURCC('Y', 'V', '1', '2'), Plane 2</entry>
+                    <entry><constant>CL_R, CL_UNORM_INT8</constant></entry>
+                </row>
+
+            </tbody>
+        </tgroup>
+    </informaltable>
+
+    <para>
+      In the table above, NV12 Plane 0 corresponds to the luminance (Y) channel and Plane 1
+      corresponds to the UV channels. The YV12 Plane 0 corresponds to the Y channel, Plane
+      1 to the U channel and Plane 2 to the V channel. Note that the YUV formats map to
+      <constant>CL_R</constant> and <constant>CL_RG</constant> but do not perform any YUV to
+      RGB conversion and vice-versa.
+    </para>
+
+    <informaltable frame="all">
+      <tgroup cols="2" align="center" colsep="1" rowsep="1">
+        <colspec colname="col1" colnum="1" />
+        <colspec colname="col2" colnum="2" />
+        <thead>
+          <row>
+            <entry>D3D format</entry>
+            <entry>CL image format (channel order, channel data type)</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry>D3DFMT_R32F</entry>
+            <entry><constant>CL_R, CL_FLOAT</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_R16F</entry>
+            <entry><constant>CL_R, CL_HALF_FLOAT</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_L16</entry>
+            <entry><constant>CL_R, CL_UNORM_INT16</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_A8</entry>
+            <entry><constant>CL_A, CL_UNORM_INT8</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_L8</entry>
+            <entry><constant>CL_R, CL_UNORM_INT8</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_G32R32F</entry>
+            <entry><constant>CL_RG, CL_FLOAT</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_G16R16F</entry>
+            <entry><constant>CL_RG, CL_HALF_FLOAT</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_G16R16</entry>
+            <entry><constant>CL_RG, CL_UNORM_INT16</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_A8L8</entry>
+            <entry><constant>CL_RG, CL_UNORM_INT8</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_A32B32G32R32F</entry>
+            <entry><constant>CL_RGBA, CL_FLOAT</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_A16B16G16R16F</entry>
+            <entry><constant>CL_RGBA, CL_HALF_FLOAT</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_A16B16G16R16</entry>
+            <entry><constant>CL_RGBA, CL_UNORM_INT16</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_A8B8G8R8</entry>
+            <entry><constant>CL_RGBA, CL_UNORM_INT8</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_X8B8G8R8</entry>
+            <entry><constant>CL_RGBA, CL_UNORM_INT8</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_A8R8G8B8</entry>
+            <entry><constant>CL_BGRA, CL_UNORM_INT8</constant></entry>
+          </row>
+
+          <row>
+            <entry>D3DFMT_X8R8G8B8</entry>
+            <entry><constant>CL_BGRA, CL_UNORM_INT8</constant></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+
+    <para>
+      Note that D3D9 format names seem to imply that the order of the color channels are switched
+      relative to OpenCL but this is not the case. For example, layout of channels for each pixel
+      for D3DFMT_A32FB32FG32FR32F is the same as <constant>CL_RGBA</constant>, <constant>CL_FLOAT</constant>.
+    </para>
+
+    <para>
+      Properties of media surface objects may be queried using
+      <citerefentry><refentrytitle>clGetMemObjectInfo</refentrytitle></citerefentry>
+      and <citerefentry><refentrytitle>clGetImageInfo</refentrytitle></citerefentry> with
+      <varname>param_name</varname> <constant>CL_MEM_MEDIA_ADAPTER_TYPE_KHR</constant>,
+      <constant>CL_MEM_MEDIA_SURFACE_INFO_KHR</constant> and
+      <constant>CL_IMAGE_MEDIA_SURFACE_PLANE_KHR</constant> as described for
+      <citerefentry><refentrytitle>clGetImageInfo</refentrytitle></citerefentry> and in the
+      information below about accessing mapped regions of a memory object.
+    </para>
+
+<!-- "accessing mapped regions of a memory object" refers to include AccessMappedInc.xml from
+5.4.3 --> <!-- 15-Oct-11 -->
+
+<!-- 02-Nov-2011 -->
+

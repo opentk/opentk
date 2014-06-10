@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY atomicFunctionsInc SYSTEM "atomicFunctionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>atomic_fetch_key</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>atomic_fetch_key</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="atomic_fetch_key">             
+        <refname>atomic_fetch_key</refname>
+
+        <refpurpose>
+            Atomically replace the value pointed to by <varname>object</varname> with the result of the computation.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    C 
+                    <function>atomic_fetch_key</function>
+                </funcdef>
+                <paramdef>volatile A <parameter>*object</parameter></paramdef>
+                <paramdef>M <parameter>operand</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    C 
+                    <function>atomic_fetch_key_explicit</function>
+                </funcdef>
+                <paramdef>volatile A <parameter>*object</parameter></paramdef>
+                <paramdef>M <parameter>operand</parameter></paramdef>
+                <paramdef><link xlink:href="memory_order.html">memory_order</link><parameter>order</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    C 
+                    <function>atomic_fetch_key_explicit</function>
+                </funcdef>
+                <paramdef>volatile A <parameter>*object</parameter></paramdef>
+                <paramdef>M <parameter>operand</parameter></paramdef>
+                <paramdef><link xlink:href="memory_order.html">memory_order</link><parameter>order</parameter></paramdef>
+                <paramdef><link xlink:href="memory_scope.html">memory_scope</link><parameter>scope</parameter></paramdef>    
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term><varname>object</varname></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>order</varname></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>scope</varname></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>operand</varname></term>
+                <listitem>
+                    <para>
+                        See the table below.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            These operations perform arithmetic and bitwise computations. All of these operations 
+            are applicable to an object of any atomic integer type. The key, operator, and computation 
+            correspondence is given in the table below:
+        </para>
+
+        <informaltable frame="all">
+        <tgroup cols="3" align="left" colsep="1" rowsep="1">
+            <colspec colname="col1" colnum="1" />
+            <colspec colname="col2" colnum="2" />
+            <colspec colname="col3" colnum="3" />
+            <thead>
+                <row>
+                <entry>key</entry>
+                <entry>op</entry>
+                <entry>computation</entry>
+                </row>
+            </thead>
+
+            <tbody>
+                <row><entry><code>add</code></entry>   <entry>+</entry>      <entry>addition</entry></row>
+                <row><entry><code>sub</code></entry>   <entry>-</entry>      <entry>subtraction</entry></row>
+                <row><entry><code>or</code></entry>    <entry>|</entry>      <entry>bitwise inclusive or</entry></row>
+                <row><entry><code>xor</code></entry>   <entry>^</entry>      <entry>bitwise exclusive or</entry></row>
+                <row><entry><code>and</code></entry>   <entry>&amp;</entry>  <entry>bitwise and</entry></row>
+                <row><entry><code>min</code></entry>   <entry>min</entry>    <entry>compute min</entry></row>
+                <row><entry><code>max</code></entry>   <entry>max</entry>    <entry>compute max</entry></row>
+            </tbody>
+        </tgroup>
+        </informaltable>
+
+        <para>
+            For atomic_fetch and modify functions with key = add or sub on atomic types 
+            <type>atomic_intptr_t</type> and <type>atomic_uintptr_t</type>, 
+            <code>M</code> is <type>ptrdiff_t</type>. For atomic_fetch and 
+            modify functions with key = or, xor, and, min and max on 
+            atomic types <type>atomic_intptr_t</type>
+            and <type>atomic_uintptr_t</type>, <code>M</code> is 
+            <type>intptr_t</type> and <type>uintptr_t</type>.
+        </para>
+
+        <para>
+            Atomically replaces the value pointed to by 
+            <varname>object</varname> with the result of the 
+            computation applied 
+            to the value pointed to by <varname>object</varname> 
+            and the given operand. Memory is affected according to the 
+            value of <varname>order</varname>. These operations 
+            are atomic read-modify-write operations (as defined by 
+            section 5.1.2.4 of the C11 specification). For signed 
+            integer types, arithmetic is defined to use 
+            two’s complement representation with silent wrap-around 
+            on overflow; there are no undefined 
+            results. For address types, the result may be an 
+            undefined address, but the operations otherwise 
+            have no undefined behavior. Returns atomically, the 
+            value pointed to by <varname>object</varname> immediately 
+            before the effects.
+        </para>
+
+        &atomicFunctionsInc;
+
+    </refsect1>
+
+<!-- ================================ NOTES  
+
+    <refsect1 id="notes"><title>Notes</title>
+         
+    </refsect1>-->
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="atomic_fetch_key">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="atomicFunctions"><refentrytitle>Atomic Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 16-Dec-2013, rev. 19 -->
+</refentry>
+

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY mathFunctionsInc SYSTEM "mathFunctionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Math Built-In Functions</keyword>
+        </keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>Math Built-In Functions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>Math Built-In Functions</refname>
+        <refpurpose>The table below describes the list of built-in math functions. These functions can take scalar or vector arguments. Click an item in the table for details about that function.</refpurpose>
+    </refnamediv>
+
+<refsect1 id="springboard"><title></title>
+
+<informaltable frame="all"><tgroup cols="4" align="center" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="25*" colname="col1" />
+    <colspec colnum="2" colwidth="25*" colname="col2" />
+    <colspec colnum="3" colwidth="25*" colname="col3" />
+    <colspec colnum="4" colwidth="25*" colname="col4" />
+    <tbody>
+        <row>
+            <entry><citerefentry><refentrytitle>acos</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="acos"><refentrytitle>acosh</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="acos"><refentrytitle>acospi</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>asin</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="asin"><refentrytitle>asinh</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="asin"><refentrytitle>asinpi</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>atan</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="atan"><refentrytitle>atan2</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="atan"><refentrytitle>atanh</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="atan"><refentrytitle>atanpi</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="atan"><refentrytitle>atan2pi</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>cbrt</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>ceil</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>copysign</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>cos</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="cos"><refentrytitle>cosh</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="cos"><refentrytitle>cospi</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="erf"><refentrytitle>erfc</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>erf</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>exp</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="exp"><refentrytitle>exp2</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="exp"><refentrytitle>exp10</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="exp"><refentrytitle>expm1</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>fabs</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>fdim</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>floor</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>fma</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>fmax</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>fmin</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>fmod</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>fract</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>frexp</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>hypot</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>ilogb</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>ldexp</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>lgamma</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="lgamma"><refentrytitle>lgamma_r</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>log</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="log"><refentrytitle>log2</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="log"><refentrytitle>log10</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="log"><refentrytitle>log1p</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="log"><refentrytitle>logb</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>mad</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="mag"><refentrytitle>maxmag</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="mag"><refentrytitle>minmag</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>modf</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>nan</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>nextafter</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>pow</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="pow"><refentrytitle>pown</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="pow"><refentrytitle>powr</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>remainder</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>remquo</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>rint</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>rootn</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>round</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="sqrt"><refentrytitle>rsqrt</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>sin</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="sin"><refentrytitle>sincos</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="sin"><refentrytitle>sinh</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="sin"><refentrytitle>sinpi</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>sqrt</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>tan</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="tan"><refentrytitle>tanh</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="tan"><refentrytitle>tanpi</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>tgamma</refentrytitle></citerefentry></entry>
+            <entry><citerefentry><refentrytitle>trunc</refentrytitle></citerefentry></entry>
+        </row>
+      </tbody>
+    </tgroup>
+  </informaltable>
+
+  <para></para>
+
+  <para>
+    The table below describes the list of built-in math functions that are defined with the
+    <constant>half_</constant> or <constant>native_</constant> prefix
+  </para>
+
+  <informaltable frame="all">
+    <tgroup cols="4" align="center" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="25*" colname="col1" />
+    <colspec colnum="2" colwidth="25*" colname="col2" />
+    <colspec colnum="3" colwidth="25*" colname="col3" />
+    <colspec colnum="4" colwidth="25*" colname="col4" />
+
+    <tbody>
+        <row>
+            <entry><citerefentry href="cos"><refentrytitle>(half
+            | native)_ cos</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="divide"><refentrytitle>(half | native)_
+            divide</refentrytitle></citerefentry></entry> <entry><citerefentry
+            href="exp"><refentrytitle>(half | native)_ exp</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="exp"><refentrytitle>(half | native)_
+            exp2</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="exp"><refentrytitle>(half |
+            native)_exp10</refentrytitle></citerefentry></entry> <entry><citerefentry
+            href="log"><refentrytitle>(half | native)_ log</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="log"><refentrytitle>(half | native)_
+            log2</refentrytitle></citerefentry></entry> <entry><citerefentry
+            href="log"><refentrytitle>(half | native)_ log10</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="pow"><refentrytitle>(half |
+            native)_ powr</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="recip"><refentrytitle>(half
+            | native)_ recip</refentrytitle></citerefentry></entry>
+            <entry><citerefentry href="sqrt"><refentrytitle>(half | native)_
+            rsqrt</refentrytitle></citerefentry></entry> <entry><citerefentry
+            href="sin"><refentrytitle>(half | native)_ sin</refentrytitle></citerefentry></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="sqrt"><refentrytitle>(half | native)_
+            sqrt</refentrytitle></citerefentry></entry> <entry><citerefentry
+            href="tan"><refentrytitle>(half | native)_ tan</refentrytitle></citerefentry></entry>
+        </row>
+    </tbody>
+
+    </tgroup></informaltable>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        &mathFunctionsInc;
+
+        <para>
+          The math functions that are defined with the <constant>half_</constant> prefix are
+          implemented with a minimum of 10-bits of accuracy i.e. an ULP value &lt;= 8192 ulp.
+        </para>
+
+        <para>
+          The math functions that are defined with the <constant>native_</constant> prefix may map
+          to one or more native device instructions and will typically have better performance
+          compared to the corresponding functions (without the <constant>native_</constant>
+          prefix) described. The accuracy (and in some cases the input range(s)) of these
+          functions is implementation-defined.
+        </para>
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="mathFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="mathConstants"><refentrytitle>Symbolic Math Constants</refentrytitle></citerefentry>,
+            <citerefentry href="FP_CONTRACT"><refentrytitle>Floating Point Pragma</refentrytitle></citerefentry>,
+            <citerefentry href="macroLimits"><refentrytitle>Macros and Limits</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-May-2013 -->
+</refentry>
+

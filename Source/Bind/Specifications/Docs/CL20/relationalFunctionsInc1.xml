@@ -1,0 +1,20 @@
+    <!-- OpenCL C spec., footnote 35 on p. 89, section 6.13.6 Relational Functions;
+         applies to all relational functions -->
+    <para>
+      If an implementation extends this specification to support IEEE-754 flags or
+      exceptions, then all built-in relational functions shall proceed without raising the
+      <varname>invalid</varname> floating-point exception when one or more of the operands
+      are NaNs.
+    </para>
+
+    <!-- Extension spec., p. 20, section 9.4.5, Half - Relational Functions;
+         applies to all half relational functions -->
+    <para>
+      The built-in relational functions are extended with
+      <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> to
+      include versions that take <type>half</type>, and
+      <type>half{2|3|4|8|16}</type> as arguments.
+    </para>
+
+<!-- 13-Dec-2013, rev. 19 -->
+

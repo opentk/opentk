@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -135,6 +135,7 @@ namespace Bind
                 do
                 {
                     string line = sr.ReadLine();
+                    string key, value;
 
                     if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
                         continue;
@@ -144,12 +145,14 @@ namespace Bind
                     if (words[0].ToLower() == "void")
                     {
                         // Special case for "void" -> "". We make it "void" -> "void"
-                        GLTypes.Add(words[0], "void");
+                        key = words[0];
+                        value = "void";
                     }
                     else if (words[0] == "VoidPointer" || words[0] == "ConstVoidPointer")
                     {
                         // "(Const)VoidPointer" -> "void*"
-                        GLTypes.Add(words[0], "void*");
+                        key = words[0];
+                        value = "void*";
                     }
                     else if (words[0] == "CharPointer" || words[0] == "charPointerARB" ||
                              words[0] == "ConstCharPointer")
@@ -158,7 +161,8 @@ namespace Bind
                         // Hence we give it a push.
                         // Note: When both CurrentType == "String" and Pointer == true, the typematching is hardcoded to use
                         // String[] or StringBuilder[].
-                        GLTypes.Add(words[0], "String");
+                        key = words[0];
+                        value = "String";
                     }
                     /*else if (words[0].Contains("Pointer"))
                     {
@@ -166,19 +170,34 @@ namespace Bind
                     }*/
                     else if (words[1].Contains("GLvoid"))
                     {
-                        GLTypes.Add(words[0], "void");
+                        key = words[0];
+                        value = "void";
                     }
                     else if (words[1] == "const" && words[2] == "GLubyte")
                     {
-                        GLTypes.Add(words[0], "String");
+                        key = words[0];
+                        value = "String";
                     }
                     else if (words[1] == "struct")
                     {
-                        GLTypes.Add(words[0], words[2]);
+                        key = words[0];
+                        value = words[2];
                     }
                     else
                     {
-                        GLTypes.Add(words[0], words[1]);
+                        key = words[0];
+                        value = words[1];
+                    }
+
+                    if (!GLTypes.ContainsKey(key))
+                    {
+                        GLTypes.Add(key, value);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Replacing typemap: {0}:{1} with {0}:{2}",
+                            key, GLTypes[key], value);
+                        GLTypes[key] = value;
                     }
                 }
                 while (!sr.EndOfStream);
@@ -280,9 +299,21 @@ namespace Bind
                     Category = node.GetAttribute("category", String.Empty).Trim(),
                     DeprecatedVersion = node.GetAttribute("deprecated", String.Empty).Trim(),
                     Deprecated = !String.IsNullOrEmpty(node.GetAttribute("deprecated", String.Empty)),
-                    Extension = node.GetAttribute("extension", String.Empty).Trim() ?? "Core",
+                    Extension = node.GetAttribute("extension", String.Empty).Trim(),
                     Obsolete = node.GetAttribute("obsolete", String.Empty).Trim()
                 };
+
+                // If a function does not specify a specific version,
+                // use the parent apiversion instead.
+                if (String.IsNullOrEmpty(d.Version))
+                    d.Version = apiversion;
+
+                // Ensure all core functions are under the "Core" extension.
+                // This is used later on by the FuncProcessor and BindStreamWriter
+                // implementations.
+                if (String.IsNullOrEmpty(d.Extension))
+                    d.Extension = "Core";
+
                 if (!extensions.Contains(d.Extension))
                     extensions.Add(d.Extension);
 
@@ -296,7 +327,7 @@ namespace Bind
 
                         case "param":
                             Parameter p = new Parameter();
-                            p.CurrentType = param.GetAttribute("type", String.Empty).Trim();
+                            p.Type.CurrentType = param.GetAttribute("type", String.Empty).Trim();
                             p.Name = param.GetAttribute("name", String.Empty).Trim();
 
                             string element_count = param.GetAttribute("elementcount", String.Empty).Trim();
@@ -308,7 +339,7 @@ namespace Bind
                                     int count;
                                     if (Int32.TryParse(element_count, out count))
                                     {
-                                        p.ElementCount = count;
+                                        p.Type.ElementCount = count;
                                     }
                                 }
                             }
@@ -350,7 +381,7 @@ namespace Bind
                     Enum e = new Enum()
                     {
                         Name = node.GetAttribute("name", String.Empty).Trim(),
-                        Type = node.GetAttribute("type", String.Empty).Trim()
+                        BaseType = node.GetAttribute("type", String.Empty).Trim()
                     };
 
                     if (String.IsNullOrEmpty(e.Name))
