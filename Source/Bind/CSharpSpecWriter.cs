@@ -564,7 +564,7 @@ namespace Bind
                     // - then by index
                     var docparam =
                         (docs.Parameters
-                            .Where(p => p.Name == param.RawName)
+                            .Where(p => p.Name == param.RawName.Trim('@'))
                             .FirstOrDefault()) ??
                         (docs.Parameters.Count > i ?
                             docs.Parameters[i] : null);
@@ -604,7 +604,7 @@ namespace Bind
                     else
                     {
                         Console.Error.WriteLine(
-                            "[Warning] Parameter '{0}' in function '{1}' not found in documentation '{{{3}}}'",
+                            "[Warning] Parameter '{0}' in function '{1}' not found in documentation '{{{2}}}'",
                             param.Name, f.Name,
                             String.Join(",", docs.Parameters.Select(p => p.Name).ToArray()));
                         sw.WriteLine("/// <param name=\"{0}\">{1}</param>",
