@@ -177,6 +177,11 @@ namespace Bind
             /// of the generated bindings.
             /// </summary>
             NoUnsignedOverloads = 0x40000,
+            /// <summary>
+            /// Generates string[] overloads for each ref string / out string parameter.
+            /// Use this option to maintain compatibility with the 1.0/1.1 GL and ES APIs.
+            /// </summary>
+            KeepStringArrayOverloads = 0x80000,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |

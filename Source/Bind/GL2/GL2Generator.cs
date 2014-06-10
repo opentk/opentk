@@ -57,8 +57,8 @@ namespace Bind.GL2
             Settings.DefaultDocPath = Path.Combine(
                 Settings.DefaultDocPath, "GL");
 
-            //Settings.DefaultCompatibility |=
-            //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
+            Settings.DefaultCompatibility |=
+                Settings.Legacy.KeepStringArrayOverloads;
         }
     }
 }

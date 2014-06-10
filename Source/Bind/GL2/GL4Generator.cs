@@ -49,8 +49,8 @@ namespace Bind.GL2
 
             Profile = "glcore";
 
-            //Settings.DefaultCompatibility |=
-            //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
+            Settings.DefaultCompatibility |=
+                Settings.Legacy.KeepStringArrayOverloads;
         }
     }
 }
