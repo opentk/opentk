@@ -540,7 +540,10 @@ namespace OpenTK.Platform.MacOS
                             // Only raise wheel events when the user has actually scrolled
                             if (dx != 0 || dy != 0)
                             {
-                                OnMouseWheel(dx, dy);
+                                // Note: OpenTK follows the win32 convention, where
+                                // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
+                                // so we need to flip the horizontal scroll direction.
+                                OnMouseWheel(-dx, dy);
                             }
                         }
                         break;
