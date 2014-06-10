@@ -26923,7 +26923,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Ext.GetTexParameterI, GL.Ext.TexBuffer and 5 other functions
+    /// Used in GL.Ext.GetTexParameterI, GL.Ext.TexBuffer and 6 other functions
     /// </summary>
     public enum TextureTarget : int
     {

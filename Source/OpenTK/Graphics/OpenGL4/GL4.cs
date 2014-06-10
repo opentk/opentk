@@ -15826,7 +15826,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="img">[length: target,level] 
         /// Returns the compressed texture image.
@@ -15841,7 +15841,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="img">[length: target,level] 
         /// Returns the compressed texture image.
@@ -15859,7 +15859,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="img">[length: target,level] 
         /// Returns the compressed texture image.
@@ -15877,7 +15877,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="img">[length: target,level] 
         /// Returns the compressed texture image.
@@ -15895,7 +15895,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="img">[length: target,level] 
         /// Returns the compressed texture image.
@@ -20730,7 +20730,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="format"> 
         /// Specifies a pixel format for the returned data. The supported formats are StencilIndex, DepthComponent, DepthStencil, Red, Green, Blue, Rg, Rgb, Rgba, Bgr, Bgra, RedInteger, GreenInteger, BlueInteger, RgInteger, RgbInteger, RgbaInteger, BgrInteger, BgraInteger.
@@ -20751,7 +20751,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="format"> 
         /// Specifies a pixel format for the returned data. The supported formats are StencilIndex, DepthComponent, DepthStencil, Red, Green, Blue, Rg, Rgb, Rgba, Bgr, Bgra, RedInteger, GreenInteger, BlueInteger, RgInteger, RgbInteger, RgbaInteger, BgrInteger, BgraInteger.
@@ -20775,7 +20775,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="format"> 
         /// Specifies a pixel format for the returned data. The supported formats are StencilIndex, DepthComponent, DepthStencil, Red, Green, Blue, Rg, Rgb, Rgba, Bgr, Bgra, RedInteger, GreenInteger, BlueInteger, RgInteger, RgbInteger, RgbaInteger, BgrInteger, BgraInteger.
@@ -20799,7 +20799,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="format"> 
         /// Specifies a pixel format for the returned data. The supported formats are StencilIndex, DepthComponent, DepthStencil, Red, Green, Blue, Rg, Rgb, Rgba, Bgr, Bgra, RedInteger, GreenInteger, BlueInteger, RgInteger, RgbInteger, RgbaInteger, BgrInteger, BgraInteger.
@@ -20823,7 +20823,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="format"> 
         /// Specifies a pixel format for the returned data. The supported formats are StencilIndex, DepthComponent, DepthStencil, Red, Green, Blue, Rg, Rgb, Rgba, Bgr, Bgra, RedInteger, GreenInteger, BlueInteger, RgInteger, RgbInteger, RgbaInteger, BgrInteger, BgraInteger.
@@ -20846,7 +20846,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="pname"> 
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
@@ -20865,7 +20865,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="pname"> 
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
@@ -20884,7 +20884,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="pname"> 
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
@@ -20903,7 +20903,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="pname"> 
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
@@ -20922,7 +20922,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="pname"> 
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
@@ -20941,7 +20941,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level  is the th mipmap reduction image.
+        /// Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image.
         /// </param>
         /// <param name="pname"> 
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
@@ -29883,7 +29883,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the test function. Eight symbolic constants are valid: Never, Less, Lequal, Greater, Gequal, Equal, Notequal, and Always. The initial value is Always.
         /// </param>
         /// <param name="ref"> 
-        /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2 sup n - 1], where  is the number of bitplanes in the stencil buffer. The initial value is 0.
+        /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2 sup n - 1], where n is the number of bitplanes in the stencil buffer. The initial value is 0.
         /// </param>
         /// <param name="mask"> 
         /// Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's.
@@ -29899,7 +29899,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the test function. Eight symbolic constants are valid: Never, Less, Lequal, Greater, Gequal, Equal, Notequal, and Always. The initial value is Always.
         /// </param>
         /// <param name="ref"> 
-        /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2 sup n - 1], where  is the number of bitplanes in the stencil buffer. The initial value is 0.
+        /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2 sup n - 1], where n is the number of bitplanes in the stencil buffer. The initial value is 0.
         /// </param>
         /// <param name="mask"> 
         /// Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's.
@@ -29918,7 +29918,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the test function. Eight symbolic constants are valid: Never, Less, Lequal, Greater, Gequal, Equal, Notequal, and Always. The initial value is Always.
         /// </param>
         /// <param name="ref"> 
-        /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2 sup n - 1], where  is the number of bitplanes in the stencil buffer. The initial value is 0.
+        /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2 sup n - 1], where n is the number of bitplanes in the stencil buffer. The initial value is 0.
         /// </param>
         /// <param name="mask"> 
         /// Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's.
@@ -29937,7 +29937,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the test function. Eight symbolic constants are valid: Never, Less, Lequal, Greater, Gequal, Equal, Notequal, and Always. The initial value is Always.
         /// </param>
         /// <param name="ref"> 
-        /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2 sup n - 1], where  is the number of bitplanes in the stencil buffer. The initial value is 0.
+        /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2 sup n - 1], where n is the number of bitplanes in the stencil buffer. The initial value is 0.
         /// </param>
         /// <param name="mask"> 
         /// Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's.
@@ -30581,7 +30581,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the target texture. Must be one of Texture3D, ProxyTexture3D, Texture2DArray or ProxyTexture2DArray.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number. Level 0 is the base image level. Level  is the n sup th mipmap reduction image.
+        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the n sup th mipmap reduction image.
         /// </param>
         /// <param name="internalformat"> 
         /// Specifies the number of color components in the texture. Must be one of base internal formats given in Table 1, one of the sized internal formats given in Table 2, or one of the compressed internal formats given in Table 3, below.
@@ -30617,7 +30617,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the target texture. Must be one of Texture3D, ProxyTexture3D, Texture2DArray or ProxyTexture2DArray.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number. Level 0 is the base image level. Level  is the n sup th mipmap reduction image.
+        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the n sup th mipmap reduction image.
         /// </param>
         /// <param name="internalformat"> 
         /// Specifies the number of color components in the texture. Must be one of base internal formats given in Table 1, one of the sized internal formats given in Table 2, or one of the compressed internal formats given in Table 3, below.
@@ -30656,7 +30656,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the target texture. Must be one of Texture3D, ProxyTexture3D, Texture2DArray or ProxyTexture2DArray.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number. Level 0 is the base image level. Level  is the n sup th mipmap reduction image.
+        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the n sup th mipmap reduction image.
         /// </param>
         /// <param name="internalformat"> 
         /// Specifies the number of color components in the texture. Must be one of base internal formats given in Table 1, one of the sized internal formats given in Table 2, or one of the compressed internal formats given in Table 3, below.
@@ -30695,7 +30695,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the target texture. Must be one of Texture3D, ProxyTexture3D, Texture2DArray or ProxyTexture2DArray.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number. Level 0 is the base image level. Level  is the n sup th mipmap reduction image.
+        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the n sup th mipmap reduction image.
         /// </param>
         /// <param name="internalformat"> 
         /// Specifies the number of color components in the texture. Must be one of base internal formats given in Table 1, one of the sized internal formats given in Table 2, or one of the compressed internal formats given in Table 3, below.
@@ -30734,7 +30734,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the target texture. Must be one of Texture3D, ProxyTexture3D, Texture2DArray or ProxyTexture2DArray.
         /// </param>
         /// <param name="level"> 
-        /// Specifies the level-of-detail number. Level 0 is the base image level. Level  is the n sup th mipmap reduction image.
+        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the n sup th mipmap reduction image.
         /// </param>
         /// <param name="internalformat"> 
         /// Specifies the number of color components in the texture. Must be one of base internal formats given in Table 1, one of the sized internal formats given in Table 2, or one of the compressed internal formats given in Table 3, below.
