@@ -228,7 +228,7 @@ namespace Bind
                     ((IEnumerable)doc.XPathEvaluate("/refentry/refsect1[substring(@id, 1, 10)='parameters']/variablelist/varlistentry"))
                         .Cast<XElement>()
                         .SelectMany(plist => plist
-                            .XPathSelectElements("term/parameter|term/varname") //|term
+                            .XPathSelectElements("term/parameter|term/varname|term")
                             .Select(p =>
                                 new DocumentationParameter(
                                     String.Join("", (p ?? new XElement("dummy")).Value.Split(separators, StringSplitOptions.RemoveEmptyEntries)) // Some docs have whitespace characters in their param names
