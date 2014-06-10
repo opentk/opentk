@@ -38,7 +38,7 @@ namespace Bind.Structures
         public List<DocumentationParameter> Parameters { get; set; }
     }
 
-    class DocumentationParameter
+    class DocumentationParameter : IEquatable<DocumentationParameter>
     {
         public string Name { get; set; }
         public string Documentation { get; set; }
@@ -48,6 +48,32 @@ namespace Bind.Structures
             Name = name;
             Documentation = doc;
         }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}: '{1}']", Name, Documentation);
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is DocumentationParameter &&
+                ((DocumentationParameter)obj).Equals(this);
+        }
+
+        #region IEquatable implementation
+
+        public bool Equals(DocumentationParameter other)
+        {
+            return Name == other.Name;
+        }
+
+        #endregion
     }
 }
 
