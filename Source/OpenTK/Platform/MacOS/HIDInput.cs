@@ -413,6 +413,11 @@ namespace OpenTK.Platform.MacOS
                             mouse.State.Y += v_int;
                             break;
 
+                        case HIDUsageGD.Z:
+                            // Horizontal scrolling for apple mouse (old-style with trackball)
+                            mouse.State.SetScrollRelative(v_int, 0);
+                            break;
+
                         case HIDUsageGD.Wheel:
                             mouse.State.SetScrollRelative(0, v_int);
                             break;
