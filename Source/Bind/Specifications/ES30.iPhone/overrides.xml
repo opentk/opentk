@@ -314,6 +314,205 @@
       <param name="name"><flow>in</flow></param>
     </function>
 
+    <!-- new ES3.0 methods -->
+
+    <function name="BeginQuery" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>QueryTarget</type></param>
+    </function>
+    <function name="BeginTransformFeedback" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="primitiveMode"><type>TransformFeedbackPrimitiveType</type></param>
+    </function>
+    <function name="BindBufferBase" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>BufferRangeTarget</type></param>
+    </function>
+    <function name="BindBufferRange" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>BufferRangeTarget</type></param>
+    </function>
+    <function name="BindTransformFeedback" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>TransformFeedbackTarget</type></param>
+    </function>
+    <function name="BlitFramebuffer" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="mask"><type>ClearBufferMask</type></param>
+      <param name="filter"><type>BlitFramebufferFilter</type></param>
+    </function>
+    <function name="ClearBufferfi" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="buffer"><type>ClearBufferCombined</type></param>
+    </function>
+    <function name="ClearBufferfv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="buffer"><type>ClearBuffer</type></param>
+    </function>
+    <function name="ClearBufferiv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="buffer"><type>ClearBuffer</type></param>
+    </function>
+    <function name="ClearBufferuiv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="buffer"><type>ClearBuffer</type></param>
+    </function>
+    <function name="ClientWaitSyncStatus" extension="Core" profile="" category="3.0" version="3.0">
+      <returns type="WaitSyncStatus" />
+      <param name="flags"><type>ClientWaitSyncFlags</type></param>
+    </function>
+    <function name="CompressedTexImage3D" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>TextureTarget3D</type></param>
+      <param name="internalformat"><type>CompressedInternalFormat</type></param>
+    </function>
+    <function name="CompressedTexSubImage3D" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>TextureTarget3D</type></param>
+      <param name="format"><type>CompressedInternalFormat</type></param>
+    </function>
+    <function name="CopyBufferSubData" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="readTarget"><type>BufferTarget</type></param>
+      <param name="writeTarget"><type>BufferTarget</type></param>
+    </function>
+    <function name="CopyTexSubImage3D" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>TextureTarget3D</type></param>
+    </function>
+    <function name="DrawArraysInstanced" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="mode"><type>PrimitiveType</type></param>
+    </function>
+    <function name="DrawBuffers" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="bufs"><type>DrawBufferMode</type></param>
+    </function>
+    <function name="DrawElementsInstanced" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+    <function name="DrawRangeElements" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+    <function name="EndQuery" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>QueryTarget</type></param>
+    </function>
+    <function name="FenceSync" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="condition"><type>SyncCondition</type></param>
+      <param name="flags"><type>WaitSyncFlags</type></param>
+    </function>
+    <function name="FlushMappedBufferRange" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    <function name="FramebufferTextureLayer" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferAttachment</type></param>
+    </function>
+    <function name="GetActiveUniformBlockiv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>ActiveUniformBlockParameter</type></param>
+    </function>
+    <function name="GetActiveUniformsiv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>ActiveUniformParameter</type></param>
+    </function>
+    <function name="GetBufferParameteri64v" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferParameterName</type></param>
+    </function>
+    <function name="GetBufferPointerv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferPointer</type></param>
+    </function>
+    <function name="GetInteger64i_v" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>GetIndexedPName</type></param>
+    </function>
+    <function name="GetInteger64v" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>GetPName</type></param>
+    </function>
+    <function name="GetIntegeri_v" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>GetIndexedPName</type></param>
+    </function>
+    <function name="GetInternalformativ" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>ImageTarget</type></param>
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+      <param name="pname"><type>InternalFormatParameter</type></param>
+    </function>
+    <function name="GetQueryiv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>QueryTarget</type></param>
+      <param name="pname"><type>GetQueryParam</type></param>
+    </function>
+    <function name="GetQueryObjectuiv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>GetQueryObjectParam</type></param>
+    </function>
+    <function name="GetSamplerParameterfv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+    <function name="GetSamplerParameteriv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+    <function name="GetStringi" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="name"><type>StringNameIndexed</type></param>
+    </function>
+    <function name="GetSynciv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>SyncParameterName</type></param>
+    </function>
+    <function name="GetTransformFeedbackVarying" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="type"><type>TransformFeedbackType</type></param>
+    </function>
+    <function name="GetVertexAttribIiv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>VertexAttribParameter</type></param>
+    </function>
+    <function name="GetVertexAttribIuiv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>VertexAttribParameter</type></param>
+    </function>
+    <function name="InvalidateFramebuffer" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachments"><type>FramebufferAttachment</type></param>
+    </function>
+    <function name="InvalidateSubFramebuffer" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachments"><type>FramebufferAttachment</type></param>
+    </function>
+    <function name="MapBufferRange" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="access"><type>BufferAccessMask</type></param>
+    </function>
+    <function name="ProgramParameteri" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>ProgramParameterName</type></param>
+    </function>
+    <function name="ReadBuffer" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="mode"><type>ReadBufferMode</type></param>
+    </function>
+
+    <function name="RenderbufferStorageMultisample" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+    </function>
+    <function name="SamplerParameterf" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+    <function name="SamplerParameterfv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+    <function name="SamplerParameteri" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+    <function name="SamplerParameteriv" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+    <function name="TexImage3D" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>TextureTarget3D</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="internalformat"><type>TextureComponentCount</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+    <function name="TexStorage2D" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>TextureTarget2D</type></param>
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="TexStorage3D" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>TextureTarget3D</type></param>
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="TexSubImage3D" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>TextureTarget3D</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+    <function name="TransformFeedbackVaryings" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="bufferMode"><type>TransformFeedbackMode</type></param>
+    </function>
+    <function name="UnmapBuffer" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    <function name="VertexAttribIPointer" extension="Core" profile="" category="3.0" version="3.0">
+      <param name="type"><type>VertexAttribIntegerType</type></param>
+    </function>
   </replace>
 
   <add>
@@ -1086,7 +1285,404 @@
     <enum name="FramebufferObject">
       <token name="StencilIndex" value="0x1901" />
     </enum>
-    
+
+    <!-- new ES3.0 enums -->
+    <enum name="ReadBufferMode">
+      <token name="Back" value="0X0405" />
+      <token name="None" value="0" />
+      <token name="ColorAttachment0" value="0X8ce0" />
+      <token name="ColorAttachment1" value="0x8CE1" />
+      <token name="ColorAttachment10" value="0x8CEA" />
+      <token name="ColorAttachment11" value="0x8CEB" />
+      <token name="ColorAttachment12" value="0x8CEC" />
+      <token name="ColorAttachment13" value="0x8CED" />
+      <token name="ColorAttachment14" value="0x8CEE" />
+      <token name="ColorAttachment15" value="0x8CEF" />
+      <token name="ColorAttachment2" value="0x8CE2" />
+      <token name="ColorAttachment3" value="0x8CE3" />
+      <token name="ColorAttachment4" value="0x8CE4" />
+      <token name="ColorAttachment5" value="0x8CE5" />
+      <token name="ColorAttachment6" value="0x8CE6" />
+      <token name="ColorAttachment7" value="0x8CE7" />
+      <token name="ColorAttachment8" value="0x8CE8" />
+      <token name="ColorAttachment9" value="0x8CE9" />
+    </enum>
+
+    <enum name="QueryTarget">
+      <token name="AnySamplesPassed" value="0x8C2F" />
+      <token name="AnySamplesPassedConservative" value="0x8D6A" />
+      <token name="TransformFeedbackPrimitivesWritten" value="0x8C88" />
+    </enum>
+
+    <enum name="TransformFeedbackPrimitiveType">
+      <token name="Points" value="0X0000" />
+      <token name="Lines" value="0X0001" />
+      <token name="Triangles" value="0X0004" />
+    </enum>
+
+    <enum name="BufferRangeTarget">
+      <token name="TransformFeedbackBuffer" value="0x8C8E" />
+      <token name="UniformBuffer" value="0x8A11" />
+    </enum>
+
+    <enum name="TransformFeedbackTarget">
+      <token name="TransformFeedback" value="0x8E22" />
+    </enum>
+
+    <enum name="BlitFramebufferFilter">
+      <token name="Nearest" value="0X2600" />
+      <token name="Linear" value="0X2601" />
+    </enum>
+
+    <enum name="ClearBuffer">
+      <token name="Color" value="0x1800" />
+      <token name="Front" value="0X0404" />
+      <token name="Back" value="0X0405" />
+      <token name="FrontAndBack" value="0X0408" />
+      <token name="Depth" value="0x1801" />
+      <token name="Stencil" value="0x1802" />
+    </enum>
+
+    <enum name="ClearBufferCombined">
+      <token name="DepthStencil" value="0x84F9" />
+    </enum>
+
+    <enum name="WaitSyncStatus">
+      <token name="AlreadySignaled" value="0x911A" />
+      <token name="TimeoutExpired" value="0x911B" />
+      <token name="ConditionSatisfied" value="0x911C" />
+      <token name="WaitFailed" value="0x911D" />
+    </enum>
+
+    <enum name="TextureTarget3D">
+      <token name="Texture3D" value="0x806F" />
+      <token name="Texture2DArray" value="0x8C1A" />
+    </enum>
+
+    <enum name="CompressedInternalFormat">
+      <token name="COMPRESSED_R11_EAC" value="0x9270" />
+      <token name="COMPRESSED_RG11_EAC" value="0x9272" />
+      <token name="COMPRESSED_RGB8_ETC2" value="0x9274" />
+      <token name="COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2" value="0x9276" />
+      <token name="COMPRESSED_RGBA8_ETC2_EAC" value="0x9278" />
+      <token name="COMPRESSED_SIGNED_R11_EAC" value="0x9271" />
+      <token name="COMPRESSED_SIGNED_RG11_EAC" value="0x9273" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ETC2_EAC" value="0x9279" />
+      <token name="COMPRESSED_SRGB8_ETC2" value="0x9275" />
+      <token name="COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2" value="0x9277" />
+    </enum>
+
+    <enum name="PrimitiveType">
+      <token name="Points" value="0X0000" />
+      <token name="LineStrip" value="0X0003" />
+      <token name="LineLoop" value="0X0002" />
+      <token name="Lines" value="0X0001" />
+      <token name="Triangles" value="0X0004" />
+      <token name="TriangleStrip" value="0X0005" />
+      <token name="TriangleFan" value="0X0006" />
+    </enum>
+
+    <enum name="DrawBufferMode">
+      <token name="None" value="0" />
+      <token name="Back" value="0X0405" />
+      <token name="ColorAttachment0" value="0X8ce0" />
+      <token name="ColorAttachment1" value="0x8CE1" />
+      <token name="ColorAttachment10" value="0x8CEA" />
+      <token name="ColorAttachment11" value="0x8CEB" />
+      <token name="ColorAttachment12" value="0x8CEC" />
+      <token name="ColorAttachment13" value="0x8CED" />
+      <token name="ColorAttachment14" value="0x8CEE" />
+      <token name="ColorAttachment15" value="0x8CEF" />
+      <token name="ColorAttachment2" value="0x8CE2" />
+      <token name="ColorAttachment3" value="0x8CE3" />
+      <token name="ColorAttachment4" value="0x8CE4" />
+      <token name="ColorAttachment5" value="0x8CE5" />
+      <token name="ColorAttachment6" value="0x8CE6" />
+      <token name="ColorAttachment7" value="0x8CE7" />
+      <token name="ColorAttachment8" value="0x8CE8" />
+      <token name="ColorAttachment9" value="0x8CE9" />
+    </enum>
+
+    <enum name="FramebufferAttachment">
+      <token name="ColorAttachment0" value="0X8ce0" />
+      <token name="ColorAttachment1" value="0x8CE1" />
+      <token name="ColorAttachment10" value="0x8CEA" />
+      <token name="ColorAttachment11" value="0x8CEB" />
+      <token name="ColorAttachment12" value="0x8CEC" />
+      <token name="ColorAttachment13" value="0x8CED" />
+      <token name="ColorAttachment14" value="0x8CEE" />
+      <token name="ColorAttachment15" value="0x8CEF" />
+      <token name="ColorAttachment2" value="0x8CE2" />
+      <token name="ColorAttachment3" value="0x8CE3" />
+      <token name="ColorAttachment4" value="0x8CE4" />
+      <token name="ColorAttachment5" value="0x8CE5" />
+      <token name="ColorAttachment6" value="0x8CE6" />
+      <token name="ColorAttachment7" value="0x8CE7" />
+      <token name="ColorAttachment8" value="0x8CE8" />
+      <token name="ColorAttachment9" value="0x8CE9" />
+      <token name="DepthAttachment" value="0X8d00" />
+      <token name="DepthStencilAttachment" value="0x821A" />
+      <token name="StencilAttachment" value="0X8d20" />
+    </enum>
+
+    <enum name="SyncCondition">
+      <token name="SyncGpuCommandsComplete" value="0x9117" />
+    </enum>
+
+    <enum name="WaitSyncFlags">
+      <token name="None" value="0" />
+    </enum>
+
+    <enum name="ActiveUniformBlockParameter">
+      <token name="UNIFORM_BLOCK_BINDING" value="0x8A3F" />
+      <token name="UNIFORM_BLOCK_DATA_SIZE" value="0x8A40" />
+      <token name="UNIFORM_BLOCK_NAME_LENGTH" value="0x8A41" />
+      <token name="UNIFORM_BLOCK_ACTIVE_UNIFORMS" value="0x8A42" />
+      <token name="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" value="0x8A43" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" value="0x8A46" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" value="0x8A44" />
+    </enum>
+
+    <enum name="ActiveUniformParameter">
+      <token name="UNIFORM_TYPE" value="0x8A37" />
+      <token name="UNIFORM_SIZE" value="0x8A38" />
+      <token name="UNIFORM_NAME_LENGTH" value="0x8A39" />
+      <token name="UNIFORM_BLOCK_INDEX" value="0x8A3A" />
+      <token name="UNIFORM_OFFSET" value="0x8A3B" />
+      <token name="UNIFORM_ARRAY_STRIDE" value="0x8A3C" />
+      <token name="UNIFORM_MATRIX_STRIDE" value="0x8A3D" />
+      <token name="UNIFORM_IS_ROW_MAJOR" value="0x8A3E" />
+    </enum>
+
+    <enum name="BufferPointer">
+      <token name="BufferMapPointer" value="0x88BD" />
+    </enum>
+
+    <enum name="ImageTarget">
+      <token name="Renderbuffer" value="0X8d41" />
+    </enum>
+
+    <enum name="SizedInternalFormat">
+      <token name="DEPTH_COMPONENT16" value="0x81A5" />
+      <token name="DEPTH_COMPONENT24" value="0x81A6" />
+      <token name="DEPTH_COMPONENT32F" value="0x8CAC" />
+      <token name="DEPTH24_STENCIL8" value="0x88F0" />
+      <token name="DEPTH32F_STENCIL8" value="0x8CAD" />
+      <token name="R8" value="0x8229" />
+      <token name="RG8" value="0x822B" />
+      <token name="R16F" value="0x822D" />
+      <token name="R32F" value="0x822E" />
+      <token name="RG16F" value="0x822F" />
+      <token name="RG32F" value="0x8230" />
+      <token name="R8I" value="0x8231" />
+      <token name="R8UI" value="0x8232" />
+      <token name="R16I" value="0x8233" />
+      <token name="R16UI" value="0x8234" />
+      <token name="R32I" value="0x8235" />
+      <token name="R32UI" value="0x8236" />
+      <token name="RG8I" value="0x8237" />
+      <token name="RG8UI" value="0x8238" />
+      <token name="RG16I" value="0x8239" />
+      <token name="RG16UI" value="0x823A" />
+      <token name="RG32I" value="0x823B" />
+      <token name="RG32UI" value="0x823C" />
+      <token name="RGBA16F" value="0x881A" />
+      <token name="RGBA32F" value="0x8814" />
+      <token name="RGB16F" value="0x881B" />
+      <token name="RGB32F" value="0x8815" />
+      <token name="R11F_G11F_B10F" value="0x8C3A" />
+      <token name="RGB9_E5" value="0x8C3D" />
+      <token name="SRGB8" value="0x8C41" />
+      <token name="SRGB8_ALPHA8" value="0x8C43" />
+      <token name="RGB565" value="0x8D62" />
+      <token name="RGBA32UI" value="0x8D70" />
+      <token name="RGBA16UI" value="0x8D76" />
+      <token name="RGBA8UI" value="0x8D7C" />
+      <token name="RGB32UI" value="0x8D71" />
+      <token name="RGB16UI" value="0x8D77" />
+      <token name="RGB8UI" value="0x8D7D" />
+      <token name="RGBA32I" value="0x8D82" />
+      <token name="RGBA16I" value="0x8D88" />
+      <token name="RGBA8I" value="0x8D8E" />
+      <token name="RGB32I" value="0x8D83" />
+      <token name="RGB16I" value="0x8D89" />
+      <token name="RGB8I" value="0x8D8F" />
+      <token name="R8_SNORM" value="0x8F94" />
+      <token name="RG8_SNORM" value="0x8F95" />
+      <token name="RGB8_SNORM" value="0x8F96" />
+      <token name="RGBA8_SNORM" value="0x8F97" />
+      <token name="RGB8" value="0x8051" />
+      <token name="RGBA4" value="0x8056" />
+      <token name="RGB5_A1" value="0x8057" />
+      <token name="RGBA8" value="0x8058" />
+      <token name="RGB10_A2" value="0x8059" />
+      <token name="RGB10_A2UI" value="0x906F" />
+    </enum>
+
+    <enum name="InternalFormatParameter">
+      <token name="NUM_SAMPLE_COUNTS" value="0x9380" />
+      <token name="SAMPLES" value="0x80A9" />
+    </enum>
+
+    <enum name="GetQueryParam">
+      <token name="CURRENT_QUERY" value="0x8865" />
+    </enum>
+
+    <enum name="GetQueryObjectParam">
+      <token name="QUERY_RESULT" value="0x8866" />
+      <token name="QUERY_RESULT_AVAILABLE" value="0x8867" />
+    </enum>
+
+    <enum name="SamplerParameterName">
+      <token name="TextureMinFilter" value="0X2801" />
+      <token name="TextureMagFilter" value="0X2800" />
+      <token name="TextureMinLod" value="0x813A" />
+      <token name="TextureMaxLod" value="0x813B" />
+      <token name="TextureWrapS" value="0X2802" />
+      <token name="TextureWrapT" value="0X2803" />
+      <token name="TextureWrapR" value="0x8072" />
+      <token name="TextureCompareFunc" value="0x884D" />
+      <token name="TextureCompareMode" value="0x884C" />
+    </enum>
+
+    <enum name="SyncParameterName">
+      <token name="OBJECT_TYPE" value="0x9112" />
+      <token name="SYNC_STATUS" value="0x9114" />
+      <token name="SYNC_CONDITION" value="0x9113" />
+      <token name="SYNC_FLAGS" value="0x9115" />
+    </enum>
+
+    <enum name="TransformFeedbackType">
+      <token name="Float" value="0X1406" />
+      <token name="FloatVec2" value="0X8b50" />
+      <token name="FloatVec3" value="0X8b51" />
+      <token name="FloatVec4" value="0X8b52" />
+      <token name="FloatMat2" value="0X8b5a" />
+      <token name="FloatMat3" value="0X8b5b" />
+      <token name="FloatMat4" value="0X8b5c" />
+      <token name="FloatMat2x3" value="0x8B65" />
+      <token name="FloatMat2x4" value="0x8B66" />
+      <token name="FloatMat3x2" value="0x8B67" />
+      <token name="FloatMat3x4" value="0x8B68" />
+      <token name="FloatMat4x2" value="0x8B69" />
+      <token name="FloatMat4x3" value="0x8B6A" />
+      <token name="Int" value="0x1404" />
+      <token name="IntVec2" value="0x8B53" />
+      <token name="IntVec3" value="0x8B54" />
+      <token name="IntVec4" value="0x8B55" />
+      <token name="UnsignedInt" value="0x1405" />
+      <token name="UnsignedIntVec2" value="0x8DC6" />
+      <token name="UnsignedIntVec3" value="0x8DC7" />
+      <token name="UnsignedIntVec4" value="0x8DC8" />
+    </enum>
+
+    <enum name="GetIndexedPName">
+      <token name="TransformFeedbackBufferBinding" value="0x8C8F" />
+      <token name="TransformFeedbackBufferSize" value="0x8C85" />
+      <token name="TransformFeedbackBufferStart" value="0x8C84" />
+      <token name="UniformBufferBinding" value="0x8A28" />
+      <token name="UniformBufferSize" value="0x8A2A" />
+      <token name="UniformBufferStart" value="0x8A29" />
+    </enum>
+
+    <enum name="StringNameIndexed">
+      <token name="Extensions" value="0X1f03" />
+    </enum>
+
+    <enum name="BufferAccessMask">
+      <token name="MAP_READ_BIT" value="0x0001" />
+      <token name="MAP_WRITE_BIT" value="0x0002" />
+      <token name="MAP_INVALIDATE_RANGE_BIT" value="0x0004" />
+      <token name="MAP_INVALIDATE_BUFFER_BIT" value="0x0008" />
+      <token name="MAP_FLUSH_EXPLICIT_BIT" value="0x0010" />
+      <token name="MAP_UNSYNCHRONIZED_BIT" value="0x0020" />
+    </enum>
+
+    <enum name="ProgramParameterName">
+      <token name="ProgramBinaryRetrievableHint" value="0x8257" />
+    </enum>
+
+    <enum name="TextureTarget2D">
+      <token name="Texture2D" value="0X0de1" />
+      <token name="TextureCubeMap" value="0X8513" />
+    </enum>
+
+    <enum name="TextureComponentCount">
+      <token name="Rgb" value="0X1907" />
+      <token name="Rgba" value="0X1908" />
+      <token name="Luminance" value="0X1909" />
+      <token name="LuminanceAlpha" value="0X190a" />
+      <token name="Alpha" value="0X1906" />
+      <token name="R8" value="0x8229" />
+      <token name="RG8" value="0x822B" />
+      <token name="R16F" value="0x822D" />
+      <token name="R32F" value="0x822E" />
+      <token name="RG16F" value="0x822F" />
+      <token name="RG32F" value="0x8230" />
+      <token name="R8I" value="0x8231" />
+      <token name="R8UI" value="0x8232" />
+      <token name="R16I" value="0x8233" />
+      <token name="R16UI" value="0x8234" />
+      <token name="R32I" value="0x8235" />
+      <token name="R32UI" value="0x8236" />
+      <token name="RG8I" value="0x8237" />
+      <token name="RG8UI" value="0x8238" />
+      <token name="RG16I" value="0x8239" />
+      <token name="RG16UI" value="0x823A" />
+      <token name="RG32I" value="0x823B" />
+      <token name="RG32UI" value="0x823C" />
+      <token name="RGBA16F" value="0x881A" />
+      <token name="RGBA32F" value="0x8814" />
+      <token name="RGB16F" value="0x881B" />
+      <token name="RGB32F" value="0x8815" />
+      <token name="R11F_G11F_B10F" value="0x8C3A" />
+      <token name="RGB9_E5" value="0x8C3D" />
+      <token name="SRGB8" value="0x8C41" />
+      <token name="SRGB8_ALPHA8" value="0x8C43" />
+      <token name="RGB565" value="0x8D62" />
+      <token name="RGBA32UI" value="0x8D70" />
+      <token name="RGBA16UI" value="0x8D76" />
+      <token name="RGBA8UI" value="0x8D7C" />
+      <token name="RGB32UI" value="0x8D71" />
+      <token name="RGB16UI" value="0x8D77" />
+      <token name="RGB8UI" value="0x8D7D" />
+      <token name="RGBA32I" value="0x8D82" />
+      <token name="RGBA16I" value="0x8D88" />
+      <token name="RGBA8I" value="0x8D8E" />
+      <token name="RGB32I" value="0x8D83" />
+      <token name="RGB16I" value="0x8D89" />
+      <token name="RGB8I" value="0x8D8F" />
+      <token name="R8_SNORM" value="0x8F94" />
+      <token name="RG8_SNORM" value="0x8F95" />
+      <token name="RGB8_SNORM" value="0x8F96" />
+      <token name="RGBA8_SNORM" value="0x8F97" />
+      <token name="RGB8" value="0x8051" />
+      <token name="RGBA4" value="0x8056" />
+      <token name="RGB5_A1" value="0x8057" />
+      <token name="RGBA8" value="0x8058" />
+      <token name="RGB10_A2" value="0x8059" />
+      <token name="RGB10_A2UI" value="0x906F" />
+      <token name="DEPTH_COMPONENT16" value="0x81A5" />
+      <token name="DEPTH_COMPONENT24" value="0x81A6" />
+      <token name="DEPTH_COMPONENT32F" value="0x8CAC" />
+      <token name="DEPTH24_STENCIL8" value="0x88F0" />
+      <token name="DEPTH32F_STENCIL8" value="0x8CAD" />
+    </enum>
+
+    <enum name="TransformFeedbackMode">
+      <token name="INTERLEAVED_ATTRIBS" value="0x8C8C" />
+      <token name="SEPARATE_ATTRIBS" value="0x8C8D" />
+    </enum>
+
+    <enum name="VertexAttribIntegerType">
+      <token name="Byte" value="0X1400" />
+      <token name="UnsignedByte" value="0X1401" />
+      <token name="Short" value="0X1402" />
+      <token name="UnsignedShort" value="0X1403" />
+      <token name="Int" value="0x1404" />
+      <token name="UnsignedInt" value="0X1405" />
+    </enum>
+
   </add>
 
 </signatures>

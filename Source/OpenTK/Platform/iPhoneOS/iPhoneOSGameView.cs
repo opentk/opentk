@@ -151,7 +151,8 @@ namespace OpenTK.Platform.iPhoneOS
 
     [Register]
     class CADisplayLinkTimeSource : NSObject, ITimeSource {
-        static Selector selRunIteration = new Selector ("runIteration");
+        const string selectorName = "runIteration:";
+        static Selector selRunIteration = new Selector (selectorName);
 
         iPhoneOSGameView view;
         CADisplayLink displayLink;
@@ -187,11 +188,15 @@ namespace OpenTK.Platform.iPhoneOS
             }
         }
 
-        [Export ("runIteration")]
+        [Export (selectorName)]
         [Preserve (Conditional = true)]
-        void RunIteration ()
+        void RunIteration (NSTimer timer)
         {
+#if XAMCORE_2_0
+            view.RunIteration (null);
+#else
             view.RunIteration ();
+#endif
         }
     }
 
@@ -846,7 +851,11 @@ namespace OpenTK.Platform.iPhoneOS
         FrameEventArgs updateEventArgs = new FrameEventArgs();
         FrameEventArgs renderEventArgs = new FrameEventArgs();
 
+#if XAMCORE_2_0
+        internal void RunIteration (NSTimer timer)
+#else
         internal void RunIteration ()
+#endif
         {
             var curUpdateTime = stopwatch.Elapsed;
             if (prevUpdateTime == TimeSpan.Zero)

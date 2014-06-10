@@ -423,6 +423,7 @@ namespace OpenTK.Platform.Android {
 			if (eglSurface != EGL10.EglNoSurface) {
 				IEGL10 egl = EGLContext.EGL.JavaCast<IEGL10> ();
 				try	{
+					egl.EglMakeCurrent (eglDisplay, EGL10.EglNoSurface, EGL10.EglNoSurface, EGL10.EglNoContext);
 					if (!egl.EglDestroySurface (eglDisplay, eglSurface))
 						Log.Warn ("AndroidWindow", "Failed to destroy surface {0}.", eglSurface);
 				}
