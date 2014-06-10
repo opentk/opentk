@@ -23,6 +23,8 @@ namespace Bind
             @"<!DOCTYPE[^>\[]*(\[.*\])?>", RegexOptions.Compiled | RegexOptions.Multiline);
         static readonly Regex remove_xmlns = new Regex(
             "xmlns=\".+\"", RegexOptions.Compiled);
+        static readonly Regex remove_unknown_entities = new Regex(
+            "&.+;", RegexOptions.Compiled);
 
         readonly Dictionary<string, string> DocumentationFiles =
             new Dictionary<string, string>();
@@ -98,10 +100,17 @@ namespace Bind
             text = File.ReadAllText(file);
 
             text = text
-                .Replace("&epsi;", "epsilon") // Fix unrecognized &epsi; entities
-                .Replace("xml:", String.Empty); // Remove namespaces
+                .Replace("&epsi;", "ϵ") // Fix mathml entities
+                .Replace("&plusmn;", "±")
+                .Replace("&infin;", "∞")
+                .Replace("&copy;", "©")
+                .Replace("&ge;", "≥")
+                .Replace("&le;", "≤")
+                .Replace("xml:", String.Empty) // Remove namespaces
+                .Replace("xlink:", String.Empty);
             text = remove_doctype.Replace(text, String.Empty);
-            text = remove_xmlns.Replace(text, string.Empty);
+            text = remove_xmlns.Replace(text, String.Empty);
+            text = remove_unknown_entities.Replace(text, String.Empty);
 
             Match m = remove_mathml.Match(text);
             while (m.Length > 0)
@@ -136,15 +145,23 @@ namespace Bind
             XDocument doc = null;
             try
             {
-                using (var sr = new StringReader(text))
+                var settings = new XmlReaderSettings
                 {
-                    var settings = new XmlReaderSettings
-                    {
-                        ProhibitDtd = true,
-                        XmlResolver = null
-                    };
+                    ProhibitDtd = false,
+                    XmlResolver = null,
+                    ValidationType = ValidationType.None
+                };
 
-                    doc = XDocument.Load(XmlReader.Create(sr, settings));
+                // We need to turn off docbook DTD processing,
+                // otherwise this process will never finish
+                // (it keeps trying to load the DTD from the server
+                // for every single documentation file!)
+                // Note: yes, that's what it takes to turn off
+                // DTD processing...
+                using (var sr = new StringReader(text))
+                using (var xml = XmlReader.Create(sr, settings))
+                {
+                    doc = XDocument.Load(xml);
                 }
 
                 Cached = ToInlineDocs(doc, processor);
@@ -187,12 +204,19 @@ namespace Bind
                         ((IEnumerable)doc.XPathEvaluate("/refentry/refnamediv/refpurpose"))
                         .Cast<XElement>().First().Value),
                 Parameters =
-                    ((IEnumerable)doc.XPathEvaluate("/refentry/refsect1[@id='parameters']/variablelist/varlistentry/term/parameter"))
+                    ((IEnumerable)doc.XPathEvaluate("/refentry/refsect1[@id='parameters']/variablelist/varlistentry"))
                         .Cast<XElement>()
-                        .Select(p =>
-                            new DocumentationParameter(
-                                p.Value.Trim(),
-                                Cleanup(p.XPathSelectElement("../../listitem").Value)))
+                        .SelectMany(plist => plist
+                            .XPathSelectElements("term/parameter|term/varname|term")
+                            .Select(p =>
+                                new DocumentationParameter(
+                                    (p ?? new XElement("dummy")).Value
+                                        .Trim(',', '*', '\t') // Some docs have whitespace characters in their param names
+                                        .Trim()
+                                        .Trim(',') // Yes, twice. Otherwise mono appears to leave some comma characters intact
+                                        .Replace(' ', '_'), // Some docs also have incorrect param names (e.g. clCreateImage3D.xml -> "image depth" instead of "image_depth"
+                                    Cleanup(p.XPathSelectElement("../listitem|../../listitem").Value)))
+                            .Distinct())
                     .ToList()
             };
 
