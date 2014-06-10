@@ -16,6 +16,8 @@ namespace Bind
     class DocProcessor
     {
         static readonly char[] numbers = "0123456789".ToCharArray();
+        static readonly char[] separators =
+            new char[] { ',', '*', '\t', '\n', '\r', ' ' };
         static readonly Regex remove_mathml = new Regex(
             @"<(mml:math|inlineequation)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
@@ -204,16 +206,13 @@ namespace Bind
                         ((IEnumerable)doc.XPathEvaluate("/refentry/refnamediv/refpurpose"))
                         .Cast<XElement>().First().Value),
                 Parameters =
-                    ((IEnumerable)doc.XPathEvaluate("/refentry/refsect1[@id='parameters']/variablelist/varlistentry"))
+                    ((IEnumerable)doc.XPathEvaluate("/refentry/refsect1[substring(@id, 1, 10)='parameters']/variablelist/varlistentry"))
                         .Cast<XElement>()
                         .SelectMany(plist => plist
-                            .XPathSelectElements("term/parameter|term/varname|term")
+                            .XPathSelectElements("term/parameter|term/varname") //|term
                             .Select(p =>
                                 new DocumentationParameter(
-                                    (p ?? new XElement("dummy")).Value
-                                        .Trim(',', '*', '\t') // Some docs have whitespace characters in their param names
-                                        .Trim()
-                                        .Trim(',') // Yes, twice. Otherwise mono appears to leave some comma characters intact
+                                    String.Join("", (p ?? new XElement("dummy")).Value.Split(separators, StringSplitOptions.RemoveEmptyEntries)) // Some docs have whitespace characters in their param names
                                         .Replace(' ', '_'), // Some docs also have incorrect param names (e.g. clCreateImage3D.xml -> "image depth" instead of "image_depth"
                                     Cleanup(p.XPathSelectElement("../listitem|../../listitem").Value)))
                             .Distinct())
