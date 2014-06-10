@@ -5471,7 +5471,7 @@
       <use token="DEPTH_COMPONENT16_OES" />
       <use token="DEPTH_COMPONENT24_OES" />
       <use token="UNSIGNED_SHORT4444_REV" />
-      <use token="UNSI"GNED_SHORT4444_REV_EXT" />
+      <use token="UNSIGNED_SHORT4444_REV_EXT" />
       <use token="UNSIGNED_SHORT4444_REV_IMG" />
       <use token="UNSIGNED_SHORT1555_REV_EXT" />
       <use token="MIRRORED_REPEAT_OES" />
