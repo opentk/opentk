@@ -314,6 +314,13 @@ namespace Bind
                 if (String.IsNullOrEmpty(d.Extension))
                     d.Extension = "Core";
 
+                // Skip extensions if "KeepCoreOnly" is enabled
+                if (Settings.IsEnabled(Settings.Legacy.KeepCoreOnly) &&
+                    d.Extension != "Core")
+                {
+                    continue;
+                }
+
                 if (!extensions.Contains(d.Extension))
                     extensions.Add(d.Extension);
 
@@ -491,6 +498,8 @@ restart:
                         // e.g. enum A reuses B which reuses C
                         goto restart;
                     }
+
+                    Utilities.Merge(enums, e);
                 }
             }
 

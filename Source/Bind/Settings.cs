@@ -182,6 +182,12 @@ namespace Bind
             /// Use this option to maintain compatibility with the 1.0/1.1 GL and ES APIs.
             /// </summary>
             KeepStringArrayOverloads = 0x80000,
+            /// <summary>
+            /// Generates bindings only for core methods. Extensions are ignored.
+            /// Use this option to generate OpenGL ES 1.0 bindings from the 1.1 specification
+            /// (OpenGL ES 1.0 does not define any extensions.)
+            /// </summary>
+            KeepCoreOnly = 0x100000,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |
