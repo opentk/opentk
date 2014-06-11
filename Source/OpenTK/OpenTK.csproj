@@ -433,21 +433,6 @@
     <Compile Include="Graphics\OpenGL\ErrorHelper.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\ES10\ES.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES10\Enums.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES10\ErrorHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES10\Helper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES10\Core.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Graphics\ES11\ErrorHelper.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -774,6 +759,15 @@
     <Compile Include="Compute\CL11\CL11.Extensions.cs" />
     <Compile Include="Compute\CL11\CL11.cs" />
     <Compile Include="Compute\CL11\CL11.Helper.cs" />
+    <Compile Include="Graphics\ES10\ES10.Extensions.cs" />
+    <Compile Include="Graphics\ES10\ES10.Enums.cs" />
+    <Compile Include="Graphics\ES10\ES10.cs" />
+    <Compile Include="Graphics\ES10\ES10.Helper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\ES10\ES10.ErrorHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -808,5 +802,6 @@
     <Folder Include="Compute\CL12\" />
     <Folder Include="Extensions\" />
     <Folder Include="Compute\CL11\" />
+    <Folder Include="Graphics\ES10\" />
   </ItemGroup>
 </Project>

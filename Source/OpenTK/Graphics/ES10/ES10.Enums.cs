@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenTK.Graphics.ES11
+namespace OpenTK.Graphics.ES10
 {
     /// <summary>
     /// Not used directly.
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.Accumx, GL.Oes.AlphaFuncx and 163 other functions
+    /// Used in GL.GetPixelMapx, GL.PixelMapx and 74 other functions
     /// </summary>
     public enum All : int
     {
@@ -6619,7 +6619,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Ext.BlendEquation
+    /// Not used directly.
     /// </summary>
     public enum BlendEquationModeExt : int
     {
@@ -7472,7 +7472,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Ext.MultiDrawElements, GL.DrawElements
+    /// Used in GL.DrawElements
     /// </summary>
     public enum DrawElementsType : int
     {
@@ -15291,7 +15291,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Ext.MultiDrawArrays, GL.Ext.MultiDrawElements and 2 other functions
+    /// Used in GL.DrawArrays, GL.DrawElements
     /// </summary>
     public enum PrimitiveType : int
     {
