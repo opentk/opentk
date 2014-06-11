@@ -258,14 +258,15 @@ namespace Bind
                     break;
                 
                 case "gl":
+                    Generators.Add(new GL2Generator(Settings.Clone(), dirName));
+                    Generators.Add(new GL4Generator(Settings.Clone(), dirName));
+                    break;
+
                 case "gl2":
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
                     Generators.Add(new GL2Generator(Settings.Clone(), dirName));
                     break;
 
-                case "gl3":
                 case "gl4":
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL4";
                     Generators.Add(new GL4Generator(Settings.Clone(), dirName));
                     break;
 
