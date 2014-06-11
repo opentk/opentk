@@ -180,9 +180,14 @@ namespace OpenTK.Platform.MacOS
                     break;
 
                 case CGEventType.ScrollWheel:
-                    CursorState.SetScrollRelative(
-                        (float)CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis2) * MacOSFactory.ScrollFactor,
-                        (float)CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis1) * MacOSFactory.ScrollFactor);
+                    {
+                        // Note: OpenTK follows the win32 convention, where
+                        // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
+                        // so we need to flip the horizontal scroll direction.
+                        double h = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis2) * MacOSFactory.ScrollFactor;
+                        double v = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis1) * MacOSFactory.ScrollFactor;
+                        CursorState.SetScrollRelative((float)(-h), (float)v);
+                    }
                     break;
 
                 case CGEventType.LeftMouseDown:
@@ -190,6 +195,7 @@ namespace OpenTK.Platform.MacOS
                 case CGEventType.OtherMouseDown:
                     {
                         int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
+                        n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
                         MouseButton b = MouseButton.Left + n;
                         CursorState[b] = true;
                     }
@@ -200,6 +206,7 @@ namespace OpenTK.Platform.MacOS
                 case CGEventType.OtherMouseUp:
                     {
                         int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
+                        n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
                         MouseButton b = MouseButton.Left + n;
                         CursorState[b] = false;
                     }
@@ -404,6 +411,11 @@ namespace OpenTK.Platform.MacOS
 
                         case HIDUsageGD.Y:
                             mouse.State.Y += v_int;
+                            break;
+
+                        case HIDUsageGD.Z:
+                            // Horizontal scrolling for apple mouse (old-style with trackball)
+                            mouse.State.SetScrollRelative(v_int, 0);
                             break;
 
                         case HIDUsageGD.Wheel:

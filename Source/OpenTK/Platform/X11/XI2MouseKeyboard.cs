@@ -544,7 +544,11 @@ namespace OpenTK.Platform.X11
 
             d.State.X += (int)Math.Round(x);
             d.State.Y += (int)Math.Round(y);
-            d.State.SetScrollRelative((float)h, (float)v);
+
+            // Note: OpenTK follows the windows scrolling convention where
+            // (+h, +v) = (right, up). XI2 uses (+h, +v) = (right, down)
+            // instead, so we need to flip the vertical offset.
+            d.State.SetScrollRelative((float)h, (float)(-v));
         }
 
         unsafe static double ReadRawValue(ref XIRawEvent raw, int bit)
