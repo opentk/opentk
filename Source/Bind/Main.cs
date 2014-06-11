@@ -232,9 +232,9 @@ namespace Bind
                         var desktop = Settings.Clone();
                         Generators.Add(new GL2Generator(desktop, dirName));
                         Generators.Add(new GL4Generator(desktop, dirName));
-                        Generators.Add(new ESGenerator(desktop, dirName));
-                        Generators.Add(new ES2Generator(desktop, dirName));
-                        Generators.Add(new ES3Generator(desktop, dirName));
+                        Generators.Add(new ES11Generator(desktop, dirName));
+                        Generators.Add(new ES20Generator(desktop, dirName));
+                        Generators.Add(new ES30Generator(desktop, dirName));
                         Generators.Add(new CLGenerator(desktop, dirName));
                         Generators.Add(new CL12Generator(desktop, dirName));
                         Generators.Add(new CL20Generator(desktop, dirName));
@@ -269,26 +269,27 @@ namespace Bind
                     Generators.Add(new GL4Generator(Settings.Clone(), dirName));
                     break;
 
+                case "es":
+                    Generators.Add(new ES10Generator(Settings.Clone(), dirName));
+                    Generators.Add(new ES11Generator(Settings.Clone(), dirName));
+                    Generators.Add(new ES20Generator(Settings.Clone(), dirName));
+                    Generators.Add(new ES30Generator(Settings.Clone(), dirName));
+                    break;
+
                 case "es10":
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES10";
-                    Generators.Add(new ESGenerator(Settings.Clone(), dirName));
+                    Generators.Add(new ES10Generator(Settings.Clone(), dirName));
                     break;
 
                 case "es11":
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
-                    Generators.Add(new ESGenerator(Settings.Clone(), dirName));
+                    Generators.Add(new ES11Generator(Settings.Clone(), dirName));
                     break;
 
-                case "es2":
                 case "es20":
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
-                    Generators.Add(new ES2Generator(Settings.Clone(), dirName));
+                    Generators.Add(new ES20Generator(Settings.Clone(), dirName));
                     break;
 
-                case "es3":
                 case "es30":
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
-                    Generators.Add(new ES3Generator(Settings.Clone(), dirName));
+                    Generators.Add(new ES30Generator(Settings.Clone(), dirName));
                     break;
 
                 case "cl":

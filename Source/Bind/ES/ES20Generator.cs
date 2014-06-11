@@ -9,23 +9,23 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind.ES
 {
-    // Generation implementation for OpenGL ES 3.0
-    class ES3Generator : Generator
+    // Generation implementation for OpenGL ES 2.0 and 3.0
+    class ES20Generator : Generator
     {
-        public ES3Generator(Settings settings, string dirName)
+        public ES20Generator(Settings settings, string dirName)
             : base(settings, dirName)
         {
             Settings.DefaultOutputPath = String.Format(
-                Settings.DefaultOutputPath, "Graphics", "ES30");
-            Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
-            Settings.DefaultEnumsFile = "ES30Enums.cs";
-            Settings.DefaultWrappersFile = "ES30.cs";
-            Settings.DefaultClassesFile = "ES30.Extensions.cs";
+                Settings.DefaultOutputPath, "Graphics", "ES20");
+            Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
+            Settings.DefaultEnumsFile = "ES20Enums.cs";
+            Settings.DefaultWrappersFile = "ES20.cs";
+            Settings.DefaultClassesFile = "ES20.Extensions.cs";
             Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "ES30");
+                Settings.DefaultDocPath, "ES20");
 
-            Profile = "gles2"; // The 3.0 spec reuses the gles2 apiname
-            Version = "2.0|3.0";
+            Profile = "gles2";
+            Version = "2.0";
 
             // For compatibility with OpenTK 1.0 and Xamarin, generate
             // overloads using the "All" enum in addition to strongly-typed enums.
