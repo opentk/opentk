@@ -114,11 +114,6 @@ namespace Bind
             text = remove_xmlns.Replace(text, String.Empty);
             text = remove_unknown_entities.Replace(text, String.Empty);
 
-            if (file.Contains("RasterPos"))
-            {
-                System.Diagnostics.Debugger.Break();
-            }
-
             Match m = remove_mathml.Match(text);
             while (m.Length > 0)
             {
