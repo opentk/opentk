@@ -231,9 +231,18 @@ namespace Bind
             else
             {
                 Enum e = enums[t.Name];
-                foreach (Constant c in t.ConstantCollection.Values)
+
+                // Note: do not attempt to merge t if
+                // it is already included in the enums
+                // collection, otherwise we will crash
+                // by trying to enumerate and modify the
+                // same collection.
+                if (!Object.ReferenceEquals(e, t))
                 {
-                    Merge(e, c);
+                    foreach (Constant c in t.ConstantCollection.Values)
+                    {
+                        Merge(e, c);
+                    }
                 }
             }
         }
