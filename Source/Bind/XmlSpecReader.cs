@@ -117,7 +117,7 @@ namespace Bind
                 }
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
                 {
-                    Utilities.Merge(enums, ReadEnums(nav));
+                    ReadEnums(enums, nav);
                 }
             }
         }
@@ -366,10 +366,11 @@ namespace Bind
             return delegates;
         }
 
-        EnumCollection ReadEnums(XPathNavigator nav)
+        void ReadEnums(EnumCollection enums, XPathNavigator nav)
         {
-            EnumCollection enums = new EnumCollection();
-            Enum all = new Enum() { Name = Settings.CompleteEnumName };
+            Enum all = enums.ContainsKey(Settings.CompleteEnumName) ?
+                enums[Settings.CompleteEnumName] :
+                new Enum() { Name = Settings.CompleteEnumName };
 
             if (nav != null)
             {
@@ -459,6 +460,7 @@ namespace Bind
 
                     Utilities.Merge(enums, e);
                 }
+                Utilities.Merge(enums, all);
 
                 // Second pass: resolve "reuse" directives
 restart:
@@ -493,7 +495,6 @@ restart:
             }
 
             Utilities.Merge(enums, all);
-            return enums;
         }
 
         #endregion
