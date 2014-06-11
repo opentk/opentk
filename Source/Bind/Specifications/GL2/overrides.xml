@@ -4901,7 +4901,10 @@
   
   <!--- gles1 -->
   <overload name="gles1">
-    <function name="Clear" obsolete="Use ClearMask overload instead">
+    <function name="Clear" obsolete="Use ClearBufferMask overload instead">
+      <param name="mask"><type>GLint</type></param>
+    </function>
+    <function name="Clear" obsolete="Use ClearBufferMask overload instead">
       <param name="mask"><type>GLuint</type></param>
     </function>
     <function name="CompressedTexImage2D" obsolete="Use strongly-typed overload instead">
@@ -4954,6 +4957,9 @@
     <function name="BufferSubData">
       <param name="target"><type>BufferTarget</type></param>
     </function>
+    <function name="Clear">
+      <param name="mask"><type>ClearBufferMask</type></param>
+    </function>
     <!-- AMD_performance_monitors is not const-correct -->
     <function name="DeletePerfMonitors" extension="AMD">
       <param name="monitors"><flow>in</flow></param>
@@ -4973,7 +4979,7 @@
       <param name="pname"><type>BufferParameterName</type></param>
     </function>
   </replace>
-  
+
   <add name="gles1">
     <enum name="ArrayCap">
       <use token="VERTEX_ARRAY" />
@@ -7986,6 +7992,20 @@
     </enum>
   </add>
 
+  <!-- OpenTK 1.1 compatibility -->
+  <!-- Todo: remove these in 1.2 -->
+  <replace name="gles1" version="1.0">
+    <function name="GetInteger">
+      <param name="data"><flow>in</flow></param>
+    </function>
+    <function name="GenTextures">
+      <param name="textures"><flow>in</flow></param>
+    </function>
+    <function name="GetError">
+      <returns><type>All</type></returns>
+    </function>
+  </replace>
+
   <!-- Xamarin.Android compatibility -->
   <add name="gles1" version="1.0">
     <enum name="Amdcompressed3Dctexture" type="int">
@@ -8374,6 +8394,14 @@
     <enum name="QcomwriteonlyRendering" type="int">
       <token name="QCOM_writeonly_rendering" value="1" />
       <token name="WRITEONLY_RENDERING_QCOM" value="0x8823" />
+    </enum>
+    <enum name="GetPName" type="int">
+      <token name="NUM_COMPRESSED_TEXTURE_FORMATS" value="0x86A2" />
+      <token name="COMPRESSED_TEXTURE_FORMATS" value="0x86A3" />
+      <token name="MAX_ELEMENTS_INDICES" value="0x80E9" />
+      <token name="MAX_ELEMENTS_VERTICES" value="0x80E8" />
+      <token name="IMPLEMENTATION_COLOR_READ_TYPE_OES" value="0x8B9A" />
+      <token name="IMPLEMENTATION_COLOR_READ_FORMAT_OES" value="0x8B9B" />
     </enum>
   </add>
 
@@ -9217,6 +9245,20 @@
     </enum>
     <enum name="OpenGLESCoreVersions" type="int" obsolete="This enum is not used and may be removed in the future">
       <token name="ES_VERSION_3_0" value="1" />
+    </enum>
+  </add>
+
+  <!-- Xamarin.iOS compatibility -->
+  <add name="gles1" version="1.1">
+    <enum name="Unknown">
+       <token name="ImgTextureFormatBgra8888" value="0X0001" />
+    </enum>
+  </add>
+
+    <!-- Xamarin.iOS compatibility -->
+  <add name="gles2" version="2.0">
+    <enum name="Unknown">
+       <token name="ImgTextureFormatBgra8888" value="0X0001" />
     </enum>
   </add>
 
