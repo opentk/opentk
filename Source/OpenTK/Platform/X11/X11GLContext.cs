@@ -54,14 +54,34 @@ namespace OpenTK.Platform.X11
             if (window == null)
                 throw new ArgumentNullException("window");
 
+            // Do not move this lower, as almost everything requires the Display
+            // property to be correctly set.
+            Display = ((X11WindowInfo)window).Display;
+
+            // Check that GLX is supported. We cannot proceed to create
+            // an OpenGL context without the GLX extension.
+            int error_base;
+            int event_base;
+            int glx_major;
+            int glx_minor;
+            using (new XLock(Display))
+            {
+                bool supported = Glx.QueryExtension(Display, out error_base, out event_base);
+                supported &= Glx.QueryVersion(Display, out glx_major, out glx_minor);
+                if (supported)
+                {
+                    Debug.Print("[X11] GLX supported. Version is {0}.{1}", glx_major, glx_minor);
+                }
+                else
+                {
+                    throw new NotSupportedException("[X11] GLX extension is not supported.");
+                }
+            }
+
             Mode = ModeSelector.SelectGraphicsMode(
                 mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
                 mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
 
-            // Do not move this lower, as almost everything requires the Display
-            // property to be correctly set.
-            Display = ((X11WindowInfo)window).Display;
-            
             currentWindow = (X11WindowInfo)window;
             currentWindow.VisualInfo = SelectVisual(Mode, currentWindow);
             

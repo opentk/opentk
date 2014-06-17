@@ -42,14 +42,14 @@ namespace OpenTK.Platform.X11
         public JoystickState State;
     }
 
+    // Note: despite what the name says, this class is Linux-specific.
     sealed class X11Joystick : IJoystickDriver2
     {
         #region Fields
 
         readonly object sync = new object();
 
-        readonly FileSystemWatcher watcher = new FileSystemWatcher(JoystickPath);
-        readonly FileSystemWatcher watcher_legacy = new FileSystemWatcher(JoystickPathLegacy);
+        readonly FileSystemWatcher watcher = new FileSystemWatcher();
 
         readonly Dictionary<int, int> index_to_stick = new Dictionary<int, int>();
         List<JoystickDevice<X11JoyDetails>> sticks = new List<JoystickDevice<X11JoyDetails>>();
@@ -62,43 +62,38 @@ namespace OpenTK.Platform.X11
 
         public X11Joystick()
         {
-            watcher.Created += JoystickAdded;
-            watcher.Deleted += JoystickRemoved;
-            watcher.EnableRaisingEvents = true;
+            string path =
+                Directory.Exists(JoystickPath) ? JoystickPath :
+                Directory.Exists(JoystickPathLegacy) ? JoystickPathLegacy :
+                String.Empty;
 
-            watcher_legacy.Created += JoystickAdded;
-            watcher_legacy.Deleted += JoystickRemoved;
-            watcher_legacy.EnableRaisingEvents = true;
+            if (!String.IsNullOrEmpty(path))
+            {
+                watcher.Path = path;
 
-            OpenJoysticks();
+                watcher.Created += JoystickAdded;
+                watcher.Deleted += JoystickRemoved;
+                watcher.EnableRaisingEvents = true;
+
+                OpenJoysticks(path);
+            }
         }
 
         #endregion
 
         #region Private Members
 
-        void OpenJoysticks()
+        void OpenJoysticks(string path)
         {
             lock (sync)
             {
-                foreach (string file in Directory.GetFiles(JoystickPath))
+                foreach (string file in Directory.GetFiles(path))
                 {
                     JoystickDevice<X11JoyDetails> stick = OpenJoystick(file);
                     if (stick != null)
                     {
                         //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
-                        //number, stick.Axis.Count, stick.Button.Count, JoystickPath);
-                        sticks.Add(stick);
-                    }
-                }
-
-                foreach (string file in Directory.GetFiles(JoystickPathLegacy))
-                {
-                    JoystickDevice<X11JoyDetails> stick = OpenJoystick(file);
-                    if (stick != null)
-                    {
-                        //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
-                        //number, stick.Axis.Count, stick.Button.Count, JoystickPathLegacy);
+                        //number, stick.Axis.Count, stick.Button.Count, path);
                         sticks.Add(stick);
                     }
                 }
@@ -447,6 +442,7 @@ namespace OpenTK.Platform.X11
                 {
                 }
 
+                watcher.Dispose();
                 foreach (JoystickDevice<X11JoyDetails> js in sticks)
                 {
                     CloseJoystick(js);
