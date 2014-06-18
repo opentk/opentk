@@ -36,7 +36,7 @@ namespace OpenTK.Platform.X11
 {
     sealed class XI2MouseKeyboard : IKeyboardDriver2, IMouseDriver2, IDisposable
     {
-        const XEventName ExitEvent = XEventName.LASTEvent + 1;
+        static readonly IntPtr ExitAtom;
         readonly object Sync = new object();
         readonly Thread ProcessingThread;
         readonly X11KeyMap KeyMap;
@@ -116,6 +116,9 @@ namespace OpenTK.Platform.X11
                 //TouchPressure = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Pressure", false);
                 //TouchId = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Tracking ID", false);
                 //TouchMaxContacts = Functions.XInternAtom(API.DefaultDisplay, "Max Contacts", false);
+
+                // Custom
+                ExitAtom = Functions.XInternAtom(API.DefaultDisplay, "Exit Input Thread Message", false);
             }
         }
 
@@ -126,9 +129,14 @@ namespace OpenTK.Platform.X11
             window.Display = Functions.XOpenDisplay(IntPtr.Zero);
             using (new XLock(window.Display))
             {
+                XSetWindowAttributes attr = new XSetWindowAttributes();
+
                 window.Screen = Functions.XDefaultScreen(window.Display);
                 window.RootWindow = Functions.XRootWindow(window.Display, window.Screen);
-                window.Handle = window.RootWindow;
+                window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
+                    0, 0, 1, 1, 0, 0,
+                    CreateWindowArgs.InputOnly, IntPtr.Zero,
+                    SetWindowValuemask.Nothing, attr);
 
                 KeyMap = new X11KeyMap(window.Display);
             }
@@ -136,6 +144,10 @@ namespace OpenTK.Platform.X11
             if (!IsSupported(window.Display))
                 throw new NotSupportedException("XInput2 not supported.");
 
+            // Enable XI2 mouse/keyboard events
+            // Note: the input event loop blocks waiting for these events
+            // *or* a custom ClientMessage event that instructs us to exit.
+            // See SendExitEvent() below.
             using (new XLock(window.Display))
             using (XIEventMask mask = new XIEventMask(1,
                 XIEventMasks.RawKeyPressMask |
@@ -144,10 +156,9 @@ namespace OpenTK.Platform.X11
                 XIEventMasks.RawButtonReleaseMask |
                 XIEventMasks.RawMotionMask |
                 XIEventMasks.MotionMask |
-                XIEventMasks.DeviceChangedMask |
-                (XIEventMasks)(1 << (int)ExitEvent)))
+                XIEventMasks.DeviceChangedMask))
             {
-                XI.SelectEvents(window.Display, window.Handle, mask);
+                XI.SelectEvents(window.Display, window.RootWindow, mask);
                 UpdateDevices();
             }
 
@@ -423,45 +434,52 @@ namespace OpenTK.Platform.X11
                 using (new XLock(window.Display))
                 {
                     Functions.XIfEvent(window.Display, ref e, Predicate, new IntPtr(XIOpCode));
-                    if (e.type == ExitEvent)
+
+                    if (e.type == XEventName.ClientMessage && e.ClientMessageEvent.ptr1 == ExitAtom)
                     {
-                        return;
+                        Functions.XDestroyWindow(window.Display, window.Handle);
+                        window.Handle = IntPtr.Zero;
+                        break;
                     }
 
-                    IntPtr dummy;
-                    int x, y, dummy2;
-                    Functions.XQueryPointer(window.Display, window.RootWindow,
-                        out dummy, out dummy, out x, out y,
-                        out dummy2, out dummy2, out dummy2);
-                    Interlocked.Exchange(ref cursor_x, (long)x);
-                    Interlocked.Exchange(ref cursor_y, (long)y);
-
-                    cookie = e.GenericEventCookie;
-                    if (Functions.XGetEventData(window.Display, ref cookie) != 0)
+                    if (e.type == XEventName.GenericEvent && e.GenericEvent.extension == XIOpCode)
                     {
-                        switch ((XIEventType)cookie.evtype)
+                        IntPtr dummy;
+                        int x, y, dummy2;
+                        Functions.XQueryPointer(window.Display, window.RootWindow,
+                            out dummy, out dummy, out x, out y,
+                            out dummy2, out dummy2, out dummy2);
+                        Interlocked.Exchange(ref cursor_x, (long)x);
+                        Interlocked.Exchange(ref cursor_y, (long)y);
+
+                        cookie = e.GenericEventCookie;
+                        if (Functions.XGetEventData(window.Display, ref cookie) != 0)
                         {
-                            case XIEventType.Motion:
+                            switch ((XIEventType)cookie.evtype)
+                            {
+                                case XIEventType.Motion:
                                 // Nothing to do
-                                break;
+                                    break;
 
-                            case XIEventType.RawKeyPress:
-                            case XIEventType.RawKeyRelease:
-                            case XIEventType.RawMotion:
-                            case XIEventType.RawButtonPress:
-                            case XIEventType.RawButtonRelease:
+                                case XIEventType.RawKeyPress:
+                                case XIEventType.RawKeyRelease:
+                                case XIEventType.RawMotion:
+                                case XIEventType.RawButtonPress:
+                                case XIEventType.RawButtonRelease:
                                 // Delivered to all XIMouse instances
-                                ProcessRawEvent(ref cookie);
-                                break;
+                                    ProcessRawEvent(ref cookie);
+                                    break;
 
-                            case XIEventType.DeviceChanged:
-                                UpdateDevices();
-                                break;
+                                case XIEventType.DeviceChanged:
+                                    UpdateDevices();
+                                    break;
+                            }
                         }
+                        Functions.XFreeEventData(window.Display, ref cookie);
                     }
-                    Functions.XFreeEventData(window.Display, ref cookie);
                 }
             }
+            Debug.WriteLine("[X11] Exiting input event loop.");
         }
 
         void ProcessRawEvent(ref XGenericEventCookie cookie)
@@ -575,16 +593,29 @@ namespace OpenTK.Platform.X11
         static bool IsEventValid(IntPtr display, ref XEvent e, IntPtr arg)
         {
             bool valid = false;
-            if ((long)e.GenericEventCookie.extension == arg.ToInt64())
+            switch (e.type)
             {
-                valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawKeyPress;
-                valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawKeyRelease;
-                valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawMotion;
-                valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawButtonPress;
-                valid |= e.GenericEventCookie.evtype == (int)XIEventType.RawButtonRelease;
-                valid |= e.GenericEventCookie.evtype == (int)XIEventType.DeviceChanged;
+                case XEventName.GenericEvent:
+                {
+                    long extension = (long)e.GenericEventCookie.extension;
+                    valid =
+                        extension == arg.ToInt64() &&
+                        (e.GenericEventCookie.evtype == (int)XIEventType.RawKeyPress ||
+                        e.GenericEventCookie.evtype == (int)XIEventType.RawKeyRelease ||
+                        e.GenericEventCookie.evtype == (int)XIEventType.RawMotion ||
+                        e.GenericEventCookie.evtype == (int)XIEventType.RawButtonPress ||
+                        e.GenericEventCookie.evtype == (int)XIEventType.RawButtonRelease ||
+                        e.GenericEventCookie.evtype == (int)XIEventType.DeviceChanged);
+                    valid |= extension == 0;
+                    break;
+                }
+
+                case XEventName.ClientMessage:
+                    valid =
+                        e.ClientMessageEvent.ptr1 == ExitAtom;
+                    break;
             }
-            valid |= e.AnyEvent.type == ExitEvent;
+
             return valid;
         }
 
@@ -593,6 +624,23 @@ namespace OpenTK.Platform.X11
             unsafe
             {
                 return bit >= 0 && (*((byte*)mask + (bit >> 3)) & (1 << (bit & 7))) != 0;
+            }
+        }
+
+        void SendExitEvent()
+        {
+            // Send a ClientMessage event to unblock XIfEvent
+            // and exit the input event loop.
+            using (new XLock(API.DefaultDisplay))
+            {
+                XEvent ev = new XEvent();
+                ev.type = XEventName.ClientMessage;
+                ev.ClientMessageEvent.display = window.Display;
+                ev.ClientMessageEvent.window = window.Handle;
+                ev.ClientMessageEvent.format = 32;
+                ev.ClientMessageEvent.ptr1 = ExitAtom;
+                Functions.XSendEvent(API.DefaultDisplay, window.Handle, false, 0, ref ev);
+                Functions.XFlush(API.DefaultDisplay);
             }
         }
 
@@ -610,17 +658,8 @@ namespace OpenTK.Platform.X11
         {
             if (!disposed)
             {
-                if (disposing)
-                {
-                    using (new XLock(API.DefaultDisplay))
-                    {
-                        XEvent e = new XEvent();
-                        e.type = ExitEvent;
-                        Functions.XSendEvent(API.DefaultDisplay, window.Handle, false, IntPtr.Zero, ref e);
-                        Functions.XFlush(API.DefaultDisplay);
-                    }
-                }
                 disposed = true;
+                SendExitEvent();
             }
         }
 

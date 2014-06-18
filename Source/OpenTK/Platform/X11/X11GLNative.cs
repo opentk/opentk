@@ -181,12 +181,13 @@ namespace OpenTK.Platform.X11
                                    EventMask.PropertyChangeMask;
                 attributes.event_mask = (IntPtr)window.EventMask;
 
-                uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
-                    (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
+                SetWindowValuemask mask =
+                    SetWindowValuemask.ColorMap | SetWindowValuemask.EventMask |
+                    SetWindowValuemask.BackPixel | SetWindowValuemask.BorderPixel;
 
                 window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
                     x, y, width, height, 0, window.VisualInfo.Depth/*(int)CreateWindowArgs.CopyFromParent*/,
-                    (int)CreateWindowArgs.InputOutput, window.VisualInfo.Visual, (UIntPtr)mask, ref attributes);
+                    CreateWindowArgs.InputOutput, window.VisualInfo.Visual, mask, attributes);
 
                 if (window.Handle == IntPtr.Zero)
                     throw new ApplicationException("XCreateWindow call failed (returned 0).");
