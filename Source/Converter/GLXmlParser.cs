@@ -61,7 +61,7 @@ namespace CHeaderToXML
             var elements = new SortedDictionary<string, XElement>();
             foreach (var e in ParseEnums(input).Concat(ParseFunctions(input)))
             {
-                var name = e.Attribute("name").Value.Trim().Replace(" ", "_");
+                var name = e.Attribute("name").Value;
                 var version = (e.Attribute("version") ?? new XAttribute("version", String.Empty)).Value;
                 var key = name + version;
                 if (!elements.ContainsKey(key))
@@ -131,7 +131,7 @@ namespace CHeaderToXML
                     enums.Add(api, new SortedDictionary<string, string>());
 
                 enums[api].Add(
-                    TrimName(e.Attribute("name").Value.Trim().Replace(" ", "_")),
+                    TrimName(e.Attribute("name").Value),
                     e.Attribute("value").Value);
             }
 
@@ -146,7 +146,7 @@ namespace CHeaderToXML
                 .Concat(groups)
                 .OrderBy(f => TrimName(f.Attribute("name").Value)))
             {
-                var category = TrimName(feature.Attribute("name").Value.Trim().Replace(" ", "_"));
+                var category = TrimName(feature.Attribute("name").Value);
                 var extension = feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
                 var version = feature.Attribute("number") != null ? feature.Attribute("number").Value : null;
                 var apinames = GetApiNames(feature);
@@ -165,14 +165,14 @@ namespace CHeaderToXML
                                 String.IsNullOrEmpty(version) ? null : new XAttribute("version", version)));
                     var api = APIs[key];
 
-                    var enum_name = TrimName(feature.Attribute("name").Value.Trim().Replace(" ", "_"));
+                    var enum_name = TrimName(feature.Attribute("name").Value);
 
                     var e = new XElement("enum", new XAttribute("name", enum_name));
                     foreach (var token in
                         feature.Elements("enum")
                         .Concat(feature.Elements("require").Elements("enum")))
                     {
-                        var token_name = TrimName(token.Attribute("name").Value.Trim().Replace(" ", "_"));
+                        var token_name = TrimName(token.Attribute("name").Value);
                         var token_value =
                             enums.ContainsKey(apiname) && enums[apiname].ContainsKey(token_name) ? enums[apiname][token_name] :
                             enums["default"].ContainsKey(token_name) ? enums["default"][token_name] :
@@ -198,15 +198,15 @@ namespace CHeaderToXML
 
                 foreach (var api in APIs.Values)
                 {
-                    var apiname = api.Attribute("name").Value.Trim().Replace(" ", "_");
+                    var apiname = api.Attribute("name").Value;
 
                     // Mark deprecated enums
                     foreach (var token in feature.Elements("remove").Elements("enum"))
                     {
-                        var token_name = TrimName(token.Attribute("name").Value.Trim().Replace(" ", "_"));
+                        var token_name = TrimName(token.Attribute("name").Value);
                         var deprecated =
                             api.Elements("enum").Elements("token")
-                                .FirstOrDefault(t => t.Attribute("name").Value.Trim().Replace(" ", "_") == token_name);
+                            .FirstOrDefault(t => t.Attribute("name").Value == token_name);
 
                         if (deprecated != null)
                         {
@@ -214,7 +214,7 @@ namespace CHeaderToXML
                             {
                                 // These tokens do not exist in the glcore profile, remove them
                                 api.Elements("enum").Elements("token")
-                                    .First(t => t.Attribute("name").Value.Trim().Replace(" ", "_") == token_name)
+                                    .First(t => t.Attribute("name").Value == token_name)
                                     .Remove();
                             }
                             else
@@ -256,7 +256,7 @@ namespace CHeaderToXML
             // information about versioning, extension support and deprecation.
             foreach (var feature in features.Concat(extensions))
             {
-                var category = TrimName(feature.Attribute("name").Value.Trim().Replace(" ", "_"));
+                var category = TrimName(feature.Attribute("name").Value);
                 var apinames = GetApiNames(feature);
                 
                 var version =
@@ -283,7 +283,7 @@ namespace CHeaderToXML
 
                     foreach (var command in feature.Elements("require").Elements("command"))
                     {
-                        var cmd_name = TrimName(command.Attribute("name").Value.Trim().Replace(" ", "_"));
+                        var cmd_name = TrimName(command.Attribute("name").Value);
                         var cmd_extension =
                             ExtensionRegex.Match(cmd_name).Value ??
                             (feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core");
@@ -304,16 +304,16 @@ namespace CHeaderToXML
                 foreach (var api in APIs.Values)
                 {
                     i++;
-                    var apiname = api.Attribute("name").Value.Trim().Replace(" ", "_");
+                    var apiname = api.Attribute("name").Value;
                     var cmd_version = version.Length > i ? version[i] : version[0];
 
                     // Mark all deprecated functions as such
                     foreach (var command in feature.Elements("remove").Elements("command"))
                     {
-                        var deprecated_name = TrimName(command.Attribute("name").Value.Trim().Replace(" ", "_"));
+                        var deprecated_name = TrimName(command.Attribute("name").Value);
                         var deprecated =
                             api.Elements("function")
-                                .FirstOrDefault(t => t.Attribute("name").Value.Trim().Replace(" ", "_") == deprecated_name);
+                            .FirstOrDefault(t => t.Attribute("name").Value == deprecated_name);
 
                         if (deprecated != null)
                         {
@@ -321,7 +321,7 @@ namespace CHeaderToXML
                             {
                                 // These tokens do not exist in the glcore profile, remove them
                                 api.Elements("function")
-                                    .First(t => t.Attribute("name").Value.Trim().Replace(" ", "_") == deprecated_name)
+                                    .First(t => t.Attribute("name").Value == deprecated_name)
                                     .Remove();
                             }
                             else
@@ -431,7 +431,7 @@ namespace CHeaderToXML
             //   -> <param name="length" type="GLsizei" count="1" />
 
             var proto = e.Value;
-            var name = e.Element("name").Value.Trim().Replace(" ", "_");
+            var name = e.Element("name").Value;
             var group = e.Attribute("group");
 
             var ret = proto.Remove(proto.LastIndexOf(name)).Trim();
