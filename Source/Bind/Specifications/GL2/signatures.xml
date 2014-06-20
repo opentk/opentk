@@ -9273,7 +9273,7 @@
       <param name="layer" type="CheckedInt32" flow="in" />
       <returns type="void" />
     </function>
-    <function name="FramebufferTextureLayerEXT" category="NV_geometry_program4" extension="EXT">
+    <function name="FramebufferTextureLayerEXT" category="EXT_texture_array|NV_geometry_program4" extension="EXT" version="">
       <param name="target" type="FramebufferTarget" flow="in" />
       <param name="attachment" type="FramebufferAttachment" flow="in" />
       <param name="texture" type="Texture" flow="in" />
@@ -16961,7 +16961,7 @@
       <returns type="void" />
     </function>
     <function name="TransformFeedbackAttribsNV" category="NV_transform_feedback" extension="NV">
-      <param name="count" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
       <param name="attribs" type="GLint *" flow="in" count="COMPSIZE(count)" />
       <param name="bufferMode" type="GLenum" flow="in" />
       <returns type="void" />
@@ -24137,11 +24137,13 @@
       <token name="UNIFORM_BUFFER_START" value="0x8A29" />
       <token name="UNIFORM_BUFFER_SIZE" value="0x8A2A" />
       <token name="MAX_VERTEX_UNIFORM_BLOCKS" value="0x8A2B" />
+      <token name="MAX_GEOMETRY_UNIFORM_BLOCKS" value="0x8A2C" />
       <token name="MAX_FRAGMENT_UNIFORM_BLOCKS" value="0x8A2D" />
       <token name="MAX_COMBINED_UNIFORM_BLOCKS" value="0x8A2E" />
       <token name="MAX_UNIFORM_BUFFER_BINDINGS" value="0x8A2F" />
       <token name="MAX_UNIFORM_BLOCK_SIZE" value="0x8A30" />
       <token name="MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS" value="0x8A31" />
+      <token name="MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS" value="0x8A32" />
       <token name="MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS" value="0x8A33" />
       <token name="UNIFORM_BUFFER_OFFSET_ALIGNMENT" value="0x8A34" />
       <token name="ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH" value="0x8A35" />
@@ -24160,6 +24162,7 @@
       <token name="UNIFORM_BLOCK_ACTIVE_UNIFORMS" value="0x8A42" />
       <token name="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" value="0x8A43" />
       <token name="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" value="0x8A44" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER" value="0x8A45" />
       <token name="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" value="0x8A46" />
       <token name="INVALID_INDEX" value="0xFFFFFFFF" />
     </enum>
@@ -26027,6 +26030,7 @@
       <token name="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER" value="0x90ED" />
       <token name="DISPATCH_INDIRECT_BUFFER" value="0x90EE" />
       <token name="DISPATCH_INDIRECT_BUFFER_BINDING" value="0x90EF" />
+      <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="DEBUG_OUTPUT_SYNCHRONOUS" value="0x8242" />
       <token name="DEBUG_NEXT_LOGGED_MESSAGE_LENGTH" value="0x8243" />
       <token name="DEBUG_CALLBACK_FUNCTION" value="0x8244" />
@@ -34372,11 +34376,13 @@
       <token name="UNIFORM_BUFFER_START" value="0x8A29" />
       <token name="UNIFORM_BUFFER_SIZE" value="0x8A2A" />
       <token name="MAX_VERTEX_UNIFORM_BLOCKS" value="0x8A2B" />
+      <token name="MAX_GEOMETRY_UNIFORM_BLOCKS" value="0x8A2C" />
       <token name="MAX_FRAGMENT_UNIFORM_BLOCKS" value="0x8A2D" />
       <token name="MAX_COMBINED_UNIFORM_BLOCKS" value="0x8A2E" />
       <token name="MAX_UNIFORM_BUFFER_BINDINGS" value="0x8A2F" />
       <token name="MAX_UNIFORM_BLOCK_SIZE" value="0x8A30" />
       <token name="MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS" value="0x8A31" />
+      <token name="MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS" value="0x8A32" />
       <token name="MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS" value="0x8A33" />
       <token name="UNIFORM_BUFFER_OFFSET_ALIGNMENT" value="0x8A34" />
       <token name="ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH" value="0x8A35" />
@@ -34395,6 +34401,7 @@
       <token name="UNIFORM_BLOCK_ACTIVE_UNIFORMS" value="0x8A42" />
       <token name="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" value="0x8A43" />
       <token name="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" value="0x8A44" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER" value="0x8A45" />
       <token name="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" value="0x8A46" />
       <token name="INVALID_INDEX" value="0xFFFFFFFF" />
     </enum>
@@ -36262,6 +36269,7 @@
       <token name="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER" value="0x90ED" />
       <token name="DISPATCH_INDIRECT_BUFFER" value="0x90EE" />
       <token name="DISPATCH_INDIRECT_BUFFER_BINDING" value="0x90EF" />
+      <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="DEBUG_OUTPUT_SYNCHRONOUS" value="0x8242" />
       <token name="DEBUG_NEXT_LOGGED_MESSAGE_LENGTH" value="0x8243" />
       <token name="DEBUG_CALLBACK_FUNCTION" value="0x8244" />
@@ -42175,6 +42183,7 @@
       <token name="SRC_ALPHA_SATURATE" value="0x0308" />
     </enum>
     <enum name="EXT_draw_instanced" />
+    <enum name="EXT_geometry_point_size" />
     <enum name="EXT_geometry_shader">
       <token name="GEOMETRY_SHADER_EXT" value="0x8DD9" />
       <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
@@ -42243,6 +42252,9 @@
       <token name="QUERY_RESULT_EXT" value="0x8866" />
       <token name="QUERY_RESULT_AVAILABLE_EXT" value="0x8867" />
     </enum>
+    <enum name="EXT_primitive_bounding_box">
+      <token name="PRIMITIVE_BOUNDING_BOX_EXT" value="0x92BE" />
+    </enum>
     <enum name="EXT_pvrtc_sRGB">
       <token name="COMPRESSED_SRGB_PVRTC_2BPPV1_EXT" value="0x8A54" />
       <token name="COMPRESSED_SRGB_PVRTC_4BPPV1_EXT" value="0x8A55" />
@@ -42302,6 +42314,7 @@
     <enum name="EXT_sRGB_write_control">
       <token name="FRAMEBUFFER_SRGB_EXT" value="0x8DB9" />
     </enum>
+    <enum name="EXT_tessellation_point_size" />
     <enum name="EXT_tessellation_shader">
       <token name="PATCHES_EXT" value="0x000E" />
       <token name="PATCH_VERTICES_EXT" value="0x8E72" />
@@ -45461,6 +45474,17 @@
       <returns type="void" />
     </function>
     <function name="PopGroupMarkerEXT" category="EXT_debug_marker" extension="EXT">
+      <returns type="void" />
+    </function>
+    <function name="PrimitiveBoundingBoxEXT" category="EXT_primitive_bounding_box" extension="EXT">
+      <param name="minX" type="GLfloat" flow="in" />
+      <param name="minY" type="GLfloat" flow="in" />
+      <param name="minZ" type="GLfloat" flow="in" />
+      <param name="minW" type="GLfloat" flow="in" />
+      <param name="maxX" type="GLfloat" flow="in" />
+      <param name="maxY" type="GLfloat" flow="in" />
+      <param name="maxZ" type="GLfloat" flow="in" />
+      <param name="maxW" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
     <function name="ProgramBinaryOES" category="OES_get_program_binary" extension="OES">
