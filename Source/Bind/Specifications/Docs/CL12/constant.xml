@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+<!ENTITY qualifierInc SYSTEM "qualifierInc.xml">
+<!ENTITY qualifierExampleInc SYSTEM "qualifierExampleInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>
+                __constant
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>__constant</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="__constant">
+        <refname>__constant</refname>
+
+        <refpurpose>
+            Address Space Qualifier.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__constant
+constant
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+        &qualifierInc;
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          The <function>__constant</function> or <function>constant</function> address space
+          name is used to describe variables allocated in global memory and which are accessed
+          inside a kernel(s) as read-only variables. These readonly variables can be accessed
+          by all (global) work-items of the kernel during its execution.  Pointers to the
+          <function>__constant</function> address space are allowed as arguments to functions
+          (including kernel functions) and for variables declared inside functions.
+        </para>
+
+        <para>
+          All string literal storage shall be in the <function>__constant</function> address space.
+        </para>
+
+        <para>
+          NOTE: Each argument to a kernel that is a pointer to the <function>__constant</function>
+          address space is counted separately towards the maximum number of such arguments,
+          defined as <constant>CL_DEVICE_MAX_CONSTANT_ARGS</constant> are described in the
+          table for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>.
+        </para>
+
+        <para>
+          Variables in the program scope or the outermost scope of kernel functions can be
+          declared in the <function>__constant</function> address space. These variables are
+          required to be initialized and the values used to initialize these variables must be
+          a compile time constant. Writing to such a variable results in a compile-time error.
+        </para>
+
+        <para>
+          Implementations are not required to aggregate these declarations into the fewest
+          number of constant arguments. This behavior is implementation defined.
+        </para>
+
+        <para>
+          Thus portable code must conservatively assume that each variable declared inside
+          a function or in program scope allocated in the <function>__constant</function>
+          address space counts as a separate constant argument.
+        </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+        &qualifierExampleInc;
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="addressSpaceQualifier">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>,
+            <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>,
+            <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 17-Oct-2011 -->
+</refentry>
+

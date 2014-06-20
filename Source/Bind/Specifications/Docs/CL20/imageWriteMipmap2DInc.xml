@@ -1,0 +1,59 @@
+<!-- imageMipmapFunctionsInc -->
+ 
+<bridgehead>Mipmap read image functions:</bridgehead>
+        <para>
+For the image write 2D functions enabled by the mipmap extension 
+that take an <type>image2d_t</type> object,
+write <varname>color</varname> value to location specified by 
+<varname>coord.xy</varname> in the mip-level specified by 
+<varname>lod</varname> in the 2D image
+object specified by <varname>image</varname>. Appropriate data format
+conversion to the specified image format is done
+before writing the color value. <varname>coord.x</varname> and 
+<varname>coord.y</varname> are considered to be unnormalized 
+coordinates and
+must be in the range 0 ... image width of mip-level
+specified by <varname>lod</varname> - 1, and 0 ... image height of miplevel
+specified by <varname>lod</varname> - 1.
+        </para>
+
+        <para>
+In these functions, the behavior of <function>write_imagef</function>, 
+<function>write_imagei</function>, and
+<function>write_imageui</function> if (<emphasis>x, y</emphasis>) coordinate values are not in
+the range (0 ... image width of the mip-level
+specified by <varname>lod</varname> - 1, 0 ... image height of the miplevel
+specified by <varname>lod</varname> - 1) or <varname>lod</varname> value exceeds the
+(number of mip-levels in the image - 1) is
+undefined.
+        </para>
+
+        <para>
+For the image write 2D functions enabled by the mipmap extension 
+that take an <type>image2d_array_t</type> object,
+write <varname>color</varname> value to location specified by 
+<varname>coord.xy</varname> in the 2D image
+ specified by <varname>coord.z</varname> and mip-level <varname>lod</varname> 
+in the 2D image array specified by <varname>image</varname>. Appropriate data format
+conversion to the specified image format is done
+before writing the color value. <varname>coord.x</varname>,  
+<varname>coord.y</varname>, and <varname>coord.z</varname> are considered to be unnormalized 
+coordinates and
+must be in the range 0 ... image width of mip-level
+specified by <varname>lod</varname> - 1.0 ... image height - 1 specified by 
+<varname>lod</varname> - 1 and 0... image numbers layers - 1.
+        </para>
+        <para>
+In these functions, the behavior of <function>write_imagef</function>, 
+<function>write_imagei</function>, and
+<function>write_imageui</function> if (<emphasis>x, y, z</emphasis>) 
+coordinate values are not
+in the range (0... image width of the mip-level
+specified by <varname>lod</varname> - 1, 0... image height of the miplevel
+specified by <varname>lod</varname> - 1, 0... image number of
+layers - 1), respectively or <varname>lod</varname> value exceeds the
+(number of mip-levels in the image - 1), is
+undefined.
+        </para>
+<!-- 2-June-2013 -->
+

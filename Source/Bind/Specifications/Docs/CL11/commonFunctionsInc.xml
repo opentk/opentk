@@ -1,0 +1,18 @@
+        <para>
+            Built-in common functions operate component-wise and the description is 
+            per-component and are implemented using the round to nearest even rounding mode. 
+            We use the generic type name <type>gentype</type> to indicate that the function can 
+            take <type>float</type>, <type>float2</type>, <type>float3</type>, <type>float4</type>, 
+            <type>float8</type>, or <type>float16</type> as the type for the arguments.
+        </para>
+        <para>
+            The built-in common functions are implemented using the round to nearest even rounding mode.
+        </para>
+        <para>
+            If extended with <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry>, 
+            generic type name <type>gentype</type> may indicate <type>double</type> and 
+            <type>double{2|3|4|8|16}</type> as arguments and return values. If extended with
+            <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>, generic type name
+            <type>gentype</type> may indicate <type>half</type> and <type>half{2|3|4|8|16}</type> as 
+            arguments and return values. 
+        </para>

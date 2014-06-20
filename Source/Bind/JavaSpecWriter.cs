@@ -165,8 +165,8 @@ namespace Bind
                             --count == 0 ? ";" : ","));
                     }
                     sw.WriteLine();
-                    sw.WriteLine("{0} mValue;", @enum.Type);
-                    sw.WriteLine("{0}({1} value) {{ mValue = value; }}", @enum.Name, @enum.Type);
+                    sw.WriteLine("{0} mValue;", @enum.BaseType);
+                    sw.WriteLine("{0}({1} value) {{ mValue = value; }}", @enum.Name, @enum.BaseType);
                 }
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -222,7 +222,7 @@ namespace Bind
             {
                 foreach (var p in f.Parameters)
                 {
-                    if (p.Reference)
+                    if (p.Type.Reference)
                     {
                         // Use a boxed type instead of primitives (i.e. "Byte" rather than "byte"), since
                         // the former are reference types. We don't need to do anything for regular reference
@@ -230,15 +230,15 @@ namespace Bind
                         // Hack: we do this by upper-casing the first letter of the type. This should work for
                         // all primitive types, but won't work for enums and other reference types. In these
                         // cases, we'll just ignore the reference overload.
-                        if (Char.IsLower(p.CurrentType[0]))
+                        if (Char.IsLower(p.Type.CurrentType[0]))
                         {
                             // Hack: Int -> Integer and Bool -> Boolean
-                            if (p.CurrentType == "int")
+                            if (p.Type.CurrentType == "int")
                                 sb.Append("Integer");
-                            else if (p.CurrentType == "bool")
+                            else if (p.Type.CurrentType == "bool")
                                 sb.Append("Boolean");
                             else
-                                sb.Append(Char.ToUpper(p.CurrentType[0]) + p.CurrentType.Substring(1));
+                                sb.Append(Char.ToUpper(p.Type.CurrentType[0]) + p.Type.CurrentType.Substring(1));
                         }
                         else
                         {
@@ -246,7 +246,7 @@ namespace Bind
                             return String.Empty;
                         }
                     }
-                    else if (p.Array > 0)
+                    else if (p.Type.Array > 0)
                     {
                         // Generic arrays are handled in the IntPtr case below.
                         if (p.Generic)
@@ -255,24 +255,24 @@ namespace Bind
                             return String.Empty;
                         }
 
-                        sb.Append(p.CurrentType);
-                        for (int i = 0; i < p.Array; i++)
+                        sb.Append(p.Type.CurrentType);
+                        for (int i = 0; i < p.Type.Array; i++)
                             sb.Append("[]");
                     }
-                    else if (p.Pointer > 0)
+                    else if (p.Type.Pointer > 0)
                     {
                         // Java does not support pointers
                         // Todo: maybe use one of the java.nio.* pointer classes?
                         valid = false;
                         return String.Empty;
                     }
-                    else if (p.CurrentType == "IntPtr")
+                    else if (p.Type.CurrentType == "IntPtr")
                     {
                         sb.Append("Buffer");
                     }
                     else
                     {
-                        sb.Append(p.CurrentType);
+                        sb.Append(p.Type.CurrentType);
                     }
 
                     sb.Append(" ");
@@ -295,7 +295,7 @@ namespace Bind
                 var sb = new StringBuilder();
                 foreach (var p in f.Parameters.Where(p => p.Generic))
                 {
-                    sb.Append(p.CurrentType);
+                    sb.Append(p.Type.CurrentType);
                     sb.Append(", ");
                 }
                 if (parameters.Count() > 0)

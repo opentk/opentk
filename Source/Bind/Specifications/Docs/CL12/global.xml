@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+<!ENTITY qualifierInc SYSTEM "qualifierInc.xml">
+<!ENTITY qualifierExampleInc SYSTEM "qualifierExampleInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>__global</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>__global</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="__global">
+        <refname>__global</refname>
+
+        <refpurpose>
+            Address space qualifier.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__global
+global
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+        &qualifierInc;
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The <function>__global</function> or <function>global</function> address
+            space name is used to refer to memory objects (buffer or image objects)
+            allocated from the global memory pool.
+        </para>
+
+        <para>
+            A buffer memory object can be declared as a pointer to a scalar, vector
+            or user-defined struct. This allows the kernel to read and/or write any
+            location in the buffer.
+        </para>
+
+        <para>
+            The actual size of the array memory object is determined when the memory
+            object is allocated via appropriate API calls in the host code.
+        </para>
+
+        <para>
+            If an image object is attached to an argument declared with this qualifier,
+            the argument must be declared as type
+            <type><citerefentry href="otherDataTypes"><refentrytitle>image2d_t</refentrytitle></citerefentry></type>
+            for a 2D image object, as type
+            <type><citerefentry  href="otherDataTypes"><refentrytitle>image3d_t</refentrytitle></citerefentry></type>
+            for a 3D image object, as type
+            <type><citerefentry  href="otherDataTypes"><refentrytitle>image2d_array_t</refentrytitle></citerefentry></type>
+            for a 2D image array object, as type
+            <type><citerefentry  href="otherDataTypes"><refentrytitle>image1d_t</refentrytitle></citerefentry></type>
+            for a 1D image object, as type
+            <type><citerefentry  href="otherDataTypes"><refentrytitle>image1d_buffer_t</refentrytitle></citerefentry></type>
+            for a 1D image buffer object, and as type
+            <type><citerefentry  href="otherDataTypes"><refentrytitle>image1d_array_t</refentrytitle></citerefentry></type>
+            for a 1D image array object. The elements of an image object cannot be directly accessed.
+            Built-in functions to read from and write to an image object are provided.
+        </para>
+
+        <para>
+            The const qualifier can also be used with the <function>__global</function> qualifier to
+            specify a read-only buffer memory object.
+        </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Examples
+        </title>
+
+        &qualifierExampleInc;
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__global float4  *color;      // An array of float4 elements
+typedef struct {
+      float a[3];
+      int   b[2];
+} foo_t;
+__global foo_t   *my_info;    // An array of foo_t elements.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="addressSpaceQualifier">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>,
+            <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>,
+            <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 16-Oct-2011 -->
+</refentry>
+

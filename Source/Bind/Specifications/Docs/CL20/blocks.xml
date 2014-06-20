@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Blocks</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Blocks</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="Blocks">
+        <refname>Blocks</refname>
+
+        <refpurpose>
+            OpenCL C 2.0 adds support for the clang block syntax.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+Example:
+int multiplier = 7;
+int (^myBlock)(int) = ^(int num) { return num * multiplier; };
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            OpenCL C 2.0 adds support for the clang block syntax. 
+            Like function types, the Block type is a 
+            pair consisting of a result value type and a list of 
+            parameter types very similar to a function type. 
+            Blocks are intended to be used much like functions 
+            with the key distinction being that in addition 
+            to executable code they also contain various 
+            variable bindings to automatic (stack) or global
+            memory.
+        </para>
+
+        <para>
+            This syntax is already part of the clang source tree 
+            on which most vendors have based their OpenCL 
+            implementations. Additionally, blocks based closures 
+            are supported by the clang open source C compiler as well as 
+            Mac OS X’s C and Objective C compilers. Specifically, 
+            Mac OS X’s Grand Central Dispatch allows applications to 
+            queue tasks as a block.
+        </para>
+
+        <bridgehead>Declaring and Using a Block</bridgehead>
+
+        <para>
+            You use the ^ operator to declare a Block 
+            variable and to indicate the beginning of a Block 
+            literal. The body of the Block itself is contained 
+            within {}, as shown in the example (as usual 
+            with C, ; indicates the end of the statement).
+        </para>
+
+<!-- the spec has a diagram here -->
+
+        <para>
+            The Block is able to make use of variables from 
+            the same scope in which it was defined.
+        </para>
+
+        <para>
+            If you declare a Block as a variable, you can 
+            then use it just as you would a function:
+        </para>
+
+
+        <para>
+<code><literallayout>
+    int multiplier = 7;
+    int (^myBlock)(int) = ^(int num) {
+        return num * multiplier;
+    };
+
+    printf(“%d\n”, myBlock(3));
+    // prints 21
+</literallayout></code>
+        </para>
+
+
+        <bridgehead>Declaring a Block Reference</bridgehead>
+
+        <para>
+            Block variables hold references to Blocks. You 
+            declare them using syntax similar to that you use 
+            to declare a pointer to a function, except that 
+            you use ^ instead of *. The Block type fully 
+            interoperates with the rest of the C type system. 
+            The following are valid Block variable 
+            declarations:
+        </para>
+
+<literallayout><code>
+    void (^blockReturningVoidWithVoidArgument)(void);
+    int (^blockReturningIntWithIntAndCharArguments)(int, char);
+</code></literallayout>
+
+        <para>
+            A Block that takes no arguments must specify void 
+            in the argument list. A Block reference may 
+            not be dereferenced via the pointer dereference 
+            operation *, and thus a Block’s size may not be 
+            computed at compile time.
+        </para>
+
+        <para>
+            Blocks are designed to be fully type safe by giving 
+            the compiler a full set of metadata to use to 
+            validate use of Blocks, parameters passed to blocks, 
+            and assignment of the return value.
+        </para>
+
+        <para>
+            You can also create types for Blocks—doing so 
+            is generally considered to be best practice when 
+            you use a block with a given signature in multiple places:
+        </para>
+
+<literallayout><code>
+    typedef float (^MyBlockType)(float, float);
+
+    MyBlockType myFirstBlock = // …;
+    MyBlockType mySecondBlock = // …;
+</code></literallayout>
+
+        <bridgehead>Block Literal Expressions</bridgehead>
+
+        <para>
+            A Block literal expression produces a reference 
+            to a Block. It is introduced by the use of the ^
+            token as a unary operator.
+        </para>
+
+<literallayout><code>
+    Block_literal_expression ::= ^ block_decl compound_statement_body
+    block_decl ::=
+    block_decl ::= parameter_list
+    block_decl ::= type_expression
+</code></literallayout>
+
+        <para>
+            where type expression is extended to allow ^ as 
+            a Block reference where * is allowed as a 
+            function reference.
+        </para>
+
+        <para>
+            The following Block literal:
+        </para>
+
+<literallayout><code>
+    ^ void (void) { printf("hello world\n"); }
+</code></literallayout>
+
+        <para>
+            produces a reference to a Block with no arguments with no return value.
+        </para>
+
+        <para>
+            The return type is optional and is inferred from 
+            the return statements. If the return statements 
+            return a value, they all must return a value of 
+            the same type. If there is no value returned the 
+            inferred type of the Block is void; otherwise it 
+            is the type of the return statement value. If the 
+            return type is omitted and the argument list is 
+            ( <type>void</type> ), 
+            the ( <type>void</type> ) argument list may also be 
+            omitted.
+        </para>
+
+        <para>
+            So:
+        </para>
+
+<literallayout><code>
+    ^ ( void ) { printf("hello world\n"); }
+</code></literallayout>
+
+        <para>
+            and:
+        </para>
+
+<literallayout><code>
+    ^ { printf("hello world\n"); }
+</code></literallayout>
+
+        <para>
+            are exactly equivalent constructs for the same expression.
+        </para>
+
+        <para>
+            The compound statement body establishes a new 
+            lexical scope within that of its parent. Variables 
+            used within the scope of the compound statement 
+            are bound to the Block in the normal manner 
+            with the exception of those in automatic (stack) 
+            storage. Thus one may access functions and 
+            global variables as one would expect, as well as 
+            static local variables. 
+        </para>
+
+        <para>
+            Local automatic (stack) variables referenced within 
+            the compound statement of a Block are 
+            imported and captured by the Block as const copies. 
+            The capture (binding) is performed at the 
+            time of the Block literal expression evaluation.
+        </para>
+
+        <para>
+            The compiler is not required to capture a variable if 
+            it can prove that no references to the variable 
+            will actually be evaluated.
+        </para>
+
+        <para>
+            The lifetime of variables declared in a Block is that of a function.
+        </para>
+
+        <para>
+            Block literal expressions may occur within Block 
+            literal expressions (nested) and all variables 
+            captured by any nested blocks are implicitly also 
+            captured in the scopes of their enclosing 
+            Blocks.
+        </para>
+
+        <para>
+            A Block literal expression may be used as the initialization 
+            value for Block variables at global or 
+            local static scope.
+        </para>
+
+        <para>
+            You can also declare a Block as a global literal in program scope.
+        </para>
+
+<literallayout><code>
+    int GlobalInt = 0;
+
+    int (^getGlobalInt)(void) = ^{ return GlobalInt; };
+</code></literallayout>
+
+        <para>
+<bridgehead>Control Flow</bridgehead>
+        </para>
+
+        <para>
+            The compound statement of a Block is treated much 
+            like a function body with respect to control 
+            flow in that continue, break and goto do not escape the Block.
+        </para>
+
+        <bridgehead>Restrictions</bridgehead>
+
+        <para>
+            The following Blocks features are currently not supported in OpenCL C.
+        </para>
+
+        <itemizedlist>
+            <listitem><para>The __block storage type.</para></listitem>
+            <listitem><para>The Block_copy() and Block_release() functions that copy and release Blocks.</para></listitem>
+            <listitem><para>Blocks with variadic arguments.</para></listitem>
+            <listitem><para>Arrays of Blocks.</para></listitem>
+        </itemizedlist>
+
+        <para>
+            Additional restrictions in addition to the above feature restrictions are:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    A Block variable must be assigned to a Block literal expression 
+                    that can be determined at compile time.
+                </para>
+            </listitem>
+
+            <listitem><para>The unary operators (* and &amp;) cannot be used with a Block.</para></listitem>
+
+            <listitem><para>Blocks cannot be used as expressions of the ternary selection operator (?:).</para></listitem>
+
+            <listitem><para>A Block cannot reference another Block.</para></listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+<!--
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+        </para>
+    </refsect1>
+-->
+
+<!-- ================================ EXAMPLE  -->
+
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="blocks">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+<!--
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+        </para>
+    </refsect1>
+-->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 12-Dec-2013, rev. 19 -->
+</refentry>
+

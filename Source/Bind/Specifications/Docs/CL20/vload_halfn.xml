@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY vectorFunctionsInc SYSTEM "vectorFunctionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>vload_halfn</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>vload_halfn</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="vload_halfn">
+        <refname>vload_half<replaceable>n</replaceable></refname>
+
+        <refpurpose>
+            Read a half float vector from a pointer to memory.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">float<replaceable>n</replaceable></link>
+                    <function>
+                        vload_half<replaceable>n</replaceable>
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">float<replaceable>n</replaceable></link>
+                    <function>
+                        vload_half<replaceable>n</replaceable>
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef>const constant <link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+      <para>
+        Read sizeof(<type>half<varname>n</varname></type>) bytes of data from address
+        (<varname>p</varname> + (<varname>offset</varname> * <varname>n</varname>)). The data
+        read is interpreted as a <type>half<replaceable>n</replaceable></type> value.
+      </para>
+
+      <para>
+        The <type>half<replaceable>n</replaceable></type> value read is
+        converted to a <type>float<replaceable>n</replaceable></type> value and the
+        <type>float<replaceable>n</replaceable></type> value is returned. The read address
+        computed as (<varname>p</varname> + (<varname>offset</varname> * <varname>n</varname>))
+        must be 16-bit aligned.
+      </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+
+      &vectorFunctionsInc;
+
+      <para>
+        We use the type name <type>half<replaceable>n</replaceable></type> to represent 
+        n-element vectors of <type>half</type> elements.
+      </para>
+
+      <para>
+        When extended by the
+        <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> extension,
+        the generic type <type>gentype<replaceable>n</replaceable></type> is extended to
+        include <type>half</type>, <type>half2</type>, <type>half3</type>, <type>half4</type>,
+        <type>half8</type>, and <type>half16</type>.
+      </para>
+
+      <para>
+        <function>vload3</function> and <function>vload_half3</function> read <varname>x</varname>,
+        <varname>y</varname>, <varname>z</varname> components from address (<varname>p</varname> +
+        (<varname>offset</varname> * 3)) into a 3-component vector.
+      </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  --> <!-- DO NOT DELETE IN CASE AN EXAMPLE IS
+ADDED IN THE FUTURE --> <!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="vectorDataLoadandStoreFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="vectorDataLoadandStoreFunctions"><refentrytitle>Vector Data Load and Store Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 14-Dec-2013, rev. 19 -->
+</refentry>
+

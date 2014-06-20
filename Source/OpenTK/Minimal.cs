@@ -1,9 +1,21 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 
-#if IPHONE || ANDROID || MINIMAL
+#if !NET40
+namespace System.Runtime.CompilerServices
+{
+    /// <summary>
+    /// Allow the use of extension methods on 2.0 projects.
+    /// (Requires a 3.5 compiler)
+    /// </summary>
+    public class ExtensionAttribute : Attribute { }
+}
+#endif
+
+#if ANDROID || IPHONE || MINIMAL
 
 namespace OpenTK
 {
@@ -14,28 +26,96 @@ namespace OpenTK
     // System.Diagnostics.Debug
     static class Debug
     {
-        public static void Write(string message) { }
-        public static void Write(object obj) { }
-        public static void WriteLine(string message) { }
-        public static void WriteLine(object obj) { }
-        public static void Print(string message) { }
-        public static void Print(string format, params object[] args) { }
-        public static void Indent() { }
-        public static void Unindent() { }
-        public static void Flush() { }
+        [Conditional("DEBUG")]
+        public static void Write(string message)
+        {
+            Console.Error.Write(message);
+        }
+
+        [Conditional("DEBUG")]
+        public static void Write(object obj)
+        {
+            Console.Error.Write(obj);
+        }
+
+        [Conditional("DEBUG")]
+        public static void WriteLine(string message)
+        {
+            Console.Error.WriteLine(message);
+        }
+
+        [Conditional("DEBUG")]
+        public static void WriteLine(object obj)
+        {
+            Console.Error.WriteLine(obj);
+        }
+
+        [Conditional("DEBUG")]
+        public static void Print(string message)
+        {
+            Console.Error.WriteLine(message);
+        }
+
+        [Conditional("DEBUG")]
+        public static void Print(string format, params object[] args)
+        {
+            Console.Error.WriteLine(format, args);
+        }
+        [Conditional("DEBUG")]
+        public static void Indent()
+        {
+        }
+
+        [Conditional("DEBUG")]
+        public static void Unindent()
+        {
+        }
+
+        [Conditional("DEBUG")]
+        public static void Flush()
+        {
+            Console.Error.Flush();
+        }
     }
 
     // System.Diagnostics.Trace
     static class Trace
     {
-        public static void Write(string message) { }
-        public static void Write(object obj) { }
-        public static void WriteLine(string message) { }
-        public static void WriteLine(object obj) { }
-        public static void Indent() { }
-        public static void Unindent() { }
-        public static void Flush() { }
+        public static void Write(string message)
+        {
+            Console.Error.Write(message);
+        }
+
+        public static void Write(object obj)
+        {
+            Console.Error.Write(obj);
+        }
+
+        public static void WriteLine(string message)
+        {
+            Console.Error.WriteLine(message);
+        }
+
+        public static void WriteLine(object obj)
+        {
+            Console.Error.WriteLine(obj);
+        }
+
+        public static void Indent()
+        {
+        }
+
+        public static void Unindent()
+        {
+        }
+
+        public static void Flush()
+        {
+            Console.Error.Flush();
+        }
     }
+
+    #if MINIMAL
 
     // System.Diagnostics.Stopwatch
     sealed class Stopwatch
@@ -72,6 +152,8 @@ namespace OpenTK
             }
         }
     }
+
+    #endif
 
     // System.Xml.XmlIgnoreAttribute
     class XmlIgnoreAttribute : Attribute
@@ -117,6 +199,8 @@ namespace OpenTK
     }
 
     #endregion
+
+    #if MINIMAL
 
     #region PointF
 
@@ -669,6 +753,8 @@ namespace OpenTK
 
     #endregion
 
+    #endif
+
     #region Icon
 
     public sealed class Icon : IDisposable
@@ -745,6 +831,8 @@ namespace OpenTK
     #endregion
 
     #region Color
+
+#if IPHONE || MINIMAL
 
     /// <summary>
     /// Represents a color with 4 8bit components (R, G, B, A).
@@ -1600,6 +1688,8 @@ namespace OpenTK
             return new Color(r, g, b, a);
         }
     }
+
+#endif
 
     #endregion
 

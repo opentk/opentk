@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clEnqueueNDRangeKernel</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clEnqueueNDRangeKernel</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clEnqueueNDRangeKernel">
+        <refname>clEnqueueNDRangeKernel</refname>
+
+        <refpurpose>
+            Enqueues a command to execute a kernel on a device.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>
+                        clEnqueueNDRangeKernel
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_command_queue</link><parameter>command_queue</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_kernel</link><parameter>kernel</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>work_dim</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">size_t</link><parameter>*global_work_offset</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">size_t</link><parameter>*global_work_size</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">size_t</link><parameter>*local_work_size</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_events_in_wait_list</parameter></paramdef>
+                <paramdef>const <link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event_wait_list</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> command_queue </varname> </term>
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A valid command-queue. The kernel will be queued for execution on
+                        the device associated with <varname>command_queue</varname>.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> kernel </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> A valid kernel object. The
+                      OpenCL context associated with <varname>kernel</varname> and
+                      <varname>command_queue</varname> must be the same.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> work_dim </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> The number of dimensions
+                      used to specify the global work-items and work-items in the
+                      work-group. <varname>work_dim</varname> must be greater than zero and less
+                      than or equal to <constant>CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> global_work_offset </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> <varname>global_work_offset</varname>
+                      can be used to specify an array of <varname>work_dim</varname> unsigned
+                      values that describe the offset used to calculate the global ID of a
+                      work-item. If <varname>global_work_offset</varname> is NULL, the global
+                      IDs start at offset (0, 0, ... 0).
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> global_work_size </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> Points to an array of
+                      <varname>work_dim</varname> unsigned values that describe the number
+                      of global work-items in <varname>work_dim</varname> dimensions
+                      that will execute the kernel function. The total number of global
+                      work-items is computed as <varname>global_work_size</varname>[0] *...*
+                      <varname>global_work_size</varname>[<varname>work_dim</varname> - 1].
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> local_work_size </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> Points to an array of
+                      <varname>work_dim</varname> unsigned values that describe the number
+                      of work-items that make up a work-group (also referred to as the
+                      size of the work-group) that will execute the kernel specified
+                      by <varname>kernel</varname>.  The total number of work-items in
+                      a work-group is computed as <varname>local_work_size</varname>[0]
+                      *... * <varname>local_work_size</varname>[<varname>work_dim</varname> -
+                      1]. The total number of work-items in the work-group must be less than
+                      or equal to the <constant>CL_DEVICE_MAX_WORK_GROUP_SIZE</constant>
+                      value specified in table of OpenCL Device Queries for
+                      <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+                      and the number of work-items specified
+                      in <varname>local_work_size</varname>[0],...
+                      <varname>local_work_size</varname>[<varname>work_dim</varname> - 1]
+                      must be less than or equal to the corresponding values specified
+                      by <constant>CL_DEVICE_MAX_WORK_ITEM_SIZES</constant>[0],....
+                      <constant>CL_DEVICE_MAX_WORK_ITEM_SIZES</constant>[<varname>work_dim</varname>
+                      - 1].  The explicitly specified <varname>local_work_size</varname>
+                      will be used to determine how to break the global work-items specified
+                      by <varname>global_work_size</varname> into appropriate work-group
+                      instances.  If <varname>local_work_size</varname> is specified,
+                      the values specified in <varname>global_work_size</varname>[0],...
+                      <varname>global_work_size</varname>[<varname>work_dim</varname>
+                      - 1] must be evenly divisible by the corresponding values
+                      specified in <varname>local_work_size</varname>[0],...
+                      <varname>local_work_size</varname>[<varname>work_dim</varname> - 1].
+                    </para>
+
+                    <para>
+                      <varname>local_work_size</varname> can also be a NULL value in which
+                      case the OpenCL implementation will determine how to be break the global
+                      work-items into appropriate work-group instances.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        event_wait_list
+                    </varname> and
+                    <varname> <!-- parameter name -->
+                        num_events_in_wait_list
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      <!-- parameter description --> Specify events that need
+                      to complete before this particular command can be executed. If
+                      <varname>event_wait_list</varname> is NULL, then this particular command does
+                      not wait on any event to complete. If <varname>event_wait_list</varname>
+                      is NULL, <varname>num_events_in_wait_list</varname> must be 0. If
+                      <varname>event_wait_list</varname> is not NULL, the list of events
+                      pointed to by <varname>event_wait_list</varname> must be valid
+                      and <varname>num_events_in_wait_list</varname> must be greater
+                      than 0.  The events specified in <varname>event_wait_list</varname>
+                      act as synchronization points. The context associated with events in
+                      <varname>event_wait_list</varname> and <varname>command_queue</varname> must
+                      be the same.  The memory associated with <varname>event_wait_list</varname>
+                      can be reused or freed after the function returns.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> event </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> Returns an event object that identifies
+                      this particular kernel execution instance. Event objects are unique and
+                      can be used to identify a particular kernel execution instance later on. If
+                      <varname>event</varname> is NULL, no event will be created for this kernel
+                      execution instance and therefore it will not be possible for the application
+                      to query or queue a wait for this particular kernel execution instance.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          The work-group size to be used for <varname>kernel</varname> can also
+          be specified in the program source using the <code><citerefentry
+          href="attribute"><refentrytitle>__attribute__</refentrytitle></citerefentry>
+          ((reqd_work_group_size(X, Y, Z)))</code> qualifier. In this case the size
+          of work group specified by <varname>local_work_size</varname> must match the
+          value specified by the <code>reqd_work_group_size</code> <citerefentry
+          href="attribute"><refentrytitle>__attribute__</refentrytitle></citerefentry> qualifier.
+        </para>
+
+        <para>
+          These work-group instances are executed in parallel across multiple compute units or
+          concurrently on the same compute unit.
+        </para>
+
+        <para>
+          Each work-item is uniquely identified by a global identifier. The global ID,
+          which can be read inside the kernel, is computed using the value given by
+          <varname>global_work_size</varname> and <varname>global_work_offset</varname>.
+          In addition, a work-item is also identified within a work-group by a unique local ID.
+          The local ID, which can also be read by the kernel, is computed using the value given
+          by <varname>local_work_size</varname>. The starting local ID is always (0, 0, ... 0).
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the kernel execution was successfully queued.
+            Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_PROGRAM_EXECUTABLE</errorname> if there is no successfully built program
+                executable available for device associated with <varname>command_queue</varname>.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_COMMAND_QUEUE</errorname> if <varname>command_queue</varname> is not a
+                valid command-queue.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_KERNEL</errorname> if <varname>kernel</varname> is
+                not a valid kernel object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if context associated with
+              <varname>command_queue</varname> and <varname>kernel</varname> is not the same
+              or if the context associated with <varname>command_queue</varname> and events in
+              <varname>event_wait_list</varname> are not the same.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_KERNEL_ARGS</errorname> if the kernel argument values
+                have not been specified.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_WORK_DIMENSION</errorname> if <varname>work_dim</varname>
+              is not a valid value (i.e. a value between 1 and 3).
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_GLOBAL_WORK_SIZE</errorname> if
+              <varname>global_work_size</varname> is NULL, or if any of the values specified in
+              <varname>global_work_size</varname>[0], ...<varname>global_work_size</varname>
+              [<varname>work_dim</varname> - 1] are 0 or exceed the range given by the
+              <code>sizeof(size_t)</code> for the device on which the kernel execution will
+              be enqueued.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_GLOBAL_OFFSET</errorname> if the value specified
+              in <varname>global_work_size</varname> + the corresponding values in
+              <varname>global_work_offset</varname> for any dimensions is greater than the
+              <code>sizeof(size_t)</code> for the device on which the kernel execution will
+              be enqueued.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_WORK_GROUP_SIZE</errorname> if
+              <varname>local_work_size</varname> is specified and number of work-items specified by
+              <varname>global_work_size</varname> is not evenly divisable by size of work-group
+              given by <varname>local_work_size</varname> or does not match the work-group
+              size specified for <varname>kernel</varname> using the <code> <citerefentry
+              href="functionQualifiers"><refentrytitle>__attribute__</refentrytitle></citerefentry>
+              ((reqd_work_group_size(X, Y, Z)))</code> qualifier in program source.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_WORK_GROUP_SIZE</errorname> if
+              <varname>local_work_size</varname> is specified and the total number of
+              work-items in the work-group computed as <varname>local_work_size</varname>[0] *...
+              <varname>local_work_size</varname>[<varname>work_dim</varname> - 1] is greater than
+              the value specified by <constant>CL_DEVICE_MAX_WORK_GROUP_SIZE</constant>
+              in the table of OpenCL Device Queries for
+              <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_WORK_GROUP_SIZE</errorname>
+              if <varname>local_work_size</varname> is NULL and
+              the <code><citerefentry href="functionQualifiers">
+              <refentrytitle>__attribute__</refentrytitle></citerefentry> ((reqd_work_group_size(X,
+              Y, Z)))</code> qualifier is used to declare the work-group size for
+              <varname>kernel</varname> in the program source.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_WORK_ITEM_SIZE</errorname> if the number of
+              work-items specified in any of <varname>local_work_size</varname>[0],
+              ...  <varname>local_work_size</varname>[<varname>work_dim</varname>
+              - 1] is greater than the corresponding values specified by
+              <constant>CL_DEVICE_MAX_WORK_ITEM_SIZES</constant>[0], ....
+              <constant>CL_DEVICE_MAX_WORK_ITEM_SIZES</constant>[<varname>work_dim</varname>
+              - 1].
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MISALIGNED_SUB_BUFFER_OFFSET</errorname> if a sub-buffer object
+              is specified as the value for an argument that is a buffer object and the
+              <varname>offset</varname> specified when the sub-buffer object is created is not
+              aligned to <constant>CL_DEVICE_MEM_BASE_ADDR_ALIGN</constant> value for device
+              associated with <varname>queue</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_IMAGE_SIZE</errorname> if an image object is specified
+              as an argument value and the image dimensions (image width, height, specified
+              or compute row and/or slice pitch) are not supported by device associated with
+              <varname>queue</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_IMAGE_FORMAT</errorname> if an image object is specified
+              as an argument value and the image format (image channel order and data type)
+              is not supported by device associated with <varname>queue</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to queue the
+              execution instance of <varname>kernel</varname> on the command-queue because of
+              insufficient resources needed to execute the kernel.  For example, the explicitly
+              specified <varname>local_work_size</varname> causes a failure to execute the kernel
+              because of insufficient resources such as registers or local memory. Another example
+              would be the number of read-only image args used in <varname>kernel</varname>
+              exceed the <constant>CL_DEVICE_MAX_READ_IMAGE_ARGS</constant> value for
+              device or the number of write-only image args used in <varname>kernel</varname>
+              exceed the <constant>CL_DEVICE_MAX_WRITE_IMAGE_ARGS</constant> value for
+              device or the number of samplers used in <varname>kernel</varname> exceed
+              <constant>CL_DEVICE_MAX_SAMPLERS</constant> for device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MEM_OBJECT_ALLOCATION_FAILURE</errorname> if there is a failure to
+              allocate memory for data store associated with image or buffer objects specified
+              as arguments to <varname>kernel</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EVENT_WAIT_LIST</errorname>
+              if <varname>event_wait_list</varname> is NULL and
+              <varname>num_events_in_wait_list</varname> &gt; 0,
+              or <varname>event_wait_list</varname> is not NULL and
+              <varname>num_events_in_wait_list</varname> is 0, or if event objects in
+              <varname>event_wait_list</varname> are not valid events.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clEnqueueNDRangeKernel">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateCommandQueue</refentrytitle>
+            </citerefentry>, <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>,
+            <citerefentry href="workItemFunctions"><refentrytitle>Work-Item Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 20-Oct-2011 -->
+</refentry>

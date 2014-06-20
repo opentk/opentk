@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY integerFunctionsInc SYSTEM "integerFunctionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>upsample</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>upsample</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="upsample">
+        <refname>upsample</refname>
+        <refpurpose>
+            result[i] = ((gentype)hi[i] &lt;&lt; 8|16|32) | lo[i]
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">short</link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">char</link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">uchar</link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">ushort</link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">uchar</link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">uchar</link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">short<replaceable>n</replaceable></link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">char<replaceable>n</replaceable></link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">uchar<replaceable>n</replaceable></link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">ushort<replaceable>n</replaceable></link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">uchar<replaceable>n</replaceable></link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">uchar<replaceable>n</replaceable></link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">short</link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">ushort</link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">uint</link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">ushort</link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">ushort</link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">int<replaceable>n</replaceable></link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">short<replaceable>n</replaceable></link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">ushort<replaceable>n</replaceable></link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">uint<replaceable>n</replaceable></link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">ushort<replaceable>n</replaceable></link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">ushort<replaceable>n</replaceable></link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">long</link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">int</link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">uint</link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">ulong</link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">uint</link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">uint</link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">long<replaceable>n</replaceable></link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">int<replaceable>n</replaceable></link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">uint<replaceable>n</replaceable></link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">ulong<replaceable>n</replaceable></link>
+                    <function>
+                        upsample
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">uint<replaceable>n</replaceable></link><parameter>hi</parameter></paramdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">uint<replaceable>n</replaceable></link><parameter>lo</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+<refsect1 id="description"><title>Description</title>
+      <para>
+        <literallayout>
+<varname>result</varname>[i] = ((<type>short</type>)<varname>hi</varname>[i] &lt;&lt; 8) | <varname>lo</varname>[i]
+<varname>result</varname>[i] = ((<type>ushort</type>)<varname>hi</varname>[i] &lt;&lt; 8) | <varname>lo</varname>[i]
+
+<varname>result</varname>[i] = ((<type>int</type>)<varname>hi</varname>[i] &lt;&lt; 16) | <varname>lo</varname>[i]
+<varname>result</varname>[i] = ((<type>uint</type>)<varname>hi</varname>[i] &lt;&lt; 16) | <varname>lo</varname>[i]
+
+<varname>result</varname>[i] = ((<type>long</type>)<varname>hi</varname>[i] &lt;&lt; 32) | <varname>lo</varname>[i]
+<varname>result</varname>[i] = ((<type>ulong</type>)<varname>hi</varname>[i] &lt;&lt; 32) | <varname>lo</varname>[i]
+        </literallayout>
+      </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+       &integerFunctionsInc;
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="integerFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="integerFunctions"><refentrytitle>Integer Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-May-2013 -->
+</refentry>
+

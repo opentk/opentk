@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Other Data Types</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Other Built-in Data Types</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="OtherDataTypes">
+        <refname>Other Data Types</refname>
+
+        <refpurpose>
+             Other Built-in Data Types
+        </refpurpose>
+    </refnamediv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The following table describes other data types supported by OpenCL:
+        </para>
+
+        <para>
+
+          <!-- Table 6.3 -->
+
+          <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" /> <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Type</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry> <type>image2d_t</type> </entry>
+                        <entry>
+                            A 2D image. See individual  <citerefentry
+                            href="imageFunctions"><refentrytitle>Image
+                            Functions</refentrytitle></citerefentry>  for more information.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>image3d_t</type> </entry>
+                        <entry>
+                            A 3D image. See individual  <citerefentry
+                            href="imageFunctions"><refentrytitle>Image
+                            Functions</refentrytitle></citerefentry>  for more information.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>image2d_array_t</type> </entry>
+                        <entry>
+                            A 2D image array. See individual  <citerefentry
+                            href="imageFunctions"><refentrytitle>Image
+                            Functions</refentrytitle></citerefentry>  for more information.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>image1d_t</type> </entry>
+                        <entry>
+                            A 1D image. See individual  <citerefentry
+                            href="imageFunctions"><refentrytitle>Image
+                            Functions</refentrytitle></citerefentry>  for more information.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>image1d_buffer_t</type> </entry>
+                        <entry>
+                            A 1D image created from a buffer object. See individual
+                            <citerefentry href="imageFunctions"><refentrytitle>Image
+                            Functions</refentrytitle></citerefentry>  for more information.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>image1d_array_t</type> </entry>
+                        <entry>
+                            A 1D image array. See individual  <citerefentry
+                            href="imageFunctions"><refentrytitle>Image
+                            Functions</refentrytitle></citerefentry>  for more information.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>image2d_depth_t</type> </entry>
+                        <entry>
+                            A 2D depth image. See individual  <citerefentry
+                            href="imageFunctions"><refentrytitle>Image
+                            Functions</refentrytitle></citerefentry>  for more information.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>image2d_array_depth_t</type> </entry>
+                        <entry>
+                            A 2D depth image array. See individual  <citerefentry
+                            href="imageFunctions"><refentrytitle>Image
+                            Functions</refentrytitle></citerefentry>  for more information.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <citerefentry><refentrytitle><type>sampler_t</type></refentrytitle></citerefentry>
+                        </entry>
+
+                        <entry>
+                            A sampler type.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>queue_t</type> </entry>
+                        <entry>
+                            A device command queue. This queue can only be used to 
+                            enqueue commands from kernels executing on the device. 
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>ndrange_t</type> </entry>
+                        <entry>
+                            The N-dimensional range over which a kernel executes.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>clk_event_t</type> </entry>
+                        <entry>
+                            A device side event that identifies a command enqueue to a 
+                            device command queue.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>reserve_id_t</type> </entry>
+                        <entry>
+                            A reservation ID. This opaque type is used to identify the 
+                            reservation for reading and writing a pipe. Refer to section 
+                            6.13.16.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><type>event_t</type></entry>
+                        <entry>
+                            An event. This can be used to identify async copies from global
+                             to local memory and vice-versa. See individual  <citerefentry
+                            href="asyncCopyFunctions"><refentrytitle>Async Copy and Prefetch
+                            Functions</refentrytitle></citerefentry> for more information.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><type>cl_mem_fence_flags</type></entry>
+                        <entry>
+                            This is a bitfield and can be 0 or a combination of the 
+                            following values ORed together:
+
+                                        <literallayout>
+<constant>CLK_GLOBAL_MEM_FENCE</constant>
+<constant>CLK_LOCAL_MEM_FENCE</constant>
+<constant>CLK_IMAGE_MEM_FENCE</constant>
+                                        </literallayout>
+
+                        <para>
+                            These flags are described in detail in section 6.13.8 of the
+                            OpenCL specification (see 
+                            <citerefentry><refentrytitle>syncFunctions</refentrytitle></citerefentry>).
+                        </para>
+
+                        </entry>
+                    </row>
+
+<!-- MSAA additions -->
+
+                    <row>
+                        <entry><type>image2d_msaa_t</type></entry>
+                        <entry>
+                            If the <citerefentry><refentrytitle>cl_khr_gl_msaa_sharing</refentrytitle></citerefentry>
+                            extension is enabled: A 2D multi-sample color image.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><type>image2d_array_msaa_t</type></entry>
+                        <entry>
+                            If the <citerefentry><refentrytitle>cl_khr_gl_msaa_sharing</refentrytitle></citerefentry>
+                            extension is enabled: A 2D multi-sample color image array.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><type>image2d_msaa_depth_t</type></entry>
+                        <entry>
+                            If the <citerefentry><refentrytitle>cl_khr_gl_msaa_sharing</refentrytitle></citerefentry>
+                            extension is enabled: A 2D multi-sample depth image.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><type>image2d_array_msaa_depth_t</type></entry>
+                        <entry>
+                            If the <citerefentry><refentrytitle>cl_khr_gl_msaa_sharing</refentrytitle></citerefentry>
+                            extension is enabled: A 2D multi-sample depth image array.
+                        </entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+          </informaltable>
+        </para>
+
+        <para>
+          NOTE: The <type>image2d_t</type>, <type>image3d_t</type>, <type>image2d_array_t</type>,
+          <type>image1d_t</type>, <type>image1d_buffer_t</type>, <type>image1d_array_t</type>,
+          <type>image2d_depth_t</type>, <type>image2d_array_depth_t</type>
+          and <type>sampler_t</type> types are only defined if the device
+          supports images i.e.  <constant>CL_DEVICE_IMAGE_SUPPORT</constant>
+          is <constant>CL_TRUE</constant>. See the table for <varname>param_name</varname> for
+          <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry> for details.
+        </para>
+
+        <para>
+          The C99 derived types (arrays, structs, union, function, and
+          pointers), constructed from the built-in data types described in
+          <citerefentry href="scalarDataTypes"><refentrytitle>Scalar Data Types</refentrytitle></citerefentry>,
+          <citerefentry href="vectorDataTypes"><refentrytitle>Vector Data Types</refentrytitle></citerefentry>, and
+          <citerefentry href="otherDataTypes"><refentrytitle>Other Data Types</refentrytitle></citerefentry>
+          are also supported with certain
+          <citerefentry><refentrytitle>restrictions</refentrytitle></citerefentry>
+          described in section 6.9.
+        </para>
+
+        <para>
+            The following tables describe the other built-in 
+            data types in OpenCL described in table 6.3 and 
+            the corresponding data type available to the application:
+        </para>
+
+        <para>
+          <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" /> 
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Type in OpenCL C</entry>
+                        <entry>API type for application</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry><type>queue_t</type></entry>
+                        <entry><type>cl_command_queue</type></entry>
+                    </row>
+
+                    <row>
+                        <entry><type>clk_event_t</type></entry>
+                        <entry><type>cl_event</type></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+          </informaltable>
+        </para>
+
+        <para>
+        </para>
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="otherDataTypes">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="macroLimits"><refentrytitle>Macros and Limits</refentrytitle></citerefentry>,
+            <citerefentry href="scalarDataTypes"><refentrytitle>Scalar Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="vectorDataTypes"><refentrytitle>Vector Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="reservedDataTypes"><refentrytitle>Reserved Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="abstractDataTypes"><refentrytitle>Abstract Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="enums"><refentrytitle>Enumerated Data Types</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Dec-2013, rev. 19 -->
+</refentry>
+

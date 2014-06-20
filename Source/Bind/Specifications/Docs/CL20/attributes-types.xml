@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Attributes of Types</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Attributes of Types</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="AttributesofTypes">
+        <refname>Attributes of Types</refname>
+
+        <refpurpose>
+            Attributes of Types.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__attribute__ ((aligned))
+__attribute__ ((aligned (<emphasis>n</emphasis>)))
+__attribute__ ((packed))
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The keyword <constant>__attribute__</constant> allows you to specify special attributes
+          of <code>enum</code>, <code>struct</code> and <code>union</code> types when you
+          define such types. This keyword is followed by an attribute specification inside
+          double parentheses. Two attributes are currently defined for types: aligned, and packed.
+        </para>
+
+        <para>
+          You may specify type attributes in an <code>enum</code>, <code>struct</code>,
+          or <code>union</code> type declaration or definition, or for other types in a
+          <code>typedef</code> declaration.
+        </para>
+
+        <para>
+          For an <code>enum</code>, <code>struct</code>, or <code>union</code> type, you
+          may specify attributes either between the <code>enum</code>, <code>struct</code>
+          or <code>union</code> tag and the name of the type, or just past the closing curly
+          brace of the <emphasis>definition</emphasis>. The former syntax is preferred.
+        </para>
+    </refsect1>
+
+    <refsect2 id="aligned"><title>aligned (<varname>alignment</varname>)</title>
+        <!-- Using refsect2 so we can have shaded backgrounds behind examples  -->
+        <para>
+          This attribute specifies a minimum alignment (in bytes) for variables of the specified
+          type. For example, the declarations:
+        </para>
+
+    <para>
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" /> 
+                <tbody>
+                    <row>
+                        <entry>    <code>struct S { short f[3]; } __attribute__ ((aligned (8)));
+    typedef int more_aligned_int __attribute__ ((aligned (8)));</code></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </para>
+
+    <para>
+      force the compiler to insure (as far as it can) that each variable whose type is
+      <code>struct S</code> or <code>more_aligned_int</code> will be allocated and aligned
+      <emphasis>at least</emphasis> on a 8-byte boundary.
+    </para>
+
+    <para>
+      Note that the alignment of any given <code>struct</code> or <code>union</code> type
+      is required by the ISO C standard to be at least a perfect multiple of the lowest
+      common multiple of the alignments of all of the members of the <code>struct</code>
+      or <code>union</code> in question and must also be a power of two. This means that
+      you <emphasis>can</emphasis> effectively adjust the alignment of a <code>struct</code>
+      or <code>union</code> type by attaching an aligned attribute to any one of the members
+      of such a type, but the notation illustrated in the example above is a more obvious,
+      intuitive, and readable way to request the compiler to adjust the alignment of an entire
+      <code>struct</code> or <code>union</code> type.
+    </para>
+
+    <para>
+      As in the preceding example, you can explicitly specify the alignment (in bytes) that
+      you wish the compiler to use for a given <code>struct</code> or <code>union</code>
+      type. Alternatively, you can leave out the alignment factor and just ask the compiler
+      to align a type to the maximum useful alignment for the target machine you are compiling
+      for. For example, you could write:
+    </para>
+
+    <para>
+         <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>    <code>struct S { short f[3]; } __attribute__ ((aligned));</code></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </para>
+
+    <para>
+      Whenever you leave out the alignment factor in an <code>aligned</code> attribute
+      specification, the compiler automatically sets the alignment for the type to the largest
+      alignment which is ever used for any data type on the target machine you are compiling
+      for. In the example above, the size of each <code>short</code> is 2 bytes, and therefore
+      the size of the entire <code>struct S</code> type is 6 bytes. The smallest power of two
+      which is greater than or equal to that is 8, so the compiler sets the alignment for the
+      entire <code>struct S</code> type to 8 bytes.
+    </para>
+
+    <para>
+      Note that the effectiveness of aligned attributes may be limited by inherent limitations
+      of the OpenCL device and compiler. For some devices, the OpenCL compiler may only be
+      able to arrange for variables to be aligned up to a certain maximum alignment. If the
+      OpenCL compiler is only able to align variables up to a maximum of 8 byte alignment, then
+      specifying <code>aligned(16)</code> in an <code>__attribute__</code> will still only provide
+      you with 8 byte alignment. See your platform-specific documentation for further information.
+    </para>
+
+    <para>
+      The <code>aligned</code> attribute can only increase the alignment; but you can decrease
+      it by specifying <code>packed</code> as well. See below.
+    </para>
+
+</refsect2>
+
+<refsect2 id="packed"><title>packed</title>
+    <!-- Using refsect2 so we can have shaded backgrounds behind examples  -->
+
+    <para>
+      The <constant>packed</constant> attribute, attached to the <code>struct</code>
+      or <code>union</code> type definition, specifies that each member of the structure or
+      union is placed to minimize the memory required. When attached to an <code>enum</code>
+      definition, it indicates that the smallest integral type should be used.
+    </para>
+
+    <para>
+      Specifying this attribute for <code>struct</code> and <code>union</code> types is equivalent
+      to specifying the <code>packed</code> attribute on each of the structure or union members.
+    </para>
+
+    <para>
+      In the following example <code>struct my_packed_struct</code>'s members are packed closely
+      together, but the internal layout of its <code>s</code> member is not packed. To do that,
+      <code>struct my_unpacked_struct</code> would need to be packed, too.
+    </para>
+
+    <para>
+         <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" /> <tbody>
+                    <row>
+                        <entry>    <code>struct my_unpacked_struct
+    {
+        char c;
+        int i;
+    };
+
+    struct __attribute__ ((packed)) my_packed_struct
+    {
+        char c;
+        int i;
+        struct my_unpacked_struct s;
+    };</code></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </para>
+
+    <para>
+      You may only specify this attribute on the definition of a <code>enum</code>,
+      <code>struct</code>, or <code>union</code>, not on a <code>typedef</code> which does not
+      also define the enumerated type, structure or union.
+    </para>
+</refsect2>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="attributes-types">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="attribute"><refentrytitle>__attribute__</refentrytitle></citerefentry>,
+            <citerefentry href="attributes-blocksAndControlFlow"><refentrytitle>Blocks and Control-Flow Statement Attributes</refentrytitle></citerefentry>,
+            <citerefentry href="attributes-variables"><refentrytitle>Variable Attributes</refentrytitle></citerefentry>,
+            <citerefentry href="attributes-loopUnroll"><refentrytitle>Loop Unroll Attributes</refentrytitle></citerefentry>,
+            <citerefentry href="qualifiers"><refentrytitle>Qualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Dec-2013, rev. 19 -->
+</refentry>
+

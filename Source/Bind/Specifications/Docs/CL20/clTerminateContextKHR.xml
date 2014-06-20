@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clTerminateContextKHR</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clTerminateContextKHR
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clTerminateContextKHR">
+        <refname>
+            clTerminateContextKHR
+        </refname>
+
+        <refpurpose>
+            Terminates all pending work associated with the context and renders all data owned by the context invalid.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link> <function>clTerminateContextKHR</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link> <parameter>context</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+<!-- Use <function /> to refer ONLY to the function that this page describes. All other functions should use
+     <citerefentry /><refentrytitle /> to make it a link. Use <varname /> for parameters. Use <constant /> for
+     constants (or anything to be set in monospace, non-bold type. -->
+
+     <refsect1 id="notes"><title>Notes</title>
+        <para>
+            It is the responsibility of the application to release all objects associated with the 
+            context being terminated.
+        </para>
+
+        <para>
+            When a context is terminated:
+        </para>
+
+        <itemizedlist mark="opencircle">
+          <listitem>
+            <para>
+                The execution status of enqueued commands will be 
+                <constant>CL_TERMINATED_KHR</constant>. Event 
+                objects can be queried using 
+                <citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry>. 
+                Event callbacks can be registered and 
+                registered event callbacks will be called with 
+                <varname>event_command_exec_status</varname> set to 
+                <constant>CL_TERMINATED_KHR</constant>. 
+                <citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry> 
+                will return as immediately for commands 
+                associated with event objects specified in 
+                <varname>event_list</varname>. The status of user events can be set. 
+                Event objects can be retained and released. 
+                <citerefentry><refentrytitle>clGetEventProfilingInfo</refentrytitle></citerefentry>  
+                returns 
+                <errorname>CL_PROFILING_INFO_NOT_AVAILABLE</errorname>.
+            </para> 
+          </listitem>
+
+          <listitem>
+            <para>
+                The context is considered to be terminated. 
+                A callback function registered when the 
+                context was created will be called. Only 
+                queries, retain and release operations can be 
+                performed on the context. All other APIs that 
+                use a context as an argument will return 
+                <errorname>CL_CONTEXT_TERMINATED_KHR</errorname>.
+            </para> 
+          </listitem>
+
+          <listitem>
+            <para>
+                The contents of the memory regions of the 
+                memory objects is undefined. Queries, 
+                registering a destructor callback, retain 
+                and release operations can be performed on the 
+                memory objects.
+            </para> 
+          </listitem>
+
+          <listitem>
+            <para>
+                Once a context has been terminated, all OpenCL API 
+                calls that create objects or enqueue 
+                commands will return 
+                <errorname>CL_CONTEXT_TERMINATED_KHR</errorname>. 
+                APIs that release OpenCL 
+                objects will continue to operate as though 
+                <function>clTerminateContextKHR</function> was not called.
+            </para> 
+          </listitem>
+
+          <listitem>
+            <para>
+                The behavior of callbacks will remain unchanged, 
+                and will report appropriate error, if 
+                executing after termination of context. This 
+                behavior is similar to enqueued commands, 
+                after the command queue has become invalid.
+            </para> 
+          </listitem>
+        </itemizedlist>
+
+        <para>
+            An implementation that supports this extension 
+            must be able to terminate commands currently 
+            executing on devices or queued across all 
+            command-queues associated with the context that is 
+            being terminated. The implementation cannot 
+            implement this extension by waiting for currently 
+            executing (or queued) commands to finish execution 
+            on devices associated with this context (i.e.
+            doing a <citerefentry><refentrytitle>clFinish</refentrytitle></citerefentry>).
+        </para>
+
+        <para>
+            In Table 4.5, (see 
+            <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>) 
+            <constant>CL_CONTEXT_TERMINATE_KHR</constant> 
+            can be specified in the context properties only if all devices
+            associated with the context support the ability 
+            to support context termination (i.e. 
+            <constant>CL_DEVICE_TERMINATE_CAPABILITY_CONTEXT_KHR</constant> 
+            is set for
+            <constant>CL_DEVICE_TERMINATE_CAPABILITY_KHR</constant>). 
+            Otherwise, context creation fails with error 
+            code of <errorname>CL_INVALID_PROPERTY</errorname>.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          <function>clTerminateContextKHR</function> returns <errorname>CL_SUCCESS</errorname> 
+            if the function is executed successfully.
+            Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not a valid OpenCL context.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_CONTEXT_TERMINATED_KHR</errorname> if <varname>context</varname> has already been terminated.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_OPERATION</errorname> if 
+                <varname>context</varname> was not created with 
+                <constant>CL_CONTEXT_TERMNATE_KHR</constant> 
+                set to <constant>CL_TRUE</constant>.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_RESOURCES</errorname> if there 
+                is a failure to allocate resources required by the
+                OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there 
+                is a failure to allocate resources required by the
+                OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clTerminateContextKHR">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 22-Dec-2013, rev. 19 -->
+</refentry>
+

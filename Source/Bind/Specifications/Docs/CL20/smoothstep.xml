@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY commonFunctionsInc SYSTEM "commonFunctionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>smoothstep</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>smoothstep</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="step">
+        <refname>smoothstep</refname>
+
+        <refpurpose>
+            Step and interpolate.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        smoothstep
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>edge0</parameter></paramdef>
+                <paramdef>gentype<parameter>edge1</parameter></paramdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentypef
+                    <function>
+                        smoothstep
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">float</link><parameter>edge0</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">float</link><parameter>edge1</parameter></paramdef>
+                <paramdef>gentypef<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentyped
+                    <function>
+                        smoothstep
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">double</link><parameter>edge0</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">double</link><parameter>edge1</parameter></paramdef>
+                <paramdef>gentyped<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <!-- Optional Half prototypes -->
+    <refsect2 xmlns:xlink="http://www.w3.org/1999/xlink" id="double">
+        <title></title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+<type>gentype</type> <function>smoothstep</function> (<type><link xlink:href="scalarDataTypes.html">half</link></type> <varname>edge0</varname>,
+              <type><link xlink:href="scalarDataTypes.html">half</link></type> <varname>edge1</varname>,
+              <type>gentype</type> <varname>x</varname>)   // if half extension enabled
+</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          Returns 0.0 if <varname>x</varname> &le; <varname>edge0</varname> and 1.0 if
+          <varname>x</varname> &ge; <varname>edge1</varname> and performs smooth Hermite
+          interpolation between 0 and 1 when <varname>edge0</varname> &lt; <varname>x</varname>
+          &lt; <varname>edge1</varname>. This is useful in cases where you would want a threshold
+          function with a smooth transition.
+        </para>
+
+        <para>This is equivalent to:</para>
+
+<literallayout>          gentype t;
+          t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+          return t * t * (3 - 2 * t);
+</literallayout>
+
+        <para>
+          For the forms that take an <varname>edge0</varname> of type other 
+          than <type>half</type> or <type>half<replaceable>n</replaceable></type>, 
+          results are undefined if <varname>edge0</varname> &ge;
+          <varname>edge1</varname> or if <varname>x</varname>, <varname>edge0</varname> or
+          <varname>edge1</varname> is a NaN.
+          For the forms that are enabled with the 
+          <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> 
+          extension, results are undefined if <varname>edge0</varname> &ge;
+          <varname>edge1</varname>.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+       &commonFunctionsInc;
+        <para>
+            If extended with
+            <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>, generic type name
+            <type>gentype</type> may indicate <type>half</type> and <type>half{2|3|4|8|16}</type> as
+            arguments and return values.
+        </para>
+
+        <para>
+          The mix and smoothstep functions can be implemented using contractions such as
+          <citerefentry><refentrytitle>mad</refentrytitle></citerefentry> or
+          <citerefentry><refentrytitle>fma</refentrytitle></citerefentry>.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="commonFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="commonFunctions"><refentrytitle>Common Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 20-Dec-2013, rev. 19 -->
+</refentry>
+

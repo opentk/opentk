@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_subgroups</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_subgroups</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_subgroups">
+        <refname>cl_khr_subgroups</refname>
+
+        <refpurpose>
+            Extension adds support for implementation-controlled subgroups.
+        </refpurpose>
+    </refnamediv>
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_subgroups : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            Subgroups behave similarly to workgroups with their own 
+            sets of builtins and synchronization primitives. Subgroups 
+            within a workgroup are independent, make forward progress 
+            with respect to each other and may map to optimized 
+            hardware structures where that makes sense.
+        </para>
+
+        <para>
+            If this extension is supported by an implementation, 
+            the string <code>cl_khr_subgroups</code> will be 
+            present in the <constant>CL_DEVICE_EXTENSIONS</constant> 
+            string described in table 4.3
+            (see <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>).
+        </para>
+
+        <para>
+            Within a work-group work-items may be divided 
+            into sub-groups in an implementation-defined 
+            fashion. The mapping of work-items to sub-groups 
+            is implementation-defined and may be 
+            queried at runtime. While sub-groups may be 
+            used in multi-dimensional work-groups, 
+            each subgroup is 1-dimensional and any given 
+            work-item may query which sub-group it is a member of.
+        </para>
+
+        <para>
+            Work items are mapped into subgroups through 
+            a combination of compile-time decisions and the 
+            parameters of the dispatch. The mapping to subgroups 
+            is invariant for the duration of a kernel’s 
+            execution, across dispatches of a given kernel 
+            with the same launch parameters, and from one 
+            work-group to another within the dispatch (excluding 
+            the trailing edge work-groups in the
+            presence of non-uniform work-group sizes). In 
+            addition, all sub-groups within a work-group will 
+            be the same size, apart from the sub-group with 
+            the maximum index which may be smaller if the 
+            size of the work-group is not evenly divisible 
+            by the size of the sub-groups
+        </para>
+
+        <para>
+            Sub-groups execute concurrently within a given work-group 
+            and make independent forward progress with respect to each 
+            other even in the absence of work-group barrier operations. 
+            Subgroups are able to internally synchronize using barrier 
+            operations without synchronizing with each other.
+        </para>
+
+        <para>
+            In the degenerate case, with the extension enabled, a single 
+            sub-group must be supported for each work-group. In this 
+            situation all sub-group scope functions alias their work-group 
+            level equivalents.
+        </para>
+
+        <para>
+            This extension enables the following functions:
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colnum="1" colwidth="2*" colname="col1" />
+                <colspec colnum="2" colwidth="8*" colname="col2" />
+                <tbody>
+                    <row>
+                        <entry><citerefentry><refentrytitle>clGetKernelSubGroupInfoKHR</refentrytitle></citerefentry></entry>
+                        <entry>Returns information about the kernel object</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_sub_group_size</refentrytitle></citerefentry></entry>
+                        <entry>Returns the number of work-items in the subgroup</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_max_sub_group_size</refentrytitle></citerefentry></entry>
+                        <entry>Returns the maximum size of a subgroup within the dispatch</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_num_sub_groups</refentrytitle></citerefentry></entry>
+                        <entry>Returns the number of subgroups in the current workgroup</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_enqueued_num_sub_groups</refentrytitle></citerefentry></entry>
+                        <entry>Returns the number of enqueued subgroups</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_sub_group_id</refentrytitle></citerefentry></entry>
+                        <entry>Returns the sub-group ID</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_sub_group_local_id</refentrytitle></citerefentry></entry>
+                        <entry>Returns the unique work-item ID within the current subgroup</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>sub_group_barrier</refentrytitle></citerefentry></entry>
+                        <entry>Sub-group barrier</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>sub_group_all</refentrytitle></citerefentry></entry>
+                        <entry>Returns non-zero if a predicate evaluates true for all work-items</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>sub_group_any</refentrytitle></citerefentry></entry>
+                        <entry>Returns non-zero if a predicate evaluates true for any work-items</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>sub_group_broadcast</refentrytitle></citerefentry></entry>
+                        <entry>Broadcast a value to all work-items in a sub-group</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry href="sub_group_reduce"><refentrytitle>sub_group_reduce_&lt;op></refentrytitle></citerefentry></entry>
+                        <entry>Broadcast a value to all work-items in a sub-group</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry href="sub_group_scan_exclusive"><refentrytitle>sub_group_scan_exclusive_&lt;op></refentrytitle></citerefentry></entry>
+                        <entry>Do an exclusive scan operation</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry href="sub_group_scan_inclusive"><refentrytitle>sub_group_scan_inclusive_&lt;op></refentrytitle></citerefentry></entry>
+                        <entry>Do an inclusive scan operation</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>sub_group_reserve_read_pipe</refentrytitle></citerefentry></entry>
+                        <entry>Reserve packet entries for reading from a pipe</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>sub_group_reserve_write_pipe</refentrytitle></citerefentry></entry>
+                        <entry>Reserve packet entries for writing to a pipe</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>sub_group_commit_read_pipe</refentrytitle></citerefentry></entry>
+                        <entry>Indicates that all reads associated with a reservation are completed</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>sub_group_commit_write_pipe</refentrytitle></citerefentry></entry>
+                        <entry>Indicates that all writes associated with a reservation are completed</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_kernel_sub_group_count_for_ndrange</refentrytitle></citerefentry></entry>
+                        <entry>Returns the number of subgroups in each workgroup of the dispatch</entry>
+                    </row>
+
+                    <row>
+                        <entry><citerefentry><refentrytitle>get_kernel_max_sub_group_size_for_ndrange</refentrytitle></citerefentry></entry>
+                        <entry>Returns the maximum sub-group size for a block</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_subgroups">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelSubGroupInfoKHR</refentrytitle></citerefentry>,
+            <citerefentry href="workItemFunctions"><refentrytitle>Work Item Functions</refentrytitle></citerefentry>,
+            <citerefentry href="syncFunctions"><refentrytitle>Sync Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Dec-2013, rev. 19 -->
+</refentry>
+

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY map_flags_Inc SYSTEM "map_flags_Inc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clEnqueueSVMMap</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clEnqueueSVMMap
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clEnqueueSVMMap">
+        <refname>
+            clEnqueueSVMMap
+        </refname>
+
+        <refpurpose>
+            Enqueues a command that will allow the host to update a region of a SVM buffer
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link> <function>clEnqueueSVMMap</function>
+                </funcdef>
+                    <paramdef><link xlink:href="abstractDataTypes.html">cl_command_queue</link><parameter>command_queue</parameter></paramdef>
+                    <paramdef><link xlink:href="enums.html#cl_bool">cl_bool</link><parameter>blocking_map</parameter></paramdef>
+                    <paramdef><link xlink:href="enums.html#cl_map_flags">cl_map_flags</link><parameter>map_flags</parameter></paramdef>
+                    <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*svm_ptr</parameter></paramdef>
+                    <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>size</parameter></paramdef>
+                    <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_events_in_wait_list</parameter></paramdef>
+                    <paramdef>const <link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event_wait_list</parameter></paramdef>
+                    <paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> command_queue </varname> </term>
+                <listitem>
+                    <para>
+                        Must be a valid host command-queue.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> blocking_map </varname> </term>
+                <listitem>
+                    <para>
+                      Indicates if the map operation is <varname>blocking</varname> or
+                      <varname>non-blocking</varname>.
+                    </para>
+
+                    <para>
+                      If <varname>blocking_map</varname> is <constant>CL_TRUE</constant>,
+                      <function>clEnqueueSVMMap</function> does not return until the application can 
+                      access the contents of the SVM region specified by 
+                      <varname>svm_ptr</varname> and <varname>size</varname> on the host.
+                    </para>
+
+                    <para>
+                      If <varname>blocking_map</varname> is <constant>CL_FALSE</constant>
+                      i.e. map operation is non-blocking, the region specified by 
+                        <varname>svm_ptr</varname> and <varname>size</varname> 
+                        cannot be used until the map command has completed. 
+                        The <varname>event</varname> argument 
+                        returns an event object which can be used to query 
+                        the execution status of the map command. 
+                        When the map command is completed, the application 
+                        can access the contents of the region 
+                        specified by <varname>svm_ptr</varname> and 
+                        <varname>size</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+<!-- ================================ PARAMETER TABLE (OPTIONAL) -->
+<!-- DELETE IF NOT NEEDED -->
+<!-- Use this if parameter information requires a table. Adjust the number of columns by adjusting
+<colspec /> tags. Column header goes in the <thead /> section. Delte the section if no column head needed.
+-->
+            <varlistentry>
+                <term><varname>map_flags</varname></term>
+                <listitem>
+                    <para>
+                        A bit-bield with the following supported values.
+                    </para>
+
+                    &map_flags_Inc;
+
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>svm_ptr</varname> and <varname>size</varname></term>
+                <listitem>
+                    <para>
+                        A pointer to a memory region and size in bytes 
+                        that will be updated by the 
+                        host. If <varname>svm_ptr</varname> is allocated using 
+                        <citerefentry><refentrytitle>clSVMAlloc</refentrytitle></citerefentry> 
+                        then it must be allocated from the same context 
+                        from which <varname>command_queue</varname> was created.
+                        Otherwise the behavior is undefined.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>
+                        event_wait_list,
+                    </varname>
+                    <varname>
+                        num_events_in_wait_list
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      Specify events that need to complete before this particular
+                      command can be executed. If <varname>event_wait_list</varname>
+                      is NULL, then this particular command does not wait on any
+                      event to complete. If <varname>event_wait_list</varname> is
+                      NULL, <varname>num_events_in_wait_list</varname> must be 0. If
+                      <varname>event_wait_list</varname> is not NULL, the list of events
+                      pointed to by <varname>event_wait_list</varname> must be valid
+                      and <varname>num_events_in_wait_list</varname> must be greater
+                      than 0. The events specified in <varname>event_wait_list</varname>
+                      act as synchronization points. The context associated with events in
+                      <varname>event_wait_list</varname> and <varname>command_queue</varname> must
+                      be the same. The memory associated with <varname>event_wait_list</varname>
+                      can be reused or freed after the function returns.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> event </varname> </term>
+                <listitem>
+                    <para>
+                      Returns an event object that identifies this particular command
+                      and can be used to query or queue a wait for this particular command
+                      to complete. <varname>event</varname> can be NULL in which case
+                      it will not be possible for the application to query the status of
+                      this command or queue a wait for this command to complete. 
+                      <citerefentry><refentrytitle>clEnqueueBarrierWithWaitList</refentrytitle></citerefentry> 
+                      can be used instead. If the
+                      <varname>event_wait_list</varname> and the <varname>event</varname>
+                      arguments are not NULL, the <varname>event</varname> argument should not
+                      refer to an element of the <varname>event_wait_list</varname> array.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Note that 
+            since we are enqueuing a command with a SVM buffer, the region is already mapped in the host 
+            address space.
+        </para>
+
+        <para>
+            <citerefentry><refentrytitle>clEnqueueSVMMap</refentrytitle></citerefentry>, and 
+            <citerefentry><refentrytitle>clEnqueueSVMUnmap</refentrytitle></citerefentry> 
+            act as synchronization points for the region 
+            of the SVM buffer specified in these calls.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          <function>clEnqueueSVMMap</function> returns <constant>CL_SUCCESS</constant>
+          if the function is executed successfully. Otherwise, 
+          it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_COMMAND_QUEUE</errorname> if <varname>command_queue</varname>
+                is not a valid host command-queue.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_CONTEXT</errorname> if the context associated with
+                <varname>command_queue</varname> 
+                and events in <varname>event_wait_list</varname> are not the same.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if <varname>svm_ptr</varname> is NULL.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if <varname>size</varname> 
+                is 0 or if values specified in <varname>map_flags</varname> are not valid.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EVENT_WAIT_LIST</errorname>
+              if <varname>event_wait_list</varname> is NULL and
+              <varname>num_events_in_wait_list</varname> &gt; 0,
+              or <varname>event_wait_list</varname> is not NULL and
+              <varname>num_events_in_wait_list</varname> is 0, or if event objects in
+              <varname>event_wait_list</varname> are not valid events.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST</errorname> 
+                if the map operation is 
+                blocking and the execution status of any of the 
+                events in <varname>event_wait_list</varname> is a negative 
+                integer value.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clEnqueueSVMMap">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="sharedVirtualMemory"><refentrytitle>Shared Virtual Memory Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 9-Dec-2013, rev. 19 -->
+</refentry>
+

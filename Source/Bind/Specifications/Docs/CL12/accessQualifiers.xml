@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>accessQualifiers</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>accessQualifiers</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="accessQualifiers">             
+        <refname>Access Qualifiers</refname>
+
+        <refpurpose>
+            Access Qualifiers for image memory objects.
+        </refpurpose>
+    </refnamediv>
+
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__read_only
+__write_only
+read_only
+write_only
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+Image objects specified as arguments to a kernel can be declared to be read-only or
+write-only. A kernel cannot read from and write to the same image object. The
+<function>__read_only</function> (or <function>read_only</function>) and
+<function>__write_only</function> (or <function>write_only</function>) qualifiers
+must be used with image object arguments to declare if the image object is
+being read or written by a kernel. The default qualifier is <function>__read_only</function>.
+        </para>
+    </refsect1>
+
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+        The <function>__read_only</function>, <function>__write_only</function>, 
+        <function>__read_write</function>, <function>read_only</function>, 
+        <function>write_only</function> and <function>read_write</function> names are reserved 
+        for use as access qualifiers and shall not be used otherwise.
+        </para>
+    </refsect1> 
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+        <para>
+In the example below, <constant>imageA</constant> is a read-only 2D image object, and 
+<constant>imageB</constant> is a write-only 2D image object.
+        </para>
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__kernel void
+foo (read_only image2d_t imageA,
+     write_only image2d_t imageB)
+{
+     ... 
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="accessQualifiers">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+<!-- Enter comma-delimited list of all other pages in the system to link to, using
+     <citerefentry /><refentrytitle /> to make it a link. For any case where the text of the link needs to differ
+     from the filename of the html file this links to, use the "href" attribute in <citerefentry />. For example:
+     <citerefentry href="thatPage"><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>addressSpaceQualifiers</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>imageAccessQualifiers</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>functionQualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+-->
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+<!-- 11-Oct-11 -->
+</refentry>
+

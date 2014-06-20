@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clReleaseEvent</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clReleaseEvent
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clReleaseEvent">
+        <refname>
+            clReleaseEvent
+        </refname>
+
+        <refpurpose>
+            Decrements the <varname>event</varname> reference count.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clReleaseEvent</function>
+                </funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>event</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term><varname>event</varname></term>
+
+                <listitem>
+                    <para>Event object being released.</para>
+               </listitem>
+           </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            Decrements the <varname>event</varname> reference count.
+        </para>
+
+        <para>
+          The event object is deleted once the reference count becomes zero, the specific command
+          identified by this event has completed (or terminated) and there are no commands in
+          the command-queues of a context that require a wait for this event to complete.
+        </para>
+
+        <para>
+          Developers should be careful when releasing their last reference count on events
+          created by <citerefentry><refentrytitle>clCreateUserEvent</refentrytitle></citerefentry>
+          that have not yet been set to status of <constant>CL_COMPLETE</constant> or an error.
+          If the user event was used in the <varname>event_wait_list</varname> argument passed to
+          a <function>clEnqueue***</function> API or another application host thread is waiting
+          for it in <citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry>,
+          those commands and host threads will continue to wait for the event status to reach
+          <constant>CL_COMPLETE</constant> or error, even after the user has released the object.
+          Since in this scenario the developer has released his last reference count to the
+          user event, it would be in principle no longer valid for him to change the status
+          of the event to unblock all the other machinery.  As a result the waiting tasks will
+          wait forever, and associated events, <type>cl_mem</type> objects, command queues and
+          contexts are likely to leak.  In-order command queues caught up in this deadlock may
+          cease to do any work.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+     <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function executed
+          successfully. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_EVENT</errorname> if <varname>event</varname> is not a
+              valid event object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clReleaseEvent">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainEvent</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 18-Oct-2011 -->
+</refentry>
+

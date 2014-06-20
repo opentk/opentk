@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY cl_queue_properties_Inc SYSTEM "cl_queue_properties_Inc.xml">
+<!ENTITY out_of_order_exec_Inc SYSTEM "out_of_order_exec_Inc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>clCreateCommandQueueWithProperties</keyword></keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>clCreateCommandQueueWithProperties</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+
+<!-- ================================ SYNOPSIS -->
+
+<refnamediv id="clCreateCommandQueueWithProperties">
+  <refname>clCreateCommandQueueWithProperties</refname>
+  <refpurpose>Create a host or device command-queue on a specific device.</refpurpose>
+  </refnamediv>
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+       <funcsynopsis>
+          <funcprototype>
+            <funcdef><link xlink:href="abstractDataTypes.html">cl_command_queue</link> <function>clCreateCommandQueueWithProperties</function></funcdef>
+            <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+            <paramdef><link xlink:href="abstractDataTypes.html">cl_device_id</link><parameter>device</parameter></paramdef>
+            <paramdef>const <link xlink:href="enums.html#cl_queue_properties">cl_queue_properties</link><parameter>*properties</parameter></paramdef>
+            <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>
+          </funcprototype>
+       </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+<!-- For each <varlistentry />, place the parameter name in <term /><varname />, then the definition in
+<listitem /><para />. When refering to anything that has a page in this system, use
+<citerefentry /><refentrytitle /> to make it a link.
+-->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><varname>context</varname></term>
+            <listitem>
+                <para>
+                    Must be a valid OpenCL context.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><varname>device</varname></term>
+            <listitem>
+                <para>
+                    Must be a device associated with <varname>context</varname>. 
+                    It can either be in the list of devices specified when 
+                    <varname>context</varname> is created using 
+                    <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry> 
+                    or have the same device type as the device type specified 
+                    when the <varname>context</varname> is created using 
+                    <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>.
+                </para>
+            </listitem>
+        </varlistentry>
+
+<!-- ================================ PARAMETER TABLE (OPTIONAL) -->
+
+        <varlistentry>
+            <term><varname>properties</varname></term>
+            <listitem>
+                <para>
+                    Specifies a list of properties for the 
+                    command-queue and their corresponding values. 
+                    Each property name is immediately followed 
+                    by the corresponding desired value. The list is 
+                    terminated with 0. The list of supported properties 
+                    is described in the table below. If a 
+                    supported property and its value is not specified in 
+                    <varname>properties</varname>, its default value will be used. 
+                    <varname>properties</varname> can be NULL in which case 
+                    the default values for supported command-queue properties 
+                    will be used.
+                </para>
+
+                &cl_queue_properties_Inc;
+
+            </listitem>
+        </varlistentry>
+<!-- ================================ END PARAMETER TABLE  -->
+
+
+        <varlistentry>
+            <term><varname>errcode_ret</varname></term>
+            <listitem>
+                <para>
+                    Returns an appropriate error code. If <varname>errcode_ret</varname> 
+                    is <constant>NULL</constant>, no error code is returned.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          OpenCL objects such as memory, program and kernel objects are created using a
+          context.  Operations on these objects are performed using  a command-queue. The
+          command-queue can be used to queue a set of operations (referred to as commands)
+          in order.  Having multiple command-queues allows applications to queue multiple
+          independent commands without requiring synchronization.  Note that this should work
+          as long as these objects are not being shared.  Sharing of objects across multiple
+          command-queues will require the application to perform appropriate synchronization.
+          This is described in Appendix A of the specification.
+        </para>
+
+        &out_of_order_exec_Inc;
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+  <refsect1 id="errors"><title>Errors</title>
+    <para>
+      <function>clCreateCommandQueueWithProperties</function> 
+      returns a valid non-zero command-queue and
+      <varname>errcode_ret</varname> is set to <errorname>CL_SUCCESS</errorname> if the
+      command-queue is created successfully. Otherwise, it returns a NULL value with one
+      of the following error values returned in <varname>errcode_ret</varname>:
+    </para>
+
+    <itemizedlist mark="disc">
+      <listitem>
+        <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not a valid
+        context.
+      </listitem>
+
+      <listitem>
+        <errorname>CL_INVALID_DEVICE</errorname> if <varname>device</varname> is not a valid
+        device or is not associated with <varname>context</varname>.
+      </listitem>
+
+      <listitem>
+        <errorname>CL_INVALID_VALUE</errorname> if values specified in
+        <varname>properties</varname> are not valid.
+      </listitem>
+
+      <listitem>
+        <errorname>CL_INVALID_QUEUE_PROPERTIES</errorname> if values specified in
+        <varname>properties</varname> are valid but are not supported by the device.
+      </listitem>
+
+      <listitem>
+        <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure 
+        to allocate resources required by the OpenCL implementation on the device.
+      </listitem>
+
+      <listitem>
+        <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure 
+        to allocate resources required by the OpenCL implementation on the host.
+      </listitem>
+
+    </itemizedlist>
+  </refsect1>
+
+<!-- ================================ EXAMPLE  --> <!-- DO NOT DELETE IN CASE AN EXAMPLE IS
+ADDED IN THE FUTURE --> <!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clCreateCommandQueueWithProperties">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetCommandQueueInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseCommandQueue</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainCommandQueue</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+
+<!-- 25-Dec-2013, rev. 19 -->
+</refentry>
+

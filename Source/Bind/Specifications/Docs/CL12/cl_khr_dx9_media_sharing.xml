@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_dx9_media_sharing</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_dx9_media_sharing</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_dx9_media_sharing">
+        <refname>cl_khr_dx9_media_sharing</refname>
+
+        <refpurpose>
+            Provide interoperability between OpenCL and selecgted adapter APIs (only DX9 at this time).
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_dx9_media_sharing : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="description"><title>Description</title>
+        <para>
+            The interfaces for this extension are provided in the header file <code>cl_dx9_media_sharing.h</code>.
+        </para>
+
+        <para>
+          If the <function>cl_khr_dx9_media_sharing</function> extension is supported, then
+          the following functions are enabled:
+        </para>
+
+         <itemizedlist mark="disc">
+            <listitem>
+                <citerefentry><refentrytitle>clGetDeviceIDsFromDX9MediaAdapterKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clCreateFromDX9MediaSurfaceKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clEnqueueAcquireDX9MediaSurfacesKHR</refentrytitle></citerefentry>
+            </listitem>
+
+            <listitem>
+                <citerefentry><refentrytitle>clEnqueueReleaseDX9MediaSurfacesKHR</refentrytitle></citerefentry>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+          The OpenCL functions enabled by the <function>cl_khr_dx9_media_sharing</function>
+          extension allow applications to use media surfaces as OpenCL memory objects. This
+          allows efficient sharing of data between OpenCL and selected adapter APIs (only DX9
+          for now). If this extension is supported, an OpenCL image object can be created from
+          a media surface and the OpenCL API can be used to execute kernels that read and/or
+          write memory objects that are media surfaces. Note that OpenCL memory objects may
+          be created from the adapter media surface if and only if the OpenCL context has been
+          created from that adapter.
+        </para>
+
+        <para>
+          If this extension is supported by an implementation,
+          the string "cl_khr_dx9_media_sharing" will be present in the
+          <constant>CL_PLATFORM_EXTENSIONS</constant> or <constant>CL_DEVICE_EXTENSIONS</constant>
+          string described in the table of allowed values for <varname>param_name</varname>
+          for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+        </para>
+
+        <para>
+          As currently proposed the interfaces for this extension would be provided in
+          <code>cl_dx9_media_sharing.h</code>.
+        </para>
+
+<!-- !!!
+The following is from the ext. spec. pp. 84-85 and contains only redundant information that
+is properly documented in the reference pages for the relevant functions. Its appearance
+here has questionable value, and introduces considerable additional labor to maintain.
+
+        <para>
+            When the <function>cl_khr_dx9_media_sharing</function> extension is enabled, this extends the list of allowable
+            values in certain parameters of certain functions, as follows:
+        </para>
+        <itemizedlist mark="disc">
+            <listitem>
+                <code>CL_ADAPTER_D3D9_KHR</code>, <code>CL_ADAPTER_D3D9EX_KHR</code>, and <code>CL_ADAPTER_DXVA_KHR</code>
+                are accepted by the <varname>media_adapter_type</varname> parameter of
+                <citerefentry><refentrytitle>clGetDeviceIDsFromDX9MediaAdapterKHR</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <code>CL_PREFERRED_DEVICES_FOR_DX9_MEDIA_ADAPTER_KHR</code>
+                and <code>CL_ALL_DEVICES_FOR_DX9_MEDIA_ADAPTER_KHR</code>
+                are accepted by the <varname>media_adapter_set</varname> parameter of
+                <citerefentry><refentrytitle>clGetDeviceIDsFromDX9MediaAdapterKHR</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <code>CL_CONTEXT_ADAPTER_D3D9_KHR</code>,
+                <code>CL_CONTEXT_ADAPTER_D3D9EX_KHR</code>,
+                and <code>CL_CONTEXT_ADAPTER_DXVA_KHR</code>
+                are accepted as a property name in the <varname>properties</varname> parameter of
+                <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry> and
+                <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <code>CL_MEM_DX9_MEDIA_ADAPTER_TYPE_KHR</code> and
+                <code>CL_MEM_DX9_MEDIA_SURFACE_INFO_KHR</code>
+                are accepted as the property being queried in the <varname>param_name</varname> parameter of
+                <citerefentry><refentrytitle>clGetMemObjectInfo</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <code>CL_IMAGE_DX9_MEDIA_PLANE_KHR</code>
+                is accepted as the property being queried in the <varname>param_name</varname> parameter of
+                <citerefentry><refentrytitle>clGetImageInfo</refentrytitle></citerefentry>.
+            </listitem>
+            <listitem>
+                <code>CL_COMMAND_ACQUIRE_DX9_MEDIA_SURFACES_KHR</code> and
+                <code>CL_COMMAND_RELEASE_DX9_MEDIA_SURFACES_KHR</code>
+                are returned in the <varname>param_value</varname> parameter of
+                <citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry>
+                when <varname>param_name</varname> is <constant>CL_EVENT_COMMAND_TYPE</constant>.
+            </listitem>
+            <listitem>
+                <code>CL_INVALID_DX9_MEDIA_ADAPTER_KHR</code>
+                is returned by
+                <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry> and
+                <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>
+                if the media adapter specified for interoperability is not compatible with the devices
+                against which the context is to be created.
+            </listitem>
+            <listitem>
+                <code>CL_INVALID_DX9_MEDIA_ADAPTER_KHR</code>
+                is returned by
+                <citerefentry><refentrytitle>clCreateFromDX9MediaSurfaceKHR</refentrytitle></citerefentry>
+                when <varname>adapter_type</varname> is set to a media adapter and the
+                <varname>surface_info</varname> does not reference a media surface of the required type,
+                or if <varname>adapter_type</varname> is set to a media adapter type and <varname>surface_info</varname>
+                does not contain a valid reference to a media surface on that adapter, by
+                <citerefentry><refentrytitle>clGetMemObjectInfo</refentrytitle></citerefentry> when
+                <varname>param_name</varname> is a surface or
+                handle when the image was not created from an appropriate media surface, and from
+                <citerefentry><refentrytitle>clGetImageInfo</refentrytitle></citerefentry> when
+                <varname>param_name</varname> is <constant>CL_IMAGE_DX9_MEDIA_SURFACE_PLANE_KHR</constant>
+                and image was not created from an appropriate media surface.
+            </listitem>
+            <listitem>
+                <code>CL_DX9_MEDIA_SURFACE_ALREADY_ACQUIRED_KHR</code>
+                is returned by
+                <citerefentry><refentrytitle>clEnqueueAcquireDX9MediaSurfacesKHR</refentrytitle></citerefentry>
+                when any of <varname>mem_objects</varname> are currently acquired by OpenCL
+            </listitem>
+            <listitem>
+                <code>CL_DX9_MEDIA_SURFACE_NOT_ACQUIRED_KHR</code>
+                is returned by
+                <citerefentry><refentrytitle>clEnqueueReleaseDX9MediaSurfacesKHR</refentrytitle></citerefentry>
+                when any of <varname>mem_objects</varname> are not currently acquired by OpenCL
+            </listitem>
+        </itemizedlist>
+-->
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_dx9_media_sharing">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetDeviceIDsFromDX9MediaAdapterKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromDX9MediaSurfaceKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueAcquireDX9MediaSurfacesKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueReleaseDX9MediaSurfacesKHR</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 18-Oct-2011 -->
+</refentry>
+

@@ -1,0 +1,177 @@
+
+    <!-- table 5.3 -->
+    <informaltable frame="all">
+      <tgroup cols="2" align="left" colsep="1" rowsep="1">
+        <colspec colname="col1" colnum="1" />
+        <thead>
+          <row>
+            <entry>cl_mem_flags</entry>
+            <entry>Description</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry><constant>CL_MEM_READ_WRITE</constant></entry>
+            <entry>
+              This flag specifies that the memory object will be read and written by a kernel. This
+              is the default.
+            </entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_MEM_WRITE_ONLY</constant></entry>
+            <entry>
+              <para>
+                This flag specifies that the memory object will be written but not read by
+                a kernel.
+              </para>
+
+              <para>
+                Reading from a buffer or image object created with
+                <constant>CL_MEM_WRITE_ONLY</constant> inside a kernel is undefined.
+              </para>
+
+              <para>
+                <constant>CL_MEM_READ_WRITE</constant> and <constant>CL_MEM_WRITE_ONLY</constant>
+                are mutually exclusive.
+              </para>
+            </entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_MEM_READ_ONLY</constant></entry>
+            <entry>
+              <para>
+                This flag specifies that the memory object is a read-only memory object when
+                used inside a kernel.
+              </para>
+
+              <para>
+                Writing to a buffer or image object created with
+                <constant>CL_MEM_READ_ONLY</constant> inside a kernel is undefined.
+              </para>
+
+              <para>
+                <constant>CL_MEM_READ_WRITE</constant> or <constant>CL_MEM_WRITE_ONLY</constant>
+                and <constant>CL_MEM_READ_ONLY</constant> are mutually exclusive.
+              </para>
+            </entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_MEM_USE_HOST_PTR</constant></entry>
+            <entry>
+              <para>
+                This flag is valid only if <varname>host_ptr</varname> is not NULL. If
+                specified, it indicates that the application wants the OpenCL implementation
+                to use memory referenced by <varname>host_ptr</varname> as the storage bits
+                for the memory object.
+              </para>
+
+              <para>
+                OpenCL implementations are allowed to cache the buffer contents pointed to by
+                <varname>host_ptr</varname> in device memory. This cached copy can be used when
+                kernels are executed on a device.
+              </para>
+
+              <para>
+                The result of OpenCL commands that operate on multiple buffer objects created with
+                the same <varname>host_ptr</varname> or overlapping host regions is considered
+                to be undefined.
+              </para>
+
+              <para>
+                Refer to the <citerefentry href="dataTypes"> <refentrytitle>description
+                of the alignment rules</refentrytitle> </citerefentry> for
+                <varname>host_ptr</varname> for memory objects (buffer and images) created
+                using <constant>CL_MEM_USE_HOST_PTR</constant>.
+              </para>
+            </entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_MEM_ALLOC_HOST_PTR</constant></entry>
+            <entry>
+              <para>
+                This flag specifies that the application wants the OpenCL implementation to
+                allocate memory from host accessible memory.
+              </para>
+
+              <para>
+                <constant>CL_MEM_ALLOC_HOST_PTR</constant> and
+                <constant>CL_MEM_USE_HOST_PTR</constant> are mutually exclusive.
+              </para>
+            </entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_MEM_COPY_HOST_PTR</constant></entry>
+            <entry>
+              <para>
+                This flag is valid only if <varname>host_ptr</varname> is not NULL. If specified,
+                it indicates that the application wants the OpenCL implementation to allocate
+                memory for the memory object and copy the data from memory referenced by
+                <varname>host_ptr</varname>.
+              </para>
+
+              <para>
+                <constant>CL_MEM_COPY_HOST_PTR</constant> and
+                <constant>CL_MEM_USE_HOST_PTR</constant> are mutually exclusive.
+              </para>
+
+              <para>
+                <constant>CL_MEM_COPY_HOST_PTR</constant> can be used with
+                <constant>CL_MEM_ALLOC_HOST_PTR</constant> to initialize the contents of the
+                <type>cl_mem</type> object allocated using host-accessible (e.g.  PCIe) memory.
+              </para>
+            </entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_MEM_HOST_WRITE_ONLY</constant></entry>
+            <entry>
+              <para>
+                This flag specifies that the host will only write to the memory object (using
+                OpenCL APIs that enqueue a write or a map for write).  This can be used to optimize
+                write access from the host (e.g. enable write-combined allocations for memory
+                objects for devices that communicate with the host over a system bus such as PCIe).
+              </para>
+            </entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_MEM_HOST_READ_ONLY</constant></entry>
+            <entry>
+              <para>
+                This flag specifies that the host will only read the memory object (using OpenCL
+                APIs that enqueue a read or a map for read).
+              </para>
+
+              <para>
+                <constant>CL_MEM_HOST_WRITE_ONLY</constant> and
+                <constant>CL_MEM_HOST_READ_ONLY</constant> are mutually exclusive.
+              </para>
+            </entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_MEM_HOST_NO_ACCESS</constant></entry>
+            <entry>
+              <para>
+                This flag specifies that the host will not read or write the memory object.
+              </para>
+
+              <para>
+                <constant>CL_MEM_HOST_WRITE_ONLY</constant> or
+                <constant>CL_MEM_HOST_READ_ONLY</constant> and
+                <constant>CL_MEM_HOST_NO_ACCESS</constant> are mutually exclusive.
+              </para>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+
+<!-- 9-Dec-2013, rev. 19 -->
+

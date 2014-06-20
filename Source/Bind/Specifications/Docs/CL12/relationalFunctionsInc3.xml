@@ -1,0 +1,9 @@
+    <para>
+      The relational functions <function>isequal</function>, <function>isgreater</function>,
+      <function>isgreaterequal</function>, <function>isless</function>,
+      <function>islessequal</function>, and <function>islessgreater</function> always return
+      0 if either argument is not a number (NaN). <function>isnotequal</function> returns 1
+      if one or both arguments are not a number (NaN) and the argument type is a scalar and
+      returns -1 if one or both arguments are not a number (NaN) and the argument type is a vector.
+    </para>
+<!-- 13-Oct-2011 -->

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clSetKernelExecInfo</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clSetKernelExecInfo
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clSetKernelExecInfo">
+        <refname>
+            clSetKernelExecInfo
+        </refname>
+
+        <refpurpose>
+            Used to pass additional information other than argument values to a kernel.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>clSetKernelExecInfo</function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_kernel</link>
+                    <parameter>kernel</parameter>
+                </paramdef>
+
+                <paramdef>
+                    cl_kernel_exec_info
+                    <parameter>param_name</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>param_value_size</parameter>
+                </paramdef>
+
+                <paramdef>
+                    const <link xlink:href="scalarDataTypes.html">void</link>
+                    <parameter>*param_value</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term> <varname> kernel </varname> </term>
+                <listitem>
+                    <para>
+                        Specifies the kernel object being queried.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_name </varname> </term>
+                <listitem>
+                    <para>
+                        Specifies the information to be passed to 
+                        <varname>kernel</varname>. The list of supported
+                        <varname>param_name</varname> types and the corresponding values passed in
+                        <varname>param_value</varname> is described in the table below.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>param_value_size</varname> </term>
+                <listitem>
+                    <para>
+                        Specifies the size in bytes of the memory pointed to by 
+                        <varname>param_value</varname>.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value </varname> </term>
+                <listitem>
+                    <para>
+                        A pointer to memory where the appropriate values 
+                        determined by <varname>param_name</varname> are specified.
+                    </para>
+
+                    <!-- table 5.18 -->
+                    <informaltable frame="all"><anchor id="cl_kernel_info"/>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colname="col1" colnum="1" />
+                        <colspec colname="col2" colnum="2" />
+                        <colspec colname="col3" colnum="3" />
+                        <thead>
+                            <row>
+                                <entry>cl_kernel_exec_info</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+
+                        <tbody>
+                            <row>
+                                <entry><constant>CL_KERNEL_EXEC_INFO_SVM_PTRS</constant></entry>
+                                <entry>void *[]</entry>
+                                <entry>
+                                    <para>
+                                        SVM pointers used by a kernel which
+                                        are not passed as arguments to <varname>kernel</varname>.
+                                        These addresses may be defined in 
+                                        SVM buffer(s) that are passed as 
+                                        arguments to <varname>kernel</varname>.
+                                    </para>
+
+                                    <para>
+                                        These non-argument SVM pointers 
+                                        must be specified using 
+                                        <function>clSetKernelExecInfo</function> 
+                                        for coarse-grain and fine-grain buffer SVM 
+                                        allocations but not for fine-grain 
+                                        system SVM allocations.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_KERNEL_EXEC_INFO_SVM_-
+FINE_GRAIN_SYSTEM</constant></entry>
+                                <entry>cl_bool</entry>
+                                <entry>
+                                    <para>
+                                        This flag indicates whether the kernel 
+                                        uses pointers that are fine grain 
+                                        system SVM allocations. These fine 
+                                        grain system SVM pointers may be 
+                                        passed as arguments or defined in 
+                                        SVM buffers that are passed as 
+                                        argumentsto <varname>kernel</varname>.
+                                    </para>
+                                </entry>
+                            </row>
+
+                        </tbody>
+                    </tgroup>
+                    </informaltable>
+               </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+            1. Coarse-grain or fine-grain buffer SVM pointers 
+            used by a kernel which are not passed as a 
+            kernel arguments must be specified using 
+            <function>clSetKernelExecInfo</function> with 
+            <constant>CL_KERNEL_EXEC_INFO_SVM_PTRS</constant>. 
+            For example, if SVM buffer A contains a pointer to 
+            another SVM buffer B, and the kernel dereferences 
+            that pointer, then a pointer to B must either 
+            be passed as an argument in the call to that 
+            kernel or it must be made available to the kernel 
+            using <function>clSetKernelExecInfo</function>. 
+            For example, we might pass extra SVM pointers as follows:
+        </para>
+
+        <para>
+<literallayout><code>
+clSetKernelExecInfo(kernel,
+     CL_KERNEL_EXEC_INFO_SVM_PTRS,
+     num_ptrs * sizeof(void *),
+     extra_svm_ptr_list);
+</code></literallayout>
+        </para>
+
+        <para>
+            Here <code>num_ptrs</code> specifies the number 
+            of additional SVM pointers while 
+            <code>extra_svm_ptr_list</code> specifies a 
+            pointer to memory containing those SVM pointers.
+        </para>
+
+        <para>
+            When calling <function>clSetKernelExecInfo</function> with 
+            <constant>CL_KERNEL_EXEC_INFO_SVM_PTRS</constant> to specify 
+            pointers to non-argument SVM buffers as extra arguments 
+            to a kernel, each of these pointers can 
+            be the SVM pointer returned by 
+            <citerefentry><refentrytitle>clSVMAlloc</refentrytitle></citerefentry> 
+            or can be a pointer + offset into the SVM region.
+            It is sufficient to provide one pointer for each SVM buffer used.
+        </para>
+
+        <para>
+            2. <constant>CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM</constant> 
+            is used to indicate whether SVM 
+            pointers used by a kernel will refer to system allocations or not.
+        </para>
+
+        <para>
+            <constant>CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM</constant> = 
+            <constant>CL_FALSE</constant> indicates that the 
+            OpenCL implementation may assume that system pointers 
+            are not passed as kernel arguments 
+            and are not stored inside SVM allocations 
+            passed as kernel arguments. 
+        </para>
+
+        <para>
+            <constant>CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM</constant> = 
+            <constant>CL_TRUE</constant> indicates that the OpenCL 
+            implementation must assume that system pointers might 
+            be passed as kernel arguments and/or 
+            stored inside SVM allocations passed as kernel arguments. 
+            In this case, if the device to which 
+            the kernel is enqueued does not support system SVM pointers, 
+            <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> will 
+            return a <errorname>CL_INVALID_OPERATION</errorname> error. 
+            If none of the devices in the context 
+            associated with kernel support fine-grain 
+            system SVM allocations, <function>clSetKernelExecInfo</function> 
+            will return a <errorname>CL_INVALID_OPERATION</errorname> error.
+        </para>
+
+        <para>
+            If <function>clSetKernelExecInfo</function> has not been called 
+            with a value for 
+            <constant>CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM</constant>
+            the default value is used for this kernel attribute. 
+            The defaule value depends on whether the device on which 
+            the kernel is enqueued supports fine-grain system SVM 
+            allocations. If so, the default value used is 
+            <constant>CL_TRUE</constant> (system pointers might 
+            be passed); otherwise, the default is <constant>CL_FALSE</constant>.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the function 
+            is executed successfully. Otherwise,
+            it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_KERNEL</errorname> if <varname>kernel</varname>
+                is not a valid kernel object.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname>
+                    if <varname>param_name</varname> 
+                    is not valid, if <varname>param_value</varname> 
+                    is NULL or if the size 
+                    specified by <varname>param_value_size</varname> 
+                    is not valid.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_OPERATION</errorname> 
+                    if <varname>param_name</varname> = 
+                    <constant>CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM</constant> 
+                    and <varname>param_value</varname> = <constant>CL_TRUE</constant>
+                    but no devices in context 
+                    associated with <varname>kernel</varname> support 
+                    fine-grain system SVM allocations.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clSetKernelExecInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelArgInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateKernelsInProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelWorkGroupInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 10-Dec-2013, rev. 19 -->
+</refentry>
+

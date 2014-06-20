@@ -1,0 +1,7 @@
+﻿<metadata>
+
+  <attr path="/api/package[@name='org.libsdl.app']/class[@name='SDLActivity']" name="visibility">public</attr>
+  <attr path="/api/package[@name='org.libsdl.app']/class[@name='SDLJoystickHandler']" name="visibility">public</attr>
+  <attr path="/api/package[@name='org.libsdl.app']/class[@name='SDLSurface']" name="visibility">public</attr>
+
+</metadata>

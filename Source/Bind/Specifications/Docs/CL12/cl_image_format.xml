@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_image_format</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_image_format</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_image_format">
+        <refname>cl_image_format</refname>
+
+        <refpurpose>The image format descriptor structure is defined as: </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 xmlns:xlink="http://www.w3.org/1999/xlink" id="synopsis">
+        <title></title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>typedef struct _cl_image_format {
+          <link xlink:href="enums.html#cl_channel_order">cl_channel_order</link> image_channel_order;
+          <link xlink:href="enums.html#cl_channel_type">cl_channel_type</link>  image_channel_data_type;
+} cl_image_format;</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Members</title>
+      <variablelist>
+
+<!-- ================================ PARAMETER TABLE (OPTIONAL) -->
+
+      <varlistentry>
+        <term>image_channel_order</term>
+        <listitem>
+            Specifies the number of channels and the channel layout i.e. the
+memory layout in which channels are stored in the image. Valid values are described in the table below.
+
+          <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+              <colspec colname="col1" colnum="1" />
+              <colspec colname="col2" colnum="2" />
+
+              <thead>
+                <row>
+                  <entry>Format</entry>
+                  <entry>Description</entry>
+                </row>
+
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry>CL_R, CL_Rx, or CL_A</entry>
+                  <entry></entry>
+                </row>
+
+                <row>
+                  <entry>CL_INTENSITY</entry>
+                  <entry>This format can only be used if channel data type = CL_UNORM_INT8,
+            CL_UNORM_INT16, CL_SNORM_INT8, CL_SNORM_INT16, CL_HALF_FLOAT, or CL_FLOAT.
+                  </entry>
+                </row>
+
+                <row>
+                  <entry>CL_LUMINANCE</entry>
+                  <entry>This format can only be used if channel data type = CL_UNORM_INT8,
+            CL_UNORM_INT16, CL_SNORM_INT8, CL_SNORM_INT16, CL_HALF_FLOAT, or CL_FLOAT.
+                  </entry>
+                </row>
+
+                <row>
+                  <entry>CL_RG, CL_RGx, or CL_RA</entry>
+                  <entry></entry>
+                </row>
+
+                <row>
+                  <entry>CL_RGB or CL_RGBx</entry>
+                  <entry>This format can only be used if channel data type = CL_UNORM_SHORT_565,
+            CL_UNORM_SHORT_555 or CL_UNORM_INT101010.</entry>
+                </row>
+
+                <row>
+                  <entry>CL_RGBA</entry>
+                  <entry> </entry>
+                </row>
+
+                <row>
+                  <entry>CL_ARGB, CL_BGRA.</entry>
+                  <entry>This format can only be used if channel data type = CL_UNORM_INT8,
+            CL_SNORM_INT8, CL_SIGNED_INT8 or CL_UNSIGNED_INT8.</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+
+          <para>
+          </para>
+
+        </listitem>
+      </varlistentry>
+
+<!-- ================================ END PARAMETER TABLE  -->
+
+<!-- ================================ PARAMETER TABLE (OPTIONAL) -->
+
+      <varlistentry>
+        <term>image_channel_data_type</term>
+        <listitem>
+           Describes the size of the channel data type. The number of bits per element determined by the
+                <constant>image_channel_data_type</constant> and <constant>image_channel_order</constant>
+                must be a power of two. The list of supported values is described in the table below.
+
+           <!-- table 5.7 -->
+           <informaltable frame="all">
+             <tgroup cols="2" align="left" colsep="1" rowsep="1">
+             <colspec colname="col1" colnum="1" />
+             <colspec colname="col2" colnum="2" />
+             <thead>
+               <row>
+                 <entry>Image Channel Data Type</entry>
+                 <entry>Description</entry>
+               </row>
+             </thead>
+
+             <tbody>
+               <row>
+                 <entry>CL_SNORM_INT8</entry>
+                 <entry>Each channel component is a normalized signed 8-bit integer value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_SNORM_INT16</entry>
+                 <entry>Each channel component is a normalized signed 16-bit integer value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_UNORM_INT8</entry>
+                 <entry>Each channel component is a normalized unsigned 8-bit integer value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_UNORM_INT16</entry>
+                 <entry>Each channel component is a normalized unsigned 16-bit integer value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_UNORM_SHORT_565</entry>
+                 <entry>Represents a normalized 5-6-5 3-channel RGB image. The channel order must be CL_RGB or CL_RGBx.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_UNORM_SHORT_555</entry>
+                 <entry>Represents a normalized x-5-5-5 4-channel xRGB image.
+                            The channel order must be CL_RGB or CL_RGBx.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_UNORM_INT_101010</entry>
+                 <entry>Represents a normalized x-10-10-10 4-channel xRGB image.
+                           The channel order must be CL_RGB or CL_RGBx.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_SIGNED_INT8</entry>
+                 <entry>Each channel component is an unnormalized signed 8-bit integer value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_SIGNED_INT16</entry>
+                 <entry>Each channel component is an unnormalized signed 16-bit integer value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_SIGNED_INT32</entry>
+                 <entry>Each channel component is an unnormalized signed 32-bit integer value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_UNSIGNED_INT8</entry>
+                 <entry>Each channel component is an unnormalized unsigned 8-bit integer value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_UNSIGNED_INT16</entry>
+                 <entry>Each channel component is an unnormalized unsigned 16-bit integer value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_UNSIGNED_INT32</entry>
+                 <entry>Each channel component is an unnormalized unsigned 32-bit integer value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_HALF_FLOAT</entry>
+                 <entry>Each channel component is a 16-bit half-float value.</entry>
+               </row>
+
+               <row>
+                 <entry>CL_FLOAT</entry>
+                 <entry>Each channel component is a single precision floating-point value.</entry>
+               </row>
+             </tbody>
+           </tgroup>
+         </informaltable>
+
+         <para>
+         </para>
+
+       </listitem>
+     </varlistentry>
+
+<!-- ================================ END PARAMETER TABLE  -->
+
+  </variablelist>
+</refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            For example, to specify a normalized unsigned 8-bit / channel RGBA image:
+        </para>
+
+        <para>
+<literallayout>          <code>image_channel_order</code> = <constant>CL_RGBA</constant>
+          <code>image_channel_data_type</code> = <constant>CL_UNORM_INT8</constant>
+</literallayout>
+        </para>
+
+        <para>
+          <varname>image_channel_data_type</varname> values of
+          <constant>CL_UNORM_SHORT_565</constant>, <constant>CL_UNORM_SHORT_555</constant>
+          and <constant>CL_UNORM_INT_101010</constant> are special cases of packed image
+          formats where the channels of each element are packed into a single unsigned
+          short or unsigned int. For these special packed image formats, the channels
+          are normally packed with the first channel in the most significant bits of
+          the bitfield, and successive channels occupying progressively less significant
+          locations. For <constant>CL_UNORM_SHORT_565</constant>, R is in bits 15:11, G is
+          in bits 10:5 and B is in bits 4:0. For <constant>CL_UNORM_SHORT_555</constant>,
+          bit 15 is undefined, R is in bits 14:10, G in bits 9:5 and B in bits 4:0. For
+          <constant>CL_UNORM_INT_101010</constant>, bits 31:30 are undefined, R is in bits 29:20,
+          G in bits 19:10 and B in bits 9:0.
+        </para>
+
+        <para>
+          OpenCL implementations must maintain the minimum precision specified by the number
+          of bits in <code>image_channel_data_type</code>. If the image format specified
+          by <code>image_channel_order</code>, and <code>image_channel_data_type</code>
+          cannot be supported by the OpenCL implementation, then the call to
+          <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry> will return
+          a NULL memory object.
+        </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                              <!-- Links to the 'Image Format Descriptor' sec of spec -->
+            <olink uri="cl_image_format">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="imageDescriptor"><refentrytitle>cl_image_desc Image Descriptor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetSupportedImageFormats</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Oct-2011 -->
+</refentry>
+

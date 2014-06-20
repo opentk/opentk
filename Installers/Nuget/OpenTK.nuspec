@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>OpenTK</id>
+        <id>OpenTK.Next</id>
         <version>$version$</version>
         <authors>The Open Toolkit Team</authors>
         <owners>The Open Toolkit Team</owners>
@@ -9,8 +9,10 @@
         <projectUrl>http://www.opentk.com</projectUrl>
         <iconUrl>file:///./logo.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <title>The Open Toolkit library</title>
         <summary>
             The Open Toolkit library (OpenTK) is an advanced, low-level C# wrapper for OpenGL, OpenGL ES and OpenAL.
+            This package contains experimental features that have not yet made it to the stable release.
         </summary>
         <description>
             The Open Toolkit library (OpenTK) is an advanced, low-level C# wrapper for OpenGL, OpenGL ES and OpenAL.
@@ -29,8 +31,8 @@
         <releaseNotes>
             http://www.opentk.com/news
         </releaseNotes>
-        <copyright>Copyright 2006-2013 Stefanos Apostolopoulos</copyright>
-        <tags>OpenTK OpenGL OpenGLES OpenAL C# F# VB .Net Mono</tags>
+        <copyright>Copyright 2006-2014 Stefanos Apostolopoulos</copyright>
+        <tags>OpenTK OpenGL OpenGLES OpenAL OpenCL C# F# VB .Net Mono 3d Graphics Audio Compute</tags>
         <references>
             <reference file="OpenTK.dll" />
         </references>
@@ -43,6 +45,8 @@
     <files>
         <file src="lib/net20/OpenTK.dll" target="lib/net20" />
         <file src="lib/net20/OpenTK.xml" target="lib/net20" />
-        <file src="lib/net20/OpenTK.dll.config" target="content" />
+        <file src="lib/net20/OpenTK.dll.config" target="lib/net20" />
+        <file src="OpenTK.targets" target="build" />
+        <file src="OpenTK.Next.targets" target="build" />
     </files>
 </package>

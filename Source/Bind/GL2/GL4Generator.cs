@@ -38,20 +38,19 @@ namespace Bind.GL2
         public GL4Generator(Settings settings, string dirname)
             : base(settings, dirname)
         {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "../OpenGL4");
+            Settings.DefaultOutputPath = String.Format(
+                Settings.DefaultOutputPath, "Graphics", "OpenGL4");
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL4";
-            Settings.DefaultImportsFile = "GL4Core.cs";
-            Settings.DefaultDelegatesFile = "GL4Delegates.cs";
             Settings.DefaultEnumsFile = "GL4Enums.cs";
             Settings.DefaultWrappersFile = "GL4.cs";
+            Settings.DefaultClassesFile = "GL4.Extensions.cs";
             Settings.DefaultDocPath = Path.Combine(
                 Settings.DefaultDocPath, "GL");
 
             Profile = "glcore";
 
-            //Settings.DefaultCompatibility |=
-            //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
+            Settings.DefaultCompatibility |=
+                Settings.Legacy.KeepStringArrayOverloads;
         }
     }
 }

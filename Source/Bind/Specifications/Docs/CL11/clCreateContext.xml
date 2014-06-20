@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>clCreateContext</keyword></keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>clCreateContext</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+    
+
+<!-- ================================ SYNOPSIS -->  
+
+  <refnamediv id="clCreateContext">
+<refname>clCreateContext</refname> 
+           <refpurpose>Creates an OpenCL context.</refpurpose> 
+    </refnamediv> 
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype><funcdef><link xlink:href="abstractDataTypes.html">cl_context</link> <function>clCreateContext</function></funcdef>
+                <paramdef>const <link xlink:href="enums.html#cl_context_properties">cl_context_properties</link><parameter>*properties</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_devices</parameter></paramdef>
+                <paramdef>const <link xlink:href="abstractDataTypes.html">cl_device_id</link><parameter>*devices</parameter></paramdef>
+                
+                <paramdef><link xlink:href="scalarDataTypes.html">(void</link>CL_CALLBACK <parameter>*pfn_notify)</parameter> 
+                        <funcparams><literallayout>const <link xlink:href="scalarDataTypes.html">char</link> *errinfo, 
+                        const <link xlink:href="scalarDataTypes.html">void</link> *private_info, <link xlink:href="otherDataTypes.html">size_t</link> cb, 
+                        <link xlink:href="scalarDataTypes.html">void</link> *user_data</literallayout></funcparams></paramdef>  
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*user_data</parameter></paramdef>       
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>                           
+           </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->      
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            An OpenCL context is created with one or more devices. Contexts
+are used by the OpenCL runtime for managing objects such as command-queues, memory,
+program and kernel objects and for executing kernels on one or more devices specified in the
+context.
+        </para>
+    </refsect1> 
+    
+<!-- ================================ PARAMETERS -->    
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="parameters"><title>Parameters</title>
+        <variablelist>
+        
+        
+        <!-- ================================ PARAMETER TABLE (OPTIONAL) -->        
+        <varlistentry>
+            <term>properties</term>
+            <listitem>
+                <para>
+                    Specifies a list of context property names and their corresponding values. Each property name is 
+                    immediately followed by the corresponding desired value. The list is terminated with 0. 
+                    <varname>properties</varname> can be NULL in which case the platform that is selected is 
+                    implementation-defined. The list of supported <varname>properties</varname> is described in the table below. 
+                </para>
+                <para>
+                    If the extension <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry>
+                    is enabled, then if a property is not specified in <varname>properties</varname>, then its default value is used
+                    (it is said to be specified implicitly). If <varname>properties</varname> is NULL or empty (points to a list 
+                    whose first value is zero), all attributes take on their default value.
+                </para>
+                <para>
+                    If the extension <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry>
+                    is enabled, then <varname>properties</varname> points to an attribute list, which is a array of ordered &lt;attribute name, value> pairs terminated with zero. If an attribute is not specified in <varname>properties</varname>, then its default value is used (it is said to be specified implicitly). If <varname>properties</varname> is NULL or empty (points to a list whose first value is zero), all attributes take on their default values..
+                </para>
+                <informaltable frame="all"><tgroup cols="3" align="left" colsep="1" rowsep="1">
+    <colspec colname="col1" colnum="1" />
+    <colspec colname="col2" colnum="2" />
+    <colspec colname="col3" colnum="3" />   
+    <thead>
+        <row>
+        <entry>cl_context_properties enum</entry>
+        <entry>Property value</entry>       
+        <entry>Description</entry>
+        </row>
+    </thead>
+    <tbody>
+        <row>
+            <entry><constant>CL_CONTEXT_PLATFORM</constant></entry>
+            <entry><link xlink:href="abstractDataTypes.html">cl_platform_id</link></entry>
+            <entry>Specifies the platform to use.</entry>
+        </row>
+        <row>
+            <entry><constant>CL_CONTEXT_D3D10_DEVICE_KHR</constant></entry>
+            <entry>ID3D10Device*</entry>
+            <entry>If the <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry> 
+            extension is enabled, specifies the ID3D10Device* to use for Direct3D 10 interoperability. The default value is NULL.</entry>
+        </row>
+        <row>
+            <entry>
+<literallayout><constant>CL_GL_CONTEXT_KHR</constant>
+<constant>CL_EGL_DISPLAY_KHR</constant>
+<constant>CL_GLX_DISPLAY_KHR</constant>
+<constant>CL_WGL_HDC_KHR</constant>
+<constant>CL_CGL_SHAREGROUP_KHR</constant></literallayout></entry>
+            <entry></entry>
+            <entry>Available if the <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry> 
+            extension is enabled.</entry>
+        </row>
+    </tbody>    
+        
+    </tgroup></informaltable>   
+            </listitem>
+        </varlistentry>
+<!-- ================================ END PARAMETER TABLE  -->  
+        
+        <varlistentry>
+            <term><varname>num_devices</varname></term>
+            <listitem>
+                <para>
+                    The number of devices specified in the <varname>devices</varname> argument.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><varname>devices</varname></term>
+            <listitem>
+                <para>
+                    A pointer to a list of unique devices returned by <citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry> 
+                    for a platform. Duplicate devices specified in <varname>devices</varname> are ignored.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><varname>pfn_notify</varname></term>
+            <listitem>
+                <para>
+                    A callback function that can be registered by the application. This callback function will be used by the OpenCL implementation to report information on errors that occur in this context. This callback function may be called asynchronously by the OpenCL implementation.
+It is the application's responsibility to ensure that the callback function is thread-safe. If <varname>pfn_notify</varname> is NULL, no callback function is registered. The parameters to this callback function are:
+                </para>
+                
+                <para><varname>errinfo</varname> is a pointer to an error string.</para>
+<para><varname>private_info</varname> and <varname>cb</varname> represent a pointer to binary data that is returned by the OpenCL implementation that can be used to log additional information helpful in debugging the error.</para>
+<para><varname>user_data</varname> is a pointer to user supplied data.</para>
+<para>NOTE: There are a number of cases where error notifications need to be delivered due to an error that occurs outside a context. Such notifications may not be delivered through the <varname>pfn_notify</varname> callback. Where these notifications go is implementation-defined.</para>                
+                
+            </listitem>
+        </varlistentry>
+        <varlistentry> 
+            <term><varname>user_data</varname></term>
+            <listitem>
+                <para>
+                    Passed as the <varname>user_data</varname> argument when <varname>pfn_notify</varname> is called. <varname>user_data</varname> can be NULL.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><varname>errcode_ret</varname></term>
+            <listitem>
+                <para>
+                    Returns an appropriate error code. If <varname>errcode_ret</varname> is NULL, no error code is returned.
+                </para>
+            </listitem>
+        </varlistentry>
+        
+        </variablelist>
+    </refsect1>
+
+
+
+<!-- ================================ NOTES  -->        
+ 
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>clCreateContext</function> and <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry> perform an implicit retain. This is very helpful for 3rd party libraries, which typically get a context passed to them by the application.
+However, it is possible that the application may delete the context without informing the library.
+Allowing functions to attach to (i.e. retain) and release a context solves the problem of a context
+being used by a library no longer being valid.
+        </para>
+    </refsect1>
+        
+    
+<!-- ================================ ERRORS  -->
+    <refsect1 id="errors"><title>Errors</title>
+<para><function>clCreateContext</function> returns a valid non-zero context and <varname>errcode_ret</varname> is set to <errorname>CL_SUCCESS</errorname> if the context is created  successfully. Otherwise, it returns NULL value with the following error
+values returned in <varname>errcode_ret</varname>:
+</para>
+<itemizedlist mark="disc">
+        <listitem>
+            <errorname>CL_INVALID_PLATFORM</errorname> if <varname>properties</varname> is NULL and no platform could be selected or if platform value specified in <varname>properties</varname> is not a valid platform. (If the extension <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry> is enabled, then see error "CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR" below.)
+        </listitem>
+        <listitem>
+            <errorname>CL_INVALID_PROPERTY</errorname> if context property name in <varname>properties</varname> is not a supported
+            property name, if the value specified for a supported property name is not valid, or if the
+            same property name is specified more than once. However if the extension <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry> is enabled, then CL_INVALID_PROPERTY is returned if an attribute name other than those listed in the table for <varname>properties</varname> above is specified in <varname>properties</varname>.
+        </listitem>
+    
+        <listitem>
+            <errorname>CL_INVALID_VALUE</errorname> if <varname>devices</varname> is NULL; if <varname>num_devices</varname> is equal to zero; or 
+            if <varname>pfn_notify</varname> is NULL but <varname>user_data</varname> is not NULL.
+        </listitem>
+        
+        <listitem>
+            <errorname>CL_INVALID_DEVICE</errorname> if <varname>devices</varname> contains an invalid device.
+        </listitem>
+        <listitem>
+            <errorname>CL_INVALID_OPERATION</errorname> if Direct3D 10 interoperability is specified by setting CL_INVALID_D3D10_DEVICE_KHR 
+            to a non-NULL value, and interoperability with another graphics API is also specified (if the 
+            <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry> extension is enabled).
+        </listitem>
+        <listitem>
+            <errorname>CL_DEVICE_NOT_AVAILABLE</errorname> if a device in <varname>devices</varname> is currently not available 
+            even though the device was returned by <citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry>.
+        </listitem>
+        <listitem>
+            <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate resources required by the OpenCL 
+            implementation on the device.
+        </listitem>
+        <listitem>
+            <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by the OpenCL 
+            implementation on the host.
+        </listitem>
+                <listitem>
+            <errorname>CL_INVALID_D3D10_DEVICE_KHR</errorname> if the Direct3D 10 device specified for interoperability is not 
+            compatible with the devices against which the context is to be created (if the 
+            <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry> extension is enabled).
+        </listitem>
+        <listitem>
+            <errorname>CL_INVALID_D3D10_DEVICE_KHR</errorname> if the value of the property CL_CONTEXT_D3D10_DEVICE_KHR is non-NULL 
+            and does not specify a valid Direct3D 10 device with which the <varname>cl_device_ids</varname> against which this context 
+            is to be created may interoperate (if the 
+            <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry> extension is enabled).
+        </listitem>
+        <listitem>
+            <errorname>CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR</errorname> when an invalid OpenGL context or share group 
+                object handle is specified in <varname>properties</varname> (only if the
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry> extension is enabled).
+        </listitem>
+        <listitem>
+            <errorname>CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR</errorname> if the
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry> extension is enabled and if a context was specified by any of the following means:
+                <itemizedlist mark="disc">
+                    <listitem>
+                        Context specified for an EGL-based OpenGL ES or OpenGL implementation by 
+                        setting the attributes CL_GL_CONTEXT_KHR and CL_EGL_DISPLAY_KHR. 
+                    </listitem>
+                    <listitem>
+                        Context was specified for a GLX-based OpenGL implementation by setting the 
+                        attributes CL_GL_CONTEXT_KHR and CL_GLX_DISPLAY_KHR.
+                    </listitem>
+                    <listitem>
+                        Context was specified for a WGL-based OpenGL implementation by setting the 
+                        attributes CL_GL_CONTEXT_KHR and CL_WGL_HDC_KHR.
+                    </listitem>
+                </itemizedlist>
+            and any of the following conditions hold:
+                <itemizedlist mark="disc">
+                    <listitem>
+                        The specified display and context attributes do not identify a valid OpenGL or 
+                        OpenGL ES context.
+                    </listitem>
+                    <listitem>  
+                        The specified context does not support buffer and renderbuffer objects.
+                    </listitem>
+                    <listitem>      
+                        The specified context is not compatible with the OpenCL context being 
+                        created (for example, it exists in a physically distinct address space, 
+                        such as another hardware device, or does not support sharing data with OpenCL 
+                        due to implementation restrictions).
+                    </listitem>
+                </itemizedlist> 
+        </listitem>
+        <listitem>
+            <errorname>CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR</errorname> if a share group was specified 
+            for a CGL-based OpenGL implementation by setting the attribute CL_CGL_SHAREGROUP_KHR, and the 
+            specified share group does not identify a valid CGL share group object (only if the
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry> extension is enabled).
+        </listitem>
+        
+    </itemizedlist>
+</refsect1>
+
+    
+<!-- ================================ EXAMPLE  -->  
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE 
+
+    <refsect2 id="example1"><title>Example</title>
+        <informaltable frame="none"><tgroup cols="1" align="left" colsep="0" rowsep="0">
+        <colspec colname="col1" colnum="1" /><tbody><row>
+        <entry>
+cl_context <function>clCreateContext</function>
+    <olink uri="enums.html#cl_context_properties">cl_context_properties</olink> <varname>*properties</varname>
+    cl_uint <varname>num_devices</varname>
+    const cl_device_id <varname>*devices</varname>
+    void <varname>*pfn_notify</varname> (
+        const char <varname>*errinfo</varname>, 
+        const void <varname>*private_info</varname>, 
+        size_t <varname>cb</varname>, 
+        void <varname>*user_data</varname>),
+        void <varname>*user_data</varname>,     
+        cl_int <varname>*errcode_ret</varname>)     
+</entry></row>
+        </tbody></tgroup></informaltable>   
+    </refsect2>  
+    -->
+
+<!-- ================================ SPECIFICATION  -->        
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->     
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clCreateContext">OpenCL Specification</olink>
+        </para>
+    </refsect1>     
+
+<!-- ================================ ALSO SEE  --> 
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+<citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clRetainContext</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clReleaseContext</refentrytitle></citerefentry>,   
+<citerefentry><refentrytitle>clGetContextInfo</refentrytitle></citerefentry>,
+            <citerefentry href="classDiagram"><refentrytitle>Cardinality Diagram</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+            Copyright &#169; 
+    </refsect3>
+
+</refentry>
+

@@ -1,0 +1,15 @@
+        <para>
+            Built-in geometric functions operate component-wise and the description is per-component. 
+            The type name <type>float</type><replaceable>n</replaceable> indicates that the function can take <type>float</type>, 
+            <type>float2</type>, <type>float3</type>, or <type>float4</type> as the type 
+            for the arguments.
+        </para>
+        <para>
+            The built-in geometric functions are implemented using the round to nearest even rounding mode.
+        </para>
+        <para>
+            The geometric functions can be implemented using contractions such as
+            <citerefentry><refentrytitle>mad</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>fma</refentrytitle></citerefentry>.
+        </para>  
+        

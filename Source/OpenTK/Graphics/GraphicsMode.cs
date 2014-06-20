@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
@@ -188,7 +188,7 @@ namespace OpenTK.Graphics
             {
                 return color_format;
             }
-            private set { color_format = value; }
+            internal set { color_format = value; }
         }
 
         #endregion
@@ -204,7 +204,7 @@ namespace OpenTK.Graphics
             {
                 return accumulator_format;
             }
-            private set { accumulator_format = value; }
+            internal set { accumulator_format = value; }
         }
 
         #endregion
@@ -221,7 +221,7 @@ namespace OpenTK.Graphics
             {
                 return depth;
             }
-            private set { depth = value; }
+            internal set { depth = value; }
         }
 
         #endregion
@@ -238,7 +238,7 @@ namespace OpenTK.Graphics
             {
                 return stencil;
             }
-            private set { stencil = value; }
+            internal set { stencil = value; }
         }
 
         #endregion
@@ -254,7 +254,7 @@ namespace OpenTK.Graphics
             {
                 return samples;
             }
-            private set
+            internal set
             {
                 // Clamp antialiasing samples to max 64x
                 // This protects against a potential DOS during
@@ -277,7 +277,7 @@ namespace OpenTK.Graphics
             {
                 return stereo;
             }
-            private set { stereo = value; }
+            internal set { stereo = value; }
         }
 
         #endregion
@@ -294,7 +294,7 @@ namespace OpenTK.Graphics
             {
                 return buffers;
             }
-            private set { buffers = value; }
+            internal set { buffers = value; }
         }
 
         #endregion

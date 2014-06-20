@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<signatures>
-  <add>
+<signatures version="2">
+  <add name="cl" version="1.0">
     <enum name="AddressingMode" type="int">
       <token name="ADDRESS_CLAMP" value="0x1132" />
       <token name="ADDRESS_CLAMP_TO_EDGE" value="0x1131" />
@@ -308,30 +308,6 @@
       <token name="SAMPLER_NORMALIZED_COORDS" value="0x1152" />
       <token name="SAMPLER_REFERENCE_COUNT" value="0x1150" />
     </enum>
-    <enum name="Unknown">
-      <token name="CHAR_BIT" value="8" />
-      <token name="CHAR_MAX" value="CL_SCHAR_MAX" />
-      <token name="CHAR_MIN" value="CL_SCHAR_MIN" />
-      <token name="DBL_DIG" value="15" />
-      <token name="DBL_MANT_DIG" value="53" />
-      <token name="DBL_MIN_10_EXP" value="-307" />
-      <token name="DBL_MIN_EXP" value="-1021" />
-      <token name="DBL_RADIX" value="2" />
-      <token name="FLT_DIG" value="6" />
-      <token name="FLT_MANT_DIG" value="24" />
-      <token name="FLT_MIN_10_EXP" value="-37" />
-      <token name="FLT_MIN_EXP" value="-125" />
-      <token name="FLT_RADIX" value="2" />
-      <token name="INT_MAX" value="2147483647" />
-      <token name="INT_MIN" value="(-2147483647-1)" />
-      <token name="SCHAR_MAX" value="127" />
-      <token name="SCHAR_MIN" value="(-127-1)" />
-      <token name="SHRT_MAX" value="32767" />
-      <token name="SHRT_MIN" value="(-32767-1)" />
-      <token name="UCHAR_MAX" value="255" />
-      <token name="UINT_MAX" value="0xffffffffU" />
-      <token name="USHRT_MAX" value="65535" />
-    </enum>
     <enum name="Version" type="int">
       <token name="VERSION_1_0" value="1" />
     </enum>
@@ -535,7 +511,7 @@
       <param type="void**" name="args_mem_loc" flow="in" />
       <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
       <param type="cl_event*" name="event_wait_list" flow="in" />
-      <param type="cl_event*" name="event" flow="in" />
+      <param type="cl_event*" name="event" flow="out" />
     </function>
     <function name="EnqueueNDRangeKernel" extension="Core" profile="" category="1.0" version="1.0">
       <returns type="cl_int" />

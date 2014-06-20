@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCreateProgramWithBinary</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clCreateProgramWithBinary
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateProgramWithBinary">
+        <refname>
+            clCreateProgramWithBinary
+        </refname>
+
+        <refpurpose>
+            Creates a program object for a context, and loads the binary bits specified by
+            <varname>binary</varname> into the program object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="abstractDataTypes.html">cl_program</link> <function>clCreateProgramWithBinary</function>
+                </funcdef>
+                    <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                    <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_devices</parameter></paramdef>
+                    <paramdef>const <link xlink:href="abstractDataTypes.html">cl_device_id</link><parameter>*device_list</parameter></paramdef>
+                    <paramdef>const <link xlink:href="scalarDataTypes.html">size_t</link><parameter>*lengths</parameter></paramdef>
+                    <paramdef>const <link xlink:href="scalarDataTypes.html">unsigned char</link><parameter>**binaries</parameter></paramdef>
+                    <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*binary_status</parameter></paramdef>
+                    <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> context </varname> </term>
+                <listitem>
+                    <para>
+                        Must be a valid OpenCL context.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> device_list </varname> </term>
+                <listitem>
+                    <para>
+                        A pointer to a list of devices that are in <varname>context</varname>.
+                        <varname>device_list</varname> must be a non-NULL
+                        value. The binaries are loaded for devices specified in this list.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> num_devices </varname> </term>
+                <listitem>
+                    <para>
+                        The number of devices listed in <varname>device_list</varname>.
+                    </para>
+
+                    <para>
+                        The devices associated with the program object 
+                        will be the list of devices specified by
+                        <varname>device_list</varname>. The list of devices 
+                        specified by <varname>device_list</varname>
+                        must be devices associated with <varname>context</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> lengths </varname> </term>
+                <listitem>
+                    <para>
+                        An array of the size in bytes of the program binaries
+                        to be loaded for devices specified by <varname>device_list</varname>.
+                    </para>
+
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> binaries </varname> </term>
+                <listitem>
+                    <para>
+                      An array of pointers to program binaries to be loaded for devices
+                      specified by <varname>device_list</varname>. For each device given
+                      by <varname>device_list</varname>[i], the pointer to the program
+                      binary for that device is given by <varname>binaries</varname>[i]
+                      and the length of this corresponding binary is given by
+                      <varname>lengths</varname>[i].  <varname>lengths</varname>[i] cannot be
+                      zero and <varname>binaries</varname>[i] cannot be a NULL pointer.
+                    </para>
+
+                    <para>
+                        The program binaries specified by <varname>binaries</varname>
+                        contain the bits that describe one of the following:
+
+                        <itemizedlist mark="disc">
+                            <listitem>
+                                a program executable to be run on the device(s) associated
+                                with <varname>context</varname>,
+                            </listitem>
+
+                            <listitem>
+                                a compiled program for device(s) associated 
+                                with <varname>context</varname>, or
+                            </listitem>
+
+                            <listitem>
+                                a library of compiled programs for device(s) associated with
+                                <varname>context</varname>.
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+
+                    <para>
+                      The program binary can consist of either or both of device-specific
+                      code and/or implementation-specific intermediate representation (IR)
+                      which will be converted to the device-specific code.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> binary_status </varname> </term>
+                <listitem>
+                    <para>
+                      Returns whether the program binary for each device specified
+                      in <varname>device_list</varname> was loaded successfully
+                      or not. It is an array of <varname>num_devices</varname>
+                      entries and returns <constant>CL_SUCCESS</constant> in
+                      <varname>binary_status</varname>[i] if binary was successfully
+                      loaded for device specified by <varname>device_list</varname>[i];
+                      otherwise returns <constant>CL_INVALID_VALUE</constant> if
+                      <varname>lengths</varname>[i] is zero or if <varname>binaries</varname>[i]
+                      is a NULL value or <constant>CL_INVALID_BINARY</constant> in
+                      <varname>binary_status</varname>[i] if program binary is not a valid
+                      binary for the specified device. If <varname>binary_status</varname>
+                      is NULL, it is ignored.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> errcode_ret </varname> </term>
+                <listitem>
+                    <para>
+                      Returns an appropriate error code. If <varname>errcode_ret</varname>
+                      is NULL, no error code is returned.
+                    </para>
+               </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          OpenCL allows applications to create a program object using the program source or
+          binary and build appropriate program executables.  This can be very useful as it
+          allows applications to load program source and then compile and link to generate a
+          program executable online on its first instance for appropriate OpenCL devices in
+          the system.  These executables can now be queried and cached by the application.
+          Future instances of the application launching will no longer need to compile and
+          link the program executables.  The cached executables can be read and loaded by the
+          application, which can help significantly reduce the application initialization time.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns a valid non-zero program object and <varname>errcode_ret</varname> is set to
+            <errorname>CL_SUCCESS</errorname> if the program object is created successfully.
+            Otherwise, it returns a NULL value with one of the following error values returned in
+            <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not
+              a valid context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>device_list</varname> is NULL
+              or <varname>num_devices</varname> is zero;
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_DEVICE</errorname> if OpenCL devices listed in
+              <varname>device_list</varname> are not in the list of devices associated with
+              <varname>context</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if or if <varname>lengths</varname> or
+              <varname>binaries</varname> are NULL or if any entry in <varname>lengths</varname>[i]
+              or <varname>binaries</varname>[i] is NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_BINARY</errorname> if an invalid program binary was encountered
+              for any device. <varname>binary_status</varname> will return specific status for
+              each device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCreateProgramWithBinary">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateProgramWithBuiltInKernels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainProgram</refentrytitle></citerefentry>,
+            <citerefentry href="classDiagram"><refentrytitle>Cardinality Diagram</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 9-Dec-2013, rev. 19 -->
+</refentry>
+

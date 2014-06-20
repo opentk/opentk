@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCreateEventFromGLsyncKHR</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clCreateEventFromGLsyncKHR</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateFromGLBuffer">
+        <refname>clCreateEventFromGLsyncKHR</refname>
+
+        <refpurpose>
+            Creates an event object linked to an OpenGL sync object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                        <link xlink:href="abstractDataTypes.html">cl_event</link>
+                     <function>
+                        clCreateEventFromGLsyncKHR
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef>GLsync<parameter>sync</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> context </varname> </term>
+                <listitem>
+                    <para>
+                      <!-- parameter description --> A valid OpenCL context
+                      created from an OpenGL context or share group, using the
+                      <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry>
+                      extension.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> sync </varname> </term>
+                <listitem>
+                    <para> <!-- parameter description -->
+                        The name of a sync object in the GL share group associated with <varname>context</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            An event object may be created by linking to an OpenGL sync object. Completion of such an event
+            object is equivalent to waiting for completion of the fence command associated with the linked
+            GL sync object.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          The parameters of an event object linked to a GL sync
+          object will return the following values when queried with
+          <citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              The <constant>CL_EVENT_COMMAND_QUEUE</constant> of a linked event is NULL,
+              because the event is not associated with any OpenCL command queue.
+            </listitem>
+
+            <listitem>
+              The <constant>CL_EVENT_COMMAND_TYPE</constant> of a linked event is
+              <constant>CL_COMMAND_GL_FENCE_SYNC_OBJECT_KHR</constant>, indicating that the
+              event is associated with a GL sync object, rather than an OpenCL command.
+            </listitem>
+
+            <listitem>
+              The <constant>CL_EVENT_COMMAND_EXECUTION_STATUS</constant> of a linked
+              event is either <constant>CL_SUBMITTED</constant>, indicating that the
+              fence command associated with the sync object has  not yet completed, or
+              <constant>CL_COMPLETE</constant>, indicating that the fence command has completed.
+            </listitem>
+        </itemizedlist>
+
+        <para>
+          <function>clCreateEventFromGLsyncKHR</function> performs an implicit
+          <citerefentry><refentrytitle>clRetainEvent</refentrytitle></citerefentry> on the
+          returned event object. Creating a linked event object also places a reference on
+          the linked GL sync object. When the event object is deleted, the reference will be
+          removed from the GL sync object.
+        </para>
+
+        <para>
+          Events returned from <function>clCreateEventFromGLsyncKHR</function> 
+          can be used in the <varname>event_wait_list</varname> argument to 
+          <citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>
+          and CL APIs that take a <type>cl_event</type> as an argument 
+          but do not enqueue commands.
+          Passing such events to any other CL API that enqueues 
+          commands will generate a
+          <errorname>CL_INVALID_EVENT</errorname> error.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns a valid OpenCL event object and <varname>errcode_ret</varname> is set to
+          <errorname>CL_SUCCESS</errorname> if the event object is created successfully.
+          Otherwise, it returns a NULL value with one of the following error values returned
+          in <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not
+              a valid context or was not created from a GL context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_GL_OBJECT</errorname> if <varname>sync</varname>
+              is not the name of a sync object in the GL share group associated with
+              <varname>context</varname>.
+            </listitem>
+        </itemizedlist>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCreateEventFromGLsyncKHR">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_gl_event</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainEvent</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 21-Dec-2013, rev. 19 -->
+</refentry>
+

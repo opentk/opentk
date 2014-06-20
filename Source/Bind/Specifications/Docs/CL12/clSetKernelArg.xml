@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clSetKernelArg</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clSetKernelArg
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clSetKernelArg">
+        <refname>
+            clSetKernelArg
+        </refname>
+
+        <refpurpose>
+            Used to set the argument value for a specific argument of a kernel.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clSetKernelArg</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_kernel</link><parameter>kernel</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>arg_index</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>arg_size</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">void</link><parameter>*arg_value</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+<!-- For each <varlistentry />, place the parameter name in <term /><varname />, then the definition in
+     <listitem /><para />. When refering to anything
+     that has a page in this system, use <citerefentry /><refentrytitle /> to make it a link.
+ -->
+
+    <refsect1 id="parameters" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <varname>kernel</varname>
+                </term>
+                <listitem>
+                    <para>
+                        A valid kernel object.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>arg_index</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      The argument index. Arguments to the kernel are referred by indices that
+                      go from 0 for the leftmost argument to <emphasis>n</emphasis> - 1, where
+                      <emphasis>n</emphasis> is the total number of arguments declared by a kernel.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>arg_value</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      A pointer to data that should be used as the argument value for argument
+                      specified by <varname>arg_index</varname>. The argument data pointed to by
+                      <varname>arg_value</varname> is copied and the <varname>arg_value</varname>
+                      pointer can therefore be reused by the application after
+                      <function>clSetKernelArg</function> returns. The argument value specified
+                      is the value used by all API calls that enqueue <varname>kernel</varname>
+                      (<citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+                      and
+                      <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>)
+                      until the argument value is changed by a call to
+                      <function>clSetKernelArg</function> for <varname>kernel</varname>.
+                    </para>
+
+                    <para>
+                      If the argument is a memory object (buffer, image or image array), the
+                      <varname>arg_value</varname> entry will be a pointer to the appropriate
+                      buffer, image or image array object.  The memory object must be created
+                      with the context associated with the kernel object.  If the argument
+                      is a buffer object, the <varname>arg_value</varname> pointer can be
+                      NULL or point to a NULL value in which case a NULL value will be used
+                      as the value for the argument declared as a pointer to <citerefentry
+                      href="global"><refentrytitle>__global</refentrytitle></citerefentry>
+                      or <citerefentry
+                      href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>
+                      memory in the kernel.  If the argument is declared with the <citerefentry
+                      href="local"><refentrytitle>__local</refentrytitle></citerefentry>
+                      qualifier, the <varname>arg_value</varname> entry must be NULL.  If the
+                      argument is of type sampler_t, the <varname>arg_value</varname> entry
+                      must be a pointer to the sampler object.
+                    </para>
+
+                    <para>
+                      If the argument is declared to be a pointer of a built-in scalar or vector
+                      type, or a user defined structure type in the global or constant address
+                      space, the memory object specified as argument value must be a buffer
+                      object (or NULL). If the argument is declared with the <citerefentry
+                      href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>
+                      qualifier, the size in bytes of the memory object cannot
+                      exceed <constant>CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE</constant>
+                      and the number of arguments declared as pointers to <citerefentry
+                      href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>
+                      memory cannot exceed <constant>CL_DEVICE_MAX_CONSTANT_ARGS</constant>.
+                    </para>
+
+                    <para>
+                        The memory object specified as argument value must be a 2D image object if the argument is
+                        declared to be of type <link xlink:href="abstractDataTypes.html">image2d_t</link>. The memory object
+                        specified as argument value must be a 3D image object if argument is declared to be of type
+                        <link xlink:href="abstractDataTypes.html">image3d_t</link>. The memory object specified as
+                        argument value must be a 1D image object if the argument is declared to be of type
+                        <link xlink:href="abstractDataTypes.html">image1d_t</link>. The memory object specified as
+                        argument value must be a 1D image buffer object if the argument is declared to be of type
+                        <link xlink:href="abstractDataTypes.html">image1d_buffer_t</link>.
+                        The memory object specified as argument value must be a 1D image array object if argument
+                        is declared to be of type <link xlink:href="abstractDataTypes.html">image1d_array_t</link>.
+                        The memory object specified as argument value must be a 2D image array object if argument is
+                        declared to be of type <link xlink:href="abstractDataTypes.html">image2d_array_t</link>.
+                    </para>
+
+                    <para>
+                      For all other kernel arguments, the <varname>arg_value</varname> entry
+                      must be a pointer to the actual data to be used as argument value.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>
+                       arg_size
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      Specifies the size of the argument value. If the argument is
+                      a memory object, the size is the size of the buffer or image
+                      object type. For arguments declared with the <citerefentry
+                      href="local"><refentrytitle>__local</refentrytitle></citerefentry>
+                      qualifier, the size specified will be the size in bytes
+                      of the buffer that must be allocated for the <citerefentry
+                      href="local"><refentrytitle>__local</refentrytitle></citerefentry>
+                      argument. If the argument is of type <type>sampler_t</type>,
+                      the <varname>arg_size</varname> value must be equal to
+                      <code>sizeof(cl_sampler)</code>. For all other arguments, the size will
+                      be the size of argument type.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+<!-- Use <function /> to refer ONLY to the function that this page describes. All other functions should use
+     <citerefentry /><refentrytitle /> to make it a link. Use <varname /> for parameters. Use <constant /> for
+     constants (or anything to be set in monospace, non-bold type. -->
+
+     <refsect1 id="notes"><title>Notes</title>
+        <para>
+          A kernel object does not update the reference count for objects such as memory, sampler
+          objects specified as argument values by <function>clSetKernelArg</function>. Users may
+          not rely on a kernel object to retain objects specified as argument values to the kernel.
+        </para>
+
+        <para>
+          Implementations shall not allow cl_kernel objects to hold reference counts to
+          cl_kernel arguments, because no mechanism is provided for the user to tell the kernel
+          to release that ownership right. If the kernel holds ownership rights on kernel args,
+          that would make it impossible for the user to tell with certainty when he may safely
+          release user allocated resources associated with OpenCL objects such as the cl_mem
+          backing store used with <constant>CL_MEM_USE_HOST_PTR</constant>.
+        </para>
+
+        <para>
+          <!-- from the spec's glossary --> An OpenCL API call is considered to be
+          <emphasis>thread-safe</emphasis> if the internal state as managed by OpenCL remains
+          consistent when called simultaneously by multiple <emphasis>host</emphasis> threads.
+          OpenCL API calls that are <emphasis>thread-safe</emphasis> allow an application to
+          call these functions in multiple <emphasis>host</emphasis> threads without having to
+          implement mutual exclusion across these <emphasis>host</emphasis> threads i.e. they
+          are also re-entrant-safe.
+        </para>
+
+        <para>
+          <!-- core spec p. 354, section A.2 --> All OpenCL API calls are thread-safe except
+          <function>clSetKernelArg</function>.  <function>clSetKernelArg</function> is safe
+          to call from any host thread, and is safe to call re-entrantly so long as concurrent
+          calls operate on different cl_kernel objects.  However, the behavior of the cl_kernel
+          object is undefined if <function>clSetKernelArg</function> is called from multiple
+          host threads on the same cl_kernel object at the same time.  Please note that there
+          are additional limitations as to which OpenCL APIs may be called from OpenCL callback
+          functions -- please see section 5.9.
+        </para>
+
+        <para>
+          <!-- core spec p. 354, section A.2 --> There is an inherent race condition in the
+          design of OpenCL that occurs between setting a kernel argument and using the kernel
+          with <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+          or <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>. Another
+          host thread might change the kernel arguments between when a host thread sets the
+          kernel arguments and then enqueues the kernel, causing the wrong kernel arguments
+          to be enqueued. Rather than attempt to share cl_kernel objects among multiple host
+          threads, applications are strongly encouraged to make additional cl_kernel objects
+          for kernel functions for each host thread.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          <function>clSetKernelArg</function> returns <errorname>CL_SUCCESS</errorname> if the
+          function is executed successfully. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_KERNEL</errorname> if <varname>kernel</varname> is not a valid kernel object.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_ARG_INDEX</errorname> if <varname>arg_index</varname> is not a valid argument index.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_ARG_VALUE</errorname> if <varname>arg_value</varname> specified is not a valid value.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_MEM_OBJECT</errorname> for an argument declared to be a memory object when the
+                specified <varname>arg_value</varname> is not a valid memory object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_SAMPLER</errorname> for an argument declared to be of type
+              <varname>sampler_t</varname> when the specified <varname>arg_value</varname>
+              is not a valid sampler object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_ARG_SIZE</errorname> if <varname>arg_size</varname>
+              does not match the size of the data type for an argument that
+              is not a memory object or if the argument is a memory object and
+              <varname>arg_size</varname> != <constant>sizeof(cl_mem)</constant> or if
+              <varname>arg_size</varname> is zero and the argument is declared with the
+              <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>
+              qualifier or if the argument is a sampler and <varname>arg_size</varname> !=
+              <constant>sizeof(cl_sampler)</constant>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_ARG_VALUE</errorname> if the argument is an image declared
+              with the <constant>read_only</constant> qualifier and <varname>arg_value</varname>
+              refers to an image object created with <varname>cl_mem_flags</varname> of
+              <constant>CL_MEM_WRITE</constant> or if the image argument is declared with
+              the <constant>write_only</constant> qualifier and <varname>arg_value</varname>
+              refers to an image object created with <varname>cl_mem_flags</varname> of
+              <constant>CL_MEM_READ</constant>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--    -->
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+kernel void
+image_filter (int n, int m,
+          __constant float *filter_weights,
+          __read_only image2d_t src_image,
+          __write_only image2d_t dst_image)
+{
+     ...
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+          Argument index values for <constant>image_filter</constant> will
+          be 0 for <constant>n</constant>, 1 for <constant>m</constant>, 2 for
+          <constant>filter_weights</constant>, 3 for <constant>src_image</constant> and 4 for
+          <constant>dst_image</constant>.
+        </para>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clSetKernelArg">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateKernelsInProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelWorkGroupInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 17-Oct-2011 -->
+</refentry>
+

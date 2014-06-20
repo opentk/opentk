@@ -1,0 +1,16 @@
+    <para>
+      If an implementation extends this specification to support IEEE-754 flags or
+      exceptions, then all built-in relational functions shall proceed without raising the
+      <varname>invalid</varname> floating-point exception when one or more of the operands
+      are NaNs.
+    </para>
+
+    <para>
+      The built-in relational functions are extended with
+      <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> to
+      include appropriate versions of functions that take <type>half</type>, and
+      <type>half{2|3|4|8|16}</type> as arguments and return values.
+    </para>
+
+ <!-- 13-Oct-2011 -->
+

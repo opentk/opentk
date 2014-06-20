@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>imageDescriptor</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>imageDescriptor</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_image_desc">
+        <refname>imageDescriptor</refname>
+
+        <refpurpose>
+            The image descriptor structure describes the type and dimensions of the image or image array and is defined as:
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>typedef struct _cl_image_desc {
+          cl_mem_object_type image_type;
+          size_t image_width;
+          size_t image_height;
+          size_t image_depth;
+          size_t image_array_size;
+          size_t image_row_pitch;
+          size_t image_slice_pitch;
+          cl_uint num_mip_levels;
+          cl_uint num_samples;
+          cl_mem mem_object;
+} cl_image_desc;</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Members</title>
+        <variablelist>
+            <varlistentry>
+                <term>image_type</term>
+                <listitem>
+                    <para>
+                      Describes the image type and must be either
+                      <constant>CL_MEM_OBJECT_IMAGE1D</constant>,
+                      <constant>CL_MEM_OBJECT_IMAGE1D_BUFFER</constant>,
+                      <constant>CL_MEM_OBJECT_IMAGE1D_ARRAY</constant>,
+                      <constant>CL_MEM_OBJECT_IMAGE2D</constant>,
+                      <constant>CL_MEM_OBJECT_IMAGE2D_ARRAY</constant>, or
+                      <constant>CL_MEM_OBJECT_IMAGE3D</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>image_width</term>
+                <listitem>
+                    <para>
+                      The width of the image in pixels. For a 2D image and image array, the image 
+                        width must be a value >= 1 and &le; <constant>CL_DEVICE_IMAGE2D_MAX_WIDTH</constant>. For a 3D image, the 
+                        image width must be a value &ge; 1 and &le; <constant>CL_DEVICE_IMAGE3D_MAX_WIDTH</constant>. For a 1D 
+                        image buffer, the image width must be a value &ge; 1 and &le;  
+                        <constant>CL_DEVICE_IMAGE_MAX_BUFFER_SIZE</constant>. For a 1D image and 1D image array, the image 
+                        width must be a value &ge; 1 and &le; <constant>CL_DEVICE_IMAGE2D_MAX_WIDTH</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>image_height</term>
+                <listitem>
+                    <para>
+                      The height of the image in pixels. This is 
+                      only used if the image is a 2D or 3D image, or a
+                      2D image array. For a 2D image or image array, 
+                      the image height must be a value &ge; 1 and &le; 
+                      <constant>CL_DEVICE_IMAGE2D_MAX_HEIGHT</constant>. 
+                      For a 3D image, the image height must be a value &ge; 1 
+                      and &le; <constant>CL_DEVICE_IMAGE3D_MAX_HEIGHT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>image_depth</term>
+                <listitem>
+                    <para>
+                      The depth of the image in pixels. This is only used if the
+                      image is a 3D image and must be a value &ge; 1 and &le;
+                      <constant>CL_DEVICE_IMAGE3D_MAX_DEPTH</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>image_array_size</term>
+                <listitem>
+                    <para>
+                      The number of images in the image array. This is only
+                      used if the image is a 1D or 2D image array. The values for
+                      <varname>image_array_size</varname>, if specified, must be a value &ge;
+                      1 and &le; <constant>CL_DEVICE_IMAGE_MAX_ARRAY_SIZE</constant>.
+                    </para>
+
+                    <para>
+                      Note that reading and writing 2D image arrays from a kernel with
+                      <varname>image_array_size</varname> = 1 may be lower performance than
+                      2D images.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>image_row_pitch</term>
+                <listitem>
+                    <para>
+                      The scan-line pitch in bytes. This must be 0 if <varname>host_ptr</varname>
+                      is NULL and can be either 0 or &ge; <varname>image_width</varname> * size of element in bytes if
+                      <varname>host_ptr</varname> is not NULL. If <varname>host_ptr</varname>
+                      is not NULL and <varname>image_row_pitch</varname> =
+                      0, <varname>image_row_pitch</varname> is calculated as
+                      <varname>image_width</varname> * size of element in bytes. If
+                      <varname>image_row_pitch</varname> is not 0, it must be a multiple of
+                      the image element size in bytes. For a 2D image created from a buffer, the pitch 
+specified (or computed if pitch specified is 0) must be a multiple of the maximum of the 
+<constant>CL_DEVICE_IMAGE_PITCH_ALIGNMENT</constant> value for all devices in the context associated with 
+<code>image_desc->mem_object</code> and that support images.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>image_slice_pitch</term>
+                <listitem>
+                    <para>
+                      The size in bytes of each 2D slice in the 3D image or the size in
+                      bytes of each image in a 1D or 2D image array. This must be 0 if
+                      <varname>host_ptr</varname> is NULL. If <varname>host_ptr</varname>
+                      is not NULL, <varname>image_slice_pitch</varname> can
+                      be either 0 or &ge; <varname>image_row_pitch</varname> *
+                      <varname>image_height</varname> for a 2D image array or 3D image
+                      and can be either 0 or &ge; <varname>image_row_pitch</varname>
+                      for a 1D image array. If <varname>host_ptr</varname>
+                      is not NULL and <varname>image_slice_pitch</varname> =
+                      0, <varname>image_slice_pitch</varname> is calculated as
+                      <varname>image_row_pitch</varname> * <varname>image_height</varname>
+                      for a 2D image array or 3D image and <varname>image_row_pitch</varname>
+                      for a 1D image array. If <varname>image_slice_pitch</varname> is not 0,
+                      it must be a multiple of the <varname>image_row_pitch</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>num_mip_level</term>, <term>num_samples</term>
+                <listitem>
+                    <para>
+                      Must be 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>mem_object</term>
+                <listitem>
+                    <para>
+                      Refers to a valid buffer or image memory object. <varname>mem_object</varname> can be a buffer 
+                        memory object if image_type is <constant>CL_MEM_OBJECT_IMAGE1D_BUFFER</constant> or
+                        <constant>CL_MEM_OBJECT_IMAGE2D</constant>
+                        (To create a 2D image from a buffer object that share the data store between the image and buffer object)
+                        . <varname>mem_object</varname> can be a image object if <varname>image_type</varname> is 
+                        <constant>CL_MEM_OBJECT_IMAGE2D</constant>
+                        (To create an image object from another image object that share the data store between these image objects). 
+                        Otherwise it must be NULL. The image pixels are taken from 
+                        the memory object’s data store. When the contents of the specified memory object’s data store 
+                        are modified, those changes are reflected in the contents of the image object and vice-versa at 
+                        corresponding sychronization points. For a 1D image buffer object, the <varname>image_width</varname> * size 
+                        of element in bytes must be &le; size of buffer object data store. For a 2D image created from a 
+                        buffer, the <varname>image_row_pitch * image_height</varname> must be &le; size of buffer object data 
+                        store. For an image object created from another image object, the values specified in the image 
+                        descriptor except for <varname>mem_object</varname> must match the image descriptor information associated 
+                        with <varname>mem_object</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="note"><title>Note</title>
+        <para>
+          Concurrent reading from, writing to and copying between both a buffer object and 1D image
+          buffer or 2D image object associated with the buffer object is undefined. Only reading from both
+          a buffer object and 1D image buffer or 2D image object associated with the buffer object is defined.
+        </para>
+
+        <para>
+            Writing to an image created from a buffer and then reading from this buffer in a kernel even if 
+            appropriate synchronization operations (such as a barrier) are performed between the writes and
+            reads is undefined. Similarly, writing to the buffer and reading from the image created from this 
+            buffer with appropriate synchronization between the writes and reads is undefined.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_image_desc">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_image_format</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 7-Dec-2013, rev. 19 -->
+</refentry>
+

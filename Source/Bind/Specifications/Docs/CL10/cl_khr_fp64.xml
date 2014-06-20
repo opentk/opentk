@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>                            
+                cl_khr_fp64
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>cl_khr_fp64</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_fp64">             
+        <refname>cl_khr_fp64</refname>
+
+        <refpurpose>
+            Support for <type>double</type> floating-point precision.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_fp64 : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+Support for double floating-point precision is a requirement for a class of scientific computing algorithms/applications. This class of applications can be enabled by adding support for double precision floating-point as an optional extension.
+        </para>
+        <para>
+OpenCL 1.0 adds support for double precision floating-point as an optional extension. An application that wants to use <type>double</type> will need to include the <function>#pragma OPENCL EXTENSION cl_khr_fp64 : enable</function> directive before any double precision data type is declared in the kernel code.
+        </para>
+        <para>
+The lists of built-in <citerefentry href="scalarDataTypes"><refentrytitle>scalar data types</refentrytitle></citerefentry> and <citerefentry href="vectorDataTypes"><refentrytitle>vector data types</refentrytitle></citerefentry> are extended to include the following:
+            <informaltable frame="all">
+                <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                    <colspec colname="col1" colnum="1" />
+                    <colspec colname="col2" colnum="2" />
+                    <colspec colname="col3" colnum="3" />
+
+                    <thead>
+                        <row>
+                            <entry>Type in OpenCL Language</entry>
+                            <entry>Description</entry>
+                            <entry>API type for application</entry>
+                        </row>
+                    </thead>
+
+                    <tbody>
+                        <row>
+                            <entry>double</entry>
+                            <entry>A double precision vector</entry>
+                            <entry>cl_double</entry>
+                        </row>					
+                        <row>
+                            <entry>double2</entry>
+                            <entry>2-component double vector</entry>
+                            <entry>cl_double2</entry>
+                        </row>
+
+                        <row>
+                            <entry>double4</entry>
+                            <entry>4-component double vector</entry>
+                            <entry>cl_double4</entry>
+                        </row>
+
+                        <row>
+                            <entry>double8</entry>
+                            <entry>8-component double vector</entry>
+                            <entry>cl_double8</entry>
+                        </row>
+
+                        <row>
+                            <entry>double16</entry>
+                            <entry>16-component double vector</entry>
+                            <entry>cl_double16</entry>
+                        </row>
+
+                    </tbody>
+                </tgroup>
+            </informaltable>
+        </para>
+
+        <para>
+The double data type must confirm to the IEEE-754 double precision storage format.
+        </para>
+
+        <para>
+       Conversions from <type>double</type> to <type>half</type> are correctly rounded. Conversions from <type>half</type> to <type>double</type> are lossless.
+        </para>
+    </refsect1>
+
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="cl_khr_fp64">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry>
+                <refentrytitle>clGetDeviceInfo</refentrytitle>, <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>
+            </citerefentry>
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

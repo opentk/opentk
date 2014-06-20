@@ -1,0 +1,75 @@
+
+    <!-- From section 5.13 -->
+    <!-- This is currently only used in clCreateCommandQueueWithProperties -->
+
+    <bridgehead>Out-of-order Execution of Kernels and Memory Object Commands</bridgehead>
+
+    <para>
+      The OpenCL functions that are submitted to a command-queue are enqueued in the order
+      the calls are made but can be configured to execute in-order or out-of-order. The
+      <varname>properties</varname> argument in <function>clCreateCommandQueueWithProperties</function>
+      can be used to specify the execution order.
+    </para>
+
+    <para>
+      If the <constant>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</constant>
+      property of a command-queue is not set, the commands enqueued to a
+      command-queue execute in order. For example, if an application calls
+      <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+      to execute kernel A followed by a
+      <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+      to execute kernel B, the application can assume that kernel A finishes first and then
+      kernel B is executed. If the memory objects output by kernel A are inputs to kernel
+      B then kernel B will see the correct data in memory objects produced by execution of
+      kernel A. If the <constant>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</constant> property
+      of a command-queue is set, then there is no guarantee that kernel A will finish before
+      kernel B starts execution.
+    </para>
+
+    <para>
+      Applications can configure the commands enqueued to a command-queue to execute
+      out-of-order by setting the <constant>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</constant>
+      property of the command-queue. This can be specified when the command-queue is
+      created. In out-of-order execution mode there is no guarantee that the enqueued
+      commands will finish execution in the order they were queued. As there is no
+      guarantee that kernels will be executed in order, i.e. based on when the
+      <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+      calls are made within a command-queue, it is therefore possible that an earlier
+      <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+      call to execute kernel A identified by event A may execute and/or finish later than a
+      <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+      call to execute kernel B which was called by the application at a later
+      point in time. To guarantee a specific order of execution of kernels, a
+      wait on a particular event (in this case event A) can be used. The wait for
+      event A can be specified in the <varname>event_wait_list</varname> argument to
+      <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+      for kernel B.
+    </para>
+
+    <para>
+      In addition, a wait for events
+      (<citerefentry><refentrytitle>clEnqueueMarkerWithWaitList</refentrytitle></citerefentry>)
+      or a barrier
+      (<citerefentry><refentrytitle>clEnqueueBarrierWithWaitList</refentrytitle></citerefentry>)
+      command can be enqueued to the command-queue. The wait for events command ensures
+      that previously enqueued commands identified by the list of events to wait for have
+      finished before the next batch of commands is executed. The barrier command ensures
+      that all previously enqueued commands in a command-queue have finished execution
+      before the next batch of commands is executed.
+    </para>
+
+    <para>
+      Similarly, commands to read, write, copy or map memory objects that are enqueued after
+      <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> or
+      <citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>
+      commands are not guaranteed to wait for kernels scheduled for execution to have
+      completed (if the <constant>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</constant>
+      property is set). To ensure correct ordering of commands, the event object returned by
+      <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> or
+      <citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>
+      can be used to enqueue a wait for event or a barrier command can be enqueued that
+      must complete before reads or writes to the memory object(s) occur.
+    </para>
+
+<!-- 25-Dec-2013, rev. 19 -->
+

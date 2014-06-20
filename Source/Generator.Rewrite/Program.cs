@@ -102,10 +102,18 @@ namespace OpenTK.Rewrite
                 {
                     foreach (var reference in module.AssemblyReferences)
                     {
-                        var resolved = module.AssemblyResolver.Resolve(reference);
-                        if (reference.Name == "mscorlib")
+                        try
                         {
-                            mscorlib = resolved;
+                            var resolved = module.AssemblyResolver.Resolve(reference);
+                            if (reference.Name == "mscorlib")
+                            {
+                                mscorlib = resolved;
+                                break;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Error.WriteLine(e.ToString());
                         }
                     }
                 }
@@ -294,11 +302,15 @@ namespace OpenTK.Rewrite
             {
                 EmitStringArrayEpilogue(wrapper, body, il);
             }
-            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "String" && !p.ParameterType.IsArray))
+            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "String&" && !p.ParameterType.IsArray && p.ParameterType.IsByReference))
+            {
+                EmitStringReferenceEpilogue(wrapper, body, il);
+            }
+            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "String" && !p.ParameterType.IsArray && !p.ParameterType.IsByReference))
             {
                 EmitStringEpilogue(wrapper, body, il);
             }
-            
+
             if (options.Contains("-debug"))
             {
                 EmitDebugEpilogue(wrapper, il, vars);
@@ -639,6 +651,44 @@ namespace OpenTK.Rewrite
             }
         }
 
+        static void EmitStringReferenceParameter(MethodDefinition wrapper, TypeReference p, MethodBody body, ILProcessor il)
+        {
+            // ref string masrhaling:
+            // IntPtr ptr = MarshalStringRefToPtr(strings);
+            // try { calli }
+            // finally { FreeStringRefPtr(ptr); }
+            var marshal_str_ref_to_ptr = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringRefToPtr"));
+
+            // IntPtr ptr;
+            var variable_name = p.Name + " _string_ref_ptr";
+            body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
+            int index = body.Variables.Count - 1;
+
+            // ptr = MarshalStringRefToPtr(strings);
+            il.Emit(OpCodes.Call, marshal_str_ref_to_ptr);
+            il.Emit(OpCodes.Stloc, index);
+            il.Emit(OpCodes.Ldloc, index);
+
+            // The finally block will be emitted in the function epilogue
+        }
+
+        static void EmitStringReferenceEpilogue(MethodDefinition wrapper, MethodBody body, ILProcessor il)
+        {
+            for (int i = 0; i < wrapper.Parameters.Count; i++)
+            {
+                var p = wrapper.Parameters[i].ParameterType;
+                if (p.Name == "String" && p.IsByReference)
+                {
+                    var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringRefPtr"));
+
+                    // FreeStringRefPtr(ptr)
+                    var variable_name = p.Name + "_string_ref_ptr";
+                    var v = body.Variables.First(m => m.Name == variable_name);
+                    il.Emit(OpCodes.Ldloc, v.Index);
+                    il.Emit(OpCodes.Call, free);
+                }
+            }
+        }
         private static void EmitConvenienceWrapper(MethodDefinition wrapper,
             MethodDefinition native, int difference, MethodBody body, ILProcessor il)
         {
@@ -741,17 +791,24 @@ namespace OpenTK.Rewrite
                     // We'll emit the try-finally block in the epilogue implementation,
                     // because we haven't yet emitted all necessary instructions here.
                 }
-                else if (p.Name == "String" && !p.IsArray)
+                else if (p.Name == "String" && !p.IsArray && !p.IsByReference)
                 {
                     EmitStringParameter(method, p, body, il);
                 }
                 else if (p.IsByReference)
                 {
-                    body.Variables.Add(new VariableDefinition(new PinnedType(p)));
-                    var index = body.Variables.Count - 1;
-                    il.Emit(OpCodes.Stloc, index);
-                    il.Emit(OpCodes.Ldloc, index);
-                    il.Emit(OpCodes.Conv_I);
+                    if (p.Name != "String&")
+                    {
+                        body.Variables.Add(new VariableDefinition(new PinnedType(p)));
+                        var index = body.Variables.Count - 1;
+                        il.Emit(OpCodes.Stloc, index);
+                        il.Emit(OpCodes.Ldloc, index);
+                        il.Emit(OpCodes.Conv_I);
+                    }
+                    else
+                    {
+                        EmitStringReferenceParameter(method, p, body, il);
+                    }
                 }
                 else if (p.IsArray)
                 {

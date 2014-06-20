@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY mediaSurfaceFormatsInc SYSTEM "mediaSurfaceFormatsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>clGetDeviceIDsFromDX9MediaAdapterKHR</keyword></keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>clGetDeviceIDsFromDX9MediaAdapterKHR</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+  <refnamediv id="clGetDeviceIDsFromDX9MediaAdapterKHR">
+<refname>clGetDeviceIDsFromDX9MediaAdapterKHR</refname>
+           <refpurpose>Query a media adapter for any associated OpenCL devices.</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                     <link xlink:href="scalarDataTypes.html">cl_int</link>
+                     <function>clGetDeviceIDsFromDX9MediaAdapterKHR</function>
+                </funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_platform_id</link><parameter>platform</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_media_adapters</parameter></paramdef>
+                <paramdef>cl_dx9_media_adapter_type_khr<parameter>*media_adapters_type</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*media_adapters</parameter></paramdef>
+                <paramdef>cl_dx9_media_adapter_set_khr<parameter>media_adapter_set</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_entries</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_device_id</link><parameter>*devices</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*num_devices</parameter></paramdef>
+           </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><varname>platform</varname></term>
+            <listitem>
+                <para>
+                    Refers to the platform ID returned by
+                    <citerefentry><refentrytitle>clGetPlatformIDs</refentrytitle></citerefentry>.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>num_media_adapters</varname></term>
+            <listitem>
+                <para>
+                    Specifies the number of media adapters.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><varname>media_adapters_type</varname></term>
+          <listitem>
+            <para>
+              An array of <varname>num_media_adapters</varname> entries. Each entry specifies
+              the type of media adapter and must be one of the values described 
+              in the table (Table 9.10.1) below.
+            </para>
+
+            <!-- table 9.10.1 -->
+            <informaltable frame="all">
+              <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <thead>
+                  <row>
+                    <entry> cl_dx9_media_adapter_type_khr </entry>
+                    <entry>Type of media adapters</entry>
+                  </row>
+                </thead>
+
+                <tbody>
+                  <row>
+                    <entry><constant>CL_ADAPTER_D3D9_KHR</constant></entry>
+                    <entry>IDirect3DDevice9 *</entry>
+                  </row>
+
+                  <row>
+                    <entry><constant>CL_ADAPTER_D3D9EX_KHR</constant></entry>
+                    <entry>IDirect3DDevice9Ex *</entry>
+                  </row>
+
+                  <row>
+                    <entry><constant>CL_ADAPTER_DXVA_KHR</constant></entry>
+                    <entry>IDXVAHD_Device *</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>media_adapters</varname></term>
+            <listitem>
+                <para>
+                  An array of <varname>num_media_adapters</varname> entries. Each
+                  entry specifies the actual adapter whose type is specified by
+                  <varname>media_adapter_type</varname>.  The <varname>media_adapters</varname>
+                  must be one of the types describes in the table above.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>media_adapter_set</varname></term>
+            <listitem>
+                <para>
+                  Specifies the set of adapters to return and must be one of the values described
+                  in the table (Table 9.10.2) below.
+                </para>
+
+                <!-- table 9.10.2 -->
+                <informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+                    <colspec colname="col1" colnum="1" />
+                    <colspec colname="col2" colnum="2" />
+                    <thead>
+                        <row>
+                            <entry>cl_dx9_media_adapter_set_khr</entry>
+                            <entry>Description</entry>
+                        </row>
+                    </thead>
+
+                    <tbody>
+                        <row>
+                            <entry><constant>CL_PREFERRED_DEVICES_FOR_DX9_MEDIA_ADAPTER_KHR</constant></entry>
+                            <entry>
+                                The preferred OpenCL devices associated with the media adapter.
+                            </entry>
+                        </row>
+
+                        <row>
+                            <entry><constant>CL_ALL_DEVICES_FOR_DX9_MEDIA_ADAPTER_KHR</constant></entry>
+                            <entry>
+                                All OpenCL devices that may interoperate with the media adapter.
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup></informaltable>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>num_entries</varname></term>
+            <listitem>
+                <para>
+                  The number of cl_device_id entries that can be added to
+                  <varname>devices</varname>.  If <varname>devices</varname> is not NULL,
+                  the <varname>num_entries</varname> must be greater than zero.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>devices</varname></term>
+            <listitem>
+                <para>
+                  Returns a list of OpenCL devices found that support the list of media adapters
+                  specified.  The <type>cl_device_id</type> values returned in <varname>devices</varname>
+                  can be used to identify a specific OpenCL device. If <varname>devices</varname>
+                  argument is NULL, this argument is ignored. The number of OpenCL devices returned
+                  is the minimum of the value specified by <varname>num_entries</varname> or
+                  the number of OpenCL devices whose type matches <varname>device_type</varname>.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>num_devices</varname></term>
+            <listitem>
+                <para>
+                  Returns the number of OpenCL devices.  If <varname>num_devices</varname>
+                  is NULL, this argument is ignored.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          Queries a media adapter for any associated OpenCL devices. Adapters with associated
+          OpenCL devices can enable media surface sharing between the two.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        &mediaSurfaceFormatsInc;
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully.
+          Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_PLATFORM</errorname> if <varname>platform</varname> is not
+              a valid platform.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>num_media_adapters</varname>
+              is zero or if <varname>media_adapters_type</varname> is NULL or if
+              <varname>media_adapters</varname> is NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if any of the entries in
+              <varname>media_adapters_type</varname> or <varname>media_adapters</varname>
+              is not a valid value.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>media_adapter_set</varname>
+              is not a valid value.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>num_entries</varname>
+              is equal to zero and <varname>devices</varname> is not NULL or if both
+              <varname>num_devices</varname> and <varname>devices</varname> are NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_DEVICE_NOT_FOUND</errorname> if no OpenCL devices that
+              correspond to adapters specified in <varname>media_adapters</varname> and
+              <varname>media_adapters_type</varname> were found.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clGetDeviceIDsFromDX9MediaAdapterKHR">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_dx9_media_sharing</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 22-Dec-2013, rev. 19 -->
+</refentry>
+

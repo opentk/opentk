@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+	<refentryinfo>
+		<keywordset><keyword>clCreateContext</keyword></keywordset>
+	</refentryinfo>
+    <refmeta>
+        <refentrytitle>clCreateContext</refentrytitle>
+		<refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+	
+
+<!-- ================================ SYNOPSIS -->	
+
+  <refnamediv id="clCreateContext">
+<refname>clCreateContext</refname> 
+           <refpurpose>Creates an OpenCL context.</refpurpose> 
+    </refnamediv> 
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype><funcdef>cl_context <function>clCreateContext</function></funcdef>
+				<paramdef><link xlink:href="enums.html#cl_context_properties">cl_context_properties</link><parameter>*properties</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_devices</parameter></paramdef>
+                <paramdef>const <link xlink:href="abstractDataTypes.html">cl_device_id</link><parameter>*devices</parameter></paramdef>
+				
+				<paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*pfn_notify</parameter>
+						<funcparams><literallayout>const <link xlink:href="scalarDataTypes.html">char</link> *errinfo, 
+						const <link xlink:href="scalarDataTypes.html">void</link> *private_info, 
+						<link xlink:href="otherDataTypes.html">size_t</link> cb, 
+						<link xlink:href="scalarDataTypes.html">void</link> *user_data</literallayout></funcparams></paramdef>	
+					
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*user_data</parameter></paramdef>		
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>							
+           </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->		
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            An OpenCL context is created with one or more devices. Contexts
+are used by the OpenCL runtime for managing objects such as command-queues, memory,
+program and kernel objects and for executing kernels on one or more devices specified in the
+context.
+		</para>
+    </refsect1>	
+	
+<!-- ================================ PARAMETERS -->	
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+      	
+		
+		<!-- ================================ PARAMETER TABLE (OPTIONAL) -->		
+        <varlistentry>
+            <term>properties</term>
+            <listitem>
+				<para>
+                    Specifies a list of context property names and their corresponding values. Each property name is immediately followed by the corresponding desired value. The list is terminated with 0. <varname>properties</varname> can be NULL in which case the platform that is selected is implementation-defined. The list of supported <varname>properties</varname> is described in the table below. 
+                </para>
+				<informaltable frame="all"><tgroup cols="3" align="left" colsep="1" rowsep="1">
+	<colspec colname="col1" colnum="1" />
+	<colspec colname="col2" colnum="2" />
+	<colspec colname="col3" colnum="3" />	
+	<thead>
+		<row>
+		<entry>cl_context_properties enum</entry>
+		<entry>Property value</entry>		
+		<entry>Description</entry>
+		</row>
+	</thead>
+	<tbody>
+		<row>
+			<entry><constant>CL_CONTEXT_PLATFORM</constant></entry>
+			<entry><link xlink:href="abstractDataTypes.html">cl_platform_id</link></entry>
+			<entry>Specifies the platform to use.</entry>
+		</row>
+	</tbody>	
+		
+	</tgroup></informaltable>	
+            </listitem>
+        </varlistentry>
+<!-- ================================ END PARAMETER TABLE  -->	
+		
+		<varlistentry>
+            <term><varname>num_devices</varname></term>
+            <listitem>
+                <para>
+                    The number of devices specified in the <varname>devices</varname> argument.
+                </para>
+            </listitem>
+        </varlistentry>
+		<varlistentry>
+            <term><varname>devices</varname></term>
+            <listitem>
+                <para>
+                    A pointer to a list of unique devices returned by <citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry> for a platform.
+                </para>
+            </listitem>
+        </varlistentry>
+		<varlistentry>
+            <term><varname>pfn_notify</varname></term>
+            <listitem>
+                <para>
+                    A callback function that can be registered by the application. This callback function will be used by the OpenCL implementation to report information on errors that occur in this context. This callback function may be called asynchronously by the OpenCL implementation.
+It is the application's responsibility to ensure that the callback function is thread-safe. If <varname>pfn_notify</varname> is NULL, no callback function is registered. The parameters to this callback function are:
+                </para>
+				
+				<para><varname>errinfo</varname> is a pointer to an error string.</para>
+<para><varname>private_info</varname> and <varname>cb</varname> represent a pointer to binary data that is returned by the OpenCL implementation that can be used to log additional information helpful in debugging the error.</para>
+<para><varname>user_data</varname> is a pointer to user supplied data.</para>
+				
+				
+            </listitem>
+        </varlistentry>
+		<varlistentry> 
+            <term><varname>user_data</varname></term>
+            <listitem>
+                <para>
+                    Passed as the <varname>user_data</varname> argument when <varname>pfn_notify</varname> is called. <varname>user_data</varname> can be NULL.
+                </para>
+            </listitem>
+        </varlistentry>
+		<varlistentry>
+            <term><varname>errcode_ret</varname></term>
+            <listitem>
+                <para>
+                    Returns an appropriate error code. If <varname>errcode_ret</varname> is NULL, no error code is returned.
+                </para>
+            </listitem>
+        </varlistentry>
+		
+        </variablelist>
+    </refsect1>
+
+	
+	
+<!-- ================================ ERRORS  -->
+    <refsect1 id="errors"><title>Errors</title>
+<para><function>clCreateContext</function> returns a valid non-zero context and <varname>errcode_ret</varname> is set to <errorname>CL_SUCCESS</errorname> if the context is created  successfully. Otherwise, it returns NULL value with the following error
+values returned in <varname>errcode_ret</varname>:
+</para>
+<itemizedlist mark="disc">
+		<listitem>
+			<errorname>CL_INVALID_PLATFORM</errorname> if <varname>properties</varname> is NULL and no platform could be selected or if platform value specified in <varname>properties</varname> is not a valid platform.
+		</listitem>
+		<listitem>
+			<errorname>CL_INVALID_VALUE</errorname> if context property name in <varname>properties</varname> is not a supported property name; if <varname>devices</varname> is NULL; if <varname>num_devices</varname> is equal to zero; or if <varname>pfn_notify</varname> is NULL but <varname>user_data</varname> is not NULL.
+		</listitem>
+		<listitem>
+			<errorname>CL_INVALID_DEVICE</errorname> if <varname>devices</varname> contains an invalid device or are not associated with the specified platform.
+		</listitem>
+		<listitem>
+			<errorname>CL_DEVICE_NOT_AVAILABLE</errorname> if a device in <varname>devices</varname> is currently not available even though the device was returned by <citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry>.
+		</listitem>
+		<listitem>
+			<errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by the OpenCL implementation on the host.
+		</listitem>
+		</itemizedlist>
+    </refsect1>
+
+
+<!-- ================================ NOTES  -->        
+ 
+
+    <refsect1 id="notes"><title>Notes</title>
+		<para>
+            <function>clCreateContext</function> and <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry> perform an implicit retain. This is very helpful for 3rd party libraries, which typically get a context passed to them by the application.
+However, it is possible that the application may delete the context without informing the library.
+Allowing functions to attach to (i.e. retain) and release a context solves the problem of a context
+being used by a library no longer being valid.
+        </para>
+    </refsect1>
+	
+<!-- ================================ EXAMPLE  -->	
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE 
+
+    <refsect2 id="example1"><title>Example</title>
+		<informaltable frame="none"><tgroup cols="1" align="left" colsep="0" rowsep="0">
+		<colspec colname="col1" colnum="1" /><tbody><row>
+		<entry>
+cl_context <function>clCreateContext</function>
+	<olink uri="enums.html#cl_context_properties">cl_context_properties</olink> <varname>*properties</varname>
+	cl_uint <varname>num_devices</varname>
+	const cl_device_id <varname>*devices</varname>
+	void <varname>*pfn_notify</varname> (
+		const char <varname>*errinfo</varname>, 
+		const void <varname>*private_info</varname>, 
+		size_t <varname>cb</varname>, 
+		void <varname>*user_data</varname>),
+    	void <varname>*user_data</varname>,		
+    	cl_int <varname>*errcode_ret</varname>)		
+</entry></row>
+		</tbody></tgroup></informaltable>	
+    </refsect2>  
+	-->
+
+<!-- ================================ SPECIFICATION  -->		
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->		
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clCreateContext">OpenCL Specification</olink>
+        </para>
+    </refsect1>  	
+
+<!-- ================================ ALSO SEE  -->	
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+<citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clRetainContext</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clReleaseContext</refentrytitle></citerefentry>, 	
+<citerefentry><refentrytitle>clGetContextInfo</refentrytitle></citerefentry>		
+        </para>
+    </refsect1>
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+			Copyright &#169; 
+    </refsect3>
+
+</refentry>
+

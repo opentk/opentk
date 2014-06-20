@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>         
+                clEnqueueWaitForEvents
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>       
+            clEnqueueWaitForEvents
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+  
+    </refmeta>
+
+
+<!-- ================================ SYNOPSIS -->  
+
+    <refnamediv id="clEnqueueWaitForEvents">
+        <refname>     
+            clEnqueueWaitForEvents
+        </refname> 
+
+        <refpurpose>          
+            Enqueues a wait for a specific event or a list of events to complete before any future commands
+			queued in the command-queue are executed.
+        </refpurpose> 
+    </refnamediv> 
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clEnqueueWaitForEvents</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_command_queue</link><parameter>command_queue</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_events</parameter></paramdef>
+                <paramdef>const <link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event_list</parameter></paramdef>                           
+
+            </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>
+
+
+<!-- ================================ PARAMETERS --> 
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        command_queue
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A valid command-queue.
+                    </para>
+               </listitem>
+            </varlistentry>
+			
+			<varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        num_events
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        Specifies the number of events given by <varname>event_list</varname>. 
+					</para>
+				</listitem>
+            </varlistentry>			
+            <varlistentry>
+ 
+				<term>
+                    <varname> <!-- parameter name -->
+                        *event_list
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        Events specified in <varname>event_list</varname> act as synchronization points. Each event in <varname>event_list</varname> must be a valid event object returned by a previous call to the following:
+	<itemizedlist mark="disc">
+		<listitem>
+<citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>
+		</listitem>
+		<listitem>	<citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>
+		</listitem>
+		<listitem>	<citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>
+		</listitem>
+		<listitem>	
+<citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>
+		</listitem>
+		<listitem>	
+<citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry> 
+		</listitem>			
+		<listitem>	<citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>
+		</listitem>	
+		<listitem>	<citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>
+		</listitem>	
+		<listitem>	
+<citerefentry><refentrytitle>clEnqueueMarker</refentrytitle></citerefentry>
+		</listitem>				
+	</itemizedlist>
+                    </para>
+               </listitem>
+            </varlistentry>
+			
+        
+
+        
+
+
+
+
+            <!-- END PARAMETER TABLE  -->          
+
+
+
+
+
+
+        </variablelist>
+    </refsect1>
+
+    
+<!-- ================================ NOTES  -->        
+ 
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+
+			The context associated with events in <varname>event_list</varname> and 
+			<varname>command_queue</varname> must be the same.
+
+        </para>
+
+    </refsect1>
+    
+
+<!-- ================================ ERRORS  -->       
+ 
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the function was successfully executed, or one of the errors below:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+				<errorname>CL_INVALID_COMMAND_QUEUE</errorname> if <varname>command_queue</varname> 
+				is not a valid command-queue.
+            </listitem>
+
+            <listitem>
+				<errorname>CL_INVALID_CONTEXT</errorname> if the context associated with 
+				<varname>command_queue</varname> and events in <varname>event_list</varname> are not the same.
+            </listitem>
+
+            <listitem>
+				<errorname>CL_INVALID_VALUE</errorname> if <varname>num_events</varname> is zero or 
+				<varname>event_list</varname> is NULL.
+            </listitem>
+
+            <listitem>
+				<errorname>CL_INVALID_EVENT</errorname> if event objects specified in 
+				<varname>event_list</varname> are not valid events.
+            </listitem>
+			
+			 <listitem>
+				<errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources 
+				required by the OpenCL implementation on the host.
+            </listitem>
+			
+        </itemizedlist>
+    </refsect1>
+    
+
+<!-- ================================ EXAMPLE  -->  
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--    
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>   
+    </refsect2>  
+--> 
+
+
+<!-- ================================ SPECIFICATION  -->        
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->     
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+			
+				      
+            <olink uri="clEnqueueWaitForEvents">OpenCL Specification</olink>
+        </para>
+    </refsect1>     
+
+
+<!-- ================================ ALSO SEE  -->     
+   
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+<citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMarker</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->  
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

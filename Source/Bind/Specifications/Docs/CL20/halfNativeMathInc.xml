@@ -1,0 +1,47 @@
+  
+    <bridgehead>Half and Native forms</bridgehead>
+
+    <para>
+        A subset of Math functions (table 6.8) are defined 
+        with the <code>half_</code> prefix. These 
+        functions are implemented with a minimum of 
+        10-bits of accuracy i.e. an ULP value &le; 
+        8192 ulp.
+    </para>
+
+    <para>
+        A subset of Math functions (table 6.8) are 
+        defined with the <code>native_</code> prefix. These 
+        functions may map to one or more native device 
+        instructions and will typically have 
+        better performance compared to the corresponding 
+        functions (without the <code>native__</code>
+        prefix). The accuracy (and in some cases the 
+        input range(s)) of 
+        these functions is implementation-defined.
+    </para>
+
+    <para>
+        For the half and native forms, we use the 
+        generic type name 
+        gentype to indicate that the functions 
+        (table 6.9) can take 
+        <type>float</type>, <type>float2</type>, 
+        <type>float3</type>, 
+        <type>float4</type>, <type>float8</type> 
+        or <type>float16</type> as the type for the 
+        arguments.
+    </para>
+
+    <para>
+        Support for denormal values is optional for 
+        <code>half_</code> functions. The <code>half_</code> 
+        functions may return any 
+        result allowed by section 7.5.3, even when 
+        <code>-cl-denorms-are-zero</code> (see section 5.8.4.2) is not in 
+        force. Support for denormal values is 
+        implementation-defined for <code>native_</code> functions.
+    </para>
+
+<!-- 24-May-2013 -->
+

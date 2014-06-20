@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" >
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>atomic_work_item_fence</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>atomic_work_item_fence</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="atomic_work_item_fence">             
+        <refname>atomic_work_item_fence</refname>
+
+        <refpurpose>
+            atomic_work_item_fence functions. 
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>atomic_work_item_fence</function>
+                </funcdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_fence_flags">cl_mem_fence_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef><link xlink:href="memory_order.html">memory_order</link><parameter>order</parameter></paramdef>
+                <paramdef><link xlink:href="memory_scope.html">memory_scope</link><parameter>scope</parameter></paramdef>    
+            </funcprototype>
+        </funcsynopsis>
+   
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term><varname>flags</varname></term>
+                <listitem>
+                    <para>
+                        Must be set to <constant>CLK_GLOBAL_MEM_FENCE</constant>, 
+                        <constant>CLK_LOCAL_MEM_FENCE</constant>, 
+                        <constant>CLK_IMAGE_MEM_FENCE</constant> or a combination 
+                        of these values ORed together; otherwise the 
+                        behavior is undefined. The behavior of calling 
+                        <function>atomic_work_item_fence</function> with 
+                        <constant>CLK_GLOBAL_MEM_FENCE</constant>, 
+                        <constant>CLK_LOCAL_MEM_FENCE</constant> or 
+                        <constant>CLK_IMAGE_MEM_FENCE</constant>
+                        ORed together is equivalent to calling <function>atomic_work_item_fence</function>
+                        individually for each of the fence values set in <varname>flags</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>order</varname></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>scope</varname></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            Depending on the value of order, this operation:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    has no effects, if <varname>order</varname> == <constant>memory_order_relaxed</constant>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    is an acquire fence, if <varname>order</varname> == <constant>memory_order_acquire</constant>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    is a release fence, if <varname>order</varname> == <constant>memory_order_release</constant>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    is both an acquire fence and a release fence, 
+                    if <varname>order</varname> == <constant>memory_order_acq_rel</constant>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    is a sequentially consistent acquire and release fence, if 
+                    <varname>order</varname> == <constant>memory_order_seq_cst</constant>.
+                </para>
+            </listitem>
+
+        </itemizedlist>
+
+        <para>
+            For images declared with the <code>read_write</code> qualifier, 
+            the <function>atomic_work_item_fence</function>
+            must be called to make sure that writes to the image by a 
+            work-item become visible to that workitem on subsequent 
+            reads to that image by that work-item.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ NOTES  
+
+    <refsect1 id="notes"><title>Notes</title>
+         
+    </refsect1>-->
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="atomic_work_item_fence">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="atomicFunctions"><refentrytitle>Atomic Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 16-Dec-2013, rev. 19 -->
+</refentry>
+

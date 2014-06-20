@@ -1,0 +1,15 @@
+        <para>
+            Vector Data Load and Store Functions allow you to read and write vector types
+            from a pointer to memory. 
+        </para>
+        
+        <para>
+            The results of vector data load and store functions are undefined if the address being read from
+            or written to is not correctly aligned. The pointer argument <varname>p</varname> can be a
+            pointer to <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>, 
+            <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>, or 
+            <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry> memory 
+            for store functions. The pointer argument <varname>p</varname> can be a pointer to 
+            __global, __local, <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry> 
+            or __private memory for load functions.
+        </para>

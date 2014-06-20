@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+	<refentryinfo>
+		<keywordset><keyword>clCreateCommandQueue</keyword></keywordset>
+	</refentryinfo>
+    <refmeta>
+        <refentrytitle>clCreateCommandQueue</refentrytitle>
+		<refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+	
+
+<!-- ================================ SYNOPSIS -->	
+
+  <refnamediv id="clCreateCommandQueue">
+<refname>clCreateCommandQueue</refname> 
+           <refpurpose>Create a command-queue on a specific device.</refpurpose> 
+    </refnamediv> 
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>cl_command_queue <function>clCreateCommandQueue</function></funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_device_id</link><parameter>device</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_command_queue_properties">cl_command_queue_properties</link><parameter>properties</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>					
+            </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->	
+<!-- For each <varlistentry />, place the parameter name in <term /><varname />, then the definition in 
+<listitem /><para />. When refering to anything that has a page in this system, use 
+<citerefentry /><refentrytitle /> to make it a link.
+-->	
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><varname>context</varname></term>
+            <listitem>
+                <para>
+                    Must be a valid OpenCL context.
+                </para>
+	        </listitem>
+		</varlistentry>
+        <varlistentry>
+            <term><varname>device</varname></term>
+            <listitem>
+                <para>
+                    Must be a device associated with <varname>context</varname>. It can either be in the list of devices specified when <varname>context</varname> is created using <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry> or have the same device type as the device type specified when the <varname>context</varname> is created using <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>.
+                </para>
+            </listitem>
+        </varlistentry>
+
+<!-- ================================ PARAMETER TABLE (OPTIONAL) -->	
+<!-- DELETE IF NOT NEEDED -->
+<!-- Use this if parameter information requires a table. Adjust the number of columns by adjusting 
+<colspec /> tags. Column header goes in the <thead /> section. Delte the section if no column head needed. 
+-->			
+        <varlistentry>
+            <term><varname>properties</varname></term>
+            <listitem>
+				<para>
+					Specifies a list of properties for the command-queue. This is a bit-field. Only command-queue properties specified in the table below can be set in
+<varname>properties</varname>; otherwise the value specified in <varname>properties</varname> is considered to be not valid.
+				</para>
+				<informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+	<colspec colname="col1" colnum="1" />
+	<colspec colname="col2" colnum="2" />
+	<thead>
+		<row>
+		<entry>Command-Queue Properties</entry>
+		<entry>Description</entry>
+		</row>
+	</thead>
+	<tbody>
+		<row>
+			<entry><constant>CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</constant></entry>
+			<entry>Determines whether the commands queued in the command-queue are executed in-order or out-of-order. If set, the commands in the command-queue are executed out-of-order. Otherwise, commands are executed in-order.</entry>
+		</row>
+		<row>
+			<entry><constant>CL_QUEUE_PROFILING_ENABLE</constant></entry>
+			<entry>Enable or disable profiling of commands in the command-queue. If set, the profiling of commands is enabled. Otherwise profiling of commands is disabled. See  <citerefentry><refentrytitle>clGetEventProfilingInfo</refentrytitle></citerefentry> for more information.</entry>
+		</row>
+	</tbody>	
+		
+	</tgroup></informaltable>	
+            </listitem>
+        </varlistentry>
+<!-- ================================ END PARAMETER TABLE  -->			
+		
+		
+		<varlistentry>
+            <term><varname>errcode_ret</varname></term>
+            <listitem>
+                <para>
+                    Returns an appropriate error code. If <varname>errcode_ret</varname> is <constant>NULL</constant>, no error code is returned.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+        <para>The OpenCL functions that are submitted to a command-queue are enqueued in the order the
+calls are made but can be configured to execute in-order or out-of-order. The <varname>properties</varname>
+argument in <function>clCreateCommandQueue</function> can be used to specify the execution order.</para>
+		<para>
+		If the CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE property of a command-queue is not set, the commands enqueued to a command-queue execute in order. For example, if an application calls <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> to execute kernel A followed by a <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> to execute kernel B, the application can assume that kernel A finishes first and then kernel B is executed. If the memory objects output by kernel A are inputs to kernel B then kernel B will see the correct data in memory objects produced by execution of kernel A. If the CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE property of a commandqueue is set, then there is no guarantee that kernel A will finish before kernel B starts execution.
+		</para>
+		<para>
+		Applications can configure the commands enqueued to a command-queue to execute out-of-order by setting the CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE property of the command-queue. This can be specified when the command-queue is created or can be changed dynamically using <function>clCreateCommandQueue</function>. In out-of-order execution mode there is no guarantee that the enqueued commands will finish execution in the order they were queued. As there is no guarantee that kernels will be executed in order, i.e. based on when the <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> calls are made within a command-queue, it is therefore possible that an earlier <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> call to execute kernel A identified by event A may execute and/or finish later than a <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> call to execute kernel B which was called by the application at a later point in time. To guarantee a specific order of execution of kernels, a wait on a particular event (in this case event A) can be used. The wait for event A can be specified in the event_wait_list argument to clEnqueueNDRangeKernel for kernel B.
+		</para>
+		<para>
+		In addition, a wait for events or a barrier command can be enqueued to the command-queue. The wait for events command ensures that previously enqueued commands identified by the list of events to wait for have finished before the next batch of commands is executed. The barrier command ensures that all previously enqueued commands in a command-queue have finished execution before the next batch of commands is executed.
+		</para>
+		<para>
+		Similarly, commands to read, write, copy or map memory objects that are enqueued after
+<citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry> or <citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry> commands are not
+guaranteed to wait for kernels scheduled for execution to have completed (if the
+CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE property is set). To ensure correct
+ordering of commands, the event object returned by  <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,
+clEnqueueTask or <citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry> can be used to enqueue a wait for event or a barrier command can be enqueued that must complete before reads or writes to the memory object(s) occur.
+		</para>
+
+    </refsect1>			
+
+	
+<!-- ================================ ERRORS  -->
+    <refsect1 id="errors"><title>Errors</title>
+	<para><function>clCreateCommandQueue</function> returns a valid non-zero command-queue and <varname>errcode_ret</varname> is set to <errorname>CL_SUCCESS</errorname> if the command-queue is created successfully. Otherwise, it returns a NULL value with one of the following error values returned in <varname>errcode_ret</varname>:</para>
+<itemizedlist mark="disc">
+		<listitem>
+            <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not a valid context.
+		</listitem>
+		<listitem>
+			<errorname>CL_INVALID_DEVICE</errorname> if <varname>device</varname> is not a valid device or is not associated with <varname>context</varname>.
+		</listitem>
+		<listitem>
+			<errorname>CL_INVALID_VALUE</errorname> if values specified in <varname>properties</varname> are not valid.
+		</listitem>
+		<listitem>
+			<errorname>CL_INVALID_QUEUE_PROPERTIES</errorname> if values specified in <varname>properties</varname> are valid but are not supported by the device.
+		</listitem>
+		<listitem>
+			<errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by the OpenCL implementation on the host.
+		</listitem>
+		</itemizedlist>
+    </refsect1>
+	
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->		
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->		
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clCreateCommandQueue">OpenCL Specification</olink>
+        </para>
+    </refsect1>  	
+
+<!-- ================================ ALSO SEE  -->	
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+<citerefentry><refentrytitle>clGetCommandQueueInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clReleaseCommandQueue</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clRetainCommandQueue</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clSetCommandQueueProperty</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>   
+        </para>
+    </refsect1>
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+			Copyright &#169; 
+    </refsect3>
+
+</refentry>
+

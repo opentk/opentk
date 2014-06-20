@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Reserved Data Types</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Reserved Data Types</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="ReservedDataTypes">
+        <refname>Reserved Data Types</refname>
+
+        <refpurpose>
+            Built-in reserved Data Types.
+        </refpurpose>
+    </refnamediv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            The data type names described in the table below are reserved and cannot be used
+            by applications as type names. The vector data type names defined in
+            <citerefentry href="vectorDataTypes"><refentrytitle>Vector Data Types</refentrytitle></citerefentry>,
+            but where <varname>n</varname> is any value other than 2, 3, 4, 8 and 16, 
+            are also reserved.
+        </para>
+
+        <para>
+          <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Type</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry> <type>bool<replaceable>n</replaceable></type> </entry>
+                        <entry> A boolean vector.</entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>half<replaceable>n</replaceable></type> </entry>
+                        <entry> A 16-bit float vector.  </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>quad</type>, <type>quad<replaceable>n</replaceable></type> </entry>
+                        <entry> A 128-bit floating-point number and vectors.</entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<literallayout><type>complex half</type>,
+<type>complex half<replaceable>n</replaceable></type>,
+<type>imaginary half</type>,
+<type>imaginary half<replaceable>n</replaceable></type></literallayout>
+                        </entry>
+                        <entry> Complex and imaginary 16-bit floating-point scalar and vector.</entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<literallayout><type>complex float</type>,
+<type>complex float<replaceable>n</replaceable></type>,
+<type>imaginary float</type>,
+<type>imaginary float<replaceable>n</replaceable></type></literallayout>
+                        </entry>
+                        <entry> Complex and imaginary 32-bit floating-point scalar and vector.</entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<literallayout><type>complex double</type>,
+<type>complex double<replaceable>n</replaceable></type>,
+<type>imaginary double</type>,
+<type>imaginary double<replaceable>n</replaceable></type></literallayout>
+                        </entry>
+                        <entry> Complex and imaginary 64-bit floating-point scalar and vector.</entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<literallayout><type>complex quad</type>,
+<type>complex quad<replaceable>n</replaceable></type>,
+<type>imaginary quad</type>,
+<type>imaginary quad<replaceable>n</replaceable></type></literallayout>
+                        </entry>
+                        <entry> Complex and imaginary 128-bit floating-point scalar and vector.</entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<type>float<replaceable>n</replaceable></type>x<emphasis>m</emphasis>
+                        </entry>
+                        <entry>
+                            An <emphasis>n</emphasis> x <emphasis>m</emphasis> matrix of single precision
+                            floating-point values stored in column-major order.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry> <type>double<replaceable>n</replaceable></type>x<emphasis>m</emphasis> </entry>
+                        <entry>
+                            An <emphasis>n</emphasis> x <emphasis>m</emphasis> matrix of double precision
+                            floating-point values stored in column-major order.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<literallayout><type>long double</type>,
+<type>long double<replaceable>n</replaceable></type></literallayout>
+                        </entry>
+                        <entry>
+                            A floating-point scalar and vector type with at
+                            long doublen least as much precision and range as a double
+                            and no more precision and range than a quad.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<type>long long</type>,
+<type>long long<replaceable>n</replaceable></type>
+                        </entry>
+
+                        <entry> A 128-bit signed integer scalar and vector.</entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<type>unsigned long long</type>,
+<type>ulong long</type>,
+<type>ulong long<replaceable>n</replaceable></type>
+                        </entry>
+                        <entry> A 128-bit unsigned integer scalar and vector.</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+     </para>
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="reservedDataTypes">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="macroLimits"><refentrytitle>Macros and Limits</refentrytitle></citerefentry>,
+            <citerefentry href="scalarDataTypes"><refentrytitle>Scalar Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="vectorDataTypes"><refentrytitle>Vector Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="otherDataTypes"><refentrytitle>Other Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="abstractDataTypes"><refentrytitle>Abstract Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="enums"><refentrytitle>Enumerated Data Types</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Dec-2013, rev. 19 -->
+</refentry>
+

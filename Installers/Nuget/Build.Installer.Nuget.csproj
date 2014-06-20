@@ -18,7 +18,7 @@
     <OutputPath>.\obj\</OutputPath>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Exe</OutputType>
     <AssemblyName>Build.Installer.Nuget</AssemblyName>
@@ -58,10 +58,10 @@
       <Output TaskParameter="Lines" ItemName="Version" />
     </ReadLinesFromFile>
     <!-- Execute nuget script -->
-    <Exec Command="nuget.exe	 pack OpenTK.nuspec -Version @(Version)" Condition="$(OS) == 'Windows_NT'" />
-    <Exec Command="nuget.exe   pack OpenTK.GLControl.nuspec -Version @(Version)" Condition="$(OS) == 'Windows_NT'" />
-    <Exec Command="mono nuget.exe pack OpenTK.nuspec  -Version @(Version)" Condition="$(OS) != 'Windows_NT'" />
-    <Exec Command="mono nuget.exe pack OpenTK.GLControl.nuspec  -Version @(Version)" Condition="$(OS) != 'Windows_NT'" />
+    <Exec Command="$(ProjectPath)../../Dependencies/managed/nuget.exe pack OpenTK.nuspec -Version @(Version)" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="$(ProjectPath)../../Dependencies/managed/nuget.exe pack OpenTK.GLControl.nuspec -Version @(Version)" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="mono $(ProjectPath)../../Dependencies/managed/nuget.exe pack OpenTK.nuspec  -Version @(Version)" Condition="$(OS) != 'Windows_NT'" />
+    <Exec Command="mono $(ProjectPath)../../Dependencies/managed/nuget.exe pack OpenTK.GLControl.nuspec  -Version @(Version)" Condition="$(OS) != 'Windows_NT'" />
     <!-- Copy the nuget archive to the root directory and add a date stamp -->
     <CreateItem Include="OpenTK*.nupkg">
       <Output TaskParameter="Include" ItemName="NugetPackage" />
@@ -81,9 +81,6 @@
   <ItemGroup>
     <None Include="OpenTK.nuspec" />
     <None Include="OpenTK.GLControl.nuspec" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="nuget.exe" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

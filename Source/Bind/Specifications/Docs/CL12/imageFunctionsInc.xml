@@ -1,0 +1,33 @@
+  <para>
+    <!-- core spec p. 288, section 6.12.14 --> The built-in functions defined in this section
+    can only be used with image memory objects.  An image memory object can be accessed by
+    specific function calls that read from and/or write to specific locations in the image.
+  </para>
+
+<!-- Note: use <function> instead of <citerefentry> for the read and write functions in the text below. -->
+
+  <para>
+    Image memory objects that are being read by a kernel should be declared with the <citerefentry
+    href="accessQualifiers"><refentrytitle>__read_only</refentrytitle></citerefentry>
+    qualifier. <function>write_image</function> calls to image memory objects declared with the
+    <citerefentry href="accessQualifiers"><refentrytitle>__read_only</refentrytitle></citerefentry>
+    qualifier will generate a compilation error. Image memory objects that
+    are being written to by a kernel should be declared with the <citerefentry
+    href="accessQualifiers"><refentrytitle>__write_only</refentrytitle></citerefentry> qualifier.
+    <function>read_image</function> calls to image memory objects declared with the <citerefentry
+    href="accessQualifiers"><refentrytitle>__write_only</refentrytitle></citerefentry>
+    qualifier will generate a compilation error. <function>read_image</function> and
+    <function>write_image</function> calls to the same image memory object in a kernel are
+    not supported.
+  </para>
+
+  <para>
+    The <function>read_image</function> calls returns a four component floating-point, integer or
+    unsigned integer color value. The color values returned by <function>read_image</function>
+    are identified as <code>x, y, z, w</code> where <code>x</code> refers to the red component,
+    <code>y</code> refers to the green component, <code>z</code> refers to the blue component
+    and <code>w</code> refers to the alpha component.
+  </para>
+
+<!-- 16-Oct-2011 -->
+

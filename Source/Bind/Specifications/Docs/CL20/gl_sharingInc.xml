@@ -1,0 +1,52 @@
+
+        <para>
+          <!-- ext. spec 9.5.1 Overview --> The OpenCL specification in section 9.7 defines how to
+          share data with texture and buffer objects in a parallel OpenGL implementation,
+          but does not define how the association between an OpenCL context and an OpenGL
+          context or share group is established. This extension defines optional attributes
+          to OpenCL context creation routines which associate a GL context or share group
+          object with a newly created OpenCL context. If this extension is supported
+          by an implementation, the string "cl_khr_gl_sharing" will be present in the
+          <constant>CL_DEVICE_EXTENSIONS</constant>
+          string described in the table of allowed values for <varname>param_name</varname>
+          for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+          or in the <constant>CL_PLATFORM_EXTENSIONS</constant>
+          string described in the table of allowed values for <varname>param_name</varname>
+          for <citerefentry><refentrytitle>clGetPlatformInfo</refentrytitle></citerefentry>.
+        </para>
+
+        <para>
+          <!-- ext. spec 9.6 Sharing Memory Objects with OpenGL --> 
+          This section discusses OpenCL functions that allow applications
+          to use OpenGL buffer, texture, and renderbuffer objects as OpenCL memory objects. This
+          allows efficient sharing of data between OpenCL and OpenGL. The OpenCL API may be used
+          to execute kernels that read and/or write memory objects that are also OpenGL objects.
+        </para>
+
+        <para>
+          An OpenCL image object may be created from an OpenGL texture or
+          renderbuffer object. An OpenCL buffer object may be created from an OpenGL buffer object.
+        </para>
+
+        <para>
+          OpenCL memory objects may be created from OpenGL objects
+          if and only if the OpenCL context has been created from an OpenGL share group
+          object or context. OpenGL share groups and contexts are created using platform
+          specific APIs such as EGL, CGL, WGL, and GLX. On MacOS X, an OpenCL context may
+          be created from an OpenGL share group object using the OpenCL platform extension
+          cl_apple_gl_sharing. On other platforms including Microsoft Windows, Linux/Unix and
+          others, an OpenCL context may be created from an OpenGL context using the Khronos
+          platform extension <function>cl_khr_gl_sharing</function>. Refer to the platform
+          documentation for your OpenCL implementation, or visit the Khronos Registry at
+          http://www.khronos.org/registry/cl/ for more information.
+        </para>
+
+        <para>
+          Any supported OpenGL object defined within the GL share
+          group object, or the share group associated with the GL context from which the CL
+          context is created, may be shared, with the exception of the default OpenGL objects
+          (i.e. objects named zero), which may not be shared.
+        </para>
+
+<!-- 21-Dec-2013, rev. 19 -->
+

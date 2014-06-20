@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>atomic_flag</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>atomic_flag</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="atomic_flag">
+        <refname>atomic_flag</refname>
+
+        <refpurpose>
+            The atomic_flag type provides the classic test-and-set functionality.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+atomic_flag
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            The <function>atomic_flag</function> type provides the 
+            classic test-and-set functionality. It has two states, set 
+            (value is non-zero) and clear (value is 0). Operations 
+            on an object of type <function>atomic_flag</function> shall 
+            be lock free.
+        </para>
+
+        <para>
+            The macro <constant>ATOMIC_FLAG_INIT</constant> may be 
+            used to initialize an <function>atomic_flag</function> to the clear 
+            state. An <function>atomic_flag</function> that is not 
+            explicitly initialized with <constant>ATOMIC_FLAG_INIT</constant> is 
+            initially in an indeterminate state.
+        </para>
+
+        <para>
+            This macro can only be used for atomic objects that are 
+            declared in program scope in the global 
+            address space with the <function>atomic_flag</function> type.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ NOTES 
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+        </para>
+
+    </refsect1>
+-->
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+global atomic_flag guard = ATOMIC_FLAG_INIT;
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="atomic_flag">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+<!-- Enter comma-delimited list of all other pages in the system to link to, using
+     <citerefentry /><refentrytitle /> to make it a link. For any case where the text of the link needs to differ
+     from the filename of the html file this links to, use the "href" attribute in <citerefentry />. For example:
+     <citerefentry href="thatPage"><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry> -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="atomicFunctions"><refentrytitle>Atomic Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 16-Dec-2013, rev. 19 -->
+</refentry>
+

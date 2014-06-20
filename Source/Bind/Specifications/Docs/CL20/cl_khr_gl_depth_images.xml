@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_gl_depth_images</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_gl_depth_images</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_gl_depth_images">
+        <refname>cl_khr_gl_depth_images</refname>
+
+        <refpurpose>
+            Extends CL/GL sharing to allow a CL image to be created from a GL depth or depth-stencil texture.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_gl_depth_images : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            The <function>cl_khr_gl_depth_images</function> extension extends 
+            CL / GL sharing by allowing a CL depth image to be created from a GL 
+            depth or depth-stencil texture. Depth images with an image 
+            channel order of <constant>CL_DEPTH_STENCIL</constant> can only be created using the
+            <citerefentry><refentrytitle>clCreateFromGLTexture</refentrytitle></citerefentry> API.
+        </para>
+
+        <para>
+            For the image format given by channel order of 
+            <constant>CL_DEPTH_STENCIL</constant> and channel data type of 
+            <constant>CL_UNORM_INT24</constant>, the depth is stored as 
+            an unsigned normalized 24-bit value. 
+        </para>
+
+        <para>
+            For the image format given by channel order of 
+            <constant>CL DEPTH_STENCIL</constant> and channel data type of
+            <constant>CL_FLOAT</constant>, each pixel is two 
+            32-bit values. The depth is stored as a single precision floating
+            point value followed by the stencil which is 
+            stored as a 8-bit integer value.
+        </para>
+
+        <para>
+            The stencil value cannot be read or written 
+            using the read imagef and write imagef built-in
+            functions in an OpenCL kernel. 
+        </para>
+
+        <para>
+            Depth image objects with an image channel order = 
+            <constant>CL_DEPTH_STENCIL</constant> cannot be used as 
+            arguments to 
+            <citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry> and 
+            <citerefentry><refentrytitle>clEnqueueFillImage</refentrytitle></citerefentry> 
+            and will return a <errorname>CL_INVALID_OPERATION</errorname> error.
+        </para>
+
+        <para>
+            <!-- spec rev. 19 refers to section 9.7.3.1, but that section does not exist in the spec -->
+            The following new image formats are added to table 9.4 in section 9.7.3.1 of the OpenCL 2.0
+            extension specification. If a GL texture object with an internal format from table 9.4 is 
+            successfully created by OpenGL, then there is guaranteed to be a mapping to one of the 
+            corresponding CL image format(s) in that table.
+        </para>
+
+        <!-- table in extension spec, section 9.11.2 -->
+        <informaltable frame="all">
+        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+            <colspec colname="col1" colnum="1" />
+            <colspec colname="col2" colnum="2" />
+            <thead>
+                <row>
+                <entry>GL internal format</entry>
+                <entry>CL image format
+(channel order, channel data type)</entry>
+                </row>
+            </thead>
+
+            <tbody>
+                <row>
+                    <entry><constant>GL_DEPTH_COMPONENT32F</constant></entry>
+                    <entry><constant>CL_DEPTH, CL_FLOAT</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_DEPTH_COMPONENT16</constant></entry>
+                    <entry><constant>CL_DEPTH, CL_UNORM_INT16</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_DEPTH24_STENCIL8</constant></entry>
+                    <entry><constant>CL_DEPTH_STENCIL, CL_UNORM_INT24</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_DEPTH32F_STENCIL8</constant></entry>
+                    <entry><constant>CL_DEPTH_STENCIL, CL_FLOAT</constant></entry>
+                </row>
+            </tbody>
+        </tgroup>
+        </informaltable>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_gl_depth_images">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+<!--
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry>
+            </citerefentry>
+        </para>
+    </refsect1>
+-->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 25-Dec-2013, rev. 19 -->
+</refentry>
+

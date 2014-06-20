@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+	<refentryinfo>
+		<keywordset>
+			<keyword>Errors</keyword>
+		</keywordset>
+	</refentryinfo>
+    <refmeta>
+        <refentrytitle>Errors</refentrytitle>
+		<refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+  	<refnamediv id="Errors">
+		<refname>Errors</refname> 
+		<refpurpose>Following are the errors encountered in OpenCL. For descriptions of errors as they pertain to specific functions, refer to the reference pages for those functions.</refpurpose>
+    </refnamediv> 
+    <refsect1 id="synopsis"><title></title>
+	<informaltable frame="void"><caption></caption><tgroup cols="2" align="left" colsep="0" rowsep="0">
+	<colspec colname="col1" colnum="1" />
+	<colspec colname="col2" colnum="2" />	
+	<thead>
+		<row>
+		<entry>Error</entry>
+		<entry>Description</entry>
+		</row>
+	</thead>
+	<tbody>
+		<row>
+			<entry><constant>CL_BUILD_PROGRAM_FAILURE</constant></entry>
+			<entry>
+				<para>
+			Returned by <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry> if there is a failure to build the program executable. This error will be returned if <function>clBuildProgram</function> does not return until the build has completed.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_COMPILER_NOT_AVAILABLE</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry> if the parameter <varname>program</varname> is created with <function>clCreateProgramWithSource</function> and a compiler is not available. For example <constant>CL_DEVICE_COMPILER_AVAILABLE</constant> is set to <constant>CL_FALSE</constant>.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_DEVICE_NOT_AVAILABLE</constant></entry>
+			<entry>
+				<para>
+Returned by <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry> and  <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry> if the specified device is not currently available.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_DEVICE_NOT_FOUND</constant></entry>
+			<entry>
+				<para>
+					Returned by <citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry> and  
+				 <citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry> if no OpenCL devices that match the specified devices were found.
+				 </para>
+			</entry>
+		</row>		
+		<row>
+			<entry><constant>CL_IMAGE_FORMAT_MISMATCH</constant></entry>
+			<entry>
+				<para>
+				Returned by <citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry> if the specified source and destination images are not valid image objects.
+				</para>
+			</entry>
+		</row>		
+		<row>
+			<entry><constant>CL_IMAGE_FORMAT_NOT_SUPPORTED</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry> and  <citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry> if the specified image format is not supported.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_ARG_INDEX</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry> if an invalid argument index is specified.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_ARG_SIZE</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry> if argument size specified (<varname>arg_size</varname>) does not match the size of the data type for an argument that is not a memory object, or if the argument is a memory object and <varname>arg_size</varname> != <constant>sizeof(cl_mem)</constant> or if <varname>arg_size</varname> is zero and the argument is declared with the <constant>__local</constant> qualifier or if the argument is a sampler and <varname>arg_size</varname> != <constant>sizeof(cl_sampler)</constant>.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_ARG_VALUE</constant></entry>
+			<entry>
+				<para>
+				Returned by <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry> if the argument value specified is NULL for an argument that is not declared with the <constant>__local</constant> qualifier or vice-versa.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_BINARY</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry> and  <citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry> if the program binary is not a valid binary for the specified device.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_BUFFER_SIZE</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry> if the value of the parameter <varname>size</varname> is 0 or is greater than CL_DEVICE_MAX_MEM_ALLOC_SIZE for all devices specified in the parameter <varname>context</varname>.
+				</para>
+			</entry>
+		</row>	
+		
+		<row>
+			<entry><constant>CL_INVALID_BUILD_OPTIONS</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry> if the specified build options are invalid.
+				</para>
+			</entry>
+		</row>
+		<row>
+			<entry><constant>CL_INVALID_COMMAND_QUEUE</constant></entry>
+			<entry>
+			<para>Returned by the functions listed below if the specified command-queue is not a valid command-queue. The exact condition that generates this error depends on the calling function. Refer to the function for more information.
+				</para><para>
+					Returned by the following functions: <citerefentry><refentrytitle>clRetainCommandQueue</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clReleaseCommandQueue</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clGetCommandQueueInfo</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clSetCommandQueueProperty</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>,   <citerefentry><refentrytitle>clEnqueueUnmapMemObject</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMarker</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueWaitForEvents</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueBarrier</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clFlush</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clFinish</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>, and  <citerefentry><refentrytitle>clEnqueueReleaseGLObjects</refentrytitle></citerefentry> 
+				 </para>
+			</entry>
+		</row>
+		
+		
+		<row>
+			<entry><constant>CL_INVALID_CONTEXT</constant></entry>
+			<entry><para>Returned by the functions listed below if the specified context is not a valid OpenCL context, or the context associated with certain parameters are not the same. The exact condition that generates this error depends on the calling function. Refer to the function for more information.
+			</para>
+			<para>
+				Returned by the following functions: <citerefentry><refentrytitle>clRetainContext</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clReleaseContext</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clGetContextInfo</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clCreateCommandQueue</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetSupportedImageFormats</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueUnmapMemObject</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clCreateSampler</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueWaitForEvents</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateFromGLBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clCreateFromGLTexture2D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clCreateFromGLTexture3D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clCreateFromGLRenderbuffer</refentrytitle></citerefentry>,		 <citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>, and  <citerefentry><refentrytitle>clEnqueueReleaseGLObjects</refentrytitle></citerefentry>	
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_DEVICE</constant></entry>
+			<entry>
+				<para>Returned by the functions listed below if the device or devices specified are not valid. The exact condition that generates this error depends on the calling function. Refer to the function for more information.	</para>	
+			
+				<para>Returned by the following functions: 
+<citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry>,	
+<citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>,	
+<citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>,	
+<citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>,	
+<citerefentry><refentrytitle>clCreateCommandQueue</refentrytitle></citerefentry>,	
+<citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>,	
+<citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>,	
+<citerefentry><refentrytitle>clGetProgramBuildInfo</refentrytitle></citerefentry>, and 
+<citerefentry><refentrytitle>clGetKernelWorkGroupInfo</refentrytitle></citerefentry>	
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_DEVICE_TYPE</constant></entry>
+			<entry><para>Returned by <citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry> and
+<citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry> if device type specified is not valid.
+				</para>
+			</entry>
+		</row>		
+		<row>
+			<entry><constant>CL_INVALID_EVENT</constant></entry>
+			<entry>
+				<para>Returned by the functions listed below if the event objects specified are not valid. The exact condition that generates this error depends on the calling function. Refer to the function for more information.
+				</para>
+				<para>
+					Returned by the following functions: <citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clRetainEvent</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clReleaseEvent</refentrytitle></citerefentry>, 		 <citerefentry><refentrytitle>clEnqueueWaitForEvents</refentrytitle></citerefentry>, and 
+<citerefentry><refentrytitle>clGetEventProfilingInfo</refentrytitle></citerefentry>
+				</para>
+			</entry>
+		</row>		
+		<row>
+			<entry><constant>CL_INVALID_EVENT_WAIT_LIST</constant></entry>
+			<entry>
+				<para>Returned by the functions listed below if <varname>event_wait_list</varname> is <constant>NULL</constant> and <varname>num_events_in_wait_list</varname> &gt; 0, or <varname>event_wait_list_list</varname> is not NULL and <varname>num_events_in_wait_list</varname> is 0, or specified  event objects are not valid events. The exact condition that generates this error depends on the calling function. Refer to the function for more information. 
+				</para>
+				<para>
+					Returned by the following functions: <citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, 		 <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>, 	
+<citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>,		 
+<citerefentry><refentrytitle>clEnqueueUnmapMemObject</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,		
+<citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>, 	
+<citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>,		 
+<citerefentry><refentrytitle>clEnqueueUnmapMemObject</refentrytitle></citerefentry>,  <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,		
+<citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>, and 
+<citerefentry><refentrytitle>clEnqueueReleaseGLObjects</refentrytitle></citerefentry>
+				</para>
+			</entry>
+		</row>
+		<row>
+			<entry><constant>CL_INVALID_GL_OBJECT</constant></entry>
+			<entry>
+<para>Returned by <citerefentry><refentrytitle>clCreateFromGLBuffer</refentrytitle></citerefentry> if <varname>bufobj</varname> is not a GL buffer object or is a GL buffer object but does not have an existing data store.</para>
+
+<para>Returned by <citerefentry><refentrytitle>clCreateFromGLRenderbuffer</refentrytitle></citerefentry> if <varname>renderbuffer</varname> is not a GL renderbuffer object or if the width
+or height of <varname>renderbuffer</varname> is zero.</para>
+
+<para>Returned by <citerefentry><refentrytitle>clCreateFromGLTexture2D</refentrytitle></citerefentry> and <citerefentry><refentrytitle>clCreateFromGLTexture3D</refentrytitle></citerefentry> if <varname>texture</varname> is not a GL texture object whose type matches <varname>texture_target</varname>, if the specified miplevel of <varname>texture</varname> is not defined, or if the width, height or depth of the specified miplevel is zero.</para>
+
+<para>Returned by <citerefentry><refentrytitle>clGetGLObjectInfo</refentrytitle></citerefentry> and <citerefentry><refentrytitle>clGetGLTextureInfo</refentrytitle></citerefentry> if there is no GL object or texture associated with <varname>memobj</varname>.</para>
+
+<para>Returned by <citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry> and <citerefentry><refentrytitle>clEnqueueReleaseGLObjects</refentrytitle></citerefentry> if memory objects in <varname>mem_objects</varname> have not been created from a GL object(s). The exact condition that generates this error depends on the calling function. </para>
+
+			</entry>
+		</row>
+		<row>
+			<entry><constant>CL_INVALID_GLOBAL_OFFSET</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> if <varname>global_work_offset</varname> is not NULL.
+				</para>
+			</entry>
+		</row>		
+		<row>
+			<entry><constant>CL_INVALID_HOST_PTR</constant></entry>
+			<entry><para>Returned by the functions listed below if <varname>host_ptr</varname> is NULL and <constant>CL_MEM_USE_HOST_PTR</constant> or <constant>CL_MEM_COPY_HOST_PTR</constant> are set in <varname>flags</varname> or if <varname> host_ptr</varname> is not <constant>NULL</constant> but <constant>CL_MEM_COPY_HOST_PTR</constant> or <constant>CL_MEM_USE_HOST_PTR</constant> are not set in flags. The exact condition that generates this error depends on the calling function. Refer to the function for more information. </para>
+				<para>Returned by the functions  
+<citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry>, and 
+<citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry>.
+				</para>
+			
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry> and   
+<citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry> if the image format specified is not valid or is NULL.</para>
+				<para>Returned by<citerefentry><refentrytitle>clCreateFromGLTexture2D</refentrytitle></citerefentry> and <citerefentry><refentrytitle>clCreateFromGLTexture3D</refentrytitle></citerefentry> 
+				</para>
+				<para>Returned by <citerefentry><refentrytitle>clCreateFromGLRenderbuffer</refentrytitle></citerefentry> if the OpenGL renderbuffer internal format does not map to a supported OpenCL image format. 
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_IMAGE_SIZE</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry> if the specified image width or height are 0 or if they exceed values specified in <constant>CL_DEVICE_IMAGE2D_MAX_WIDTH</constant> or <constant>CL_DEVICE_IMAGE2D_MAX_HEIGHT</constant> respectively for all devices in context, or if the specified image row pitch does not follow rules described for <function>clCreateImage2D</function>.
+				</para>
+				<para>Returned by <citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry> if the specified image width or height are 0 or if the image depth is &lt;= 1, or if they exceed values specified in CL_DEVICE_IMAGE3D_MAX_WIDTH, <constant>CL_DEVICE_IMAGE3D_MAX_HEIGHT</constant> or <constant>CL_DEVICE_IMAGE3D_MAX_DEPTH</constant> respectively for all devices in context, or if the image row pitch and image slice pitch do not follow rules described for <function>clCreateImage3D</function>.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_KERNEL_NAME</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry> if the specified kernel name is not found in <varname>program</varname>.
+				</para>			
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_KERNEL</constant></entry>
+			<entry><para>Returned by the functions listed below if the specified kernel is not a valid kernel object. The exact condition that generates this error depends on the calling function. Refer to the function for more information.</para>
+				<para>Returned by the following functions:  
+<citerefentry><refentrytitle>clReleaseKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clRetainKernel</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetKernelInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetKernelWorkGroupInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>, and 
+<citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>  
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_KERNEL_ARGS</constant></entry>
+			<entry>
+				<para>Returned by 			<citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> and 
+<citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry> if the kernel argument values have not been specified.		</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_KERNEL_DEFINITION</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry> if the function definition for <constant>__kernel</constant> function given by <varname>kernel_name</varname> such as the number of arguments, the argument types are not the same for all devices for which the <varname>program</varname> executable has been built.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_MEM_OBJECT</constant></entry>
+			<entry>
+				<para>Returned by the functions listed below if a parameter is not a valid memory, image, or buffer object. The exact condition that generates this error depends on the calling function. Refer to the function for more information.</para>
+				<para>Returned by the following functions: 
+<citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clRetainMemObject</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clReleaseMemObject</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueUnmapMemObject</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetMemObjectInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetImageInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetGLObjectInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetGLTextureInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>, and
+<citerefentry><refentrytitle>clEnqueueReleaseGLObjects</refentrytitle></citerefentry>
+				</para>
+			</entry>
+		</row>
+		<row>
+			<entry><constant>CL_INVALID_OPERATION</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry>, and 
+<citerefentry><refentrytitle>clCreateSampler</refentrytitle></citerefentry> if there are no devices in <varname>context</varname> that support images. 
+				</para>
+				<para>Returned by <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry> if the build of a program executable for any of the devices specified by a previous call to <function>clBuildProgram</function> for <varname>program</varname> has not completed, or if there are kernel objects attached to <varname>program</varname>. 
+				</para>
+				<para>Returned by <citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry> if the specified device cannot execute the native kernel.
+				</para>
+				<para>Returned by <citerefentry><refentrytitle>clCreateFromGLTexture2D</refentrytitle></citerefentry> if the miplevel is less than 0.
+				</para>
+				<para>Returned by <citerefentry><refentrytitle>clCreateFromGLTexture3D</refentrytitle></citerefentry> if 3D images are not supported by the OpenCL embedded profile. 
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_PLATFORM</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clGetPlatformInfo</refentrytitle></citerefentry> and  
+<citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry> if the specified platform is not a valid platform.
+				</para>
+				<para>Returned by <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry> and 
+<citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry> if <varname>properties</varname> is NULL and no platform could be selected, or if platform value specified in <varname>properties</varname> is not a valid platform.</para>
+			</entry>
+		</row>		
+		<row>
+			<entry><constant>CL_INVALID_PROGRAM</constant></entry>
+			<entry><para>Returned by the functions listed below if the specified program is not a valid program object. The exact condition that generates this error depends on the calling function. Refer to the function for more information.	</para>
+				<para>Returned by the following functions: 
+<citerefentry><refentrytitle>clRetainProgram</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clReleaseProgram</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetProgramInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetProgramBuildInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry>, and 
+<citerefentry><refentrytitle>clCreateKernelsInProgram</refentrytitle></citerefentry>
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_PROGRAM_EXECUTABLE</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry> if there is no successfully built executable for <varname>program</varname>, and returned by
+<citerefentry><refentrytitle>clCreateKernelsInProgram</refentrytitle></citerefentry> if there is no device in <varname>program</varname>. 
+				</para>
+				<para>Returned by <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>  and <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry> if there is no successfully built program executable available for device associated with <varname>command_queue</varname>.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_QUEUE_PROPERTIES</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clCreateCommandQueue</refentrytitle></citerefentry> and <citerefentry><refentrytitle>clSetCommandQueueProperty</refentrytitle></citerefentry> if specified  properties are valid but are not supported by the device.
+				</para>
+			</entry>
+		</row>		
+		<row>
+			<entry><constant>CL_INVALID_SAMPLER</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clRetainSampler</refentrytitle></citerefentry>, <citerefentry><refentrytitle>clReleaseSampler</refentrytitle></citerefentry>, and
+<citerefentry><refentrytitle>clGetSamplerInfo</refentrytitle></citerefentry> if the specified sampler is not a valid sampler object. 
+				</para>
+				<para>Returned by <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry> for an argument declared to be of type sampler_t when the specified <varname>arg_value</varname> is not a valid sampler object. 
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_VALUE</constant></entry>
+			<entry><para>Returned by the functions listed below if a parameter is not an expected value. The exact condition that generates this error depends on the calling function. Refer to the function for more information.</para>
+				<para>Returned by the following functions: 
+<citerefentry><refentrytitle>clGetPlatformIDs</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetPlatformInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetDeviceIDs</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetContextInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateCommandQueue</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clGetCommandQueueInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clSetCommandQueueProperty</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetSupportedImageFormats</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueUnmapMemObject</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetMemObjectInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetImageInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateSampler</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetSamplerInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetProgramInfo</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clGetProgramBuildInfo</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateKernelsInProgram</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetKernelInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetKernelWorkGroupInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clWaitForEvents</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clEnqueueMarker</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clEnqueueWaitForEvents</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clGetEventProfilingInfo</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateFromGLBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateFromGLTexture2D</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateFromGLTexture3D</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateFromGLRenderbuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clGetGLTextureInfo</refentrytitle></citerefentry>, and 
+<citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>
+				</para>
+
+			</entry>
+		</row>
+				<row>
+			<entry><constant>CL_INVALID_WORK_DIMENSION</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> if <varname>work_dim</varname> is not a valid value.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_INVALID_WORK_GROUP_SIZE</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> and <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry> if <varname>local_work_size</varname> is specified and number of workitems specified by <varname>global_work_size</varname> is not evenly divisible by size of work-group given by <varname>local_work_size</varname> or does not match the work-group size specified for <varname>kernel</varname> using the <constant>__attribute__((reqd_work_group_size(X, Y, Z)))</constant> qualifier in program source.</para>
+			</entry>
+		</row>	
+		
+		<row>
+			<entry><constant>CL_INVALID_WORK_ITEM_SIZE</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry> if the number of work-items specified in any of local_work_size... [0]... local_work_size[work_dim - 1] is greater than the corresponding values specified by CL_DEVICE_MAX_WORK_ITEM_SIZES[0],... CL_DEVICE_MAX_WORK_ITEM_SIZES[work_dim -1].
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_MAP_FAILURE</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry> and 
+<citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry> if there is a failure to map the requested region into the host address space. This error cannot occur for buffer objects created with <function>CL_MEM_USE_HOST_PTR</function> or <function>CL_MEM_ALLOC_HOST_PTR</function>.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_MEM_OBJECT_ALLOCATION_FAILURE</constant></entry>
+			<entry>
+				<para>Returned by the functions listed below if there is a failure to allocate memory for data store associated with image or buffer objects specified as arguments to <varname>kernel</varname>. The exact condition that generates this error depends on the calling function. Refer to the function for more information. 
+			</para>
+				<para>Returned by the following functions: 
+<citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry>,  
+<citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>,
+<citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>,  
+<citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>, and 
+<citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>
+				</para>
+</entry>
+		</row>			
+		<row>
+			<entry><constant>CL_MEM_COPY_OVERLAP</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry> and  <citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry> if the source and destination images are the same image (or the source and destination buffers are the same buffer), and the source and destination regions overlap.
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_OUT_OF_HOST_MEMORY</constant></entry>
+			<entry>
+				<para>Returned by the functions listed below in the event of a failure to allocate resources required by the OpenCL implementation on the host. The exact condition that generates this error depends on the calling function. Refer to the function for more information. 
+				</para>
+				<para>Returned by the following functions: 
+<citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateContextFromType</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateCommandQueue</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateImage3D</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueUnmapMemObject</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateSampler</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateProgramWithBinary</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateKernelsInProgram</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueMarker</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueWaitForEvents</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueBarrier</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clFlush</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clFinish</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateFromGLBuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateFromGLTexture2D</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateFromGLTexture3D</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clCreateFromGLRenderbuffer</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry>, and  
+<citerefentry><refentrytitle>clEnqueueReleaseGLObjects</refentrytitle></citerefentry>
+				</para>
+			</entry>
+		</row>	
+		<row>
+			<entry><constant>CL_OUT_OF_RESOURCES</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>, 
+<citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>, and 
+<citerefentry><refentrytitle>clEnqueueNativeKernel</refentrytitle></citerefentry> in the event of a failure to queue the execution instance of <varname>kernel</varname> on the command-queue because of insufficient resources needed to execute the kernel.
+				</para>
+			</entry>
+		</row>			
+		<row>
+			<entry><constant>CL_PROFILING_INFO_NOT_AVAILABLE</constant></entry>
+			<entry>
+				<para>Returned by <citerefentry><refentrytitle>clGetEventProfilingInfo</refentrytitle></citerefentry> if the <constant>CL_QUEUE_PROFILING_ENABLE</constant> flag is not set for the command-queue and the profiling information is currently not available (because the command identified by <varname>event</varname> has not completed).
+				</para>
+			</entry>
+		</row>		
+		<row>
+			<entry><errorname>CL_SUCCESS</errorname></entry>
+			<entry><para>Indicates that the function executed successfully.</para>
+</entry>
+		</row>	
+	</tbody>	
+	</tgroup></informaltable>	
+    </refsect1>
+     
+
+    <refsect3 id="Copyright"><title></title>
+		Copyright &#169;  
+    </refsect3>
+</refentry>

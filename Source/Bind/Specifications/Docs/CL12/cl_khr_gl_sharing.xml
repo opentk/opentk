@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY gl_formatsInc SYSTEM "gl_formatsInc.xml">
+<!ENTITY gl_syncInc SYSTEM "gl_syncInc.xml">
+<!ENTITY gl_lifetimeInc SYSTEM "gl_lifetimeInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_gl_sharing</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_gl_sharing</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_gl_sharing">
+        <refname>cl_khr_gl_sharing</refname>
+
+        <refpurpose>
+Allow applications to use OpenGL buffer, texture and renderbuffer objects as OpenCL memory objects.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+cl_khr_gl_sharing
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="description"><title>Description</title>
+        <para>
+          <!-- core spec p. 46 --> This is a Kronos-approved extension
+          name. If this extension is supported, "cl_khr_gl_sharing" will
+          be returned for <constant>CL_DEVICE_EXTENSIONS</constant> using
+          <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>.
+        </para>
+
+        <para>
+          <!-- ext. spec p. 39 --> The OpenCL specification in section 9.7 defines how to
+          share data with texture and buffer objects in a parallel OpenGL implementation,
+          but does not define how the association between an OpenCL context and an OpenGL
+          context or share group is established. This extension defines optional attributes
+          to OpenCL context creation routines which associate a GL context or share group
+          object with a newly created OpenCL context. If this extension is supported by an
+          implementation, the string <function>cl_khr_gl_sharing</function> will be present in the
+          <constant>CL_PLATFORM_EXTENSIONS</constant> or <constant>CL_DEVICE_EXTENSIONS</constant>
+          string described in the table of allowed values for <varname>param_name</varname>
+          for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+        </para>
+
+        <para>
+          <!-- ext. spec p. 39 --> An OpenGL implementation supporting buffer objects and
+          sharing of texture and buffer object images with OpenCL is required by this extension.
+        </para>
+
+        <para>
+          <!-- ext. spec p. 48 --> This section discusses OpenCL functions that allow applications
+          to use OpenGL buffer, texture, and renderbuffer objects as OpenCL memory objects. This
+          allows efficient sharing of data between OpenCL and OpenGL. The OpenCL API may be used
+          to execute kernels that read and/or write memory objects that are also OpenGL objects.
+        </para>
+
+        <para>
+          <!-- ext. spec p. 48 --> An OpenCL image object may be created from an OpenGL texture or
+          renderbuffer object. An OpenCL buffer object may be created from an OpenGL buffer object.
+        </para>
+
+        <para>
+          <!-- ext. spec p. 48 --> OpenCL memory objects may be created from OpenGL objects
+          if and only if the OpenCL context has been created from an OpenGL share group
+          object or context. OpenGL share groups and contexts are created using platform
+          specific APIs such as EGL, CGL, WGL, and GLX. On MacOS X, an OpenCL context may
+          be created from an OpenGL share group object using the OpenCL platform extension
+          cl_apple_gl_sharing. On other platforms including Microsoft Windows, Linux/Unix and
+          others, an OpenCL context may be created from an OpenGL context using the Khronos
+          platform extension <function>cl_khr_gl_sharing</function>. Refer to the platform
+          documentation for your OpenCL implementation, or visit the Khronos Registry at
+          http://www.khronos.org/registry/cl/ for more information.
+        </para>
+
+        <para>
+          <!-- ext. spec p. 48 --> Any supported OpenGL object defined within the GL share
+          group object, or the share group associated with the GL context from which the CL
+          context is created, may be shared, with the exception of the default OpenGL objects
+          (i.e. objects named zero), which may not be shared.
+        </para>
+
+        <para>
+            &gl_formatsInc;
+            &gl_syncInc;
+            &gl_lifetimeInc;
+        </para>
+
+        <bridgehead>OpenCL Functions That Allow Sharing</bridgehead>
+
+        <para>
+            Click an item in the table for details about that function.
+        </para>
+    </refsect1>
+
+    <refsect1 id="springboard">
+    <title></title>
+      <informaltable frame="all">
+        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+          <colspec colnum="1" colwidth="25*" colname="col1" />
+          <colspec colnum="2" colwidth="25*" colname="col2" />
+
+          <tbody>
+            <row>
+              <entry><citerefentry><refentrytitle>clGetGLContextInfoKHR</refentrytitle></citerefentry></entry>
+              <entry>Query the device.</entry>
+            </row>
+
+            <row>
+              <entry><citerefentry><refentrytitle>clCreateFromGLBuffer</refentrytitle></citerefentry></entry>
+              <entry>Creates an OpenCL buffer object from an OpenGL buffer object.</entry>
+            </row>
+
+            <row>
+              <entry><citerefentry><refentrytitle>clCreateFromGLTexture</refentrytitle></citerefentry></entry>
+              <entry>Creates an OpenCL image object, image array object, or image buffer object from an OpenGL
+                     texture object, texture array object, texture buffer object, or a single face of an
+                     OpenGL cubemap texture object.</entry>
+            </row>
+
+            <row>
+              <entry><citerefentry><refentrytitle>clCreateFromGLRenderbuffer</refentrytitle></citerefentry></entry>
+              <entry>Creates an OpenCL 2D image object from an OpenGL renderbuffer object.</entry>
+            </row>
+
+            <row>
+              <entry><citerefentry><refentrytitle>clGetGLObjectInfo</refentrytitle></citerefentry></entry>
+              <entry>Query an OpenGL memory object used to create an OpenCL memory object.</entry>
+            </row>
+
+            <row>
+              <entry><citerefentry><refentrytitle>clGetGLTextureInfo</refentrytitle></citerefentry></entry>
+              <entry>Get additional information about the GL texture object associated with a memory object.</entry>
+            </row>
+
+            <row>
+              <entry><citerefentry><refentrytitle>clEnqueueAcquireGLObjects</refentrytitle></citerefentry></entry>
+              <entry>Acquire OpenCL memory objects that have been created from OpenGL objects.</entry>
+            </row>
+
+            <row>
+              <entry><citerefentry><refentrytitle>clEnqueueReleaseGLObjects</refentrytitle></citerefentry></entry>
+              <entry>Release OpenCL memory objects that have been created from OpenGL objects.</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_gl_sharing">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetGLContextInfoKHR</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 18-Oct-2011 -->
+</refentry>
+

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Work-Item Built-In Functions</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Work-Item Built-In Functions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>Work-Item Built-In Functions</refname>
+        <refpurpose>Click an item in the table below for details about that function.</refpurpose>
+    </refnamediv>
+
+  <refsect1 id="springboard"><title></title>
+    <informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="2*" colname="col1" />
+    <colspec colnum="2" colwidth="8*" colname="col2" />
+    <tbody>
+        <row>
+            <entry><citerefentry><refentrytitle>get_work_dim</refentrytitle></citerefentry></entry>
+            <entry>Number of dimensions in use</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>get_global_size</refentrytitle></citerefentry></entry>
+            <entry>Number of global work items</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>get_global_id</refentrytitle></citerefentry></entry>
+            <entry>Global work item ID value</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>get_local_size</refentrytitle></citerefentry></entry>
+            <entry>Number of local work items</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>get_local_id</refentrytitle></citerefentry></entry>
+            <entry>Local work item ID</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>get_num_groups</refentrytitle></citerefentry></entry>
+            <entry>Number of work groups</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>get_group_id</refentrytitle></citerefentry></entry>
+            <entry>Work group ID</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>get_global_offset</refentrytitle></citerefentry></entry>
+            <entry>Work offset</entry>
+        </row>
+    </tbody>
+
+    </tgroup></informaltable>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          Built-in work-item functions can be used to query the
+          number of dimensions, the global and local work size specified to
+          <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,
+          and the global and local identifier of each work-item when this
+          kernel is being executed on a device. The number of dimensions, the
+          global and local work size when executing a kernel using the function
+          <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry> is one.
+        </para>
+    </refsect1>
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+            <olink uri="workItemFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 13-Oct-2011 -->
+</refentry>

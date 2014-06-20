@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY clCreate_memflagsInc SYSTEM "clCreate_memflagsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>sub_group_commit_write_pipe</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            sub_group_commit_write_pipe
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="sub_group_commit_write_pipe">
+        <refname>
+            sub_group_commit_write_pipe
+        </refname>
+
+        <refpurpose>
+            Indicates that all writes to <varname>num_packets</varname>
+            associated with reservation <varname>reserve_id</varname> are 
+            completed.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link> <function>sub_group_commit_write_pipe</function>
+                </funcdef>
+
+                <paramdef>pipe <link xlink:href="abstractDataTypes.html">gentype</link><parameter>pipe</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">reserve_id_t</link><parameter>reserve_id</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+
+<!-- ================================ DESCRIPTION -->
+     <refsect1 id="description"><title>Notes</title>
+        <para>
+            Indicates that all writes to <varname>num_packets</varname>
+            associated with reservation <varname>reserve_id</varname> are 
+            completed.
+        </para>
+
+        <para>
+            This built-in functions must be encountered by all work-items in a 
+            sub-group executing the kernel with the same argument values; otherwise the behavior is 
+            undefined. We use the generic type name gentype to indicate the built-in OpenCL C scalar or 
+            vector integer or floating-point data types or any user defined type built from these scalar and 
+            vector data types can be used as the type for the arguments to the pipe functions listed in table 
+            6.29.
+        </para>
+
+        <para>
+            The half scalar and vector types can only be used if the 
+            <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> 
+            extension is supported. The double scalar 
+            and vector types can only be used if double precision is supported.
+        </para>
+
+        <para>
+            Reservations made by a sub-group are ordered in 
+            the pipe as they are ordered in the 
+            program. Reservations made by different 
+            sub-groups that belong to the same work-group can be 
+            ordered using sub-group synchronization. The 
+            order of sub-group based reservations that belong 
+            to different work-groups is implementation defined.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+<!--
+    <refsect1 id="errors"><title>Errors</title>
+    </refsect1>
+-->
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="sub_group_commit_write_pipe">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_subgroups</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>sub_group_commit_read_pipe</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Dec-2013, rev. 19 -->
+</refentry>
+

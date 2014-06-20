@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clSetKernelArgSVMPointer</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clSetKernelArgSVMPointer
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clSetKernelArgSVMPointer">
+        <refname>
+            clSetKernelArgSVMPointer
+        </refname>
+
+        <refpurpose>
+            Used to set a SVM pointer as the argument value for a specific argument of a kernel.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clSetKernelArgSVMPointer</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_kernel</link><parameter>kernel</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>arg_index</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">void</link><parameter>*arg_value</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+<!-- For each <varlistentry />, place the parameter name in <term /><varname />, then the definition in
+     <listitem /><para />. When refering to anything
+     that has a page in this system, use <citerefentry /><refentrytitle /> to make it a link.
+ -->
+
+    <refsect1 id="parameters" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <varname>kernel</varname>
+                </term>
+                <listitem>
+                    <para>
+                        A valid kernel object.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>arg_index</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                        The argument index. Arguments to the kernel are 
+                        referred by indices that go from 0 
+                        for the leftmost argument to <varname>n</varname> - 1, 
+                        where <varname>n</varname> is the total 
+                        number of arguments declared by a kernel.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>arg_value</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                        A pointer to the SVM pointer that should be used as the argument value for 
+                        argument specified by <varname>arg_index</varname>.
+                        The SVM pointer specified is the value used by all 
+                        API calls that enqueue <varname>kernel</varname>
+                        (<citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>) 
+                        until the argument value is changed by a call to 
+                        <function>clSetKernelArgSVMPointer</function> 
+                        for <varname>kernel</varname>.
+                        The SVM pointer can only be used for arguments that 
+                        are declared to be a pointer to global or constant 
+                        memory. The SVM pointer value must 
+                        be aligned according to the argument’s type. For 
+                        example, if the argument is declared to be 
+                        <code>global float4 *p</code>, the SVM pointer 
+                        value passed for <varname>p</varname> must 
+                        be at a minimum aligned to a 
+                        <type>float4</type>. The SVM pointer value 
+                        specified as the argument value can be the pointer returned by 
+                        <citerefentry><refentrytitle>clSVMAlloc</refentrytitle></citerefentry> 
+                        or can be a pointer + offset into the SVM region.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+<!-- Use <function /> to refer ONLY to the function that this page describes. All other functions should use
+     <citerefentry /><refentrytitle /> to make it a link. Use <varname /> for parameters. Use <constant /> for
+     constants (or anything to be set in monospace, non-bold type. -->
+
+     <refsect1 id="notes"><title>Notes</title>
+        <para>
+          <!-- section A.2 --> All OpenCL API calls are thread-safe except
+          <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry>
+          and <function>clSetKernelArgSVMPointer</function>. 
+          <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry>
+          and <function>clSetKernelArgSVMPointer</function> are safe
+          to call from any host thread, and safe to call re-entrantly so long as concurrent
+          calls operate on different <type>cl_kernel</type> objects. 
+          However, the behavior of the <type>cl_kernel</type> object is undefined if 
+          <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry> 
+          or <function>clSetKernelArgSVMPointer</function>
+          are called from multiple host threads on the same 
+          <type>cl_kernel</type> object at the same time.  Please note that there
+          are additional limitations as to which OpenCL APIs may be called 
+          from OpenCL callback functions -- please see section 5.11.
+          (Please refer to the OpenCL glossary for the OpenCL definition of thread-safe. 
+          This definition may be different from usage of the term in other contexts.)
+        </para>
+
+        <para>
+          <!-- section A.2, footnote --> There is an inherent race condition in the
+          design of OpenCL that occurs between setting a kernel argument and using the kernel
+          with <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>.
+          Another host thread might change the kernel arguments between when a host thread sets the
+          kernel arguments and then enqueues the kernel, causing the wrong kernel arguments
+          to be enqueued. Rather than attempt to share <type>cl_kernel</type> 
+          objects among multiple host threads, applications are strongly encouraged 
+          to make additional <type>cl_kernel</type> objects
+          for kernel functions for each host thread.
+        </para>
+
+     </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          <function>clSetKernelArgSVMPointer</function> returns <errorname>CL_SUCCESS</errorname> if the
+          function is executed successfully. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_KERNEL</errorname> if <varname>kernel</varname> 
+                is not a valid kernel object.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_ARG_INDEX</errorname> if <varname>arg_index</varname> 
+                is not a valid argument index.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_ARG_VALUE</errorname> if <varname>arg_value</varname> 
+                specified is not a valid value.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--    -->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clSetKernelArgSVMPointer">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateKernelsInProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelWorkGroupInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

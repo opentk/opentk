@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY gl_syncInc SYSTEM "gl_syncInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clEnqueueReleaseEGLObjectsKHR</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clEnqueueReleaseEGLObjectsKHR</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clEnqueueReleaseEGLObjectsKHR">
+        <refname>clEnqueueReleaseEGLObjectsKHR</refname>
+
+        <refpurpose>
+            Release OpenCL memory objects that have been created from EGL resources.
+        </refpurpose>
+    </refnamediv>
+
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef><link xlink:href="scalarDataTypes.html">cl_int</link>
+
+                    <function>
+                        clEnqueueReleaseEGLObjectsKHR
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_command_queue</link><parameter>command_queue</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_objects</parameter></paramdef>
+                <paramdef>const <link xlink:href="abstractDataTypes.html">cl_mem</link><parameter>*mem_objects</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_events_in_wait_list</parameter></paramdef>
+                <paramdef>const <link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event_wait_list</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+
+<!-- ================================ PARAMETERS -->
+
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <varname>command_queue</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                        A valid command-queue.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>num_objects</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                        The number of memory objects to be acquired in <varname>mem_objects</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>mem_objects</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                        A pointer to a list of OpenCL memory objects 
+                        that were created from EGL 
+                        resources, within the context associated with 
+                        <varname>command_queue</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>event_wait_list</varname>
+                </term>
+and
+                <term>
+                    <varname>num_events_in_wait_list</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                        Specify events that need to complete before this
+                        particular command can be executed. If 
+                        <varname>event_wait_list</varname> is NULL, 
+                        then this particular command
+                        does not wait on any event to complete. 
+                        If <varname>event_wait_list</varname> is NULL,
+                        <varname>num_events_in_wait_list</varname>
+                        must be 0. If <varname>event_wait_list</varname> 
+                        is not NULL, the list of events pointed to by 
+                        <varname>event_wait_list</varname> must
+                        be valid and <varname>num_events_in_wait_list</varname> 
+                        must be greater than 0. The events specified in
+                        <varname>event_wait_list</varname> act 
+                        as synchronization points.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>event</varname>
+                </term>
+
+                <listitem>
+                    <para>
+                      Returns an event object that identifies
+                      this command and can be used to query or queue a wait for the command
+                      to complete. <varname>event</varname> can be NULL in which case
+                      it will not be possible for the application to query the status of
+                      this command or queue a wait for this command to complete.
+                    </para>
+
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            This function is used to release OpenCL memory objects 
+            that have been created from EGL resources. The EGL 
+            objects are released by the OpenCL context associated 
+            with <varname>command_queue</varname>.
+        </para>
+
+        <para>
+            OpenCL memory objects created from EGL resources which have been acquired by OpenCL 
+            must be released by OpenCL before they may be accessed by EGL or by EGL client APIs. 
+        </para>
+
+        <para>
+            Accessing a EGL resource while its corresponding 
+            OpenCL memory object is acquired is in error
+            and will result in undefined behavior, including 
+            but not limited to possible OpenCL errors, data 
+            corruption, and program termination.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+<!--
+    <refsect1 id="notes"><title>Notes</title>
+    </refsect1>
+-->
+
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully. If
+          <varname>num_objects</varname> is 0 and <varname>mem_objects</varname> is NULL the
+          function does nothing and returns <errorname>CL_SUCCESS</errorname>. Otherwise,
+          it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>num_objects</varname>
+              is zero and <varname>mem_objects</varname> is not a NULL value or if
+              <varname>num_objects</varname> &gt; 0 and <varname>mem_objects</varname> is NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_MEM_OBJECT</errorname> if memory objects in
+              <varname>mem_objects</varname> are not valid OpenCL memory objects
+              in the context associated with <varname>command_queue</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EGL_OBJECT_KHR</errorname> if memory objects in
+              <varname>mem_objects</varname> have not been 
+              created from EGL resources.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_COMMAND_QUEUE</errorname> if <varname>command_queue</varname>
+              is not a valid command-queue.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EVENT_WAIT_LIST</errorname>
+              if <varname>event_wait_list</varname> is NULL and
+              <varname>num_events_in_wait_list</varname> &gt; 0,
+              or <varname>event_wait_list</varname> is not NULL and
+              <varname>num_events_in_wait_list</varname> is 0, or if event objects in
+              <varname>event_wait_list</varname> are not valid events.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clEnqueueReleaseEGLObjectsKHR">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_egl_image</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_egl_event</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueAcquireEGLObjectsKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromEGLImageKHR</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

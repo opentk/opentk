@@ -747,11 +747,8 @@ namespace OpenTK.Graphics.OpenGL
 
         public static void ShaderSource(Int32 shader, System.String @string)
         {
-            unsafe
-            {
-                int length = @string.Length;
-                GL.ShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
-            }
+            int length = @string.Length;
+            GL.ShaderSource((UInt32)shader, 1, ref @string, ref length);
         }
 
         #endregion
@@ -1355,23 +1352,47 @@ namespace OpenTK.Graphics.OpenGL
         #endregion
     }
 
+    /// <summary>
+    /// Defines the callback prototype for
+    /// <see cref="GL.Amd.DebugMessageCallback"/>
+    /// Note: callback implementations must not
+    /// throw exceptions.
+    /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProcAmd(int id,
         AmdDebugOutput category, AmdDebugOutput severity,
         int length, IntPtr message, IntPtr userParam);
 
+    /// <summary>
+    /// Defines the callback prototype for
+    /// <see cref="GL.Arb.DebugMessageCallback"/>
+    /// Note: callback implementations must not
+    /// throw exceptions.
+    /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProcArb(
         DebugSource source, DebugType type, int id,
         DebugSeverity severity, int length, IntPtr message,
         IntPtr userParam);
 
+    /// <summary>
+    /// Defines the callback prototype for
+    /// <see cref="GL.DebugMessageCallback"/>
+    /// Note: callback implementations must not
+    /// throw exceptions.
+    /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProc(
         DebugSource source, DebugType type, int id,
         DebugSeverity severity, int length, IntPtr message,
         IntPtr userParam);
 
+    /// <summary>
+    /// Defines the callback prototype for
+    /// <see cref="GL.Khr.DebugMessageCallback"/>
+    /// Note: callback implementations must not
+    /// throw exceptions.
+    /// </summary>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProcKhr(
         DebugSource source, DebugType type, int id,

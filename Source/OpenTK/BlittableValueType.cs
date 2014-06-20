@@ -219,6 +219,79 @@ namespace OpenTK
 
         #endregion
 
+        #region SizeOf
+
+        /// <summary>
+        /// Returns the total size of the specified type in bytes.
+        /// </summary>
+        /// <typeparam name="T">The value type. Must be blittable.</typeparam>
+        /// <param name="type">An instance of the value type.</param>
+        /// <returns>An integer, specifying the total size of the type in bytes.</returns>
+        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        public static int SizeOf<T>(T type)
+        {
+            if (!Check(type))
+                throw new ArgumentException("type");
+
+            return BlittableValueType<T>.Stride;
+        }
+
+        /// <summary>
+        /// Returns the total size of the specified array in bytes.
+        /// Use <see cref="BlittableValueType.StrideOf{T}(T[])" /> to get the size
+        /// of a single array element.
+        /// </summary>
+        /// <typeparam name="T">The value type. Must be blittable.</typeparam>
+        /// <param name="type">An instance of the value type.</param>
+        /// <returns>An integer, specifying the total size of the type in bytes.</returns>
+        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        [CLSCompliant(false)]
+        public static int SizeOf<T>(T[] type)
+        {
+            if (!Check(type))
+                throw new ArgumentException("type");
+
+            return BlittableValueType<T>.Stride * type.Length;
+        }
+
+        /// <summary>
+        /// Returns the total size of the specified array in bytes.
+        /// Use <see cref="BlittableValueType.StrideOf{T}(T[,])" /> to get the size
+        /// of a single array element.
+        /// </summary>
+        /// <typeparam name="T">The value type. Must be blittable.</typeparam>
+        /// <param name="type">An instance of the value type.</param>
+        /// <returns>An integer, specifying the total size of the type in bytes.</returns>
+        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        [CLSCompliant(false)]
+        public static int SizeOf<T>(T[,] type)
+        {
+            if (!Check(type))
+                throw new ArgumentException("type");
+
+            return BlittableValueType<T>.Stride * type.Length;
+        }
+
+        /// <summary>
+        /// Returns the total size of the specified array in bytes.
+        /// Use <see cref="BlittableValueType.StrideOf{T}(T[, ,])" /> to get the size
+        /// of a single array element.
+        /// </summary>
+        /// <typeparam name="T">The value type. Must be blittable.</typeparam>
+        /// <param name="type">An instance of the value type.</param>
+        /// <returns>An integer, specifying the total size of the type in bytes.</returns>
+        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        [CLSCompliant(false)]
+        public static int SizeOf<T>(T[, ,] type)
+        {
+            if (!Check(type))
+                throw new ArgumentException("type");
+
+            return BlittableValueType<T>.Stride * type.Length;
+        }
+
+        #endregion
+
         #region StrideOf
 
         /// <summary>

@@ -1,0 +1,48 @@
+<!-- imageMipmapFunctionsInc -->
+ 
+    <bridgehead>Mipmap read image functions:</bridgehead>
+
+    <para>
+        For the forms that take an <type>image1d_t</type> object, 
+        use the coordinate <emphasis>coord</emphasis> to 
+        do an element lookup in the mip-level specified by  
+        <varname>lod</varname> in the 1D image object specified 
+        by <varname>image</varname>.
+    </para>
+
+    <para>
+        For the forms that use gradients, use the gradients to compute 
+        the lod and coordinate <emphasis>coord</emphasis> to do an 
+        element lookup in
+        the mip-level specified by the computed lod in
+        the 1D image object specified by <varname>image</varname>.
+    </para>
+
+    <para>
+        For the forms that take an <type>image1d_array_t</type> object, 
+        use the coordinate <emphasis>coord.x</emphasis> to 
+        do an element lookup in the 1D image identified by 
+        <emphasis>coord.x</emphasis> and mip-level specified by  
+        <varname>lod</varname> in the 1D image object specified 
+        by <varname>image</varname>.
+    </para>
+
+    <para>
+        When a multisample image is accessed in a kernel, 
+        the access takes one vector of 
+        integers describing which pixel to fetch and an 
+        integer corresponding to the sample numbers 
+        describing which sample within the pixel to fetch. 
+        sample identifies the sample position in the 
+        multi-sample image.
+    </para>
+
+    <para>
+        For best performance, we recommend that <varname>sample</varname> 
+        be a literal value so it is known at 
+        compile time and the OpenCL compiler can perform appropriate 
+        optimizationsfor multisample reads on the device.
+    </para>
+
+<!-- 17-Dec-2013, rev. 19 -->
+

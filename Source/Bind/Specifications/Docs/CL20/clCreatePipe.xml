@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY clCreate_memflagsInc SYSTEM "clCreate_memflagsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCreatePipe</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clCreatePipe
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreatePipe">
+        <refname>
+            clCreatePipe
+        </refname>
+
+        <refpurpose>
+            Creates a pipe object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="abstractDataTypes.html">cl_mem</link> <function>clCreatePipe</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>pipe_packet_size</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>pipe_max_packets</parameter></paramdef>
+                <paramdef>const cl_pipe_properties<parameter>* properties</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> context </varname> </term>
+                <listitem>
+                    <para>
+                        A valid OpenCL context used to create the pipe object.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> flags </varname> </term>
+                <listitem>
+                    <para>
+                        A bit-field that is used to specify 
+                        allocation and usage information such as the memory 
+                        arena that should be used to allocate the pipe object and how it 
+                        will be used. The table below describes 
+                        the possible values for <varname>flags</varname>. 
+                        Only <constant>CL_MEM_READ_ONLY</constant>,
+                        <constant>CL_MEM_WRITE_ONLY</constant>, <constant>CL_MEM_READ_WRITE</constant>,
+                        and <constant>CL_MEM_HOST_NO_ACCESS</constant>
+                        can be specified when creating a pipe object.
+                        If value specified for <varname>flags</varname> is 0, 
+                        the default is used which is 
+                        <constant>CL_MEM_READ_WRITE</constant>.
+                    </para>
+
+                    <!-- Table 5.3 - (only two rows apply to this particular function) -->
+                    &clCreate_memflagsInc;
+
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> pipe_packet_size </varname> </term>
+                <listitem>
+                    <para>
+                      Size in bytes of a pipe packet.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>pipe_max_packets</varname></term>
+                <listitem>
+                    <para>
+                      Specifies the pipe capacity by specifying the 
+                      maximum number of packets the pipe can hold. 
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>properties</varname></term>
+                <listitem>
+                    <para>
+                      A list of properties for the pipe and their corresponding values. Each property 
+                        name is immediately followed by the corresponding desired value. 
+                        The list is terminated with 0. 
+                        In OpenCL 2.0, <varname>properties</varname> must be NULL.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>errcode_ret</varname></term>
+                <listitem>
+                    <para>
+                      Will return an appropriate error code. If <varname>errcode_ret</varname>
+                      is NULL, no error code is returned.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION -->
+     <refsect1 id="description"><title>Notes</title>
+
+        <para>
+            Pipes follow the same memory consistency model as 
+            defined for buffer and image objects. The 
+            pipe state i.e. contents of the pipe across kernel 
+            executions (on the same or different devices) is 
+            enforced at a synchronization point.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          <function>clCreatePipe</function> returns a valid non-zero pipe object and
+          <varname>errcode_ret</varname> is set to <errorname>CL_SUCCESS</errorname> if the
+          pipe object is created successfully. Otherwise, it returns a NULL value with one of
+          the following error values returned in <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not a valid context.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if values specified in 
+                <varname>flags</varname> are not as defined above.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if <varname>properties</varname> is not NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_PIPE_SIZE</errorname> if <varname>pipe_packet_size</varname> 
+                is 0 or the <varname>pipe_packet_size</varname> exceeds 
+                <constant>CL_DEVICE_PIPE_MAX_PACKET_SIZE</constant> value specified in table 4.3 
+                (see <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>) 
+                for all devices in <varname>context</varname> or if 
+                <varname>pipe_max_packets</varname> is 0.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MEM_OBJECT_ALLOCATION_FAILURE</errorname> if there is a failure to 
+                allocate memory for the pipe object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCreatePipe">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

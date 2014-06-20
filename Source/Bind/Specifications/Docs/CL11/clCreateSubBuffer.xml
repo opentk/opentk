@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCreateSubBuffer</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>       
+            clCreateSubBuffer
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+  
+    </refmeta>
+
+
+<!-- ================================ SYNOPSIS -->  
+
+    <refnamediv id="clCreateSubBuffer">
+        <refname>     
+            clCreateSubBuffer
+        </refname> 
+
+        <refpurpose>          
+            Creates a buffer object (referred to as a sub-buffer object) from an existing
+buffer object.
+        </refpurpose> 
+    </refnamediv> 
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>              
+                    <link xlink:href="abstractDataTypes.html">cl_mem</link> <function>clCreateSubBuffer</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_mem</link><parameter>buffer</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_buffer_create_type">cl_buffer_create_type</link><parameter>buffer_create_type</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">void</link><parameter>*buffer_create_info</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>                              
+
+            </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>
+
+
+<!-- ================================ PARAMETERS --> 
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term><varname>buffer</varname></term>
+                <listitem>
+                    <para>A valid object. Cannot be a sub-buffer object.</para>
+               </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>
+                    <varname>flags</varname>
+                </term>
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A bit-field that is used to specify allocation and usage information about the image memory
+                        object being created. The
+                        following table describes the possible values for <varname>flags</varname>:
+                    </para>
+                
+                    <informaltable frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colname="col1" colnum="1" />
+                            <thead>
+                                <row>
+                                    <entry>cl_mem_flags</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+        
+                                <row>
+                                    <entry><constant>CL_MEM_READ_WRITE</constant></entry>
+                                    <entry>
+                                        This flag specifies that the memory object will be read and
+                                        written by a kernel. This is the default.
+                                    </entry>
+                                </row>
+        
+                                <row>
+                                    <entry><constant>CL_MEM_WRITE_ONLY</constant></entry>
+                                    <entry>
+                                        <para>This flags specifies that the memory object will be written
+                                        but not read by a kernel.</para>
+                                        <para>Reading from a buffer or image object created with
+                                        <constant>CL_MEM_WRITE_ONLY</constant> inside a kernel is undefined.</para>
+                                    </entry>
+                                </row>
+        
+                                <row>
+                                    <entry><constant>CL_MEM_READ_ONLY</constant></entry>
+                                    <entry>
+                                        <para>This flag specifies that the memory object is a read-only
+                                        memory object when used inside a kernel.</para>
+                                        <para>Writing to a buffer or image object created with
+                                        <constant>CL_MEM_READ_ONLY</constant> inside a kernel is undefined.</para>
+                                    </entry>
+                                </row>
+        
+                                <row>
+                                    <entry><constant>CL_MEM_USE_HOST_PTR</constant></entry>
+                                    <entry>
+                                        <para>This flag is valid only if <varname>host_ptr</varname> is not NULL. If
+                                        specified, it indicates that the application wants the
+                                        OpenCL implementation to use memory referenced by
+                                        <varname>host_ptr</varname> as the storage bits for the memory object.</para>
+                                        <para>OpenCL implementations are allowed to cache the buffer
+                                        contents pointed to by <varname>host_ptr</varname> in device memory. This
+                                        cached copy can be used when kernels are executed on a
+                                        device.</para>
+                                        <para>The result of OpenCL commands that operate on multiple
+                                        buffer objects created with the same <varname>host_ptr</varname> or
+                                        overlapping host regions is considered to be undefined.</para>
+                                    </entry>
+                                </row>
+        
+                                <row>
+                                    <entry><constant>CL_MEM_ALLOC_HOST_PTR</constant></entry>
+                                    <entry>
+                                        <para>This flag specifies that the application wants the OpenCL
+                                                implementation to allocate memory from host accessible
+                                                memory.</para>
+                                                <para>
+                                                <constant>CL_MEM_ALLOC_HOST_PTR</constant> and
+                                                <constant>CL_MEM_USE_HOST_PTR</constant> are mutually exclusive.</para>
+                                    </entry>
+                                </row>
+        
+                                <row>
+                                    <entry><constant>CL_MEM_COPY_HOST_PTR</constant></entry>
+                                    <entry>
+                                        <para>
+                                            This flag is valid only if <varname>host_ptr</varname> is not NULL. If
+                                            specified, it indicates that the application wants the
+                                            OpenCL implementation to allocate memory for the
+                                            memory object and copy the data from memory referenced
+                                            by <varname>host_ptr</varname>.
+                                        </para>
+                                        <para>                                  
+                                            <constant>CL_MEM_COPY_HOST_PTR</constant> and
+                                            <constant>CL_MEM_USE_HOST_PTR</constant> are mutually exclusive.
+                                        </para>
+                                        <para>
+                                            <constant>CL_MEM_COPY_HOST_PTR</constant> can be used with
+                                            <constant>CL_MEM_ALLOC_HOST_PTR</constant> to initialize the contents of
+                                            the cl_mem object allocated using host-accessible (e.g.
+                                            PCIe) memory.
+                                        </para>
+                                    </entry>
+                                </row>                              
+                            </tbody>    
+                        </tgroup>
+                    </informaltable>   
+                </listitem>
+            </varlistentry>
+            <!-- END PARAMETER TABLE  -->          
+
+            <varlistentry>
+                <term><varname>buffer_create_type</varname> and <varname>buffer_create_info</varname></term>
+                <listitem>
+                    <para>The type of buffer object to be created. The supported value for <varname>buffer_create_type</varname> is CL_BUFFER_CREATE_TYPE_REGION, which create a buffer object that represents a specific region in <varname>buffer</varname>. <varname>buffer_create_info</varname> is a pointer to the following structure:</para>
+<literallayout>
+typedef struct _cl_buffer_region {
+    size_t origin;
+    size_t size;
+} cl_buffer_region;
+</literallayout>
+
+<para>(<varname>origin, size</varname>) defines the offset and size in bytes in <varname>buffer</varname>.</para>
+
+<para>If <varname>buffer</varname> is created with CL_MEM_USE_HOST_PTR, the <varname>host_ptr</varname> associated with the buffer object returned is <varname>host_ptr</varname> + <varname>origin</varname>.</para>
+
+<para>The buffer object returned references the data store allocated for <varname>buffer</varname> and points to a specific region given by (<varname>origin, size</varname>) in this data store.</para>
+
+<para>CL_INVALID_VALUE is returned in <varname>errcode_ret</varname> if the region specified by (<varname>origin, size</varname>) is out of bounds in <varname>buffer</varname>.</para>
+
+<para>CL_MISALIGNED_SUB_BUFFER_OFFSET is returned in <varname>errcode_ret</varname> if there are no devices in context associated with <varname>buffer</varname> for which the <varname>origin</varname> value is aligned to the CL_DEVICE_MEM_BASE_ADDR_ALIGN value.</para>
+
+
+
+
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>errcode_ret</varname></term>
+                <listitem>
+                    <para> <!-- parameter description -->
+Returns an appropriate error code. If <varname>errcode_ret</varname> is NULL, no error code is returned.
+                    </para>
+               </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    
+<!-- ================================ NOTES  -->        
+  <refsect1 id="notes"><title>Notes</title>
+        <para>
+        The implementation may return the same <citerefentry href="abstractDataTypes"><refentrytitle>cl_mem</refentrytitle></citerefentry> object with the reference count incremented
+appropriately for multiple calls to <function>clCreateSubBuffer</function> that use the same values for <varname>buffer</varname>, <varname>flags</varname>, <varname>buffer_create_type</varname> and <varname>buffer_create_info</varname> points to the same descriptor or descriptors that
+describe values that are exactly the same.
+        </para>
+        <para>
+The result of OpenCL commands that read from and write to multiple sub-buffer objects created
+using <function>clCreateSubBuffer</function> with the same buffer object but represent overlapping regions in the
+buffer object is undefined. The result of OpenCL commands that read from and write to a buffer
+object and its sub-buffer object(s) created using <function>clCreateSubBuffer</function> with the same buffer object
+is undefined. OpenCL commands that only read from multiple sub-buffer objects created using
+<function>clCreateSubBuffer</function> with the same buffer object but represent overlapping regions in the buffer
+object or read from a buffer object and its sub-buffer objects should work as defined.
+        </para>
+    </refsect1> 
+    
+
+<!-- ================================ ERRORS  -->       
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns a valid non-zero buffer object and <varname>errcode_ret</varname> is set to <errorname>CL_SUCCESS</errorname> if
+            the buffer object is created successfully. Otherwise, it returns one of the following error in  <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_MEM_OBJECT</errorname> if <varname>buffer</varname> is not a valid buffer object or is a sub-buffer object.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if values specified in <varname>flags</varname> are not valid; or if value specified in <varname>buffer_create_type</varname> is not valid; or if value(s) specified in <varname>buffer_create_info</varname> (for a given <varname>buffer_create_type</varname>) is not valid or if <varname>buffer_create_info</varname> is NULL.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate resources required by the
+OpenCL implementation on the device.
+            </listitem>
+            <listitem>
+                <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by the
+                OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+    
+
+<!-- ================================ EXAMPLE  -->  
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--    
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>   
+    </refsect2>  
+--> 
+
+
+<!-- ================================ SPECIFICATION  -->        
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->     
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+            
+                      
+            <olink uri="clCreateSubBuffer">OpenCL Specification</olink>
+        </para>
+    </refsect1>     
+
+
+<!-- ================================ ALSO SEE  -->     
+   
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->  
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

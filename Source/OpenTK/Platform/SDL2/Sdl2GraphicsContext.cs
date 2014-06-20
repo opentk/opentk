@@ -154,6 +154,8 @@ namespace OpenTK.Platform.SDL2
                 context_flags |= GraphicsContextFlags.ForwardCompatible;
             }
 
+            Debug.Print("Got version: {0}.{1}", major, minor);
+
             return new GraphicsMode(
                 new ColorFormat(red, green, blue, alpha),
                 depth,
@@ -166,29 +168,36 @@ namespace OpenTK.Platform.SDL2
 
         static void ClearGLAttributes()
         {
-            SDL.GL.SetAttribute(ContextAttribute.ACCUM_ALPHA_SIZE, 0);
-            SDL.GL.SetAttribute(ContextAttribute.ACCUM_RED_SIZE, 0);
-            SDL.GL.SetAttribute(ContextAttribute.ACCUM_GREEN_SIZE, 0);
-            SDL.GL.SetAttribute(ContextAttribute.ACCUM_BLUE_SIZE, 0);
-            SDL.GL.SetAttribute(ContextAttribute.DOUBLEBUFFER, 0);
-            SDL.GL.SetAttribute(ContextAttribute.ALPHA_SIZE, 0);
-            SDL.GL.SetAttribute(ContextAttribute.RED_SIZE, 0);
-            SDL.GL.SetAttribute(ContextAttribute.GREEN_SIZE, 0);
-            SDL.GL.SetAttribute(ContextAttribute.BLUE_SIZE, 0);
-            SDL.GL.SetAttribute(ContextAttribute.DEPTH_SIZE, 0);
-            SDL.GL.SetAttribute(ContextAttribute.MULTISAMPLEBUFFERS, 0);
-            SDL.GL.SetAttribute(ContextAttribute.MULTISAMPLESAMPLES, 0);
-            SDL.GL.SetAttribute(ContextAttribute.STENCIL_SIZE, 0);
-            SDL.GL.SetAttribute(ContextAttribute.STEREO, 0);
-            SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MAJOR_VERSION, 1);
-            SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MINOR_VERSION, 0);
-            SDL.GL.SetAttribute(ContextAttribute.CONTEXT_FLAGS, 0);
-            SDL.GL.SetAttribute(ContextAttribute.CONTEXT_EGL, 0);
-            SDL.GL.SetAttribute(ContextAttribute.CONTEXT_PROFILE_MASK, 0);
-            SDL.GL.SetAttribute(ContextAttribute.SHARE_WITH_CURRENT_CONTEXT, 0);
+            if (SDL.Version.Number >= 202)
+            {
+                SDL.GL.ResetAttributes();
+            }
+            else
+            {
+                SDL.GL.SetAttribute(ContextAttribute.ACCUM_ALPHA_SIZE, 0);
+                SDL.GL.SetAttribute(ContextAttribute.ACCUM_RED_SIZE, 0);
+                SDL.GL.SetAttribute(ContextAttribute.ACCUM_GREEN_SIZE, 0);
+                SDL.GL.SetAttribute(ContextAttribute.ACCUM_BLUE_SIZE, 0);
+                SDL.GL.SetAttribute(ContextAttribute.DOUBLEBUFFER, 0);
+                SDL.GL.SetAttribute(ContextAttribute.ALPHA_SIZE, 0);
+                SDL.GL.SetAttribute(ContextAttribute.RED_SIZE, 0);
+                SDL.GL.SetAttribute(ContextAttribute.GREEN_SIZE, 0);
+                SDL.GL.SetAttribute(ContextAttribute.BLUE_SIZE, 0);
+                SDL.GL.SetAttribute(ContextAttribute.DEPTH_SIZE, 0);
+                SDL.GL.SetAttribute(ContextAttribute.MULTISAMPLEBUFFERS, 0);
+                SDL.GL.SetAttribute(ContextAttribute.MULTISAMPLESAMPLES, 0);
+                SDL.GL.SetAttribute(ContextAttribute.STENCIL_SIZE, 0);
+                SDL.GL.SetAttribute(ContextAttribute.STEREO, 0);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MAJOR_VERSION, 1);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MINOR_VERSION, 0);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_FLAGS, 0);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_EGL, 0);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_PROFILE_MASK, 0);
+                SDL.GL.SetAttribute(ContextAttribute.SHARE_WITH_CURRENT_CONTEXT, 0);
+            }
         }
 
-        static void SetGLAttributes(GraphicsMode mode,
+        internal static void SetGLAttributes(GraphicsMode mode,
             IGraphicsContext shareContext,
             int major, int minor,
             GraphicsContextFlags flags)

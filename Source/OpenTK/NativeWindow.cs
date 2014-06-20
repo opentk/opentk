@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -90,6 +90,28 @@ namespace OpenTK
         /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
         public NativeWindow(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
+            : this(device.Bounds.Left + (device.Bounds.Width - width) / 2,
+                device.Bounds.Top + (device.Bounds.Height - height) / 2,
+                width, height, title, options, mode, device,
+                1, 0, GraphicsContextFlags.Default) { }
+
+        /// <summary>Constructs a new NativeWindow with the specified attributes.</summary>
+        /// <param name="x">Horizontal screen space coordinate of the NativeWindow's origin.</param>
+        /// <param name="y">Vertical screen space coordinate of the NativeWindow's origin.</param>
+        /// <param name="width">The width of the NativeWindow in pixels.</param>
+        /// <param name="height">The height of the NativeWindow in pixels.</param>
+        /// <param name="title">The title of the NativeWindow.</param>
+        /// <param name="options">GameWindow options specifying window appearance and behavior.</param>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the NativeWindow.</param>
+        /// <param name="device">The OpenTK.Graphics.DisplayDevice to construct the NativeWindow in.</param>
+        /// <param name="major">The major version of the OpenGL context that will be instantiated on this window.</param>
+        /// <param name="major">The minor version of the OpenGL context that will be instantiated on this window.</param>
+        /// <param name="flags">A bitwise combination of <see cref="OpenTK.Graphics.GraphicsContextFlags"/> for the OpenGL context that will be instantiated on this window.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
+        /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
+        public NativeWindow(int x, int y, int width, int height, string title,
+            GameWindowFlags options, GraphicsMode mode, DisplayDevice device,
+            int major, int minor, GraphicsContextFlags flags)
         {
             // TODO: Should a constraint be added for the position?
             if (width < 1)
@@ -102,7 +124,10 @@ namespace OpenTK
             this.options = options;
             this.device = device;
 
-            implementation = Factory.Default.CreateNativeWindow(x, y, width, height, title, mode, options, this.device);
+            implementation = Factory.Default.CreateNativeWindow(
+                x, y, width, height, title,
+                mode, options, this.device,
+                major, minor, flags);
 
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {

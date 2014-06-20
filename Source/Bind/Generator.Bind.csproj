@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{31D19132-0000-0000-0000-000000000000}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -55,6 +55,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>full</DebugType>
+    <Commandlineparameters>-mode:cl</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BaseAddress>285212672</BaseAddress>
@@ -69,6 +70,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>none</DebugType>
+    <Commandlineparameters>-mode:all</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
     <BaseAddress>285212672</BaseAddress>
@@ -83,6 +85,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>none</DebugType>
+    <Commandlineparameters>-mode:all</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
     <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
@@ -90,6 +93,7 @@
     <WarningLevel>4</WarningLevel>
     <Optimize>True</Optimize>
     <DefineConstants>TRACE;</DefineConstants>
+    <Commandlineparameters>-mode:all</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>True</SignAssembly>
@@ -213,8 +217,6 @@
     </None>
     <None Include="Specifications\CL10\signatures.xml">
     </None>
-    <None Include="Specifications\CL10\overrides.xml">
-    </None>
     <None Include="Specifications\ES10\signatures.xml">
     </None>
     <None Include="Specifications\ES10\overrides.xml">
@@ -242,6 +244,14 @@
     </Compile>
     <Compile Include="GL2\GL2Generator.cs" />
     <Compile Include="Structures\Documentation.cs" />
+    <Compile Include="CL\CL20Generator.cs" />
+    <None Include="Specifications\CL10\cl.tm" />
+    <Compile Include="CL\CL12Generator.cs" />
+    <Compile Include="Structures\Class.cs" />
+    <Compile Include="Structures\GenericCollection.cs" />
+    <None Include="Specifications\CL10\overrides.xml" />
+    <Compile Include="Structures\Field.cs" />
+    <Compile Include="CL\CL11Generator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">

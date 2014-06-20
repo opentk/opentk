@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+<!ENTITY imageFunctionsInc SYSTEM "imageFunctionsInc.xml">
+]>
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>write_imageh</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>write_imageh</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="write_image">             
+        <refname>write_imageh (2D)</refname>
+
+        <refpurpose>
+            Write <varname>color</varname> value to location in the 2D image object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>                   
+                        write_imageh
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="otherDataTypes.html">image2d_t</link><parameter>image</parameter></paramdef>    
+            <paramdef><link xlink:href="vectorDataTypes.html">int2</link><parameter>coord</parameter></paramdef>
+            <paramdef><link xlink:href="vectorDataTypes.html">half4</link><parameter>color</parameter></paramdef>   
+            </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>       
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+        Write <varname>color</varname> value to location specified by coordinate <emphasis>(x, y)</emphasis> in the 2D image object specified by <varname>image</varname>. Appropriate data format conversion to the specified image format is done before writing the color value. <emphasis>x</emphasis> and <emphasis>y</emphasis> are considered to be unnormalized coordinates and must be in the range 0... image width - 1, and 0... image height - 1.
+        </para>     
+        <para>      
+<function>write_imageh</function> can only be used with image objects created with <varname>image_channel_data_type</varname> set to one of the pre-defined packed formats or set to CL_SNORM_INT8, CL_UNORM_INT8, CL_SNORM_INT16, CL_UNORM_INT16, or CL_HALF_FLOAT. Appropriate data format conversion will be done to convert channel data from a half floating-point value to actual data format in which the channels are stored.
+        </para>     
+        <para>  
+The behavior of <function>write_imageh</function> for image objects created with <varname>image_channel_data_type</varname> values not specified in the description above or with <emphasis>(x, y)</emphasis> coordinate values that are not in the range (0... image width - 1, 0... image height - 1), respectively, is undefined.
+        </para>
+    </refsect1>
+
+    
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+        &imageFunctionsInc;
+        <para>
+            A kernel that uses a sampler with the CL_ADDRESS_CLAMP addressing mode with
+multiple images may result in additional samplers being used internally by an implementation. If
+the same sampler is used with multiple images called via <function>read_image{f | i | ui}</function>, then it is
+possible that an implementation may need to allocate an additional sampler to handle the
+different border color values that may be needed depending on the image formats being used.
+These implementation allocated samplers will count against the maximum sampler values
+supported by the device and given by CL_DEVICE_MAX_SAMPLERS. Enqueuing a kernel that
+requires more samplers than the implementation can support will result in a
+CL_OUT_OF_RESOURCES error being returned.
+        </para>
+    </refsect1> 
+    
+    
+    
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="imageFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry> 
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

@@ -556,6 +556,10 @@ namespace OpenTK.Platform.SDL2
             public static extern int MakeCurrent(IntPtr window, IntPtr context);
 
             [SuppressUnmanagedCodeSecurity]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_ResetAttributes", ExactSpelling = true)]
+            public static extern void ResetAttributes();
+
+            [SuppressUnmanagedCodeSecurity]
             [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_SetAttribute", ExactSpelling = true)]
             public static extern int SetAttribute(ContextAttribute attr, int value);
             public static int SetAttribute(ContextAttribute attr, ContextFlags value)
@@ -1713,7 +1717,7 @@ namespace OpenTK.Platform.SDL2
 
         public int Number
         {
-            get { return 1000 * Major + 100 * Minor + Patch; }
+            get { return 100 * Major + 10 * Minor + Patch; }
         }
     }
 

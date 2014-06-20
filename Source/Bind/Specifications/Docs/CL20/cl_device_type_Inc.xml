@@ -1,0 +1,74 @@
+
+<!--
+Table 4.2 applies to:
+cl_device_type device_type in clGetDeviceIDs
+cl_device_type device_type in clCreateContextFromType
+-->
+
+    <informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+        <colspec colname="col1" colnum="1" />
+        <colspec colname="col2" colnum="2" />
+        <thead>
+            <row>
+            <entry>cl_device_type</entry>
+            <entry>Description</entry>
+            </row>
+        </thead>
+
+        <tbody>
+            <row>
+                <entry><constant>CL_DEVICE_TYPE_CPU</constant></entry>
+                <entry>
+                  An OpenCL device that is the host processor. The host processor
+                  runs the OpenCL implementations and is a single or multi-core CPU.
+                </entry>
+            </row>
+
+            <row>
+                <entry><constant>CL_DEVICE_TYPE_GPU</constant></entry>
+                <entry>
+                  An OpenCL device that is a GPU. By this we mean that the device
+                  can also be used to accelerate a 3D API such as OpenGL or DirectX.
+                </entry>
+            </row>
+
+            <row>
+                <entry><constant>CL_DEVICE_TYPE_ACCELERATOR</constant></entry>
+                <entry>
+                  Dedicated OpenCL accelerators (for example the IBM CELL Blade). These
+                  devices communicate with the host processor using a peripheral
+                  interconnect such as PCIe.
+                </entry>
+            </row>
+
+            <row>
+                <entry><constant>CL_DEVICE_TYPE_CUSTOM</constant></entry>
+                <entry>
+                  Dedicated accelerators that do not support programs written in
+                  OpenCL C.
+                </entry>
+            </row>
+
+            <row>
+                <entry><constant>CL_DEVICE_TYPE_DEFAULT</constant></entry>
+                <entry>
+                  The default OpenCL device in the system. The default device cannot
+                  be a <constant>CL_DEVICE_TYPE_CUSTOM</constant> device.
+                </entry>
+            </row>
+
+            <row>
+                <entry><constant>CL_DEVICE_TYPE_ALL</constant></entry>
+                <entry>
+                  All OpenCL devices available in the system except
+                  <constant>CL_DEVICE_TYPE_CUSTOM</constant> devices.
+                </entry>
+            </row>
+        </tbody>
+
+        </tgroup>
+    </informaltable>
+
+<!-- 29-May-2013 -->
+
+

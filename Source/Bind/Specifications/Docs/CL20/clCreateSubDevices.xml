@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY clCreate_memflagsInc SYSTEM "clCreate_memflagsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clCreateSubDevices</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clCreateSubDevices
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clCreateSubDevices">
+        <refname>
+            clCreateSubDevices
+        </refname>
+
+        <refpurpose>
+            Creates an array of sub-devices that each reference a non-intersecting set of compute units within <varname>in_device</varname>.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link> <function>clCreateSubDevices</function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_device_id</link>
+                    <parameter>in_device</parameter>
+                </paramdef>
+                <paramdef>const
+                    <link xlink:href="enums.html#cl_device_partition_property">cl_device_partition_property</link>
+                    <parameter>*properties</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_uint</link>
+                    <parameter>num_devices</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_device_id</link>
+                    <parameter>*out_devices</parameter>
+                </paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link>
+                    <parameter>*num_devices_ret</parameter>
+                </paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term><varname>in_device</varname></term>
+                <listitem>
+                    <para>The device to be partitioned.</para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>properties</varname></term>
+                <listitem>
+                    <para>
+                      Specifies how <varname>in_device</varname> is to be partition described
+                      by a partition name and its corresponding value. Each partition name
+                      is immediately followed by the corresponding desired value. The list is
+                      terminated with 0. The list of supported partitioning schemes is described
+                      in the table below. Only one of the listed partitioning schemes can be
+                      specified in <varname>properties</varname>.
+                    </para>
+
+                    <!-- table 5.4 -->
+                    <informaltable frame="all">
+                            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                                <colspec colname="col1" colnum="1" />
+                                <colspec colname="col2" colnum="2" />
+                                <thead>
+                                    <row>
+                                        <entry>cl_device_partition_property enum (Partition value)</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+
+                                <tbody>
+                                    <row>
+                                        <entry>CL_DEVICE_PARTITION_EQUALLY (unsigned int)</entry>
+                                        <entry>
+                                          Split the aggregate device into as many smaller
+                                          aggregate devices as can be created, each
+                                          containing <replaceable>n</replaceable> compute
+                                          units.  The value <replaceable>n</replaceable> is
+                                          passed as the value accompanying this property. If
+                                          <replaceable>n</replaceable> does not divide evenly into
+                                          <constant>CL_DEVICE_PARTITION_MAX_COMPUTE_UNITS</constant>,
+                                          then the remaining compute units are not used.
+                                        </entry>
+                                    </row>
+
+                                    <row>
+                                        <entry>CL_DEVICE_PARTITION_BY_COUNTS (unsigned int)</entry>
+                                        <entry>
+                                          This property is followed by a
+                                          <constant>CL_DEVICE_PARTITION_BY_COUNTS_LIST_END</constant>
+                                          terminated list of compute unit counts. For
+                                          each nonzero count <replaceable>m</replaceable>
+                                          in the list, a sub-device is created with
+                                          <replaceable>m</replaceable> compute units in it.
+                                          <constant>CL_DEVICE_PARTITION_BY_COUNTS_LIST_END</constant>
+                                          is defined to be 0.
+
+                                          <para>
+                                            The number of non-zero count
+                                            entries in the list may not exceed
+                                            <constant>CL_DEVICE_PARTITION_MAX_SUB_DEVICES</constant>.
+                                          </para>
+
+                                          <para>
+                                            The total number of compute
+                                            units specified may not exceed
+                                            <constant>CL_DEVICE_PARTITION_MAX_COMPUTE_UNITS</constant>.
+                                          </para>
+                                        </entry>
+                                    </row>
+
+                                    <row>
+                                        <entry>CL_DEVICE_PARTITION_BY_-
+AFFINITY_DOMAIN (cl_device_affinity_domain)</entry>
+                                        <entry>
+                                            Split the device into smaller aggregate devices
+                                            containing one or more compute units that all share
+                                            part of a cache hierarchy. The value accompanying
+                                            this property may be drawn from the following list:
+
+                                            <para>
+                                              <constant>CL_DEVICE_AFFINITY_DOMAIN_NUMA</constant>
+                                              - Split the device into sub-devices comprised of
+                                              compute units that share a NUMA node.
+                                            </para>
+
+                                            <para>
+                                              <constant>CL_DEVICE_AFFINITY_DOMAIN_L4_CACHE</constant>
+                                              - Split the device into sub-devices comprised of
+                                              compute units that share a level 4 data cache.
+                                            </para>
+
+                                            <para>
+                                              <constant>CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE</constant>
+                                              - Split the device into sub-devices comprised of
+                                              compute units that share a level 3 data cache.
+                                            </para>
+
+                                            <para>
+                                              <constant>CL_DEVICE_AFFINITY_DOMAIN_L2_CACHE</constant>
+                                              - Split the device into sub-devices comprised of
+                                              compute units that share a level 2 data cache.
+                                            </para>
+
+                                            <para>
+                                              <constant>CL_DEVICE_AFFINITY_DOMAIN_L1_CACHE</constant>
+                                              - Split the device into sub-devices comprised of
+                                              compute units that share a level 1 data cache.
+                                            </para>
+
+                                            <para>
+                                              <constant>CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE</constant>
+                                              - Split the device along the next partitionable
+                                              affinity domain. The implementation shall find the
+                                              first level along which the device or sub-device
+                                              may be further subdivided in the order NUMA,
+                                              L4, L3, L2, L1, and partition the device into
+                                              sub-devices comprised of compute units that share
+                                              memory subsystems at this level.
+                                            </para>
+
+                                            <para>
+                                              The user may determine what happened by calling
+                                              <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+                                              (<constant>CL_DEVICE_PARTITION_TYPE</constant>)
+                                              on the sub-devices.
+                                            </para>
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                    </informaltable>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>num_devices</varname></term>
+                <listitem>
+                    <para>
+                      Size of memory pointed to by <varname>out_devices</varname> specified as
+                      the number of <type>cl_device_id</type> entries.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>out_devices</varname></term>
+                <listitem>
+                    <para>
+                      The buffer where the OpenCL sub-devices will be returned.  If
+                      <varname>out_devices</varname> is NULL, this argument is ignored. If
+                      <varname>out_devices</varname> is not NULL, <varname>num_devices</varname>
+                      must be greater than or equal to the number of sub-devices that
+                      <varname>device</varname> may be partitioned into according to the
+                      partitioning scheme specified in <varname>properties</varname>.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>num_devices_ret</varname></term>
+                <listitem>
+                    <para>
+                      Returns the number of sub-devices that device may be
+                      partitioned into according to the partitioning scheme specified in
+                      <varname>properties</varname>.  If <varname>num_devices_ret</varname>
+                      is NULL, it is ignored.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+  <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Creates an array of sub-devices that each reference a non-intersecting set of compute
+          units within <varname>in_device</varname>, according to a partition scheme given
+          by <varname>properties</varname>. The output sub-devices may be used in every way
+          that the root (or parent) device can be used, including creating contexts, building
+          programs, further calls to <function>clCreateSubDevices</function> and creating
+          command-queues. When a command-queue is created against a sub-device, the commands
+          enqueued on the queue are executed only on the sub-device.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the partition is created successfully.
+            Otherwise, it returns a NULL value with the following error values returned in
+            <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_DEVICE</errorname> if <varname>in_device</varname> is not valid.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if values specified in
+                <varname>properties</varname> are not valid or if values specified in
+                <varname>properties</varname> are valid but not supported by the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>out_devices</varname> is not
+              NULL and <varname>num_devices</varname> is less than the number of sub-devices
+              created by the partition scheme.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_DEVICE_PARTITION_FAILED</errorname> if the partition name is
+              supported by the implementation but <varname>in_device</varname> could not be
+              further partitioned.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_DEVICE_PARTITION_COUNT</errorname> if
+              the partition name specified in <varname>properties</varname> is
+              <constant>CL_DEVICE_PARTITION_BY_COUNTS</constant> and the number of sub-devices
+              requested exceeds <constant>CL_DEVICE_PARTITION_MAX_SUB_DEVICES</constant>
+              or the total number of compute units requested exceeds
+              <constant>CL_DEVICE_PARTITION_MAX_COMPUTE_UNITS</constant> for
+              <varname>in_device</varname>, or the number of compute units requested
+              for one or more sub-devices is less than zero or the number of sub-devices
+              requested exceeds <constant>CL_DEVICE_PARTITION_MAX_COMPUTE_UNITS</constant>
+              for <varname>in_device</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--    -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+          A few examples that describe how to specify partition properties in
+          <varname>properties</varname> argument to <function>clCreateSubDevices</function>
+          are given below.
+        </para>
+
+        <para>
+          To partition a device containing 16 compute units into two sub-devices, each containing
+          8 compute units, pass the following in <varname>properties</varname>:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" /> <tbody>
+                    <row>
+                        <entry>
+    { CL_DEVICE_PARTITION_EQUALLY, 8, 0 }
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          To partition a device with four compute units into two sub-devices with one sub-device
+          containing 3 compute units and the other sub-device 1 compute unit, pass the following
+          in <varname>properties</varname> argument:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" /> <tbody>
+                    <row>
+                        <entry>
+    { CL_DEVICE_PARTITION_BY_COUNTS,
+      3, 1, CL_DEVICE_PARTITION_BY_COUNTS_LIST_END, 0 }
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          To split a device along the outermost cache line (if any), pass the following in
+          <varname>properties</varname> argument:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" /> <tbody>
+                    <row>
+                        <entry>
+    { CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN,
+      CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE, 0 }
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clCreateSubDevices">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 5-May-2013 -->
+</refentry>
+

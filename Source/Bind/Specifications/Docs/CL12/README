@@ -1,0 +1,13 @@
+SVN objects to checking in these files due to some property of the .xml
+file type it assumes. So first check them in via
+    svn add --force *
+then force proper attributes:
+    svn propset --force svn:mime-type application/xml *.xml
+    svn propset --force svn:eol-style native *.xml
+and in the xhtml/ subdirectory:
+    cd xhtml
+    svn propset svn:mime-type text/html *.html
+    svn propset svn:mime-type text/plain *.css *.xsl Makefile *.rb
+    svn propset svn:mime-type image/jpeg *.jpg
+    svn propset svn:mime-type image/gif *.gif
+    svn propset svn:eol-style native *.html *.css *.xsl Makefile *.rb

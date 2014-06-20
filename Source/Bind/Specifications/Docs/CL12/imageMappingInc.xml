@@ -1,0 +1,83 @@
+  <para>
+    <!-- core spec p. 309, section 6.12.14.5 --> The following table describes the mapping
+    of the number of channels of an image element to the appropriate components in the
+    <type>float4</type>, <type>int4</type> or <type>uint4</type> vector data type for
+    the color values returned by <function>read_image{f|i|ui}</function> or supplied
+    to <function>write_image{f|i|ui}</function>. The unmapped components will be set
+    to <constant>0.0</constant> for red, green and blue channels and will be set to
+    <constant>1.0</constant> for the alpha channel.
+  </para>
+
+  <para>
+    <informaltable frame="all">
+      <tgroup cols="2" align="center" colsep="1" rowsep="1">
+        <colspec colname="col1" colnum="1" />
+        <colspec colname="col2" colnum="2" />
+
+        <thead>
+          <row>
+            <entry>Channel Order</entry>
+            <entry><type>float4</type>, <type>int4</type> or <type>uint4</type> components of channel data</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry><constant>CL_R</constant>, <constant>CL_Rx</constant></entry>
+            <entry><constant>(r, 0.0, 0.0, 1.0)</constant></entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_A</constant></entry>
+            <entry><constant>(0.0, 0.0, 0.0, a)</constant></entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_RG</constant>, <constant>CL_RGx</constant></entry>
+            <entry><constant>(r, g, 0.0, 1.0)</constant></entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_RA</constant></entry>
+            <entry><constant>(r, 0.0, 0.0, a)</constant></entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_RGB</constant>, <constant>CL_RGBx</constant></entry>
+            <entry><constant>(r, g, b, 1.0)</constant></entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_RGBA, CL_BGRA, CL_ARGB</constant></entry>
+            <entry><constant>(r, g, b, a)</constant></entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_INTENSITY</constant></entry>
+            <entry><constant>(I, I, I, I)</constant></entry>
+          </row>
+
+          <row>
+            <entry><constant>CL_LUMINANCE</constant></entry>
+            <entry><constant>(L, L, L, 1.0)</constant></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+  </para>
+
+  <para>
+    A kernel that uses a sampler with the <constant>CL_ADDRESS_CLAMP</constant> addressing
+    mode with multiple images may result in additional samplers being used internally
+    by an implementation. If the same sampler is used with multiple images called via
+    <function>read_image{f|i|ui}</function>, then it is possible that an implementation may
+    need to allocate an additional sampler to handle the different border color values that
+    may be needed depending on the image formats being used. These implementation allocated
+    samplers will count against the maximum sampler values supported by the device and given by
+    <constant>CL_DEVICE_MAX_SAMPLERS</constant>. Enqueuing a kernel that requires more samplers
+    than the implementation can support will result in a <constant>CL_OUT_OF_RESOURCES</constant>
+    error being returned.
+  </para>
+
+<!-- 16-Oct-2011 -->
+

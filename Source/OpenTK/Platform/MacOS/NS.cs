@@ -54,6 +54,9 @@ namespace OpenTK.Platform.MacOS
     {
         const string Library = "libdl.dylib";
 
+        internal static readonly IntPtr RuntimeLoadDefault = new IntPtr(-2);
+        internal static readonly IntPtr RuntimeLoadSelf = new IntPtr(-3);
+
         [DllImport(Library, EntryPoint = "NSAddImage")]
         internal static extern IntPtr AddImage(string s, AddImageFlags flags);
         [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]

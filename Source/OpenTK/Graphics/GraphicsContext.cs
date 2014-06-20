@@ -101,10 +101,14 @@ namespace OpenTK.Graphics
             lock (SyncRoot)
             {
                 bool designMode = false;
+#if !IPHONE
+                // Todo: we need to pass a proper GraphicsMode and IWindowInfo
+                // for iOS
                 if (mode == null && window == null)
                     designMode = true;
                 else if (mode == null) throw new ArgumentNullException("mode", "Must be a valid GraphicsMode.");
                 else if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
+#endif
 
                 // Silently ignore invalid major and minor versions.
                 if (major <= 0)

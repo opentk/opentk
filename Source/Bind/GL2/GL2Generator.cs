@@ -49,15 +49,16 @@ namespace Bind.GL2
             }
 
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-            Settings.DefaultImportsFile = "GLCore.cs";
-            Settings.DefaultDelegatesFile = "GLDelegates.cs";
             Settings.DefaultEnumsFile = "GLEnums.cs";
             Settings.DefaultWrappersFile = "GL.cs";
+            Settings.DefaultOutputPath = String.Format(
+                Settings.DefaultOutputPath, "Graphics", "OpenGL");
+            Settings.DefaultClassesFile = "GL.Extensions.cs";
             Settings.DefaultDocPath = Path.Combine(
                 Settings.DefaultDocPath, "GL");
 
-            //Settings.DefaultCompatibility |=
-            //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
+            Settings.DefaultCompatibility |=
+                Settings.Legacy.KeepStringArrayOverloads;
         }
     }
 }

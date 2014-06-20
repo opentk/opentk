@@ -46,7 +46,7 @@ namespace Bind.Structures
             Extension = d.Extension;
             Name = d.Name;
             Parameters = new ParameterCollection(d.Parameters);
-            ReturnType = new Type(d.ReturnType);
+            ReturnType = (Type)d.ReturnType.Clone();
             Version = d.Version;
             //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
             Deprecated = d.Deprecated;
@@ -55,6 +55,7 @@ namespace Bind.Structures
             Obsolete = d.Obsolete;
             CLSCompliant = d.CLSCompliant;
             Slot = d.Slot;
+            IsExtensionMethod = d.IsExtensionMethod;
         }
 
         #endregion
@@ -81,7 +82,7 @@ namespace Bind.Structures
 
                 foreach (Parameter p in Parameters)
                 {
-                    if (!p.CLSCompliant)
+                    if (!p.Type.CLSCompliant)
                         return false;
                 }
                 return true;
@@ -124,7 +125,7 @@ namespace Bind.Structures
 
                 foreach (Parameter p in Parameters)
                 {
-                    if (p.WrapperType != WrapperTypes.None)
+                    if (p.Type.WrapperType != WrapperTypes.None)
                         return true;
                 }
 
@@ -153,7 +154,7 @@ namespace Bind.Structures
 
                 foreach (Parameter p in Parameters)
                 {
-                    if (p.Pointer != 0)
+                    if (p.Type.Pointer != 0)
                     {
                         return true;
                     }
@@ -244,6 +245,18 @@ namespace Bind.Structures
         public string EntryPoint { get; set; }
         public string Obsolete { get; set; }
 
+        /// <summary>
+        /// True, if this instance is a .Net extension method; false otherwise.
+        /// </summary>
+        public bool IsExtensionMethod { get; set; }
+
+        /// <summary>
+        /// True, if this instance is a static method.
+        /// Only used for class generation.
+        /// </summary>
+        public bool IsStaticMethod { get; set; }
+
+
         // Slot index in the address table
         public int Slot { get; set; }
 
@@ -258,7 +271,7 @@ namespace Bind.Structures
 
             sb.Append(Unsafe ? "unsafe " : "");
             sb.Append("delegate ");
-            sb.Append(ReturnType);
+            sb.Append(ReturnType.CurrentType);
             sb.Append(" ");
             sb.Append(Name);
             sb.Append(Parameters.ToString());
@@ -270,7 +283,11 @@ namespace Bind.Structures
 
         public int CompareTo(Delegate other)
         {
-            int ret = Name.CompareTo(other.Name);
+            int ret = (Extension != "Core").CompareTo(other.Extension != "Core");
+            if (ret == 0)
+                ret = Extension.CompareTo(other.Extension);
+            if (ret == 0)
+                ret = Name.CompareTo(other.Name);
             if (ret == 0)
                 ret = Parameters.CompareTo(other.Parameters);
             if (ret == 0)
@@ -295,12 +312,9 @@ namespace Bind.Structures
 
     #region DelegateCollection
 
-    class DelegateCollection : IDictionary<string, List<Delegate>>
+    class DelegateCollection : GenericCollection<Delegate>
     {
-        readonly SortedDictionary<string, List<Delegate>> Delegates =
-            new SortedDictionary<string, List<Delegate>>();
-
-        public void Add(Delegate d)
+        public override void Add(Delegate d)
         {
             if (!ContainsKey(d.Name))
             {
@@ -308,7 +322,7 @@ namespace Bind.Structures
             }
             else
             {
-                var list = Delegates[d.Name];
+                var list = Collection[d.Name];
                 var index = list.FindIndex(w => w.CompareTo(d) == 0);
                 if (index < 0)
                 {
@@ -332,14 +346,6 @@ namespace Bind.Structures
             }
         }
 
-        public void AddRange(IEnumerable<Delegate> delegates)
-        {
-            foreach (var d in delegates)
-            {
-                Add(d);
-            }
-        }
-
         public void AddRange(DelegateCollection delegates)
         {
             foreach (var d in delegates.Values.SelectMany(v => v))
@@ -347,121 +353,6 @@ namespace Bind.Structures
                 Add(d);
             }
         }
-
-        #region IDictionary Members
-
-        public void Add(string key, List<Delegate> value)
-        {
-            Delegates.Add(key, value.ToList());
-        }
-
-        public bool ContainsKey(string key)
-        {
-            return Delegates.ContainsKey(key);
-        }
-
-        public bool Remove(string key)
-        {
-            return Delegates.Remove(key);
-        }
-
-        public bool TryGetValue(string key, out List<Delegate> value)
-        {
-            return Delegates.TryGetValue(key, out value);
-        }
-
-        public List<Delegate> this[string index]
-        {
-            get
-            {
-                return Delegates[index];
-            }
-            set
-            {
-                Delegates[index] = value;
-            }
-        }
-
-        public ICollection<string> Keys
-        {
-            get
-            {
-                return Delegates.Keys;
-            }
-        }
-
-        public ICollection<List<Delegate>> Values
-        {
-            get
-            {
-                return Delegates.Values;
-            }
-        }
-
-        #endregion
-
-        #region ICollection implementation
-
-        public void Add(KeyValuePair<string, List<Delegate>> item)
-        {
-            Delegates.Add(item.Key, item.Value.ToList());
-        }
-
-        public void Clear()
-        {
-            Delegates.Clear();
-        }
-
-        public bool Contains(KeyValuePair<string, List<Delegate>> item)
-        {
-            return Delegates.Contains(item);
-        }
-
-        public void CopyTo(KeyValuePair<string, List<Delegate>>[] array, int arrayIndex)
-        {
-            Delegates.CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(KeyValuePair<string, List<Delegate>> item)
-        {
-            return Delegates.Remove(item.Key);
-        }
-
-        public int Count
-        {
-            get
-            {
-                return Delegates.Count;
-            }
-        }
-
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        #endregion
-
-        #region IEnumerable implementation
-
-        public IEnumerator<KeyValuePair<string, List<Delegate>>> GetEnumerator()
-        {
-            return Delegates.GetEnumerator();
-        }
-
-        #endregion
-
-        #region IEnumerable implementation
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return Delegates.GetEnumerator();
-        }
-
-        #endregion
     }
 
     #endregion

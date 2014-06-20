@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+<!ENTITY imageFunctionsInc SYSTEM "imageFunctionsInc.xml">
+]>
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>write_image3d</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>write_image (3D)</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="write_image3d">
+        <refname>write_image</refname>
+
+        <refpurpose>
+            Write <varname>color</varname> value to location in a 3D image object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagef
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image3d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">float4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagei
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image3d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imageui
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image3d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">uint4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imageh
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image3d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          Writes to a 3D image memory object are only supported when the
+          <citerefentry><refentrytitle>cl_khr_3d_image_writes</refentrytitle></citerefentry>
+          extension is implemented. Reads and writes to the same 3D image memory object are
+          not allowed in a kernel.
+        </para>
+
+        <para>
+          An application that wants to use this extension to write to 3D
+          image memory objects will need to include the <code>#pragma OPENCL EXTENSION
+          <citerefentry><refentrytitle>cl_khr_3d_image_writes</refentrytitle></citerefentry>
+          : enable</code> directive in the OpenCL program source.
+        </para>
+
+        <para>
+          These functions write <varname>color</varname> value to location specified by coordinate <emphasis>(x,
+          y, z)</emphasis> in the 3D image object specified by <varname>image</varname>. Appropriate
+          data format conversion to the specified image format is done before writing
+          the color value. <emphasis>coord.x</emphasis>, <emphasis>coord.y</emphasis> and
+          <emphasis>coord.z</emphasis> are considered to be unnormalized coordinates and must
+          be in the range 0 ... image width - 1, 0 ... image height - 1 and 0 ... image depth - 1.
+        </para>
+
+        <para>
+          <function>write_imagef</function> can only be used with image  objects created with
+          <varname>image_channel_data_type</varname> set to one of the pre-defined packed formats
+          or set  to <constant>CL_SNORM_INT8</constant>, <constant>CL_UNORM_INT8</constant>,
+           <constant>CL_SNORM_INT16</constant>,  <constant>CL_UNORM_INT16</constant>,
+          <constant>CL_HALF_FLOAT</constant> or <constant>CL_FLOAT</constant>. Appropriate
+          data format conversion will be done to convert  channel data from a floating-point
+          value to actual  data format in which the channels are stored.
+        </para>
+
+        <para>
+          <function>write_imagei</function> can only be used with image objects created with
+          <varname>image_channel_data_type</varname> set to one of the following values:
+          <constant>CL_SIGNED_INT8</constant>, <constant>CL_SIGNED_INT16</constant>, or
+          <constant>CL_SIGNED_INT32</constant>.
+        </para>
+
+        <para>
+          <function>write_imageui</function> can only be used with image objects created with
+          <varname>image_channel_data_type</varname> set to one of the following values:
+          <constant>CL_UNSIGNED_INT8</constant>, <constant>CL_UNSIGNED_INT16</constant>,
+          or <constant>CL_UNSIGNED_INT32</constant>.
+        </para>
+
+        <para>
+          The behavior of <function>write_imagef</function>, <function>write_imagei</function>
+          and <function>write_imageui</function> for image objects with
+          <varname>image_channel_data_type</varname> values not specified in the description
+          above or with <emphasis>(x, y, z)</emphasis> coordinate values that are not in the range
+          (0 ... image width - 1, 0 ... image height - 1, 0 ... image depth - 1), respectively,
+          is undefined.
+        </para>
+
+        <para>
+          <function>write_imageh</function> can only be used with image objects created with
+          <varname>image_channel_data_type</varname> set to one of the pre-defined packed formats
+          or set to <constant>CL_SNORM_INT8</constant>, <constant>CL_UNORM_INT8</constant>,
+          <constant>CL_SNORM_INT16</constant>, <constant>CL_UNORM_INT16</constant> or
+          <constant>CL_HALF_FLOAT</constant>.
+        </para>
+
+        <para>
+          The behavior of <function>write_imageh</function> for image objects created  with
+          <varname>image_channel_data_type</varname> values not specified in the  description
+          above or with <emphasis>(x, y, z)</emphasis> coordinate values that  are not in the
+          range (0 ... image width - 1, 0 ... image  height - 1,  0 ... image depth - 1),
+          respectively, is  undefined.
+        </para>
+
+        <para>
+          An application that wants to use <type>half</type> and
+          <type>half<replaceable>n</replaceable></type> types will need to include the
+          <code>#pragma OPENCL EXTENSION cl_khr_fp16 : enable</code> directive.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+<!--
+    <refsect1 id="notes"><title>Notes</title>
+    </refsect1>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="imageFunctions3D">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_3d_image_writes</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>scalarDataTypes</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 12-Oct-2011 -->
+</refentry>
+

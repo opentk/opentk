@@ -1,0 +1,7 @@
+<WorkspaceItem ctype="Workspace">
+  <Items>
+    <Item>OpenTK.sln</Item>
+    <Item>Projects/OpenTK.Android/OpenTK.Android.sln</Item>
+    <Item>Projects/OpenTK.iOS/OpenTK.iOS.sln</Item>
+  </Items>
+</WorkspaceItem>

@@ -47,7 +47,7 @@ namespace OpenTK.Platform.MacOS
 
         #region IPlatformFactory Members
 
-        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
         {
             return new CocoaNativeWindow(x, y, width, height, title, mode, options, device);
         }

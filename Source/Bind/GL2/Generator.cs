@@ -22,13 +22,7 @@ namespace Bind.GL2
     {
         #region Fields
 
-        protected string glTypemap = "GL2/gl.tm";
-        protected string csTypemap = "csharp.tm";
-        protected string enumSpec = "GL2/enum.spec";
-        protected string enumSpecExt = "GL2/enumext.spec";
-        protected string glSpec = "GL2/gl.spec";
-        protected string glSpecExt = "";
-
+        protected string path;
         protected string loadAllFuncName = "LoadAll";
 
         protected Regex enumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
@@ -64,27 +58,21 @@ namespace Bind.GL2
         {
             if (settings == null)
                 throw new ArgumentNullException("settings");
-            if (dirName == null)
+            if (String.IsNullOrEmpty(dirName))
                 dirName = "GL2";
 
             Settings = settings.Clone();
+            Settings.DefaultTypeMapFile = "GL2/gl.tm";
 
-            glTypemap = "GL2/gl.tm";
-            csTypemap = Settings.LanguageTypeMapFile;
+            path = Path.Combine(Settings.InputPath, dirName);
 
-            enumSpec = Path.Combine(dirName, "signatures.xml");
-            enumSpecExt = String.Empty;
-            glSpec = Path.Combine(dirName, "signatures.xml");
-            glSpecExt = String.Empty;
-            Settings.OverridesFile = Path.Combine(dirName, "overrides.xml");
-
-            Settings.ImportsClass = "Core";
-            Settings.DelegatesClass = "Delegates";
             Settings.OutputClass = "GL";
+            Settings.DefaultClassesFile = "GL.Extensions.cs";
 
             Delegates = new DelegateCollection();
             Enums = new EnumCollection();
             Wrappers = new FunctionCollection();
+            Classes = new ClassCollection();
 
             SpecReader = new XmlSpecReader(Settings);
         }
@@ -96,19 +84,22 @@ namespace Bind.GL2
         public DelegateCollection Delegates { get; private set; }
         public EnumCollection Enums { get; private set; }
         public FunctionCollection Wrappers { get; private set; }
+        public ClassCollection Classes { get; private set; }
         public IDictionary<string, string> GLTypes { get; private set; }
         public IDictionary<string, string> CSTypes { get; private set; }
 
         public virtual void Process()
         {
-            string overrides = Path.Combine(Settings.InputPath, Settings.OverridesFile);
-            
-            GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, glTypemap));
-            CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, csTypemap));
+            string overrides = Path.Combine(path, Settings.OverridesFile);
+            string enums = Path.Combine(path, Settings.SignaturesFile);
+            string functions = Path.Combine(path, Settings.SignaturesFile);
 
-            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, Profile, Version);
+            GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, Settings.TypeMapFile));
+            CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, Settings.LanguageTypeMapFile));
+
+            SpecReader.ReadEnums(enums, Enums, Profile, Version);
             SpecReader.ReadEnums(overrides, Enums, Profile, Version);
-            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, Profile, Version);
+            SpecReader.ReadDelegates(functions, Delegates, Profile, Version);
             SpecReader.ReadDelegates(overrides, Delegates, Profile, Version);
 
             var enum_processor = new EnumProcessor(this, overrides);
@@ -117,7 +108,7 @@ namespace Bind.GL2
 
             Enums = enum_processor.Process(Enums, Profile);
             Wrappers = func_processor.Process(enum_processor, doc_processor,
-                Delegates, Enums, Profile, Version);
+                Delegates, Enums, Profile, Version, Classes);
         }
 
         #endregion

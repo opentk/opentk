@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY relationalFunctionsInc1 SYSTEM "relationalFunctionsInc1.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Relational Built-In Functions</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Relational Built-In Functions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>Relational Built-In Functions</refname>
+        <refpurpose>Click an item in the table below for details about that function.</refpurpose>
+    </refnamediv>
+
+    <refsect1 id="springboard"><title></title>
+      <informaltable frame="all">
+      <tgroup cols="2" align="left" colsep="1" rowsep="1">
+        <colspec colnum="1" colwidth="2*" colname="col1" />
+        <colspec colnum="2" colwidth="8*" colname="col2" />
+
+        <tbody>
+          <row>
+            <entry><citerefentry>
+              <refentrytitle>isequal</refentrytitle></citerefentry>
+            </entry>
+
+            <entry>
+              <para>
+                Component-wise compare of <varname>x</varname> == <varname>y</varname>.
+              </para>
+            </entry>
+          </row>
+
+          <row>
+            <entry>
+              <citerefentry> <refentrytitle>isnotequal</refentrytitle>
+            </citerefentry></entry> <entry><para>Component-wise compare of <varname>x</varname>
+            != <varname>y</varname>.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>isgreater</refentrytitle>
+            </citerefentry></entry> <entry><para>Component-wise compare of <varname>x</varname>
+            &gt; <varname>y</varname>.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>isgreaterequal</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>Component-wise compare of <varname>x</varname> &gt;= <varname>y</varname>.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>isless</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>Component-wise compare of <varname>x</varname> &lt; <varname>y</varname>.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>islessequal</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>Component-wise compare of <varname>x</varname> &lt;= <varname>y</varname>.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>islessgreater</refentrytitle>
+            </citerefentry></entry>
+            <entry>
+              <para>
+                Component-wise compare of (<varname>x</varname> &lt; <varname>y</varname>) ||
+                (<varname>x</varname> &gt; <varname>y</varname>).
+              </para>
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>isfinite</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>Test for finite value.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>isinf</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>Test for positive or negative infinity.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>isnan</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>Test for a NaN.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>isnormal</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>Test for a normal value.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>isordered</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>Test if arguments are ordered.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>isunordered</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>Test if arguments are unordered.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>signbit</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>Test for sign bit.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>any</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>1 if MSB in any component of <varname>x</varname> is set; else 0.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry href="any">
+                <refentrytitle>all</refentrytitle>
+            </citerefentry></entry>
+            <entry><para>1 if MSB in all components of <varname>x</varname> is set; else 0.</para></entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>bitselect</refentrytitle>
+            </citerefentry></entry>
+            <entry>
+              <para>
+                Each bit of result is corresponding bit of <varname>a</varname> if corresponding
+                bit of <varname>c</varname> is 0.
+              </para>
+            </entry>
+          </row>
+
+          <row>
+            <entry><citerefentry>
+                <refentrytitle>select</refentrytitle>
+            </citerefentry></entry>
+            <entry>
+              <para>
+                For each component of a vector type, result[<varname>i</varname>]
+                = if MSB of <varname>c</varname>[<varname>i</varname>]
+                is set ? <varname>b</varname>[<varname>i</varname>] :
+                <varname>a</varname>[<varname>i</varname>] For scalar type, result =
+                <varname>c</varname> ? <varname>b</varname> : <varname>a</varname>.
+              </para>
+            </entry>
+          </row>
+        </tbody>
+        </tgroup>
+      </informaltable>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+      <para>
+        If an implementation extends this specification to support IEEE-754 flags or
+        exceptions, then all built-in relational functions shall proceed without raising the
+        <varname>invalid</varname> floating-point exception when one or more of the operands
+        are NaNs.
+      </para>
+  </refsect1>
+
+<!-- ================================ SPECIFICATION  --> <!-- Set the "uri" attribute in the
+<olink /> element to the "named destination" for the PDF page -->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+            <olink uri="relationalFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+        </para>
+    </refsect1>-->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 7-Jun-2013 -->
+</refentry>
+

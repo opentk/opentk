@@ -20,23 +20,25 @@ namespace Bind
         }
 
         public string DefaultInputPath = "../../../Source/Bind/Specifications";
-        public string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
+        public string DefaultOutputPath = "../../../Source/OpenTK/{0}/{1}";
         public string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
         public string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
         public string DefaultFallbackDocPath = "../../../Source/Bind/Specifications/Docs/GL";
         public string DefaultLicenseFile = "License.txt";
-        public string DefaultOverridesFile = "GL2/gloverrides.xml";
+        public string DefaultSignaturesFile = "signatures.xml";
+        public string DefaultOverridesFile = "overrides.xml";
         public string DefaultLanguageTypeMapFile = "csharp.tm";
         public string DefaultKeywordEscapeCharacter = "@";
-        public string DefaultImportsFile = "Core.cs";
-        public string DefaultDelegatesFile = "Delegates.cs";
         public string DefaultEnumsFile = "Enums.cs";
         public string DefaultWrappersFile = "GL.cs";
+        public string DefaultClassesFile = "Extensions.cs";
+        public string DefaultTypeMapFile = "gl.tm";
         public Legacy DefaultCompatibility = Legacy.NoDropMultipleTokens;
 
-        string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile, overridesFile,
-            languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
-            wrappersFile;
+        string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
+            signaturesFile, overridesFile, typemap,
+            languageTypeMapFile, keywordEscapeCharacter, enumsFile,
+            wrappersFile, classesFile;
         Nullable<Legacy> compatibility;
         public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
         public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
@@ -44,13 +46,14 @@ namespace Bind
         public string DocPath { get { return docPath ?? DefaultDocPath; } set { docPath = value; } }
         public string FallbackDocPath { get { return fallbackDocPath ?? DefaultFallbackDocPath; } set { fallbackDocPath = value; } }
         public string LicenseFile { get { return licenseFile ?? DefaultLicenseFile; } set { licenseFile = value; } }
+        public string SignaturesFile { get { return signaturesFile ?? DefaultSignaturesFile; } set { signaturesFile = value; } }
         public string OverridesFile { get { return overridesFile ?? DefaultOverridesFile; } set { overridesFile = value; } }
         public string LanguageTypeMapFile { get { return languageTypeMapFile ?? DefaultLanguageTypeMapFile; } set { languageTypeMapFile = value; } }
         public string KeywordEscapeCharacter { get { return keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter; } set { keywordEscapeCharacter = value; } }
-        public string ImportsFile { get { return importsFile ?? DefaultImportsFile; } set { importsFile = value; } }
-        public string DelegatesFile { get { return delegatesFile ?? DefaultDelegatesFile; } set { delegatesFile = value; } }
         public string EnumsFile { get { return enumsFile ?? DefaultEnumsFile; } set { enumsFile = value; } }
         public string WrappersFile { get { return wrappersFile ?? DefaultWrappersFile; } set { wrappersFile = value; } }
+        public string ClassesFile { get { return classesFile ?? DefaultClassesFile; } set { classesFile = value; } }
+        public string TypeMapFile { get { return typemap ?? DefaultTypeMapFile; } set { typemap = value; } }
         public Legacy Compatibility { get { return compatibility ?? DefaultCompatibility; } set { compatibility = value; } }
 
         public string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
@@ -105,9 +108,6 @@ namespace Bind
         // New enums namespace (don't use a nested class).
         public string EnumsNamespace = null;// = "Enums";
 
-        public string DelegatesClass = "Delegates";
-        public string ImportsClass = "Core";
-
         /// <summary>
         /// The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
         /// </summary>
@@ -121,10 +121,8 @@ namespace Bind
             ConstIntEnums = 0x01,
             /// <summary>Leave enums in the default STRANGE_capitalization.ALL_CAPS form.</summary>
             NoAdvancedEnumProcessing = 0x02,
-            /// <summary>Don't allow unsafe wrappers in the interface.</summary>
+            /// <summary>Convert unsafe pointers to IntPtr.</summary>
             NoPublicUnsafeFunctions = 0x04,
-            /// <summary>Don't trim the [fdisub]v? endings from functions.</summary>
-            NoTrimFunctionEnding = NoPublicUnsafeFunctions,
             /// <summary>Don't trim the [gl|wgl|glx|glu] prefixes from functions.</summary>
             NoTrimFunctionPrefix = 0x08,
             /// <summary>
@@ -163,6 +161,33 @@ namespace Bind
             /// for higher versions.
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
+            /// <summary>
+            /// Force all entry points to be DllImports.
+            /// Only useful on MacOS and iOS - on other platforms,
+            /// this will cause API extensions to fail.
+            /// </summary>
+            ForceDllImports = 0x10000,
+            /// <summary>Don't trim the [fdisub]v? endings from functions.</summary>
+            NoTrimFunctionEnding = 0x20000,
+            /// <summary>
+            /// Suppress the generation of unsigned overloads.
+            /// Normally, when the specs define a uint parameter,
+            /// we generate both int and uint overloads. This setting
+            /// will keep only the int overloads, reducing the size
+            /// of the generated bindings.
+            /// </summary>
+            NoUnsignedOverloads = 0x40000,
+            /// <summary>
+            /// Generates string[] overloads for each ref string / out string parameter.
+            /// Use this option to maintain compatibility with the 1.0/1.1 GL and ES APIs.
+            /// </summary>
+            KeepStringArrayOverloads = 0x80000,
+            /// <summary>
+            /// Generates bindings only for core methods. Extensions are ignored.
+            /// Use this option to generate OpenGL ES 1.0 bindings from the 1.1 specification
+            /// (OpenGL ES 1.0 does not define any extensions.)
+            /// </summary>
+            KeepCoreOnly = 0x100000,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |
