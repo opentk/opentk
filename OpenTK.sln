@@ -74,6 +74,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Rewrite", "Source
 		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.API.Desktop", "Source\Tests\Test.API.Desktop\Test.API.Desktop.csproj", "{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -158,6 +163,14 @@ Global
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Nsis|Any CPU.Build.0 = Release|Any CPU
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Documentation|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Documentation|Any CPU.Build.0 = Debug|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Nsis|Any CPU.ActiveCfg = Release|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Nsis|Any CPU.Build.0 = Release|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

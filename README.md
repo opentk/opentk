@@ -32,61 +32,37 @@ Alternatively, download the [OpenTK binaries](http://www.opentk.com) and:
 2. Use "Add reference" to add OpenTK.dll as a project reference
 3. Use "Add files" to add OpenTK.dll.config to your project, and enable the "Copy to Output Directory" option.
 
-If you wish to build OpenTK from source, simply double-click OpenTK.sln
+If you wish to build OpenTK from source, simply double-click OpenTK.sln and build through your IDE. Alternatively, open a command prompt and type:
 
+```
+msbuild /p:Configuration=Release OpenTK.sln  # Windows
+xbuild  /p:Configuration=Release OpenTK.sln  # Linux and Mac OS X
+```
 
 News
 ====
 
-OpenTK 1.1.2 was released on 19 May 2014.
+OpenTK 1.1.3 was released on 20 June 2014.
 
-It contains performance and stability improvements and synchronizes the OpenGL and OpenGL ES bindings with the May 2014 Khronos specifications.
+This release resolves a number of identified issues and synchronizes the OpenGL and OpenGL ES bindings with the June 2014 Khronos specifications.
 
 **Changelog:**
 
-1. New Cocoa backend for Mac OS X, with support for OpenGL 4.x and retina displays. Huge thanks to [Ollhax](https://github.com/Ollhax) for implementing the backend from scratch, including the necessary Cocoa bindings!
-2. Custom hardware cursors are now supported: `INativeWindow.Cursor = new MouseCursor(...)`
-3. Up to 2000% improvement in binding loading speed. The exact numbers depend on the operating system and hardware configuration. On a Nvidia 650M GPU and a 2.3GHz processor:
-   - Linux: 6.5ms instead of  45ms
-   - MacOS: 9.5ms instead of 165ms
-   - Win64: 5.9ms instead of 108ms
-4. Up to 1000% improvement in memory consumption. The object graph has been reduced from 9000 to 900 objects, consuming between 185-220KB of memory depending on the platform and hardware configuration.
-5. Support for high-resolution X/Y scrolling on all platforms:
-   - `OpenTK.Input.MouseState.Scroll.X/Y`
-6. Improved mouse input APIs:
-   - new INativeWindow.MouseMove, MouseUp, MouseDown and MouseWheel events
-   - new OpenTK.Mouse.GetCursorPos() API to retrieve the state of the system cursor
-   - all mouse event arguments now carry the current MouseState
-7. Improved keyboard input APIs:
-   - support for non-US layouts on Linux/X11
-   - all keyboard event arguments now carry the current KeyboardState
-   - all keyboard event arguments now report the correct KeyModifiers state
-8. New OpenGL extensions:
-   - AMD_gcn_shader
-   - AMD_gpu_shader_int64
-   - AMD_transform_feedback4
-   - EXT_shader_image_load_formatted
-   - NV_shader_thread_group
-   - NV_shader_thread_shuffle
-9. New OpenGL ES extensions:
-   - ARM_shader_framebuffer_fetch
-   - ARM_shader_framebuffer_fetch_depth_stencil
-   - EXT_shader_pixel_local_storage
-   - KHR_blend_equation_advanced
-   - OES_sample_shading
-   - OES_sample_variables
-   - OES_shader_image_atomic
-   - OES_shader_multisample_interpolation
-   - OES_texture_stencil8
-   - OES_texture_storage_multisample_2d_array
-10. Improved OpenGL ES documentation tooltips.
-11. Improved stability when using EGL on Linux and Windows/ANGLE.
-12. Improved stability when using SDL2 on 32bit platforms.
-13. Improved the shutdown sequence on X11.
-14. Fixed a marshaling issue affecting 2d and 3d arrays on Windows/.Net.
+1. Fixed a potential crash in bindings accepting a string array.
+2. Fixed a marshalling issue where bindings might return an incorrect boolean value on some architectures.
+3. Fixed a regression where mouse scrolling coordinates on Linux where flipped. Mouse scrolling now uses identical coordinate systems on Windows, Linux and Mac OS X: (+x, +y) = (right, up).
+4. Fixed a potential deadlock when exiting the X11/XInput2 subsystem.
+5. Fixed an issue where single-to-half floating point conversions would return incorrect results for specific numbers.
+6. Added an API compatibility test - backwards-incompatible changes will now cause a compilation failure in the continuous integration server.
+7. New platform: XQuartz (X11 over Mac OS X).
+8. New platform: XWayland (X11 over Wayland).
+9. New OpenGL and OpenGL ES extensions:
+  - EXT_geometry_point_size
+  - EXT_primitive_bounding_box
+  - EXT_texture_array
+  - EXT_tessellation_point_size
 
-
-OpenTK 1.1.2 is backwards compatible with 1.1.1. Users of previous versions are encouraged to upgrade.
+OpenTK 1.1.3 is backwards compatible with 1.1.2. Users of previous versions are strongly encouraged to upgrade.
 
 
 Known issues
@@ -113,17 +89,17 @@ Some areas we could really use your help:
 - Tutorials for OpenGL 3.x and 4.x. [Inspiration here](https://github.com/Groovounet/ogl-samples)
 - New platforms:
   - Native Client (NaCL)
-  - Raspberry PI (EGL without X11)
+  - Blackberry
+  - Raspberry PI
   - Wayland
   - Mir
   - WinRT (via ANGLE)
+  - Linux KMS (EGL without X11)
 - New features:
   - Multitouch
-  - Clipboard
-  - Input Method Editors (IMEs)
-  - USB HID joystick backend (Windows, Linux)
+  - Improved joystick support (HID backend for Windows, Linux)
 
-Further ideas for improvement are always welcome.
+Further ideas for improvement are always welcome!
 
 
 Requirements
@@ -163,6 +139,8 @@ http://www.opentk.com/project/license
 
 API compatibility
 =================
+
+OpenTK 1.1.3 is backwards compatible with 1.1.2.
 
 OpenTK 1.1.2 is backwards compatible with 1.1.1.
 

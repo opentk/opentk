@@ -117,24 +117,6 @@ namespace OpenTK.Platform.X11
 
         #region Window handling
 
-        [Obsolete("Use XCreateWindow instead")]
-        [DllImport(_dll_name, EntryPoint = "XCreateWindow")]
-        public extern static Window CreateWindow(
-            Display display,
-            Window parent,
-            int x, int y,
-            //uint width, uint height,
-            int width, int height,
-            //uint border_width,
-            int border_width,
-            int depth,
-            //uint @class,
-            int @class,
-            IntPtr visual,
-            [MarshalAs(UnmanagedType.SysUInt)] CreateWindowMask valuemask,
-            SetWindowAttributes attributes
-        );
-
         [DllImport(_dll_name, EntryPoint = "XCreateSimpleWindow")]
         public extern static Window CreateSimpleWindow(
             Display display,
@@ -1462,10 +1444,26 @@ XF86VidModeGetGammaRampSize(
         /// <para>The XCreateSimpleWindow function creates an unmapped InputOutput subwindow for a specified parent window, returns the window ID of the created window, and causes the X server to generate a CreateNotify event. The created window is placed on top in the stacking order with respect to siblings. Any part of the window that extends outside its parent window is clipped. The border_width for an InputOnly window must be zero, or a BadMatch error results. XCreateSimpleWindow inherits its depth, class, and visual from its parent. All other window attributes, except background and border, have their default values. </para>
         /// <para>XCreateSimpleWindow can generate BadAlloc, BadMatch, BadValue, and BadWindow errors.</para>
         /// </remarks>
-        [DllImport(X11Library, EntryPoint = "XCreateWindow")]//, CLSCompliant(false)]
-        public extern static Window XCreateWindow(Display display, Window parent,
+        public static Window XCreateWindow(Display display, Window parent,
             int x, int y, int width, int height, int border_width, int depth,
-            int @class, IntPtr visual, UIntPtr valuemask, ref XSetWindowAttributes attributes);
+            CreateWindowArgs @class, IntPtr visual, SetWindowValuemask valuemask,
+            XSetWindowAttributes? attributes)
+        {
+            unsafe
+            {
+                if (attributes.HasValue)
+                {
+                    XSetWindowAttributes attr = attributes.Value;
+                    return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
+                        (int)@class, visual, (IntPtr)valuemask, &attr);
+                }
+                else
+                {
+                    return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
+                        (int)@class, visual, (IntPtr)valuemask, null);
+                }
+            }
+        }
 
         #endregion
 

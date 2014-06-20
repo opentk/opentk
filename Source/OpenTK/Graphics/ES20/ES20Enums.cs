@@ -7646,6 +7646,10 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         InvertOvgNv = ((int)0x92B4)        ,
         /// <summary>
+        /// Original was GL_PRIMITIVE_BOUNDING_BOX_EXT = 0x92BE
+        /// </summary>
+        PrimitiveBoundingBoxExt = ((int)0x92BE)        ,
+        /// <summary>
         /// Original was GL_MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS_EXT = 0x92CD
         /// </summary>
         MaxTessControlAtomicCounterBuffersExt = ((int)0x92CD)        ,
@@ -11943,6 +11947,13 @@ namespace OpenTK.Graphics.ES20
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum ExtGeometryPointSize : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum ExtGeometryShader : int
     {
         /// <summary>
@@ -12215,6 +12226,17 @@ namespace OpenTK.Graphics.ES20
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum ExtPrimitiveBoundingBox : int
+    {
+        /// <summary>
+        /// Original was GL_PRIMITIVE_BOUNDING_BOX_EXT = 0x92BE
+        /// </summary>
+        PrimitiveBoundingBoxExt = ((int)0x92BE)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum ExtPvrtcSrgb : int
     {
         /// <summary>
@@ -12445,6 +12467,13 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_FRAMEBUFFER_SRGB_EXT = 0x8DB9
         /// </summary>
         FramebufferSrgbExt = ((int)0x8DB9)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ExtTessellationPointSize : int
+    {
     }
 
     /// <summary>
