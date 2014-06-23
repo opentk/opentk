@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.Accumx, GL.Oes.AlphaFuncx and 163 other functions
+    /// Used in GL.Oes.Accumx, GL.Oes.AlphaFuncx and 172 other functions
     /// </summary>
     public enum All : int
     {
@@ -5200,17 +5200,17 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         AtcRgbaInterpolatedAlphaAmd = ((int)0x87EE),
         /// <summary>
-        /// Original was GL_GL_3DcXAmd = 0x87F9
+        /// Original was GL_##GL_3DcXAmd = 0x87F9
         /// </summary>
-        Gl3Dcxamd = ((int)0x87F9),
+        GL_3DcXAmd = ((int)0x87F9),
         /// <summary>
         /// Original was GL_3DC_X_AMD = 0x87F9
         /// </summary>
         Gl3DcXAmd = ((int)0x87F9),
         /// <summary>
-        /// Original was GL_GL_3DcXyAmd = 0x87FA
+        /// Original was GL_##GL_3DcXyAmd = 0x87FA
         /// </summary>
-        Gl3Dcxyamd = ((int)0x87FA),
+        GL_3DcXyAmd = ((int)0x87FA),
         /// <summary>
         /// Original was GL_3DC_XY_AMD = 0x87FA
         /// </summary>
@@ -6206,17 +6206,17 @@ namespace OpenTK.Graphics.ES11
     public enum Amdcompressed3Dctexture : int
     {
         /// <summary>
-        /// Original was GL_GL_3DcXAmd = 0x87F9
+        /// Original was GL_##GL_3DcXAmd = 0x87F9
         /// </summary>
-        Gl3Dcxamd = ((int)0x87F9),
+        GL_3DcXAmd = ((int)0x87F9),
         /// <summary>
         /// Original was GL_3DC_X_AMD = 0x87F9
         /// </summary>
         Gl3DcXAmd = ((int)0x87F9),
         /// <summary>
-        /// Original was GL_GL_3DcXyAmd = 0x87FA
+        /// Original was GL_##GL_3DcXyAmd = 0x87FA
         /// </summary>
-        Gl3Dcxyamd = ((int)0x87FA),
+        GL_3DcXyAmd = ((int)0x87FA),
         /// <summary>
         /// Original was GL_3DC_XY_AMD = 0x87FA
         /// </summary>

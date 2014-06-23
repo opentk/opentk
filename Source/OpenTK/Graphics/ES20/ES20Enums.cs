@@ -5542,17 +5542,17 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         AtcRgbaInterpolatedAlphaAmd = ((int)0x87EE),
         /// <summary>
-        /// Original was GL_GL_3DcXAmd = 0x87F9
+        /// Original was GL_##GL_3DcXAmd = 0x87F9
         /// </summary>
-        Gl3Dcxamd = ((int)0x87F9),
+        GL_3DcXAmd = ((int)0x87F9),
         /// <summary>
         /// Original was GL_3DC_X_AMD = 0x87F9
         /// </summary>
         Gl3DcXAmd = ((int)0x87F9),
         /// <summary>
-        /// Original was GL_GL_3DcXyAmd = 0x87FA
+        /// Original was GL_##GL_3DcXyAmd = 0x87FA
         /// </summary>
-        Gl3Dcxyamd = ((int)0x87FA),
+        GL_3DcXyAmd = ((int)0x87FA),
         /// <summary>
         /// Original was GL_3DC_XY_AMD = 0x87FA
         /// </summary>
@@ -8062,6 +8062,10 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         ExtDiscardFramebuffer = ((int)1),
         /// <summary>
+        /// Original was GL_EXT_multi_draw_arrays = 1
+        /// </summary>
+        ExtMultiDrawArrays = ((int)1),
+        /// <summary>
         /// Original was GL_EXT_read_format_bgra = 1
         /// </summary>
         ExtReadFormatBgra = ((int)1),
@@ -8304,13 +8308,13 @@ namespace OpenTK.Graphics.ES20
     public enum Amdcompressed3Dctexture : int
     {
         /// <summary>
-        /// Original was GL_GL_3DcXAmd = 0x87F9
+        /// Original was GL_##GL_3DcXAmd = 0x87F9
         /// </summary>
-        Gl3Dcxamd = ((int)0x87F9),
+        GL_3DcXAmd = ((int)0x87F9),
         /// <summary>
-        /// Original was GL_GL_3DcXyAmd = 0x87FA
+        /// Original was GL_##GL_3DcXyAmd = 0x87FA
         /// </summary>
-        Gl3Dcxyamd = ((int)0x87FA),
+        GL_3DcXyAmd = ((int)0x87FA),
         /// <summary>
         /// Original was GL_AmdCompressed3DcTexture = 1
         /// </summary>
@@ -22608,6 +22612,21 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ReadFormat : int
+    {
+        /// <summary>
+        /// Original was GL_IMPLEMENTATION_COLOR_READ_TYPE = 0x8B9A
+        /// </summary>
+        ImplementationColorReadType = ((int)0x8B9A),
+        /// <summary>
+        /// Original was GL_IMPLEMENTATION_COLOR_READ_FORMAT = 0x8B9B
+        /// </summary>
+        ImplementationColorReadFormat = ((int)0x8B9B),
+    }
+
+    /// <summary>
     /// Used in GL.Ext.RenderbufferStorageMultisample, GL.NV.RenderbufferStorageMultisample and 4 other functions
     /// </summary>
     public enum RenderbufferInternalFormat : int
@@ -22813,6 +22832,64 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum SeparateBlendFunctions : int
+    {
+        /// <summary>
+        /// Original was GL_CONSTANT_COLOR = 0x8001
+        /// </summary>
+        ConstantColor = ((int)0x8001),
+        /// <summary>
+        /// Original was GL_ONE_MINUS_CONSTANT_COLOR = 0x8002
+        /// </summary>
+        OneMinusConstantColor = ((int)0x8002),
+        /// <summary>
+        /// Original was GL_CONSTANT_ALPHA = 0x8003
+        /// </summary>
+        ConstantAlpha = ((int)0x8003),
+        /// <summary>
+        /// Original was GL_ONE_MINUS_CONSTANT_ALPHA = 0x8004
+        /// </summary>
+        OneMinusConstantAlpha = ((int)0x8004),
+        /// <summary>
+        /// Original was GL_BLEND_COLOR = 0x8005
+        /// </summary>
+        BlendColor = ((int)0x8005),
+        /// <summary>
+        /// Original was GL_BLEND_DST_RGB = 0x80C8
+        /// </summary>
+        BlendDstRgb = ((int)0x80C8),
+        /// <summary>
+        /// Original was GL_BLEND_SRC_RGB = 0x80C9
+        /// </summary>
+        BlendSrcRgb = ((int)0x80C9),
+        /// <summary>
+        /// Original was GL_BLEND_DST_ALPHA = 0x80CA
+        /// </summary>
+        BlendDstAlpha = ((int)0x80CA),
+        /// <summary>
+        /// Original was GL_BLEND_SRC_ALPHA = 0x80CB
+        /// </summary>
+        BlendSrcAlpha = ((int)0x80CB),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ShaderBinary : int
+    {
+        /// <summary>
+        /// Original was GL_SHADER_BINARY_FORMATS = 0x8DF8
+        /// </summary>
+        ShaderBinaryFormats = ((int)0x8DF8),
+        /// <summary>
+        /// Original was GL_NUM_SHADER_BINARY_FORMATS = 0x8DF9
+        /// </summary>
+        NumShaderBinaryFormats = ((int)0x8DF9),
+    }
+
+    /// <summary>
     /// Used in GL.ShaderBinary
     /// </summary>
     public enum ShaderBinaryFormat : int
@@ -22875,6 +22952,147 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_HighInt = 0X8df5
         /// </summary>
         HighInt = ((int)0X8df5),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ShaderPrecisionSpecifiedTypes : int
+    {
+        /// <summary>
+        /// Original was GL_LOW_FLOAT = 0x8DF0
+        /// </summary>
+        LowFloat = ((int)0x8DF0),
+        /// <summary>
+        /// Original was GL_MEDIUM_FLOAT = 0x8DF1
+        /// </summary>
+        MediumFloat = ((int)0x8DF1),
+        /// <summary>
+        /// Original was GL_HIGH_FLOAT = 0x8DF2
+        /// </summary>
+        HighFloat = ((int)0x8DF2),
+        /// <summary>
+        /// Original was GL_LOW_INT = 0x8DF3
+        /// </summary>
+        LowInt = ((int)0x8DF3),
+        /// <summary>
+        /// Original was GL_MEDIUM_INT = 0x8DF4
+        /// </summary>
+        MediumInt = ((int)0x8DF4),
+        /// <summary>
+        /// Original was GL_HIGH_INT = 0x8DF5
+        /// </summary>
+        HighInt = ((int)0x8DF5),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum Shaders : int
+    {
+        /// <summary>
+        /// Original was GL_MAX_VERTEX_ATTRIBS = 0x8869
+        /// </summary>
+        MaxVertexAttribs = ((int)0x8869),
+        /// <summary>
+        /// Original was GL_MAX_TEXTURE_IMAGE_UNITS = 0x8872
+        /// </summary>
+        MaxTextureImageUnits = ((int)0x8872),
+        /// <summary>
+        /// Original was GL_FRAGMENT_SHADER = 0x8B30
+        /// </summary>
+        FragmentShader = ((int)0x8B30),
+        /// <summary>
+        /// Original was GL_VERTEX_SHADER = 0x8B31
+        /// </summary>
+        VertexShader = ((int)0x8B31),
+        /// <summary>
+        /// Original was GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS = 0x8B4C
+        /// </summary>
+        MaxVertexTextureImageUnits = ((int)0x8B4C),
+        /// <summary>
+        /// Original was GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = 0x8B4D
+        /// </summary>
+        MaxCombinedTextureImageUnits = ((int)0x8B4D),
+        /// <summary>
+        /// Original was GL_SHADER_TYPE = 0x8B4F
+        /// </summary>
+        ShaderType = ((int)0x8B4F),
+        /// <summary>
+        /// Original was GL_DELETE_STATUS = 0x8B80
+        /// </summary>
+        DeleteStatus = ((int)0x8B80),
+        /// <summary>
+        /// Original was GL_LINK_STATUS = 0x8B82
+        /// </summary>
+        LinkStatus = ((int)0x8B82),
+        /// <summary>
+        /// Original was GL_VALIDATE_STATUS = 0x8B83
+        /// </summary>
+        ValidateStatus = ((int)0x8B83),
+        /// <summary>
+        /// Original was GL_ATTACHED_SHADERS = 0x8B85
+        /// </summary>
+        AttachedShaders = ((int)0x8B85),
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORMS = 0x8B86
+        /// </summary>
+        ActiveUniforms = ((int)0x8B86),
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87
+        /// </summary>
+        ActiveUniformMaxLength = ((int)0x8B87),
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTES = 0x8B89
+        /// </summary>
+        ActiveAttributes = ((int)0x8B89),
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A
+        /// </summary>
+        ActiveAttributeMaxLength = ((int)0x8B8A),
+        /// <summary>
+        /// Original was GL_SHADING_LANGUAGE_VERSION = 0x8B8C
+        /// </summary>
+        ShadingLanguageVersion = ((int)0x8B8C),
+        /// <summary>
+        /// Original was GL_CURRENT_PROGRAM = 0x8B8D
+        /// </summary>
+        CurrentProgram = ((int)0x8B8D),
+        /// <summary>
+        /// Original was GL_MAX_VERTEX_UNIFORM_VECTORS = 0x8DFB
+        /// </summary>
+        MaxVertexUniformVectors = ((int)0x8DFB),
+        /// <summary>
+        /// Original was GL_MAX_VARYING_VECTORS = 0x8DFC
+        /// </summary>
+        MaxVaryingVectors = ((int)0x8DFC),
+        /// <summary>
+        /// Original was GL_MAX_FRAGMENT_UNIFORM_VECTORS = 0x8DFD
+        /// </summary>
+        MaxFragmentUniformVectors = ((int)0x8DFD),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ShaderSource : int
+    {
+        /// <summary>
+        /// Original was GL_COMPILE_STATUS = 0x8B81
+        /// </summary>
+        CompileStatus = ((int)0x8B81),
+        /// <summary>
+        /// Original was GL_INFO_LOG_LENGTH = 0x8B84
+        /// </summary>
+        InfoLogLength = ((int)0x8B84),
+        /// <summary>
+        /// Original was GL_SHADER_SOURCE_LENGTH = 0x8B88
+        /// </summary>
+        ShaderSourceLength = ((int)0x8B88),
+        /// <summary>
+        /// Original was GL_SHADER_COMPILER = 0x8DFA
+        /// </summary>
+        ShaderCompiler = ((int)0x8DFA),
     }
 
     /// <summary>
@@ -23785,6 +24003,10 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         Texture2D = ((int)0x0DE1),
         /// <summary>
+        /// Original was GL_TEXTURE = 0x1702
+        /// </summary>
+        Texture = ((int)0x1702),
+        /// <summary>
         /// Original was GL_PROXY_TEXTURE_1D = 0x8063
         /// </summary>
         ProxyTexture1D = ((int)0x8063),
@@ -23869,6 +24091,10 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         TextureCubeMap = ((int)0X8513),
         /// <summary>
+        /// Original was GL_TEXTURE_BINDING_CUBE_MAP = 0x8514
+        /// </summary>
+        TextureBindingCubeMap = ((int)0x8514),
+        /// <summary>
         /// Original was GL_TextureCubeMapPositiveX = 0X8515
         /// </summary>
         TextureCubeMapPositiveX = ((int)0X8515),
@@ -23892,6 +24118,10 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_TextureCubeMapNegativeZ = 0X851a
         /// </summary>
         TextureCubeMapNegativeZ = ((int)0X851a),
+        /// <summary>
+        /// Original was GL_MAX_CUBE_MAP_TEXTURE_SIZE = 0x851C
+        /// </summary>
+        MaxCubeMapTextureSize = ((int)0x851C),
     }
 
     /// <summary>
@@ -24073,6 +24303,10 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_Texture31 = 0X84df
         /// </summary>
         Texture31 = ((int)0X84df),
+        /// <summary>
+        /// Original was GL_ACTIVE_TEXTURE = 0x84E0
+        /// </summary>
+        ActiveTexture = ((int)0x84E0),
     }
 
     /// <summary>
@@ -24194,6 +24428,10 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_ImgTextureFormatBgra8888 = 0X0001
         /// </summary>
         ImgTextureFormatBgra8888 = ((int)0X0001),
+        /// <summary>
+        /// Original was GL_EXT_multi_draw_arrays = 1
+        /// </summary>
+        ExtMultiDrawArrays = ((int)1),
     }
 
     /// <summary>
@@ -24254,6 +24492,41 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_ALL_SHADER_BITS_EXT = 0xFFFFFFFF
         /// </summary>
         AllShaderBitsExt = unchecked((int)0xFFFFFFFF),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum VertexArrays : int
+    {
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_ENABLED = 0x8622
+        /// </summary>
+        VertexAttribArrayEnabled = ((int)0x8622),
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_SIZE = 0x8623
+        /// </summary>
+        VertexAttribArraySize = ((int)0x8623),
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_STRIDE = 0x8624
+        /// </summary>
+        VertexAttribArrayStride = ((int)0x8624),
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_TYPE = 0x8625
+        /// </summary>
+        VertexAttribArrayType = ((int)0x8625),
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_POINTER = 0x8645
+        /// </summary>
+        VertexAttribArrayPointer = ((int)0x8645),
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A
+        /// </summary>
+        VertexAttribArrayNormalized = ((int)0x886A),
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 0x889F
+        /// </summary>
+        VertexAttribArrayBufferBinding = ((int)0x889F),
     }
 
     /// <summary>

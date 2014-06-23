@@ -5944,17 +5944,17 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         AtcRgbaInterpolatedAlphaAmd = ((int)0x87EE),
         /// <summary>
-        /// Original was GL_GL_3DcXAmd = 0x87F9
+        /// Original was GL_##GL_3DcXAmd = 0x87F9
         /// </summary>
-        Gl3Dcxamd = ((int)0x87F9),
+        GL_3DcXAmd = ((int)0x87F9),
         /// <summary>
         /// Original was GL_3DC_X_AMD = 0x87F9
         /// </summary>
         Gl3DcXAmd = ((int)0x87F9),
         /// <summary>
-        /// Original was GL_GL_3DcXyAmd = 0x87FA
+        /// Original was GL_##GL_3DcXyAmd = 0x87FA
         /// </summary>
-        Gl3Dcxyamd = ((int)0x87FA),
+        GL_3DcXyAmd = ((int)0x87FA),
         /// <summary>
         /// Original was GL_3DC_XY_AMD = 0x87FA
         /// </summary>
@@ -9356,6 +9356,10 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         ExtDiscardFramebuffer = ((int)1),
         /// <summary>
+        /// Original was GL_EXT_multi_draw_arrays = 1
+        /// </summary>
+        ExtMultiDrawArrays = ((int)1),
+        /// <summary>
         /// Original was GL_EXT_read_format_bgra = 1
         /// </summary>
         ExtReadFormatBgra = ((int)1),
@@ -9598,13 +9602,13 @@ namespace OpenTK.Graphics.ES30
     public enum Amdcompressed3Dctexture : int
     {
         /// <summary>
-        /// Original was GL_GL_3DcXAmd = 0x87F9
+        /// Original was GL_##GL_3DcXAmd = 0x87F9
         /// </summary>
-        Gl3Dcxamd = ((int)0x87F9),
+        GL_3DcXAmd = ((int)0x87F9),
         /// <summary>
-        /// Original was GL_GL_3DcXyAmd = 0x87FA
+        /// Original was GL_##GL_3DcXyAmd = 0x87FA
         /// </summary>
-        Gl3Dcxyamd = ((int)0x87FA),
+        GL_3DcXyAmd = ((int)0x87FA),
         /// <summary>
         /// Original was GL_AmdCompressed3DcTexture = 1
         /// </summary>
@@ -24426,13 +24430,6 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_ES_VERSION_2_0 = 1
         /// </summary>
         EsVersion20 = ((int)1),
-    }
-
-    /// <summary>
-    /// Not used directly.
-    /// </summary>
-    public enum OpenGlEsCoreVersions : int
-    {
         /// <summary>
         /// Original was GL_ES_VERSION_3_0 = 1
         /// </summary>
@@ -27133,6 +27130,21 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ShaderBinary : int
+    {
+        /// <summary>
+        /// Original was GL_SHADER_BINARY_FORMATS = 0x8DF8
+        /// </summary>
+        ShaderBinaryFormats = ((int)0x8DF8),
+        /// <summary>
+        /// Original was GL_NUM_SHADER_BINARY_FORMATS = 0x8DF9
+        /// </summary>
+        NumShaderBinaryFormats = ((int)0x8DF9),
+    }
+
+    /// <summary>
     /// Used in GL.ShaderBinary
     /// </summary>
     public enum ShaderBinaryFormat : int
@@ -27313,6 +27325,29 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_MAX_FRAGMENT_UNIFORM_VECTORS = 0x8DFD
         /// </summary>
         MaxFragmentUniformVectors = ((int)0x8DFD),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ShaderSource : int
+    {
+        /// <summary>
+        /// Original was GL_COMPILE_STATUS = 0x8B81
+        /// </summary>
+        CompileStatus = ((int)0x8B81),
+        /// <summary>
+        /// Original was GL_INFO_LOG_LENGTH = 0x8B84
+        /// </summary>
+        InfoLogLength = ((int)0x8B84),
+        /// <summary>
+        /// Original was GL_SHADER_SOURCE_LENGTH = 0x8B88
+        /// </summary>
+        ShaderSourceLength = ((int)0x8B88),
+        /// <summary>
+        /// Original was GL_SHADER_COMPILER = 0x8DFA
+        /// </summary>
+        ShaderCompiler = ((int)0x8DFA),
     }
 
     /// <summary>
@@ -29152,6 +29187,10 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         Texture2D = ((int)0x0DE1),
         /// <summary>
+        /// Original was GL_TEXTURE = 0x1702
+        /// </summary>
+        Texture = ((int)0x1702),
+        /// <summary>
         /// Original was GL_PROXY_TEXTURE_1D = 0x8063
         /// </summary>
         ProxyTexture1D = ((int)0x8063),
@@ -29236,6 +29275,10 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         TextureCubeMap = ((int)0X8513),
         /// <summary>
+        /// Original was GL_TEXTURE_BINDING_CUBE_MAP = 0x8514
+        /// </summary>
+        TextureBindingCubeMap = ((int)0x8514),
+        /// <summary>
         /// Original was GL_TextureCubeMapPositiveX = 0X8515
         /// </summary>
         TextureCubeMapPositiveX = ((int)0X8515),
@@ -29259,6 +29302,10 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_TextureCubeMapNegativeZ = 0X851a
         /// </summary>
         TextureCubeMapNegativeZ = ((int)0X851a),
+        /// <summary>
+        /// Original was GL_MAX_CUBE_MAP_TEXTURE_SIZE = 0x851C
+        /// </summary>
+        MaxCubeMapTextureSize = ((int)0x851C),
         /// <summary>
         /// Original was GL_TEXTURE_2D_ARRAY = 0x8C1A
         /// </summary>
@@ -29452,6 +29499,10 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_Texture31 = 0X84df
         /// </summary>
         Texture31 = ((int)0X84df),
+        /// <summary>
+        /// Original was GL_ACTIVE_TEXTURE = 0x84E0
+        /// </summary>
+        ActiveTexture = ((int)0x84E0),
     }
 
     /// <summary>
@@ -35059,17 +35110,17 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         AtcRgbaInterpolatedAlphaAmd = ((int)0x87EE),
         /// <summary>
-        /// Original was GL_GL_3DcXAmd = 0x87F9
+        /// Original was GL_##GL_3DcXAmd = 0x87F9
         /// </summary>
-        Gl3Dcxamd = ((int)0x87F9),
+        GL_3DcXAmd = ((int)0x87F9),
         /// <summary>
         /// Original was GL_3DC_X_AMD = 0x87F9
         /// </summary>
         Gl3DcXAmd = ((int)0x87F9),
         /// <summary>
-        /// Original was GL_GL_3DcXyAmd = 0x87FA
+        /// Original was GL_##GL_3DcXyAmd = 0x87FA
         /// </summary>
-        Gl3Dcxyamd = ((int)0x87FA),
+        GL_3DcXyAmd = ((int)0x87FA),
         /// <summary>
         /// Original was GL_3DC_XY_AMD = 0x87FA
         /// </summary>
@@ -38471,6 +38522,10 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         ExtDiscardFramebuffer = ((int)1),
         /// <summary>
+        /// Original was GL_EXT_multi_draw_arrays = 1
+        /// </summary>
+        ExtMultiDrawArrays = ((int)1),
+        /// <summary>
         /// Original was GL_EXT_read_format_bgra = 1
         /// </summary>
         ExtReadFormatBgra = ((int)1),
@@ -38880,6 +38935,10 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_ImgTextureFormatBgra8888 = 0X0001
         /// </summary>
         ImgTextureFormatBgra8888 = ((int)0X0001),
+        /// <summary>
+        /// Original was GL_EXT_multi_draw_arrays = 1
+        /// </summary>
+        ExtMultiDrawArrays = ((int)1),
     }
 
     /// <summary>

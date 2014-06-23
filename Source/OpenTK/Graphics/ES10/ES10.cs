@@ -72,8 +72,12 @@ namespace OpenTK.Graphics.ES10
                 103, 108, 67, 108, 105, 101, 110, 116, 65, 99, 116, 105, 118, 101, 84, 101, 120, 116, 117, 114, 101, 0,
                 // glClipPlanef
                 103, 108, 67, 108, 105, 112, 80, 108, 97, 110, 101, 102, 0,
+                // glClipPlanefIMG
+                103, 108, 67, 108, 105, 112, 80, 108, 97, 110, 101, 102, 73, 77, 71, 0,
                 // glClipPlanex
                 103, 108, 67, 108, 105, 112, 80, 108, 97, 110, 101, 120, 0,
+                // glClipPlanexIMG
+                103, 108, 67, 108, 105, 112, 80, 108, 97, 110, 101, 120, 73, 77, 71, 0,
                 // glColor4f
                 103, 108, 67, 111, 108, 111, 114, 52, 102, 0,
                 // glColor4ub
@@ -110,6 +114,8 @@ namespace OpenTK.Graphics.ES10
                 103, 108, 68, 105, 115, 97, 98, 108, 101, 0,
                 // glDisableClientState
                 103, 108, 68, 105, 115, 97, 98, 108, 101, 67, 108, 105, 101, 110, 116, 83, 116, 97, 116, 101, 0,
+                // glDisableDriverControlQCOM
+                103, 108, 68, 105, 115, 97, 98, 108, 101, 68, 114, 105, 118, 101, 114, 67, 111, 110, 116, 114, 111, 108, 81, 67, 79, 77, 0,
                 // glDrawArrays
                 103, 108, 68, 114, 97, 119, 65, 114, 114, 97, 121, 115, 0,
                 // glDrawElements
@@ -118,6 +124,34 @@ namespace OpenTK.Graphics.ES10
                 103, 108, 69, 110, 97, 98, 108, 101, 0,
                 // glEnableClientState
                 103, 108, 69, 110, 97, 98, 108, 101, 67, 108, 105, 101, 110, 116, 83, 116, 97, 116, 101, 0,
+                // glEnableDriverControlQCOM
+                103, 108, 69, 110, 97, 98, 108, 101, 68, 114, 105, 118, 101, 114, 67, 111, 110, 116, 114, 111, 108, 81, 67, 79, 77, 0,
+                // glEndTilingQCOM
+                103, 108, 69, 110, 100, 84, 105, 108, 105, 110, 103, 81, 67, 79, 77, 0,
+                // glExtGetBufferPointervQCOM
+                103, 108, 69, 120, 116, 71, 101, 116, 66, 117, 102, 102, 101, 114, 80, 111, 105, 110, 116, 101, 114, 118, 81, 67, 79, 77, 0,
+                // glExtGetBuffersQCOM
+                103, 108, 69, 120, 116, 71, 101, 116, 66, 117, 102, 102, 101, 114, 115, 81, 67, 79, 77, 0,
+                // glExtGetFramebuffersQCOM
+                103, 108, 69, 120, 116, 71, 101, 116, 70, 114, 97, 109, 101, 98, 117, 102, 102, 101, 114, 115, 81, 67, 79, 77, 0,
+                // glExtGetProgramBinarySourceQCOM
+                103, 108, 69, 120, 116, 71, 101, 116, 80, 114, 111, 103, 114, 97, 109, 66, 105, 110, 97, 114, 121, 83, 111, 117, 114, 99, 101, 81, 67, 79, 77, 0,
+                // glExtGetProgramsQCOM
+                103, 108, 69, 120, 116, 71, 101, 116, 80, 114, 111, 103, 114, 97, 109, 115, 81, 67, 79, 77, 0,
+                // glExtGetRenderbuffersQCOM
+                103, 108, 69, 120, 116, 71, 101, 116, 82, 101, 110, 100, 101, 114, 98, 117, 102, 102, 101, 114, 115, 81, 67, 79, 77, 0,
+                // glExtGetShadersQCOM
+                103, 108, 69, 120, 116, 71, 101, 116, 83, 104, 97, 100, 101, 114, 115, 81, 67, 79, 77, 0,
+                // glExtGetTexLevelParameterivQCOM
+                103, 108, 69, 120, 116, 71, 101, 116, 84, 101, 120, 76, 101, 118, 101, 108, 80, 97, 114, 97, 109, 101, 116, 101, 114, 105, 118, 81, 67, 79, 77, 0,
+                // glExtGetTexSubImageQCOM
+                103, 108, 69, 120, 116, 71, 101, 116, 84, 101, 120, 83, 117, 98, 73, 109, 97, 103, 101, 81, 67, 79, 77, 0,
+                // glExtGetTexturesQCOM
+                103, 108, 69, 120, 116, 71, 101, 116, 84, 101, 120, 116, 117, 114, 101, 115, 81, 67, 79, 77, 0,
+                // glExtIsProgramBinaryQCOM
+                103, 108, 69, 120, 116, 73, 115, 80, 114, 111, 103, 114, 97, 109, 66, 105, 110, 97, 114, 121, 81, 67, 79, 77, 0,
+                // glExtTexObjectStateOverrideiQCOM
+                103, 108, 69, 120, 116, 84, 101, 120, 79, 98, 106, 101, 99, 116, 83, 116, 97, 116, 101, 79, 118, 101, 114, 114, 105, 100, 101, 105, 81, 67, 79, 77, 0,
                 // glFinish
                 103, 108, 70, 105, 110, 105, 115, 104, 0,
                 // glFlush
@@ -130,6 +164,8 @@ namespace OpenTK.Graphics.ES10
                 103, 108, 70, 111, 103, 120, 0,
                 // glFogxv
                 103, 108, 70, 111, 103, 120, 118, 0,
+                // glFramebufferTexture2DMultisampleIMG
+                103, 108, 70, 114, 97, 109, 101, 98, 117, 102, 102, 101, 114, 84, 101, 120, 116, 117, 114, 101, 50, 68, 77, 117, 108, 116, 105, 115, 97, 109, 112, 108, 101, 73, 77, 71, 0,
                 // glFrontFace
                 103, 108, 70, 114, 111, 110, 116, 70, 97, 99, 101, 0,
                 // glFrustumf
@@ -148,6 +184,10 @@ namespace OpenTK.Graphics.ES10
                 103, 108, 71, 101, 116, 67, 108, 105, 112, 80, 108, 97, 110, 101, 102, 0,
                 // glGetClipPlanex
                 103, 108, 71, 101, 116, 67, 108, 105, 112, 80, 108, 97, 110, 101, 120, 0,
+                // glGetDriverControlsQCOM
+                103, 108, 71, 101, 116, 68, 114, 105, 118, 101, 114, 67, 111, 110, 116, 114, 111, 108, 115, 81, 67, 79, 77, 0,
+                // glGetDriverControlStringQCOM
+                103, 108, 71, 101, 116, 68, 114, 105, 118, 101, 114, 67, 111, 110, 116, 114, 111, 108, 83, 116, 114, 105, 110, 103, 81, 67, 79, 77, 0,
                 // glGetError
                 103, 108, 71, 101, 116, 69, 114, 114, 111, 114, 0,
                 // glGetFixedv
@@ -274,6 +314,8 @@ namespace OpenTK.Graphics.ES10
                 103, 108, 80, 117, 115, 104, 77, 97, 116, 114, 105, 120, 0,
                 // glReadPixels
                 103, 108, 82, 101, 97, 100, 80, 105, 120, 101, 108, 115, 0,
+                // glRenderbufferStorageMultisampleIMG
+                103, 108, 82, 101, 110, 100, 101, 114, 98, 117, 102, 102, 101, 114, 83, 116, 111, 114, 97, 103, 101, 77, 117, 108, 116, 105, 115, 97, 109, 112, 108, 101, 73, 77, 71, 0,
                 // glRotatef
                 103, 108, 82, 111, 116, 97, 116, 101, 102, 0,
                 // glRotatex
@@ -290,6 +332,8 @@ namespace OpenTK.Graphics.ES10
                 103, 108, 83, 99, 105, 115, 115, 111, 114, 0,
                 // glShadeModel
                 103, 108, 83, 104, 97, 100, 101, 77, 111, 100, 101, 108, 0,
+                // glStartTilingQCOM
+                103, 108, 83, 116, 97, 114, 116, 84, 105, 108, 105, 110, 103, 81, 67, 79, 77, 0,
                 // glStencilFunc
                 103, 108, 83, 116, 101, 110, 99, 105, 108, 70, 117, 110, 99, 0,
                 // glStencilMask
@@ -354,136 +398,158 @@ namespace OpenTK.Graphics.ES10
                 187,
                 209,
                 222,
-                235,
-                245,
-                256,
-                266,
-                278,
-                293,
-                316,
-                342,
-                359,
-                379,
-                390,
-                406,
-                423,
-                435,
-                447,
-                461,
-                475,
-                485,
-                506,
-                519,
-                534,
-                543,
-                563,
-                572,
-                580,
-                587,
-                595,
+                238,
+                251,
+                267,
+                277,
+                288,
+                298,
+                310,
+                325,
+                348,
+                374,
+                391,
+                411,
+                422,
+                438,
+                455,
+                467,
+                479,
+                493,
+                507,
+                517,
+                538,
+                565,
+                578,
+                593,
                 602,
-                610,
                 622,
-                633,
-                644,
-                657,
-                671,
-                685,
-                708,
-                724,
-                740,
-                751,
-                763,
-                775,
+                648,
+                664,
+                691,
+                711,
+                736,
+                768,
                 789,
-                802,
                 815,
-                831,
-                847,
-                863,
-                877,
-                889,
-                903,
-                917,
-                931,
-                951,
-                971,
-                991,
-                998,
+                835,
+                867,
+                891,
+                912,
+                937,
+                970,
+                979,
+                987,
+                994,
+                1002,
                 1009,
-                1021,
-                1033,
-                1042,
-                1052,
+                1017,
+                1054,
                 1066,
-                1081,
-                1095,
-                1110,
-                1119,
+                1077,
+                1088,
+                1101,
+                1115,
                 1129,
-                1141,
-                1154,
-                1169,
-                1183,
-                1197,
-                1207,
-                1219,
-                1232,
-                1244,
-                1257,
-                1270,
-                1288,
-                1306,
-                1320,
-                1334,
-                1345,
-                1356,
-                1372,
-                1381,
-                1390,
-                1402,
-                1416,
-                1430,
+                1152,
+                1168,
+                1184,
+                1208,
+                1237,
+                1248,
+                1260,
+                1272,
+                1286,
+                1299,
+                1312,
+                1328,
+                1344,
+                1360,
+                1374,
+                1386,
+                1400,
+                1414,
+                1428,
                 1448,
-                1467,
-                1485,
-                1504,
-                1516,
-                1529,
-                1545,
-                1562,
-                1574,
-                1587,
-                1600,
-                1610,
-                1620,
-                1637,
-                1655,
-                1664,
-                1673,
-                1683,
-                1696,
-                1710,
-                1724,
-                1736,
+                1468,
+                1488,
+                1495,
+                1506,
+                1518,
+                1530,
+                1539,
+                1549,
+                1563,
+                1578,
+                1592,
+                1607,
+                1616,
+                1626,
+                1638,
+                1651,
+                1666,
+                1680,
+                1694,
+                1704,
+                1716,
+                1729,
+                1741,
                 1754,
-                1764,
-                1775,
+                1767,
                 1785,
-                1796,
-                1806,
+                1803,
                 1817,
-                1830,
-                1846,
-                1863,
-                1879,
-                1896,
-                1912,
-                1929,
+                1831,
+                1842,
+                1853,
+                1869,
+                1878,
+                1887,
+                1899,
+                1913,
+                1927,
                 1945,
-                1958,
-                1971,
-                1987,
+                1964,
+                1982,
+                2001,
+                2013,
+                2026,
+                2042,
+                2059,
+                2071,
+                2084,
+                2097,
+                2133,
+                2143,
+                2153,
+                2170,
+                2188,
+                2197,
+                2206,
+                2216,
+                2229,
+                2247,
+                2261,
+                2275,
+                2287,
+                2305,
+                2315,
+                2326,
+                2336,
+                2347,
+                2357,
+                2368,
+                2381,
+                2397,
+                2414,
+                2430,
+                2447,
+                2463,
+                2480,
+                2496,
+                2509,
+                2522,
+                2538,
             };
             EntryPoints = new IntPtr[EntryPointNameOffsets.Length];
         }
@@ -1231,6 +1297,30 @@ namespace OpenTK.Graphics.ES10
         [CLSCompliant(false)]
         public static unsafe void ClipPlane(OpenTK.Graphics.ES10.All p, Single* eqn) { throw new NotImplementedException(); }
 
+        /// <summary>[requires: v1.0 or IMG_user_clip_plane]</summary>
+        /// <param name="p"></param>
+        /// <param name="eqn">[length: 4]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "IMG_user_clip_plane", Version = "1.0", EntryPoint = "glClipPlanefIMG")]
+        [CLSCompliant(false)]
+        public static void ClipPlanefIMG(OpenTK.Graphics.ES10.All p, Single[] eqn) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or IMG_user_clip_plane]</summary>
+        /// <param name="p"></param>
+        /// <param name="eqn">[length: 4]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "IMG_user_clip_plane", Version = "1.0", EntryPoint = "glClipPlanefIMG")]
+        [CLSCompliant(false)]
+        public static void ClipPlanefIMG(OpenTK.Graphics.ES10.All p, ref Single eqn) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or IMG_user_clip_plane]</summary>
+        /// <param name="p"></param>
+        /// <param name="eqn">[length: 4]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "IMG_user_clip_plane", Version = "1.0", EntryPoint = "glClipPlanefIMG")]
+        [CLSCompliant(false)]
+        public static unsafe void ClipPlanefIMG(OpenTK.Graphics.ES10.All p, Single* eqn) { throw new NotImplementedException(); }
+
         /// <summary>[requires: v1.0]</summary>
         /// <param name="plane"></param>
         /// <param name="equation">[length: 4]</param>
@@ -1251,6 +1341,30 @@ namespace OpenTK.Graphics.ES10
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanex")]
         [CLSCompliant(false)]
         public static unsafe void ClipPlanex(OpenTK.Graphics.ES10.All plane, int* equation) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or IMG_user_clip_plane]</summary>
+        /// <param name="p"></param>
+        /// <param name="eqn">[length: 4]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "IMG_user_clip_plane", Version = "1.0", EntryPoint = "glClipPlanexIMG")]
+        [CLSCompliant(false)]
+        public static void ClipPlanexIMG(OpenTK.Graphics.ES10.All p, int[] eqn) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or IMG_user_clip_plane]</summary>
+        /// <param name="p"></param>
+        /// <param name="eqn">[length: 4]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "IMG_user_clip_plane", Version = "1.0", EntryPoint = "glClipPlanexIMG")]
+        [CLSCompliant(false)]
+        public static void ClipPlanexIMG(OpenTK.Graphics.ES10.All p, ref int eqn) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or IMG_user_clip_plane]</summary>
+        /// <param name="p"></param>
+        /// <param name="eqn">[length: 4]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "IMG_user_clip_plane", Version = "1.0", EntryPoint = "glClipPlanexIMG")]
+        [CLSCompliant(false)]
+        public static unsafe void ClipPlanexIMG(OpenTK.Graphics.ES10.All p, int* eqn) { throw new NotImplementedException(); }
 
         /// <summary>[requires: v1.0]
         /// Set the current color
@@ -2807,6 +2921,20 @@ namespace OpenTK.Graphics.ES10
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glDisableClientState")]
         public static void DisableClientState(OpenTK.Graphics.ES10.EnableCap array) { throw new NotImplementedException(); }
 
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="driverControl"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glDisableDriverControlQCOM")]
+        [CLSCompliant(false)]
+        public static void DisableDriverControlQCOM(Int32 driverControl) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="driverControl"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glDisableDriverControlQCOM")]
+        [CLSCompliant(false)]
+        public static void DisableDriverControlQCOM(UInt32 driverControl) { throw new NotImplementedException(); }
+
         /// <summary>[requires: v1.0]
         /// Render primitives from array data
         /// </summary>
@@ -3321,6 +3449,643 @@ namespace OpenTK.Graphics.ES10
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glEnableClientState")]
         public static void EnableClientState(OpenTK.Graphics.ES10.EnableCap array) { throw new NotImplementedException(); }
 
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="driverControl"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glEnableDriverControlQCOM")]
+        [CLSCompliant(false)]
+        public static void EnableDriverControlQCOM(Int32 driverControl) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="driverControl"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glEnableDriverControlQCOM")]
+        [CLSCompliant(false)]
+        public static void EnableDriverControlQCOM(UInt32 driverControl) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_tiled_rendering]</summary>
+        /// <param name="preserveMask"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_tiled_rendering", Version = "1.0", EntryPoint = "glEndTilingQCOM")]
+        [CLSCompliant(false)]
+        public static void EndTilingQCOM(Int32 preserveMask) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_tiled_rendering]</summary>
+        /// <param name="preserveMask"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_tiled_rendering", Version = "1.0", EntryPoint = "glEndTilingQCOM")]
+        [CLSCompliant(false)]
+        public static void EndTilingQCOM(UInt32 preserveMask) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBufferPointervQCOM")]
+        public static void ExtGetBufferPointervQCOM(OpenTK.Graphics.ES10.All target, IntPtr @params) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBufferPointervQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetBufferPointervQCOM<T1>(OpenTK.Graphics.ES10.All target, [InAttribute, OutAttribute] T1[] @params)
+            where T1 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBufferPointervQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetBufferPointervQCOM<T1>(OpenTK.Graphics.ES10.All target, [InAttribute, OutAttribute] T1[,] @params)
+            where T1 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBufferPointervQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetBufferPointervQCOM<T1>(OpenTK.Graphics.ES10.All target, [InAttribute, OutAttribute] T1[,,] @params)
+            where T1 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBufferPointervQCOM")]
+        public static void ExtGetBufferPointervQCOM<T1>(OpenTK.Graphics.ES10.All target, [InAttribute, OutAttribute] ref T1 @params)
+            where T1 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="buffers">[length: maxBuffers]</param>
+        /// <param name="maxBuffers"></param>
+        /// <param name="numBuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetBuffersQCOM(Int32[] buffers, Int32 maxBuffers, Int32[] numBuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="buffers">[length: maxBuffers]</param>
+        /// <param name="maxBuffers"></param>
+        /// <param name="numBuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetBuffersQCOM(ref Int32 buffers, Int32 maxBuffers, ref Int32 numBuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="buffers">[length: maxBuffers]</param>
+        /// <param name="maxBuffers"></param>
+        /// <param name="numBuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBuffersQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetBuffersQCOM(Int32* buffers, Int32 maxBuffers, Int32* numBuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="buffers">[length: maxBuffers]</param>
+        /// <param name="maxBuffers"></param>
+        /// <param name="numBuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetBuffersQCOM(UInt32[] buffers, Int32 maxBuffers, Int32[] numBuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="buffers">[length: maxBuffers]</param>
+        /// <param name="maxBuffers"></param>
+        /// <param name="numBuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetBuffersQCOM(ref UInt32 buffers, Int32 maxBuffers, ref Int32 numBuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="buffers">[length: maxBuffers]</param>
+        /// <param name="maxBuffers"></param>
+        /// <param name="numBuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetBuffersQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetBuffersQCOM(UInt32* buffers, Int32 maxBuffers, Int32* numBuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="framebuffers">[length: maxFramebuffers]</param>
+        /// <param name="maxFramebuffers"></param>
+        /// <param name="numFramebuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetFramebuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetFramebuffersQCOM(Int32[] framebuffers, Int32 maxFramebuffers, Int32[] numFramebuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="framebuffers">[length: maxFramebuffers]</param>
+        /// <param name="maxFramebuffers"></param>
+        /// <param name="numFramebuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetFramebuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetFramebuffersQCOM(ref Int32 framebuffers, Int32 maxFramebuffers, ref Int32 numFramebuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="framebuffers">[length: maxFramebuffers]</param>
+        /// <param name="maxFramebuffers"></param>
+        /// <param name="numFramebuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetFramebuffersQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetFramebuffersQCOM(Int32* framebuffers, Int32 maxFramebuffers, Int32* numFramebuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="framebuffers">[length: maxFramebuffers]</param>
+        /// <param name="maxFramebuffers"></param>
+        /// <param name="numFramebuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetFramebuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetFramebuffersQCOM(UInt32[] framebuffers, Int32 maxFramebuffers, Int32[] numFramebuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="framebuffers">[length: maxFramebuffers]</param>
+        /// <param name="maxFramebuffers"></param>
+        /// <param name="numFramebuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetFramebuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetFramebuffersQCOM(ref UInt32 framebuffers, Int32 maxFramebuffers, ref Int32 numFramebuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="framebuffers">[length: maxFramebuffers]</param>
+        /// <param name="maxFramebuffers"></param>
+        /// <param name="numFramebuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetFramebuffersQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetFramebuffersQCOM(UInt32* framebuffers, Int32 maxFramebuffers, Int32* numFramebuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="program"></param>
+        /// <param name="shadertype"></param>
+        /// <param name="source"></param>
+        /// <param name="length"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetProgramBinarySourceQCOM(Int32 program, OpenTK.Graphics.ES10.All shadertype, String source, Int32[] length) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="program"></param>
+        /// <param name="shadertype"></param>
+        /// <param name="source"></param>
+        /// <param name="length"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetProgramBinarySourceQCOM(Int32 program, OpenTK.Graphics.ES10.All shadertype, String source, ref Int32 length) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="program"></param>
+        /// <param name="shadertype"></param>
+        /// <param name="source"></param>
+        /// <param name="length"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetProgramBinarySourceQCOM(Int32 program, OpenTK.Graphics.ES10.All shadertype, String source, Int32* length) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="program"></param>
+        /// <param name="shadertype"></param>
+        /// <param name="source"></param>
+        /// <param name="length"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetProgramBinarySourceQCOM(UInt32 program, OpenTK.Graphics.ES10.All shadertype, String source, Int32[] length) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="program"></param>
+        /// <param name="shadertype"></param>
+        /// <param name="source"></param>
+        /// <param name="length"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetProgramBinarySourceQCOM(UInt32 program, OpenTK.Graphics.ES10.All shadertype, String source, ref Int32 length) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="program"></param>
+        /// <param name="shadertype"></param>
+        /// <param name="source"></param>
+        /// <param name="length"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetProgramBinarySourceQCOM(UInt32 program, OpenTK.Graphics.ES10.All shadertype, String source, Int32* length) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="programs">[length: maxPrograms]</param>
+        /// <param name="maxPrograms"></param>
+        /// <param name="numPrograms"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramsQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetProgramsQCOM(Int32[] programs, Int32 maxPrograms, Int32[] numPrograms) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="programs">[length: maxPrograms]</param>
+        /// <param name="maxPrograms"></param>
+        /// <param name="numPrograms"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramsQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetProgramsQCOM(ref Int32 programs, Int32 maxPrograms, ref Int32 numPrograms) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="programs">[length: maxPrograms]</param>
+        /// <param name="maxPrograms"></param>
+        /// <param name="numPrograms"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramsQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetProgramsQCOM(Int32* programs, Int32 maxPrograms, Int32* numPrograms) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="programs">[length: maxPrograms]</param>
+        /// <param name="maxPrograms"></param>
+        /// <param name="numPrograms"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramsQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetProgramsQCOM(UInt32[] programs, Int32 maxPrograms, Int32[] numPrograms) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="programs">[length: maxPrograms]</param>
+        /// <param name="maxPrograms"></param>
+        /// <param name="numPrograms"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramsQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetProgramsQCOM(ref UInt32 programs, Int32 maxPrograms, ref Int32 numPrograms) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="programs">[length: maxPrograms]</param>
+        /// <param name="maxPrograms"></param>
+        /// <param name="numPrograms"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetProgramsQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetProgramsQCOM(UInt32* programs, Int32 maxPrograms, Int32* numPrograms) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="renderbuffers">[length: maxRenderbuffers]</param>
+        /// <param name="maxRenderbuffers"></param>
+        /// <param name="numRenderbuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetRenderbuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetRenderbuffersQCOM(Int32[] renderbuffers, Int32 maxRenderbuffers, Int32[] numRenderbuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="renderbuffers">[length: maxRenderbuffers]</param>
+        /// <param name="maxRenderbuffers"></param>
+        /// <param name="numRenderbuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetRenderbuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetRenderbuffersQCOM(ref Int32 renderbuffers, Int32 maxRenderbuffers, ref Int32 numRenderbuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="renderbuffers">[length: maxRenderbuffers]</param>
+        /// <param name="maxRenderbuffers"></param>
+        /// <param name="numRenderbuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetRenderbuffersQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetRenderbuffersQCOM(Int32* renderbuffers, Int32 maxRenderbuffers, Int32* numRenderbuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="renderbuffers">[length: maxRenderbuffers]</param>
+        /// <param name="maxRenderbuffers"></param>
+        /// <param name="numRenderbuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetRenderbuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetRenderbuffersQCOM(UInt32[] renderbuffers, Int32 maxRenderbuffers, Int32[] numRenderbuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="renderbuffers">[length: maxRenderbuffers]</param>
+        /// <param name="maxRenderbuffers"></param>
+        /// <param name="numRenderbuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetRenderbuffersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetRenderbuffersQCOM(ref UInt32 renderbuffers, Int32 maxRenderbuffers, ref Int32 numRenderbuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="renderbuffers">[length: maxRenderbuffers]</param>
+        /// <param name="maxRenderbuffers"></param>
+        /// <param name="numRenderbuffers"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetRenderbuffersQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetRenderbuffersQCOM(UInt32* renderbuffers, Int32 maxRenderbuffers, Int32* numRenderbuffers) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="shaders">[length: maxShaders]</param>
+        /// <param name="maxShaders"></param>
+        /// <param name="numShaders"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetShadersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetShadersQCOM(Int32[] shaders, Int32 maxShaders, Int32[] numShaders) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="shaders">[length: maxShaders]</param>
+        /// <param name="maxShaders"></param>
+        /// <param name="numShaders"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetShadersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetShadersQCOM(ref Int32 shaders, Int32 maxShaders, ref Int32 numShaders) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="shaders">[length: maxShaders]</param>
+        /// <param name="maxShaders"></param>
+        /// <param name="numShaders"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetShadersQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetShadersQCOM(Int32* shaders, Int32 maxShaders, Int32* numShaders) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="shaders">[length: maxShaders]</param>
+        /// <param name="maxShaders"></param>
+        /// <param name="numShaders"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetShadersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetShadersQCOM(UInt32[] shaders, Int32 maxShaders, Int32[] numShaders) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="shaders">[length: maxShaders]</param>
+        /// <param name="maxShaders"></param>
+        /// <param name="numShaders"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetShadersQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetShadersQCOM(ref UInt32 shaders, Int32 maxShaders, ref Int32 numShaders) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="shaders">[length: maxShaders]</param>
+        /// <param name="maxShaders"></param>
+        /// <param name="numShaders"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtGetShadersQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetShadersQCOM(UInt32* shaders, Int32 maxShaders, Int32* numShaders) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="texture"></param>
+        /// <param name="face"></param>
+        /// <param name="level"></param>
+        /// <param name="pname"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexLevelParameterivQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexLevelParameterivQCOM(Int32 texture, OpenTK.Graphics.ES10.All face, Int32 level, OpenTK.Graphics.ES10.All pname, Int32[] @params) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="texture"></param>
+        /// <param name="face"></param>
+        /// <param name="level"></param>
+        /// <param name="pname"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexLevelParameterivQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexLevelParameterivQCOM(Int32 texture, OpenTK.Graphics.ES10.All face, Int32 level, OpenTK.Graphics.ES10.All pname, ref Int32 @params) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="texture"></param>
+        /// <param name="face"></param>
+        /// <param name="level"></param>
+        /// <param name="pname"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexLevelParameterivQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetTexLevelParameterivQCOM(Int32 texture, OpenTK.Graphics.ES10.All face, Int32 level, OpenTK.Graphics.ES10.All pname, Int32* @params) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="texture"></param>
+        /// <param name="face"></param>
+        /// <param name="level"></param>
+        /// <param name="pname"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexLevelParameterivQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexLevelParameterivQCOM(UInt32 texture, OpenTK.Graphics.ES10.All face, Int32 level, OpenTK.Graphics.ES10.All pname, Int32[] @params) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="texture"></param>
+        /// <param name="face"></param>
+        /// <param name="level"></param>
+        /// <param name="pname"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexLevelParameterivQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexLevelParameterivQCOM(UInt32 texture, OpenTK.Graphics.ES10.All face, Int32 level, OpenTK.Graphics.ES10.All pname, ref Int32 @params) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="texture"></param>
+        /// <param name="face"></param>
+        /// <param name="level"></param>
+        /// <param name="pname"></param>
+        /// <param name="params"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexLevelParameterivQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetTexLevelParameterivQCOM(UInt32 texture, OpenTK.Graphics.ES10.All face, Int32 level, OpenTK.Graphics.ES10.All pname, Int32* @params) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="level"></param>
+        /// <param name="xoffset"></param>
+        /// <param name="yoffset"></param>
+        /// <param name="zoffset"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="depth"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="texels"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexSubImageQCOM")]
+        public static void ExtGetTexSubImageQCOM(OpenTK.Graphics.ES10.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES10.All format, OpenTK.Graphics.ES10.All type, IntPtr texels) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="level"></param>
+        /// <param name="xoffset"></param>
+        /// <param name="yoffset"></param>
+        /// <param name="zoffset"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="depth"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="texels"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexSubImageQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexSubImageQCOM<T10>(OpenTK.Graphics.ES10.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES10.All format, OpenTK.Graphics.ES10.All type, [InAttribute, OutAttribute] T10[] texels)
+            where T10 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="level"></param>
+        /// <param name="xoffset"></param>
+        /// <param name="yoffset"></param>
+        /// <param name="zoffset"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="depth"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="texels"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexSubImageQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexSubImageQCOM<T10>(OpenTK.Graphics.ES10.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES10.All format, OpenTK.Graphics.ES10.All type, [InAttribute, OutAttribute] T10[,] texels)
+            where T10 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="level"></param>
+        /// <param name="xoffset"></param>
+        /// <param name="yoffset"></param>
+        /// <param name="zoffset"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="depth"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="texels"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexSubImageQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexSubImageQCOM<T10>(OpenTK.Graphics.ES10.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES10.All format, OpenTK.Graphics.ES10.All type, [InAttribute, OutAttribute] T10[,,] texels)
+            where T10 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="level"></param>
+        /// <param name="xoffset"></param>
+        /// <param name="yoffset"></param>
+        /// <param name="zoffset"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="depth"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="texels"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexSubImageQCOM")]
+        public static void ExtGetTexSubImageQCOM<T10>(OpenTK.Graphics.ES10.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES10.All format, OpenTK.Graphics.ES10.All type, [InAttribute, OutAttribute] ref T10 texels)
+            where T10 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="textures"></param>
+        /// <param name="maxTextures"></param>
+        /// <param name="numTextures"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexturesQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexturesQCOM(Int32[] textures, Int32 maxTextures, Int32[] numTextures) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="textures"></param>
+        /// <param name="maxTextures"></param>
+        /// <param name="numTextures"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexturesQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexturesQCOM(ref Int32 textures, Int32 maxTextures, ref Int32 numTextures) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="textures"></param>
+        /// <param name="maxTextures"></param>
+        /// <param name="numTextures"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexturesQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetTexturesQCOM(Int32* textures, Int32 maxTextures, Int32* numTextures) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="textures"></param>
+        /// <param name="maxTextures"></param>
+        /// <param name="numTextures"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexturesQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexturesQCOM(UInt32[] textures, Int32 maxTextures, Int32[] numTextures) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="textures"></param>
+        /// <param name="maxTextures"></param>
+        /// <param name="numTextures"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexturesQCOM")]
+        [CLSCompliant(false)]
+        public static void ExtGetTexturesQCOM(ref UInt32 textures, Int32 maxTextures, ref Int32 numTextures) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="textures"></param>
+        /// <param name="maxTextures"></param>
+        /// <param name="numTextures"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtGetTexturesQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void ExtGetTexturesQCOM(UInt32* textures, Int32 maxTextures, Int32* numTextures) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="program"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtIsProgramBinaryQCOM")]
+        [CLSCompliant(false)]
+        public static bool ExtIsProgramBinaryQCOM(Int32 program) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get2]</summary>
+        /// <param name="program"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get2", Version = "1.0", EntryPoint = "glExtIsProgramBinaryQCOM")]
+        [CLSCompliant(false)]
+        public static bool ExtIsProgramBinaryQCOM(UInt32 program) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_extended_get]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="param"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_extended_get", Version = "1.0", EntryPoint = "glExtTexObjectStateOverrideiQCOM")]
+        public static void ExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES10.All target, OpenTK.Graphics.ES10.All pname, Int32 param) { throw new NotImplementedException(); }
+
         /// <summary>[requires: v1.0]
         /// Block until all GL execution is complete
         /// </summary>
@@ -3431,6 +4196,30 @@ namespace OpenTK.Graphics.ES10
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glFogxv")]
         [CLSCompliant(false)]
         public static unsafe void Fogx(OpenTK.Graphics.ES10.All pname, int* param) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or IMG_multisampled_render_to_texture]</summary>
+        /// <param name="target"></param>
+        /// <param name="attachment"></param>
+        /// <param name="textarget"></param>
+        /// <param name="texture"></param>
+        /// <param name="level"></param>
+        /// <param name="samples"></param>
+        [Obsolete("Use GL.Img instead")]
+        [AutoGenerated(Category = "IMG_multisampled_render_to_texture", Version = "1.0", EntryPoint = "glFramebufferTexture2DMultisampleIMG")]
+        [CLSCompliant(false)]
+        public static void FramebufferTexture2DMultisampleIMG(OpenTK.Graphics.ES10.All target, OpenTK.Graphics.ES10.All attachment, OpenTK.Graphics.ES10.All textarget, Int32 texture, Int32 level, Int32 samples) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or IMG_multisampled_render_to_texture]</summary>
+        /// <param name="target"></param>
+        /// <param name="attachment"></param>
+        /// <param name="textarget"></param>
+        /// <param name="texture"></param>
+        /// <param name="level"></param>
+        /// <param name="samples"></param>
+        [Obsolete("Use GL.Img instead")]
+        [AutoGenerated(Category = "IMG_multisampled_render_to_texture", Version = "1.0", EntryPoint = "glFramebufferTexture2DMultisampleIMG")]
+        [CLSCompliant(false)]
+        public static void FramebufferTexture2DMultisampleIMG(OpenTK.Graphics.ES10.All target, OpenTK.Graphics.ES10.All attachment, OpenTK.Graphics.ES10.All textarget, UInt32 texture, Int32 level, Int32 samples) { throw new NotImplementedException(); }
 
         /// <summary>[requires: v1.0]
         /// Define front- and back-facing polygons
@@ -3884,6 +4673,120 @@ namespace OpenTK.Graphics.ES10
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanex")]
         [CLSCompliant(false)]
         public static unsafe void GetClipPlanex(OpenTK.Graphics.ES10.All plane, [OutAttribute] int* equation) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="num"></param>
+        /// <param name="size"></param>
+        /// <param name="driverControls">[length: size]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlsQCOM")]
+        [CLSCompliant(false)]
+        public static void GetDriverControlsQCOM([OutAttribute] Int32[] num, Int32 size, [OutAttribute] Int32[] driverControls) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="num"></param>
+        /// <param name="size"></param>
+        /// <param name="driverControls">[length: size]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlsQCOM")]
+        [CLSCompliant(false)]
+        public static void GetDriverControlsQCOM([OutAttribute] Int32[] num, Int32 size, [OutAttribute] UInt32[] driverControls) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="num"></param>
+        /// <param name="size"></param>
+        /// <param name="driverControls">[length: size]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlsQCOM")]
+        [CLSCompliant(false)]
+        public static void GetDriverControlsQCOM([OutAttribute] out Int32 num, Int32 size, [OutAttribute] out Int32 driverControls) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="num"></param>
+        /// <param name="size"></param>
+        /// <param name="driverControls">[length: size]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlsQCOM")]
+        [CLSCompliant(false)]
+        public static void GetDriverControlsQCOM([OutAttribute] out Int32 num, Int32 size, [OutAttribute] out UInt32 driverControls) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="num"></param>
+        /// <param name="size"></param>
+        /// <param name="driverControls">[length: size]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlsQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void GetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] Int32* driverControls) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="num"></param>
+        /// <param name="size"></param>
+        /// <param name="driverControls">[length: size]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlsQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void GetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="driverControl"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="length"></param>
+        /// <param name="driverControlString">[length: bufSize]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlStringQCOM")]
+        [CLSCompliant(false)]
+        public static void GetDriverControlStringQCOM(Int32 driverControl, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder driverControlString) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="driverControl"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="length"></param>
+        /// <param name="driverControlString">[length: bufSize]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlStringQCOM")]
+        [CLSCompliant(false)]
+        public static void GetDriverControlStringQCOM(Int32 driverControl, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder driverControlString) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="driverControl"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="length"></param>
+        /// <param name="driverControlString">[length: bufSize]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlStringQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void GetDriverControlStringQCOM(Int32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder driverControlString) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="driverControl"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="length"></param>
+        /// <param name="driverControlString">[length: bufSize]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlStringQCOM")]
+        [CLSCompliant(false)]
+        public static void GetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder driverControlString) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="driverControl"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="length"></param>
+        /// <param name="driverControlString">[length: bufSize]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlStringQCOM")]
+        [CLSCompliant(false)]
+        public static void GetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder driverControlString) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_driver_control]</summary>
+        /// <param name="driverControl"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="length"></param>
+        /// <param name="driverControlString">[length: bufSize]</param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_driver_control", Version = "1.0", EntryPoint = "glGetDriverControlStringQCOM")]
+        [CLSCompliant(false)]
+        public static unsafe void GetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder driverControlString) { throw new NotImplementedException(); }
 
         /// <summary>[requires: v1.0]
         /// Return error information
@@ -6221,6 +7124,16 @@ namespace OpenTK.Graphics.ES10
             where T6 : struct
          { throw new NotImplementedException(); }
 
+        /// <summary>[requires: v1.0 or IMG_multisampled_render_to_texture]</summary>
+        /// <param name="target"></param>
+        /// <param name="samples"></param>
+        /// <param name="internalformat"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        [Obsolete("Use GL.Img instead")]
+        [AutoGenerated(Category = "IMG_multisampled_render_to_texture", Version = "1.0", EntryPoint = "glRenderbufferStorageMultisampleIMG")]
+        public static void RenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES10.All target, Int32 samples, OpenTK.Graphics.ES10.All internalformat, Int32 width, Int32 height) { throw new NotImplementedException(); }
+
         /// <summary>[requires: v1.0]
         /// Multiply the current matrix by a rotation matrix
         /// </summary>
@@ -6323,6 +7236,28 @@ namespace OpenTK.Graphics.ES10
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glShadeModel")]
         public static void ShadeModel(OpenTK.Graphics.ES10.ShadingModel mode) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_tiled_rendering]</summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="preserveMask"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_tiled_rendering", Version = "1.0", EntryPoint = "glStartTilingQCOM")]
+        [CLSCompliant(false)]
+        public static void StartTilingQCOM(Int32 x, Int32 y, Int32 width, Int32 height, Int32 preserveMask) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v1.0 or QCOM_tiled_rendering]</summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="preserveMask"></param>
+        [Obsolete("Use GL.Qcom instead")]
+        [AutoGenerated(Category = "QCOM_tiled_rendering", Version = "1.0", EntryPoint = "glStartTilingQCOM")]
+        [CLSCompliant(false)]
+        public static void StartTilingQCOM(UInt32 x, UInt32 y, UInt32 width, UInt32 height, UInt32 preserveMask) { throw new NotImplementedException(); }
 
         /// <summary>[requires: v1.0]
         /// Set front and back function and reference value for stencil testing
@@ -8093,395 +9028,461 @@ namespace OpenTK.Graphics.ES10
         static extern unsafe void glClipPlanef(System.Int32 p, Single* eqn);
         [Slot(16)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanex(System.Int32 plane, int* equation);
+        static extern unsafe void glClipPlanefIMG(System.Int32 p, Single* eqn);
         [Slot(17)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor4f(Single red, Single green, Single blue, Single alpha);
+        static extern unsafe void glClipPlanex(System.Int32 plane, int* equation);
         [Slot(18)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor4ub(Byte red, Byte green, Byte blue, Byte alpha);
+        static extern unsafe void glClipPlanexIMG(System.Int32 p, int* eqn);
         [Slot(19)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor4x(int red, int green, int blue, int alpha);
+        static extern void glColor4f(Single red, Single green, Single blue, Single alpha);
         [Slot(20)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColorMask(bool red, bool green, bool blue, bool alpha);
+        static extern void glColor4ub(Byte red, Byte green, Byte blue, Byte alpha);
         [Slot(21)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColorPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        static extern void glColor4x(int red, int green, int blue, int alpha);
         [Slot(22)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+        static extern void glColorMask(bool red, bool green, bool blue, bool alpha);
         [Slot(23)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
+        static extern void glColorPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(24)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+        static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
         [Slot(25)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
         [Slot(26)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCullFace(System.Int32 mode);
+        static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
         [Slot(27)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
+        static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(28)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteTextures(Int32 n, UInt32* textures);
+        static extern void glCullFace(System.Int32 mode);
         [Slot(29)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthFunc(System.Int32 func);
+        static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
         [Slot(30)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthMask(bool flag);
+        static extern unsafe void glDeleteTextures(Int32 n, UInt32* textures);
         [Slot(31)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthRangef(Single n, Single f);
+        static extern void glDepthFunc(System.Int32 func);
         [Slot(32)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthRangex(int n, int f);
+        static extern void glDepthMask(bool flag);
         [Slot(33)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisable(System.Int32 cap);
+        static extern void glDepthRangef(Single n, Single f);
         [Slot(34)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisableClientState(System.Int32 array);
+        static extern void glDepthRangex(int n, int f);
         [Slot(35)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
+        static extern void glDisable(System.Int32 cap);
         [Slot(36)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
+        static extern void glDisableClientState(System.Int32 array);
         [Slot(37)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnable(System.Int32 cap);
+        static extern void glDisableDriverControlQCOM(UInt32 driverControl);
         [Slot(38)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnableClientState(System.Int32 array);
+        static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
         [Slot(39)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFinish();
+        static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
         [Slot(40)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFlush();
+        static extern void glEnable(System.Int32 cap);
         [Slot(41)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFogf(System.Int32 pname, Single param);
+        static extern void glEnableClientState(System.Int32 array);
         [Slot(42)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glFogfv(System.Int32 pname, Single* @params);
+        static extern void glEnableDriverControlQCOM(UInt32 driverControl);
         [Slot(43)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFogx(System.Int32 pname, int param);
+        static extern void glEndTilingQCOM(UInt32 preserveMask);
         [Slot(44)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glFogxv(System.Int32 pname, int* param);
+        static extern void glExtGetBufferPointervQCOM(System.Int32 target, IntPtr @params);
         [Slot(45)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrontFace(System.Int32 mode);
+        static extern unsafe void glExtGetBuffersQCOM(UInt32* buffers, Int32 maxBuffers, Int32* numBuffers);
         [Slot(46)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrustumf(Single l, Single r, Single b, Single t, Single n, Single f);
+        static extern unsafe void glExtGetFramebuffersQCOM(UInt32* framebuffers, Int32 maxFramebuffers, Int32* numFramebuffers);
         [Slot(47)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrustumx(int l, int r, int b, int t, int n, int f);
+        static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, IntPtr source, Int32* length);
         [Slot(48)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
+        static extern unsafe void glExtGetProgramsQCOM(UInt32* programs, Int32 maxPrograms, Int32* numPrograms);
         [Slot(49)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenTextures(Int32 n, UInt32* textures);
+        static extern unsafe void glExtGetRenderbuffersQCOM(UInt32* renderbuffers, Int32 maxRenderbuffers, Int32* numRenderbuffers);
         [Slot(50)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
+        static extern unsafe void glExtGetShadersQCOM(UInt32* shaders, Int32 maxShaders, Int32* numShaders);
         [Slot(51)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, Int32* @params);
         [Slot(52)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetClipPlanef(System.Int32 plane, [OutAttribute] Single* equation);
+        static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, IntPtr texels);
         [Slot(53)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetClipPlanex(System.Int32 plane, [OutAttribute] int* equation);
+        static extern unsafe void glExtGetTexturesQCOM(UInt32* textures, Int32 maxTextures, Int32* numTextures);
         [Slot(54)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern System.Int32 glGetError();
+        static extern byte glExtIsProgramBinaryQCOM(UInt32 program);
         [Slot(55)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFixedv(System.Int32 pname, [OutAttribute] int* @params);
+        static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(56)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
+        static extern void glFinish();
         [Slot(57)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetIntegerv(System.Int32 pname, Int32* data);
+        static extern void glFlush();
         [Slot(58)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetLightfv(System.Int32 light, System.Int32 pname, [OutAttribute] Single* @params);
+        static extern void glFogf(System.Int32 pname, Single param);
         [Slot(59)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetLightxv(System.Int32 light, System.Int32 pname, [OutAttribute] int* @params);
+        static extern unsafe void glFogfv(System.Int32 pname, Single* @params);
         [Slot(60)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetMaterialfv(System.Int32 face, System.Int32 pname, [OutAttribute] Single* @params);
+        static extern void glFogx(System.Int32 pname, int param);
         [Slot(61)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetMaterialxv(System.Int32 face, System.Int32 pname, [OutAttribute] int* @params);
+        static extern unsafe void glFogxv(System.Int32 pname, int* param);
         [Slot(62)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetPixelMapxv(System.Int32 map, Int32 size, [OutAttribute] int* values);
+        static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
         [Slot(63)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
+        static extern void glFrontFace(System.Int32 mode);
         [Slot(64)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glGetString(System.Int32 name);
+        static extern void glFrustumf(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(65)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnvfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
+        static extern void glFrustumx(int l, int r, int b, int t, int n, int f);
         [Slot(66)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnviv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
         [Slot(67)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnvxv(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
+        static extern unsafe void glGenTextures(Int32 n, UInt32* textures);
         [Slot(68)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
         [Slot(69)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(70)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameterxv(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetClipPlanef(System.Int32 plane, [OutAttribute] Single* equation);
         [Slot(71)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glHint(System.Int32 target, System.Int32 mode);
+        static extern unsafe void glGetClipPlanex(System.Int32 plane, [OutAttribute] int* equation);
         [Slot(72)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsBuffer(UInt32 buffer);
+        static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
         [Slot(73)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsEnabled(System.Int32 cap);
+        static extern unsafe void glGetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr driverControlString);
         [Slot(74)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsTexture(UInt32 texture);
+        static extern System.Int32 glGetError();
         [Slot(75)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightf(System.Int32 light, System.Int32 pname, Single param);
+        static extern unsafe void glGetFixedv(System.Int32 pname, [OutAttribute] int* @params);
         [Slot(76)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightfv(System.Int32 light, System.Int32 pname, Single* @params);
+        static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
         [Slot(77)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightModelf(System.Int32 pname, Single param);
+        static extern unsafe void glGetIntegerv(System.Int32 pname, Int32* data);
         [Slot(78)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightModelfv(System.Int32 pname, Single* @params);
+        static extern unsafe void glGetLightfv(System.Int32 light, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(79)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightModelx(System.Int32 pname, int param);
+        static extern unsafe void glGetLightxv(System.Int32 light, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(80)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightModelxv(System.Int32 pname, int* param);
+        static extern unsafe void glGetMaterialfv(System.Int32 face, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(81)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightx(System.Int32 light, System.Int32 pname, int param);
+        static extern unsafe void glGetMaterialxv(System.Int32 face, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(82)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightxv(System.Int32 light, System.Int32 pname, int* @params);
+        static extern unsafe void glGetPixelMapxv(System.Int32 map, Int32 size, [OutAttribute] int* values);
         [Slot(83)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLineWidth(Single width);
+        static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(84)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLineWidthx(int width);
+        static extern IntPtr glGetString(System.Int32 name);
         [Slot(85)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLoadIdentity();
+        static extern unsafe void glGetTexEnvfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(86)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLoadMatrixf(Single* m);
+        static extern unsafe void glGetTexEnviv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(87)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLoadMatrixx(int* m);
+        static extern unsafe void glGetTexEnvxv(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(88)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLogicOp(System.Int32 opcode);
+        static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(89)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMaterialf(System.Int32 face, System.Int32 pname, Single param);
+        static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(90)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMaterialfv(System.Int32 face, System.Int32 pname, Single* @params);
+        static extern unsafe void glGetTexParameterxv(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(91)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMaterialx(System.Int32 face, System.Int32 pname, int param);
+        static extern void glHint(System.Int32 target, System.Int32 mode);
         [Slot(92)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMaterialxv(System.Int32 face, System.Int32 pname, int* param);
+        static extern byte glIsBuffer(UInt32 buffer);
         [Slot(93)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMatrixMode(System.Int32 mode);
+        static extern byte glIsEnabled(System.Int32 cap);
         [Slot(94)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord4f(System.Int32 target, Single s, Single t, Single r, Single q);
+        static extern byte glIsTexture(UInt32 texture);
         [Slot(95)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord4x(System.Int32 texture, int s, int t, int r, int q);
+        static extern void glLightf(System.Int32 light, System.Int32 pname, Single param);
         [Slot(96)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultMatrixf(Single* m);
+        static extern unsafe void glLightfv(System.Int32 light, System.Int32 pname, Single* @params);
         [Slot(97)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultMatrixx(int* m);
+        static extern void glLightModelf(System.Int32 pname, Single param);
         [Slot(98)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glNormal3f(Single nx, Single ny, Single nz);
+        static extern unsafe void glLightModelfv(System.Int32 pname, Single* @params);
         [Slot(99)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glNormal3x(int nx, int ny, int nz);
+        static extern void glLightModelx(System.Int32 pname, int param);
         [Slot(100)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glNormalPointer(System.Int32 type, Int32 stride, IntPtr pointer);
+        static extern unsafe void glLightModelxv(System.Int32 pname, int* param);
         [Slot(101)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glOrthof(Single l, Single r, Single b, Single t, Single n, Single f);
+        static extern void glLightx(System.Int32 light, System.Int32 pname, int param);
         [Slot(102)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glOrthox(int l, int r, int b, int t, int n, int f);
+        static extern unsafe void glLightxv(System.Int32 light, System.Int32 pname, int* @params);
         [Slot(103)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glPixelMapx(System.Int32 map, Int32 size, int* values);
+        static extern void glLineWidth(Single width);
         [Slot(104)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPixelStorei(System.Int32 pname, Int32 param);
+        static extern void glLineWidthx(int width);
         [Slot(105)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPixelStorex(System.Int32 pname, int param);
+        static extern void glLoadIdentity();
         [Slot(106)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointParameterf(System.Int32 pname, Single param);
+        static extern unsafe void glLoadMatrixf(Single* m);
         [Slot(107)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glPointParameterfv(System.Int32 pname, Single* @params);
+        static extern unsafe void glLoadMatrixx(int* m);
         [Slot(108)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointParameterx(System.Int32 pname, int param);
+        static extern void glLogicOp(System.Int32 opcode);
         [Slot(109)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glPointParameterxv(System.Int32 pname, int* @params);
+        static extern void glMaterialf(System.Int32 face, System.Int32 pname, Single param);
         [Slot(110)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointSize(Single size);
+        static extern unsafe void glMaterialfv(System.Int32 face, System.Int32 pname, Single* @params);
         [Slot(111)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointSizex(int size);
+        static extern void glMaterialx(System.Int32 face, System.Int32 pname, int param);
         [Slot(112)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPolygonOffset(Single factor, Single units);
+        static extern unsafe void glMaterialxv(System.Int32 face, System.Int32 pname, int* param);
         [Slot(113)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPolygonOffsetx(int factor, int units);
+        static extern void glMatrixMode(System.Int32 mode);
         [Slot(114)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPopMatrix();
+        static extern void glMultiTexCoord4f(System.Int32 target, Single s, Single t, Single r, Single q);
         [Slot(115)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPushMatrix();
+        static extern void glMultiTexCoord4x(System.Int32 texture, int s, int t, int r, int q);
         [Slot(116)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
+        static extern unsafe void glMultMatrixf(Single* m);
         [Slot(117)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRotatef(Single angle, Single x, Single y, Single z);
+        static extern unsafe void glMultMatrixx(int* m);
         [Slot(118)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRotatex(int angle, int x, int y, int z);
+        static extern void glNormal3f(Single nx, Single ny, Single nz);
         [Slot(119)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSampleCoverage(Single value, bool invert);
+        static extern void glNormal3x(int nx, int ny, int nz);
         [Slot(120)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSampleCoveragex(int value, bool invert);
+        static extern void glNormalPointer(System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(121)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glScalef(Single x, Single y, Single z);
+        static extern void glOrthof(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(122)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glScalex(int x, int y, int z);
+        static extern void glOrthox(int l, int r, int b, int t, int n, int f);
         [Slot(123)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
+        static extern unsafe void glPixelMapx(System.Int32 map, Int32 size, int* values);
         [Slot(124)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glShadeModel(System.Int32 mode);
+        static extern void glPixelStorei(System.Int32 pname, Int32 param);
         [Slot(125)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
+        static extern void glPixelStorex(System.Int32 pname, int param);
         [Slot(126)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilMask(UInt32 mask);
+        static extern void glPointParameterf(System.Int32 pname, Single param);
         [Slot(127)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
+        static extern unsafe void glPointParameterfv(System.Int32 pname, Single* @params);
         [Slot(128)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoordPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        static extern void glPointParameterx(System.Int32 pname, int param);
         [Slot(129)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexEnvf(System.Int32 target, System.Int32 pname, Single param);
+        static extern unsafe void glPointParameterxv(System.Int32 pname, int* @params);
         [Slot(130)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexEnvfv(System.Int32 target, System.Int32 pname, Single* @params);
+        static extern void glPointSize(Single size);
         [Slot(131)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexEnvi(System.Int32 target, System.Int32 pname, Int32 param);
+        static extern void glPointSizex(int size);
         [Slot(132)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexEnviv(System.Int32 target, System.Int32 pname, Int32* @params);
+        static extern void glPolygonOffset(Single factor, Single units);
         [Slot(133)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexEnvx(System.Int32 target, System.Int32 pname, int param);
+        static extern void glPolygonOffsetx(int factor, int units);
         [Slot(134)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexEnvxv(System.Int32 target, System.Int32 pname, int* @params);
+        static extern void glPopMatrix();
         [Slot(135)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexImage2D(System.Int32 target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
+        static extern void glPushMatrix();
         [Slot(136)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
+        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
         [Slot(137)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
+        static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(138)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
+        static extern void glRotatef(Single angle, Single x, Single y, Single z);
         [Slot(139)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
+        static extern void glRotatex(int angle, int x, int y, int z);
         [Slot(140)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexParameterx(System.Int32 target, System.Int32 pname, int param);
+        static extern void glSampleCoverage(Single value, bool invert);
         [Slot(141)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameterxv(System.Int32 target, System.Int32 pname, int* @params);
+        static extern void glSampleCoveragex(int value, bool invert);
         [Slot(142)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
+        static extern void glScalef(Single x, Single y, Single z);
         [Slot(143)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTranslatef(Single x, Single y, Single z);
+        static extern void glScalex(int x, int y, int z);
         [Slot(144)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTranslatex(int x, int y, int z);
+        static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(145)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertexPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        static extern void glShadeModel(System.Int32 mode);
         [Slot(146)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glStartTilingQCOM(UInt32 x, UInt32 y, UInt32 width, UInt32 height, UInt32 preserveMask);
+        [Slot(147)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
+        [Slot(148)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glStencilMask(UInt32 mask);
+        [Slot(149)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
+        [Slot(150)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexCoordPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        [Slot(151)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexEnvf(System.Int32 target, System.Int32 pname, Single param);
+        [Slot(152)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexEnvfv(System.Int32 target, System.Int32 pname, Single* @params);
+        [Slot(153)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexEnvi(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(154)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexEnviv(System.Int32 target, System.Int32 pname, Int32* @params);
+        [Slot(155)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexEnvx(System.Int32 target, System.Int32 pname, int param);
+        [Slot(156)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexEnvxv(System.Int32 target, System.Int32 pname, int* @params);
+        [Slot(157)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexImage2D(System.Int32 target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
+        [Slot(158)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
+        [Slot(159)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
+        [Slot(160)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(161)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
+        [Slot(162)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexParameterx(System.Int32 target, System.Int32 pname, int param);
+        [Slot(163)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexParameterxv(System.Int32 target, System.Int32 pname, int* @params);
+        [Slot(164)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
+        [Slot(165)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTranslatef(Single x, Single y, Single z);
+        [Slot(166)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTranslatex(int x, int y, int z);
+        [Slot(167)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertexPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        [Slot(168)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glViewport(Int32 x, Int32 y, Int32 width, Int32 height);
     }
