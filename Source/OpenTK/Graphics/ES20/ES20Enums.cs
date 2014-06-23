@@ -7660,7 +7660,7 @@ namespace OpenTK.Graphics.ES20
         /// <summary>
         /// Original was GL_PRIMITIVE_BOUNDING_BOX_EXT = 0x92BE
         /// </summary>
-        PrimitiveBoundingBoxExt = ((int)0x92BE)        ,
+        PrimitiveBoundingBoxExt = ((int)0x92BE),
         /// <summary>
         /// Original was GL_MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS_EXT = 0x92CD
         /// </summary>
@@ -12702,7 +12702,7 @@ namespace OpenTK.Graphics.ES20
         /// <summary>
         /// Original was GL_PRIMITIVE_BOUNDING_BOX_EXT = 0x92BE
         /// </summary>
-        PrimitiveBoundingBoxExt = ((int)0x92BE)        ,
+        PrimitiveBoundingBoxExt = ((int)0x92BE),
     }
 
     /// <summary>
