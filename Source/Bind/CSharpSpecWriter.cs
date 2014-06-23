@@ -653,7 +653,7 @@ namespace Bind
                     sw.WriteLine("/// </summary>");
                 }
 
-                var str = String.Format("{0} = {1}((int){2}{3})", c.Name, c.Unchecked ? "unchecked" : "",
+                var str = String.Format("{0} = {1}((int){2}{3})", c.Name.TrimStart('#'), c.Unchecked ? "unchecked" : "",
                     !String.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : "", c.Value);
 
                 sw.Write(str);

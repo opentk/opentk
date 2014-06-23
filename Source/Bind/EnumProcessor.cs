@@ -252,6 +252,12 @@ namespace Bind
             if (String.IsNullOrEmpty(s))
                 return s;
 
+            if (s.StartsWith("##"))
+            {
+                // Do not translate
+                return s;
+            }
+
             StringBuilder translator = new StringBuilder(s.Length);
 
             if (isValue)
