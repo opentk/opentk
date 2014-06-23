@@ -177,9 +177,6 @@
     <Compile Include="Structures\FlowDirection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ES\ESGenerator.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="XmlSpecReader.cs" />
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
@@ -236,12 +233,6 @@
     <None Include="Specifications\License.txt">
     </None>
     <None Include="Specifications\GL2\overrides.xml" />
-    <Compile Include="ES\ES2Generator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ES\ES3Generator.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="GL2\GL2Generator.cs" />
     <Compile Include="Structures\Documentation.cs" />
     <Compile Include="CL\CL20Generator.cs" />
@@ -252,6 +243,10 @@
     <None Include="Specifications\CL10\overrides.xml" />
     <Compile Include="Structures\Field.cs" />
     <Compile Include="CL\CL11Generator.cs" />
+    <Compile Include="ES\ES30Generator.cs" />
+    <Compile Include="ES\ES20Generator.cs" />
+    <Compile Include="ES\ES11Generator.cs" />
+    <Compile Include="ES\ES10Generator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">
@@ -281,5 +276,6 @@
   </ProjectExtensions>
   <ItemGroup>
     <Folder Include="Specifications\Docs\" />
+    <Folder Include="ES\" />
   </ItemGroup>
 </Project>
