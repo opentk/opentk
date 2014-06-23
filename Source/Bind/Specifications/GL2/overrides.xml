@@ -8009,8 +8009,8 @@
   <!-- Xamarin.Android compatibility -->
   <add name="gles1" version="1.0">
     <enum name="Amdcompressed3Dctexture" type="int">
-      <token name="GL_3DcXAmd" value="0x87F9" />
-      <token name="GL_3DcXyAmd" value="0x87FA" />
+      <token name="##GL_3DcXAmd" value="0x87F9" />
+      <token name="##GL_3DcXyAmd" value="0x87FA" />
       <token name="AmdCompressed3DcTexture" value="1" />
     </enum>
     <enum name="AmdcompressedAtctexture" type="int">
@@ -8403,13 +8403,155 @@
       <token name="IMPLEMENTATION_COLOR_READ_TYPE_OES" value="0x8B9A" />
       <token name="IMPLEMENTATION_COLOR_READ_FORMAT_OES" value="0x8B9B" />
     </enum>
+
+    <!-- Misclassified extensions from old ESCL parser -->
+    <function name="ClipPlanefIMG" category="IMG_user_clip_plane" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="p" type="GLenum" flow="in" />
+      <param name="eqn" type="GLfloat *" flow="in" count="4" />
+      <returns type="void" />
+    </function>
+    <function name="ClipPlanexIMG" category="IMG_user_clip_plane" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="p" type="GLenum" flow="in" />
+      <param name="eqn" type="GLfixed *" flow="in" count="4" />
+      <returns type="void" />
+    </function>
+    <function name="DisableDriverControlQCOM" category="QCOM_driver_control" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="driverControl" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="EnableDriverControlQCOM" category="QCOM_driver_control" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="driverControl" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="EndTilingQCOM" category="QCOM_tiled_rendering" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="preserveMask" type="GLbitfield" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtGetBufferPointervQCOM" category="QCOM_extended_get" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="params" type="void **" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtGetBuffersQCOM" category="QCOM_extended_get" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="buffers" type="GLuint *" flow="in" count="maxBuffers" />
+      <param name="maxBuffers" type="GLint" flow="in" />
+      <param name="numBuffers" type="GLint *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtGetFramebuffersQCOM" category="QCOM_extended_get" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="framebuffers" type="GLuint *" flow="in" count="maxFramebuffers" />
+      <param name="maxFramebuffers" type="GLint" flow="in" />
+      <param name="numFramebuffers" type="GLint *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtGetProgramBinarySourceQCOM" category="QCOM_extended_get2" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="program" type="GLuint" flow="in" />
+      <param name="shadertype" type="GLenum" flow="in" />
+      <param name="source" type="GLchar *" flow="in" />
+      <param name="length" type="GLint *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtGetProgramsQCOM" category="QCOM_extended_get2" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="programs" type="GLuint *" flow="in" count="maxPrograms" />
+      <param name="maxPrograms" type="GLint" flow="in" />
+      <param name="numPrograms" type="GLint *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtGetRenderbuffersQCOM" category="QCOM_extended_get" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="renderbuffers" type="GLuint *" flow="in" count="maxRenderbuffers" />
+      <param name="maxRenderbuffers" type="GLint" flow="in" />
+      <param name="numRenderbuffers" type="GLint *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtGetShadersQCOM" category="QCOM_extended_get2" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="shaders" type="GLuint *" flow="in" count="maxShaders" />
+      <param name="maxShaders" type="GLint" flow="in" />
+      <param name="numShaders" type="GLint *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtGetTexLevelParameterivQCOM" category="QCOM_extended_get" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="texture" type="GLuint" flow="in" />
+      <param name="face" type="GLenum" flow="in" />
+      <param name="level" type="GLint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="GLint *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtGetTexSubImageQCOM" category="QCOM_extended_get" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="level" type="GLint" flow="in" />
+      <param name="xoffset" type="GLint" flow="in" />
+      <param name="yoffset" type="GLint" flow="in" />
+      <param name="zoffset" type="GLint" flow="in" />
+      <param name="width" type="GLsizei" flow="in" />
+      <param name="height" type="GLsizei" flow="in" />
+      <param name="depth" type="GLsizei" flow="in" />
+      <param name="format" type="GLenum" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="texels" type="void *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtGetTexturesQCOM" category="QCOM_extended_get" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="textures" type="GLuint *" flow="in" />
+      <param name="maxTextures" type="GLint" flow="in" />
+      <param name="numTextures" type="GLint *" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ExtIsProgramBinaryQCOM" category="QCOM_extended_get2" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="program" type="GLuint" flow="in" />
+      <returns type="GLboolean" />
+    </function>
+    <function name="ExtTexObjectStateOverrideiQCOM" category="QCOM_extended_get" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="GetDriverControlsQCOM" category="QCOM_driver_control" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="num" type="GLint *" flow="in" />
+      <param name="size" type="GLsizei" flow="in" />
+      <param name="driverControls" type="GLuint *" flow="in" count="size" />
+      <returns type="void" />
+    </function>
+    <function name="GetDriverControlStringQCOM" category="QCOM_driver_control" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="driverControl" type="GLuint" flow="in" />
+      <param name="bufSize" type="GLsizei" flow="in" />
+      <param name="length" type="GLsizei *" flow="in" />
+      <param name="driverControlString" type="GLchar *" flow="out" count="bufSize" />
+      <returns type="void" />
+    </function>
+    <function name="StartTilingQCOM" category="QCOM_tiled_rendering" extension="Core" obsolete="Use GL.Qcom instead">
+      <param name="x" type="GLuint" flow="in" />
+      <param name="y" type="GLuint" flow="in" />
+      <param name="width" type="GLuint" flow="in" />
+      <param name="height" type="GLuint" flow="in" />
+      <param name="preserveMask" type="GLbitfield" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="FramebufferTexture2DMultisampleIMG" category="IMG_multisampled_render_to_texture" extension="Core" obsolete="Use GL.Img instead">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="attachment" type="GLenum" flow="in" />
+      <param name="textarget" type="GLenum" flow="in" />
+      <param name="texture" type="GLuint" flow="in" />
+      <param name="level" type="GLint" flow="in" />
+      <param name="samples" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="RenderbufferStorageMultisampleIMG" category="IMG_multisampled_render_to_texture" extension="Core" obsolete="Use GL.Img instead">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="samples" type="GLsizei" flow="in" />
+      <param name="internalformat" type="GLenum" flow="in" />
+      <param name="width" type="GLsizei" flow="in" />
+      <param name="height" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
   </add>
 
   <!-- Xamarin.Android compatibility -->
   <add name="gles1" version="1.1">
     <enum name="Amdcompressed3Dctexture" type="int">
-      <token name="GL_3DcXAmd" value="0x87F9" />
-      <token name="GL_3DcXyAmd" value="0x87FA" />
+      <token name="##GL_3DcXAmd" value="0x87F9" />
+      <token name="##GL_3DcXyAmd" value="0x87FA" />
       <token name="AmdCompressed3DcTexture" value="1" />
     </enum>
     <enum name="AmdcompressedAtctexture" type="int">
@@ -8799,8 +8941,8 @@
   <!-- Xamarin.Android compatibility -->
   <add name="gles2" version="2.0">
     <enum name="Amdcompressed3Dctexture" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
-      <token name="GL_3DcXAmd" value="0x87F9" />
-      <token name="GL_3DcXyAmd" value="0x87FA" />
+      <token name="##GL_3DcXAmd" value="0x87F9" />
+      <token name="##GL_3DcXyAmd" value="0x87FA" />
       <token name="AmdCompressed3DcTexture" value="1" />
     </enum>
     <enum name="AmdcompressedAtctexture" type="int" obsolete="Use an enum with a similar name and a capital letter at right places">
