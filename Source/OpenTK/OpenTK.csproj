@@ -806,6 +806,11 @@
     <Compile Include="Platform\X11\XI2Input.cs" />
     <Compile Include="Platform\X11\XI2MouseKeyboard.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSFloat.cs" />
+    <Compile Include="Platform\Linux\Bindings\Drm.cs" />
+    <Compile Include="Platform\Linux\LinuxFactory.cs" />
+    <Compile Include="Platform\Linux\LinuxNativeWindow.cs" />
+    <Compile Include="Platform\Linux\Bindings\Linux.cs" />
+    <Compile Include="Platform\Linux\Bindings\Gbm.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -836,4 +841,8 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Platform\Linux\" />
+    <Folder Include="Platform\Linux\Bindings\" />
+  </ItemGroup>
 </Project>
