@@ -101,6 +101,15 @@ namespace Examples
         public static void Main(string[] args)
         {
             Trace.Listeners.Add(new ConsoleTraceListener());
+            Tests.GameWindowStates.Main();
+            return;
+
+            using (var gw = new GameWindow())
+            {
+                gw.KeyDown += (sender, e) => gw.Exit();
+                gw.Run(60);
+            }
+            return;
 
             if (args.Length > 0)
             {

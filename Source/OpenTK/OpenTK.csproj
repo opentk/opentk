@@ -343,9 +343,6 @@
     <Compile Include="Platform\X11\X11WindowInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\X11\X11Joystick.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\X11\Functions.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -809,8 +806,13 @@
     <Compile Include="Platform\Linux\Bindings\Drm.cs" />
     <Compile Include="Platform\Linux\LinuxFactory.cs" />
     <Compile Include="Platform\Linux\LinuxNativeWindow.cs" />
-    <Compile Include="Platform\Linux\Bindings\Linux.cs" />
     <Compile Include="Platform\Linux\Bindings\Gbm.cs" />
+    <Compile Include="Platform\Linux\LinuxDisplayDriver.cs" />
+    <Compile Include="Platform\Linux\LinuxJoystick.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\Linux\Bindings\Libc.cs" />
+    <Compile Include="Platform\Linux\LinuxWindowInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

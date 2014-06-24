@@ -33,9 +33,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Input;
 
-namespace OpenTK.Platform.X11
+namespace OpenTK.Platform.Linux
 {
-    struct X11JoyDetails
+    struct LinuxJoyDetails
     {
         public Guid Guid;
         public int FileDescriptor;
@@ -43,7 +43,7 @@ namespace OpenTK.Platform.X11
     }
 
     // Note: despite what the name says, this class is Linux-specific.
-    sealed class X11Joystick : IJoystickDriver2
+    sealed class LinuxJoystick : IJoystickDriver2
     {
         #region Fields
 
@@ -52,7 +52,7 @@ namespace OpenTK.Platform.X11
         readonly FileSystemWatcher watcher = new FileSystemWatcher();
 
         readonly Dictionary<int, int> index_to_stick = new Dictionary<int, int>();
-        List<JoystickDevice<X11JoyDetails>> sticks = new List<JoystickDevice<X11JoyDetails>>();
+        List<JoystickDevice<LinuxJoyDetails>> sticks = new List<JoystickDevice<LinuxJoyDetails>>();
 
         bool disposed;
 
@@ -60,7 +60,7 @@ namespace OpenTK.Platform.X11
 
         #region Constructors
 
-        public X11Joystick()
+        public LinuxJoystick()
         {
             string path =
                 Directory.Exists(JoystickPath) ? JoystickPath :
@@ -89,7 +89,7 @@ namespace OpenTK.Platform.X11
             {
                 foreach (string file in Directory.GetFiles(path))
                 {
-                    JoystickDevice<X11JoyDetails> stick = OpenJoystick(file);
+                    JoystickDevice<LinuxJoyDetails> stick = OpenJoystick(file);
                     if (stick != null)
                     {
                         //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
@@ -155,7 +155,7 @@ namespace OpenTK.Platform.X11
 
         #region Private Members
 
-        Guid CreateGuid(JoystickDevice<X11JoyDetails> js, string path, int number)
+        Guid CreateGuid(JoystickDevice<LinuxJoyDetails> js, string path, int number)
         {
             byte[] bytes = new byte[16];
             for (int i = 0; i < Math.Min(bytes.Length, js.Description.Length); i++)
@@ -221,9 +221,9 @@ namespace OpenTK.Platform.X11
 #endif
         }
         
-        JoystickDevice<X11JoyDetails> OpenJoystick(string path)
+        JoystickDevice<LinuxJoyDetails> OpenJoystick(string path)
         {
-            JoystickDevice<X11JoyDetails> stick = null;
+            JoystickDevice<LinuxJoyDetails> stick = null;
 
             int number = GetJoystickNumber(Path.GetFileName(path));
             if (number >= 0)
@@ -231,28 +231,28 @@ namespace OpenTK.Platform.X11
                 int fd = -1;
                 try
                 {
-                    fd = UnsafeNativeMethods.open(path, OpenFlags.NonBlock);
+                    fd = Libc.open(path, OpenFlags.NonBlock);
                     if (fd == -1)
                         return null;
 
                     // Check joystick driver version (must be 1.0+)
                     int driver_version = 0x00000800;
-                    UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Version, ref driver_version);
+                    Libc.ioctl(fd, JoystickIoctlCode.Version, ref driver_version);
                     if (driver_version < 0x00010000)
                         return null;
 
                     // Get number of joystick axes
                     int axes = 0;
-                    UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Axes, ref axes);
+                    Libc.ioctl(fd, JoystickIoctlCode.Axes, ref axes);
 
                     // Get number of joystick buttons
                     int buttons = 0;
-                    UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Buttons, ref buttons);
+                    Libc.ioctl(fd, JoystickIoctlCode.Buttons, ref buttons);
 
-                    stick = new JoystickDevice<X11JoyDetails>(number, axes, buttons);
+                    stick = new JoystickDevice<LinuxJoyDetails>(number, axes, buttons);
 
                     StringBuilder sb = new StringBuilder(128);
-                    UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Name128, sb);
+                    Libc.ioctl(fd, JoystickIoctlCode.Name128, sb);
                     stick.Description = sb.ToString();
 
                     stick.Details.FileDescriptor = fd;
@@ -287,16 +287,16 @@ namespace OpenTK.Platform.X11
                 finally
                 {
                     if (stick == null && fd != -1)
-                        UnsafeNativeMethods.close(fd);
+                        Libc.close(fd);
                 }
             }
 
             return stick;
         }
 
-        void CloseJoystick(JoystickDevice<X11JoyDetails> js)
+        void CloseJoystick(JoystickDevice<LinuxJoyDetails> js)
         {
-            UnsafeNativeMethods.close(js.Details.FileDescriptor);
+            Libc.close(js.Details.FileDescriptor);
             js.Details.State = new JoystickState(); // clear joystick state
             js.Details.FileDescriptor = -1;
             
@@ -317,13 +317,13 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void PollJoystick(JoystickDevice<X11JoyDetails> js)
+        void PollJoystick(JoystickDevice<LinuxJoyDetails> js)
         {
             JoystickEvent e;
 
             unsafe
             {
-                while ((long)UnsafeNativeMethods.read(js.Details.FileDescriptor, (void*)&e, (UIntPtr)sizeof(JoystickEvent)) > 0)
+                while ((long)Libc.read(js.Details.FileDescriptor, (void*)&e, (UIntPtr)sizeof(JoystickEvent)) > 0)
                 {
                     e.Type &= ~JoystickEventType.Init;
 
@@ -352,77 +352,8 @@ namespace OpenTK.Platform.X11
             return index_to_stick.ContainsKey(index);
         }
 
-        #region UnsafeNativeMethods
-
-        struct EvdevInputId
-        {
-            public ushort BusType;
-            public ushort Vendor;
-            public ushort Product;
-            public ushort Version;
-        }
-
-        enum EvdevIoctlCode : uint
-        {
-            Id = ((byte)'E' << 8) | (0x02 << 0) //EVIOCGID, which is _IOR('E', 0x02, struct input_id)
-        }
- 
-
-        struct JoystickEvent
-        {
-            public uint Time;    // (u32) event timestamp in milliseconds
-            public short Value;  // (s16) value
-            public JoystickEventType Type;    // (u8)  event type
-            public byte Number;  // (u8)  axis/button number
-        }
-
-        [Flags]
-        enum JoystickEventType : byte
-        {
-            Button = 0x01,    // button pressed/released
-            Axis = 0x02,      // joystick moved
-            Init = 0x80       // initial state of device
-        }
-
-        enum JoystickIoctlCode : uint
-        {
-            Version = 0x80046a01,
-            Axes = 0x80016a11,
-            Buttons = 0x80016a12,
-            Name128 = (2u << 30) | (0x6A << 8) | (0x13 << 0) | (128 << 16) //JSIOCGNAME(128), which is _IOC(_IO_READ, 'j', 0x13, len)
-        }
-
         static readonly string JoystickPath = "/dev/input";
         static readonly string JoystickPathLegacy = "/dev";
-
-        [Flags]
-        enum OpenFlags
-        {
-            NonBlock = 0x00000800
-        }
-
-        static class UnsafeNativeMethods
-        {
-            [DllImport("libc", SetLastError = true)]
-            public static extern int ioctl(int d, JoystickIoctlCode request, ref int data);
-
-            [DllImport("libc", SetLastError = true)]
-            public static extern int ioctl(int d, JoystickIoctlCode request, StringBuilder data);
-
-            [DllImport("libc", SetLastError = true)]
-            public static extern int ioctl(int d, EvdevIoctlCode request, out EvdevInputId data);
-
-            [DllImport("libc", SetLastError = true)]
-            public static extern int open([MarshalAs(UnmanagedType.LPStr)]string pathname, OpenFlags flags);
-
-            [DllImport("libc", SetLastError = true)]
-            public static extern int close(int fd);
-
-            [DllImport("libc", SetLastError = true)]
-            unsafe public static extern IntPtr read(int fd, void* buffer, UIntPtr count);
-        }
-
-        #endregion
 
         #endregion
 
@@ -443,7 +374,7 @@ namespace OpenTK.Platform.X11
                 }
 
                 watcher.Dispose();
-                foreach (JoystickDevice<X11JoyDetails> js in sticks)
+                foreach (JoystickDevice<LinuxJoyDetails> js in sticks)
                 {
                     CloseJoystick(js);
                 }
@@ -452,7 +383,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        ~X11Joystick()
+        ~LinuxJoystick()
         {
             Dispose(false);
         }
@@ -465,7 +396,7 @@ namespace OpenTK.Platform.X11
         {
             if (IsValid(index))
             {
-                JoystickDevice<X11JoyDetails> js = 
+                JoystickDevice<LinuxJoyDetails> js = 
                     sticks[index_to_stick[index]];
                 PollJoystick(js);
                 return js.Details.State;
@@ -478,7 +409,7 @@ namespace OpenTK.Platform.X11
             JoystickCapabilities caps = new JoystickCapabilities();
             if (IsValid(index))
             {
-                JoystickDevice<X11JoyDetails> js = sticks[index_to_stick[index]];
+                JoystickDevice<LinuxJoyDetails> js = sticks[index_to_stick[index]];
                 caps = new JoystickCapabilities(
                     js.Axis.Count,
                     js.Button.Count,
@@ -492,7 +423,7 @@ namespace OpenTK.Platform.X11
         {
             if (IsValid(index))
             {
-                JoystickDevice<X11JoyDetails> js = sticks[index_to_stick[index]];
+                JoystickDevice<LinuxJoyDetails> js = sticks[index_to_stick[index]];
                 return js.Details.Guid; 
             }
             return new Guid();

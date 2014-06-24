@@ -32,70 +32,93 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform.Linux
 {
+    using Egl = OpenTK.Platform.Egl.Egl;
+
     // Linux KMS platform
     class LinuxFactory : PlatformFactoryBase
     {
         int fd;
-        GbmDevice device;
+        GbmDevice gbm_device;
         IntPtr display;
+
+        IJoystickDriver2 JoystickDriver;
+        IDisplayDeviceDriver DisplayDriver;
 
         public LinuxFactory()
         {
+            SetupEgl();
+        }
+
+        #region Private Members
+
+        void SetupEgl()
+        {
             // Todo: support multi-GPU systems
             string gpu = "/dev/dri/card0";
-            fd = Linux.Open(gpu, OpenFlags.ReadOnly | OpenFlags.CloseOnExec);
+            fd = Libc.open(gpu, OpenFlags.ReadWrite | OpenFlags.CloseOnExec);
             if (fd < 0)
             {
-                throw new NotSupportedException("No KMS-capable GPU available");
+                throw new NotSupportedException("[KMS] No KMS-capable GPU available");
             }
-            Debug.Print("GPU {0} opened as fd:{1}", gpu, fd);
+            Debug.Print("[KMS] GPU '{0}' opened as fd:{1}", gpu, fd);
 
             IntPtr dev = Gbm.CreateDevice(fd);
             if (dev == IntPtr.Zero)
             {
-                throw new NotSupportedException("Failed to create GBM device");
+                throw new NotSupportedException("[KMS] Failed to create GBM device");
             }
-            device = (GbmDevice)Marshal.PtrToStructure(dev, typeof(GbmDevice));
-            Debug.Print("GBM {0:x} '{1}' created successfully",
-                dev, Marshal.PtrToStringAnsi(device.name));
+            gbm_device = (GbmDevice)Marshal.PtrToStructure(dev, typeof(GbmDevice));
+            Debug.Print("[KMS] GBM {0:x} created successfully", dev);
 
-            display = Egl.Egl.GetDisplay(dev);
+            display = Egl.GetDisplay(dev);
             if (display == IntPtr.Zero)
             {
-                throw new NotSupportedException("Failed to create EGL display");
+                throw new NotSupportedException("[KMS] Failed to create EGL display");
             }
-            Debug.Print("EGL display {0:x} created successfully", display);
+            Debug.Print("[KMS] EGL display {0:x} created successfully", display);
 
             int major, minor;
-            if (!Egl.Egl.Initialize(display, out major, out minor))
+            if (!Egl.Initialize(display, out major, out minor))
             {
-                int error = Egl.Egl.GetError();
-                throw new NotSupportedException("Failed to initialize EGL display. Error code: " + error);
+                int error = Egl.GetError();
+                throw new NotSupportedException("[KMS] Failed to initialize EGL display. Error code: " + error);
             }
-            Debug.Print("EGL {0}.{1} initialized successfully on display {2:x}", major, minor, display);
+            Debug.Print("[KMS] EGL {0}.{1} initialized successfully on display {2:x}", major, minor, display);
         }
 
-        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        #endregion
+
+        #region IPlatformFactory Members
+
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice display_device)
         {
-            return new LinuxNativeWindow(x, y, width, height, title, mode, options, device);
+            return new LinuxNativeWindow(display, gbm_device, width, height, title, mode, options, display_device);
         }
 
         public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
-            throw new NotImplementedException();
+            lock (this)
+            {
+                DisplayDriver = DisplayDriver ?? new LinuxDisplayDriver(fd);
+                return DisplayDriver;
+            }
         }
 
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            throw new NotImplementedException();
+            return new EglUnixContext(mode, (EglWindowInfo)window, shareContext, major, minor, flags);
         }
 
         public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            throw new NotImplementedException();
+            return (GraphicsContext.GetCurrentContextDelegate)delegate
+            {
+                return new ContextHandle(Egl.GetCurrentContext());
+            };
         }
 
         public override IKeyboardDriver2 CreateKeyboardDriver()
@@ -110,8 +133,14 @@ namespace OpenTK.Platform.Linux
 
         public override IJoystickDriver2 CreateJoystickDriver()
         {
-            throw new NotImplementedException();
+            lock (this)
+            {
+                JoystickDriver = JoystickDriver ?? new LinuxJoystick();
+                return JoystickDriver;
+            }
         }
+
+        #endregion
     }
 }
 

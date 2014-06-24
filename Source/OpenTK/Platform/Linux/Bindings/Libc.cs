@@ -29,22 +29,62 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Platform.Linux
 {
-    class Linux
+    class Libc
     {
-        [DllImport("glib", EntryPoint = "open", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int Open(string pathname, OpenFlags flags);
+        const string lib = "libc";
+
+        [DllImport(lib)]
+        public static extern int ioctl(int d, JoystickIoctlCode request, ref int data);
+
+        [DllImport(lib)]
+        public static extern int ioctl(int d, JoystickIoctlCode request, StringBuilder data);
+
+        [DllImport(lib)]
+        public static extern int ioctl(int d, EvdevIoctlCode request, out EvdevInputId data);
+
+        [DllImport(lib)]
+        public static extern int open([MarshalAs(UnmanagedType.LPStr)]string pathname, OpenFlags flags);
+
+        [DllImport(lib)]
+        public static extern int close(int fd);
+
+        [DllImport(lib)]
+        unsafe public static extern IntPtr read(int fd, void* buffer, UIntPtr count);
     }
 
     [Flags]
     enum OpenFlags
     {
-        ReadOnly = 0,
-        WriteOnly = 1,
-        ReadWrite = 2,
-        CloseOnExec = 4096
+        ReadOnly = 0x0000,
+        WriteOnly = 0x0001,
+        ReadWrite = 0x0002,
+        NonBlock = 0x0800,
+        CloseOnExec = 0x0080000
+    }
+
+    enum EvdevIoctlCode : uint
+    {
+        Id = ((byte)'E' << 8) | (0x02 << 0) //EVIOCGID, which is _IOR('E', 0x02, struct input_id)
+    }
+
+    [Flags]
+    enum JoystickEventType : byte
+    {
+        Button = 0x01,    // button pressed/released
+        Axis = 0x02,      // joystick moved
+        Init = 0x80       // initial state of device
+    }
+
+    enum JoystickIoctlCode : uint
+    {
+        Version = 0x80046a01,
+        Axes = 0x80016a11,
+        Buttons = 0x80016a12,
+        Name128 = (2u << 30) | (0x6A << 8) | (0x13 << 0) | (128 << 16) //JSIOCGNAME(128), which is _IOC(_IO_READ, 'j', 0x13, len)
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -63,6 +103,22 @@ namespace OpenTK.Platform.Linux
         public IntPtr atime;   /* time of last access */
         public IntPtr mtime;   /* time of last modification */
         public IntPtr ctime;   /* time of last status change */
+    }
+
+    struct EvdevInputId
+    {
+        public ushort BusType;
+        public ushort Vendor;
+        public ushort Product;
+        public ushort Version;
+    }
+
+    struct JoystickEvent
+    {
+        public uint Time;    // (u32) event timestamp in milliseconds
+        public short Value;  // (s16) value
+        public JoystickEventType Type;    // (u8)  event type
+        public byte Number;  // (u8)  axis/button number
     }
 }
 

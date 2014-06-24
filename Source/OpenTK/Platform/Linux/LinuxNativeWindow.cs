@@ -28,42 +28,74 @@
 #endregion
 
 using System;
+using System.Drawing;
+using OpenTK.Graphics;
+using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform.Linux
 {
+    using Egl = OpenTK.Platform.Egl.Egl;
+
     class LinuxNativeWindow : NativeWindowBase
     {
+        LinuxWindowInfo window_info;
+        string title;
+        Icon icon;
+        bool exists;
+        Rectangle bounds;
+        Size client_size;
+
+        public LinuxNativeWindow(IntPtr display, GbmDevice device,
+            int width, int height, string title, GraphicsMode mode, GameWindowFlags options,
+            DisplayDevice display_device)
+        {
+            Title = title;
+            bounds = new Rectangle(0, 0, width, height);
+            client_size = bounds.Size;
+
+            //window_info = new LinuxWindowInfo(
+                //    Egl.CreateWindowSurface(
+
+            exists = true;
+        }
+
         #region INativeWindow Members
 
         public override void Close()
         {
-            throw new NotImplementedException();
+            exists = false;
         }
 
-        public override System.Drawing.Point PointToClient(System.Drawing.Point point)
+        public override Point PointToClient(Point point)
         {
-            throw new NotImplementedException();
+            // Todo
+            return point;
         }
 
-        public override System.Drawing.Point PointToScreen(System.Drawing.Point point)
+        public override Point PointToScreen(Point point)
         {
-            throw new NotImplementedException();
+            // Todo
+            return point;
         }
 
         protected override void Dispose(bool disposing)
         {
-            throw new NotImplementedException();
+            // Todo
         }
 
-        public override System.Drawing.Icon Icon
+        public override Icon Icon
         {
             get
             {
-                throw new NotImplementedException();
+                return icon;
             }
             set
             {
-                throw new NotImplementedException();
+                if (icon != value)
+                {
+                    icon = value;
+                    OnIconChanged(EventArgs.Empty);
+                }
             }
         }
 
@@ -71,11 +103,15 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                throw new NotImplementedException();
+                return title;
             }
             set
             {
-                throw new NotImplementedException();
+                if (title != value)
+                {
+                    title = value;
+                    OnTitleChanged(EventArgs.Empty);
+                }
             }
         }
 
@@ -83,7 +119,7 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                throw new NotImplementedException();
+                return true;
             }
         }
 
@@ -91,11 +127,10 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                throw new NotImplementedException();
+                return true;
             }
             set
             {
-                throw new NotImplementedException();
             }
         }
 
@@ -103,7 +138,7 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                throw new NotImplementedException();
+                return exists;
             }
         }
 
@@ -111,7 +146,7 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                throw new NotImplementedException();
+                return window_info;
             }
         }
 
@@ -119,11 +154,10 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                throw new NotImplementedException();
+                return WindowState.Fullscreen;
             }
             set
             {
-                throw new NotImplementedException();
             }
         }
 
@@ -131,35 +165,32 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                throw new NotImplementedException();
+                return WindowBorder.Hidden;
             }
             set
             {
-                throw new NotImplementedException();
             }
         }
 
-        public override System.Drawing.Rectangle Bounds
+        public override Rectangle Bounds
         {
             get
             {
-                throw new NotImplementedException();
+                return bounds;
             }
             set
             {
-                throw new NotImplementedException();
             }
         }
 
-        public override System.Drawing.Size ClientSize
+        public override Size ClientSize
         {
             get
             {
-                throw new NotImplementedException();
+                return client_size;
             }
             set
             {
-                throw new NotImplementedException();
             }
         }
 
@@ -167,11 +198,10 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                throw new NotImplementedException();
+                return false;
             }
             set
             {
-                throw new NotImplementedException();
             }
         }
 
@@ -179,18 +209,14 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                throw new NotImplementedException();
+                return MouseCursor.Empty;
             }
             set
             {
-                throw new NotImplementedException();
             }
         }
 
         #endregion
-
-
-
     }
 }
 
