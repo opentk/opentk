@@ -41,6 +41,13 @@ namespace OpenTK.Platform.Egl
     using EGLSurface = IntPtr;
     using EGLClientBuffer = IntPtr;
 
+    enum RenderApi
+    {
+        ES = Egl.OPENGL_ES_API,
+        GL = Egl.OPENGL_API,
+        VG = Egl.OPENVG_API
+    }
+
     [Flags]
     enum RenderableFlags
     {
@@ -229,7 +236,7 @@ namespace OpenTK.Platform.Egl
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglBindAPI")]
         [return: MarshalAsAttribute(UnmanagedType.I1)]
-        public static extern bool BindAPI(int api);
+        public static extern bool BindAPI(RenderApi api);
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglQueryAPI")]
         public static extern int QueryAPI();

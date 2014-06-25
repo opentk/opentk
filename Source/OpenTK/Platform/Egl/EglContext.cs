@@ -60,7 +60,12 @@ namespace OpenTK.Platform.Egl
             // Select an EGLConfig that matches the desired mode. We cannot use the 'mode'
             // parameter directly, since it may have originated on a different system (e.g. GLX)
             // and it may not support the desired renderer.
-            Renderable = major > 1 ? RenderableFlags.ES2 : RenderableFlags.ES;
+
+            Renderable = RenderableFlags.GL;
+            if ((flags & GraphicsContextFlags.Embedded) != 0)
+            {
+                Renderable = major > 1 ? RenderableFlags.ES2 : RenderableFlags.ES;
+            }
             Mode = new EglGraphicsMode().SelectGraphicsMode(window,
                 mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
                 mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
@@ -76,6 +81,13 @@ namespace OpenTK.Platform.Egl
             HandleAsEGLContext = Egl.CreateContext(window.Display, config, shared != null ? shared.HandleAsEGLContext : IntPtr.Zero, attrib_list);
 
             MakeCurrent(window);
+
+            RenderApi api = (Renderable & RenderableFlags.GL) != 0 ? RenderApi.GL : RenderApi.ES;
+            Debug.Print("[EGL] Binding rendering API {0}.", api);
+            if (!Egl.BindAPI(api))
+            {
+                Debug.Print("[EGL] Failed to bind rendering API. Error: {0}", Egl.GetError());
+            }
         }
 
         public EglContext(ContextHandle handle, EglWindowInfo window, IGraphicsContext sharedContext,
