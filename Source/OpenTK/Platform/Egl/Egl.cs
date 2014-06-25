@@ -50,6 +50,24 @@ namespace OpenTK.Platform.Egl
         VG = Egl.OPENVG_BIT,
     }
 
+    enum ErrorCode
+    {
+        SUCCESS = 12288,
+        NOT_INITIALIZED = 12289,
+        BAD_ACCESS = 12290,
+        BAD_ALLOC = 12291,
+        BAD_ATTRIBUTE = 12292,
+        BAD_CONFIG = 12293,
+        BAD_CONTEXT = 12294,
+        BAD_CURRENT_SURFACE = 12295,
+        BAD_DISPLAY = 12296,
+        BAD_MATCH = 12297,
+        BAD_NATIVE_PIXMAP = 12298,
+        BAD_NATIVE_WINDOW = 12299,
+        BAD_PARAMETER = 12300,
+        BAD_SURFACE = 12301,
+    }
+
     static partial class Egl
     {
         public const int VERSION_1_0 = 1;
@@ -60,20 +78,6 @@ namespace OpenTK.Platform.Egl
         public const int FALSE = 0;
         public const int TRUE = 1;
         public const int DONT_CARE = -1;
-        public const int SUCCESS = 12288;
-        public const int NOT_INITIALIZED = 12289;
-        public const int BAD_ACCESS = 12290;
-        public const int BAD_ALLOC = 12291;
-        public const int BAD_ATTRIBUTE = 12292;
-        public const int BAD_CONFIG = 12293;
-        public const int BAD_CONTEXT = 12294;
-        public const int BAD_CURRENT_SURFACE = 12295;
-        public const int BAD_DISPLAY = 12296;
-        public const int BAD_MATCH = 12297;
-        public const int BAD_NATIVE_PIXMAP = 12298;
-        public const int BAD_NATIVE_WINDOW = 12299;
-        public const int BAD_PARAMETER = 12300;
-        public const int BAD_SURFACE = 12301;
         public const int CONTEXT_LOST = 12302;
         public const int BUFFER_SIZE = 12320;
         public const int ALPHA_SIZE = 12321;
@@ -178,7 +182,7 @@ namespace OpenTK.Platform.Egl
         public const int ALPHA_FORMAT_PRE = VG_ALPHA_FORMAT_PRE;
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetError")]
-        public static extern int GetError();
+        public static extern ErrorCode GetError();
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetDisplay")]
         public static extern EGLDisplay GetDisplay(EGLNativeDisplayType display_id);

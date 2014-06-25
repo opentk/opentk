@@ -133,7 +133,8 @@ namespace OpenTK.Platform.Egl
                 if (Egl.SwapInterval(WindowInfo.Display, value))
                     swap_interval = value;
                 else
-                    Debug.Print("[Warning] Egl.SwapInterval({0}, {1}) failed.", WindowInfo.Display, value);
+                    Debug.Print("[Warning] Egl.SwapInterval({0}, {1}) failed. Error: {2}",
+                        WindowInfo.Display, value, Egl.GetError());
             }
         }
 

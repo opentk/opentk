@@ -83,7 +83,7 @@ namespace OpenTK.Platform.Linux
             int major, minor;
             if (!Egl.Initialize(display, out major, out minor))
             {
-                int error = Egl.GetError();
+                ErrorCode error = Egl.GetError();
                 throw new NotSupportedException("[KMS] Failed to initialize EGL display. Error code: " + error);
             }
             Debug.Print("[KMS] EGL {0}.{1} initialized successfully on display {2:x}", major, minor, display);
