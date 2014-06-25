@@ -75,7 +75,6 @@ namespace OpenTK.Platform.Linux
         }
 
         readonly int FD;
-        readonly GbmDevice Device;
         readonly Dictionary<int, int> DisplayIds =
             new Dictionary<int, int>();
 
@@ -203,19 +202,16 @@ namespace OpenTK.Platform.Linux
                     0,
                     current.Width,
                     current.Height);
-
-            DisplayDevice device = new DisplayDevice(
-                current,
-                AvailableDevices.Count == 0,
-                modes,
-                bounds,
-                display);
+            bool is_primary = AvailableDevices.Count == 0;
+            DisplayDevice device = new DisplayDevice(current, is_primary,
+                modes, bounds, display);
 
             if (AvailableDevices.Count == 0)
             {
                 Primary = device;
             }
 
+            Debug.Print("[KMS] Detected display {0}", device);
             AvailableDevices.Add(device);
         }
 

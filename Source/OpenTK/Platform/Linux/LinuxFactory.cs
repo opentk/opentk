@@ -42,7 +42,7 @@ namespace OpenTK.Platform.Linux
     class LinuxFactory : PlatformFactoryBase
     {
         int fd;
-        GbmDevice gbm_device;
+        IntPtr gbm_device;
         IntPtr display;
 
         IJoystickDriver2 JoystickDriver;
@@ -66,15 +66,14 @@ namespace OpenTK.Platform.Linux
             }
             Debug.Print("[KMS] GPU '{0}' opened as fd:{1}", gpu, fd);
 
-            IntPtr dev = Gbm.CreateDevice(fd);
-            if (dev == IntPtr.Zero)
+            gbm_device = Gbm.CreateDevice(fd);
+            if (gbm_device == IntPtr.Zero)
             {
                 throw new NotSupportedException("[KMS] Failed to create GBM device");
             }
-            gbm_device = (GbmDevice)Marshal.PtrToStructure(dev, typeof(GbmDevice));
-            Debug.Print("[KMS] GBM {0:x} created successfully", dev);
+            Debug.Print("[KMS] GBM {0:x} created successfully; ", gbm_device);
 
-            display = Egl.GetDisplay(dev);
+            display = Egl.GetDisplay(gbm_device);
             if (display == IntPtr.Zero)
             {
                 throw new NotSupportedException("[KMS] Failed to create EGL display");
@@ -96,7 +95,7 @@ namespace OpenTK.Platform.Linux
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice display_device)
         {
-            return new LinuxNativeWindow(display, gbm_device, width, height, title, mode, options, display_device);
+            return new LinuxNativeWindow(display, gbm_device, x, y, width, height, title, mode, options, display_device);
         }
 
         public override IDisplayDeviceDriver CreateDisplayDeviceDriver()

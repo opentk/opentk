@@ -34,9 +34,11 @@ namespace OpenTK.Platform.Linux
 {
     class LinuxWindowInfo : EglWindowInfo
     {
-        public LinuxWindowInfo(IntPtr handle, IntPtr display, IntPtr surface)
-            : base(handle, display, surface)
+        public LinuxWindowInfo(IntPtr display)
+            : base(IntPtr.Zero, display, IntPtr.Zero)
         {
+            // The window handle and surface handle must
+            // be filled in manually once they are known.
         }
     }
 }

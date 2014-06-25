@@ -28,7 +28,9 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using OpenTK.Graphics;
 using OpenTK.Platform.Egl;
 
@@ -38,25 +40,87 @@ namespace OpenTK.Platform.Linux
 
     class LinuxNativeWindow : NativeWindowBase
     {
-        LinuxWindowInfo window_info;
+        LinuxWindowInfo window;
         string title;
         Icon icon;
         bool exists;
         Rectangle bounds;
         Size client_size;
 
-        public LinuxNativeWindow(IntPtr display, GbmDevice device,
-            int width, int height, string title, GraphicsMode mode, GameWindowFlags options,
+        public LinuxNativeWindow(IntPtr display, IntPtr gbm,
+            int x, int y, int width, int height, string title,
+            GraphicsMode mode, GameWindowFlags options,
             DisplayDevice display_device)
         {
+            Debug.Print("[KMS] Creating window on display {0:x}", display);
+
             Title = title;
             bounds = new Rectangle(0, 0, width, height);
             client_size = bounds.Size;
 
-            //window_info = new LinuxWindowInfo(
-                //    Egl.CreateWindowSurface(
+            window = new LinuxWindowInfo(display);
+            if (!mode.Index.HasValue)
+            {
+                mode = new EglGraphicsMode().SelectGraphicsMode(window, mode, 0);
+            }
+            Debug.Print("[KMS] Selected EGL mode {0}", mode);
 
+            unsafe
+            {
+                SurfaceFormat format = GetSurfaceFormat(mode);
+                SurfaceFlags usage = SurfaceFlags.Rendering | SurfaceFlags.Scanout;
+                if (!Gbm.IsFormatSupported(gbm, format, usage))
+                {
+                    format = SurfaceFormat.XBGR8888;
+                }
+
+                Debug.Print("[KMS] Creating GBM surface on {0:x} with {1}x{2} {3} {4}",
+                    gbm, width, height, format, usage);
+                IntPtr gbm_surface =  Gbm.CreateSurface(gbm,
+                        width, height, format, usage);
+                if (gbm_surface == IntPtr.Zero)
+                {
+                    throw new NotSupportedException("[KMS] Failed to create GBM surface for rendering");
+                }
+
+                window.Handle = gbm_surface;
+                Debug.Print("[KMS] Created GBM surface {0:x}", window.Handle);
+            }
+
+            window.CreateWindowSurface(mode.Index.Value);
+            Debug.Print("[KMS] Created EGL surface {0:x}", window.Surface);
+
+            // Todo: create mouse cursor
             exists = true;
+        }
+
+        SurfaceFormat GetSurfaceFormat(GraphicsMode mode)
+        {
+            int r = mode.ColorFormat.Red;
+            int g = mode.ColorFormat.Green;
+            int b = mode.ColorFormat.Blue;
+            int a = mode.ColorFormat.Alpha;
+
+            if (mode.ColorFormat.IsIndexed)
+                return SurfaceFormat.C8;
+            if (r == 3 && g == 3 && b == 2 && a == 0)
+                return SurfaceFormat.RGB332;
+            if (r == 5 && g == 6 && b == 5 && a == 0)
+                return SurfaceFormat.RGB565;
+            if (r == 5 && g == 6 && b == 5 && a == 0)
+                return SurfaceFormat.RGB565;
+            if (r == 8 && g == 8 && b == 8 && a == 0)
+                return SurfaceFormat.RGB888;
+            if (r == 5 && g == 5 && b == 5 && a == 1)
+                return SurfaceFormat.RGBA5551;
+            if (r == 10 && g == 10 && b == 10 && a == 2)
+                return SurfaceFormat.RGBA1010102;
+            if (r == 4 && g == 4 && b == 4 && a == 4)
+                return SurfaceFormat.RGBA4444;
+            if (r == 8 && g == 8 && b == 8 && a == 8)
+                return SurfaceFormat.RGBA8888;
+
+            return SurfaceFormat.RGBA8888;
         }
 
         #region INativeWindow Members
@@ -80,7 +144,11 @@ namespace OpenTK.Platform.Linux
 
         protected override void Dispose(bool disposing)
         {
-            // Todo
+            if (disposing)
+            {
+                window.Dispose();
+                Gbm.DestroySurface(window.Handle);
+            }
         }
 
         public override Icon Icon
@@ -146,7 +214,7 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                return window_info;
+                return window;
             }
         }
 
