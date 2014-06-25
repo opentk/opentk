@@ -65,27 +65,24 @@ namespace OpenTK.Platform.Linux
             }
             Debug.Print("[KMS] Selected EGL mode {0}", mode);
 
-            unsafe
+            SurfaceFormat format = GetSurfaceFormat(display, mode);
+            SurfaceFlags usage = SurfaceFlags.Rendering | SurfaceFlags.Scanout;
+            if (!Gbm.IsFormatSupported(gbm, format, usage))
             {
-                SurfaceFormat format = GetSurfaceFormat(mode);
-                SurfaceFlags usage = SurfaceFlags.Rendering | SurfaceFlags.Scanout;
-                if (!Gbm.IsFormatSupported(gbm, format, usage))
-                {
-                    format = SurfaceFormat.XBGR8888;
-                }
-
-                Debug.Print("[KMS] Creating GBM surface on {0:x} with {1}x{2} {3} {4}",
-                    gbm, width, height, format, usage);
-                IntPtr gbm_surface =  Gbm.CreateSurface(gbm,
-                        width, height, format, usage);
-                if (gbm_surface == IntPtr.Zero)
-                {
-                    throw new NotSupportedException("[KMS] Failed to create GBM surface for rendering");
-                }
-
-                window.Handle = gbm_surface;
-                Debug.Print("[KMS] Created GBM surface {0:x}", window.Handle);
+                //format = SurfaceFormat.xrgba;
             }
+
+            Debug.Print("[KMS] Creating GBM surface on {0:x} with {1}x{2} {3} [{4}]",
+                gbm, width, height, format, usage);
+            IntPtr gbm_surface =  Gbm.CreateSurface(gbm,
+                    width, height, format, usage);
+            if (gbm_surface == IntPtr.Zero)
+            {
+                throw new NotSupportedException("[KMS] Failed to create GBM surface for rendering");
+            }
+
+            window.Handle = gbm_surface;
+                Debug.Print("[KMS] Created GBM surface {0:x}", window.Handle);
 
             window.CreateWindowSurface(mode.Index.Value);
             Debug.Print("[KMS] Created EGL surface {0:x}", window.Surface);
@@ -94,8 +91,21 @@ namespace OpenTK.Platform.Linux
             exists = true;
         }
 
-        SurfaceFormat GetSurfaceFormat(GraphicsMode mode)
+        SurfaceFormat GetSurfaceFormat(IntPtr display, GraphicsMode mode)
         {
+            // Use EGL 1.4 EGL_NATIVE_VISUAL_ID to retrieve
+            // the corresponding surface format. If that fails
+            // fall back to a manual algorithm.
+            int format;
+            Egl.GetConfigAttrib(display, mode.Index.Value,
+                Egl.NATIVE_VISUAL_ID, out format);
+            if ((SurfaceFormat)format != 0)
+                return (SurfaceFormat)format;
+
+            Debug.Print("[KMS] Failed to retrieve EGL visual from GBM surface. Error: {0}",
+                Egl.GetError());
+            Debug.Print("[KMS] Falling back to hardcoded formats.");
+
             int r = mode.ColorFormat.Red;
             int g = mode.ColorFormat.Green;
             int b = mode.ColorFormat.Blue;
