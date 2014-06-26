@@ -42,16 +42,38 @@ namespace OpenTK.Platform.Linux
     // Linux KMS platform
     class LinuxFactory : PlatformFactoryBase
     {
-        int fd;
+        int _fd;
         IntPtr gbm_device;
-        IntPtr display;
+        IntPtr egl_display;
 
         IJoystickDriver2 JoystickDriver;
-        IDisplayDeviceDriver DisplayDriver;
+        IKeyboardDriver2 KeyboardDriver;
 
         const string gpu_path = "/dev/dri"; // card0, card1, ...
 
         public LinuxFactory()
+        {
+            Debug.Print("[KMS] Using Linux/KMS backend.");
+        }
+
+        #region Private Members
+
+        int gpu_fd
+        {
+            get
+            {
+                lock (this)
+                {
+                    if (_fd == 0)
+                    {
+                        _fd = CreateDisplay(out gbm_device, out egl_display);
+                    }
+                    return _fd;
+                }
+            }
+        }
+
+        static int CreateDisplay(out IntPtr gbm_device, out IntPtr egl_display)
         {
             // Query all GPUs until we find one that has a connected display.
             // This is necessary in multi-gpu systems, where only one GPU
@@ -59,12 +81,16 @@ namespace OpenTK.Platform.Linux
             // Todo: allow OpenTK to drive multiple GPUs
             // Todo: allow OpenTK to run on an offscreen GPU
             // Todo: allow the user to pick a GPU
+            int fd = 0;
+            gbm_device = IntPtr.Zero;
+            egl_display = IntPtr.Zero;
+
             var files = Directory.GetFiles(gpu_path);
             foreach (var gpu in files)
             {
                 if (Path.GetFileName(gpu).StartsWith("card"))
                 {
-                    int test_fd = SetupDisplay(gpu);
+                    int test_fd = SetupDisplay(gpu, out gbm_device, out egl_display);
                     if (test_fd >= 0)
                     {
                         try
@@ -91,13 +117,16 @@ namespace OpenTK.Platform.Linux
                 Debug.Print("[Error] No valid GPU found, bailing out.");
                 throw new PlatformNotSupportedException();
             }
+
+            return fd;
         }
 
-        #region Private Members
-
-        int SetupDisplay(string gpu)
+        static int SetupDisplay(string gpu, out IntPtr gbm_device, out IntPtr egl_display)
         {
             Debug.Print("[KMS] Attempting to use gpu '{0}'.", gpu);
+
+            gbm_device = IntPtr.Zero;
+            egl_display = IntPtr.Zero;
             
             int fd = Libc.open(gpu, OpenFlags.ReadWrite | OpenFlags.CloseOnExec);
             if (fd < 0)
@@ -114,20 +143,20 @@ namespace OpenTK.Platform.Linux
             }
             Debug.Print("[KMS] GBM {0:x} created successfully; ", gbm_device);
 
-            display = Egl.GetDisplay(gbm_device);
-            if (display == IntPtr.Zero)
+            egl_display = Egl.GetDisplay(gbm_device);
+            if (egl_display == IntPtr.Zero)
             {
                 throw new NotSupportedException("[KMS] Failed to create EGL display");
             }
-            Debug.Print("[KMS] EGL display {0:x} created successfully", display);
+            Debug.Print("[KMS] EGL display {0:x} created successfully", egl_display);
 
             int major, minor;
-            if (!Egl.Initialize(display, out major, out minor))
+            if (!Egl.Initialize(egl_display, out major, out minor))
             {
                 ErrorCode error = Egl.GetError();
                 throw new NotSupportedException("[KMS] Failed to initialize EGL display. Error code: " + error);
             }
-            Debug.Print("[KMS] EGL {0}.{1} initialized successfully on display {2:x}", major, minor, display);
+            Debug.Print("[KMS] EGL {0}.{1} initialized successfully on display {2:x}", major, minor, egl_display);
 
             return fd;
         }
@@ -138,19 +167,19 @@ namespace OpenTK.Platform.Linux
 
         protected override void Dispose(bool manual)
         {
-            if (display != IntPtr.Zero)
+            if (egl_display != IntPtr.Zero)
             {
-                Egl.Terminate(display);
-                display = IntPtr.Zero;
+                Egl.Terminate(egl_display);
+                egl_display = IntPtr.Zero;
             }
             if (gbm_device != IntPtr.Zero)
             {
                 Gbm.DestroyDevice(gbm_device);
                 gbm_device = IntPtr.Zero;
             }
-            if (fd >= 0)
+            if (_fd >= 0)
             {
-                Libc.close(fd);
+                Libc.close(_fd);
             }
 
             base.Dispose(manual);
@@ -162,12 +191,12 @@ namespace OpenTK.Platform.Linux
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice display_device)
         {
-            return new LinuxNativeWindow(display, gbm_device, fd, x, y, width, height, title, mode, options, display_device);
+            return new LinuxNativeWindow(egl_display, gbm_device, gpu_fd, x, y, width, height, title, mode, options, display_device);
         }
 
         public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
-            return new LinuxDisplayDriver(fd);
+            return new LinuxDisplayDriver(gpu_fd);
         }
 
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
@@ -185,7 +214,13 @@ namespace OpenTK.Platform.Linux
 
         public override IKeyboardDriver2 CreateKeyboardDriver()
         {
-            throw new NotImplementedException();
+            lock (this)
+            {
+                KeyboardDriver = KeyboardDriver ??
+                    (IKeyboardDriver2)new LinuxKeyboardLibInput() ??
+                    (IKeyboardDriver2)new LinuxKeyboardTTY();
+                return KeyboardDriver;
+            }
         }
 
         public override IMouseDriver2 CreateMouseDriver()
