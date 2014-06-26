@@ -1,6 +1,6 @@
 #region License
 //
-// LinuxWindowInfo.cs
+// Poll.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -28,27 +28,38 @@
 #endregion
 
 using System;
-using System.Diagnostics;
-using OpenTK.Platform.Egl;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Linux
 {
-    class LinuxWindowInfo : EglWindowInfo
+    partial class Libc
     {
-        public int FD { get; private set; }
-        public LinuxDisplay DisplayDevice { get; private set; }
+        [DllImport(lib)]
+        public static extern int poll(ref PollFD fd, IntPtr fd_count, int timeout);
 
-        public LinuxWindowInfo(IntPtr display, int fd, LinuxDisplay display_device)
-            : base(IntPtr.Zero, display, IntPtr.Zero)
+        public static int poll(ref PollFD fd, int fd_count, int timeout)
         {
-            if (display_device == null)
-                throw new ArgumentNullException();
-
-            FD = fd;
-            DisplayDevice = display_device;
-            // The window handle and surface handle must
-            // be filled in manually once they are known.
+            return poll(ref fd, (IntPtr)fd_count, timeout);
         }
+    }
+
+    [Flags]
+    enum PollFlags : short
+    {
+        In = 0x01,
+        Pri = 0x02,
+        Out = 0x04,
+        Error = 0x08,
+        Hup = 0x10,
+        Nval = 0x20,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct PollFD
+    {
+        public int fd;
+        public PollFlags events;
+        public PollFlags revents;
     }
 }
 

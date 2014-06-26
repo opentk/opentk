@@ -35,9 +35,9 @@ namespace OpenTK.Platform.Egl
     {
         #region Fields
 
-        readonly RenderableFlags Renderable;
+        protected readonly RenderableFlags Renderable;
+        protected EglWindowInfo WindowInfo;
 
-        EglWindowInfo WindowInfo;
         IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
         int swap_interval = 1; // Default interval is defined as 1 in EGL.
 
@@ -66,6 +66,14 @@ namespace OpenTK.Platform.Egl
             {
                 Renderable = major > 1 ? RenderableFlags.ES2 : RenderableFlags.ES;
             }
+
+            RenderApi api = (Renderable & RenderableFlags.GL) != 0 ? RenderApi.GL : RenderApi.ES;
+            Debug.Print("[EGL] Binding {0} rendering API.", api);
+            if (!Egl.BindAPI(api))
+            {
+                Debug.Print("[EGL] Failed to bind rendering API. Error: {0}", Egl.GetError());
+            }
+
             Mode = new EglGraphicsMode().SelectGraphicsMode(window,
                 mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
                 mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
@@ -81,13 +89,6 @@ namespace OpenTK.Platform.Egl
             HandleAsEGLContext = Egl.CreateContext(window.Display, config, shared != null ? shared.HandleAsEGLContext : IntPtr.Zero, attrib_list);
 
             MakeCurrent(window);
-
-            RenderApi api = (Renderable & RenderableFlags.GL) != 0 ? RenderApi.GL : RenderApi.ES;
-            Debug.Print("[EGL] Binding rendering API {0}.", api);
-            if (!Egl.BindAPI(api))
-            {
-                Debug.Print("[EGL] Failed to bind rendering API. Error: {0}", Egl.GetError());
-            }
         }
 
         public EglContext(ContextHandle handle, EglWindowInfo window, IGraphicsContext sharedContext,

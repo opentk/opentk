@@ -35,9 +35,9 @@ namespace OpenTK.Platform.Egl
 {
     class EglUnixContext : EglContext
     {
-        IntPtr GL = OpenTK.Platform.X11.DL.Open("libGL", X11.DLOpenFlags.Lazy);
         IntPtr ES1 = OpenTK.Platform.X11.DL.Open("libGLESv1_CM", X11.DLOpenFlags.Lazy);
         IntPtr ES2 = OpenTK.Platform.X11.DL.Open("libGLESv2", X11.DLOpenFlags.Lazy);
+        IntPtr GL = OpenTK.Platform.X11.DL.Open("libGL", X11.DLOpenFlags.Lazy);
 
         public EglUnixContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -70,10 +70,6 @@ namespace OpenTK.Platform.Egl
 
         protected override void Dispose(bool manual)
         {
-            if (GL != IntPtr.Zero)
-            {
-                X11.DL.Close(GL);
-            }
             if (ES1 != IntPtr.Zero)
             {
                 X11.DL.Close(ES1);
@@ -81,6 +77,10 @@ namespace OpenTK.Platform.Egl
             if (ES2 != IntPtr.Zero)
             {
                 X11.DL.Close(ES2);
+            }
+            if (GL != IntPtr.Zero)
+            {
+                X11.DL.Close(GL);
             }
 
             GL = ES1 = ES2 = IntPtr.Zero;

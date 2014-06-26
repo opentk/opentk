@@ -33,7 +33,7 @@ using System.Text;
 
 namespace OpenTK.Platform.Linux
 {
-    class Libc
+    partial class Libc
     {
         const string lib = "libc";
 

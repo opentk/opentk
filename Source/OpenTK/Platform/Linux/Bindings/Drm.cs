@@ -32,12 +32,37 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Linux
 {
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    delegate void VBlankCallback(int fd,
+        int sequence,
+        int tv_sec,
+        int tv_usec,
+        IntPtr user_data);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    delegate void PageFlipCallback(int fd,
+        int sequence,
+        int tv_sec,
+        int tv_usec,
+        IntPtr user_data);
+
     class Drm
     {
         const string lib = "libdrm";
 
+        [DllImport(lib, EntryPoint = "drmHandleEvent", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int HandleEvent(int fd, ref EventContext evctx);
+
+        [DllImport(lib, EntryPoint = "drmModeAddFB", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int ModeAddFB(int fd, int width, int height, byte depth,
+            byte bpp, int pitch, int bo_handle,
+            out int buf_id);
+
+        [DllImport(lib, EntryPoint = "drmModeRmFB", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int ModeRmFB(int fd, int bufferId);
+
         [DllImport(lib, EntryPoint = "drmModeGetCrtc", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr ModeGetCrtc(int fd, uint crtcId);
+        public static extern IntPtr ModeGetCrtc(int fd, int crtcId);
 
         [DllImport(lib, EntryPoint = "drmModeFreeConnector", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ModeFreeConnector(IntPtr ptr);
@@ -46,27 +71,31 @@ namespace OpenTK.Platform.Linux
         public static extern void ModeFreeEncoder(IntPtr ptr);
 
         [DllImport(lib, EntryPoint = "drmModeGetConnector", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr ModeGetConnector(int fd, uint connector_id);
+        public static extern IntPtr ModeGetConnector(int fd, int connector_id);
 
         [DllImport(lib, EntryPoint = "drmModeGetEncoder", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr ModeGetEncoder(int fd, uint encoder_id);
+        public static extern IntPtr ModeGetEncoder(int fd, int encoder_id);
 
         [DllImport(lib, EntryPoint = "drmModeGetResources", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ModeGetResources(int fd);
 
+        [DllImport(lib, EntryPoint = "drmModePageFlip", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int ModePageFlip(int fd, int crtc_id, int fb_id,
+            PageFlipFlags flags, IntPtr user_data);
+
         [DllImport(lib, EntryPoint = "drmModeSetCrtc", CallingConvention = CallingConvention.Cdecl)]
-        unsafe public static extern int ModeSetCrtc(int fd, uint crtcId, uint bufferId,
-            uint x, uint y, uint* connectors, int count, ModeInfo* mode);
+        unsafe public static extern int ModeSetCrtc(int fd, int crtcId, int bufferId,
+            int x, int y, int* connectors, int count, ModeInfo* mode);
     }
 
-    enum ModeConnection : byte
+    enum ModeConnection
     {
         Connected = 1,
         Disconnected = 2,
         Unknown = 3
     }
 
-    enum ModeSubPixel : byte
+    enum ModeSubPixel
     {
         Unknown = 1,
         HorizontalRgb = 2,
@@ -76,35 +105,53 @@ namespace OpenTK.Platform.Linux
         None = 6
     }
 
+    [Flags]
+    enum PageFlipFlags
+    {
+        FlipEvent = 0x01,
+        FlipAsync = 0x02,
+        FlipFlags = FlipEvent | FlipAsync
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct EventContext
+    {
+        public int version;
+        public IntPtr vblank_handler;
+        public IntPtr page_flip_handler;
+
+        public static readonly int Version = 2;
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct ModeConnector
     {
-        public uint connector_id;
-        public uint encoder_id;
-        public uint connector_type;
-        public uint connector_type_id;
+        public int connector_id;
+        public int encoder_id;
+        public int connector_type;
+        public int connector_type_id;
         public ModeConnection connection;
-        public uint mmWidth, mmHeight;
+        public int mmWidth, mmHeight;
         public ModeSubPixel subpixel;
 
         public int count_modes;
         public ModeInfo* modes;
 
         public int count_props;
-        public uint *props;
-        public ulong *prop_values;
+        public int *props;
+        public long *prop_values;
 
         public int count_encoders;
-        public uint *encoders;
+        public int *encoders;
     }
 
     struct ModeCrtc
     {
-        public uint crtc_id;
-        public uint buffer_id;
+        public int crtc_id;
+        public int buffer_id;
 
-        public uint x, y;
-        public uint width, height;
+        public int x, y;
+        public int width, height;
         public int mode_valid;
         public ModeInfo mode;
 
@@ -113,11 +160,11 @@ namespace OpenTK.Platform.Linux
 
     struct ModeEncoder
     {
-        public uint encoder_id;
-        public uint encoder_type;
-        public uint crtc_id;
-        public uint possible_crtcs;
-        public uint possible_clones;
+        public int encoder_id;
+        public int encoder_type;
+        public int crtc_id;
+        public int possible_crtcs;
+        public int possible_clones;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -127,7 +174,7 @@ namespace OpenTK.Platform.Linux
         public ushort hdisplay, hsync_start, hsync_end, htotal, hskew;
         public ushort vdisplay, vsync_start, vsync_end, vtotal, vscan;
 
-        public uint vrefresh; // refresh rate * 1000
+        public int vrefresh; // refresh rate * 1000
 
         public uint flags;
         public uint type;
@@ -138,13 +185,13 @@ namespace OpenTK.Platform.Linux
     unsafe struct ModeRes
     {
         public int count_fbs;
-        public uint* fbs;
+        public int* fbs;
         public int count_crtcs;
-        public uint* crtcs;
+        public int* crtcs;
         public int count_connectors;
-        public uint* connectors;
+        public int* connectors;
         public int count_encoders;
-        public uint* encoders;
+        public int* encoders;
         public int min_width, max_width;
         public int min_height, max_height;
     }

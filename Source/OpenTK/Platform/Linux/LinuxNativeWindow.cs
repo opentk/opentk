@@ -47,7 +47,7 @@ namespace OpenTK.Platform.Linux
         Rectangle bounds;
         Size client_size;
 
-        public LinuxNativeWindow(IntPtr display, IntPtr gbm,
+        public LinuxNativeWindow(IntPtr display, IntPtr gbm, int fd,
             int x, int y, int width, int height, string title,
             GraphicsMode mode, GameWindowFlags options,
             DisplayDevice display_device)
@@ -58,7 +58,8 @@ namespace OpenTK.Platform.Linux
             bounds = new Rectangle(0, 0, width, height);
             client_size = bounds.Size;
 
-            window = new LinuxWindowInfo(display);
+            window = new LinuxWindowInfo(display, fd, display_device.Id as LinuxDisplay);
+
             if (!mode.Index.HasValue)
             {
                 mode = new EglGraphicsMode().SelectGraphicsMode(window, mode, 0);
@@ -69,7 +70,17 @@ namespace OpenTK.Platform.Linux
             SurfaceFlags usage = SurfaceFlags.Rendering | SurfaceFlags.Scanout;
             if (!Gbm.IsFormatSupported(gbm, format, usage))
             {
-                //format = SurfaceFormat.xrgba;
+                Debug.Print("[KMS] Failed to find suitable surface format, using XRGB8888");
+                format = SurfaceFormat.XRGB8888;
+            }
+
+            // Note: we only support fullscreen windows on KMS.
+            // We implicitly override the requested width and height
+            // by the width and height of the DisplayDevice, if any.
+            if (display_device != null)
+            {
+                width = display_device.Width;
+                height = display_device.Height;
             }
 
             Debug.Print("[KMS] Creating GBM surface on {0:x} with {1}x{2} {3} [{4}]",

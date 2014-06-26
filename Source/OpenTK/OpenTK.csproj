@@ -813,6 +813,8 @@
     </Compile>
     <Compile Include="Platform\Linux\Bindings\Libc.cs" />
     <Compile Include="Platform\Linux\LinuxWindowInfo.cs" />
+    <Compile Include="Platform\Linux\LinuxGraphicsContext.cs" />
+    <Compile Include="Platform\Linux\Bindings\Poll.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

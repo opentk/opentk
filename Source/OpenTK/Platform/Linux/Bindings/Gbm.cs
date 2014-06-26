@@ -32,24 +32,57 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Linux
 {
-    using GbmDevice = IntPtr; // opaque pointer "struct gbm_device*"
+    using Device = IntPtr; // opaque pointer "struct gbm_device*"
+    using Surface = IntPtr;
+    using BufferObject = IntPtr;
+    using BufferObjectHandle = IntPtr;
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    delegate void DestroyUserDataCallback(BufferObject bo, IntPtr data);
 
     class Gbm
     {
         const string lib = "gbm";
 
+        [DllImport(lib, EntryPoint = "gbm_bo_get_device", CallingConvention = CallingConvention.Cdecl)]
+        public static extern Device BOGetDevice(BufferObject bo);
+
+        [DllImport(lib, EntryPoint = "gbm_bo_get_handle", CallingConvention = CallingConvention.Cdecl)]
+        public static extern BufferObjectHandle BOGetHandle(BufferObject bo);
+
+        [DllImport(lib, EntryPoint = "gbm_bo_get_height", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BOGetHeight(BufferObject bo);
+
+        [DllImport(lib, EntryPoint = "gbm_bo_get_width", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BOGetWidth(BufferObject bo);
+
+        [DllImport(lib, EntryPoint = "gbm_bo_get_stride", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BOGetStride(BufferObject bo);
+
+        [DllImport(lib, EntryPoint = "gbm_bo_set_user_data", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void BOSetUserData(BufferObject bo, IntPtr data, DestroyUserDataCallback callback);
+
         [DllImport(lib, EntryPoint = "gbm_create_device", CallingConvention = CallingConvention.Cdecl)]
-        public static extern GbmDevice CreateDevice(int fd);
+        public static extern Device CreateDevice(int fd);
+
+        [DllImport(lib, EntryPoint = "gbm_device_get_fd", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int DeviceGetFD(IntPtr gbm);
 
         [DllImport(lib, EntryPoint = "gbm_surface_create", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr CreateSurface(GbmDevice gbm, int width, int height, SurfaceFormat format, SurfaceFlags flags);
+        public static extern Surface CreateSurface(Device gbm, int width, int height, SurfaceFormat format, SurfaceFlags flags);
 
         [DllImport(lib, EntryPoint = "gbm_surface_destroy", CallingConvention = CallingConvention.Cdecl)]
         public static extern void DestroySurface(IntPtr surface);
 
         [DllImport(lib, EntryPoint = "gbm_device_is_format_supported", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool IsFormatSupported(GbmDevice gbm, SurfaceFormat format, SurfaceFlags usage);
+        public static extern bool IsFormatSupported(Device gbm, SurfaceFormat format, SurfaceFlags usage);
+
+        [DllImport(lib, EntryPoint = "gbm_surface_lock_front_buffer", CallingConvention = CallingConvention.Cdecl)]
+        public static extern BufferObject LockFrontBuffer(Surface surface);
+
+        [DllImport(lib, EntryPoint = "gbm_surface_release_buffer", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ReleaseBuffer(Surface surface, BufferObject buffer);
     }
 
     enum SurfaceFormat
