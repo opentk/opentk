@@ -146,6 +146,11 @@ namespace OpenTK.Platform.Linux
 
         #region INativeWindow Members
 
+        public override void ProcessEvents()
+        {
+            base.ProcessEvents();
+        }
+
         public override void Close()
         {
             exists = false;

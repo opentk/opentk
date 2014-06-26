@@ -50,10 +50,17 @@ namespace OpenTK.Platform.Linux
         public static extern int open([MarshalAs(UnmanagedType.LPStr)]string pathname, OpenFlags flags);
 
         [DllImport(lib)]
+        public static extern int open(IntPtr pathname, OpenFlags flags);
+
+        [DllImport(lib)]
         public static extern int close(int fd);
 
         [DllImport(lib)]
         unsafe public static extern IntPtr read(int fd, void* buffer, UIntPtr count);
+
+        [DllImport(lib)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool isatty(int fd);
     }
 
     [Flags]

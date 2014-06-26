@@ -815,6 +815,10 @@
     <Compile Include="Platform\Linux\LinuxWindowInfo.cs" />
     <Compile Include="Platform\Linux\LinuxGraphicsContext.cs" />
     <Compile Include="Platform\Linux\Bindings\Poll.cs" />
+    <Compile Include="Platform\Linux\LinuxKeyboardTTY.cs" />
+    <Compile Include="Platform\Linux\Bindings\Udev.cs" />
+    <Compile Include="Platform\Linux\LinuxKeyboardLibInput.cs" />
+    <Compile Include="Platform\Linux\Bindings\LibInput.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
