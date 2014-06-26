@@ -61,6 +61,9 @@ namespace OpenTK.Platform.Linux
         [DllImport(lib, EntryPoint = "drmModeRmFB", CallingConvention = CallingConvention.Cdecl)]
         public static extern int ModeRmFB(int fd, int bufferId);
 
+        [DllImport(lib, EntryPoint = "drmModeFreeCrtc", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ModeFreeCrtc(IntPtr ptr);
+
         [DllImport(lib, EntryPoint = "drmModeGetCrtc", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ModeGetCrtc(int fd, int crtcId);
 

@@ -69,8 +69,7 @@ namespace OpenTK.Platform.Linux
                     {
                         try
                         {
-                            DisplayDriver = new LinuxDisplayDriver(test_fd);
-                            if (DisplayDriver.GetDisplay(DisplayIndex.Primary) != null)
+                            if (LinuxDisplayDriver.QueryDisplays(test_fd, null))
                             {
                                 fd = test_fd;
                                 break;
@@ -135,6 +134,30 @@ namespace OpenTK.Platform.Linux
 
         #endregion
 
+        #region Protected Members
+
+        protected override void Dispose(bool manual)
+        {
+            if (display != IntPtr.Zero)
+            {
+                Egl.Terminate(display);
+                display = IntPtr.Zero;
+            }
+            if (gbm_device != IntPtr.Zero)
+            {
+                Gbm.DestroyDevice(gbm_device);
+                gbm_device = IntPtr.Zero;
+            }
+            if (fd >= 0)
+            {
+                Libc.close(fd);
+            }
+
+            base.Dispose(manual);
+        }
+
+        #endregion
+
         #region IPlatformFactory Members
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice display_device)
@@ -144,7 +167,7 @@ namespace OpenTK.Platform.Linux
 
         public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
-            return DisplayDriver;
+            return new LinuxDisplayDriver(fd);
         }
 
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)

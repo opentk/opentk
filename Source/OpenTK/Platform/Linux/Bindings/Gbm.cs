@@ -65,6 +65,9 @@ namespace OpenTK.Platform.Linux
         [DllImport(lib, EntryPoint = "gbm_create_device", CallingConvention = CallingConvention.Cdecl)]
         public static extern Device CreateDevice(int fd);
 
+        [DllImport(lib, EntryPoint = "gbm_destroy_device", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void DestroyDevice(Device gbm);
+
         [DllImport(lib, EntryPoint = "gbm_device_get_fd", CallingConvention = CallingConvention.Cdecl)]
         public static extern int DeviceGetFD(IntPtr gbm);
 
