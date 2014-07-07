@@ -286,19 +286,9 @@ namespace OpenTK.Rewrite
             {
                 EmitReturnTypeWrapper(wrapper, native, body, il);
             }
-            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "StringBuilder"))
-            {
-                EmitStringBuilderEpilogue(wrapper, native, body, il);
-            }
-            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "String" && p.ParameterType.IsArray))
-            {
-                EmitStringArrayEpilogue(wrapper, body, il);
-            }
-            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "String" && !p.ParameterType.IsArray))
-            {
-                EmitStringEpilogue(wrapper, body, il);
-            }
-            
+
+            EmitParameterEpilogues(wrapper, native, body, il);
+
             if (options.Contains("-debug"))
             {
                 EmitDebugEpilogue(wrapper, il, vars);
@@ -517,49 +507,102 @@ namespace OpenTK.Rewrite
             }
         }
 
-        static void EmitStringBuilderEpilogue(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il)
+        static void EmitParameterEpilogues(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il)
         {
-            for (int i = 0; i < wrapper.Parameters.Count; i++)
+            foreach (var p in wrapper.Parameters)
             {
-                var p = wrapper.Parameters[i].ParameterType;
-                if (p.Name == "StringBuilder")
+                if (p.ParameterType.Name == "StringBuilder")
                 {
-                    // void GetShaderInfoLog(..., StringBuilder foo)
-                    // try {
-                    //  foo_sb_ptr = Marshal.AllocHGlobal(sb.Capacity + 1); -- already emitted
-                    //  glGetShaderInfoLog(..., foo_sb_ptr); -- already emitted
-                    //  MarshalPtrToStringBuilder(foo_sb_ptr, foo);
-                    // }
-                    // finally {
-                    //  Marshal.FreeHGlobal(foo_sb_ptr);
-                    // }
+                    EmitStringBuilderEpilogue(wrapper, native, p, body, il);
+                }
 
-                    // Make sure we have imported BindingsBase::MasrhalPtrToStringBuilder and Marshal::FreeHGlobal
-                    var ptr_to_sb = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalPtrToStringBuilder"));
-                    var free_hglobal = wrapper.Module.Import(TypeMarshal.Methods.First(m => m.Name == "FreeHGlobal"));
+                if (!p.ParameterType.IsArray && p.ParameterType.Name == "String")
+                {
+                    EmitStringEpilogue(wrapper, p, body, il);
+                }
 
-                    var block = new ExceptionHandler(ExceptionHandlerType.Finally);
-                    block.TryStart = body.Instructions[0];
-
-                    var variable_name = p.Name + " _sb_ptr";
-                    var v = body.Variables.First(m => m.Name == variable_name);
-                    il.Emit(OpCodes.Ldloc, v.Index);
-                    il.Emit(OpCodes.Ldarg, i);
-                    il.Emit(OpCodes.Call, ptr_to_sb);
-
-                    block.TryEnd = body.Instructions.Last();
-                    block.HandlerStart = body.Instructions.Last();
-
-                    il.Emit(OpCodes.Ldloc, v.Index);
-                    il.Emit(OpCodes.Call, free_hglobal);
-
-                    block.HandlerEnd = body.Instructions.Last();
+                if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String")
+                {
+                    EmitStringArrayEpilogue(wrapper, p, body, il);
                 }
             }
         }
 
-        static void EmitStringParameter(MethodDefinition wrapper, TypeReference p, MethodBody body, ILProcessor il)
+        static void EmitStringBuilderParameter(MethodDefinition method, ParameterDefinition parameter, MethodBody body, ILProcessor il)
         {
+            var p = parameter.ParameterType;
+
+            // void GetShaderInfoLog(..., StringBuilder foo)
+            // IntPtr foo_sb_ptr;
+            // try {
+            //  foo_sb_ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
+            //  glGetShaderInfoLog(..., foo_sb_ptr);
+            //  MarshalPtrToStringBuilder(foo_sb_ptr, sb);
+            // }
+            // finally {
+            //  Marshal.FreeHGlobal(sb_ptr);
+            // }
+            // Make sure we have imported StringBuilder::Capacity and Marshal::AllocHGlobal
+            var sb_get_capacity = method.Module.Import(TypeStringBuilder.Methods.First(m => m.Name == "get_Capacity"));
+            var alloc_hglobal = method.Module.Import(TypeMarshal.Methods.First(m => m.Name == "AllocHGlobal"));
+
+            // IntPtr ptr;
+            var variable_name = parameter.Name + " _sb_ptr";
+            body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
+            int index = body.Variables.Count - 1;
+
+            // ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
+            il.Emit(OpCodes.Callvirt, sb_get_capacity);
+            il.Emit(OpCodes.Call, alloc_hglobal);
+            il.Emit(OpCodes.Stloc, index);
+            il.Emit(OpCodes.Ldloc, index);
+
+            // We'll emit the try-finally block in the epilogue implementation,
+            // because we haven't yet emitted all necessary instructions here.
+        }
+
+        static void EmitStringBuilderEpilogue(MethodDefinition wrapper, MethodDefinition native, ParameterDefinition parameter, MethodBody body, ILProcessor il)
+        {
+            var p = parameter.ParameterType;
+            if (p.Name == "StringBuilder")
+            {
+                // void GetShaderInfoLog(..., StringBuilder foo)
+                // try {
+                //  foo_sb_ptr = Marshal.AllocHGlobal(sb.Capacity + 1); -- already emitted
+                //  glGetShaderInfoLog(..., foo_sb_ptr); -- already emitted
+                //  MarshalPtrToStringBuilder(foo_sb_ptr, foo);
+                // }
+                // finally {
+                //  Marshal.FreeHGlobal(foo_sb_ptr);
+                // }
+
+                // Make sure we have imported BindingsBase::MasrhalPtrToStringBuilder and Marshal::FreeHGlobal
+                var ptr_to_sb = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalPtrToStringBuilder"));
+                var free_hglobal = wrapper.Module.Import(TypeMarshal.Methods.First(m => m.Name == "FreeHGlobal"));
+
+                var block = new ExceptionHandler(ExceptionHandlerType.Finally);
+                block.TryStart = body.Instructions[0];
+
+                var variable_name = parameter.Name + " _sb_ptr";
+                var v = body.Variables.First(m => m.Name == variable_name);
+                il.Emit(OpCodes.Ldloc, v.Index);
+                il.Emit(OpCodes.Ldarg, parameter.Index);
+                il.Emit(OpCodes.Call, ptr_to_sb);
+
+                block.TryEnd = body.Instructions.Last();
+                block.HandlerStart = body.Instructions.Last();
+
+                il.Emit(OpCodes.Ldloc, v.Index);
+                il.Emit(OpCodes.Call, free_hglobal);
+
+                block.HandlerEnd = body.Instructions.Last();
+            }
+        }
+
+        static void EmitStringParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il)
+        {
+            var p = parameter.ParameterType;
+
             // string marshaling:
             // IntPtr ptr = MarshalStringToPtr(str);
             // try { calli }
@@ -567,7 +610,7 @@ namespace OpenTK.Rewrite
             var marshal_str_to_ptr = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringToPtr"));
 
             // IntPtr ptr;
-            var variable_name = p.Name + "_string_ptr";
+            var variable_name = parameter.Name + "_string_ptr";
             body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
             int index = body.Variables.Count - 1;
 
@@ -579,34 +622,30 @@ namespace OpenTK.Rewrite
             // The finally block will be emitted in the function epilogue
         }
 
-        static void EmitStringEpilogue(MethodDefinition wrapper, MethodBody body, ILProcessor il)
+        static void EmitStringEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il)
         {
-            for (int i = 0; i < wrapper.Parameters.Count; i++)
-            {
-                var p = wrapper.Parameters[i].ParameterType;
-                if (p.Name == "String" && !p.IsArray)
-                {
-                    var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringPtr"));
+            var p = parameter.ParameterType;
+            var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringPtr"));
 
-                    // FreeStringPtr(ptr)
-                    var variable_name = p.Name + "_string_ptr";
-                    var v = body.Variables.First(m => m.Name == variable_name);
-                    il.Emit(OpCodes.Ldloc, v.Index);
-                    il.Emit(OpCodes.Call, free);
-                }
-            }
+            // FreeStringPtr(ptr)
+            var variable_name = parameter.Name + "_string_ptr";
+            var v = body.Variables.First(m => m.Name == variable_name);
+            il.Emit(OpCodes.Ldloc, v.Index);
+            il.Emit(OpCodes.Call, free);
         }
 
-        static void EmitStringArrayParameter(MethodDefinition wrapper, TypeReference p, MethodBody body, ILProcessor il)
+        static void EmitStringArrayParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il)
         {
+            var p = parameter.ParameterType;
+
             // string[] masrhaling:
             // IntPtr ptr = MarshalStringArrayToPtr(strings);
             // try { calli }
-            // finally { UnmarshalStringArray(ptr); }
+            // finally { FreeStringArrayPtr(ptr); }
             var marshal_str_array_to_ptr = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringArrayToPtr"));
 
             // IntPtr ptr;
-            var variable_name = p.Name + " _string_array_ptr";
+            var variable_name = parameter.Name + "_string_array_ptr";
             body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
             int index = body.Variables.Count - 1;
 
@@ -618,28 +657,30 @@ namespace OpenTK.Rewrite
             // The finally block will be emitted in the function epilogue
         }
 
-        static void EmitStringArrayEpilogue(MethodDefinition wrapper, MethodBody body, ILProcessor il)
+        static void EmitStringArrayEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il)
         {
-            for (int i = 0; i < wrapper.Parameters.Count; i++)
-            {
-                var p = wrapper.Parameters[i].ParameterType;
-                if (p.Name == "String" && p.IsArray)
-                {
-                    var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringArrayPtr"));
-                    var get_length = wrapper.Module.Import(TypeStringArray.Methods.First(m => m.Name == "get_Length"));
+            // Note: only works for string vectors (1d arrays).
+            // We do not (and will probably never) support 2d or higher string arrays
+            var p = parameter.ParameterType;
+            var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringArrayPtr"));
 
-                    // FreeStringArrayPtr(string_array_ptr, string_array.Length)
-                    var variable_name = p.Name + "_string_array_ptr";
-                    var v = body.Variables.First(m => m.Name == variable_name);
-                    il.Emit(OpCodes.Ldloc, v.Index);
-                    il.Emit(OpCodes.Ldarg, i);
-                    il.Emit(OpCodes.Callvirt, get_length);
-                    il.Emit(OpCodes.Call, free);
-                }
-            }
+            // FreeStringArrayPtr(string_array_ptr, string_array.Length)
+            var variable_name = parameter.Name + "_string_array_ptr";
+            var v = body.Variables.First(m => m.Name == variable_name);
+
+            // load string_array_ptr
+            il.Emit(OpCodes.Ldloc, v.Index);
+
+            // load string_array.Length
+            il.Emit(OpCodes.Ldarg, parameter.Index);
+            il.Emit(OpCodes.Ldlen);
+            il.Emit(OpCodes.Conv_I4);
+
+            // call FreeStringArrayPtr
+            il.Emit(OpCodes.Call, free);
         }
 
-        private static void EmitConvenienceWrapper(MethodDefinition wrapper,
+        static void EmitConvenienceWrapper(MethodDefinition wrapper,
             MethodDefinition native, int difference, MethodBody body, ILProcessor il)
         {
             if (wrapper.Parameters.Count > 2)
@@ -707,43 +748,17 @@ namespace OpenTK.Rewrite
             int i;
             for (i = 0; i < method.Parameters.Count; i++)
             {
+                var parameter = method.Parameters[i];
                 var p = method.Module.Import(method.Parameters[i].ParameterType);
                 il.Emit(OpCodes.Ldarg, i);
 
                 if (p.Name == "StringBuilder")
                 {
-                    // void GetShaderInfoLog(..., StringBuilder foo)
-                    // IntPtr foo_sb_ptr;
-                    // try {
-                    //  foo_sb_ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
-                    //  glGetShaderInfoLog(..., foo_sb_ptr);
-                    //  MarshalPtrToStringBuilder(foo_sb_ptr, sb);
-                    // }
-                    // finally {
-                    //  Marshal.FreeHGlobal(sb_ptr);
-                    // }
-
-                    // Make sure we have imported StringBuilder::Capacity and Marshal::AllocHGlobal
-                    var sb_get_capacity = method.Module.Import(TypeStringBuilder.Methods.First(m => m.Name == "get_Capacity"));
-                    var alloc_hglobal = method.Module.Import(TypeMarshal.Methods.First(m => m.Name == "AllocHGlobal"));
-
-                    // IntPtr ptr;
-                    var variable_name = p.Name + " _sb_ptr";
-                    body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
-                    int index = body.Variables.Count - 1;
-
-                    // ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
-                    il.Emit(OpCodes.Callvirt, sb_get_capacity);
-                    il.Emit(OpCodes.Call, alloc_hglobal);
-                    il.Emit(OpCodes.Stloc, index);
-                    il.Emit(OpCodes.Ldloc, index);
-
-                    // We'll emit the try-finally block in the epilogue implementation,
-                    // because we haven't yet emitted all necessary instructions here.
+                    EmitStringBuilderParameter(method, parameter, body, il);
                 }
                 else if (p.Name == "String" && !p.IsArray)
                 {
-                    EmitStringParameter(method, p, body, il);
+                    EmitStringParameter(method, parameter, body, il);
                 }
                 else if (p.IsByReference)
                 {
@@ -845,7 +860,7 @@ namespace OpenTK.Rewrite
                     }
                     else
                     {
-                        EmitStringArrayParameter(method, p, body, il);
+                        EmitStringArrayParameter(method, parameter, body, il);
                     }
                 }
             }
