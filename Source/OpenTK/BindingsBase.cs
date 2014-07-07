@@ -211,7 +211,7 @@ namespace OpenTK
                         Marshal.WriteIntPtr(ptr, i * IntPtr.Size, str);
                     }
                 }
-                catch (OutOfMemoryException oom)
+                catch (OutOfMemoryException)
                 {
                     for (i = i - 1; i >= 0; --i)
                     {
@@ -220,7 +220,7 @@ namespace OpenTK
 
                     Marshal.FreeHGlobal(ptr);
 
-                    throw oom;
+                    throw;
                 }
             }
             return ptr;
