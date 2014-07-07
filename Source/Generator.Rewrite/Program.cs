@@ -519,27 +519,35 @@ namespace OpenTK.Rewrite
         {
             foreach (var p in wrapper.Parameters)
             {
+                bool is_array = p.ParameterType.IsArray;
+                bool is_ref = p.ParameterType.IsByReference;
+
+                if (is_array && is_ref && p.ParameterType.GetElementType().Name == "String")
+                {
+                    // Note: ref string[] parameters are not supported!
+                    Console.Error.WriteLine("Error: parameter '{0}' not supported in function '{1}'",
+                        p, wrapper);
+                }
+
                 if (p.ParameterType.Name == "StringBuilder")
                 {
                     EmitStringBuilderEpilogue(wrapper, native, p, body, il);
                 }
 
-                if (!p.ParameterType.IsArray && !p.ParameterType.IsByReference && p.ParameterType.Name == "String")
+                if (!is_array && !is_ref && p.ParameterType.Name == "String")
                 {
                     EmitStringEpilogue(wrapper, p, body, il);
                 }
 
-                if (!p.ParameterType.IsArray && p.ParameterType.IsByReference && p.ParameterType.GetElementType().Name == "String")
+                if (is_ref && p.ParameterType.GetElementType().Name == "String")
                 {
-                    EmitStringReferenceEpilogue
+                    EmitStringReferenceEpilogue(wrapper, p, body, il);
                 }
 
-                if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String")
+                if (is_array && p.ParameterType.GetElementType().Name == "String")
                 {
                     EmitStringArrayEpilogue(wrapper, p, body, il);
                 }
-
-                if (p.pa
             }
         }
 
@@ -695,8 +703,10 @@ namespace OpenTK.Rewrite
             il.Emit(OpCodes.Call, free);
         }
 
-        static void EmitStringReferenceParameter(MethodDefinition wrapper, TypeReference p, MethodBody body, ILProcessor il)
+        static void EmitStringReferenceParameter(MethodDefinition wrapper, ParameterReference parameter, MethodBody body, ILProcessor il)
         {
+            var p = parameter.ParameterType;
+
             // ref string masrhaling:
             // IntPtr ptr = MarshalStringRefToPtr(strings);
             // try { calli }
@@ -704,7 +714,7 @@ namespace OpenTK.Rewrite
             var marshal_str_ref_to_ptr = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringRefToPtr"));
 
             // IntPtr ptr;
-            var variable_name = p.Name + " _string_ref_ptr";
+            var variable_name = parameter.Name + "_string_ref_ptr";
             body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
             int index = body.Variables.Count - 1;
 
@@ -716,23 +726,18 @@ namespace OpenTK.Rewrite
             // The finally block will be emitted in the function epilogue
         }
 
-        static void EmitStringReferenceEpilogue(MethodDefinition wrapper, MethodBody body, ILProcessor il)
+        static void EmitStringReferenceEpilogue(MethodDefinition wrapper, ParameterReference parameter, MethodBody body, ILProcessor il)
         {
-            for (int i = 0; i < wrapper.Parameters.Count; i++)
-            {
-                var p = wrapper.Parameters[i].ParameterType;
-                if (p.Name == "String" && p.IsByReference)
-                {
-                    var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringRefPtr"));
+            var p = parameter.ParameterType;
+            var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringRefPtr"));
 
-                    // FreeStringRefPtr(ptr)
-                    var variable_name = p.Name + "_string_ref_ptr";
-                    var v = body.Variables.First(m => m.Name == variable_name);
-                    il.Emit(OpCodes.Ldloc, v.Index);
-                    il.Emit(OpCodes.Call, free);
-                }
-            }
+            // FreeStringRefPtr(ptr)
+            var variable_name = parameter.Name + "_string_ref_ptr";
+            var v = body.Variables.First(m => m.Name == variable_name);
+            il.Emit(OpCodes.Ldloc, v.Index);
+            il.Emit(OpCodes.Call, free);
         }
+
         private static void EmitConvenienceWrapper(MethodDefinition wrapper,
             MethodDefinition native, int difference, MethodBody body, ILProcessor il)
         {
@@ -825,7 +830,7 @@ namespace OpenTK.Rewrite
                     }
                     else
                     {
-                        EmitStringReferenceParameter(method, p, body, il);
+                        EmitStringReferenceParameter(method, parameter, body, il);
                     }
                 }
                 else if (p.IsArray)
