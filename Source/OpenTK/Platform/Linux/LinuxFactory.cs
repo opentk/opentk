@@ -217,7 +217,7 @@ namespace OpenTK.Platform.Linux
             lock (this)
             {
                 KeyboardDriver = KeyboardDriver ??
-                    (IKeyboardDriver2)new LinuxKeyboardLibInput() ??
+                    // Todo: use LinuxInput driver if available?
                     (IKeyboardDriver2)new LinuxKeyboardTTY();
                 return KeyboardDriver;
             }

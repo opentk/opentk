@@ -47,6 +47,12 @@ namespace OpenTK.Platform.Linux
         public static extern int ioctl(int d, EvdevIoctlCode request, out EvdevInputId data);
 
         [DllImport(lib)]
+        public static extern int ioctl(int d, KeyboardIoctlCode request, ref IntPtr data);
+
+        [DllImport(lib)]
+        public static extern int ioctl(int d, KeyboardIoctlCode request, int data);
+
+        [DllImport(lib)]
         public static extern int open([MarshalAs(UnmanagedType.LPStr)]string pathname, OpenFlags flags);
 
         [DllImport(lib)]
@@ -57,6 +63,28 @@ namespace OpenTK.Platform.Linux
 
         [DllImport(lib)]
         unsafe public static extern IntPtr read(int fd, void* buffer, UIntPtr count);
+
+        public static int read(int fd, out byte b)
+        {
+            unsafe
+            {
+                fixed (byte* pb = &b)
+                {
+                    return read(fd, pb, (UIntPtr)1).ToInt32();
+                }
+            }
+        }
+
+        public static int read(int fd, out short s)
+        {
+            unsafe
+            {
+                fixed (short* ps = &s)
+                {
+                    return read(fd, ps, (UIntPtr)2).ToInt32();
+                }
+            }
+        }
 
         [DllImport(lib)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -92,6 +120,12 @@ namespace OpenTK.Platform.Linux
         Axes = 0x80016a11,
         Buttons = 0x80016a12,
         Name128 = (2u << 30) | (0x6A << 8) | (0x13 << 0) | (128 << 16) //JSIOCGNAME(128), which is _IOC(_IO_READ, 'j', 0x13, len)
+    }
+
+    enum KeyboardIoctlCode
+    {
+        GetMode = 0x4b44,
+        SetMode = 0x4b45,
     }
 
     [StructLayout(LayoutKind.Sequential)]

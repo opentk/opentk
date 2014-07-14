@@ -36,8 +36,11 @@ namespace OpenTK.Platform.Linux
     {
         const string lib = "libudev";
 
-        [DllImport(lib, EntryPoint = "udev_new")]
+        [DllImport(lib, EntryPoint = "udev_new", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr New();
+
+        [DllImport(lib, EntryPoint = "udev_destroy", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void Destroy(IntPtr Udev);
     }
 }
 

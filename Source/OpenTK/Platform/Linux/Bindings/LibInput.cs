@@ -27,7 +27,7 @@
 //
 #endregion
 
-#pragma warning disable 0169
+#pragma warning disable 0169, 0219
 
 using System;
 using System.Diagnostics;
@@ -48,6 +48,60 @@ namespace OpenTK.Platform.Linux
         [DllImport(lib, EntryPoint = "libinput_udev_create_for_seat", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CreateContext(InputInterface @interface,
             IntPtr user_data, IntPtr udev, string seat_id);
+
+        [DllImport(lib, EntryPoint = "libinput_destroy", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void DestroyContext(IntPtr libinput);
+
+        [DllImport(lib, EntryPoint = "libinput_event_destroy", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void DestroyEvent(IntPtr @event);
+
+        [DllImport(lib, EntryPoint = "libinput_dispatch", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int Dispatch(IntPtr libinput);
+
+        [DllImport(lib, EntryPoint = "libinput_get_event", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr GetEvent(IntPtr libinput);
+
+        [DllImport(lib, EntryPoint = "libinput_event_get_type", CallingConvention = CallingConvention.Cdecl)]
+        public static extern InputEventType GetEventType(IntPtr @event);
+
+        [DllImport(lib, EntryPoint = "libinput_get_fd", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetFD(IntPtr libinput);
+
+        [DllImport(lib, EntryPoint = "libinput_next_event_type", CallingConvention = CallingConvention.Cdecl)]
+        public static extern InputEventType NextEventType(IntPtr libinput);
+
+        [DllImport(lib, EntryPoint = "libinput_resume", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void Resume(IntPtr libinput);
+
+        [DllImport(lib, EntryPoint = "libinput_suspend", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void Suspend(IntPtr libinput);
+    }
+
+    enum InputEventType
+    {
+        None = 0,
+
+        DeviceAdded,
+        DeviceRemoved,
+
+        KeyboardKey = 300,
+
+        PointerMotion = 400,
+        PointerMotionAbsolute,
+        PointerButton,
+        PointerAxis,
+
+        TouchDown = 500,
+        TouchUP,
+        TouchMotion,
+        TouchCancel,
+
+        /// \internal
+        /// <summary>
+        /// Signals the end of a set of touchpoints at one device sample
+        /// time. This event has no coordinate information attached.
+        /// </summary>
+        TouchFrame
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -66,27 +120,6 @@ namespace OpenTK.Platform.Linux
             open = Marshal.GetFunctionPointerForDelegate(open_restricted);
             close = Marshal.GetFunctionPointerForDelegate(close_restricted);
         }
-
-        #region Default implementation
-
-        static CloseRestrictedCallback CloseRestricted = CloseRestrictedHandler;
-        static void CloseRestrictedHandler(int fd, IntPtr data)
-        {
-            Debug.Print("[Input] Closing fd {0}", fd);
-            Libc.close(fd);
-        }
-
-        static OpenRestrictedCallback OpenRestricted = OpenRestrictedHandler;
-        static int OpenRestrictedHandler(IntPtr path, int flags, IntPtr data) 
-        {
-            Debug.Print("[Input] Opening path '{0}'", Marshal.PtrToStringAnsi(path));
-            return Libc.open(path, (OpenFlags)flags);
-        }
-
-        public static readonly InputInterface Default = new InputInterface(
-            OpenRestricted, CloseRestricted);
-
-        #endregion
     }
 }
 
