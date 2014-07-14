@@ -48,6 +48,7 @@ namespace OpenTK.Platform.Linux
 
         IJoystickDriver2 JoystickDriver;
         IKeyboardDriver2 KeyboardDriver;
+        IMouseDriver2 MouseDriver;
 
         const string gpu_path = "/dev/dri"; // card0, card1, ...
 
@@ -216,9 +217,7 @@ namespace OpenTK.Platform.Linux
         {
             lock (this)
             {
-                KeyboardDriver = KeyboardDriver ??
-                    // Todo: use LinuxInput driver if available?
-                    (IKeyboardDriver2)new LinuxKeyboardTTY();
+                KeyboardDriver = KeyboardDriver ?? new LinuxInput();
                 return KeyboardDriver;
             }
         }

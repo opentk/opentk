@@ -101,6 +101,23 @@ namespace Examples
         public static void Main(string[] args)
         {
             Trace.Listeners.Add(new ConsoleTraceListener());
+            using (Toolkit.Init())
+            {
+                while (true)
+                {
+                    var state = OpenTK.Input.Keyboard.GetState();
+                    if (!state.IsConnected)
+                    {
+                        break;
+                    }
+                    else if (state.IsKeyDown(OpenTK.Input.Key.Escape))
+                    {
+                        break;
+                    }
+                }
+            }
+            return;
+
             Tests.GameWindowStates.Main();
             return;
 

@@ -35,6 +35,11 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
 {
+    // Todo: this has terrible side-effects on process exit
+    // (the keyboard remains tied up.) We need to find a
+    // proper way to clean up after ourselves, even in case
+    // of a crash.
+    #if EXPERIMENTAL
     class LinuxKeyboardTTY : IKeyboardDriver2, IDisposable
     {
         const int stdin = 0; // STDIN_FILENO
@@ -552,5 +557,6 @@ namespace OpenTK.Platform.Linux
 
         #endregion
     }
+    #endif
 }
 
