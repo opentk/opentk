@@ -38,19 +38,16 @@ namespace OpenTK.Platform.Windows
 {
     sealed class WinMMJoystick : IJoystickDriver, IJoystickDriver2
     {
+        #region Constants
+        // WinMM allows up to 16 devices.
+        const int NumSticks = 16;
+        #endregion
+
         #region Fields
 
         readonly object sync = new object();
 
-        List<JoystickDevice> sticks = new List<JoystickDevice>();
-        IList<JoystickDevice> sticks_readonly;
-
-        // Matches a WinMM device index to a specific stick above
-        readonly Dictionary<int, int> index_to_stick =
-            new Dictionary<int, int>();
-        // Matches a player index to a WinMM device index
-        readonly Dictionary<int, int> player_to_index =
-            new Dictionary<int, int>();
+        JoystickDevice[] sticks;
 
         // Todo: Read the joystick name from the registry.
         //static readonly string RegistryJoyConfig = @"Joystick%dConfiguration";
@@ -65,7 +62,7 @@ namespace OpenTK.Platform.Windows
 
         public WinMMJoystick()
         {
-            sticks_readonly = sticks.AsReadOnly();
+            sticks = new JoystickDevice[NumSticks];
             RefreshDevices();
         }
 
@@ -75,12 +72,6 @@ namespace OpenTK.Platform.Windows
 
         internal void RefreshDevices()
         {
-            for (int i = 0; i < sticks.Count; i++)
-            {
-                CloseJoystick(i);
-            }
-
-            // WinMM supports up to 16 joysticks.
             for (int i = 0; i < UnsafeNativeMethods.joyGetNumDevs(); i++)
             {
                 OpenJoystick(i);
@@ -91,14 +82,14 @@ namespace OpenTK.Platform.Windows
 
         #region Private Members
 
-        JoystickDevice<WinMMJoyDetails> OpenJoystick(int number)
+        JoystickDevice<WinMMJoyDetails> OpenJoystick(int index)
         {
             lock (sync)
             {
                 JoystickDevice<WinMMJoyDetails> stick = null;
 
                 JoyCaps caps;
-                JoystickError result = UnsafeNativeMethods.joyGetDevCaps(number, out caps, JoyCaps.SizeInBytes);
+                JoystickError result = UnsafeNativeMethods.joyGetDevCaps(index, out caps, JoyCaps.SizeInBytes);
                 if (result == JoystickError.NoError)
                 {
                     if (caps.NumAxes > JoystickState.MaxAxes)
@@ -115,7 +106,7 @@ namespace OpenTK.Platform.Windows
                         caps.NumButtons = JoystickState.MaxButtons;
                     }
 
-                    JoystickCapabilities joycaps = new JoystickCapabilities(
+                    var joycaps = new JoystickCapabilities(
                         caps.NumAxes,
                         caps.NumButtons,
                         (caps.Capabilities & JoystCapsFlags.HasPov) != 0 ? 1 : 0,
@@ -125,7 +116,7 @@ namespace OpenTK.Platform.Windows
                     if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
                         num_axes += 2;
 
-                    stick = new JoystickDevice<WinMMJoyDetails>(number, num_axes, caps.NumButtons);
+                    stick = new JoystickDevice<WinMMJoyDetails>(index, num_axes, caps.NumButtons);
                     stick.Details = new WinMMJoyDetails(joycaps);
 
                     // Make sure to reverse the vertical axes, so that +1 points up and -1 points down.
@@ -153,7 +144,7 @@ namespace OpenTK.Platform.Windows
                     }
 
                     // Todo: Implement joystick name detection for WinMM.
-                    stick.Description = String.Format("Joystick/Joystick #{0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
+                    stick.Description = String.Format("Joystick/Joystick #{0} ({1} axes, {2} buttons)", index, stick.Axis.Count, stick.Button.Count);
                     // Todo: Try to get the device name from the registry. Oh joy!
                     //string key_path = String.Format("{0}\\{1}\\{2}", RegistryJoyConfig, caps.RegKey, RegstryJoyCurrent);
                     //RegistryKey key = Registry.LocalMachine.OpenSubKey(key_path, false);
@@ -166,58 +157,23 @@ namespace OpenTK.Platform.Windows
                     //    key.Close();
                     //}
 
-                    Debug.Print("Found joystick on device number {0}", number);
-                    index_to_stick.Add(number, sticks.Count);
-                    player_to_index.Add(player_to_index.Count, number);
-                    sticks.Add(stick);
+                    Debug.Print("Found joystick on device number {0}", index);
+                    sticks[index] = stick;
                 }
 
                 return stick;
             }
         }
 
-        void UnplugJoystick(int player_index)
+        void UnplugJoystick(int index)
         {
             // Reset the system configuration. Without this,
             // joysticks that are reconnected on different
             // ports are given different ids, making it
             // impossible to reconnect a disconnected user.
             UnsafeNativeMethods.joyConfigChanged(0);
-            Debug.Print("[Win] WinMM joystick {0} unplugged", player_index);
-            CloseJoystick(player_index);
-        }
-
-        void CloseJoystick(int player_index)
-        {
-            lock (sync)
-            {
-                if (IsValid(player_index))
-                {
-                    int device_index = player_to_index[player_index];
-
-                    JoystickDevice<WinMMJoyDetails> stick =
-                        sticks[index_to_stick[device_index]] as JoystickDevice<WinMMJoyDetails>;
-
-                    if (stick != null)
-                    {
-                        index_to_stick.Remove(device_index);
-                        player_to_index.Remove(player_index);
-                    }
-                }
-            }
-        }
-
-        bool IsValid(int player_index)
-        {
-            if (player_to_index.ContainsKey(player_index))
-            {
-                return true;
-            }
-            //else if (index >= 0 && index < UnsafeNativeMethods.joyGetNumDevs())
-            //{
-            //    return OpenJoystick(index) != null;
-            //}
-            return false;
+            Debug.Print("[Win] WinMM joystick {0} unplugged", index);
+            sticks[index] = null;
         }
 
         static short CalculateOffset(int pos, int min, int max)
@@ -229,22 +185,22 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region IJoystickDriver
-
+        
         public int DeviceCount
         {
-            get { return sticks.Count; }
+            get { return Joysticks.Count; }
         }
 
         public IList<JoystickDevice> Joysticks
         {
-            get { return sticks_readonly; }
+            get { return new List<JoystickDevice>(sticks); }
         }
 
         public void Poll()
         {
             lock (sync)
             {
-                foreach (JoystickDevice<WinMMJoyDetails> js in sticks)
+                foreach (JoystickDevice<WinMMJoyDetails> js in Joysticks)
                 {
                     JoyInfoEx info = new JoyInfoEx();
                     info.Size = JoyInfoEx.SizeInBytes;
@@ -335,15 +291,13 @@ namespace OpenTK.Platform.Windows
 
         #region IJoystickDriver2 Members
 
-        public JoystickCapabilities GetCapabilities(int player_index)
+        public JoystickCapabilities GetCapabilities(int index)
         {
             lock (sync)
             {
-                if (IsValid(player_index))
+                if (sticks[index] != null)
                 {
-                    int device_index = player_to_index[player_index];
-                    JoystickDevice<WinMMJoyDetails> stick =
-                        sticks[index_to_stick[device_index]] as JoystickDevice<WinMMJoyDetails>;
+                    var stick = sticks[index] as JoystickDevice<WinMMJoyDetails>;
 
                     return stick.Details.Capabilities;
                 }
@@ -352,19 +306,14 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public JoystickState GetState(int player_index)
+        public JoystickState GetState(int index)
         {
             lock (sync)
             {
                 JoystickState state = new JoystickState();
-
-                if (IsValid(player_index))
+                var stick = sticks[index] as JoystickDevice<WinMMJoyDetails>;
+                if (stick != null)
                 {
-                    int device_index = player_to_index[player_index];
-                    int index = index_to_stick[device_index];
-                    JoystickDevice<WinMMJoyDetails> stick =
-                        sticks[index] as JoystickDevice<WinMMJoyDetails>;
-
                     // For joysticks with fewer than three axes or four buttons, we must
                     // use joyGetPos; otherwise, joyGetPosEx. This is not just a cosmetic
                     // difference, simple devices will return incorrect results if we use
@@ -374,7 +323,7 @@ namespace OpenTK.Platform.Windows
                         // Use joyGetPos
                         JoyInfo info = new JoyInfo();
 
-                        JoystickError result = UnsafeNativeMethods.joyGetPos(device_index, ref info);
+                        JoystickError result = UnsafeNativeMethods.joyGetPos(index, ref info);
                         if (result == JoystickError.NoError)
                         {
                             for (int i = 0; i < stick.Details.Capabilities.AxisCount; i++)
@@ -391,7 +340,7 @@ namespace OpenTK.Platform.Windows
                         }
                         else if (result == JoystickError.Unplugged)
                         {
-                            UnplugJoystick(player_index);
+                            UnplugJoystick(index);
                         }
                     }
                     else
@@ -400,8 +349,8 @@ namespace OpenTK.Platform.Windows
                         JoyInfoEx info_ex = new JoyInfoEx();
                         info_ex.Size = JoyInfoEx.SizeInBytes;
                         info_ex.Flags = JoystickFlags.All;
+                        JoystickError result = UnsafeNativeMethods.joyGetPosEx(index, ref info_ex);
 
-                        JoystickError result = UnsafeNativeMethods.joyGetPosEx(device_index, ref info_ex);
                         if (result == JoystickError.NoError)
                         {
                             for (int i = 0; i < stick.Details.Capabilities.AxisCount; i++)
@@ -439,7 +388,7 @@ namespace OpenTK.Platform.Windows
                         }
                         else if (result == JoystickError.Unplugged)
                         {
-                            UnplugJoystick(player_index);
+                            UnplugJoystick(index);
                         }
                     }
                 }
@@ -454,7 +403,7 @@ namespace OpenTK.Platform.Windows
             {
                 Guid guid = new Guid();
 
-                if (IsValid(index))
+                if (sticks[index] != null)
                 {
                     // Todo: implement WinMM Guid retrieval
                 }
@@ -539,6 +488,7 @@ namespace OpenTK.Platform.Windows
             Left = 27000
         }
 
+        [StructLayout(LayoutKind.Sequential)]
         struct JoyCaps
         {
             public ushort Mid;
@@ -605,6 +555,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        [StructLayout(LayoutKind.Sequential)]
         struct JoyInfo
         {
             public int XPos;
@@ -624,6 +575,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        [StructLayout(LayoutKind.Sequential)]
         struct JoyInfoEx
         {
             public int Size;
