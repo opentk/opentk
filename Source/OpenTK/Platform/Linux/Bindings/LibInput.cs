@@ -55,8 +55,42 @@ namespace OpenTK.Platform.Linux
         [DllImport(lib, EntryPoint = "libinput_event_destroy", CallingConvention = CallingConvention.Cdecl)]
         public static extern void DestroyEvent(IntPtr @event);
 
+        [DllImport(lib, EntryPoint = "libinput_device_get_sysname", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr DeviceGetNameInternal(IntPtr device);
+        public static string DeviceGetName(IntPtr device)
+        {
+            unsafe
+            {
+                return new string((sbyte*)DeviceGetNameInternal(device));
+            }
+        }
+
+        [DllImport(lib, EntryPoint = "libinput_device_get_user_data", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr DeviceGetData(IntPtr device);
+
+        [DllImport(lib, EntryPoint = "libinput_device_set_user_data", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void DeviceSetData(IntPtr device, IntPtr user_data);
+
+        [DllImport(lib, EntryPoint = "libinput_device_get_output_name", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr DeviceGetOutputNameInternal(IntPtr device);
+        public static string DeviceGetOutputName(IntPtr device)
+        {
+            unsafe
+            {
+                sbyte* pname = (sbyte*)DeviceGetOutputNameInternal(device);
+                return pname == null ? String.Empty : new string(pname);
+            }
+        }
+
+        [DllImport(lib, EntryPoint = "libinput_device_has_capability", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DeviceHasCapability(IntPtr device, DeviceCapability capability);
+
         [DllImport(lib, EntryPoint = "libinput_dispatch", CallingConvention = CallingConvention.Cdecl)]
         public static extern int Dispatch(IntPtr libinput);
+
+        [DllImport(lib, EntryPoint = "libinput_event_get_device", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr GetDevice(IntPtr @event);
 
         [DllImport(lib, EntryPoint = "libinput_get_event", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr GetEvent(IntPtr libinput);
@@ -75,6 +109,13 @@ namespace OpenTK.Platform.Linux
 
         [DllImport(lib, EntryPoint = "libinput_suspend", CallingConvention = CallingConvention.Cdecl)]
         public static extern void Suspend(IntPtr libinput);
+    }
+
+    enum DeviceCapability
+    {
+        Keyboard = 0,
+        Mouse,
+        Touch
     }
 
     enum InputEventType

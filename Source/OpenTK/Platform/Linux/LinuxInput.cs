@@ -37,6 +37,62 @@ namespace OpenTK.Platform.Linux
 {
     class LinuxInput : IKeyboardDriver2, IMouseDriver2, IDisposable
     {
+        class KeyboardDevice
+        {
+            readonly IntPtr Device;
+            string name;
+            string output;
+
+            public KeyboardDevice(IntPtr device, int id)
+            {
+                Device = device;
+                Id = id;
+                State.SetIsConnected(true);
+            }
+
+            public int Id
+            {
+                get
+                {
+                    return GetId(Device);
+                }
+                set
+                {
+                    LibInput.DeviceSetData(Device, (IntPtr)value);
+                }
+            }
+
+            public string Name
+            {
+                get
+                {
+                    name = name ?? LibInput.DeviceGetName(Device);
+                    return name;
+                }
+            }
+
+            public string Output
+            {
+                get
+                {
+                    output = output ?? LibInput.DeviceGetOutputName(Device);
+                    return output;
+                }
+            }
+
+            public KeyboardState State;
+        }
+
+        class MouseDevice
+        {
+            public int FD;
+            public string Name;
+            public MouseState State;
+        }
+
+        DeviceCollection<KeyboardDevice> Keyboards = new DeviceCollection<KeyboardDevice>();
+        DeviceCollection<MouseDevice> Mice = new DeviceCollection<MouseDevice>();
+
         IntPtr udev;
         IntPtr input_context;
         InputInterface input_interface = new InputInterface(
@@ -102,6 +158,8 @@ namespace OpenTK.Platform.Linux
             poll_fd.fd = fd;
             poll_fd.events = PollFlags.In;
 
+            LibInput.Resume(input_context);
+
             while (Interlocked.Read(ref exit) == 0)
             {
                 int ret = Libc.poll(ref poll_fd, 1, -1);
@@ -124,8 +182,23 @@ namespace OpenTK.Platform.Linux
                         continue;
                     }
 
+                    IntPtr device = LibInput.GetDevice(pevent);
                     InputEventType type = LibInput.GetEventType(pevent);
-                    Debug.Print(type.ToString());
+                    switch (type)
+                    {
+                        case InputEventType.DeviceAdded:
+                            HandleDeviceAdded(input_context, device);
+                            break;
+
+                        case InputEventType.DeviceRemoved:
+                            HandleDeviceRemoved(input_context, device);
+                            break;
+
+                        case InputEventType.KeyboardKey:
+                            HandleKeyboard(input_context, device);
+                            break;
+                    }
+                    Debug.WriteLine(type.ToString());
 
                     LibInput.DestroyEvent(pevent);
                 }
@@ -139,23 +212,91 @@ namespace OpenTK.Platform.Linux
             }
         }
 
+        void HandleDeviceAdded(IntPtr context, IntPtr device)
+        {
+            if (LibInput.DeviceHasCapability(device, DeviceCapability.Keyboard))
+            {
+                KeyboardDevice keyboard = new KeyboardDevice(device, Keyboards.Count);
+                Keyboards.Add(keyboard.Id, keyboard);
+            }
+
+            if (LibInput.DeviceHasCapability(device, DeviceCapability.Mouse))
+            {
+                Debug.Print("[Linux] Todo: libinput mouse device.");
+            }
+
+            if (LibInput.DeviceHasCapability(device, DeviceCapability.Touch))
+            {
+                Debug.Print("[Linux] Todo: libinput touch device.");
+            }
+        }
+
+        void HandleDeviceRemoved(IntPtr context, IntPtr device)
+        {
+            if (LibInput.DeviceHasCapability(device, DeviceCapability.Keyboard))
+            {
+                int id = GetId(device);
+                Keyboards.Remove(id);
+            }
+        }
+
+        void HandleKeyboard(IntPtr context, IntPtr device)
+        {
+            int id = GetId(device);
+            KeyboardDevice keyboard = Keyboards.FromHardwareId(id);
+            if (keyboard != null)
+            {
+                // Todo: update keyboard state
+            }
+            else
+            {
+                Debug.Print("[Linux] libinput ignoring invalid device id {0}", id);
+            }
+        }
+
+        static int GetId(IntPtr device)
+        {
+            return LibInput.DeviceGetData(device).ToInt32();
+        }
+
         #endregion
 
         #region IKeyboardDriver2 implementation
 
         KeyboardState IKeyboardDriver2.GetState()
         {
-            return new KeyboardState();
+            KeyboardState state = new KeyboardState();
+            foreach (KeyboardDevice keyboard in Keyboards)
+            {
+                state.MergeBits(keyboard.State);
+            }
+            return state;
         }
 
         KeyboardState IKeyboardDriver2.GetState(int index)
         {
-            return new KeyboardState();
+            KeyboardDevice device = Keyboards.FromIndex(index);
+            if (device != null)
+            {
+                return device.State;
+            }
+            else
+            {
+                return new KeyboardState();
+            }
         }
 
         string IKeyboardDriver2.GetDeviceName(int index)
         {
-            return String.Empty;
+            KeyboardDevice device = Keyboards.FromIndex(index);
+            if (device != null)
+            {
+                return device.Name;
+            }
+            else
+            {
+                return String.Empty;
+            }
         }
 
         #endregion
