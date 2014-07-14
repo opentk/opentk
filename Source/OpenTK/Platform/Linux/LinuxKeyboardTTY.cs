@@ -47,9 +47,12 @@ namespace OpenTK.Platform.Linux
         TerminalState current_state;
 
         IntPtr original_mode = new IntPtr(-1);
+        int original_stdin;
 
         public LinuxKeyboardTTY()
         {
+            Debug.Print("[Linux] Using TTY keyboard input.");
+
             if (!SetupTTY(stdin))
             {
                 throw new NotSupportedException();
@@ -64,6 +67,16 @@ namespace OpenTK.Platform.Linux
 
         bool SetupTTY(int stdin)
         {
+            // Ensure that we are using a real terminal,
+            // rather than some short of file redirection.thing.
+            if (!Terminal.IsTerminal(stdin))
+            {
+                Debug.Print("[Linux] Terminal.IsTerminal({0}) returned false.", stdin);
+                return false;
+            }
+
+            //original_stdin = Libc.dup(stdin);
+
             int ret = Terminal.GetAttributes(stdin, out original_state);
             if (ret < 0)
             {
@@ -83,7 +96,7 @@ namespace OpenTK.Platform.Linux
 
             // Update terminal state
             current_state = original_state;
-            current_state.LocalMode &= ~(LocalFlags.ECHO | LocalFlags.ICANON | LocalFlags.ISIG);
+            current_state.LocalMode &= ~(/*LocalFlags.ECHO |*/ LocalFlags.ICANON | LocalFlags.ISIG);
             current_state.InputMode &= ~(
                 InputFlags.ISTRIP | InputFlags.IGNCR | InputFlags.ICRNL |
                 InputFlags.INLCR | InputFlags.IXOFF | InputFlags.IXON);
@@ -113,6 +126,8 @@ namespace OpenTK.Platform.Linux
         {
             if (original_mode != new IntPtr(-1))
             {
+                Debug.Print("[Linux] Exiting TTY keyboard input.");
+
                 Libc.ioctl(stdin, KeyboardIoctlCode.SetMode, ref original_mode);
                 Terminal.SetAttributes(stdin, OptionalActions.FLUSH, ref original_state);
                 original_mode = new IntPtr(-1);

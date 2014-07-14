@@ -36,6 +36,10 @@ namespace OpenTK.Platform.Linux
     {
         const string lib = "libc";
 
+        [DllImport(lib, EntryPoint = "isatty", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I4)]
+        public static extern bool IsTerminal(int fd);
+
         [DllImport(lib, EntryPoint = "tcgetattr", CallingConvention = CallingConvention.Cdecl)]
         public static extern int GetAttributes(int fd, out TerminalState state);
 

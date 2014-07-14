@@ -38,6 +38,12 @@ namespace OpenTK.Platform.Linux
         const string lib = "libc";
 
         [DllImport(lib)]
+        public static extern int dup(int file);
+
+        [DllImport(lib)]
+        public static extern int dup2(int file1, int file2);
+
+        [DllImport(lib)]
         public static extern int ioctl(int d, JoystickIoctlCode request, ref int data);
 
         [DllImport(lib)]
