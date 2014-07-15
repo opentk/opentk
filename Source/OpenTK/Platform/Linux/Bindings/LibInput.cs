@@ -43,7 +43,7 @@ namespace OpenTK.Platform.Linux
 
     class LibInput
     {
-        const string lib = "libinput";
+        internal const string lib = "libinput";
 
         [DllImport(lib, EntryPoint = "libinput_udev_create_for_seat", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CreateContext(InputInterface @interface,
@@ -95,6 +95,9 @@ namespace OpenTK.Platform.Linux
         [DllImport(lib, EntryPoint = "libinput_get_event", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr GetEvent(IntPtr libinput);
 
+        [DllImport(lib, EntryPoint = "libinput_event_get_keyboard_event", CallingConvention = CallingConvention.Cdecl)]
+        public static extern KeyboardEvent GetKeyboardEvent(IntPtr @event);
+
         [DllImport(lib, EntryPoint = "libinput_event_get_type", CallingConvention = CallingConvention.Cdecl)]
         public static extern InputEventType GetEventType(IntPtr @event);
 
@@ -145,6 +148,12 @@ namespace OpenTK.Platform.Linux
         TouchFrame
     }
 
+    enum KeyState
+    {
+        Released = 0,
+        Pressed = 1
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     class InputInterface
     {
@@ -161,6 +170,34 @@ namespace OpenTK.Platform.Linux
             open = Marshal.GetFunctionPointerForDelegate(open_restricted);
             close = Marshal.GetFunctionPointerForDelegate(close_restricted);
         }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct KeyboardEvent
+    {
+        IntPtr @event;
+
+        public IntPtr BaseEvent { get { return GetBaseEvent(@event); } }
+        public IntPtr Event { get { return @event; } }
+        public uint Key { get { return GetKey(@event); } }
+        public uint KeyCount { get { return GetSeatKeyCount(@event); } }
+        public KeyState KeyState { get { return GetKeyState(@event); } }
+        public uint Time { get { return GetTime(@event); } }
+
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_time", CallingConvention = CallingConvention.Cdecl)]
+        static extern uint GetTime(IntPtr @event);
+
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_key", CallingConvention = CallingConvention.Cdecl)]
+        static extern uint GetKey(IntPtr @event);
+
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_key_state", CallingConvention = CallingConvention.Cdecl)]
+        static extern KeyState GetKeyState(IntPtr @event);
+
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_base_event", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr GetBaseEvent(IntPtr @event);
+
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_seat_key_count", CallingConvention = CallingConvention.Cdecl)]
+        static extern uint GetSeatKeyCount(IntPtr @event);
     }
 }
 

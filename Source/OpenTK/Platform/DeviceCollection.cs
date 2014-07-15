@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace OpenTK
+namespace OpenTK.Platform
 {
     // Holds a collection of hardware devices with an associated id.
     // Note: 'id' refers to a unique hardware-specific device identifier.
@@ -41,7 +41,6 @@ namespace OpenTK
     //        that is added.
     class DeviceCollection<T> : IEnumerable<T>
     {
-        readonly object Sync = new object();
         readonly Dictionary<int, int> Map = new Dictionary<int, int>();
         readonly List<T> Devices = new List<T>();
 

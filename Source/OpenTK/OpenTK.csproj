@@ -821,6 +821,7 @@
     <Compile Include="Platform\Linux\LinuxInput.cs" />
     <Compile Include="Platform\Linux\Bindings\Terminal.cs" />
     <Compile Include="Platform\DeviceCollection.cs" />
+    <Compile Include="Platform\Linux\Bindings\Evdev.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
