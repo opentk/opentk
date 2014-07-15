@@ -112,6 +112,42 @@ namespace OpenTK
         private void CreateContext(GraphicsMode mode, CocoaWindowInfo cocoaWindow, IntPtr shareContextRef, int majorVersion, int minorVersion, bool fullscreen)
         {
             // Prepare attributes
+            IntPtr pixelFormat = SelectPixelFormat(mode, majorVersion, minorVersion);
+            if (pixelFormat == IntPtr.Zero)
+            {
+                throw new GraphicsException(String.Format(
+                    "Failed to contruct NSOpenGLPixelFormat for GraphicsMode '{0}'",
+                    mode));
+            }
+
+            // Create context
+            var context = Cocoa.SendIntPtr(NSOpenGLContext, Selector.Alloc);
+            context = Cocoa.SendIntPtr(context, Selector.Get("initWithFormat:shareContext:"), pixelFormat, shareContextRef);
+            if (context == IntPtr.Zero)
+            {
+                throw new GraphicsException(String.Format(
+                    "Failed to construct NSOpenGLContext",
+                    mode));
+            }
+
+            // Release pixel format
+            Cocoa.SendVoid(pixelFormat, Selector.Release);
+            pixelFormat = IntPtr.Zero;
+
+            // Attach the view
+            Cocoa.SendVoid(context, Selector.Get("setView:"), cocoaWindow.ViewHandle);
+            Cocoa.SendVoid(cocoaWindow.ViewHandle, Selector.Get("setWantsBestResolutionOpenGLSurface:"), true);
+
+            // Finalize
+            Handle = new ContextHandle(context);
+            Mode = GetGraphicsMode(context);
+
+            Update(cocoaWindow);
+            MakeCurrent(cocoaWindow);
+        }
+
+        private IntPtr SelectPixelFormat(GraphicsMode mode, int majorVersion, int minorVersion)
+        {
             List<NSOpenGLPixelFormatAttribute> attributes = new List<NSOpenGLPixelFormatAttribute>();
 
             var profile = NSOpenGLProfile.VersionLegacy;
@@ -129,31 +165,50 @@ namespace OpenTK
             Debug.Indent();
 
             AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.OpenGLProfile, (int)profile);
-            AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.DoubleBuffer);
-            AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.Accelerated);
-            AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.ColorSize, mode.ColorFormat.BitsPerPixel);
+
+            if (mode.ColorFormat.BitsPerPixel > 0)
+            {
+                AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.ColorSize, mode.ColorFormat.BitsPerPixel);
+            }
 
             if (mode.Depth > 0)
+            {
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.DepthSize, mode.Depth);
-            
+            }
+
             if (mode.Stencil > 0)
+            {
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.StencilSize, mode.Stencil);
+            }
 
             if (mode.AccumulatorFormat.BitsPerPixel > 0)
             {
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.AccumSize, mode.AccumulatorFormat.BitsPerPixel);
             }
-            
+
             if (mode.Samples > 1)
             {
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.SampleBuffers, 1);
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.Samples, mode.Samples);
             }
 
+            if (mode.Buffers > 1)
+            {
+                AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.DoubleBuffer);
+            }
+
+            // If at least a single accelerated pixel format is available,
+            // then use that. If no accelerated formats are available, fall
+            // back to software rendering.
+            if (IsAccelerationSupported())
+            {
+                AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.Accelerated);
+            }
+
             AddPixelAttrib(attributes, (NSOpenGLPixelFormatAttribute)0);
-            
+
             Debug.Unindent();
-            
+
             Debug.Write("Attribute array:  ");
             for (int i = 0; i < attributes.Count; i++)
                 Debug.Write(attributes[i].ToString() + "  ");
@@ -170,24 +225,22 @@ namespace OpenTK
                 }
             }
 
-            // Create context
-            var context = Cocoa.SendIntPtr(NSOpenGLContext, Selector.Alloc);
-            context = Cocoa.SendIntPtr(context, Selector.Get("initWithFormat:shareContext:"), pixelFormat, shareContextRef);
+            return pixelFormat;
+        }
 
-            // Release pixel format
-            Cocoa.SendVoid(pixelFormat, Selector.Release);
-            pixelFormat = IntPtr.Zero;
+        bool IsAccelerationSupported()
+        {
+            IntPtr pf = IntPtr.Zero;
+            int count = 0;
+            Cgl.ChoosePixelFormat(new int[] { (int)Cgl.PixelFormatBool.Accelerated, 0 },
+                ref pf, ref count);
 
-            // Attach the view
-            Cocoa.SendVoid(context, Selector.Get("setView:"), cocoaWindow.ViewHandle);
-            Cocoa.SendVoid(cocoaWindow.ViewHandle, Selector.Get("setWantsBestResolutionOpenGLSurface:"), true);
+            if (pf != IntPtr.Zero)
+            {
+                Cgl.DestroyPixelFormat(pf);
+            }
 
-            // Finalize
-            Handle = new ContextHandle(context);
-            Mode = GetGraphicsMode(context);
-
-            Update(cocoaWindow);
-            MakeCurrent(cocoaWindow);
+            return pf != IntPtr.Zero;
         }
 
         private GraphicsMode GetGraphicsMode(IntPtr context)
