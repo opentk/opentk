@@ -135,7 +135,7 @@ namespace OpenTK
             Key.Keypad0,
             Key.KeypadPeriod,
             Key.Unknown,
-            Key.Unknown, // Zzenkakuhankaku
+            Key.Unknown, // zenkakuhankaku
             Key.Unknown, // 102ND
             Key.F11,
             // 88-95

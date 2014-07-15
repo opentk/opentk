@@ -34,7 +34,7 @@ namespace OpenTK.Platform.Linux
 {
     partial class Libc
     {
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         public static extern int poll(ref PollFD fd, IntPtr fd_count, int timeout);
 
         public static int poll(ref PollFD fd, int fd_count, int timeout)

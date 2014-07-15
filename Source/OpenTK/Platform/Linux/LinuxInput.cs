@@ -193,11 +193,10 @@ namespace OpenTK.Platform.Linux
                     ProcessEvents(input_context);
                 }
 
-                if ((poll_fd.revents & (PollFlags.Hup | PollFlags.Error | PollFlags.Invalid)) != 0)
+                if (ret < 0 || (poll_fd.revents & (PollFlags.Hup | PollFlags.Error | PollFlags.Invalid)) != 0)
                 {
-                    // An error has occurred
-                    Debug.Print("[Input] Exiting input thread {0} due to error [ret:{1} events:{2}]",
-                        input_thread.ManagedThreadId, ret, poll_fd.revents);
+                    Debug.Print("[Input] Exiting input loop {0} due to poll error [ret:{1} events:{2}]. Error: {3}.",
+                        input_thread.ManagedThreadId, ret, poll_fd.revents, Marshal.GetLastWin32Error());
                     Interlocked.Increment(ref exit);
                 }
             }
@@ -268,7 +267,6 @@ namespace OpenTK.Platform.Linux
 
                 IntPtr device = LibInput.GetDevice(pevent);
                 InputEventType type = LibInput.GetEventType(pevent);
-                Debug.Print(type.ToString());
 
                 lock (Sync)
                 {
@@ -332,6 +330,11 @@ namespace OpenTK.Platform.Linux
                 if (raw >= 0 && raw < KeyMap.Length)
                 {
                     key = KeyMap[raw];
+                }
+
+                if (key == Key.Unknown)
+                {
+                    Debug.Print("[Linux] Unknown key with code '{0}'", raw);
                 }
 
                 keyboard.State.SetKeyState(key, e.KeyState == KeyState.Pressed);
