@@ -51,7 +51,7 @@ namespace OpenTK.Platform.Linux
         Out = 0x04,
         Error = 0x08,
         Hup = 0x10,
-        Nval = 0x20,
+        Invalid = 0x20,
     }
 
     [StructLayout(LayoutKind.Sequential)]

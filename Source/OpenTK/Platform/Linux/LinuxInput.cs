@@ -90,7 +90,9 @@ namespace OpenTK.Platform.Linux
             public MouseState State;
         }
 
+        static readonly object Sync = new object();
         static readonly Key[] KeyMap = Evdev.KeyMap;
+        static long DeviceFDCount;
         DeviceCollection<KeyboardDevice> Keyboards = new DeviceCollection<KeyboardDevice>();
         DeviceCollection<MouseDevice> Mice = new DeviceCollection<MouseDevice>();
 
@@ -105,35 +107,33 @@ namespace OpenTK.Platform.Linux
         public LinuxInput()
         {
             Debug.Print("[Linux] Initializing {0}", GetType().Name);
-
-            input_thread = new Thread(InputThreadLoop);
-            input_thread.IsBackground = true;
-
-            // Todo: add static path fallback when udev is not installed.
-            udev = Udev.New();
-            if (udev == IntPtr.Zero)
+            Debug.Indent();
+            try
             {
-                throw new NotSupportedException("[Input] Udev.New() failed.");
-            }
+                Semaphore ready = new Semaphore(0, 1);
+                input_thread = new Thread(InputThreadLoop);
+                input_thread.IsBackground = true;
+                input_thread.Start(ready);
 
-            input_context = LibInput.CreateContext(input_interface,
-                IntPtr.Zero, udev, "seat0");
-            if (input_context == IntPtr.Zero)
+                // Wait until the input thread is ready.
+                // Note: it would be nicer if we could avoid this.
+                // however we need to marshal errors back to the caller
+                // as exceptions.
+                // Todo: in a future version, we should add an "Application" object
+                // to handle all communication with the OS (including event processing.)
+                // Once we do that, we can remove all separate input threads.
+                ready.WaitOne();
+                if (exit != 0)
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            finally
             {
-                throw new NotSupportedException(
-                    String.Format("[Input] LibInput.CreateContext({0:x}) failed.", udev));
+                Debug.Print("Initialization {0}", exit == 0 ?
+                    "complete" : "failed");
+                Debug.Unindent();
             }
-
-            fd = LibInput.GetFD(input_context);
-            if (fd < 0)
-            {
-                throw new NotSupportedException(
-                    String.Format("[Input] LibInput.GetFD({0:x}) failed.", input_context));
-            }
-
-            ProcessEvents(input_context);
-            LibInput.Resume(input_context);
-            //input_thread.Start();
         }
 
         #region Private Members
@@ -142,7 +142,16 @@ namespace OpenTK.Platform.Linux
         static void CloseRestrictedHandler(int fd, IntPtr data)
         {
             Debug.Print("[Input] Closing fd {0}", fd);
-            Libc.close(fd);
+            int ret = Libc.close(fd);
+
+            if (ret < 0)
+            {
+                Debug.Print("[Input] Failed to close fd {0}. Error: {1}", fd, ret);
+            }
+            else
+            {
+                Interlocked.Decrement(ref DeviceFDCount);
+            }
         }
 
         static OpenRestrictedCallback OpenRestricted = OpenRestrictedHandler;
@@ -152,29 +161,88 @@ namespace OpenTK.Platform.Linux
             Debug.Print("[Input] Opening '{0}' with flags {1}. fd:{2}",
                 Marshal.PtrToStringAnsi(path), (OpenFlags)flags, fd);
 
+            if (fd >= 0)
+            {
+                Interlocked.Increment(ref DeviceFDCount);
+            }
+
             return fd;
         }
 
-        void InputThreadLoop()
+        void InputThreadLoop(object semaphore)
         {
+            Debug.Print("[Input] Running on thread {0}", Thread.CurrentThread.ManagedThreadId);
+            Setup();
+
+            // Inform the parent thread that initialization has completed successfully
+            (semaphore as Semaphore).Release();
+            Debug.Print("[Input] Released main thread.", input_context);
+
+            // Use a blocking poll for input messages, in order to reduce CPU usage
             PollFD poll_fd = new PollFD();
             poll_fd.fd = fd;
             poll_fd.events = PollFlags.In;
+            Debug.Print("[Input] Created PollFD({0}, {1})", poll_fd.fd, poll_fd.events);
 
+            Debug.Print("[Input] Entering input loop.", poll_fd.fd, poll_fd.events);
             while (Interlocked.Read(ref exit) == 0)
             {
                 int ret = Libc.poll(ref poll_fd, 1, -1);
-                if (ret > 0 && (poll_fd.revents & PollFlags.In) != 0)
+                if (ret > 0 && (poll_fd.revents & (PollFlags.In | PollFlags.Pri)) != 0)
                 {
                     ProcessEvents(input_context);
                 }
-                else if (ret < 0)
+
+                if ((poll_fd.revents & (PollFlags.Hup | PollFlags.Error | PollFlags.Invalid)) != 0)
                 {
                     // An error has occurred
-                    Debug.Print("[Input] Exiting input thread {0} [ret:{1} events:{2}]",
+                    Debug.Print("[Input] Exiting input thread {0} due to error [ret:{1} events:{2}]",
                         input_thread.ManagedThreadId, ret, poll_fd.revents);
                     Interlocked.Increment(ref exit);
                 }
+            }
+            Debug.Print("[Input] Exited input loop.", poll_fd.fd, poll_fd.events);
+        }
+
+        void Setup()
+        {
+            // Todo: add static path fallback when udev is not installed.
+            udev = Udev.New();
+            if (udev == IntPtr.Zero)
+            {
+                Debug.Print("[Input] Udev.New() failed.");
+                Interlocked.Increment(ref exit);
+                return;
+            }
+            Debug.Print("[Input] Udev.New() = {0:x}", udev);
+
+            input_context = LibInput.CreateContext(input_interface, IntPtr.Zero, udev, "seat0");
+            if (input_context == IntPtr.Zero)
+            {
+                Debug.Print("[Input] LibInput.CreateContext({0:x}) failed.", udev);
+                Interlocked.Increment(ref exit);
+                return;
+            }
+            Debug.Print("[Input] LibInput.CreateContext({0:x}) = {1:x}", udev, input_context);
+
+            fd = LibInput.GetFD(input_context);
+            if (fd < 0)
+            {
+                Debug.Print("[Input] LibInput.GetFD({0:x}) failed.", input_context);
+                Interlocked.Increment(ref exit);
+                return;
+            }
+            Debug.Print("[Input] LibInput.GetFD({0:x}) = {1}.", input_context, fd);
+
+            ProcessEvents(input_context);
+            LibInput.Resume(input_context);
+            Debug.Print("[Input] LibInput.Resume({0:x})", input_context);
+
+            if (Interlocked.Read(ref DeviceFDCount) <= 0)
+            {
+                Debug.Print("[Error] Failed to open any input devices.");
+                Debug.Print("[Error] Ensure that you have access to '/dev/input/event*'.");
+                Interlocked.Increment(ref exit);
             }
         }
 
@@ -201,19 +269,23 @@ namespace OpenTK.Platform.Linux
                 IntPtr device = LibInput.GetDevice(pevent);
                 InputEventType type = LibInput.GetEventType(pevent);
                 Debug.Print(type.ToString());
-                switch (type)
+
+                lock (Sync)
                 {
-                    case InputEventType.DeviceAdded:
-                        HandleDeviceAdded(input_context, device);
-                        break;
+                    switch (type)
+                    {
+                        case InputEventType.DeviceAdded:
+                            HandleDeviceAdded(input_context, device);
+                            break;
 
-                    case InputEventType.DeviceRemoved:
-                        HandleDeviceRemoved(input_context, device);
-                        break;
+                        case InputEventType.DeviceRemoved:
+                            HandleDeviceRemoved(input_context, device);
+                            break;
 
-                    case InputEventType.KeyboardKey:
-                        HandleKeyboard(input_context, device, LibInput.GetKeyboardEvent(pevent));
-                        break;
+                        case InputEventType.KeyboardKey:
+                            HandleKeyboard(input_context, device, LibInput.GetKeyboardEvent(pevent));
+                            break;
+                    }
                 }
 
                 LibInput.DestroyEvent(pevent);
@@ -281,39 +353,46 @@ namespace OpenTK.Platform.Linux
 
         KeyboardState IKeyboardDriver2.GetState()
         {
-            ProcessEvents(input_context);
-            KeyboardState state = new KeyboardState();
-            foreach (KeyboardDevice keyboard in Keyboards)
+            lock (Sync)
             {
-                state.MergeBits(keyboard.State);
+                KeyboardState state = new KeyboardState();
+                foreach (KeyboardDevice keyboard in Keyboards)
+                {
+                    state.MergeBits(keyboard.State);
+                }
+                return state;
             }
-            return state;
         }
 
         KeyboardState IKeyboardDriver2.GetState(int index)
         {
-            ProcessEvents(input_context);
-            KeyboardDevice device = Keyboards.FromIndex(index);
-            if (device != null)
+            lock (Sync)
             {
-                return device.State;
-            }
-            else
-            {
-                return new KeyboardState();
+                KeyboardDevice device = Keyboards.FromIndex(index);
+                if (device != null)
+                {
+                    return device.State;
+                }
+                else
+                {
+                    return new KeyboardState();
+                }
             }
         }
 
         string IKeyboardDriver2.GetDeviceName(int index)
         {
-            KeyboardDevice device = Keyboards.FromIndex(index);
-            if (device != null)
+            lock (Sync)
             {
-                return device.Name;
-            }
-            else
-            {
-                return String.Empty;
+                KeyboardDevice device = Keyboards.FromIndex(index);
+                if (device != null)
+                {
+                    return device.Name;
+                }
+                else
+                {
+                    return String.Empty;
+                }
             }
         }
 
