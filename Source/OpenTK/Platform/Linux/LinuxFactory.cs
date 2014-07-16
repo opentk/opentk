@@ -47,8 +47,7 @@ namespace OpenTK.Platform.Linux
         IntPtr egl_display;
 
         IJoystickDriver2 JoystickDriver;
-        IKeyboardDriver2 KeyboardDriver;
-        IMouseDriver2 MouseDriver;
+        LinuxInput MouseKeyboardDriver;
 
         const string gpu_path = "/dev/dri"; // card0, card1, ...
 
@@ -217,14 +216,18 @@ namespace OpenTK.Platform.Linux
         {
             lock (this)
             {
-                KeyboardDriver = KeyboardDriver ?? new LinuxInput();
-                return KeyboardDriver;
+                MouseKeyboardDriver = MouseKeyboardDriver ?? new LinuxInput();
+                return MouseKeyboardDriver;
             }
         }
 
         public override IMouseDriver2 CreateMouseDriver()
         {
-            throw new NotImplementedException();
+            lock (this)
+            {
+                MouseKeyboardDriver = MouseKeyboardDriver ?? new LinuxInput();
+                return MouseKeyboardDriver;
+            }
         }
 
         public override IJoystickDriver2 CreateJoystickDriver()

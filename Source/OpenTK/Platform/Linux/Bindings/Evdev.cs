@@ -30,7 +30,7 @@
 using System;
 using OpenTK.Input;
 
-namespace OpenTK
+namespace OpenTK.Platform.Linux
 {
     // Bindings for linux/input.h
     class Evdev
@@ -330,6 +330,123 @@ namespace OpenTK
         };
 
         #endregion
+
+        public static MouseButton GetMouseButton(EvdevButton button)
+        {
+            switch (button)
+            {
+                case EvdevButton.LEFT:
+                    return MouseButton.Left;
+                case EvdevButton.RIGHT:
+                    return MouseButton.Right;
+                case EvdevButton.MIDDLE:
+                    return MouseButton.Middle;
+                case EvdevButton.BTN0:
+                    return MouseButton.Button1;
+                case EvdevButton.BTN1:
+                    return MouseButton.Button2;
+                case EvdevButton.BTN2:
+                    return MouseButton.Button3;
+                case EvdevButton.BTN3:
+                    return MouseButton.Button4;
+                case EvdevButton.BTN4:
+                    return MouseButton.Button5;
+                case EvdevButton.BTN5:
+                    return MouseButton.Button6;
+                case EvdevButton.BTN6:
+                    return MouseButton.Button7;
+                case EvdevButton.BTN7:
+                    return MouseButton.Button8;
+                case EvdevButton.BTN8:
+                    return MouseButton.Button9;
+                case EvdevButton.BTN9:
+                    return MouseButton.LastButton;
+                default:
+                    return MouseButton.LastButton;
+            }
+        }
+    }
+
+    enum EvdevButton : uint
+    {
+        MISC        = 0x100,
+        BTN0        = 0x100,
+        BTN1        = 0x101,
+        BTN2        = 0x102,
+        BTN3        = 0x103,
+        BTN4        = 0x104,
+        BTN5        = 0x105,
+        BTN6        = 0x106,
+        BTN7        = 0x107,
+        BTN8        = 0x108,
+        BTN9        = 0x109,
+
+        MOUSE       = 0x110,
+        LEFT        = 0x110,
+        RIGHT       = 0x111,
+        MIDDLE      = 0x112,
+        SIDE        = 0x113,
+        EXTRA       = 0x114,
+        FORWARD     = 0x115,
+        BACK        = 0x116,
+        TASK        = 0x117,
+
+        JOYSTICK    = 0x120,
+        TRIGGER     = 0x120,
+        THUMB       = 0x121,
+        THUMB2      = 0x122,
+        TOP         = 0x123,
+        TOP2        = 0x124,
+        PINKIE      = 0x125,
+        BASE        = 0x126,
+        BASE2       = 0x127,
+        BASE3       = 0x128,
+        BASE4       = 0x129,
+        BASE5       = 0x12a,
+        BASE6       = 0x12b,
+        DEAD        = 0x12f,
+
+        GAMEPAD     = 0x130,
+        SOUTH       = 0x130,
+        A           = SOUTH,
+        EAST        = 0x131,
+        B           = EAST,
+        C           = 0x132,
+        NORTH       = 0x133,
+        X           = NORTH,
+        WEST        = 0x134,
+        Y           = WEST,
+        Z           = 0x135,
+        TL          = 0x136,
+        TR          = 0x137,
+        TL2         = 0x138,
+        TR2         = 0x139,
+        SELECT      = 0x13a,
+        START       = 0x13b,
+        MODE        = 0x13c,
+        THUMBL      = 0x13d,
+        THUMBR      = 0x13e,
+
+        DIGI        = 0x140,
+        TOOL_PEN        = 0x140,
+        TOOL_RUBBER     = 0x141,
+        TOOL_BRUSH      = 0x142,
+        TOOL_PENCIL     = 0x143,
+        TOOL_AIRBRUSH   = 0x144,
+        TOOL_FINGER     = 0x145,
+        TOOL_MOUSE      = 0x146,
+        TOOL_LENS       = 0x147,
+        TOOL_QUINTTAP   = 0x148, // Five fingers on trackpad
+        TOUCH           = 0x14a,
+        STYLUS          = 0x14b,
+        STYLUS2     = 0x14c,
+        TOOL_DOUBLETAP  = 0x14d,
+        TOOL_TRIPLETAP  = 0x14e,
+        TOOL_QUADTAP    = 0x14f, // Four fingers on trackpad
+
+        WHEEL       = 0x150,
+        GEAR_DOWN   = 0x150,
+        GEAR_UP     = 0x151,
     }
 }
 

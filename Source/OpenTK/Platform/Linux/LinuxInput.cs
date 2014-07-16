@@ -37,17 +37,16 @@ namespace OpenTK.Platform.Linux
 {
     class LinuxInput : IKeyboardDriver2, IMouseDriver2, IDisposable
     {
-        class KeyboardDevice
+        class DeviceBase
         {
             readonly IntPtr Device;
             string name;
             string output;
 
-            public KeyboardDevice(IntPtr device, int id)
+            public DeviceBase(IntPtr device, int id)
             {
                 Device = device;
                 Id = id;
-                State.SetIsConnected(true);
             }
 
             public int Id
@@ -79,15 +78,28 @@ namespace OpenTK.Platform.Linux
                     return output;
                 }
             }
-
-            public KeyboardState State;
         }
 
-        class MouseDevice
+        class KeyboardDevice : DeviceBase
         {
-            public int FD;
-            public string Name;
+            public KeyboardState State;
+
+            public KeyboardDevice(IntPtr device, int id)
+                : base(device, id)
+            {
+                State.SetIsConnected(true);
+            }
+        }
+
+        class MouseDevice : DeviceBase
+        {
             public MouseState State;
+
+            public MouseDevice(IntPtr device, int id)
+                : base(device, id)
+            {
+                State.SetIsConnected(true);
+            }
         }
 
         static readonly object Sync = new object();
@@ -95,6 +107,11 @@ namespace OpenTK.Platform.Linux
         static long DeviceFDCount;
         DeviceCollection<KeyboardDevice> Keyboards = new DeviceCollection<KeyboardDevice>();
         DeviceCollection<MouseDevice> Mice = new DeviceCollection<MouseDevice>();
+
+        // Global mouse cursor state
+        Vector2 CursorPosition = Vector2.Zero;
+        // Global mouse cursor offset (used for emulating SetPosition)
+        Vector2 CursorOffset = Vector2.Zero;
 
         IntPtr udev;
         IntPtr input_context;
@@ -188,15 +205,20 @@ namespace OpenTK.Platform.Linux
             while (Interlocked.Read(ref exit) == 0)
             {
                 int ret = Libc.poll(ref poll_fd, 1, -1);
+                ErrorNumber error = (ErrorNumber)Marshal.GetLastWin32Error();
+                bool is_error =
+                    ret < 0 && !(error == ErrorNumber.Again || error == ErrorNumber.Interrupted) ||
+                    (poll_fd.revents & (PollFlags.Hup | PollFlags.Error | PollFlags.Invalid)) != 0;
+
                 if (ret > 0 && (poll_fd.revents & (PollFlags.In | PollFlags.Pri)) != 0)
                 {
                     ProcessEvents(input_context);
                 }
 
-                if (ret < 0 || (poll_fd.revents & (PollFlags.Hup | PollFlags.Error | PollFlags.Invalid)) != 0)
+                if (is_error)
                 {
                     Debug.Print("[Input] Exiting input loop {0} due to poll error [ret:{1} events:{2}]. Error: {3}.",
-                        input_thread.ManagedThreadId, ret, poll_fd.revents, Marshal.GetLastWin32Error());
+                        input_thread.ManagedThreadId, ret, poll_fd.revents, error);
                     Interlocked.Increment(ref exit);
                 }
             }
@@ -281,7 +303,23 @@ namespace OpenTK.Platform.Linux
                             break;
 
                         case InputEventType.KeyboardKey:
-                            HandleKeyboard(input_context, device, LibInput.GetKeyboardEvent(pevent));
+                            HandleKeyboard(GetKeyboard(device), LibInput.GetKeyboardEvent(pevent));
+                            break;
+
+                        case InputEventType.PointerAxis:
+                            HandlePointerAxis(GetMouse(device), LibInput.GetPointerEvent(pevent));
+                            break;
+
+                        case InputEventType.PointerButton:
+                            HandlePointerButton(GetMouse(device), LibInput.GetPointerEvent(pevent));
+                            break;
+
+                        case InputEventType.PointerMotion:
+                            HandlePointerMotion(GetMouse(device), LibInput.GetPointerEvent(pevent));
+                            break;
+
+                        case InputEventType.PointerMotionAbsolute:
+                            HandlePointerMotionAbsolute(GetMouse(device), LibInput.GetPointerEvent(pevent));
                             break;
                     }
                 }
@@ -296,17 +334,19 @@ namespace OpenTK.Platform.Linux
             {
                 KeyboardDevice keyboard = new KeyboardDevice(device, Keyboards.Count);
                 Keyboards.Add(keyboard.Id, keyboard);
-                Debug.Print("[Linux] libinput: added keyboard device {0}", keyboard.Id);
+                Debug.Print("[Input] Added keyboard device {0}", keyboard.Id);
             }
 
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Mouse))
             {
-                Debug.Print("[Linux] Todo: libinput mouse device.");
+                MouseDevice mouse = new MouseDevice(device, Mice.Count);
+                Mice.Add(mouse.Id, mouse);
+                Debug.Print("[Input] Added mouse device {0}", mouse.Id);
             }
 
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Touch))
             {
-                Debug.Print("[Linux] Todo: libinput touch device.");
+                Debug.Print("[Input] Todo: touch device.");
             }
         }
 
@@ -317,13 +357,17 @@ namespace OpenTK.Platform.Linux
                 int id = GetId(device);
                 Keyboards.Remove(id);
             }
+
+            if (LibInput.DeviceHasCapability(device, DeviceCapability.Mouse))
+            {
+                int id = GetId(device);
+                Mice.Remove(id);
+            }
         }
 
-        void HandleKeyboard(IntPtr context, IntPtr device, KeyboardEvent e)
+        void HandleKeyboard(KeyboardDevice device, KeyboardEvent e)
         {
-            int id = GetId(device);
-            KeyboardDevice keyboard = Keyboards.FromHardwareId(id);
-            if (keyboard != null)
+            if (device != null)
             {
                 Key key = Key.Unknown;
                 uint raw = e.Key;
@@ -337,17 +381,87 @@ namespace OpenTK.Platform.Linux
                     Debug.Print("[Linux] Unknown key with code '{0}'", raw);
                 }
 
-                keyboard.State.SetKeyState(key, e.KeyState == KeyState.Pressed);
+                device.State.SetKeyState(key, e.KeyState == KeyState.Pressed);
             }
-            else
+        }
+
+        void HandlePointerAxis(MouseDevice mouse, PointerEvent e)
+        {
+            if (mouse != null)
             {
-                Debug.Print("[Linux] libinput ignoring invalid device id {0}", id);
+                double value = e.AxisValue;
+                PointerAxis axis = e.Axis;
+                switch (axis)
+                {
+                    case PointerAxis.HorizontalScroll:
+                        mouse.State.SetScrollRelative((float)value, 0);
+                        break;
+
+                    case PointerAxis.VerticalScroll:
+                        mouse.State.SetScrollRelative(0, (float)value);
+                        break;
+
+                    default:
+                        Debug.Print("[Input] Unknown scroll axis {0}.", axis);
+                        break;
+                }
             }
+        }
+
+        void HandlePointerButton(MouseDevice mouse, PointerEvent e)
+        {
+            if (mouse != null)
+            {
+                MouseButton button = Evdev.GetMouseButton(e.Button);
+                ButtonState state = e.ButtonState;
+                mouse.State[(MouseButton)button] = state == ButtonState.Pressed;
+            }
+        }
+
+        void HandlePointerMotion(MouseDevice mouse, PointerEvent e)
+        {
+            Vector2 delta = new Vector2((float)e.X, (float)e.Y);
+            if (mouse != null)
+            {
+                mouse.State.Position += delta;
+            }
+        }
+
+        void HandlePointerMotionAbsolute(MouseDevice mouse, PointerEvent e)
+        {
+            Vector2 position = new Vector2(e.X, e.Y);
+            if (mouse != null)
+            {
+                mouse.State.Position = position;
+            }
+            CursorPosition = position; // update global cursor position
         }
 
         static int GetId(IntPtr device)
         {
             return LibInput.DeviceGetData(device).ToInt32();
+        }
+
+        KeyboardDevice GetKeyboard(IntPtr device)
+        {
+            int id = GetId(device);
+            KeyboardDevice keyboard = Keyboards.FromHardwareId(id);
+            if (keyboard == null)
+            {
+                Debug.Print("[Input] Keyboard {0} does not exist in device list.", id);
+            }
+            return keyboard;
+        }
+
+        MouseDevice GetMouse(IntPtr device)
+        {
+            int id = GetId(device);
+            MouseDevice mouse = Mice.FromHardwareId(id);
+            if (mouse == null)
+            {
+                Debug.Print("[Input] Mouse {0} does not exist in device list.", id);
+            }
+            return mouse;
         }
 
         #endregion
@@ -405,22 +519,45 @@ namespace OpenTK.Platform.Linux
 
         MouseState IMouseDriver2.GetState()
         {
-            throw new NotImplementedException();
+            lock (Sync)
+            {
+                MouseState state = new MouseState();
+                foreach (MouseDevice mouse in Mice)
+                {
+                    state.MergeBits(mouse.State);
+                }
+                return state;
+            }
         }
 
         MouseState IMouseDriver2.GetState(int index)
         {
-            throw new NotImplementedException();
+            lock (Sync)
+            {
+                MouseDevice device = Mice.FromIndex(index);
+                if (device != null)
+                {
+                    return device.State;
+                }
+                else
+                {
+                    return new MouseState();
+                }
+            }
         }
 
         void IMouseDriver2.SetPosition(double x, double y)
         {
-            throw new NotImplementedException();
+            // Todo: this does not appear to be supported in libinput.
+            // We will have to emulate this in the KMS mouse rendering code.
+            CursorOffset = new Vector2((float)x, (float)y);
         }
 
         MouseState IMouseDriver2.GetCursorState()
         {
-            throw new NotImplementedException();
+            MouseState state = (this as IMouseDriver2).GetState();
+            state.Position = CursorPosition + CursorOffset;
+            return state;
         }
 
         #endregion

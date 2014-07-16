@@ -97,6 +97,13 @@ namespace OpenTK.Platform.Linux
         public static extern bool isatty(int fd);
     }
 
+    enum ErrorNumber
+    {
+        Interrupted = 4,
+        Again = 11,
+        InvalidValue = 22,
+    }
+
     [Flags]
     enum OpenFlags
     {
