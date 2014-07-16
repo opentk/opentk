@@ -55,10 +55,22 @@ namespace OpenTK.Platform.Linux
             Debug.Print("[KMS] Creating window on display {0:x}", display);
 
             Title = title;
-            bounds = new Rectangle(0, 0, width, height);
-            client_size = bounds.Size;
+
+            display_device = display_device ?? DisplayDevice.Default;
+            if (display_device == null)
+            {
+                throw new NotSupportedException("[KMS] Driver does not currently support headless systems");
+            }
 
             window = new LinuxWindowInfo(display, fd, display_device.Id as LinuxDisplay);
+
+            // Note: we only support fullscreen windows on KMS.
+            // We implicitly override the requested width and height
+            // by the width and height of the DisplayDevice, if any.
+            width = display_device.Width;
+            height = display_device.Height;
+            bounds = new Rectangle(0, 0, width, height);
+            client_size = bounds.Size;
 
             if (!mode.Index.HasValue)
             {
@@ -72,15 +84,6 @@ namespace OpenTK.Platform.Linux
             {
                 Debug.Print("[KMS] Failed to find suitable surface format, using XRGB8888");
                 format = SurfaceFormat.XRGB8888;
-            }
-
-            // Note: we only support fullscreen windows on KMS.
-            // We implicitly override the requested width and height
-            // by the width and height of the DisplayDevice, if any.
-            if (display_device != null)
-            {
-                width = display_device.Width;
-                height = display_device.Height;
             }
 
             Debug.Print("[KMS] Creating GBM surface on {0:x} with {1}x{2} {3} [{4}]",
