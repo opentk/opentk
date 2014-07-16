@@ -241,14 +241,27 @@ namespace OpenTK.Platform.Linux
 
         public override Point PointToClient(Point point)
         {
-            // Todo
-            return point;
+            var origin = Point.Empty;
+            var display = DisplayDevice.Default;
+            if (display != null)
+            {
+                origin = display.Bounds.Location;
+            }
+            var client = Location;
+            return new Point(point.X + client.X - origin.X, point.Y + client.Y - origin.Y);
         }
 
         public override Point PointToScreen(Point point)
         {
-            // Todo
-            return point;
+            var origin = Point.Empty;
+            var display = DisplayDevice.Default;
+            if (display != null)
+            {
+                origin = display.Bounds.Location;
+            }
+            var client = Location;
+            return new Point(point.X + origin.X - client.X, point.Y + origin.Y - client.Y);
+
         }
 
         protected override void Dispose(bool disposing)
