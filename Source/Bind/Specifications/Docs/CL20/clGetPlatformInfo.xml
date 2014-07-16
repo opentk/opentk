@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>clGetPlatformInfo</keyword></keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>clGetPlatformInfo</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+  <refnamediv id="clGetPlatformInfo">
+<refname>clGetPlatformInfo</refname>
+           <refpurpose>Get specific information about the OpenCL platform.</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef><link xlink:href="scalarDataTypes.html">cl_int</link> <function>clGetPlatformInfo</function></funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_platform_id</link><parameter>platform</parameter></paramdef>
+<paramdef><link xlink:href="enums.html#cl_platform_info">cl_platform_info</link><parameter>param_name</parameter></paramdef>
+<paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>param_value_size</parameter></paramdef>
+<paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*param_value</parameter></paramdef>
+<paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>*param_value_size_ret</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+
+        <varlistentry>
+            <term><varname>platform</varname></term>
+            <listitem>
+                <para>
+                  The platform ID returned by
+                  <citerefentry><refentrytitle>clGetPlatformIDs</refentrytitle></citerefentry>
+                  or can be NULL. If <varname>platform</varname> is NULL, the behavior is
+                  implementation-defined.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>param_name</varname></term>
+            <listitem>
+                <para>
+                  An enumeration constant that identifies the platform information being
+                  queried. It can be one of the values specified in the table below.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>param_value</varname></term>
+            <listitem>
+                <para>
+                  A pointer to memory location where appropriate values for a
+                  given <varname>param_name</varname> will be returned. Possible
+                  <varname>param_value</varname> values returned are listed in the table
+                  below. If <varname>param_value</varname> is NULL, it is ignored.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>param_value_size</varname></term>
+            <listitem>
+                <para>
+                  Specifies the size in bytes of memory pointed to by
+                  <varname>param_value</varname>. This size in bytes must be &ge; size of return
+                  type specified in the table below.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>param_value_size_ret</varname></term>
+            <listitem>
+                <para>
+                  Returns the actual size in bytes of data being queried by
+                  <varname>param_value</varname>. If <varname>param_value_size_ret</varname>
+                  is NULL, it is ignored
+                </para>
+            </listitem>
+        </varlistentry>
+    </variablelist>
+
+<!-- ================================ PARAMETER TABLE (OPTIONAL) -->
+
+
+    <bridgehead>OpenCL Platform Queries</bridgehead>
+    <!-- Table 4.1 -->
+
+    <informaltable frame="all"><tgroup cols="3" align="left" colsep="1" rowsep="1">
+    <colspec colname="col1" colnum="1" />
+    <colspec colname="col2" colnum="2" />
+    <colspec colname="col2" colnum="3" />
+
+    <thead>
+        <row>
+        <entry>cl_platform_info</entry>
+        <entry>Return Type</entry>
+        <entry>Description</entry>
+        </row>
+    </thead>
+
+    <tbody>
+
+        <row>
+            <entry><constant>CL_PLATFORM_PROFILE</constant></entry>
+            <entry>char[]</entry>
+            <entry>
+            <para>
+              OpenCL profile string. Returns the profile name supported by the implementation. The
+              profile name returned can be one of the following strings:
+            </para>
+
+            <para>
+              FULL_PROFILE - if the implementation supports the OpenCL specification (functionality
+              defined as part of the core specification and does not require any extensions to
+              be supported).
+            </para>
+
+            <para>
+              EMBEDDED_PROFILE - if the implementation supports the OpenCL embedded profile. The
+              embedded profile is defined to be a subset for each version of OpenCL.
+              The embedded profile for 
+              OpenCL 2.0 is described in section 10 of the OpenCL Specification.
+            </para> </entry>
+        </row>
+
+        <row>
+            <entry><constant>CL_PLATFORM_VERSION</constant></entry>
+            <entry>char[]</entry>
+            <entry>
+              <para>OpenCL version string. Returns the OpenCL version supported by the
+              implementation. This version string has the following format:
+            </para>
+
+            <para>
+              <varname>OpenCL&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;platform-specific
+              information&gt;</varname>
+            </para>
+
+            <para>
+              The <varname>major_version.minor_version</varname> value returned will be 2.0.
+            </para>
+            </entry>
+        </row>
+
+        <row>
+            <entry><constant>CL_PLATFORM_NAME</constant></entry>
+            <entry>char[]</entry>
+            <entry>Platform name string.</entry>
+        </row>
+
+        <row>
+            <entry><constant>CL_PLATFORM_VENDOR</constant></entry>
+            <entry>char[]</entry>
+            <entry>Platform vendor string.</entry>
+        </row>
+
+        <row>
+            <entry><constant>CL_PLATFORM_EXTENSIONS</constant></entry>
+            <entry>char[]</entry>
+            <entry>
+              <para>Returns a space-separated list of extension names (the extension names
+              themselves do not contain any spaces) supported by the platform. Extensions
+              defined here must be supported by all devices associated with this platform.
+            </para></entry>
+        </row>
+
+        <row>
+            <entry><constant>CL_PLATFORM_ICD_SUFFIX_KHR</constant></entry>
+            <entry>char[]</entry>
+            <entry>
+              <para>
+                If the <citerefentry><refentrytitle>cl_khr_icd</refentrytitle></citerefentry>
+                extension is enabled,
+                the function name suffix used to 
+                identify extension functions to be 
+                directed to this platform by the ICD 
+                Loader.
+              </para>
+            </entry>
+        </row>
+
+    </tbody>
+
+    </tgroup></informaltable>
+
+<!-- ================================ END PARAMETER TABLE  -->
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          A null terminated string is returned by OpenCL query function calls if the return
+          type of the information being queried is a char[].
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+    <para>
+      Returns <errorname>CL_SUCCESS</errorname> if the function is executed
+      successfully. Otherwise, it returns the following:
+      (The OpenCL specification does not describe the order 
+      of precedence for error codes returned by API calls)
+    </para>
+
+    <itemizedlist mark="disc">
+        <listitem>
+            <errorname>CL_INVALID_PLATFORM</errorname> if <varname>platform</varname> is not a valid platform.
+        </listitem>
+
+        <listitem>
+          <errorname>CL_INVALID_VALUE</errorname> if <varname>param_name</varname> is not one of
+          the supported values or if size in bytes specified by <varname>param_value_size</varname>
+          is less than size of return type and <varname>param_value</varname> is not a NULL value.
+        </listitem>
+
+        <listitem>
+          <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+          resources required by the OpenCL implementation on the host.
+        </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clGetPlatformInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetPlatformIDs</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+
+<!-- 5-Dec-2013, rev. 19 -->
+</refentry>
+

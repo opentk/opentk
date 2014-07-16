@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>cl_khr_fp16</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>cl_khr_fp16</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="cl_khr_fp16">
+        <refname>cl_khr_fp16</refname>
+
+        <refpurpose>
+            Optional half floating-point support.
+        </refpurpose>
+    </refnamediv>
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL EXTENSION cl_khr_fp16 : enable
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          This extension adds support for half scalar and vector types as built-in types that
+          can be used for arithmetic operations, conversions, etc. An application that wants
+          to use <type>half</type> and <type>half<replaceable>n</replaceable></type> types will
+          need to include the directive shown above.
+        </para>
+
+        <para>
+          The list of built-in scalar and vector data types are extended to include the types
+          in the table below.
+        </para>
+
+        <para>
+          The built-in vector data types for 
+          <type>half<replaceable>n</replaceable></type> are also declared as
+          appropriate types in the OpenCL API (and header files) that can be used by an
+          application. The following table describes the built-in vector data types for
+          <type>half<replaceable>n</replaceable></type> as defined in the OpenCL C programming
+          language and the corresponding data type available to the application:
+        </para>
+
+        <para>
+          <informaltable frame="all"> <tgroup cols="3" align="left" colsep="1" rowsep="1">
+          <colspec colname="col1" colnum="1" /> <colspec colname="col2" colnum="2" /> <colspec
+          colname="col3" colnum="3" />
+          <thead> <row> <entry>Type in OpenCL Language</entry> <entry>Description</entry>
+          <entry>API type for application</entry> </row> </thead>
+          <tbody> <row> <entry>half2</entry> <entry>2-component half-precision floating-point
+          vector</entry> <entry>cl_half2</entry> </row> <row> <entry>half3</entry>
+          <entry>3-component half-precision floating-point vector</entry> <entry>cl_half3</entry>
+          </row> <row> <entry>half4</entry> <entry>4-component half-precision floating-point
+          vector</entry> <entry>cl_half4</entry> </row>
+          <row> <entry>half8</entry> <entry>8-component half-precision floating-point
+          vector</entry> <entry>cl_half8</entry> </row>
+          <row> <entry>half16</entry> <entry>16-component half-precision floating-point
+          vector</entry> <entry>cl_half16</entry> </row>
+          </tbody> </tgroup> </informaltable>
+        </para>
+
+        <para>
+          The relational, equality, logical and logical unary
+          <citerefentry><refentrytitle>operators</refentrytitle></citerefentry> can be used
+          with <type>half</type> scalar and <type>half<replaceable>n</replaceable></type>
+          vector types and shall produce a scalar <type>int</type> and vector
+          <type>short<replaceable>n</replaceable></type> result respectively.
+        </para>
+
+        <para>
+          The OpenCL compiler accepts an <constant>h</constant> and <constant>H</constant> suffix
+          on floating point literals, indicating the literal is typed as a <type>half</type>.
+        </para>
+
+        <para>
+          The macro names given in the following list must use the values specified. These constant
+          expressions are suitable for use in <constant>#if</constant> preprocessing directives.
+        </para>
+
+        <para>
+          The following table also describes the corresponding macro names available to the
+          application.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="3" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <colspec colname="col3" colnum="3" />
+
+                <thead>
+                    <row>
+                        <entry>Macro in OpenCL Language</entry>
+                        <entry>value</entry>
+                        <entry>Macro for application</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                      <entry><code>#define HALF_DIG</code></entry>
+                      <entry><code>3</code></entry>
+                      <entry><constant>HALF_DIG</constant></entry>
+                    </row>
+
+                    <row>
+                      <entry><code>#define HALF_MANT_DIG</code></entry>
+                      <entry><code>11</code></entry>
+                      <entry><constant>HALF_MANT_DIG</constant></entry>
+                    </row>
+
+                    <row>
+                      <entry><code>#define HALF_MAX_10_EXP</code></entry>
+                      <entry><code>+4</code></entry>
+                      <entry><constant>HALF_MAX_10_EXP</constant></entry>
+                    </row>
+
+                    <row>
+                      <entry><code>#define HALF_MAX_EXP</code></entry>
+                      <entry><code>+16</code></entry>
+                      <entry><constant>HALF_MAX_EXP</constant></entry>
+                    </row>
+
+                    <row>
+                      <entry><code>#define HALF_MIN_10_EXP</code></entry>
+                      <entry><code>-4</code></entry>
+                      <entry><constant>HALF_MIN_10_EXP</constant></entry>
+                    </row>
+
+                    <row>
+                      <entry><code>#define HALF_MIN_EXP</code></entry>
+                      <entry><code>-13</code></entry>
+                      <entry><constant>HALF_MIN_EXP</constant></entry>
+                    </row>
+
+                    <row>
+                      <entry><code>#define HALF_RADIX</code></entry>
+                      <entry><code>2</code></entry>
+                      <entry><constant>HALF_RADIX</constant></entry>
+                    </row>
+
+                    <row>
+                      <entry><code>#define HALF_MAX</code></entry>
+                      <entry><code>0x1.ffcp15h</code></entry>
+                      <entry><constant>HALF_MAX</constant></entry>
+                    </row>
+
+                    <row>
+                      <entry><code>#define HALF_MIN</code></entry>
+                      <entry><code>0x1.0p-14h</code></entry>
+                      <entry><constant>HALF_MIN</constant></entry>
+                    </row>
+
+                    <row>
+                      <entry><code>#define HALF_EPSILON</code></entry>
+                      <entry><code>0x1.0p-10h</code></entry>
+                      <entry><constant>HALF_EPSILON</constant></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          The following constants are also available. They are of type <type>half</type> and
+          are accurate within the precision of the <type>half</type> type.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Constant</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row><entry><code>M_E_H</code></entry>       <entry>Value of e</entry></row>
+                    <row><entry><code>M_LOG2E_H</code></entry>   <entry> Value of log2 e</entry></row>
+                    <row><entry><code>M_LOG10E_H</code></entry>  <entry>Value of log10 e</entry></row>
+                    <row><entry><code>M_LN2_H</code></entry>     <entry>Value of ln 2</entry></row>
+                    <row><entry><code>M_LN10_H</code></entry>    <entry> Value of ln 10</entry></row>
+                    <row><entry><code>M_PI_H</code></entry>      <entry> Value of π</entry></row>
+                    <row><entry><code>M_PI_2_H</code></entry>    <entry>Value of π / 2</entry></row>
+                    <row><entry><code>M_PI_4_H</code></entry>    <entry>Value of π / 4</entry></row>
+                    <row><entry><code>M_1_PI_H</code></entry>    <entry>Value of 1 / π</entry></row>
+                    <row><entry><code>M_2_PI_H</code></entry>    <entry>Value of 2 / π</entry></row>
+                    <row><entry><code>M_2_SQRTPI_H</code></entry><entry>Value of 2 / √π</entry></row>
+                    <row><entry><code>M_SQRT2_H</code></entry>   <entry>Value of √2</entry></row>
+                    <row><entry><code>M_SQRT1_2_H</code></entry> <entry>Value of 1 / √2</entry></row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+          Ann application may query the configuration information using
+          the op-code <constant>CL_DEVICE_HALF_FP_CONFIG</constant> with
+          <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry> for an
+          OpenCL device that supports half precision floating-point.
+        </para>
+
+        <bridgehead>Conversions</bridgehead>
+
+        <para>
+            The implicit conversion rules specified in section 6.2.1 
+            now include the <type>half</type> scalar and 
+            <type>half<replaceable>n</replaceable></type>
+            vector data types.
+        </para>
+
+        <para>
+            The explicit casts described in section 6.2.2 are 
+            extended to take a <type>half</type> scalar data type and a 
+            <type>half<replaceable>n</replaceable></type> vector data type.
+        </para>
+
+        <para>
+            The explicit conversion functions described in section 
+            6.2.3 are extended to take a <type>half</type> scalar 
+            data type and a <type>half<replaceable>n</replaceable></type> 
+            vector data type.
+        </para>
+
+        <para>
+            The as_typen() 
+            function for re-interpreting types as described in section 
+            6.2.4.2 is extended to allow conversion-free casts between 
+            <type>short<replaceable>n</replaceable></type>, 
+            <type>ushort<replaceable>n</replaceable></type> and 
+            <type>half<replaceable>n</replaceable></type> 
+            scalar and vector data types.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="cl_khr_fp16">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>mathFunctions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>commonFunctions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>geometricFunctions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>relationalFunctions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>vectorDataLoadandStoreFunctions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>asyncCopyFunctions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>imageFunctions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 20-Dec-2013, rev. 19 -->
+</refentry>
+

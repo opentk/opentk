@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clWaitForEvents</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clWaitForEvents
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clWaitForEvents">
+        <refname>
+            clWaitForEvents
+        </refname>
+
+        <refpurpose>
+            Waits on the host thread for commands identified by event objects to complete.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clWaitForEvents</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_events</parameter></paramdef>
+                <paramdef>const <link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event_list</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+      <variablelist>
+        <varlistentry>
+          <term><varname>event_list</varname></term>
+          <listitem>
+            <para>
+               The events specified in <varname>event_list</varname> act as synchronization points.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Waits on the host thread for commands identified by event objects in
+          <varname>event_list</varname> to complete. A command is considered complete if its
+          execution status is <constant>CL_COMPLETE</constant> or a negative value. The events
+          specified in <varname>event_list</varname> act as synchronization points.
+        </para>
+
+        <para>
+          If the
+          <citerefentry><refentrytitle>cl_khr_gl_event</refentrytitle></citerefentry> extension
+          is enabled, event objects can also be used to reflect the status of an OpenGL sync
+          object. The sync object in turn refers to a fence command executing in an OpenGL
+          command stream. This provides another method of coordinating sharing of buffers and
+          images between OpenGL and OpenCL.
+        </para>
+
+        <para>
+            If the
+            <citerefentry><refentrytitle>cl_khr_egl_event</refentrytitle></citerefentry> extension
+            is enabled,
+            Event objects can also be used to reflect the status of an EGL 
+            fence sync object. The sync object in turn refers to a fence 
+            command executing in an EGL client API command stream. This 
+            provides another method of coordinating sharing of EGL / EGL 
+            client API objects with OpenCL. Completion of EGL / EGL client 
+            API commands may be determined by placing an EGL fence command 
+            after commands using <code>eglCreateSyncKHR</code>, creating an 
+            event from the resulting EGL sync object using 
+            <citerefentry><refentrytitle>clCreateEventFromEGLsyncKHR</refentrytitle></citerefentry> 
+            and then specifying it in the <varname>event_wait_list</varname> 
+            of a <function>clEnqueueAcquire***</function> command. This 
+            method may be considerably more efficient than calling operations 
+            like <code>glFinish</code>, and is referred to as 
+            <emphasis>explicit synchronization</emphasis>. The application 
+            is responsible for ensuring the command stream associated with 
+            the EGL fence is flushed to ensure the CL queue is submitted to 
+            the device. Explicit synchronization is most useful when an EGL 
+            client API context bound to another thread is accessing the
+             memory objects."
+        </para>
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+           Returns <errorname>CL_SUCCESS</errorname> if the execution status of all
+           events in <varname>event_list</varname> is <constant>CL_COMPLETE</constant>.
+           Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>num_events</varname> is zero
+              or <varname>event_list</varname> is NULL..
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if events specified in
+              <varname>event_list</varname> do not belong to the same context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EVENT</errorname> if event objects specified in
+              <varname>event_list</varname> are not valid event objects.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST</errorname> if the
+              execution status of any of the events in <varname>event_list</varname> is a
+              negative integer value.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+         </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clWaitForEvents">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetEventInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseEvent</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainEvent</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_gl_event</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_egl_event</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Dec-2013, rev. 19 -->
+</refentry>
+

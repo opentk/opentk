@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY vectorFunctionsInc SYSTEM "vectorFunctionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>vstore_halfn</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>vstore_halfn</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="vstore_halfn">
+        <refname>vstore_half<replaceable>n</replaceable></refname>
+
+        <refpurpose>
+            Convert float vector to half vector and write to a pointer to memory.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        vstore_half<replaceable>n</replaceable>
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">float<replaceable>n</replaceable></link><parameter>data</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        vstore_half<replaceable>n</replaceable>_rte
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">float<replaceable>n</replaceable></link><parameter>data</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        vstore_half<replaceable>n</replaceable>_rtz
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">float<replaceable>n</replaceable></link><parameter>data</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        vstore_half<replaceable>n</replaceable>_rtp
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">float<replaceable>n</replaceable></link><parameter>data</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        vstore_half<replaceable>n</replaceable>_rtn
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">float<replaceable>n</replaceable></link><parameter>data</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- double versions of the above -->
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        vstore_half<replaceable>n</replaceable>
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">double<replaceable>n</replaceable></link><parameter>data</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        vstore_half<replaceable>n</replaceable>_rte
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">double<replaceable>n</replaceable></link><parameter>data</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        vstore_half<replaceable>n</replaceable>_rtz
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">double<replaceable>n</replaceable></link><parameter>data</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        vstore_half<replaceable>n</replaceable>_rtp
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">double<replaceable>n</replaceable></link><parameter>data</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        vstore_half<replaceable>n</replaceable>_rtn
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">double<replaceable>n</replaceable></link><parameter>data</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>offset</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">half</link><parameter>*p</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The <type>float<replaceable>n</replaceable></type>
+          (or <type>double<replaceable>n</replaceable></type>)
+          value given by <varname>data</varname> is converted to
+          a <type>half<replaceable>n</replaceable></type> value using the appropriate
+          rounding mode. The <type>half<replaceable>n</replaceable></type> value is then
+          written to address computed as (<varname>p</varname> + (<varname>offset</varname>
+          * <varname>n</varname>)). The address computed as (<varname>p</varname> +
+          (<varname>offset</varname> * <varname>n</varname>)) must be 16-bit aligned.
+        </para>
+
+        <para>
+          <function>vstore_half<replaceable>n</replaceable></function> uses the default rounding
+          mode. The default rounding mode is round to nearest even.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+      &vectorFunctionsInc;
+
+      <para>
+        <function>vload3</function> and <function>vload_half3</function> read <varname>x</varname>,
+        <varname>y</varname>, <varname>z</varname> components from address (<varname>p</varname> +
+        (<varname>offset</varname> * 3)) into a 3-component vector. <function>vstore3</function>,
+        and <function>vstore_half3</function> write <varname>x</varname>, <varname>y</varname>,
+        <varname>z</varname> components from a 3-component vector to address (<varname>p</varname>
+        + (<varname>offset</varname> * 3)).
+      </para>
+
+      <para>
+        In addition <function>vloada_half3</function> reads <varname>x</varname>,
+        <varname>y</varname>, <varname>z</varname> components from address
+        (<varname>p</varname> + (<varname>offset</varname> * 4)) into a 3- component vector and
+        <function>vstorea_half3</function> writes <varname>x</varname>, <varname>y</varname>,
+        <varname>z</varname> components from a 3-component vector to address (<varname>p</varname>
+        + (<varname>offset</varname> * 4)).
+      </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="vectorDataLoadandStoreFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="vectorDataLoadandStoreFunctions"><refentrytitle>Vector Data Load and Store Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 14-Dec-2013, rev. 19 -->
+</refentry>
+

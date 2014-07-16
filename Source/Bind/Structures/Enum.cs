@@ -15,9 +15,29 @@ namespace Bind.Structures
 {
     #region class Enum
 
-    class Enum
+    sealed class Enum : Type, IComparable<Enum>
     {
         string _name, _type;
+
+        public Enum()
+        {
+        }
+
+        public Enum(Type type, Enum e)
+            : base(type)
+        {
+            Name = e.Name;
+            BaseType = e.BaseType;
+            foreach (var c in e.ConstantCollection)
+            {
+                ConstantCollection.Add(c);
+            }
+        }
+
+        public override object Clone()
+        {
+            return new Enum(this, this);
+        }
 
         // Returns true if the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...
         public bool IsFlagCollection
@@ -31,14 +51,36 @@ namespace Bind.Structures
             set { _name = value; }
         }
 
+        public override string CurrentType
+        {
+            get
+            {
+                return Name;
+            }
+            set
+            {
+                Name = value;
+            }
+        }
+
         // Typically 'long' or 'int'. Default is 'int'.
-        public string Type
+        public string BaseType
         {
             get { return String.IsNullOrEmpty(_type) ? "int" : _type; }
             set { _type = value; }
         }
 
-        SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
+        public override bool IsEnum
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public string Obsolete { get; set; }
+
+        Dictionary<string, Constant> _constant_collection = new Dictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection
         {
@@ -61,14 +103,35 @@ namespace Bind.Structures
         {
             return String.Format("enum {0} : {1} {{ {2} }}",
                 Name,
-                Type,
-                ConstantCollection);
+                BaseType,
+                String.Join(";", ConstantCollection.Values.Select(v => v.Name).ToArray()));
         }
 
         public void Add(Constant constant)
         {
             ConstantCollection.Add(constant.Name, constant);
         }
+
+        #region IComparable<Enum> Members
+
+        public override int CompareTo(Type other)
+        {
+            if (other is Enum)
+            {
+                return CompareTo((Enum)other);
+            }
+            return base.CompareTo(other);
+        }
+
+        public int CompareTo(Enum e)
+        {
+            int result = Name.CompareTo(e.Name);
+            if (result == 0)
+                result = base.CompareTo(e);
+            return result;
+        }
+
+        #endregion
     }
 
     #endregion
@@ -77,7 +140,7 @@ namespace Bind.Structures
 
     class EnumCollection : IDictionary<string, Enum>
     {
-        SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
+        Dictionary<string, Enum> Enumerations = new Dictionary<string, Enum>();
 
         // Return -1 for ext1, 1 for ext2 or 0 if no preference.
         int OrderOfPreference(string ext1, string ext2)
@@ -133,10 +196,11 @@ namespace Bind.Structures
             if (ContainsKey(key))
             {
                 var e = this[key];
-                foreach (var token in value.ConstantCollection.Values)
+                foreach (var token in e.ConstantCollection.Values)
                 {
-                    Utilities.Merge(e, token);
+                    Utilities.Merge(value, token);
                 }
+                this[key] = value; // Make sure the Enum properties are up-to-date
             }
             else
             {
@@ -198,7 +262,7 @@ namespace Bind.Structures
 
         public void CopyTo(KeyValuePair<string, Enum>[] array, int arrayIndex)
         {
-            Enumerations.CopyTo(array, arrayIndex);
+            Array.Copy(Enumerations.ToArray(), 0, array, arrayIndex, array.Length);
         }
 
         public int Count

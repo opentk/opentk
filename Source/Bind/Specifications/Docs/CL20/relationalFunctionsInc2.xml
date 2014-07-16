@@ -1,0 +1,16 @@
+    <!-- return types: from API spec., p. 89, 6.13.6 Relational Functions; 
+         and OpenCL C spec., p. 20, 9.4.5 Half - Relational Functions.
+         These words apply to: isequal, isnotequal, isgreater, isgreaterequal, 
+         isless, islessequal, islessgreater, isfinite, isinf, isnan, isnormal, 
+         isordered, isunordered and signbit -->
+
+    <para>
+      The function returns a 0 if the specified relation is <constant>false</constant> and a 1
+      if the specified relation is <constant>true</constant> for scalar argument types. These
+      functions shall return a 0 if the specified relation is <constant>false</constant> and a -
+      1 (i.e. all bits set) if the specified relation is <constant>true</constant> for vector
+      argument types.
+    </para>
+
+<!-- 13-Dec-2013, rev. 19 -->
+

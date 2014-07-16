@@ -31,6 +31,8 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
+#pragma warning disable 0169
+
 namespace OpenTK.Platform.X11
 {
     using Atom = IntPtr;

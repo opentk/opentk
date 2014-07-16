@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -25,6 +25,8 @@
 //
 #endregion
 
+#if CARBON
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -46,3 +48,5 @@ namespace OpenTK.Platform.Egl
         }
     }
 }
+
+#endif

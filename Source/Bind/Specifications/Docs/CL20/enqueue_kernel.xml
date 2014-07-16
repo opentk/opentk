@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>enqueue_kernel</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>enqueue_kernel</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="enqueue_kernel">
+        <refname>enqueue_kernel</refname>
+
+        <refpurpose>
+            Enqueue the block for execution to <varname>queue</varname>.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        enqueue_kernel
+                    </function>
+                </funcdef>
+            <paramdef>
+                <link xlink:href="otherDataTypes.html">queue_t</link>
+                <parameter>queue</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="enums.html#kernel_enqueue_flags_t">kernel_enqueue_flags_t</link>
+                <parameter>flags</parameter>
+            </paramdef>
+            <paramdef>
+                const <link xlink:href="otherDataTypes.html">ndrange_t</link>
+                <parameter>ndrange</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="scalarDataTypes.html">void</link>
+                (<parameter>^block)(void)</parameter>
+            </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        enqueue_kernel
+                    </function>
+                </funcdef>
+            <paramdef>
+                <link xlink:href="otherDataTypes.html">queue_t</link>
+                <parameter>queue</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="enums.html#kernel_enqueue_flags_t">kernel_enqueue_flags_t</link>
+                <parameter>flags</parameter>
+            </paramdef>
+            <paramdef>
+                const <link xlink:href="otherDataTypes.html">ndrange_t</link>
+                <parameter>ndrange</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="scalarDataTypes.html">uint</link>
+                <parameter>num_events_in_wait_list</parameter>
+            </paramdef>
+            <paramdef>
+                const <link xlink:href="otherDataTypes.html">clk_event_t</link>
+                *<parameter>event_wait_list</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="otherDataTypes.html">clk_event_t</link>
+                *<parameter>event_ret</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="scalarDataTypes.html">void</link>
+                (<parameter>^block)(void)</parameter>
+            </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        enqueue_kernel
+                    </function>
+                </funcdef>
+            <paramdef>
+                <link xlink:href="otherDataTypes.html">queue_t</link>
+                <parameter>queue</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="enums.html#kernel_enqueue_flags_t">kernel_enqueue_flags_t</link>
+                <parameter>flags</parameter>
+            </paramdef>
+            <paramdef>
+                const <link xlink:href="otherDataTypes.html">ndrange_t</link>
+                <parameter>ndrange</parameter>
+            </paramdef>
+            
+            <paramdef>
+                <link xlink:href="scalarDataTypes.html">void</link>
+                (<parameter>^block)(local void *, ...)</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="scalarDataTypes.html">uint</link>
+                <parameter>size0, ...</parameter>
+            </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        enqueue_kernel
+                    </function>
+                </funcdef>
+            <paramdef>
+                <link xlink:href="otherDataTypes.html">queue_t</link>
+                <parameter>queue</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="enums.html#kernel_enqueue_flags_t">kernel_enqueue_flags_t</link>
+                <parameter>flags</parameter>
+            </paramdef>
+            <paramdef>
+                const <link xlink:href="otherDataTypes.html">ndrange_t</link>
+                <parameter>ndrange</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="scalarDataTypes.html">uint</link>
+                <parameter>num_events_in_wait_list</parameter>
+            </paramdef>
+            <paramdef>
+                const <link xlink:href="otherDataTypes.html">clk_event_t</link>
+                *<parameter>event_wait_list</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="otherDataTypes.html">clk_event_t</link>
+                *<parameter>event_ret</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="scalarDataTypes.html">void</link>
+                (<parameter>^block)(local void *, ...)</parameter>
+            </paramdef>
+            <paramdef>
+                <link xlink:href="scalarDataTypes.html">uint</link>
+                <parameter>size0, ...</parameter>
+            </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            Enqueue the block for execution to <varname>queue</varname>. 
+            If an event is returned, <function>enqueue_kernel</function>
+            performs an implicit retain on the returned event.
+        </para>
+
+        <para>
+            OpenCL 2.0 allows a kernel to independently enqueue to the same device, without host
+            interaction. A kernel may enqueue code represented by Block syntax, and control execution
+            order with event dependencies including user events and markers. There are several advantages
+            to using the Block syntax: it is more compact; it does not require a 
+            <type>cl_kernel</type> object; and
+            enqueuing can be done as a single semantic step.
+        </para>
+
+        <para>
+            The <function>enqueue_kernel</function> built-in function 
+            allows a work-item to enqueue a block. Work-items can
+            enqueue multiple blocks to a device queue(s).
+        </para>
+
+        <para>
+            The <type>kernel_enqueue_flags_t</type> argument to 
+            <function>enqueue_kernel</function> built-in functions can 
+            be used to specify when the child kernel begins 
+            execution. Supported values are described in the 
+            table below. (Implementations are not required to honor this flag. 
+            Implementations may not schedule kernel launch earlier than 
+            the point specified by this flag, however):
+        </para>
+
+        <!-- table 6.32 -->
+        <informaltable frame="all">
+        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+            <colspec colname="col1" colnum="1" />
+            <colspec colname="col2" colnum="2" />
+            <thead>
+                <row>
+                <entry>kernel_enqueue_flags_t enum</entry>
+                <entry>Description</entry>
+                </row>
+            </thead>
+
+            <tbody>
+                <row>
+                    <entry><constant>CLK_ENQUEUE_FLAGS_NO_WAIT</constant></entry>
+                    <entry>
+                        Indicates that the enqueued kernels 
+                        do not need to wait for the parent 
+                        kernel to finish execution before 
+                        they begin execution.
+                    </entry>
+                </row>
+
+                <row>
+                    <entry><constant>CLK_ENQUEUE_FLAGS_WAIT_KERNEL</constant></entry>
+                    <entry>
+                        Indicates that all work-items of the 
+                        parent kernel must finish executing 
+                        and all immediate side effects 
+                        committed before the enqueued 
+                        child kernel may begin execution.
+                        (Immediate meaning not side effects resulting from child kernels. 
+                        The side effects would include stores to global 
+                        memory and pipe reads and writes.)
+                    </entry>
+                </row>
+
+                <row>
+                    <entry><constant>CLK_ENQUEUE_FLAGS_WAIT_WORK_GROUP</constant></entry>
+                    <entry>
+                        Indicates that the enqueued kernels 
+                        wait only for the workgroup that 
+                        enqueued the kernels to finish 
+                        before they begin execution.
+                        This acts as a memory synchronization point between 
+                        work-items in a work-group and child kernels enqueued by 
+                        work-items in the work-group.
+                    </entry>
+                </row>
+
+            </tbody>
+        </tgroup>
+        </informaltable>
+
+        <para>
+            NOTE: The <type>kernel_enqueue_flags_t</type> 
+            flags are useful when a kernel enqueued from the 
+            host and executing on a device enqueues kernels 
+            on the device. The kernel enqueued from the 
+            host may not have an event associated with it. 
+            The <type>kernel_enqueue_flags_t</type> flags allow 
+            the developer to indicate when the child 
+            kernels can begin execution.
+        </para>
+
+    </refsect1>
+
+<!--================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            A block passed to <function>enqueue_kernel</function> 
+            can have arguments declared to be a pointer to local
+            memory. The <function>enqueue_kernel</function> built-in 
+            function variants allow blocks to be enqueued with a
+            variable number of arguments. Each argument must be 
+            declared to be a pointer of a data type to
+            local memory. These <function>enqueue_kernel</function> 
+            built-in function variants also have a corresponding
+            number of arguments each of type uint that follow 
+            the block argument. These arguments
+            specify the size of each local memory pointer 
+            argument of the enqueued block.
+        </para>
+
+    </refsect1>
+
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+            Below are some examples of how to enqueue a block.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+kernel void
+my_func_A(global int *a, global int *b, global int *c)
+{
+    ...
+}
+
+kernel void
+my_func_B(global int *a, global int *b, global int *c)
+{
+    ndrange_t ndrange;
+    // build ndrange information
+    ...
+
+    // example – enqueue a kernel as a block
+    enqueue_kernel(get_default_queue(), ndrange,
+                           ^{my_func_A(a, b, c);});
+    ...
+}
+
+kernel void
+my_func_C(global int *a, global int *b, global int *c)
+{
+    ndrange_t ndrange;
+    // build ndrange information
+    ...
+
+    // note that a, b and c are variables in scope of 
+    // the block
+    void (^my_block_A)(void) = ^{my_func_A(a, b, c);};
+
+    // enqueue the block variable
+    enqueue_kernel(get_default_queue(), 
+                   CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+                   ndrange, 
+                   my_block_A);
+    ...
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            The example below shows how to declare a block literal and enqueue it.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+kernel void
+my_func(global int *a, global int *b)
+{
+    ndrange_t ndrange;
+    // build ndrange information
+    ...
+
+    // note that a, b and c are variables in scope of 
+    // the block
+    void (^my_block_A)(void) = 
+          ^{ size_t id = get_global_id(0);
+             b[id] += a[id]; 
+        };
+
+// enqueue the block variable
+enqueue_kernel(get_default_queue(), 
+               CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+               ndrange, 
+               my_block_A);
+
+// or we could have done the following
+enqueue_kernel(get_default_queue(), 
+               CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+               ndrange,
+               ^{ size_t id = get_global_id(0);
+                  b[id] += a[id]; 
+                }; 
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            NOTE: Blocks passed to <function>enqueue_kernel</function> 
+            cannot use global variables or stack variables 
+            local to the enclosing lexical scope that are a 
+            pointer type in the local or private address space.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+kernel void
+foo(global int *a, local int *lptr, …)
+{
+    enqueue_kernel(get_default_queue(),
+           CLK_ENQUEUE_FLAGS_WAIT_KERNEL,
+           ndrange,
+           ^{ 
+              size_t id = get_global_id(0);
+              local int *p = lptr; // undefined behavior
+            };
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            See section 6.13.17 of the specification for more information and examples.
+        </para>
+
+    </refsect2>
+
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <function>enqueue_kernel</function> returns 
+            <errorname>CL_SUCCESS</errorname> if the
+            block is enqueued successfully and returns 
+            <errorname>CL_ENQUEUE_FAILURE</errorname>
+            otherwise. If the –g compile option is 
+            specified in compiler options passed to 
+            <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry>
+            when compiling or building the parent program, the following
+            errors may be returned instead of 
+            <errorname>CL_ENQUEUE_FAILURE</errorname> to indicate 
+            why <function>enqueue_kernel</function> 
+            failed to enqueue the block:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CLK_INVALID_QUEUE</errorname> if <varname>queue</varname> is not
+              a valid device queue.
+            </listitem>
+
+            <listitem>
+                <errorname>CLK_INVALID_NDRANGE</errorname> if <varname>ndrange</varname>
+                is not a valid ND-range descriptor or if the 
+                program was compiled with <code>–cl-uniform-work-group-size</code> 
+                and the local_work_size is specified in <varname>ndrange</varname> 
+                but the global_work_size specified in <varname>ndrange</varname> 
+                is not a multiple of the local_work_size.
+            </listitem>
+
+            <listitem>
+                <errorname>CLK_INVALID_EVENT_WAIT_LIST</errorname> if 
+                <varname>event_wait_list</varname> is NULL and
+                <varname>num_events_in_wait_list</varname> > 0, or if 
+                <varname>event_wait_list</varname> is not NULL and
+                <varname>num_events_in_wait_list</varname> is 0, or if event objects in 
+                <varname>event_wait_list</varname> are not valid events.
+            </listitem>
+
+            <listitem>
+                <errorname>CLK_DEVICE_QUEUE_FULL</errorname> if 
+                <varname>queue</varname> is full.
+            </listitem>
+
+            <listitem>
+              <errorname>CLK_INVALID_ARG_SIZE</errorname> if size of local memory arguments is 0.
+            </listitem>
+
+            <listitem>
+                <errorname>CLK_EVENT_ALLOCATION_FAILURE</errorname>
+                if <varname>event_ret</varname> is not NULL and an event could not
+                be allocated.
+            </listitem>
+
+            <listitem>
+                <errorname>CLK_OUT_OF_RESOURCES</errorname>
+                if there is a failure to queue the block in <varname>queue</varname> 
+                because of insufficient resources needed to execute the kernel.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="enqueueKernelFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="eventFunctions"><refentrytitle>Event Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>-->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 20-Dec-2013, rev. 19 -->
+</refentry>
+

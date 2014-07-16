@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY relationalFunctionsInc1 SYSTEM "relationalFunctionsInc1.xml">
+<!ENTITY relationalFunctionsInc2 SYSTEM "relationalFunctionsInc2.xml">
+]>
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>signbit</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>signbit</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="signbit">             
+        <refname>signbit</refname>
+
+        <refpurpose>
+            Test for sign bit.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+
+
+                    <function>                   
+                        signbit
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">float</link><parameter></parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>     
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">int<replaceable>n</replaceable></link>
+                    <function>                   
+                        signbit
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">float<replaceable>n</replaceable></link><parameter></parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>   
+
+<!-- Optional Double and Half prototypes -->
+ <refsect2 xmlns:xlink="http://www.w3.org/1999/xlink" id="double">
+        <title></title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+<type><link xlink:href="scalarDataTypes.html">int</link></type> <function>signbit</function> (<type><link xlink:href="scalarDataTypes.html">double</link></type>)      // if double extension enabled 
+
+<type><link xlink:href="vectorDataTypes.html">long<replaceable>n</replaceable></link></type> <function>signbit</function> (<type><link xlink:href="vectorDataTypes.html">double<replaceable>n</replaceable></link></type>)      // if double extension enabled 
+</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+<type><link xlink:href="scalarDataTypes.html">int</link></type> <function>signbit</function> (<type><link xlink:href="scalarDataTypes.html">half</link></type>)      // if half extension enabled 
+
+<type><link xlink:href="vectorDataTypes.html">short<replaceable>n</replaceable></link></type> <function>signbit</function> (<type><link xlink:href="vectorDataTypes.html">half<replaceable>n</replaceable></link></type>)      // if half extension enabled 
+</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>             
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+The built-in function <function>signbit</function> tests for sign bit. The scalar version of the function returns a 1 if the sign bit in the float is set else returns 0. The vector version of the function returns the following for each component in float<varname>n</varname>: <varname>a</varname> -1 if the sign bit in the float is set else returns 0.
+        </para>
+        <para>
+If extended with <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry> or <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> to enable <type>double</type> or <type>half</type> respectively, then <function>signbit</function> returns -1 if the sign bit in the float is set; otherwise returns 0.     
+        </para>
+        
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        &relationalFunctionsInc1;
+        &relationalFunctionsInc2;
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="relationalFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="relationalFunctions"><refentrytitle>Relational Functions</refentrytitle></citerefentry> 
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

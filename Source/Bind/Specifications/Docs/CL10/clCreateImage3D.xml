@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>         
+                clCreateImage3D
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>       
+            clCreateImage3D
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+  
+    </refmeta>
+
+
+<!-- ================================ SYNOPSIS -->  
+
+    <refnamediv id="clCreateImage3D">
+        <refname>     
+            clCreateImage3D
+        </refname> 
+
+        <refpurpose>          
+            Creates a 3D image object.
+        </refpurpose> 
+    </refnamediv> 
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>              
+                    cl_mem <function>clCreateImage3D</function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+				<paramdef>const <link xlink:href="cl_image_format.html">cl_image_format</link><parameter>*image_format</parameter></paramdef>
+				<paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>image_width</parameter></paramdef>
+				<paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>image_height</parameter></paramdef>
+				<paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>image_depth</parameter></paramdef>
+				<paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>image_row_pitch</parameter></paramdef>
+				<paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>image_slice_pitch</parameter></paramdef>
+				<paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*host_ptr</parameter></paramdef>
+				<paramdef><link xlink:href="scalarDataTypes.html">cl_int</link><parameter>*errcode_ret</parameter></paramdef>
+                             
+
+            </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>
+
+
+<!-- ================================ PARAMETERS --> 
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        context
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A valid OpenCL context on which the image object is to be created.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+						flags
+					</varname>
+                </term>
+                <listitem>
+                    <para> <!-- parameter description -->
+						A bit-field that is used to specify allocation and usage information about the image
+						memory object being created and is described in the table List of supported <varname>cl_mem_flags</varname> values for <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>.
+                    </para>
+               </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>
+                    <varname>
+						image_format
+                    </varname>
+                </term>
+                <listitem>
+                    <para>
+						A pointer to a structure that describes format properties of the image to be
+						allocated. See <citerefentry><refentrytitle>cl_image_format</refentrytitle></citerefentry> for a detailed description of the image format descriptor.
+                    </para>
+               </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>
+                    <varname>						
+						image_width
+					</varname>
+				</term>
+				<term>
+					<varname>
+						image_height
+					</varname>
+				</term>
+                <listitem>
+                    <para>
+						The width and height of the image in pixels. These must be
+						values greater than or equal to 1.
+					</para>
+				</listitem>
+			</varlistentry>
+            <varlistentry>
+                <term>
+                    <varname>
+						image depth
+					</varname>
+				</term>
+                <listitem>
+                    <para>					
+						The depth of the image in pixels. This must be a value greater than 1.
+					</para>
+				</listitem>
+			</varlistentry>
+            <varlistentry>
+                <term>
+                    <varname>
+						image_row_pitch
+					</varname>
+				</term>
+                <listitem>
+                    <para>
+						The scan-line pitch in bytes. This must be 0 if <varname>host_ptr</varname> is NULL and can be
+						either 0 or greater than or equal to <varname>image_width</varname> * size of element in bytes 
+						if <varname>host_ptr</varname> is not NULL. If <varname>host_ptr</varname> is not
+						NULL and <varname>image_row_pitch</varname> is equal to 0, <varname>image_row_pitch</varname> is calculated as <varname>image_width</varname> * size of
+						element in bytes. If <varname>image_row_pitch</varname> is not 0, it must be a multiple of the image element size in
+						bytes.
+					</para>
+				</listitem>
+			</varlistentry>
+            <varlistentry>
+                <term>
+                    <varname>
+						image_slice_pitch
+					</varname>
+				</term>
+                <listitem>
+                    <para>
+						The size in bytes of each 2D slice in the 3D image. This must be 0 if
+						<varname>host_ptr</varname> is NULL and can be either 0 or greater than or equal to <varname>image_row_pitch</varname> * <varname>image_height</varname> if <varname>host_ptr</varname> is not
+						NULL. If <varname>host_ptr</varname> is not NULL and <varname>image_slice_pitch</varname> equal to 0, <varname>image_slice_pitch</varname> is calculated as
+						<varname>image_row_pitch</varname> * <varname>image_height</varname>. If <varname>image_slice_pitch</varname> is not 0, it must be a multiple of the
+						<varname>image_row_pitch</varname>.
+					</para>
+				</listitem>
+			</varlistentry>
+            <varlistentry>
+                <term>
+                    <varname>
+						host_ptr
+					</varname> 
+				</term>
+                <listitem>
+                    <para>
+						A pointer to the image data that may already be allocated by the application. The size
+						of the buffer that <varname>host_ptr</varname> points to must be greater than or equal to <varname>image_slice_pitch</varname> * <varname>image_depth</varname>. The size of
+						each element in bytes must be a power of 2. The image data specified by <varname>host_ptr</varname> is stored as a
+						linear sequence of adjacent 2D slices. Each 2D slice is a linear sequence of adjacent scanlines.
+						Each scanline is a linear sequence of image elements.
+					</para>
+				</listitem>
+			</varlistentry>
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        errcode_ret
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        Will return an appropriate error code. If <varname>errcode_ret</varname> is NULL, no error code is returned.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+        
+
+
+            <!-- END PARAMETER TABLE  -->          
+
+
+
+
+
+
+        </variablelist>
+    </refsect1>
+
+    
+<!-- ================================ NOTES  -->        
+ 
+
+
+    
+
+<!-- ================================ ERRORS  -->       
+
+
+    <refsect1 id="errors"><title>Errors</title>
+		<para>
+			Returns a valid non-zero image object created and the <varname>errcode_ret</varname> is set to
+			<errorname>CL_SUCCESS</errorname> if the image object is created successfully. Otherwise, it returns a NULL value
+			with one of the following error values returned in <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+				<errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not a valid context.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_VALUE</errorname> if values specified in <varname>flags</varname> are not valid.
+			</listitem>
+			<listitem>	
+				<errorname>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</errorname> if values specified in <varname>image_format</varname> are
+				not valid or if <varname>image_format</varname> is NULL.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_IMAGE_SIZE</errorname> if <varname>image_width</varname>, <varname>image_height</varname> are 0 or if <varname>image_depth</varname> less than or equal to 1
+				or if they exceed values specified in <constant>CL_DEVICE_IMAGE3D_MAX_WIDTH</constant>,
+				<constant>CL_DEVICE_IMAGE3D_MAX_HEIGHT</constant> or <constant>CL_DEVICE_IMAGE3D_MAX_DEPTH</constant>
+				respectively for all devices in <varname>context</varname> or if values specified by <varname>image_row_pitch</varname> and
+				<varname>image_slice_pitch</varname> do not follow rules described in the argument description above.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_HOST_PTR</errorname> if <varname>host_ptr</varname> is NULL and <constant>CL_MEM_USE_HOST_PTR</constant> or <constant>CL_MEM_COPY_HOST_PTR</constant> are set in <varname>flags</varname> or if <varname>host_ptr</varname> is not NULL but
+				<constant>CL_MEM_COPY_HOST_PTR</constant> or <constant>CL_MEM_USE_HOST_PTR</constant> are not set in <varname>flags</varname>.
+			</listitem>
+			<listitem>
+				<errorname>CL_IMAGE_FORMAT_NOT_SUPPORTED</errorname> if the <varname>image_format</varname> is not supported.
+			</listitem>
+			<listitem>
+				<errorname>CL_MEM_OBJECT_ALLOCATION_FAILURE</errorname> if there is a failure to allocate memory for
+				image object.
+			</listitem>
+			<listitem>
+				<errorname>CL_INVALID_OPERATION</errorname> if there are no devices in <varname>context</varname> that support images (i.e.
+				<constant>CL_DEVICE_IMAGE_SUPPORT</constant> (specified in the table of OpenCL Device Queries for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>) is <errorname>CL_FALSE</errorname>).
+			</listitem>
+			<listitem>
+				<errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by the
+				OpenCL implementation on the host.
+			</listitem>
+        </itemizedlist>
+    </refsect1>
+    
+
+<!-- ================================ EXAMPLE  -->  
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--    
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>   
+    </refsect2>  
+--> 
+
+
+<!-- ================================ SPECIFICATION  -->        
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->     
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+			
+				      
+            <olink uri="clCreateImage3D">OpenCL Specification</olink>
+        </para>
+    </refsect1>     
+
+
+<!-- ================================ ALSO SEE  -->     
+   
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateImage2D</refentrytitle></citerefentry>, 
+			<citerefentry><refentrytitle>cl_image_format</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->  
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

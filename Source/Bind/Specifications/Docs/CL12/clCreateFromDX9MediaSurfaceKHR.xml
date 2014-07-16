@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY mediaSurfaceFormatsInc SYSTEM "mediaSurfaceFormatsInc.xml">
+<!ENTITY accessMappedInc SYSTEM "accessMappedInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>clCreateFromDX9MediaSurfaceKHR</keyword></keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>clCreateFromDX9MediaSurfaceKHR</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+  <refnamediv id="clCreateFromDX9MediaSurfaceKHR">
+      <refname>clCreateFromDX9MediaSurfaceKHR</refname>
+      <refpurpose>Creates an OpenCL image object from a media surface.</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="abstractDataTypes.html">cl_mem</link>
+                    <function>clCreateFromDX9MediaSurfaceKHR</function>
+                </funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef>cl_dx9_media_adapter_type_khr<parameter>adapter_type</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*surface_info</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>plane</parameter></paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <parameter>*errcode_ret</parameter>
+                </paramdef>
+           </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><varname>context</varname></term>
+            <listitem>
+                <para>
+                    A valid OpenCL context created from a media adapter.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>flags</varname></term>
+            <listitem>
+                <para>
+                  A bit-field that is used to specify usage information. Refer
+                  to the table of allowed values for <varname>flags</varname> for
+                  <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>.  Only
+                  <constant>CL_MEM_READ_ONLY</constant>, <constant>CL_MEM_WRITE_ONLY</constant>,
+                  and <constant>CL_MEM_READ_WRITE</constant> values specified
+                  in the table of allowed values for <varname>flags</varname> for
+                  <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>
+                  can be used.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>adapter_type</varname></term>
+            <listitem>
+                <para>
+                  A value from enumeration of supported adapters described in the
+                  table of <varname>cl_dx9_media_adapter_type_khr</varname> values for
+                  <citerefentry><refentrytitle>clGetDeviceIDsFromDX9MediaAdapterKHR</refentrytitle></citerefentry>.
+                  The type of <varname>surface_info</varname> is determined by the adapter
+                  type.  The implementation does not need to support all adapter types. This
+                  approach provides flexibility to support additional adapter types in the
+                  future. Supported adapter types are <constant>CL_ADAPTER_D3D9_KHR</constant>,
+                  <constant>CL_ADAPTER_D3D9EX_KHR</constant>, and
+                  <constant>CL_ADAPTER_DXVA_KHR</constant>.
+                </para>
+
+                <para>
+                  If <varname>adapter_type</varname> is <constant>CL_ADAPTER_D3D9_KHR</constant>,
+                  <constant>CL_ADAPTER_D3D9EX_KHR</constant>, or
+                  <constant>CL_ADAPTER_DXVA_KHR</constant>, the <varname>surface_info</varname>
+                  points to the following structure:
+                </para>
+
+                <para> <code><literallayout>typedef struct _cl_dx9_surface_info_khr
+{
+    IDirect3DSurface9 *resource; HANDLE shared_handle;
+} cl_dx9_surface_info_khr;
+                    </literallayout></code>
+                </para>
+
+                <para>
+                  For D3D9 surfaces, we need both the handle to the resource and the resource
+                  itself to have a sufficient amount of information to eliminate a copy of the
+                  surface for sharing in cases where this is possible. Elimination of the copy
+                  is driver dependent. <varname>shared_handle</varname> may be NULL and this
+                  may result in sub-optimal performance.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>surface_info</varname></term>
+            <listitem>
+                <para>
+                  A pointer to one of the structures defined in the <varname>adapter_type</varname>
+                  description above passed in as a <type>void</type> *.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>plane</varname></term>
+            <listitem>
+                <para>
+                  The plane of resource to share for planar surface formats.  For planar formats,
+                  we use the plane parameter to obtain a handle to thie specific plane (Y, U or
+                  V for example).  For nonplanar formats used by media, <varname>plane</varname>
+                  must be 0.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>errcode_ret</varname></term>
+            <listitem>
+                <para>
+                  An appropriate error code. If <varname>errcode_ret</varname> is NULL, no
+                  error code is returned.
+                </para>
+            </listitem>
+        </varlistentry> </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          The width and height of the returned OpenCL 2D image object are determined by the
+          width and height of the plane of resource. The channel type and order of the returned
+          image object is determined by the format and plane of resource and are described in
+          tables 9.10.3 and 9.10.4.
+        </para>
+
+        <para>
+          This call will increment the internal media surface count on
+          <varname>resource</varname>. The internal media surface reference count on
+          <varname>resource</varname> will be decremented when the OpenCL reference count on
+          the returned OpenCL memory object drops to zero.
+        </para>
+
+        <bridgehead>DX9 Media Surface Sharing</bridgehead>
+
+        &mediaSurfaceFormatsInc;
+
+        &accessMappedInc;
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> returns a valid non-zero 2D image object and
+          <varname>errcode_ret</varname> is set to <errorname>CL_SUCCESS</errorname> if the 2D
+          image object is created successfully.  Otherwise, it returns a NULL value with one
+          of the following error values returned in <varname>errcode_ret</varname>:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not
+              a valid context.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if values specified in
+              <varname>flags</varname> are not valid or if plane is not a valid plane of
+              <varname>resource</varname> specified in <varname>surface_info</varname>..
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_DX9_MEDIA_SURFACE_KHR</errorname> if
+              <varname>resource</varname> specified in <varname>surface_info</varname> is not
+              a valid resource or is not associated with <varname>adapter_type</varname> (e.g.,
+              <varname>adapter_type</varname> is set to <constant>CL_ADAPTER_D3D9_KHR</constant>
+              and <varname>resource</varname> is not a Direct3D 9 surface created in
+              <constant>D3DPOOL_DEFAULT</constant>).
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_DX9_MEDIA_SURFACE_KHR</errorname> if
+              <varname>shared_handle</varname> specified in <varname>surface_info</varname>
+              is not NULL or a valid handle value.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_IMAGE_FORMAT_DESCRIPTOR</errorname> if the texture format
+              of <varname>resource</varname> is not listed in tables 9.10.3 and 9.10.4.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_OPERATION</errorname> if there are no devices in
+              <varname>context</varname> that support <varname>adapter_type</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clCreateFromDX9MediaSurfaceKHR">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+         <para>
+             <citerefentry><refentrytitle>cl_khr_dx9_media_sharing</refentrytitle></citerefentry>,
+             <citerefentry><refentrytitle>clGetDeviceIDsFromDX9MediaAdapterKHR</refentrytitle></citerefentry>,
+             <citerefentry><refentrytitle>clEnqueueAcquireDX9MediaSurfacesKHR</refentrytitle></citerefentry>,
+             <citerefentry><refentrytitle>clEnqueueReleaseDX9MediaSurfacesKHR</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Oct-2011 -->
+</refentry>
+

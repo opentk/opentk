@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+	<refentryinfo>
+		<keywordset>
+			<keyword>Vector Data Load and Store Functions</keyword>
+		</keywordset>
+	</refentryinfo>
+    <refmeta>
+        <refentrytitle>Vector Data Load and Store Functions</refentrytitle>
+		<refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+  	<refnamediv>
+		<refname>Vector Data Load and Store Functions</refname> 
+		<refpurpose>Click an item in the table below for details about that function.</refpurpose> 
+	</refnamediv>
+	 
+<refsect1 id="springboard"><title></title>
+	<informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+	<colspec colnum="1" colwidth="2*" colname="col1" />
+	<colspec colnum="2" colwidth="8*" colname="col2" />
+	<tbody>
+		<row>
+			<entry><citerefentry>
+				<refentrytitle>vload<emphasis>n</emphasis></refentrytitle>
+			</citerefentry></entry>
+			<entry><para>Read vectors from a pointer to memory.</para></entry>
+		</row>
+		<row>
+			<entry><citerefentry>
+				<refentrytitle>vstore<emphasis>n</emphasis></refentrytitle>
+			</citerefentry></entry>
+			<entry><para>Write a vector to a pointer to memory.</para></entry>
+		</row>
+		<row>			
+			<entry><citerefentry>
+				<refentrytitle>vload_half</refentrytitle>
+			</citerefentry></entry>
+			<entry><para>Read a half float from a pointer to memory.</para></entry>
+		</row>
+		<row>				
+			<entry><citerefentry>
+				<refentrytitle>vload_half<emphasis>n</emphasis></refentrytitle>
+			</citerefentry></entry>
+			<entry><para>Read a half float vector from a pointer to memory.</para></entry>
+		</row>
+		<row>
+			<entry><citerefentry>
+				<refentrytitle>vstore_half</refentrytitle>
+			</citerefentry></entry>
+			<entry><para>Convert float to half and write to a pointer to memory.</para></entry>
+		</row>
+		<row>				
+			<entry><citerefentry>
+				<refentrytitle>vstore_half<emphasis>n</emphasis></refentrytitle>
+			</citerefentry></entry>
+			<entry><para>Convert float vector to half vector and write to a pointer to memory.</para></entry>
+		</row>
+		<row>			
+			<entry><citerefentry>
+				<refentrytitle>vloada_half<emphasis>n</emphasis></refentrytitle>
+			</citerefentry></entry>
+			<entry><para>Read half float vector from a pointer to memory.</para></entry>
+		</row>
+		<row>			
+			<entry><citerefentry>
+				<refentrytitle>vstorea_half<emphasis>n</emphasis></refentrytitle>
+			</citerefentry></entry>
+			<entry><para>Convert float vector to half vector and write to a pointer to memory.</para></entry>
+		</row>
+	</tbody>	
+		
+	</tgroup></informaltable>	
+    </refsect1>
+	
+    <refsect1 id="description"><title>Description</title>
+        <para>
+			Vector Data Load and Store Functions allow you to read and write vector types
+from a pointer to memory. 
+        </para>
+		<para>
+		The generic type <type>gentype</type> is used to indicate the built-in data types
+<type>char</type>, <type>uchar</type>, <type>short</type>, <type>ushort</type>, <type>int</type>, <type>uint</type>, <type>long</type>, <type>ulong</type>, or <type>float</type>. 
+        </para>
+		<para>
+The generic type name <type>gentype<replaceable>n</replaceable></type> is used to indicate the built-in data types <type>char{2|4|8|16}</type>,
+<type>uchar{2|4|8|16}</type>, <type>short{2|4|8|16}</type>, <type>ushort{2|4|8|16}</type>,
+<type>int{2|4|8|16}</type>, <type>uint{2|4|8|16}</type>, <type>long{2|4|8|16}</type>, <type>ulong{2|4|8|16}</type>, or <type>float{2|4|8|16}</type> as the type for the arguments unless otherwise stated. The suffix used in gentype<emphasis>n</emphasis> or the function name (i.e. <function>vload<emphasis>n</emphasis></function>, <function>vstore<emphasis>n</emphasis></function>, etc.) represents the number of elements in the built-in vector type (<emphasis>n</emphasis> = 2, 4, 8, or 16).
+        </para>
+		<para>
+		The results of vector data load and store functions are undefined if the address being read from
+or written to is not correctly aligned. The pointer argument <varname>p</varname> can be a
+pointer to <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>, <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>, or <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry> memory for store functions. The
+pointer argument <varname>p</varname> can be a pointer to __global, __local, <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry> or __private memory for load functions.
+		</para>
+		<para> 
+		Certain built-in vector data load and store functions are extended with <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry> to include appropriate versions of functions that take <type>double</type>, and <type>double{2|4|8|16}</type> as arguments and return values. They are also extended with with <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> to include appropriate versions of functions that take <type>half</type>, and <type>half{2|4|8|16}</type> as arguments and return values. 
+		</para>
+    </refsect1>
+	
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="vectorDataLoadandStoreFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1> 	
+<!-- ================================ ALSO SEE  
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clEnqueueNDRangeKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueTask</refentrytitle></citerefentry>
+        </para>
+    </refsect1>-->	
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

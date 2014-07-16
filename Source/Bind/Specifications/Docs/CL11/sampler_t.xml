@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>sampler_t</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>sampler_t</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id=" sampler_t">             
+        <refname> sampler_t</refname>
+
+        <refpurpose>
+            A type used to control how elements of a 2D or 3D image object are read by <function>read_image{f|i|ui}</function>.
+        </refpurpose>
+    </refnamediv>
+
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+const sampler_t &lt;sampler name&gt; = &lt;value&gt;
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+<!-- sampler_t below needs to be rendered in monospace, but I couldn't bear to tag it as <constant> because it isn't a constant. I tagged it <type> for now. - drm -->
+        <para>
+The image read functions take a sampler argument. The sampler can be passed as an argument
+to the kernel using <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry>, or it can be a constant variable of type <type>sampler_t</type> declared in the program source.
+        </para>
+
+        <para>
+Sampler variables in a program are declared to be of type <type>sampler_t</type>.
+The <type>sampler_t</type> type is a 32-bit unsigned int constant and is interpreted as a bit-field that specifies the following properties:
+        </para>
+
+<!-- I didn't know how to make a bulleted list for the following three items - drm -->
+<itemizedlist>
+    <listitem>
+       <para>
+            Addressing Mode
+       </para>
+    </listitem>
+    <listitem>
+       <para>
+            Filter Mode
+       </para>
+    </listitem>
+    <listitem>
+       <para>
+           Normalized Coordinates
+       </para>
+    </listitem>
+</itemizedlist>
+
+        <para>
+These properties control how elements of an image object are read by
+<citerefentry href="imageFunctions"><refentrytitle>read_image{f|i|ui}</refentrytitle></citerefentry>.
+        </para>
+
+        <para>
+Samplers can also be declared as global constants in the program source using the syntax shown at the top of this page.
+        </para>
+
+        <para>
+The sampler fields are described in the table below:
+        </para>
+        <para>
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Sampler State</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+
+                    <row>
+                        <entry>
+<para>
+<constant>&lt;normalized&#160;coords&gt;</constant>
+</para>
+                        </entry>
+
+                        <entry>
+<para>
+Specifies whether the <varname>x</varname>, <varname>y</varname> and <varname>z</varname> coordinates are passed in as normalized or unnormalized values. This must be a literal value and can be one of the following predefined enums:
+</para>
+
+<para>
+<literallayout>CLK_NORMALIZED_COORDS_TRUE or
+CLK_NORMALIZED_COORDS_FALSE.</literallayout>
+</para>
+
+<para>
+The samplers used with an image in multiple calls to <function>read_image{f|i|ui}</function> declared in a kernel must use the same value for <constant>&lt;normalized coords&gt;</constant>.
+</para>
+                        </entry>
+                    </row>
+
+
+                    <row>
+                        <entry>
+<para>
+<constant>&lt;address mode&gt;</constant>
+</para>
+                        </entry>
+
+                        <entry>
+<para>
+Specifies the image addressing-mode i.e. how out-of-range
+image coordinates are handled. This must be a literal value
+and can be one of the following predefined enums:
+</para>
+
+<para>
+CLK_ADDRESS_MIRRORED_REPEAT - Flip the image
+coordinate at every integer junction. This address
+mode can only be used with normalized coordinates. If
+normalized coordinates are not used, this addressing
+mode may generate image coordinates that are
+undefined.
+</para>
+
+<para>
+CLK_ADDRESS_REPEAT - out-of-range image coordinates
+are wrapped to the valid range. This <constant>address mode</constant> can
+only be used with normalized coordinates. If normalized
+coordinates are not used, this addressing mode may generate
+image coordinates that are undefined.
+</para>
+
+<para>
+CLK_ADDRESS_CLAMP_TO_EDGE - out-of-range image
+coordinates are clamped to the extent.
+</para>
+
+<para>
+CLK_ADDRESS_CLAMP - out-of-range image coordinates
+will return a border color. 
+</para>
+
+<para>
+CLK_ADDRESS_NONE - for this address mode the
+programmer guarantees that the image coordinates used to
+sample elements of the image refer to a location inside the
+image; otherwise the results are undefined.
+</para>
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<para>
+<constant>&lt;filter mode&gt;</constant>
+</para>
+                        </entry>
+
+                        <entry>
+<para>
+Specifies the filtering mode to use. This must be a literal value
+and can be one of the following predefined enums:
+CLK_FILTER_NEAREST or CLK_FILTER_LINEAR.
+</para>
+
+<!-- Sorry, I didn't know where this links - drm -->
+<para>
+Refer to section on Image Addressing and Filtering in the <olink uri="imageAddressFiltering">OpenCL specification</olink> for a description of these filtering modes.
+</para>
+                        </entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </para>
+<para>
+Samplers cannot be declared as arrays, pointers, or be used as the type for local variables inside a function or as the return value of a function defined in a program. Samplers cannot be passed as arguments to functions called by a <citerefentry href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry> function.
+A sampler argument to a <citerefentry href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry>
+function cannot be modified.
+</para>
+
+    </refsect1>
+
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The maximum number of samplers that can be declared in a kernel can be queried using the
+            <constant>CL_DEVICE_MAX_SAMPLERS</constant> token in the table of OpenCL Device Queries for
+            <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            If <code>&lt;addressing mode&gt;</code> in sampler is CLK_ADDRESS_CLAMP, then out-of-range image
+            coordinates return the border color. The border color selected depends on the image channel
+            order and can be one of the following values:
+        </para>
+        <itemizedlist mark="disc">
+            <listitem>
+                If the image channel order is CL_A, CL_INTENSITY, CL_Rx, CL_RA, CL_RGx,CL_RGBx, CL_ARGB, 
+                CL_BGRA, or CL_RGBA, the border color is (0.0f, 0.0f,0.0f, 0.0f).
+            </listitem>
+            <listitem>
+                If the image channel order is CL_R, CL_RG, CL_RGB, or CL_LUMINANCE, the border
+                color is (0.0f, 0.0f, 0.0f, 1.0f)
+            </listitem>
+        </itemizedlist>
+        <para>
+            A kernel that uses a sampler with the CL_ADDRESS_CLAMP addressing mode with multiple 
+            images may result in additional samplers being used internally by an implementation. If
+            the same sampler is used with multiple images called via 
+            <citerefentry href="read_imagef2d"><refentrytitle>read_imagef</refentrytitle></citerefentry> or 
+            <citerefentry href="read_imagei2d"><refentrytitle>read_image{i|ui}</refentrytitle></citerefentry> 
+            then it is possible that an implementation may need to allocate an additional sampler to handle 
+            the different border color values that may be needed depending on the image formats being used. 
+            These implementation allocated samplers will count against the maximum sampler values supported 
+            by the device and given by CL_DEVICE_MAX_SAMPLERS. Enqueuing a kernel that requires more samplers 
+            than the implementation can support will result in a CL_OUT_OF_RESOURCES error being returned.
+        </para>
+    </refsect1>
+
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+const sampler_t samplerA = CLK_NORMALIZED_COORDS_TRUE |
+                           CLK_ADDRESS_REPEAT         |
+                           CLK_FILTER_NEAREST;
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+<!-- "samplerA" below needs to be rendered bold, but I can't bring myself to
+     tag it as <function> because it isn't a function - drm -->
+<para>
+samplerA specifies a sampler that uses normalized coordinates, the repeat addressing mode and
+a nearest filter.
+</para>
+    </refsect2>
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="sampler_t">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="otherDataTypes"><refentrytitle>Other Data Types</refentrytitle></citerefentry>,
+<citerefentry href="imageFunctions"><refentrytitle>Image Read and Write Functions</refentrytitle></citerefentry>,
+            <citerefentry href="classDiagram"><refentrytitle>Cardinality Diagram</refentrytitle></citerefentry>
+
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

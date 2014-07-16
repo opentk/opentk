@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Other Data Types</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>Other Built-in Data Types</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+ 
+
+
+<!-- ================================ SYNOPSIS -->
+
+ 
+    <refnamediv id="Other Data Types">             
+        <refname>Other Data Types</refname>
+
+        <refpurpose>
+             Other Built-in Data Types
+        </refpurpose>
+    </refnamediv>
+
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+The following table describes other data types supported by OpenCL:
+        </para>
+<para>
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Type</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+
+                    <row>
+                        <entry>
+                            <type>image2d_t</type>
+                        </entry>
+                        <entry>
+                            A 2D image. See individual <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry> for more information.
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <type>image3d_t</type>
+                        </entry>
+
+                        <entry>
+                            A 3D image. See individual <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry> for more information.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+<citerefentry><refentrytitle><type>sampler_t</type></refentrytitle></citerefentry>
+                        </entry>
+
+                        <entry>
+A sampler type.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <type>event_t</type>
+                        </entry>
+
+                        <entry>
+An event. This can be used to identify async copies from global to local memory and vice-versa. See individual <citerefentry href="asyncCopyFunctions"><refentrytitle>Async Copy and Prefetch Functions</refentrytitle></citerefentry> for more information.
+                        </entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </informaltable>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="otherDataTypes">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="macroLimits"><refentrytitle>Macros and Limits</refentrytitle></citerefentry>, 
+            <citerefentry href="scalarDataTypes"><refentrytitle>Scalar Data Types</refentrytitle></citerefentry>, 
+            <citerefentry href="vectorDataTypes"><refentrytitle>Vector Data Types</refentrytitle></citerefentry>, 
+            <citerefentry href="reservedDataTypes"><refentrytitle>Reserved Data Types</refentrytitle></citerefentry>,  
+            <citerefentry href="abstractDataTypes"><refentrytitle>Abstract Data Types</refentrytitle></citerefentry> 
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

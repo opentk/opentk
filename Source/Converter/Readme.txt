@@ -1,4 +1,4 @@
-﻿[Introduction]
+[Introduction]
 
 This is a simple tool to convert C headers to XML files. It works using simple pattern matching - it does not actually parse the header files. For this reason, it will work with only a few, specific header files: ES and CL at this point.
 

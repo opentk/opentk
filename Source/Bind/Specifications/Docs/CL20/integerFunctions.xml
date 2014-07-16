@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY integerFunctionsInc SYSTEM "integerFunctionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Integer Built-In Functions</keyword>
+        </keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>Integer Built-In Functions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>Integer Built-In Functions</refname>
+        <refpurpose>Click an item in the table below for details about that function.</refpurpose>
+    </refnamediv>
+
+<refsect1 id="springboard"><title></title>
+    <informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="2*" colname="col1" />
+    <colspec colnum="2" colwidth="8*" colname="col2" />
+    <tbody>
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>abs</refentrytitle>
+            </citerefentry></entry>
+            <entry>|<varname>x</varname>|</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="abs">
+                <refentrytitle>abs_diff</refentrytitle>
+            </citerefentry></entry>
+            <entry>|<varname>x</varname>-<varname>y</varname>| without modulo overflow</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>add_sat</refentrytitle>
+            </citerefentry></entry>
+            <entry><varname>x</varname>+<varname>y</varname> and saturate result</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>hadd</refentrytitle>
+            </citerefentry></entry>
+            <entry>(<varname>x</varname>+<varname>y</varname>) &gt;&gt; 1.
+            The intermediate sum does not modulo overflow</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="hadd">
+                <refentrytitle>rhadd</refentrytitle>
+            </citerefentry></entry>
+            <entry>(<varname>x</varname>+<varname>y</varname>+1) &gt;&gt; 1.
+                The intermediate sum does not modulo overflow.</entry>
+        </row>
+
+        <row>
+            <entry>
+                <citerefentry href="clamp_integer"><refentrytitle>clamp</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <function>min</function>(<function>max</function>(
+                <varname>x</varname>, <varname>minval</varname>), <varname>maxval</varname>)
+            </entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>clz</refentrytitle>
+            </citerefentry></entry>
+            <entry>Number of leading 0-bits in <varname>x</varname></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>ctz</refentrytitle>
+            </citerefentry></entry>
+            <entry>Number of trailing 0-bits in <varname>x</varname></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>mad_hi</refentrytitle>
+            </citerefentry></entry>
+            <entry><function>mul_hi</function>(<varname>a</varname>,<varname>b</varname>)+<varname>c</varname></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>mad24</refentrytitle>
+            </citerefentry></entry>
+            <entry>(Fast integer function.) Multiply 24-bit integer then add 
+               the 32-bit result to 32-bit integer</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>mad_sat</refentrytitle>
+            </citerefentry></entry>
+            <entry><varname>a</varname>*<varname>b</varname>+<varname>c</varname> 
+               and saturate the result</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="integerMax">
+                <refentrytitle>max</refentrytitle>
+            </citerefentry></entry>
+            <entry>The greater of <varname>x</varname> or <varname>y</varname></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry href="integerMax">
+                <refentrytitle>min</refentrytitle>
+            </citerefentry></entry>
+            <entry>The lesser of <varname>x</varname> or <varname>y</varname></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>mul_hi</refentrytitle>
+            </citerefentry></entry>
+            <entry>High half of the product of <varname>x</varname> and <varname>y</varname></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>mul24</refentrytitle>
+            </citerefentry></entry>
+            <entry>(Fast integer function.) Multiply 24-bit integer values 
+               <varname>a</varname> and <varname>b</varname></entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>rotate</refentrytitle>
+            </citerefentry></entry>
+            <entry>result[<varname>indx</varname>]=<varname>v</varname>[<varname>indx</varname>]&lt;&lt;
+                <varname>i</varname>[<varname>indx</varname>]</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>sub_sat</refentrytitle>
+            </citerefentry></entry>
+            <entry><varname>x</varname> - <varname>y</varname> and saturate the result</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>upsample</refentrytitle>
+            </citerefentry></entry>
+            <entry><varname>result</varname>[i] = ((gentype)<varname>hi</varname>[i] &lt;&lt; 8|16|32) | 
+                <varname>lo</varname>[i]</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry>
+                <refentrytitle>popcount</refentrytitle>
+            </citerefentry></entry>
+            <entry>Returns the number of non-zero bits in <varname>x</varname>.</entry>
+        </row>
+    </tbody>
+
+    </tgroup>
+</informaltable>
+
+</refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        &integerFunctionsInc;
+
+    </refsect1>
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="integerFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+        </para>
+    </refsect1>-->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 12-Dec-2013, rev. 19 -->
+</refentry>
+

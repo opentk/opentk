@@ -1,0 +1,225 @@
+
+<para>
+    We use the generic type name gentype to indicate the built-in 
+    OpenCL C scalar or vector integer or floating-point data types or any user defined type built 
+    from these scalar and vector data types can be used as the type for the arguments to the pipe 
+    functions listed in this section.
+    The half scalar and vector types can only be used if the 
+    <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> 
+    extension is supported. The <type>double</type> scalar 
+    and vector types can only be used if double precision is supported.
+</para>
+
+<para>
+    A pipe is identified by specifying the <code>pipe</code> 
+    keyword with a type. The data type specifies the 
+    size of each packet in the pipe. The <code>pipe</code> 
+    keyword is a type modifier. When it is applied to 
+    another type <code>T</code>, the result is a pipe type 
+    whose elements (or packets) are of type <code>T</code>. The packet 
+    type <code>T</code> may be any supported OpenCL C scalar 
+    and vector integer or floating-point data types, or 
+    a user-defined type built from these scalar and vector data types.
+</para>
+
+<para>
+    The 
+    <citerefentry href="qualifiers"><refentrytitle>read_only</refentrytitle></citerefentry> 
+    (or <code>__read_only</code>) and 
+    <citerefentry href="qualifiers"><refentrytitle>write_only</refentrytitle></citerefentry>
+    (or <code>__write_only</code>) qualifiers can 
+    also be used with the pipe qualifier to identify if a pipe can be read from or written to by a 
+    kernel. The default qualifier is  <code>read_only</code>.
+</para>
+
+<para>
+    A kernel cannot read from and write to the same pipe object. Using the 
+    <citerefentry href="qualifiers"><refentrytitle>read_write </refentrytitle></citerefentry>
+    (or <code>__read_write</code>) qualifier with the pipe qualifier is a compilation error.
+</para>
+
+<para>
+    The macro <constant>CLK_NULL_RESERVE_ID</constant> refers to an invalid reservation ID.
+</para>
+
+<para>
+    NOTE: The 
+    <citerefentry><refentrytitle>read_pipe</refentrytitle></citerefentry> and 
+    <citerefentry><refentrytitle>write_pipe</refentrytitle></citerefentry> 
+    functions that take a reservation ID as an argument can 
+    be used to read from or write to a packet index. These built-ins can be used to read from or write 
+    to a packet index one or multiple times. If a packet index that is reserved for writing is not 
+    written to using the 
+    <citerefentry><refentrytitle>write_pipe</refentrytitle></citerefentry> 
+    function, the contents of that packet in the pipe are undefined. 
+    <citerefentry><refentrytitle>commit_read_pipe</refentrytitle></citerefentry> and 
+    <citerefentry><refentrytitle>work_group_commit_read_pipe</refentrytitle></citerefentry>
+    remove the entries reserved for reading from the pipe. 
+    <citerefentry><refentrytitle>commit_write_pipe</refentrytitle></citerefentry> and 
+    <citerefentry><refentrytitle>work_group_commit_write_pipe</refentrytitle></citerefentry> 
+    ensures that the entries reserved for writing are all added in-order 
+    as one contiguous set of packets to the pipe.
+</para>
+
+<para>
+    There can only be <constant>CL_DEVICE_PIPE_MAX_ACTIVE_RESERVATIONS</constant> 
+    (refer to the list of possible values for <varname>parame_name</varname>
+    for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>(table 4.3)) 
+    reservations active (i.e. reservation IDs that have been reserved 
+    but not committed) per work-item or work-group for a 
+    pipe in a kernel executing on a device.
+</para>
+
+<para>
+    Work-item based reservations made by a work-item are ordered in the pipe as they are ordered in 
+    the program. Reservations made by different work-items that belong to the same work-group 
+    can be ordered using the work-group barrier function. The order of work-item based 
+    reservations that belong to different work-groups is implementation defined.
+</para>
+
+<para>
+    Work-group based reservations made by a work-group are ordered in the pipe as they are ordered 
+    in the program. The order of work-group based reservations by different work-groups is
+    implementation defined.
+</para>
+
+<bridgehead>Restrictions</bridgehead>
+
+<para>
+    Pipes can only be passed as arguments to a function 
+    (including kernel functions). The C 
+    <citerefentry><refentrytitle>operators</refentrytitle></citerefentry> 
+    (refer to section 6.3 of the OpenCL 2.0 specification) cannot be used with 
+    variables declared with the <code>pipe</code> qualifier.
+</para>
+
+<para>
+    The <code>pipe</code> qualifier cannot be used with 
+    variables declared inside a kernel, a structure or 
+    union field, a pointer type, an array, global variables 
+    declared in program scope or the return type of a function.
+</para>
+
+<para>
+    The following behavior is undefined:
+</para>
+
+<para>
+    <itemizedlist>
+        <listitem>
+            <!-- [sic] spec ver. 2.0 refers to reserve_pipe, which does not exist -->
+            A kernel fails to call 
+            <function>reserve_pipe</function>
+            before calling 
+            <citerefentry><refentrytitle>read_pipe</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>write_pipe</refentrytitle></citerefentry> that take a 
+            reservation ID.
+        </listitem>
+
+        <listitem>
+            A kernel calls 
+            <citerefentry><refentrytitle>read_pipe</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>write_pipe</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>commit_read_pipe</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>commit_write_pipe</refentrytitle></citerefentry> with 
+            an invalid reservation ID.
+        </listitem>
+
+        <listitem>
+            A kernel calls 
+            <citerefentry><refentrytitle>read_pipe</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>write_pipe</refentrytitle></citerefentry> 
+            with an valid reservation ID but with an <varname>index</varname>
+            that is not a value from 0 ... <varname>num_packets</varname> - 1 
+            specified to the corresponding call to 
+            <function>reserve_pipe</function>.
+        </listitem>
+
+        <listitem>
+            A kernel calls 
+            <citerefentry><refentrytitle>read_pipe</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>write_pipe</refentrytitle></citerefentry> 
+            with a reservation ID that has already been committed (i.e. a 
+            <citerefentry><refentrytitle>commit_read_pipe</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>commit_write_pipe</refentrytitle></citerefentry>
+            with this reservation ID has 
+            already been called).
+        </listitem>
+
+        <listitem>
+            A kernel fails to call 
+            <citerefentry><refentrytitle>commit_read_pipe</refentrytitle></citerefentry> 
+            for any reservation ID obtained by a prior call 
+            to <citerefentry><refentrytitle>reserve_read_pipe</refentrytitle></citerefentry>.
+        </listitem>
+
+        <listitem>
+            A kernel fails to call 
+            <citerefentry><refentrytitle>commit_write_pipe</refentrytitle></citerefentry> 
+            for any reservation ID obtained by a prior call 
+            to <citerefentry><refentrytitle>reserve_write_pipe</refentrytitle></citerefentry>.
+        </listitem>
+
+        <listitem>
+            The contents of the reserved data packets in the pipe are undefined if the kernel does not 
+            call <citerefentry><refentrytitle>write_pipe</refentrytitle></citerefentry> 
+            for all entries that were reserved by the corresponding call to 
+            <function>reserve_pipe</function>.
+        </listitem>
+
+        <listitem>
+            Calls to 
+            <citerefentry><refentrytitle>read_pipe</refentrytitle></citerefentry> 
+            that takes a reservation ID and 
+            <citerefentry><refentrytitle>commit_read_pipe</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>write_pipe</refentrytitle></citerefentry> that 
+            takes a reservation ID and 
+            <citerefentry><refentrytitle>commit_write_pipe</refentrytitle></citerefentry> 
+            for a given reservation ID must be called 
+            by the same kernel that made the reservation using 
+            <citerefentry><refentrytitle>reserve_read_pipe</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>reserve_write_pipe</refentrytitle></citerefentry>. 
+            The reservation ID cannot be passed to another kernel including 
+            child kernels.
+        </listitem>
+
+    </itemizedlist>
+</para>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+In the following example
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+kernel void
+foo (read_only pipe fooA_t pipeA, 
+     write_only pipe fooB_t pipeB)
+{
+...
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            <code>pipeA</code> is a read-only pipe object, 
+            and <code>pipeB</code> is a write-only pipe object.
+        </para>
+    </refsect2>
+
+<!-- 25-Dec-2013, rev. 19 -->
+

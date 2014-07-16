@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+<!ENTITY imageFunctionsInc SYSTEM "imageFunctionsInc.xml">
+]>
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>read_imagei (2D)</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>read_imagei (2D)</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="read_image2d">             
+        <refname>read_image{i|ui} (2D)</refname>
+
+        <refpurpose>
+            Do an element lookup in the 2D image object, returning unnormalized signed integer and unsigned integer values.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <function>                   
+                        read_imagei
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="otherDataTypes.html">image2d_t</link><parameter>image</parameter></paramdef>    
+            <paramdef><link xlink:href="sampler_t.html">sampler_t</link><parameter>sampler</parameter></paramdef>
+            <paramdef><link xlink:href="vectorDataTypes.html">int2</link><parameter>coord</parameter></paramdef>    
+            </funcprototype>
+        </funcsynopsis>     
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <function>       
+                        read_imagei
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="otherDataTypes.html">image2d_t</link><parameter>image</parameter></paramdef>    
+            <paramdef><link xlink:href="sampler_t.html">sampler_t</link><parameter>sampler</parameter></paramdef>
+            <paramdef><link xlink:href="vectorDataTypes.html">float2</link><parameter>coord</parameter></paramdef>  
+            </funcprototype>
+        </funcsynopsis>    
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">uint4</link>
+                    <function>                   
+                        read_imageui
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="otherDataTypes.html">image2d_t</link><parameter>image</parameter></paramdef>    
+            <paramdef><link xlink:href="sampler_t.html">sampler_t</link><parameter>sampler</parameter></paramdef>
+            <paramdef><link xlink:href="vectorDataTypes.html">int2</link><parameter>coord</parameter></paramdef>    
+            </funcprototype>
+        </funcsynopsis>     
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">uint4</link>
+                    <function>                   
+                        read_imageui
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="otherDataTypes.html">image2d_t</link><parameter>image</parameter></paramdef>    
+            <paramdef><link xlink:href="sampler_t.html">sampler_t</link><parameter>sampler</parameter></paramdef>
+            <paramdef><link xlink:href="vectorDataTypes.html">float2</link><parameter>coord</parameter></paramdef>  
+            </funcprototype>
+        </funcsynopsis>         
+        
+    </refsynopsisdiv>       
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+        Use the coordinate <emphasis>(x, y)</emphasis> to do an element lookup in the 2D image object specified by <varname>image</varname>.
+        </para>     
+        <para>      
+<function>read_imagei</function> and <function>read_imageui</function> return unnormalized signed integer and unsigned integer values respectively. Each channel will be stored in a 32-bit integer.
+        </para>     
+        <para>  
+<function>read_imagei</function> can only be used with image objects created with <varname>image_channel_data_type</varname> set to one of the following values: CL_SIGNED_INT8, CL_SIGNED_INT16, or
+CL_SIGNED_INT32. If the <varname>image_channel_data_type</varname> is not one of the above values, the values returned by <function>read_imagei</function> are undefined.
+        </para>     
+        <para>  
+<function>read_imageui</function> can only be used with image objects created with <varname>image_channel_data_type</varname> set to one of the following values: CL_UNSIGNED_INT8, CL_UNSIGNED_INT16, and CL_UNSIGNED_INT32. If the <varname>image_channel_data_type</varname> is not one of the above values, the values returned by <function>read_imageui</function> are undefined.
+        </para>
+        <para>
+        The <function>read_imagei</function> and <function>read_imageui</function> calls support a nearest filter only. The <varname>filter_mode</varname> specified in <varname>sampler</varname> must be set to CLK_FILTER_NEAREST; otherwise the values returned are undefined.
+        </para>
+        <para>
+        Furthermore, the <function>read_imagei</function> and <function>read_imageui</function> calls that take integer coordinates must use a sampler with normalized coordinates set to CLK_NORMALIZED_COORDS_FALSE and addressing mode set to CLK_ADDRESS_CLAMP_TO_EDGE, CLK_ADDRESS_CLAMP or CLK_ADDRESS_NONE; otherwise the values returned are undefined.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+    &imageFunctionsInc;
+        <para>
+      The following table describes the mapping of the number of channels of an image element to the appropriate components in the float4, int4 or uint4 vector data type for the color values returned by <function>read_image{f|i|ui}</function> or supplied to <function>write_image{f|i|ui}</function>. The unmapped components will be set to <constant>0.0</constant> for red, green and blue channels and will be set to <constant>1.0</constant> for the alpha channel.
+        </para>
+        <para>
+        <informaltable frame="all">
+            <tgroup cols="2" align="center" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <thead>
+                    <row>
+                        <entry>Channel Order</entry>
+                        <entry>float4, int4 or unsigned int4 components of channel data</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry><constant>CL_R</constant>, <constant>CL_Rx</constant></entry>
+                        <entry><constant>(r, 0.0, 0.0, 1.0)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_A</constant></entry>
+                        <entry><constant>(0.0, 0.0, 0.0, a)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_RG</constant>, <constant>CL_RGx</constant></entry>
+                        <entry><constant>(r, g, 0.0, 1.0)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_RA</constant></entry>
+                        <entry><constant>(r, 0.0, 0.0, a)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_RGB</constant>, <constant>CL_RGBx</constant></entry>
+                        <entry><constant>(r, g, b, 1.0)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_RGBA, CL_BGRA, CL_ARGB</constant></entry>
+                        <entry><constant>(r, g, b, a)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_INTENSITY</constant></entry>
+                        <entry><constant>(I, I, I, I)</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>CL_LUMINANCE</constant></entry>
+                        <entry><constant>(L, L, L, 1.0)</constant></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        </para>
+        <para>
+            A kernel that uses a sampler with the CL_ADDRESS_CLAMP addressing mode with
+multiple images may result in additional samplers being used internally by an implementation. If
+the same sampler is used with multiple images called via <function>read_image{f | i | ui}</function>, then it is
+possible that an implementation may need to allocate an additional sampler to handle the
+different border color values that may be needed depending on the image formats being used.
+These implementation allocated samplers will count against the maximum sampler values
+supported by the device and given by CL_DEVICE_MAX_SAMPLERS. Enqueuing a kernel that
+requires more samplers than the implementation can support will result in a
+CL_OUT_OF_RESOURCES error being returned.
+        </para>
+    </refsect1>
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="imageFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry> 
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

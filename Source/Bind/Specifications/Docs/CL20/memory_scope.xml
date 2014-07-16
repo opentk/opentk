@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY atomicFunctionsInc SYSTEM "atomicFunctionsInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>memory_scope</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>memory_scope</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="memory_scope">
+        <refname>memory_scope</refname>
+
+        <refpurpose>
+            Identify if memory_scope applies to work-items in a work-group or work-items of a kernel(s).
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+memory_scope
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+<!-- general atomic functions info -->
+
+        <para>
+            The OpenCL C programming language implements a subset of the C11 atomics (refer to section 
+            7.17 of the C11 specification) and synchronization operations. These operations play a special 
+            role in making assignments in one work-item visible to another.
+            A synchronization operation on 
+            one or more memory locations is either an acquire operation, a release operation, or both an 
+            acquire and release operation. (The C11 consume operation is not supported.)
+            A synchronization operation without an associated memory 
+            location is a fence and can be either an acquire fence, a release fence or both an acquire and 
+            release fence. In addition, there are relaxed atomic operations, which are not synchronization 
+            operations, and atomic read-modify-write operations which have special characteristics
+        </para>
+
+<!-- start of memory_scope-specific text -->
+
+        <para>
+            The enumerated type <type>memory_scope</type> specifies 
+            whether the memory ordering constraints given by 
+            <citerefentry><refentrytitle>memory_order</refentrytitle></citerefentry> 
+            apply to work-items in a work-group or work-items of a kernel(s) 
+            executing on the device or across devices (in the case of shared virtual memory).
+            Its enumeration constants are as follows:
+        </para>
+
+        <para>
+<literallayout><code>     <constant>memory_scope_work_item</constant>
+     <constant>memory_scope_work_group</constant>
+     <constant>memory_scope_device</constant>
+     <constant>memory_scope_all_svm_devices</constant>
+     <constant>memory_scope_sub_group</constant></code> (if <citerefentry><refentrytitle>cl_khr_subgroups</refentrytitle></citerefentry> is supported)</literallayout>
+        </para>
+
+        <para>
+            The <constant>memory_scope_work_item</constant> value for 
+            <type>memory_scope</type> can only be used with 
+            <function>atomic_work_item_fence</function> with 
+            <varname>flags</varname> set to 
+            <constant>CLK_IMAGE_MEM_FENCE</constant>.
+        </para>
+
+        <para>
+            The memory scope should only be used when performing atomic operations to global memory. 
+            Atomic operations to local memory only guarantee memory ordering in the work-group not 
+            across work-groups and therefore ignore the <type>memory_scope</type> value.
+        </para>
+
+        <para>
+            If the
+            <citerefentry><refentrytitle>cl_khr_subgroups</refentrytitle></citerefentry>
+            extension is enabled, The <constant>memory_scope_sub_group</constant> 
+            specifies that the memory ordering constraints given by memory_order 
+            apply to work-items in a sub-group. This memory scope can be used 
+            when performing atomic operations to global or local memory.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+        </para>
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+example code
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="memory_scope">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+<!-- Enter comma-delimited list of all other pages in the system to link to, using
+     <citerefentry /><refentrytitle /> to make it a link. For any case where the text of the link needs to differ
+     from the filename of the html file this links to, use the "href" attribute in <citerefentry />. For example:
+     <citerefentry href="thatPage"><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry> -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="atomicFunctions"><refentrytitle>Atomic Functions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>memory_order</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 23-Dec-2013, rev. 19 -->
+</refentry>
+

@@ -1,0 +1,148 @@
+  <para>
+    Events can be used to identify commands enqueued to a command-queue from the host. 
+    These events created by the OpenCL runtime can only be used on the host i.e. as events passed 
+    in <varname>event_wait_list</varname> argument to various clEnqueue APIs or runtime APIs that take 
+    events as arguments such as <citerefentry><refentrytitle>clRetainEvent</refentrytitle></citerefentry>, 
+    <citerefentry><refentrytitle>clReleaseEvent</refentrytitle></citerefentry>, 
+    <citerefentry><refentrytitle>clGetEventProfilingInfo</refentrytitle></citerefentry>.
+  </para>
+
+  <para> 
+    Similarly, events can be used to identify commands enqueued to a device queue (from a kernel).
+    These event objects s cannot be passed to the host or used by OpenCL runtime APIs such as the 
+    clEnqueueAPIs or runtime APIs that take event arguments.
+  </para>
+
+  <para>
+    <citerefentry><refentrytitle>clRetainEvent</refentrytitle></citerefentry> and 
+    <citerefentry><refentrytitle>clReleaseEvent</refentrytitle></citerefentry> will return 
+    <errorname>CL_INVALID_OPERATION</errorname> if <varname>event</varname>
+    specified is an event that refers to any kernel enqueued to a device queue using
+    <citerefentry><refentrytitle>enqueue_kernel</refentrytitle></citerefentry> or
+    or <citerefentry><refentrytitle>enqueue_marker</refentrytitle></citerefentry>
+    or is a user event created by 
+    <citerefentry><refentrytitle>create_user_event</refentrytitle></citerefentry>.
+  </para>
+  
+  <para>
+    Similarly, 
+    <citerefentry><refentrytitle>clSetUserEventStatus</refentrytitle></citerefentry> 
+    can only be used to set the execution status of events created using 
+    <citerefentry><refentrytitle>clCreateUserEvent</refentrytitle></citerefentry>. 
+    User events created on the device can be set using
+    <citerefentry><refentrytitle>set_user_event_status</refentrytitle></citerefentry> built-in function.
+  </para>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <para>
+            The example below shows how events can be used with 
+            kernels enqueued to multiple device queues.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+extern void barA_kernel(...);
+extern void barB_kernel(...);
+
+kernel void
+foo(queue_t q0, queue q1, ...)
+{
+    ...
+    clk_event_t evt0;
+
+    // enqueue kernel to queue q0
+    enqueue_kernel(q0, 
+                   CLK_ENQUEUE_FLAGS_NO_WAIT,
+                   ndrange_A,
+                   0, NULL, &amp;evt0,
+                   ^{barA_kernel(...);} );
+
+    // enqueue kernel to queue q1 
+    enqueue_kernel(q1, 
+                   CLK_ENQUEUE_FLAGS_NO_WAIT,
+                   ndrange_B,
+                   1, &amp;evt0, NULL,
+                   ^{barB_kernel(...);} );
+
+    // release event evt0. This will get released
+    // after barA_kernel enqueued in queue q0 has finished 
+    // execution and barB_kernel enqueued in queue q1 and 
+    // waits for evt0 is submitted for execution i.e. wait 
+    // for evt0 is satisfied.
+    release_event(evt0);
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            The example below shows how the marker command can 
+            be used with kernels enqueued to a device queue.
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+kernel void
+foo(queue_t q, ...)
+{
+    ...
+    clk_event_t marker_event;
+    clk_event_t events[2];
+
+    enqueue_kernel(q,
+                  CLK_ENQUEUE_FLAGS_NO_WAIT,
+                  ndrange,
+                  0, NULL, &amp;events[0],
+                  ^{barA_kernel(...);} );
+
+    enqueue_kernel(q,
+                  CLK_ENQUEUE_FLAGS_NO_WAIT,
+                  ndrange,
+                  0, NULL, &amp;events[1],
+                  ^{barB_kernel(...);} );
+
+    // barA_kernel and barB_kernel can be executed
+    // out of order. we need to wait for both these 
+    // kernels to finish execution before barC_kernel 
+    // starts execution so we enqueue a marker command and
+    // then enqueue barC_kernel that waits on the event 
+    // associated with the marker. 
+
+    enqueue_marker(q, 2, events, &amp;marker_event);
+
+    enqueue_kernel(q, 
+                   CLK_ENQUEUE_FLAGS_NO_WAIT, 
+                   1, &amp;marker_event, NULL,
+                   ^{barC_kernel(...);} ); 
+
+    release_event(events[0];
+    release_event(events[1]);
+    release_event(marker_event);
+}
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+    </refsect2>
+
+<!-- 23-Dec-2013, rev. 19 -->
+

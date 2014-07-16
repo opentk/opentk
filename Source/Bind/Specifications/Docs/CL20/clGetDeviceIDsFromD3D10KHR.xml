@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY sharingD3D10Inc SYSTEM "sharingD3D10Inc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset><keyword>clGetDeviceIDsFromD3D10KHR</keyword></keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>clGetDeviceIDsFromD3D10KHR</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+  <refnamediv id="clGetDeviceIDsFromD3D10KHR">
+    <refname>clGetDeviceIDsFromD3D10KHR</refname>
+    <refpurpose>Querying OpenCL Devices Corresponding to Direct3D 10 Devices.</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title></title>
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>
+          <link xlink:href="scalarDataTypes.html">cl_int</link>
+          <function>clGetDeviceIDsFromD3D10KHR</function>
+        </funcdef>
+
+        <paramdef><link xlink:href="abstractDataTypes.html">cl_platform_id</link><parameter>platform</parameter></paramdef>
+        <paramdef><link xlink:href="enums.html#cl_d3d10_device_source_khr">cl_d3d10_device_source_khr</link><parameter>d3d_device_source</parameter></paramdef>
+        <paramdef><link xlink:href="scalarDataTypes.html">void</link><parameter>*d3d_object</parameter></paramdef>
+        <paramdef><link xlink:href="enums.html#cl_d3d10_device_set_khr">cl_d3d10_device_set_khr</link><parameter>d3d_device_set</parameter></paramdef>
+        <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_entries</parameter></paramdef>
+        <paramdef><link xlink:href="abstractDataTypes.html">cl_device_id</link><parameter>*devices</parameter></paramdef>
+        <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>*num_devices</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><varname>platform</varname></term>
+            <listitem>
+                <para>
+                    Refers to the platform ID returned by
+                    <citerefentry><refentrytitle>clGetPlatformIDs</refentrytitle></citerefentry>.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>d3d_device_source</varname></term>
+            <listitem>
+                <para>
+                    Specifies the type of <varname>d3d_object</varname> and may be one of the following:.
+                </para>
+                <informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+                    <colspec colname="col1" colnum="1" />
+                    <colspec colname="col2" colnum="2" />
+                    <thead>
+                        <row>
+                            <entry>cl_d3d_device_source_khr</entry>
+                            <entry>Type of <varname>d3d_object</varname></entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><constant>CL_D3D10_DEVICE_KHR</constant></entry>
+                            <entry><type>ID3D10Device</type> *</entry>
+                        </row>
+                        <row>
+                            <entry><constant>CL_D3D10_DXGI_ADAPTER_KHR</constant></entry>
+                            <entry><type>IDXGIAdapter</type> *</entry>
+                        </row>
+                    </tbody>
+                </tgroup></informaltable>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>d3d_object</varname></term>
+            <listitem>
+                <para>
+                    Specifies the object whose corresponding OpenCL devices are being queried. The type of
+                    <varname>d3d_object</varname> must be as specified in the table above.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>d3d_device_set</varname></term>
+            <listitem>
+                <para>
+                    Specifies the set of devices to return, and must be one of the following:
+                </para>
+                <informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+                    <colspec colname="col1" colnum="1" />
+                    <colspec colname="col2" colnum="2" />
+                    <thead>
+                        <row>
+                            <entry>cl_d3d_device_set_khr</entry>
+                            <entry>Devices returned in <varname>devices</varname></entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><constant>CL_PREFERRED_DEVICES_FOR_D3D10_KHR</constant></entry>
+                            <entry>
+                                The OpenCL devices associated with the specified Direct3D object.
+                            </entry>
+                        </row>
+
+                        <row>
+                            <entry><constant>CL_ALL_DEVICES_FOR_D3D10_KHR</constant></entry>
+                            <entry>
+                              All OpenCL devices which may interoperate with the specified
+                              Direct3D object.  Performance of sharing data on these devices
+                              may be considerably less than on the preferred devices.
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup></informaltable>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>num_entries</varname></term>
+            <listitem>
+                <para>
+                  The number of <type>cl_device_id</type> entries that can be added to
+                  <varname>devices</varname>.  If <varname>devices</varname> is not NULL,
+                  the <varname>num_entries</varname> must be greater than zero.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>devices</varname></term>
+            <listitem>
+                <para>
+                  Returns a list of OpenCL devices found. The cl_device_id values returned
+                  in <varname>devices</varname> can be used to identify a specific OpenCL
+                  device. If <varname>devices</varname> is NULL, this argument is ignored. The
+                  number of OpenCL devices returned is the mininum of the value specified by
+                  <varname>num_entries</varname> and the number of OpenCL devices corresponding
+                  to <varname>d3d_object</varname>.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term><varname>num_devices</varname></term>
+            <listitem>
+                <para>
+                  Returns the number of OpenCL devices available that correspond to
+                  <varname>d3d_object</varname>.  If <varname>num_devices</varname> is NULL,
+                  this argument is ignored.
+                </para>
+            </listitem>
+        </varlistentry> </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The OpenCL devices corresponding to a Direct3D 10 device may be queried. The OpenCL
+          devices corresponding to a DXGI adapter may also be queried. The OpenCL devices
+          corresponding to a Direct3D 10 device will be a subset of the OpenCL devices
+          corresponding to the DXGI adapter against which the Direct3D 10 device was created.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        &sharingD3D10Inc;
+
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully. Otherwise it may return:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_PLATFORM</errorname> if <varname>platform</varname> is not
+              a valid platform.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>d3d_device_source</varname>
+              is not a valid value, <varname>d3d_device_set</varname> is not a valid value,
+              <varname>num_entries</varname> is equal to zero and <varname>devices</varname> is
+              not NULL, or if both <varname>num_devices</varname> and <varname>devices</varname>
+              are NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_DEVICE_NOT_FOUND</errorname> if no OpenCL devices that correspond
+              to <varname>d3d_object</varname> were found.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para><imageobject><imagedata fileref="pdficon_small1.gif" format="gif" /></imageobject>
+            <olink uri="clGetDeviceIDsFromD3D10KHR">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromD3D10BufferKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromD3D10Texture2DKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateFromD3D10Texture3DKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueAcquireD3D10ObjectsKHR</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueReleaseD3D10ObjectsKHR</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+
+<!-- 3-Jun-2013 -->
+</refentry>
+

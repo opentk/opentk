@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY gl_sharingInc SYSTEM "gl_sharingInc.xml">
+<!ENTITY gl_formatsInc SYSTEM "gl_formatsInc.xml">
+<!ENTITY gl_lifetimeInc SYSTEM "gl_lifetimeInc.xml">
+<!ENTITY gl_syncInc SYSTEM "gl_syncInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clGetGLContextInfoKHR</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clGetGLContextInfoKHR
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetGLContextInfoKHR">
+        <refname>
+            clGetGLContextInfoKHR
+        </refname>
+
+        <refpurpose>
+             Get OpenGL context information.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>clGetGLContextInfoKHR</function>
+                </funcdef>
+
+                <paramdef>const
+                    <link xlink:href="enums.html#cl_context_properties">cl_context_properties</link>
+                    <parameter>*properties</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="enums.html#cl_gl_context_info">cl_gl_context_info</link>
+                    <parameter>param_name</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>param_value_size</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <parameter>*param_value</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>*param_value_size_ret</parameter>
+                </paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+<!-- For each <varlistentry />, place the parameter name in <term /><varname />, then the definition in
+     <listitem /><para />. When refering to anything
+     that has a page in this system, use <citerefentry /><refentrytitle /> to make it a link.
+ -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term> <varname>properties</varname> </term>
+                <listitem>
+                    <para>
+                      Points to an attribute list whose format and valid contents
+                      are identical to the <varname>properties</varname> argument of
+                      <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>.
+                      <varname>properties</varname> must identify a single valid GL context or
+                      GL share group object.
+                      <!-- include cl_context_properties_Inc.xml here? (it's a big table)
+                           Or is the link to clCreateContext sufficient? -->
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>param_name</varname> </term>
+                <listitem>
+                    <para>
+                      A constant that specifies the GL context information to query, and must
+                      be one of the values shown in the table below.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>param_value_size</varname> </term>
+                <listitem>
+                    <para>
+                      Specifies the size in bytes of memory pointed to by
+                      <varname>param_value</varname>.  This size must be greater than or equal
+                      to the size of the return type described in the table below.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>param_value</varname> </term>
+                <listitem>
+                    <para>
+                      A pointer to memory where the result of the query is returned as described
+                      in the table below. If <varname>param_value</varname> is NULL, it is ignored.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>param_value_size_ret</varname> </term>
+                <listitem>
+                    <para>
+                      Returns the actual size in bytes of data being queried by
+                      <varname>param_value</varname>.  If <varname>param_value_size_ret</varname>
+                      is NULL, it is ignored.
+                    </para>
+               </listitem>
+            </varlistentry>
+        </variablelist>
+
+        <!-- Table 9.ctxprop -->
+        <informaltable frame="all">
+            <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <colspec colname="col3" colnum="3" />
+                <thead>
+                    <row>
+                        <entry>param_name</entry>
+                        <entry>Return Type</entry>
+                        <entry>Information returned in param_value</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry><constant>CL_CURRENT_DEVICE_FOR_GL_CONTEXT_KHR</constant></entry>
+                        <entry>cl_device_id</entry>
+                        <entry>
+                            Return the CL device currently associated with the specified OpenGL context.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><constant>CL_DEVICES_FOR_GL_CONTEXT_KHR</constant></entry>
+                        <entry>cl_device_id[]</entry>
+                        <entry>
+                            List of all CL devices which may be associated with the specified OpenGL context.
+                        </entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            Get OpenGL context information.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        &gl_sharingInc;
+        &gl_formatsInc;
+        &gl_lifetimeInc;
+        &gl_syncInc;
+
+    </refsect1>
+
+<!-- ================================ ERRORS     -->
+
+    <refsect1 id="errors">
+        <title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully.
+          If no device(s) exist corresponding to <varname>param_name</varname>, the call will not
+          fail, but the value of <varname>param_value_size_ret</varname> will be zero. Otherwise
+          returns one of the following:
+        </para>
+
+        <itemizedlist mark="disc">
+
+            <listitem>
+                <errorname>CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR</errorname> if a context was
+                    specified by any of the following means:
+
+                <itemizedlist mark="disc">
+                    <listitem>
+                      A context was specified for an
+                      EGL-based OpenGL ES or OpenGL implementation by setting
+                      the attributes <constant>CL_GL_CONTEXT_KHR</constant> and
+                      <constant>CL_EGL_DISPLAY_KHR</constant>
+                    </listitem>
+
+                    <listitem>
+                      A context was specified
+                      for a GLX-based OpenGL implementation by setting the
+                      attributes <constant>CL_GL_CONTEXT_KHR</constant> and
+                      <constant>CL_GLX_DISPLAY_KHR</constant>
+                    </listitem>
+
+                    <listitem>
+                      A context was specified
+                      for a WGL-based OpenGL implementation by setting the
+                      attributes <constant>CL_GL_CONTEXT_KHR</constant> and
+                      <constant>CL_WGL_HDC_KHR</constant>
+                    </listitem>
+                </itemizedlist>
+
+                <para>
+                    and any of the following conditions hold:
+                </para>
+
+                <itemizedlist mark="disc">
+                    <listitem>
+                      The specified display and context attributes do
+                      not identify a valid OpenGL or OpenGL ES context.
+                    </listitem>
+
+                    <listitem>
+                        The specified context does not support buffer and renderbuffer objects.
+                    </listitem>
+
+                    <listitem>
+                      The specified context is not compatible with
+                      the OpenCL context being created (for example, it exists in a physically
+                      distinct address space, such as another hardware device; or it does not
+                      support sharing data with OpenCL due to implementation restrictions).
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem>
+                <para>
+                  <errorname>CL_INVALID_GL_SHAREGROUP_REFERENCE_KHR</errorname> if a share group
+                  was specified for a CGL-based OpenGL implementation by setting the attribute
+                  <constant>CL_CGL_SHAREGROUP_KHR</constant>, and the specified share group
+                  does not identify a valid CGL share group object.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <errorname>CL_INVALID_OPERATION</errorname> if a context was specified as
+                    described above and any of the following conditions hold:
+                </para>
+
+                <itemizedlist mark="disc">
+                    <listitem>
+                      A context or share group object was specified
+                      for one of CGL, EGL, GLX, or WGL and the OpenGL implementation does not
+                      support that window-system binding API.
+                    </listitem>
+
+                    <listitem>
+                      More than one of the attributes <constant>CL_CGL_SHAREGROUP_KHR</constant>,
+                      <constant>CL_EGL_DISPLAY_KHR</constant>,
+                      <constant>CL_GLX_DISPLAY_KHR</constant>, and
+                      <constant>CL_WGL_HDC_KHR</constant> is set to a non-default value.
+                    </listitem>
+
+                    <listitem>
+                        Both of the attributes <constant>CL_CGL_SHAREGROUP_KHR</constant> and
+                        <constant>CL_GL_CONTEXT_KHR</constant> are set to non-default values.
+                    </listitem>
+
+                    <listitem>
+                      Any of the devices specified in the <varname>devices</varname> argument
+                      cannot support OpenCL objects which share the data store of an OpenGL object.
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if an attribute name
+              other than those specified in the table of supported <varname>properties</varname>
+              for <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>
+              is specified in <varname>properties</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname>
+              if <varname>param_name</varname> is not one of the values listed
+              in the table above; or if the size in bytes specified
+              by <varname>param_value_size</varname> is less than the size of the return type
+              shown in the table above, and
+              <varname>param_value</varname> is not a NULL value.
+            </listitem>
+
+            <listitem>
+              <!-- ext. spec p. 42, starts in the middle of a paragraph -->
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device
+            </listitem>
+
+            <listitem>
+              <!-- ext. spec p. 42, starts in the middle of a paragraph --> 
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there
+              is a failure to allocate resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clGetGLContextInfoKHR">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateContext</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_gl_event</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

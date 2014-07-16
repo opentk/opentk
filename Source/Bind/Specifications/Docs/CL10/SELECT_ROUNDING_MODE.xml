@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>                            
+                SELECT_ROUNDING_MODE
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>SELECT_ROUNDING_MODE</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2009</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>2</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="SELECT_ROUNDING_MODE">             
+        <refname>SELECT_ROUNDING_MODE</refname>
+
+        <refpurpose>
+            Specify the rounding mode for an instruction or group of instructions.
+        </refpurpose>
+    </refnamediv>
+
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+#pragma OPENCL SELECT_ROUNDING_MODE <varname>rounding-mode</varname>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <!-- ================================ PARAMETER TABLE (OPTIONAL) -->
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        rounding-mode
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        One of the following values:
+                    </para>
+
+                    <informaltable frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colname="col1" colnum="1" />
+                            <colspec colname="col2" colnum="2" />
+
+                            <thead>
+                                <row>
+                                    <entry><emphasis>rounding-mode</emphasis></entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+
+                            <tbody>
+
+                                <row>
+                                    <entry>rte</entry>
+                                    <entry>round to nearest even</entry>
+                                </row>
+
+                                <row>
+                                    <entry>rtz</entry>
+                                    <entry>round to zero</entry>
+                                </row>
+
+                                <row>
+                                    <entry>rtp</entry>
+                                    <entry>round to positive infinity</entry>
+                                </row>
+
+                                <row>
+                                    <entry>rtn</entry>
+                                    <entry>round to negative infinity</entry>
+                                </row>
+
+                            </tbody>
+                        </tgroup>
+                    </informaltable>
+                </listitem>
+            </varlistentry>
+            <!-- END PARAMETER TABLE  -->
+
+        </variablelist>
+    </refsect1>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+OpenCL 1.0 adds support for specifying the rounding mode for an instruction or group of instructions in the program source as an optional extension. An application that wants to use this feature will need to include the <function>#pragma OPENCL EXTENSION
+<citerefentry><refentrytitle>cl_khr_select_fprounding_mode</refentrytitle></citerefentry> : enable</function> directive. </para>
+ <para>If the <citerefentry><refentrytitle>cl_khr_select_fprounding_mode</refentrytitle></citerefentry> extension is supported, the OpenCL implementation must support all four rounding modes for single precision floating-point i.e. the  <constant>CL_DEVICE_SINGLE_FP_CONFIG</constant> described in the table of OpenCL Device Queries for  <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>. must include
+<constant>CL_FP_ROUND_TO_ZERO</constant> and <constant>CL_FP_ROUND_TO_INF</constant>. This is already the case for double
+precision floating-point. </para>
+<para>The appropriate rounding mode can be specified using <function>#pragma OPENCL SELECT_ROUNDING_MODE <varname>rounding-mode</varname></function> in the program source.
+        </para>
+        <para>
+		The <function>#pragma OPENCL SELECT_ROUNDING_MODE</function> sets the rounding mode for all
+instructions that operate on floating-point types (scalar or vector types) or produce floating-point
+values that follow this pragma in the program source until the next <function>#pragma OPENCL SELECT_ROUNDING_MODE</function> is encountered. Note that the rounding mode specified for a block of code is known at compile time. Except where otherwise documented, the callee functions do not inherit the rounding mode of the caller function.
+		</para>
+		<para>
+		If this extension is enabled, the <function>__ROUNDING_MODE__</function> preprocessor symbol shall be defined to be one of the following according to the current rounding mode:
+		</para>
+             <para><constant><literallayout>
+	#define __ROUNDING_MODE__ rte
+	#define __ROUNDING_MODE__ rtz
+	#define __ROUNDING_MODE__ rtp
+	#define __ROUNDING_MODE__ rtz
+	
+    This is intended to let us remap foo() to foo_rte() in the preprocessor using
+    #define foo    foo ## __ROUNDING_MODE__
+        	</literallayout></constant></para>
+
+        <para>
+The default rounding mode is round to nearest even. The built-in <citerefentry href="mathFunctions"><refentrytitle>math functions</refentrytitle></citerefentry>, the <citerefentry href="commonFunctions"><refentrytitle>common functions</refentrytitle></citerefentry>, and the <citerefentry href="geometricFunctions"><refentrytitle>geometric functions</refentrytitle></citerefentry> are implemented with the round to nearest even rounding mode. </para>
+  		<para>
+Various built-in conversions and the <citerefentry><refentrytitle>vstore_half</refentrytitle></citerefentry> and
+<citerefentry href="vstorea_halfn"><refentrytitle>vstorea_half<emphasis>n</emphasis></refentrytitle></citerefentry> built-in functions that do not specify a rounding mode inherit the current rounding mode. Conversions from floating-point to integer type always use <constant>rtz</constant> mode, except where the user specifically asks for another rounding mode.
+        </para>
+
+    </refsect1>
+
+
+<!-- ================================ NOTES  -->
+
+   <refsect1 id="notes"><title>Notes</title>
+        <para>
+           The above four rounding modes are defined by IEEE 754. Floating-point calculations may be carried out internally with extra precision and then rounded to fit into the destination type. <emphasis>Round to nearest even</emphasis> is currently the only rounding mode required by the OpenCL specification and is therefore the default rounding mode. In addition, only static selection of rounding mode is supported. Dynamically reconfiguring the rounding modes as specified by the IEEE 754 spec is not a requirement.
+        </para>
+    </refsect1>
+
+
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>#pragma OPENCL SELECT_ROUNDING_MODE rtz
+      float4      a = b * c; // uses round to zero rounding mode.
+
+#pragma OPENCL SELECT_ROUNDING_MODE rtp
+       float4 d = foo(a);    // function foo uses rounding mode
+                                 specified where source for foo() is
+                                 implemented.</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="SELECT_ROUNDING_MODE">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry>
+                <refentrytitle>cl_khr_select_fprounding_mode</refentrytitle>
+            </citerefentry>
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+		<imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+		<para />
+    </refsect3>
+
+</refentry>
+

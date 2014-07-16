@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>         
+                clGetSupportedImageFormats
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>       
+            clGetSupportedImageFormats
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+  
+    </refmeta>
+
+
+<!-- ================================ SYNOPSIS -->  
+
+    <refnamediv id="clGetSupportedImageFormats">
+        <refname>     
+            clGetSupportedImageFormats
+        </refname> 
+
+        <refpurpose>          
+            Get the list of image formats supported by an OpenCL implementation.
+        </refpurpose> 
+    </refnamediv> 
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+ <function>clGetSupportedImageFormats</function>
+                </funcdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_context</link><parameter>context</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_flags">cl_mem_flags</link><parameter>flags</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_mem_object_type">cl_mem_object_type</link><parameter>image_type</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_entries</parameter></paramdef>
+                <paramdef><link xlink:href="cl_image_format.html">cl_image_format</link><parameter>*image_formats</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>*num_image_formats</parameter></paramdef>
+                                            
+
+            </funcprototype>
+        </funcsynopsis>     
+    </refsynopsisdiv>
+
+
+<!-- ================================ PARAMETERS --> 
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        context
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A valid OpenCL context on which the image object(s) will be created.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname> <!-- parameter name -->
+                        flags
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> <!-- parameter description -->
+                        A bit-field that is used to specify allocation and usage information about the image
+                        memory object being created and is described in the List of supported <type>cl_mem_flags</type> values for <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>
+                    </para>
+               </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+                <term>
+                    <varname>
+                        image_type
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> 
+                        Describes the image type and must be either <constant>CL_MEM_OBJECT_IMAGE2D</constant> or
+                        <constant>CL_MEM_OBJECT_IMAGE3D</constant>.
+                    </para>
+               </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+                <term>
+                    <varname>
+                        num_entries
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> 
+                        Specifies the number of entries that can be returned in the memory location given by
+                        <varname>image_formats</varname>.
+                    </para>
+                </listitem>
+            </varlistentry>           
+            
+            <varlistentry>
+                <term>
+                    <varname>
+                        image_formats
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para> 
+                        A pointer to a memory location where the list of supported image formats are
+                        returned. Each entry describes a <citerefentry><refentrytitle>cl_image_format</refentrytitle></citerefentry> structure supported 
+                        by the OpenCL implementation. If <varname>image_formats</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+                <term>
+                    <varname>
+                        num_image_formats
+                    </varname>
+                </term>
+
+                <listitem> 
+                    <para>
+                        The actual number of supported image formats for a specific <varname>context</varname> and
+                        values specified by <varname>flags</varname>. If <varname>num_image_formats</varname> is NULL, it is ignored.              
+                    </para>
+                </listitem> 
+            </varlistentry>
+
+        
+
+
+        </variablelist>
+    </refsect1>
+
+    
+<!-- ================================ NOTES  -->        
+ 
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>clGetSupportedImageFormats</function> can be used to get the list of image formats supported by an OpenCL 
+            implementation when the following information about an image memory object is specified: 
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                Context
+            </listitem>
+            
+            <listitem>
+                Image type - 2D or 3D image
+            </listitem>
+            
+            <listitem>
+                Image object allocation information
+            </listitem>
+        </itemizedlist>
+        
+        <para>
+The minimum list of supported image formats is given by the table below:
+</para>
+        <informaltable frame="all">
+            <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+                <colspec colname="col3" colnum="3" />
+
+                <thead>
+                    <row>
+                        <entry><literallayout>image_num_channels</literallayout></entry>
+                        <entry><literallayout>image_channel_order</literallayout></entry>
+                        <entry><literallayout>image_channel_data_type</literallayout></entry>
+                    </row>
+                </thead>
+
+                <tbody>
+
+                    <row>
+                        <entry>
+                            <literallayout>4</literallayout>
+                        </entry>
+
+                        <entry>
+                            <literallayout>CL_RGBA</literallayout>
+                        </entry>
+
+                        <entry><literallayout>CL_UNORM_INT8
+CL_UNORM_INT16
+
+CL_SIGNED_INT8
+CL_SIGNED_INT16
+CL_SIGNED_INT32
+
+CL_UNSIGNED_INT8
+CL_UNSIGNED_INT16
+CL_UNSIGNED_INT32
+
+CL_HALF_FLOAT
+CL_FLOAT
+</literallayout>
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><literallayout>4</literallayout>
+                        </entry>
+
+                        <entry><literallayout>CL_BGRA</literallayout>
+                        </entry>
+
+                        <entry><literallayout>CL_UNORM_INT8</literallayout>
+                        </entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+If CL_DEVICE_IMAGE_SUPPORT specified in the table of OpenCL Device Queries for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry> is CL_TRUE, the values assigned to the following constants by the implementation must be greater than or equal to the minimum values specified in the table of OpenCL Device Queries for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>:
+CL_DEVICE_MAX_READ_IMAGE_ARGS, CL_DEVICE_MAX_WRITE_IMAGE_ARGS,
+CL_DEVICE_IMAGE2D_MAX_WIDTH, CL_DEVICE_IMAGE2D_MAX_HEIGHT,
+CL_DEVICE_IMAGE3D_MAX_WIDTH, CL_DEVICE_IMAGE3D_MAX_HEIGHT,
+CL_DEVICE_IMAGE3D_MAX_DEPTH, CL_DEVICE_MAX_SAMPLERS.
+</para>
+    </refsect1>
+    
+
+<!-- ================================ ERRORS  -->       
+
+
+     <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully. 
+             Otherwise, it returns a NULL value
+            with one of the following error values returned in <varname>errcode_ret</varname>:
+        </para>
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_CONTEXT</errorname> if <varname>context</varname> is not a valid context.
+            </listitem>
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if <varname>flags</varname> or <varname>image_type</varname> are not valid, or 
+                if <varname>num_entries</varname> is 0 and <varname>image_formats</varname> is not NULL.
+            </listitem>
+            <listitem>
+                <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate resources required by 
+                the OpenCL implementation on the device.
+            </listitem>
+            <listitem>
+                <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate resources required by the
+                OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+    
+
+<!-- ================================ EXAMPLE  -->  
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--    
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>   
+    </refsect2>  
+--> 
+
+
+<!-- ================================ SPECIFICATION  -->        
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->     
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+            
+                      
+            <olink uri="clGetSupportedImageFormats">OpenCL Specification</olink>
+        </para>
+    </refsect1>     
+
+
+<!-- ================================ ALSO SEE  -->     
+   
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_image_format</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->  
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

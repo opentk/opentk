@@ -89,6 +89,10 @@ namespace Bind
         /// Function takes a String[] parameter
         /// </summary>
         StringArrayParameter = 1 << 13,
+        /// <summary>
+        /// Function takes a ref String parameter
+        /// </summary>
+        StringReferenceParameter = 1 << 14,
     }
 
     #endregion
@@ -114,6 +118,7 @@ namespace Bind
                 "3TC", "DXT", "BPTC", "RGTC",
                 "3DC", "ATC", "ETC",
                 "ANGLE",  "MESAX", "MESA",
+                "SVM",
             };
 
             Extensions = new Regex(
@@ -226,9 +231,18 @@ namespace Bind
             else
             {
                 Enum e = enums[t.Name];
-                foreach (Constant c in t.ConstantCollection.Values)
+
+                // Note: do not attempt to merge t if
+                // it is already included in the enums
+                // collection, otherwise we will crash
+                // by trying to enumerate and modify the
+                // same collection.
+                if (!Object.ReferenceEquals(e, t))
                 {
-                    Merge(e, c);
+                    foreach (Constant c in t.ConstantCollection.Values)
+                    {
+                        Merge(e, c);
+                    }
                 }
             }
         }
@@ -311,6 +325,10 @@ namespace Bind
                 System.Globalization.NumberStyles.Float,
                 System.Globalization.CultureInfo.InvariantCulture,
                 out version);
+
+            if (settings.IsEnabled(Settings.Legacy.ForceDllImports))
+                return false;
+
             return
                 !settings.IsEnabled(Settings.Legacy.UseDllImports) ||
                 (settings.IsEnabled(Settings.Legacy.UseWindowsCompatibleGL) && version > 1.1) ||

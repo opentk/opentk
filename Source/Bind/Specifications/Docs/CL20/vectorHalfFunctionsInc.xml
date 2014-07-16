@@ -1,0 +1,12 @@
+    <!-- Section 9.4.6, optional half forms, applies only to vloadn and vstoren -->
+
+        <para>
+          When extended by the
+          <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> extension,
+          the generic type <type>gentype<replaceable>n</replaceable></type> is extended to
+          include <type>half</type>, <type>half2</type>, <type>half3</type>, <type>half4</type>,
+          <type>half8</type>, and <type>half16</type>.
+        </para>
+
+<!-- 13-Dec-2013, rev. 19 -->
+

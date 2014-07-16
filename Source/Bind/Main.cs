@@ -18,20 +18,6 @@ using Bind.GL2;
 
 namespace Bind
 {
-    enum GeneratorMode
-    {
-        All = 0,
-        Default = All,
-        GL2,
-        GL3,
-        GL4,
-        ES10,
-        ES11,
-        ES20,
-        ES30,
-        CL10,
-    }
-
     enum GeneratorLanguage
     {
         CSharp,
@@ -41,7 +27,6 @@ namespace Bind
 
     static class MainClass
     {
-        static GeneratorMode mode = GeneratorMode.Default;
         static internal List<IBind> Generators = new List<IBind>();
         static Settings Settings = new Settings();
 
@@ -56,10 +41,10 @@ namespace Bind
 
             Console.WriteLine("OpenGL binding generator {0} for OpenTK.",
                 Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
+            Console.WriteLine("http://www.opentk.com");
             Console.WriteLine();
 
-            string dirName =  "GL2";
+            string dirName =  null;
 
             try
             {
@@ -115,8 +100,10 @@ namespace Bind
                                 }
                             case "mode":
                                 {
-                                    string arg = val.ToLower();
-                                    SetGeneratorMode(dirName, arg);
+                                    foreach (var arg in val.ToLower().Split(','))
+                                    {
+                                        EnableGenerator(dirName, arg);
+                                    }
                                     break;
                                 }
                             case "namespace":
@@ -182,54 +169,10 @@ namespace Bind
 
             try
             {
-                switch (mode)
-                {
-                    case GeneratorMode.All:
-                        Console.WriteLine("Using 'all' generator mode.");
-                        Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30' to select a specific mode.");
-                        Generators.Add(new GL2Generator(Settings, dirName));
-                        Generators.Add(new GL4Generator(Settings, dirName));
-                        Generators.Add(new ESGenerator(Settings, dirName));
-                        Generators.Add(new ES2Generator(Settings, dirName));
-                        Generators.Add(new ES3Generator(Settings, dirName));
-                        break;
-
-                    case GeneratorMode.GL2:
-                        Generators.Add(new GL2Generator(Settings, dirName));
-                        break;
-
-                    case GeneratorMode.GL3:
-                    case GeneratorMode.GL4:
-                        Generators.Add(new GL4Generator(Settings, dirName));
-                        break;
-
-                    case GeneratorMode.ES10:
-                        Generators.Add(new ESGenerator(Settings, dirName));
-                        break;
-                    
-                    case GeneratorMode.ES11:
-                        Generators.Add(new ESGenerator(Settings, dirName));
-                        break;
-                    
-                    case GeneratorMode.ES20:
-                        Generators.Add(new ES2Generator(Settings, dirName));
-                        break;
-
-                    case GeneratorMode.ES30:
-                        Generators.Add(new ES3Generator(Settings, dirName));
-                        break;
-
-                    case GeneratorMode.CL10:
-                        Generators.Add(new CLGenerator(Settings, dirName));
-                        break;
-                    
-                    default:
-                        Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl4/es10/es11/es20/es30')");
-                        return;
-                }
-
                 foreach (var generator in Generators)
                 {
+                    Console.WriteLine("Executing {0}", generator.GetType());
+
                     long ticks = DateTime.Now.Ticks;
 
                     generator.Process();
@@ -277,48 +220,100 @@ namespace Bind
             }
         }
 
-        private static void SetGeneratorMode(string dirName, string arg)
+        static void EnableGenerator(string dirName, string arg)
         {
             switch (arg)
             {
+                case "all":
+                    {
+                        Console.WriteLine("Using 'all' generator mode.");
+                        Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30' to select a specific mode.");
+
+                        var desktop = Settings.Clone();
+                        Generators.Add(new GL2Generator(desktop, dirName));
+                        Generators.Add(new GL4Generator(desktop, dirName));
+                        Generators.Add(new ES11Generator(desktop, dirName));
+                        Generators.Add(new ES20Generator(desktop, dirName));
+                        Generators.Add(new ES30Generator(desktop, dirName));
+                        Generators.Add(new CLGenerator(desktop, dirName));
+                        Generators.Add(new CL12Generator(desktop, dirName));
+                        Generators.Add(new CL20Generator(desktop, dirName));
+
+                        /* Temporarily disabled
+                        var android = Settings.Clone();
+                        android.Compatibility |= Settings.Legacy.UseDllImports;
+                        android.DefaultOutputPath += ".Android";
+                        Generators.Add(new ESGenerator(android, dirName));
+                        Generators.Add(new ES2Generator(android, dirName));
+                        Generators.Add(new ES3Generator(android, dirName));
+
+                        var ios = Settings.Clone();
+                        ios.Compatibility |= Settings.Legacy.ForceDllImports;
+                        ios.DefaultOutputPath += ".iPhone";
+                        Generators.Add(new ESGenerator(ios, dirName));
+                        Generators.Add(new ES2Generator(ios, dirName));
+                        Generators.Add(new ES3Generator(ios, dirName));
+                        */
+                    }
+                    break;
+                
                 case "gl":
-                case "gl2":
-                    mode = GeneratorMode.GL2;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
+                    Generators.Add(new GL2Generator(Settings.Clone(), dirName));
+                    Generators.Add(new GL4Generator(Settings.Clone(), dirName));
                     break;
 
-                case "gl3":
+                case "gl2":
+                    Generators.Add(new GL2Generator(Settings.Clone(), dirName));
+                    break;
+
                 case "gl4":
-					mode = GeneratorMode.GL4;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL4";
+                    Generators.Add(new GL4Generator(Settings.Clone(), dirName));
+                    break;
+
+                case "es":
+                    Generators.Add(new ES10Generator(Settings.Clone(), dirName));
+                    Generators.Add(new ES11Generator(Settings.Clone(), dirName));
+                    Generators.Add(new ES20Generator(Settings.Clone(), dirName));
+                    Generators.Add(new ES30Generator(Settings.Clone(), dirName));
                     break;
 
                 case "es10":
-                    mode = GeneratorMode.ES10;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES10";
+                    Generators.Add(new ES10Generator(Settings.Clone(), dirName));
                     break;
 
                 case "es11":
-                    mode = GeneratorMode.ES11;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
+                    Generators.Add(new ES11Generator(Settings.Clone(), dirName));
                     break;
 
-                case "es2":
                 case "es20":
-                    mode = GeneratorMode.ES20;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
+                    Generators.Add(new ES20Generator(Settings.Clone(), dirName));
                     break;
 
-                case "es3":
                 case "es30":
-                    mode = GeneratorMode.ES30;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
+                    Generators.Add(new ES30Generator(Settings.Clone(), dirName));
                     break;
 
                 case "cl":
+                    Generators.Add(new CLGenerator(Settings.Clone(), dirName));
+                    Generators.Add(new CL11Generator(Settings.Clone(), dirName));
+                    Generators.Add(new CL12Generator(Settings.Clone(), dirName));
+                    Generators.Add(new CL20Generator(Settings.Clone(), dirName));
+                    break;
+
                 case "cl10":
-                    mode = GeneratorMode.CL10;
-                    Settings.DefaultOutputNamespace = "OpenTK.Compute.OpenCL";
+                    Generators.Add(new CLGenerator(Settings.Clone(), dirName));
+                    break;
+
+                case "cl11":
+                    Generators.Add(new CL11Generator(Settings.Clone(), dirName));
+                    break;
+
+                case "cl12":
+                    Generators.Add(new CL12Generator(Settings.Clone(), dirName));
+                    break;
+
+                case "cl20":
+                    Generators.Add(new CL20Generator(Settings.Clone(), dirName));
                     break;
 
                 default:

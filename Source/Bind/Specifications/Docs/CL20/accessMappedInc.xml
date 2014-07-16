@@ -1,0 +1,81 @@
+
+    <!-- include from 5.5.3  -->
+
+    <bridgehead>Accessing mapped regions of a memory object</bridgehead>
+
+    <para>
+      This section describes the behavior of OpenCL commands that access 
+      mapped regions of a memory object.
+    </para>
+
+    <para>
+        The contents of the region of a memory object and associated memory objects 
+        (sub-buffer objects or 1D image buffer objects that overlap this region) mapped 
+        for writing (i.e. <constant>CL_MAP_WRITE</constant> or 
+        <constant>CL_MAP_WRITE_INVALIDATE_REGION</constant> is set in <varname>map_flags</varname> 
+        argument to <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry> 
+        or <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>) are 
+        considered to be undefined until this region is unmapped.
+    </para>
+
+    <para>
+        Multiple commands in command-queues can map a region or overlapping regions of a memory
+        object and associated memory objects (sub-buffer objects or 1D image buffer objects that
+        overlap this region) for reading 
+        (i.e. <varname>map_flags</varname> = <constant>CL_MAP_READ</constant>). 
+        The contents of the regions of a memory object mapped for reading can also be read by kernels 
+        and other OpenCL commands (such as 
+        <citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>) 
+        executing on a device(s).
+    </para>
+
+    <para>
+        Mapping (and unmapping) overlapped regions in a memory object and/or associated memory
+        objects (sub-buffer objects or 1D image buffer objects that overlap this region) for writing 
+        is an error and will result in <constant>CL_INVALID_OPERATION</constant> error returned by 
+        <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry> 
+        or <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry>.
+    </para>
+
+    <para>
+        If a memory object is currently mapped for writing, the application must ensure that the memory
+        object is unmapped before any enqueued kernels or commands that read from or write to this
+        memory object or any of its associated memory objects (sub-buffer or 1D image buffer objects)
+        or its parent object (if the memory object is a sub-buffer or 1D image buffer object) begin
+        execution; otherwise the behavior is undefined.
+    </para>
+
+    <para>
+        If a memory object is currently mapped for reading, the application must ensure that the memory
+        object is unmapped before any enqueued kernels or commands that write to this memory object
+        or any of its associated memory objects (sub-buffer or 1D image buffer objects) or its parent
+        object (if the memory object is a sub-buffer or 1D image buffer object) begin execution;
+        otherwise the behavior is undefined.
+    </para>
+
+    <para>
+        A memory object is considered as mapped if there are one or more active mappings for the 
+        memory object irrespective of whether the mapped regions span the entire memory object.
+    </para>
+
+    <para>
+        Accessing the contents of the memory region referred to by the mapped pointer that has 
+        been unmapped is undefined.
+    </para>
+
+    <para>
+        The mapped pointer returned by 
+        <citerefentry><refentrytitle>clEnqueueMapBuffer</refentrytitle></citerefentry> 
+        or <citerefentry><refentrytitle>clEnqueueMapImage</refentrytitle></citerefentry> can be used as
+        <varname>ptr</varname> argument value to 
+        <citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>, 
+        <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>, 
+        <citerefentry><refentrytitle>clEnqueueReadBufferRect</refentrytitle></citerefentry>, 
+        <citerefentry><refentrytitle>clEnqueueWriteBufferRect</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>clEnqueueReadImage</refentrytitle></citerefentry>, and 
+        <citerefentry><refentrytitle>clEnqueueWriteImage</refentrytitle></citerefentry>, 
+        provided the rules described above are adhered to.
+    </para>
+
+<!-- 25-Dec-2013, rev. 19 -->
+

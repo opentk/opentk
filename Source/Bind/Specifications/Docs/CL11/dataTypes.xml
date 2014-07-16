@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Data Types</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                      
+        <refentrytitle>Data Types</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="Data Types">             
+        <refname>Data Types</refname>
+
+        <refpurpose>
+            OpenCL data types.
+        </refpurpose>
+    </refnamediv>
+
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+These are the data types available in the OpenCL C programming language. Click on a category name in the table below to see information about specific data types.
+        </para>
+
+        <informaltable frame="all">
+            <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                <colspec colname="col1" colnum="1" />
+                <colspec colname="col2" colnum="2" />
+
+                <thead>
+                    <row>
+                        <entry>Data type category</entry>
+                        <entry>Included data types</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>
+                            <citerefentry href="scalarDataTypes"><refentrytitle>Scalar data types</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            <type>bool</type>, <type>char</type>, <type>cl_char</type>, 
+                            <type>unsigned char</type>, <type>uchar</type>, <type>cl_uchar</type>, 
+                            <type>short</type>, <type>cl_short</type>, <type>unsigned short</type>, 
+                            <type>ushort</type>, <type>int</type>, <type>unsigned int</type>, 
+                            <type>uint</type>, <type>long</type>, <type>unsigned long</type>, 
+                            <type>ulong</type>, <type>float</type>, <type>half</type>, <type>size_t</type>, 
+                            <type>ptrdiff_t</type>, <type>intptr_t</type>, <type>uintptr_t</type>, 
+                            <type>void</type>, and optional double precision and half floating point types.
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <citerefentry href="vectorDataTypes"><refentrytitle>Vector data types</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            <type>char<replaceable>n</replaceable></type>, <type>uchar<replaceable>n</replaceable></type>, 
+                            <type>short<replaceable>n</replaceable></type>, <type>ushort<replaceable>n</replaceable></type>, 
+                            <type>int<replaceable>n</replaceable></type>, <type>uint<replaceable>n</replaceable></type>, 
+                            <type>long<replaceable>n</replaceable></type>, <type>ulong<replaceable>n</replaceable></type>, 
+                            <type>float<replaceable>n</replaceable></type>, and optional double<replaceable>n</replaceable> and half<replaceable>n</replaceable> types.
+                        </entry>
+                    </row>
+                    
+                    <row>
+                        <entry>
+                            <citerefentry href="abstractDataTypes"><refentrytitle>Abstract data types</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            <type>cl_platform_id</type>, <type>cl_device_id</type>, 
+                            <type>cl_context</type>, <type>cl_command_queue</type>, 
+                            <type>cl_mem</type>, <type>cl_program</type>, 
+                            <type>cl_kernel</type>, <type>cl_event</type>, 
+                            <type>cl_sampler</type>
+                        </entry>
+                    </row>
+                    
+                    <row>
+                        <entry>
+                            <citerefentry href="reservedDataTypes"><refentrytitle>Reserved Data Types</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            <type>bool<replaceable>n</replaceable></type>, 
+                            <type>half<replaceable>n</replaceable></type>, <type>quad</type>, 
+                            <type>quad<replaceable>n</replaceable></type>, 
+                            <type>complex half</type>, <type>complex half<replaceable>n</replaceable></type>, 
+                            <type>imaginary half</type>, <type>imaginary half<replaceable>n</replaceable></type>, 
+                            <type>complex float</type>, <type>complex float<replaceable>n</replaceable></type>, 
+                            <type>imaginary float</type>, <type>imaginary float<replaceable>n</replaceable></type>, 
+                            <type>complex double</type>, <type>complex double<replaceable>n</replaceable></type>,
+                            <type>imaginary double</type>, <type>imaginary double<replaceable>n</replaceable></type>,
+                            <type>complex quad</type>, <type>complex quad<replaceable>n</replaceable></type>, 
+                            <type>imaginary quad</type>, <type>imaginary quad<replaceable>n</replaceable></type>, 
+                            <type>float<replaceable>n</replaceable></type>x<emphasis>m</emphasis>, 
+                            <type>double<replaceable>n</replaceable></type>x<emphasis>m</emphasis>, 
+                            <type>long double</type>, <type>long double<replaceable>n</replaceable></type>, 
+                            <type>long long</type>, <type>long long<replaceable>n</replaceable></type>, 
+                            <type>unsigned long long</type>, <type>ulong long</type>, 
+                            <type>ulong long<replaceable>n</replaceable></type>, <type>long</type>
+                        </entry>
+                    </row>
+                    <row>   
+                        <entry>
+                            <citerefentry href="otherDataTypes"><refentrytitle>Other data types</refentrytitle></citerefentry>
+                        </entry>
+                        <entry>
+                            <type>image2d_t</type>, <type>image3d_t</type>, <type>sampler_t</type>, 
+                             <type>event_t</type> 
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+                        
+                       
+        
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="scalarDataTypes">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE 
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry>
+        </para>
+    </refsect1> -->
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+<!ENTITY qualifierInc SYSTEM "qualifierInc.xml">
+<!ENTITY qualifierExampleInc SYSTEM "qualifierExampleInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>__global</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>__global</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="__global">
+        <refname>__global</refname>
+
+        <refpurpose>
+            Address space qualifier.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__global
+global
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+            The <function>__global</function> or <function>global</function> address
+            space name is used to refer to memory objects (buffer or image objects)
+            allocated from the global memory pool.
+        </para>
+
+        <para>
+            A buffer memory object can be declared as a pointer to a scalar, vector
+            or user-defined struct. This allows the kernel to read and/or write any
+            location in the buffer.
+        </para>
+
+        <para>
+            The actual size of the array memory object is determined when the memory
+            object is allocated via appropriate API calls in the host code.
+        </para>
+
+        <para>
+            As image objects are always allocated from the global 
+            address space, the <function>__global</function> or 
+            <function>global</function> qualifier should not be 
+            specified for image types. The elements of an image object 
+            cannot be directly accessed. Built-in functions to 
+            read from and write to an image object are 
+            provided.
+        </para>
+
+        <para>
+            Variables defined at program scope and static 
+            variables inside a function can also be declared 
+            in the <function>global</function> address space. 
+            They can be defined with any valid OpenCL C data type except 
+            for those in table 6.3. In particular, such 
+            program scope variables may be of any user-defined 
+            type, or a pointer to a user-defined type. In 
+            the presence of shared virtual memory, these pointers 
+            or pointer members should work as expected as 
+            long as they are shared virtual memory pointers
+            and the referenced storage has been mapped appropriately. 
+            These variables in the <function>global</function>
+            address space have the same lifetime as the program, 
+            and their values persist between calls to 
+            any of the kernels in the program. These variables 
+            are not shared across devices. They have 
+            distinct storage.
+        </para>
+
+        <para>
+            Program scope and static variables in the 
+            <function>global</function> address space may be initialized, but only 
+            with constant expressions.
+        </para>
+
+        <para>
+            The <code>const</code> qualifier can also be used 
+            with the <function>__global</function> qualifier to
+            specify a read-only buffer memory object.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        &qualifierInc;
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Examples
+        </title>
+
+        &qualifierExampleInc;
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+global float4  *color;      // An array of float4 elements
+typedef struct {
+      float a[3];
+      int   b[2];
+} foo_t;
+global foo_t   *my_info;    // An array of foo_t elements.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+global int foo;         // OK.
+int foo;                // OK. Declared in the global address space
+global uchar buf[512];  // OK.
+global int baz = 12;    // OK. Initialization is allowed
+static global int bat;  // OK. Internal linkage
+
+global uchar bigbuf[CL_DEVICE_MAX_GLOBAL_VARIABLE_SIZE]; // OK.
+
+static int foo;         // OK. Declared in the global address space
+static global int foo;  // OK.
+
+int *foo;               // OK. foo is allocated in global address space.
+                        // pointer to foo in generic address space
+
+void func(...)
+{
+   int *foo;            // OK. foo is allocated in private address space.
+                        // foo points to a location in generic address space.
+   ...
+}
+
+global int * global ptr;          // OK.
+int * global ptr;                 // OK.
+constant int *global ptr=&amp;baz;    // error since baz is in global address 
+                                  // space.
+global int * constant ptr = &amp;baz; // OK
+
+// Pointers work. Also, initialization to a constant known at 
+// program load time
+global int *global baz_ptr = &amp;baz;
+
+global image2d_t im;       // Error. Invalid type for program scope 
+                           // variables
+
+global event_t ev;   // Error. Invalid type for program scope variables
+
+global int *bad_ptr; // Error. No implicit address space
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="addressSpaceQualifiers">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>,
+            <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>,
+            <citerefentry href="private"><refentrytitle>__private</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>qualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 25-Dec-2013, rev. 19 -->
+</refentry>
+

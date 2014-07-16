@@ -42,7 +42,12 @@ namespace OpenTK
     /// </summary>
     public sealed class Configuration
     {
-        static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux;
+        static bool runningOnWindows;
+        static bool runningOnUnix;
+        static bool runningOnX11;
+        static bool runningOnMacOS;
+        static bool runningOnLinux;
+        static bool runningOnSdl2;
         static bool runningOnMono;
         volatile static bool initialized;
         readonly static object InitLock = new object();
@@ -87,8 +92,7 @@ namespace OpenTK
         /// </summary>
         public static bool RunningOnSdl2
         {
-            get;
-            private set;
+            get { return runningOnSdl2; }
         }
 
         #endregion
@@ -120,13 +124,29 @@ namespace OpenTK
 
         /// <summary>
         /// Gets a <c>System.Boolean</c> indicating whether
-        /// OpenTK is running on an Android device.
+        /// OpenTK is currently running on an Android device.
         /// </summary>
         public static bool RunningOnAndroid
         {
             get
             {
 #if ANDROID
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
+        /// <summary>
+        /// Gets a <c>System.Boolean</c> indicating whether
+        /// OpenTK is currently running on an iOS device.
+        /// </summary>
+        public static bool RunningOniOS
+        {
+            get
+            {
+#if IPHONE
                 return true;
 #else
                 return false;
@@ -198,6 +218,7 @@ namespace OpenTK
 
         static bool DetectSdl2()
         {
+            #if SDL2
             bool supported = false;
 
             // Detect whether SDL2 is supported
@@ -251,6 +272,9 @@ namespace OpenTK
             }
 
             return supported;
+            #else
+            return false;
+            #endif
         }
 
         static void DetectUnix(out bool unix, out bool linux, out bool macos)
@@ -290,9 +314,13 @@ namespace OpenTK
 
         static bool DetectX11()
         {
+            #if X11
             // Detect whether X is present.
             try { return OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
             catch { return false; }
+            #else
+            return false;
+            #endif
         }
 
         #endregion
@@ -312,10 +340,17 @@ namespace OpenTK
                 {
 #if ANDROID
                     runningOnMono = true;
-                    runningOnAnroid = true;
+                    runningOnLinux = runningOnUnix = true;
+                    if (options.Backend == PlatformBackend.Default)
+                    {
+                        runningOnSdl2 = DetectSdl2();
+                    }
 #elif IPHONE
                     runningOnMono = true;
-                    runningOnIOS = true;
+                    if (options.Backend == PlatformBackend.Default)
+                    {
+                        runningOnSdl2 = DetectSdl2();
+                    }
 #else
                     runningOnMono = DetectMono();
                     runningOnWindows = DetectWindows();
@@ -326,22 +361,38 @@ namespace OpenTK
 
                     if (options.Backend == PlatformBackend.Default)
                     {
-                        RunningOnSdl2 = DetectSdl2();
+                        runningOnSdl2 = DetectSdl2();
                     }
                     
                     if ((runningOnLinux && !RunningOnSdl2) || options.Backend == PlatformBackend.PreferX11)
                     {
                         runningOnX11 = DetectX11();
                     }
+#endif
 
                     initialized = true;
-#endif
                     Debug.Print("Detected configuration: {0} / {1}",
-                        RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" :
-                        runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
-                        RunningOnMono ? "Mono" : ".Net");
+                        GetPlatformName(), GetRuntimeName());
                 }
             }
+        }
+
+        static string GetPlatformName()
+        {
+            return
+                RunningOnAndroid ? "Android" :
+                RunningOniOS ? "iOS" :
+                RunningOnWindows ? "Windows" :
+                RunningOnLinux ? "Linux" :
+                RunningOnMacOS ? "MacOS" :
+                runningOnUnix ? "Unix" :
+                RunningOnX11 ? "X11" :
+                "Unknown Platform";
+        }
+
+        static string GetRuntimeName()
+        {
+            return RunningOnMono ? "Mono" : ".Net";
         }
 
         #endregion

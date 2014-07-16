@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clGetGLObjectInfo</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>clGetGLObjectInfo</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetGLObjectInfo">
+        <refname>clGetGLObjectInfo</refname>
+
+        <refpurpose>
+Query an OpenGL object used to create an OpenCL memory object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef><link xlink:href="scalarDataTypes.html">cl_int</link>
+
+                    <function>
+                        clGetGLObjectInfo
+                    </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_mem</link><parameter>memobj</parameter></paramdef>
+                <paramdef><link xlink:href="enums.html#cl_gl_object_type">cl_gl_object_type</link><parameter>*gl_object_type</parameter></paramdef>
+                <paramdef>GLuint<parameter>*gl_object_name</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname>gl_object_type </varname> </term>
+                <listitem>
+                    <para>
+                      Returns the type of GL object attached to <varname>memobj</varname>
+                      and can be <constant>CL_GL_OBJECT_BUFFER</constant>,
+                      <constant>CL_GL_OBJECT_TEXTURE2D</constant>,
+                      <constant>CL_GL_OBJECT_TEXTURE3D</constant>,
+                      <constant>CL_GL_OBJECT_TEXTURE2D_ARRAY</constant>,
+                      <constant>CL_GL_OBJECT_TEXTURE1D</constant>,
+                      <constant>CL_GL_OBJECT_TEXTURE1D_ARRAY</constant>,
+                      <constant>CL_GL_OBJECT_TEXTURE_BUFFER</constant>, or
+                      <constant>CL_GL_OBJECT_RENDERBUFFER</constant>.  If
+                      <varname>gl_object_type</varname> is NULL, it is ignored.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> gl_object_name </varname> </term>
+                <listitem>
+                    <para>
+                      Returns the GL object name used to create <varname>memobj</varname>. If
+                      <varname>gl_object_name</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The OpenGL object used to create the OpenCL memory object and information about
+          the object type i.e. whether it is a texture, renderbuffer, or buffer object can be
+          queried using this function.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the call was executed
+          successfully. Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_MEM_OBJECT</errorname> if <varname>memobj</varname>
+                is not a valid OpenCL memory object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_GL_OBJECT</errorname> if there is no GL object associated
+              with <varname>memobj</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clGetGLObjectInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>cl_khr_gl_sharing</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetGLTextureInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-May-2013 -->
+</refentry>
+

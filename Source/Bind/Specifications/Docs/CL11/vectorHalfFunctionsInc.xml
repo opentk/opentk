@@ -1,0 +1,9 @@
+        <para>
+            This function may be extended to include versions that read from or write to half scalar or vector values.
+            We use the type name <type>half<replaceable>n</replaceable></type> to represent
+            <replaceable>n</replaceable>-element vectors of <type>half</type> elements when enabled by the 
+            <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> extension. 
+            The generic type <type>gentype<replaceable>n</replaceable></type> is extended to include 
+            <type>half</type>, <type>half2</type>, <type>half3</type>, <type>half4</type>, 
+            <type>half8</type>, and <type>half16</type>.
+        </para>

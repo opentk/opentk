@@ -1,0 +1,32 @@
+<!-- imageMipmapFunctionsInc -->
+ 
+    <bridgehead>Mipmap read image functions:</bridgehead>
+
+    <para>
+        For the forms that take an <type>image3d_t</type> object, 
+        use the coordinate <emphasis>coord.xyz</emphasis> to 
+        do an element lookup in the mip-level specified by  
+        <varname>lod</varname> in the 3D image object specified 
+        by <varname>image</varname>.
+    </para>
+
+    <para>
+        For the forms that use gradients, use the gradients to compute 
+        the lod and coordinate <emphasis>coord.xyz</emphasis> to do an 
+        element lookup in
+        the mip-level specified by the computed lod in
+        the 3D image object specified by <varname>image</varname>.
+    </para>
+
+    <para>
+        When a multisample image is accessed in a kernel, 
+        the access takes one vector of 
+        integers describing which pixel to fetch and an 
+        integer corresponding to the sample numbers 
+        describing which sample within the pixel to fetch. 
+        sample identifies the sample position in the 
+        multi-sample image.
+    </para>
+
+<!-- 19-Dec-2013, rev. 19 -->
+

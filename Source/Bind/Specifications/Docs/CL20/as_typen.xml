@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Reinterpreting Types, as_typen(), as_type()</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Reinterpreting Types Using as_type() and as_typen()</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="ReinterpretingTypesUsingas_typen()">
+        <refname>as_type(), as_type<emphasis>n</emphasis>()</refname>
+        <refpurpose>
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+
+    <refsect2 id="synopsis">
+        <title></title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+as_type()
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+as_type<replaceable>n</replaceable>()
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          All data types described in <citerefentry href="scalarDataTypes"><refentrytitle>Scalar
+          Data Types</refentrytitle></citerefentry> and
+          <citerefentry href="vectorDataTypes"><refentrytitle>Vector Data
+          Types</refentrytitle></citerefentry> (except <type>bool</type>, <type>half</type>
+          (unless  the <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>
+          extension is supported), and <type>void</type>) may be also reinterpreted as another
+          data type of the same size using the <function>as_type()</function> operator for scalar
+          data types and the <function>as_type<replaceable>n</replaceable>()</function> operator
+          for vector data types. When the operand and result type contain the same number of
+          elements, the bits in the operand shall be returned directly without modification as
+          the new type. The usual type promotion for function arguments shall not be performed.
+        </para>
+
+        <para>
+          For example, <code>as_float(0x3f800000)</code> returns <code>1.0f</code>, which is
+          the value that the bit pattern <code>0x3f800000</code> has if viewed as an IEEE-754
+          single precision value.
+        </para>
+
+        <para>
+          When the operand and result type contain a different number of elements, the result
+          shall be implementation-defined except if the operand is a 4-component vector and the
+          result is a 3-component vector.  In this case, the bits in the operand shall be returned
+          directly without modification as the new type. That is, a conforming implementation shall
+          explicitly define a behavior, but two conforming implementations need not have the same
+          behavior when the number of elements in the result and operand types does not match. The
+          implementation may define the result to contain all, some or none of the original bits
+          in whatever order it chooses. It is an error to use the  <function>as_type()</function>
+          or  <function>as_type<replaceable>n</replaceable>()</function> operators to reinterpret
+          data to a type of a different number of bytes.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          While the union is intended to reflect the organization
+          of data in memory, the <function>as_type()</function> and
+          <function>as_type<replaceable>n</replaceable>()</function> constructs are intended
+          to reflect the organization of data in register. The <function>as_type()</function>
+          and <function>as_type<replaceable>n</replaceable>()</function> constructs are intended
+          to compile to no instructions on devices that use a shared register file designed to
+          operate on both the operand and result types.
+        </para>
+
+        <para>
+          Note that while differences in memory organization are expected to largely be limited
+          to those arising from endianness, the register based representation may also differ
+          due to size of the element in register. (For example, an architecture may load a char
+          into a 32-bit register, or a char vector into a SIMD vector register with fixed 32-bit
+          element size.)
+        </para>
+
+        <para>
+          If the element count does not match, then the implementation should pick a data
+          representation that most closely matches what would happen if an appropriate result type
+          operator was applied to a register containing data of the source type. If the number of
+          elements matches, then the <function>as_type<replaceable>n</replaceable>()</function>
+          should faithfully reproduce the behavior expected from a similar data type
+          reinterpretation using memory/unions.  So, for example if an implementation stores
+          all single precision data as double in register, it should implement as_int( float )
+          by first downconverting the double to single precision and then (if necessary) moving
+          the single precision bits to a register suitable for operating on integer data.
+        </para>
+
+        <para>
+          If data stored in different address spaces do not have the same endianness, then the
+          "dominant endianness" of the device should prevail.
+        </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+float f = 1.0f;
+uint u = as_uint(f);  // Legal. Contains:  0x3f800000
+
+float4 f = (float4)(1.0f, 2.0f, 3.0f, 4.0f);
+// Legal. Contains: (int4)
+// (0x3f800000, 0x40000000, 0x40400000, 0x40800000)
+int4 i = as_int4(f);
+
+float4 f, g;
+int4 is_less = f &lt; g;
+
+// Legal. f[i] = f[i] &lt; g[i] ? f[i] : 0.0f
+f = as_float4(as_int4(f) &amp; is_less);
+
+int i;
+// Legal. Result is implementation-defined.
+short2 j = as_short2(i);
+
+int4 i;
+// Legal. Result is implementation-defined.
+short8 j = as_short8(i);
+
+float4 f;
+//Error. result and operand have different size
+double4 g = as_double4(f);   // Only if double is supported.
+
+float4 f;
+// Legal. g.xyz will have same values as f.xyz. g.w is undefined
+float3 g = as_float3(f);
+
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="as_typen">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="scalarDataTypes"><refentrytitle>Scalar Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="vectorDataTypes"><refentrytitle>Vector Data Types</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 3-Jun-2013 -->
+</refentry>
+

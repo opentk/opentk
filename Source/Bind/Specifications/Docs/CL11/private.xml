@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>__private</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>                                    
+        <refentrytitle>__private</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="__private">             
+        <refname>__private</refname>
+
+        <refpurpose>
+            Address Space Qualifier.
+        </refpurpose>
+    </refnamediv>
+
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+__private
+private
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+OpenCL implements the following disjoint address spaces: <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>, <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>, 
+<citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>
+and <function>__private</function>.
+        <para>
+        </para>
+The address space qualifier may be used in variable declarations to specify the region of memory that is used to allocate the object. The C syntax for type qualifiers is extended in OpenCL to include an address space name as a valid type qualifier. If the type of an object is qualified by an address space name, the object is allocated in the specified address name; otherwise, the object is allocated in the generic address space.
+        </para>
+
+        <para>
+The address space names without the __ prefix i.e. <function>global</function>, <function>local</function>, <function>constant</function> and <function>private</function> may be substituted for the corresponding address space names with the __ prefix.
+        </para>
+
+        <para>
+The generic address space name for arguments to a function in a program, or local variables of a function is  <function>__private</function>. All function arguments shall be in the <function>__private</function> address space.
+        </para>
+
+        <para>
+<citerefentry  href="functionQualifiers"><refentrytitle>__kernel</refentrytitle></citerefentry> function arguments declared to be a pointer of a type can point to one of the following address spaces only: <function>__global</function>, <function>__local</function> or <function>__constant</function>. A pointer to address space A can only be assigned to a pointer to the same address space A. Casting a pointer to address space A to a pointer to address space B is illegal.
+        </para>
+
+        <para>
+The <function>__kernel</function> function arguments declared to be of type <type><citerefentry  href="otherDataTypes"><refentrytitle>image2d_t</refentrytitle></citerefentry></type> or <type><citerefentry  href="otherDataTypes"><refentrytitle>image3d_t</refentrytitle></citerefentry></type>
+always point to the <function>__global</function> address space. 
+ </para>
+
+        <para>
+There is no generic address space name for program scope variables. All program scope variables must be declared in the <function>__constant</function> address space.
+        </para>
+
+        <para>
+The <function>__constant</function> or <function>constant</function>
+address space name is used to describe variables allocated in
+global memory and which are accessed inside a kernel(s) as read-only variables. These read-
+only variables can be accessed by all (global) work-items of the kernel during its execution. Pointers to the <function>__constant</function> address space are allowed arguments to functions (including <function>__kernel</function> functions) and for variables declared inside functions. Variables allocated in the <function>__constant</function> address space can only be defined as program scope variables and are required to be initialized.
+        </para>
+        <para>
+Writes to variables declared with the <function>__constant</function> address space qualifier in the OpenCL program source should be a compile-time error.
+        </para>
+        <para>
+All string literal storage shall be in the <function>__constant</function> address space.
+        </para>
+        <para>
+        NOTE: Any argument to a kernel that is declared with the <function>__constant</function> address space qualifier counts as a separate constant argument. The relevant device capabilities CL_DEVICE_MAX_CONSTANT_ARGS and CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE are described in the table for <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry>.
+        </para>
+        <para>
+Variables inside a function or in program scope can also be declared with the <function>__constant</function> address qualifier. Implementations are not required to aggregate these declarations into the fewest number of constant arguments. This behavior is implementation defined.
+        </para>
+        <para>
+Thus portable code must conservatively assume that each variable declared inside a function or in program scope with the <function>__constant</function> qualifier counts as a separate constant argument.
+        </para>
+    </refsect1>
+
+    
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            Variables inside a <function>__kernel</function> function not declared with an address space qualifier, all variables inside non-kernel functions, and all function arguments are in the <function>__private</function> or <function>private</function> address space. Variables declared as pointers are considered to point to the <function>__private</function> address space if an address space qualifier is not specified except for arguments declared to be of type <citerefentry href="otherDataTypes"><refentrytitle>image2d_t</refentrytitle></citerefentry>, and <citerefentry href="otherDataTypes"><refentrytitle>image3d_t</refentrytitle></citerefentry> implicitly point to the <function>__global</function> address space.
+
+The <function>__global</function>, <function>__constant</function>, <function>__local</function>, <function>__private</function>, <function>global</function>, <function>constant</function>, <function>local</function>, and <function>private</function> names are reserved for use as address space qualifiers and shall not be used otherwise.
+        </para>
+    </refsect1>
+        
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+// declares a pointer p in the __private address space that
+// points to an int object in address space __global
+__global int *p;
+
+// declares an array of 4 floats in the __private address space.
+float x[4];
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 
+            <olink uri="addressSpaceQualifier">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="global"><refentrytitle>__global</refentrytitle></citerefentry>, 
+            <citerefentry href="local"><refentrytitle>__local</refentrytitle></citerefentry>, 
+            <citerefentry href="constant"><refentrytitle>__constant</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

@@ -1,0 +1,52 @@
+<!-- imageMipmapFunctionsInc -->
+ 
+    <bridgehead>Mipmap read image functions:</bridgehead>
+
+    <para>
+        For the forms that take an <type>image2d_t</type> object, 
+        use the coordinate <varname>coord.xy</varname> to 
+        do an element lookup in the mip-level specified by  
+        <varname>lod</varname> in the 2D image object specified 
+        by <varname>image</varname>.
+    </para>
+
+    <para>
+        For the forms that use gradients, use the gradients to compute 
+        the lod and coordinate <emphasis>coord.xy</emphasis> to do an 
+        element lookup in
+        the mip-level specified by the computed lod in
+        the 2D image object specified by <varname>image</varname>.
+    </para>
+
+    <para>
+        For the forms that take an <type>image2d_array_t</type> object, 
+        use the coordinate <emphasis>coord.xy</emphasis> to 
+        do an element lookup in the 2D image identified by 
+        <emphasis>coord.z</emphasis> and mip-level specified by  
+        <varname>lod</varname> in the 2D image object specified 
+        by <varname>image</varname>.
+    </para>
+
+    <para>
+        For the forms that take an <type>image2d_array_t</type> 
+        object and that use gradients, 
+        use the gradients to compute the lod coordinate
+        and <emphasis>coord.xy</emphasis> to 
+        do an element lookup in the 2D image identified by 
+        <emphasis>coord.z</emphasis> and mip-level specified by  
+        <varname>lod</varname> in the 2D image object specified 
+        by <varname>image</varname>.
+    </para>
+
+    <para>
+        When a multisample image is accessed in a kernel, 
+        the access takes one vector of 
+        integers describing which pixel to fetch and an 
+        integer corresponding to the sample numbers 
+        describing which sample within the pixel to fetch. 
+        sample identifies the sample position in the 
+        multi-sample image.
+    </para>
+
+<!-- 17-Dec-2013, rev. 19 -->
+

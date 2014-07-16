@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clEnqueueCopyBufferRect</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clEnqueueCopyBufferRect
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+<!-- For each <funcprototype />, use <funcdef /> for the first part, with the function name
+     set as <function /> and <paramdef /> for each or the parameters, plus <parameter /> for the
+     actual parameter name. If you need multiple synopses, use separate <funcsynopsis /> sets.
+
+-->
+    <refnamediv id="clEnqueueCopyBufferRect ">
+        <refname>
+            clEnqueueCopyBufferRect
+        </refname>
+
+        <refpurpose>
+            Enqueues a command to copy a rectangular region from a buffer object to another buffer object.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link> <function>clEnqueueCopyBufferRect </function>
+                </funcdef>
+
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_command_queue</link><parameter>command_queue</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_mem</link><parameter>src_buffer</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_mem</link><parameter>dst_buffer</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">size_t</link><parameter>*src_origin</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">size_t</link><parameter>*dst_origin</parameter></paramdef>
+                <paramdef>const <link xlink:href="scalarDataTypes.html">size_t</link><parameter>*region</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>src_row_pitch</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>src_slice_pitch</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>dst_row_pitch</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">size_t</link><parameter>dst_slice_pitch</parameter></paramdef>
+                <paramdef><link xlink:href="scalarDataTypes.html">cl_uint</link><parameter>num_events_in_wait_list</parameter></paramdef>
+                <paramdef>const <link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event_wait_list</parameter></paramdef>
+                <paramdef><link xlink:href="abstractDataTypes.html">cl_event</link><parameter>*event</parameter></paramdef>
+
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+<!-- For each <varlistentry />, place the parameter name in <term /><varname />, then the definition in
+     <listitem /><para />. When refering to anything
+     that has a page in this system, use <citerefentry /><refentrytitle /> to make it a link.
+
+-->
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term> <varname> command_queue </varname> </term>
+                <listitem>
+                    <para>
+                      The command-queue in which the copy command will be queued. The
+                      OpenCL context associated with <varname>command_queue</varname>,
+                      <varname>src_buffer</varname>, and <varname>dst_buffer</varname> must be
+                      the same.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>
+                        src_origin
+                    </varname>
+                </term>
+                <listitem>
+                    <para>
+                      The (<emphasis>x, y, z</emphasis>) offset in the memory region associated
+                      with <varname>src_buffer</varname>. For a 2D rectangle region, the
+                      <varname>z</varname> value given by <varname>src_origin</varname>[2] should
+                      be 0. The offset in bytes is computed as <varname>src_origin</varname>[2]
+                      * <varname>src_slice_pitch</varname> + <varname>src_origin</varname>[1]
+                      * <varname>src_row_pitch</varname> + <varname>src_origin</varname>[0].
+                    </para>
+               </listitem>
+            </varlistentry>
+
+
+            <varlistentry>
+                <term> <varname> dst_origin </varname> </term>
+                <listitem>
+                    <para>
+                      The (<emphasis>x, y, z</emphasis>) offset in the memory region associated
+                      with <varname>dst_buffer</varname>. For a 2D rectangle region, the
+                      <varname>z</varname> value given by <varname>dst_origin</varname>[2] should
+                      be 0. The offset in bytes is computed as <varname>dst_origin</varname>[2]
+                      * <varname>dst_slice_pitch</varname> + <varname>dst_origin</varname>[1]
+                      * <varname>dst_row_pitch</varname> + <varname>dst_origin</varname>[0].
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>region</varname> </term>
+                <listitem>
+                    <para>
+                      The (<emphasis>width, height, depth</emphasis>) in bytes of the 2D or 3D
+                      rectangle being copied. For a 2D rectangle, the <varname>depth</varname>
+                      value given by <varname>region</varname>[2] should be 1.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+
+             <varlistentry>
+                <term> <varname>src_row_pitch</varname> </term> <listitem>
+                    <para>
+                      The length of each row in bytes to be used for the memory region associated
+                      with <varname>src_buffer</varname>. If <varname>src_row_pitch</varname> is 0,
+                      <varname>src_row_pitch</varname> is computed as <varname>region</varname>[0].
+                    </para>
+               </listitem>
+            </varlistentry>
+
+
+             <varlistentry>
+                <term> <varname>src_slice_pitch</varname> </term> <listitem>
+                    <para>
+                      The length of each 2D slice in bytes to be used for the
+                      memory region associated with <varname>src_buffer</varname>. If
+                      <varname>src_slice_pitch</varname> is 0, <varname>src_slice_pitch</varname>
+                      is computed as <varname>region</varname>[1] *
+                      <varname>src_row_pitch</varname>.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>dst_row_pitch</varname> </term>
+                <listitem>
+                    <para>
+                      The length of each row in bytes to be used for the memory region associated
+                      with <varname>dst_buffer</varname>. If <varname>dst_row_pitch</varname> is 0,
+                      <varname>dst_row_pitch</varname> is computed as <varname>region</varname>[0].
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname>dst_slice_pitch</varname> </term>
+                <listitem>
+                    <para>
+                      The length of each 2D slice in bytes to be used for the
+                      memory region associated with <varname>dst_buffer</varname>. If
+                      <varname>dst_slice_pitch</varname> is 0, <varname>dst_slice_pitch</varname>
+                      is computed as <varname>region</varname>[1] *
+                      <varname>dst_row_pitch</varname>.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+
+
+            <varlistentry>
+                <term>
+                    <varname>
+                        event_wait_list
+                    </varname>
+                </term>
+                <term>
+                    <varname>
+                        num_events_in_wait_list
+                    </varname>
+                </term>
+                <listitem>
+                    <para>
+                      Specify events that need to complete before this particular
+                      command can be executed. If <varname>event_wait_list</varname>
+                      is NULL, then this particular command does not wait on any
+                      event to complete. If <varname>event_wait_list</varname> is
+                      NULL, <varname>num_events_in_wait_list</varname> must be 0. If
+                      <varname>event_wait_list</varname> is not NULL, the list of events
+                      pointed to by <varname>event_wait_list</varname> must be valid
+                      and <varname>num_events_in_wait_list</varname> must be greater
+                      than 0. The events specified in <varname>event_wait_list</varname>
+                      act as synchronization points. The context associated with events in
+                      <varname>event_wait_list</varname> and <varname>command_queue</varname> must
+                      be the same. The memory associated with <varname>event_wait_list</varname>
+                      can be reused or freed after the function returns.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> event </varname> </term>
+                <listitem>
+                    <para>
+                      Returns an event object that identifies this particular copy command
+                      and can be used to query or queue a wait for this particular
+                      command to complete. <varname>event</varname> can be NULL in
+                      which case it will not be possible for the application to query the
+                      status of this command or queue a wait for this command to complete.
+                      <citerefentry><refentrytitle>clEnqueueBarrierWithWaitList</refentrytitle></citerefentry>
+                      can be used instead.  If the <varname>event_wait_list</varname>
+                      and the <varname>event</varname> arguments are not NULL, the
+                      <varname>event</varname> argument should not refer to an element of the
+                      <varname>event_wait_list</varname> array.
+                    </para>
+               </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          <function>clEnqueueCopyBufferRect</function>enqueues a command to copy a 2D or 3D
+          rectangular region from the buffer object identified by <varname>src_buffer</varname>
+          to a 2D or 3D region in the buffer object identified by <varname>dst_buffer</varname>.
+          Copying begins at the source offset and destination offset which are computed
+          as described in the description for <varname>src_origin</varname> and
+          <varname>dst_origin</varname>.
+        </para>
+
+        <para>
+          Each byte of the region's width is copied from the source offset to the destination
+          offset.  After copying each width, the source and destination offsets are incremented by
+          their respective source and destination row pitches. After copying each 2D rectangle,
+          the source and destination offsets are incremented by their respective source and
+          destination slice pitches.
+        </para>
+
+        <para>
+          NOTE: If <varname>src_buffer</varname> and <varname>dst_buffer</varname>
+          are the same buffer object, <varname>src_row_pitch</varname> must equal
+          <varname>dst_row_pitch</varname> and <varname>src_slice_pitch</varname> must equal
+          <varname>dst_slice_pitch</varname>.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+          Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully.
+          Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_COMMAND_QUEUE</errorname> if <varname>command_queue</varname>
+              is not a valid command-queue.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_CONTEXT</errorname> if the context associated
+              with <varname>command_queue</varname>, <varname>src_buffer</varname>, and
+              <varname>dst_buffer</varname> are not the same or if the context associated with
+              <varname>command_queue</varname> and events in <varname>event_wait_list</varname>
+              are not the same.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_MEM_OBJECT</errorname> if <varname>src_buffer</varname>
+              and <varname>dst_buffer</varname> are not valid buffer objects.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if (<varname>src_offset</varname>,
+              <varname>region</varname>) or (<varname>dst_offset</varname>,
+              <varname>region</varname>) require accessing elements outside the
+              <varname>src_buffer</varname> and <varname>dst_buffer</varname> objects respectively.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if any <varname>region</varname> array
+              element is 0.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>src_row_pitch</varname>
+              is not 0 and is less than <varname>region</varname>[0].
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>dst_row_pitch</varname>
+              is not 0 and is less than <varname>region</varname>[0].
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>src_slice_pitch</varname> is not
+              0 and is less than <varname>region</varname>[1] * <varname>src_row_pitch</varname>
+              or if <varname>src_slice_pitch</varname> is not 0 and is not a multiple of
+              <varname>src_row_pitch</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>dst_slice_pitch</varname> is not
+              0 and is less than <varname>region</varname>[1] * <varname>dst_row_pitch</varname>
+              or if <varname>dst_slice_pitch</varname> is not 0 and is not a multiple of
+              <varname>dst_row_pitch</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>src_buffer</varname>
+              and <varname>dst_buffer</varname> are the same buffer
+              object and <varname>src_slice_pitch</varname> is not equal to
+              <varname>dst_slice_pitch</varname> and <varname>src_row_pitch</varname> is not
+              equal to <varname>dst_row_pitch</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_EVENT_WAIT_LIST</errorname>
+              if <varname>event_wait_list</varname> is NULL and
+              <varname>num_events_in_wait_list</varname> is &gt;
+              0, or <varname>event_wait_list</varname> is not NULL and
+              <varname>num_events_in_wait_list</varname> is 0, or if event objects in
+              <varname>event_wait_list</varname> are not valid events.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MEM_COPY_OVERLAP</errorname> if <varname>src_buffer</varname>
+              and <varname>dst_buffer</varname> are the same buffer object and the source
+              and destination regions overlap or if <varname>src_buffer</varname> and
+              <varname>dst_buffer</varname> are different sub-buffers of the same associated
+              buffer object and they overlap.  Refer to Appendix E in the OpenCL specification
+              for details on how to determine if source and destination regions overlap.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MISALIGNED_SUB_BUFFER_OFFSET </errorname> if
+              <varname>src_buffer</varname> is a sub-buffer object and <varname>offset</varname>
+              specified when the sub-buffer object is created is not aligned to
+              <constant>CL_DEVICE_MEM_BASE_ADDR_ALIGN</constant> value for device associated
+              with <varname>queue</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MISALIGNED_SUB_BUFFER_OFFSET </errorname> if
+              <varname>dst_buffer</varname> is a sub-buffer object and <varname>offset</varname>
+              specified when the sub-buffer object is created is not aligned to
+              <constant>CL_DEVICE_MEM_BASE_ADDR_ALIGN</constant> value for device associated
+              with <varname>queue</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_MEM_OBJECT_ALLOCATION_FAILURE</errorname> if there is a failure
+              to allocate memory for data store associated with <varname>src_buffer</varname>
+              or <varname>dst_buffer</varname>.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clEnqueueCopyBufferRect">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clEnqueueReadBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueReadBufferRect</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueWriteBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueWriteBufferRect</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueCopyBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateSubBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueCopyBufferToImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clEnqueueCopyImageToBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 21-Oct-2011 -->
+</refentry>
+

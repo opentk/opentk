@@ -1,0 +1,18 @@
+        <para>
+            This function may be extended with the 
+            <citerefentry><refentrytitle>cl_khr_fp64</refentrytitle></citerefentry> extension to include 
+            versions that read from or write to double scalar or 
+            vector values. 
+        <para>  
+        </para> 
+            The generic type <type>gentype</type> is extended to include <type>double</type>. 
+            The generic type <type>gentype<replaceable>n</replaceable></type> is extended to include 
+            <type>double2</type>, <type>double3</type>, <type>double4</type>, <type>double8</type>, and 
+            <type>double16</type>. 
+        <para>  
+        </para> 
+            The <function>vstore_half</function>, 
+            <function>vstore_half<replaceable>n</replaceable></function>, and 
+            <function>vstorea_half<replaceable>n</replaceable></function> functions are extended to allow a double precision
+            scalar or vector value to be written to memory as half values.
+        </para>

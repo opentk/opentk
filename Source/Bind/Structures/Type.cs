@@ -25,18 +25,26 @@ namespace Bind.Structures
 
         public Type(Type t)
         {
-            if (t != null)
-            {
-                QualifiedType = t.QualifiedType ?? t.CurrentType; // Covers current type and qualifier
-                PreviousType = t.PreviousType;
-                PreviousQualifier = t.PreviousQualifier;
-                WrapperType = t.WrapperType;
-                Array = t.Array;
-                Pointer = t.Pointer;
-                Reference = t.Reference;
-                ElementCount = t.ElementCount;
-                IsEnum = t.IsEnum;
-            }
+            Copy(t);
+        }
+
+        protected void Copy(Type t)
+        {
+            QualifiedType = t.QualifiedType ?? t.CurrentType; // Covers current type and qualifier
+            PreviousType = t.PreviousType;
+            PreviousQualifier = t.PreviousQualifier;
+            WrapperType = t.WrapperType;
+            Array = t.Array;
+            Pointer = t.Pointer;
+            Reference = t.Reference;
+            ElementCount = t.ElementCount;
+        }
+
+        public virtual object Clone()
+        {
+            var type = new Type();
+            type.Copy(this);
+            return type;
         }
 
         #endregion
@@ -181,7 +189,7 @@ namespace Bind.Structures
         #endregion
 
         // Set to true if parameter is an enum.
-        public bool IsEnum { get; set; }
+        public virtual bool IsEnum { get; protected set; }
 
         #region IndirectionLevel
 
@@ -258,7 +266,13 @@ namespace Bind.Structures
         {
             get
             {
-                return (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
+                bool unsigned = false;
+                unsigned |= CurrentType.Contains("uint");
+                unsigned |= CurrentType.Contains("ushort");
+                unsigned |= CurrentType.Contains("byte");
+                unsigned |= CurrentType.Contains("UInt");
+                unsigned |= CurrentType.Contains("Byte");
+                return unsigned;
             }
         }
 
@@ -310,7 +324,7 @@ namespace Bind.Structures
 
         #region IComparable<Type> Members
 
-        public int CompareTo(Type other)
+        public virtual int CompareTo(Type other)
         {
             // Make sure that Pointer parameters are sorted last to avoid bug [#1098].
             // The rest of the comparisons help maintain a stable order (useful for source control).

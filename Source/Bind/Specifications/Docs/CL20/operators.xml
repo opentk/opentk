@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Operators</keyword>
+        </keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>Operators</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>Operators</refname>
+        <refpurpose>Operators used in OpenCL.</refpurpose>
+    </refnamediv>
+
+<refsect1 id="springboard"><title></title>
+  <para>
+      The following operators are used in OpenCL. For information about the usage of these
+      operators, please refer to the <olink uri="operators">OpenCL specification</olink>.
+  </para>
+
+  <informaltable frame="all">
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colnum="1" colwidth="70*" colname="col1" />
+      <colspec colnum="2" colwidth="30*" colname="col2" />
+        <tbody>
+          <row> <entry>add</entry><entry>+</entry> </row>
+          <row> <entry>subtract</entry><entry>-</entry> </row>
+          <row> <entry>multiply</entry><entry>*</entry> </row>
+          <row> <entry>divide</entry><entry>/</entry> </row>
+          <row> <entry>remainder</entry><entry>%</entry> </row>
+          <row> <entry>unary plus</entry><entry>+</entry> </row>
+          <row> <entry>unary minus</entry><entry>-</entry> </row>
+          <row> <entry>post- and pre-increment</entry><entry>++</entry> </row>
+          <row> <entry>post- and pre-decrement</entry><entry>--</entry> </row>
+          <row> <entry>relational greater-than</entry><entry>&gt;</entry> </row>
+          <row> <entry>relational less-than</entry><entry>&lt;</entry> </row>
+          <row> <entry>relational greater-than or equal-to</entry><entry>&gt;=</entry> </row>
+          <row> <entry>relational less-than or equal-to</entry><entry>&lt;=</entry> </row>
+          <row> <entry>equal</entry><entry>==</entry> </row>
+          <row> <entry>not equal</entry><entry>!=</entry> </row>
+          <row> <entry>bitwise and</entry><entry>&amp;</entry> </row>
+          <row> <entry>bitwise or</entry><entry>|</entry> </row>
+          <row> <entry>bitwise not</entry><entry>^</entry> </row>
+          <row> <entry>bitwise not</entry><entry>~</entry> </row>
+          <row> <entry>logical and</entry><entry>&amp;&amp;</entry> </row>
+          <row> <entry>logical or</entry><entry>||</entry> </row>
+          <row> <entry>logical exclusive or</entry><entry>^^</entry> </row>
+          <row> <entry>logical unary not</entry><entry>!</entry> </row>
+          <row> <entry>ternary selection</entry><entry>?:</entry> </row>
+          <row> <entry>right shift</entry><entry>&gt;&gt;</entry> </row>
+          <row> <entry>left shift </entry><entry>&lt;&lt;</entry> </row>
+          <row> <entry>size of</entry><entry><constant>sizeof</constant></entry> </row>
+          <row> <entry>comma</entry><entry>,</entry> </row>
+          <row> <entry>dereference</entry><entry>*</entry> </row>
+          <row> <entry>address-of</entry><entry>&amp;</entry> </row>
+          <row> <entry>assignment</entry><entry> =</entry> </row>
+        </tbody>
+    </tgroup>
+</informaltable>
+
+</refsect1>
+    <refsect1 id="note"><title>Note</title>
+        <para>
+          Except for the <constant>sizeof</constant> operator, <type>the</type> half data type
+          cannot be used with any of the operators described in this section.
+        </para>
+    </refsect1>
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject> <olink uri="operators">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="mathConstants"><refentrytitle>Symbolic
+            Math Constants</refentrytitle></citerefentry>, <citerefentry
+            href="FP_CONTRACT"><refentrytitle>Floating Point Pragma</refentrytitle></citerefentry>,
+            <citerefentry href="macroLimits"><refentrytitle>Macros and
+            Limits</refentrytitle></citerefentry>
+        </para>
+    </refsect1> -->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 4-Jun-2013 -->
+</refentry>
+

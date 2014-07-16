@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>macros, limits</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>macros and limits</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="limits">
+        <refname>Macros and Limits</refname>
+
+        <refpurpose>
+Macros for math limits.
+        </refpurpose>
+    </refnamediv>
+
+<!-- ================================ DESCRIPTION  -->
+
+  <refsect1 xmlns:xlink="http://www.w3.org/1999/xlink" id="description"><title>Description</title>
+    <para>
+      The macro names given in the following list must use the values specified. These constant
+      expressions are suitable for use in <code>#if</code> preprocessing directives.
+    </para>
+
+    <para>
+      <informaltable frame="none">
+        <tgroup cols="2" align="left" colsep="0" rowsep="0">
+          <colspec colname="col1" colnum="1" />
+          <colspec colname="col2" colnum="2" />
+          <tbody>
+            <!-- API spec, section 6.13.2.1 -->
+            <row><entry><code>#define FLT_DIG</code></entry>        <entry><code>6</code></entry> </row>
+            <row><entry><code>#define FLT_MANT_DIG</code></entry>   <entry><code>24</code></entry> </row>
+            <row><entry><code>#define FLT_MAX_10_EXP</code></entry> <entry><code>+38</code></entry> </row>
+            <row><entry><code>#define FLT_MAX_EXP</code></entry>    <entry><code>+128</code></entry> </row>
+            <row><entry><code>#define FLT_MIN_10_EXP</code></entry> <entry><code>-37</code></entry> </row>
+            <row><entry><code>#define FLT_MIN_EXP</code></entry>    <entry><code>-125</code></entry> </row>
+            <row><entry><code>#define FLT_RADIX</code></entry>      <entry><code>2</code></entry> </row>
+            <row><entry><code>#define FLT_MAX</code></entry>        <entry><code>0x1.fffffep127f</code></entry> </row>
+            <row><entry><code>#define FLT_MIN</code></entry>        <entry><code>0x1.0p-126f</code></entry> </row>
+            <row><entry><code>#define FLT_EPSILON</code></entry>    <entry><code>0x1.0p-23f</code></entry> </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+
+    <para>
+      The macro names given in the following list (available if the double precision 
+      option is supported) must use the values specified. These constant expressions 
+      are suitable for use in <code>#if</code> preprocessing directives.
+    </para>
+
+    <para>
+      <informaltable frame="none">
+        <tgroup cols="2" align="left" colsep="0" rowsep="0">
+          <colspec colname="col1" colnum="1" />
+          <colspec colname="col2" colnum="2" />
+
+          <tbody>
+            <!-- API spec, section 6.13.2.1 -->
+            <row><entry><code>#define DBL_DIG</code> </entry>        <entry><code>15</code></entry></row>
+            <row><entry><code>#define DBL_MANT_DIG</code> </entry>   <entry><code>53</code></entry></row>
+            <row><entry><code>#define DBL_MAX_10_EXP</code> </entry> <entry><code>+308</code></entry></row>
+            <row><entry><code>#define DBL_MAX_EXP</code> </entry>    <entry><code>+1024</code></entry></row>
+            <row><entry><code>#define DBL_MIN_10_EXP</code> </entry> <entry><code>-307</code></entry></row>
+            <row><entry><code>#define DBL_MIN_EXP</code> </entry>    <entry><code>-1021</code></entry></row>
+            <row><entry><code>#define DBL_MAX</code> </entry>        <entry><code>0x1.fffffffffffffp1023</code></entry></row>
+            <row><entry><code>#define DBL_MIN</code> </entry>        <entry><code>0x1.0p-1022</code></entry></row>
+            <row><entry><code>#define DBL_EPSILON</code> </entry>    <entry><code>0x1.0p-52</code></entry></row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+
+    <para>
+      The macro names given in the following list must use the values
+      specified. These constant expressions are suitable for use in <code>#if</code>
+      preprocessing directives.  An application that wants to use <type>half</type> and
+      <type>half<replaceable>n</replaceable></type> types will need to include the 
+      <code>#pragma OPENCL EXTENSION 
+      <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> : enable</code> directive.
+    </para>
+
+    <para>
+      <informaltable frame="none">
+        <tgroup cols="2" align="left" colsep="0" rowsep="0">
+          <colspec colname="col1" colnum="1" />
+          <colspec colname="col2" colnum="2" />
+
+          <tbody>
+            <!-- ext spec, section 9.4.2 -->
+            <row><entry><code>#define HALF_DIG</code> </entry>        <entry><code>3</code></entry></row>
+            <row><entry><code>#define HALF_MANT_DIG</code> </entry>   <entry><code>11</code></entry></row>
+            <row><entry><code>#define HALF_MAX_10_EXP</code> </entry> <entry><code>+4</code></entry></row>
+            <row><entry><code>#define HALF_MAX_EXP</code> </entry>    <entry><code>+16</code></entry></row>
+            <row><entry><code>#define HALF_MIN_10_EXP</code> </entry> <entry><code>-4</code></entry></row>
+            <row><entry><code>#define HALF_MIN_EXP</code> </entry>    <entry><code>-13</code></entry></row>
+            <row><entry><code>#define HALF_MAX</code> </entry>        <entry><code>0x1.ffcp15h</code></entry></row>
+            <row><entry><code>#define HALF_MIN</code> </entry>        <entry><code>0x1.0p-14h</code></entry></row>
+            <row><entry><code>#define HALF_EPSILON</code> </entry>    <entry><code>0x1.0p-10h</code></entry></row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+
+    <para>
+      The macro names given in the following list must use the values specified. These constant
+      expressions are suitable for use in <code>#if</code> preprocessing directives.
+    </para>
+
+    <para>
+      <informaltable frame="none">
+        <tgroup cols="2" align="left" colsep="0" rowsep="0">
+          <colspec colname="col1" colnum="1" />
+          <colspec colname="col2" colnum="2" />
+          <tbody>
+            <!-- API spec, section 6.13.3, Integer Functions -->
+            <row><entry><code>#define CHAR_BIT</code></entry>   <entry><code>8</code></entry></row>
+            <row><entry><code>#define CHAR_MAX</code></entry>   <entry><code>SCHAR_MAX</code></entry></row>
+            <row><entry><code>#define CHAR_MIN</code></entry>   <entry><code>SCHAR_MIN</code></entry></row>
+            <row><entry><code>#define INT_MAX</code></entry>    <entry><code>2147483647</code></entry></row>
+            <row><entry><code>#define INT_MIN</code> </entry>   <entry><code>(-2147483647- 1)</code></entry></row>
+            <row><entry><code>#define LONG_MAX</code> </entry>  <entry><code>0x7fffffffffffffffL</code></entry></row>
+            <row><entry><code>#define LONG_MIN</code> </entry>  <entry><code>(-0x7fffffffffffffffL- 1)</code></entry></row>
+            <row><entry><code>#define SCHAR_MAX</code> </entry> <entry><code>127</code></entry></row>
+            <row><entry><code>#define SCHAR_MIN</code> </entry> <entry><code>(-127 - 1)</code></entry></row>
+            <row><entry><code>#define SHRT_MAX</code> </entry>  <entry><code>32767</code></entry></row>
+            <row><entry><code>#define SHRT_MIN</code> </entry>  <entry><code>(-32767- 1)</code></entry></row>
+            <row><entry><code>#define UCHAR_MAX</code> </entry> <entry><code>255</code></entry></row>
+            <row><entry><code>#define USHRT_MAX</code></entry>  <entry><code>65535</code></entry></row>
+            <row><entry><code>#define UINT_MAX</code> </entry>  <entry><code>0xffffffff</code></entry></row>
+            <row><entry><code>#define ULONG_MAX</code> </entry> <entry><code>0xffffffffffffffffUL</code></entry> </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+  </refsect1>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="macroLimits">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="mathFunctions"><refentrytitle>Math Functions</refentrytitle></citerefentry>,
+            <citerefentry href="mathConstants"><refentrytitle>Symbolic Math Constants</refentrytitle></citerefentry>,
+            <citerefentry href="FP_CONTRACT"><refentrytitle>Floating Point Pragma</refentrytitle></citerefentry>,
+            <citerefentry href="scalarDataTypes"><refentrytitle>Scalar Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="vectorDataTypes"><refentrytitle>Vector Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="reservedDataTypes"><refentrytitle>Reserved Data Types</refentrytitle></citerefentry>,
+            <citerefentry href="otherDataTypes"><refentrytitle>Other Data Types</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 25-Dec-2013, rev. 19 -->
+</refentry>
+

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Atomic Functions</keyword>
+        </keywordset>
+    </refentryinfo>
+    <refmeta>
+        <refentrytitle>Atomic Functions</refentrytitle>
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2010</year>
+                <holder>The Khronos Group Inc. 
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>Atomic Functions</refname> 
+        <refpurpose>Click an item in the table below for details about that function.</refpurpose> 
+    </refnamediv>
+    
+     
+<refsect1 id="springboard"><title></title>
+
+
+
+<informaltable frame="all"><tgroup cols="4" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="1*" colname="col1" />
+    <colspec colnum="2" colwidth="1*" colname="col2" />
+    <colspec colnum="3" colwidth="1*" colname="col3" />
+    <colspec colnum="4" colwidth="1*" colname="col4" />
+    <tbody>
+        <row>                       
+            <entry>
+                <citerefentry><refentrytitle>atomic_add</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_sub</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_xchg</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_inc</refentrytitle></citerefentry>
+            </entry>
+        </row>
+        <row>                       
+            <entry>
+                <citerefentry><refentrytitle>atomic_dec</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_cmpxchg</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_min</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_max</refentrytitle></citerefentry>
+            </entry>
+        </row>
+        <row>                       
+            <entry>
+                <citerefentry><refentrytitle>atomic_and</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_or</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+                <citerefentry><refentrytitle>atomic_xor</refentrytitle></citerefentry>
+            </entry>
+            <entry>
+            </entry>
+        </row>
+
+    </tbody>    
+        
+    </tgroup></informaltable>   
+
+
+
+
+
+<para>
+The following extensions enable additional atomic functions using types <type>long</type> and <type>unsigned long</type>:
+</para>
+    <informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="2*" colname="col1" />
+    <colspec colnum="2" colwidth="8*" colname="col2" />
+    <tbody>
+        <row>                       <entry><citerefentry><refentrytitle>cl_khr_int64_base_atomics</refentrytitle></citerefentry></entry>
+            <entry>Optional extensions that implement atomic operations on 64-bit signed and unsigned integers to locations in __global and __local memory. </entry>
+        </row>
+        <row>
+            <entry><citerefentry><refentrytitle>cl_khr_int64_extended_atomics</refentrytitle></citerefentry></entry>
+            <entry>Optional extensions that implement atomic operations on 64-bit signed and unsigned integers to locations in __global and __local memory. </entry>
+        </row>
+    </tbody>    
+        
+    </tgroup></informaltable>   
+    </refsect1>
+    
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            These transactions are atomic for the device executing these atomic functions. There is no
+guarantee of atomicity if the atomic operations to the same memory location are being performed
+by kernels executing on multiple devices.
+        </para>
+    </refsect1>
+    
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+                                                 <!-- link to section 9.5 of spec -->
+            <olink uri="atomicFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>     
+<!-- ================================ ALSO SEE 
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>sampler_t</refentrytitle></citerefentry>
+        </para>
+    </refsect1>  -->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+</refentry>
+

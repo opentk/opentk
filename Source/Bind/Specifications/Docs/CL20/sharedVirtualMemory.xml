@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Shared Virtual Memory</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Shared Virtual Memory</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv>
+        <refname>Shared Virtual Memory (SVM) Functions</refname>
+        <refpurpose>Click an item in the table below for details about that function.</refpurpose>
+    </refnamediv>
+
+<refsect1 id="springboard"><title></title>
+    <informaltable frame="all"><tgroup cols="2" align="left" colsep="1" rowsep="1">
+    <colspec colnum="1" colwidth="2*" colname="col1" />
+    <colspec colnum="2" colwidth="8*" colname="col2" />
+    <tbody>
+
+        <row>
+            <entry><citerefentry><refentrytitle>clSVMAlloc</refentrytitle></citerefentry></entry>
+            <entry>Allocates a shared virtual memory buffer</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>clSVMFree</refentrytitle></citerefentry></entry>
+            <entry>Frees a shared virtual memory buffer</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>clEnqueueSVMFree</refentrytitle></citerefentry></entry>
+            <entry>
+               Enqueues a command to free the shared virtual memory allocated using
+               <citerefentry><refentrytitle>clSVMAlloc</refentrytitle></citerefentry>
+               or a shared system memory pointer
+            </entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>clEnqueueSVMMemcpy</refentrytitle></citerefentry></entry>
+            <entry>Enqueues a command to do a memcpy operation</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>clEnqueueSVMMemFill</refentrytitle></citerefentry></entry>
+            <entry>Enqueues a command to fill a region in memory with a pattern of a given pattern size</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>clEnqueueSVMMap</refentrytitle></citerefentry></entry>
+            <entry>Enqueues a command that will allow the host to update a region of a SVM buffer</entry>
+        </row>
+
+        <row>
+            <entry><citerefentry><refentrytitle>clEnqueueSVMUnmap</refentrytitle></citerefentry></entry>
+            <entry>Enqueues a command to indicate that the host has completed updating a specified region</entry>
+        </row>
+
+    </tbody>
+    </tgroup>
+</informaltable>
+
+</refsect1>
+
+
+<!-- ================================ DESCRIPTION  -->
+
+<!--
+    <refsect1 id="description"><title>Description</title>
+        <para>
+        </para>
+    </refsect1>
+-->
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="sharedVirtualMemory">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+<!--
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>EXTENSION</refentrytitle></citerefentry>,
+        </para>
+    </refsect1>
+-->
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 10-Jun-2013 -->
+</refentry>
+

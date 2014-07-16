@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd" [
+<!ENTITY mathFunctionsInc SYSTEM "mathFunctionsInc.xml">
+<!ENTITY halfNativeMathInc SYSTEM "halfNativeMathInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>exp, exp2, exp10, expm1,half_exp, half_exp2, half_exp10, native_exp, native_exp2, native_exp10</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>exp, exp2, exp10, expm1,half_exp, half_exp2, half_exp10, native_exp, native_exp2, native_exp10 </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="exp">
+        <refname>exp, exp2, exp10, expm1 (including half_ and native_)</refname>
+
+        <refpurpose>
+            Exponent functions.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        exp
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        exp2
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter></parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        exp10
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter></parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        expm1
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        half_exp
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        half_exp2
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        half_exp10
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        native_exp
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        native_exp2
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        native_exp10
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para><function>exp</function> computes the base- e exponential of <varname>x</varname>. </para>
+        <para><function>exp2</function> is the exponential base 2 function. </para>
+        <para><function>exp10</function> is the exponential base 10 function. </para>
+        <para><function>expm1</function> computes <varname>e</varname><superscript>x</superscript> - 1.0. </para>
+        <para><function>half_exp</function> computes the base- e exponential of <varname>x</varname>. </para>
+        <para><function>half_exp2</function> computes the base- 2 exponential of <varname>x</varname>. </para>
+        <para><function>half_exp10</function> computes the base- 10 exponential of <varname>x</varname>. </para>
+        <para><function>native_exp</function> computes the base- e exponential of <varname>x</varname> over an
+implementation-defined range. The maximum error is implementation-defined. </para>
+        <para><function>native_exp2</function> computes the base- 2 exponential of <varname>x</varname> over an
+implementation-defined range. The maximum error is implementation-defined. </para>
+        <para><function>native_exp10</function> computes the base- 10 exponential of <varname>x</varname> over an
+implementation-defined range. The maximum error is implementation-defined. </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        &mathFunctionsInc;
+
+        &halfNativeMathInc;
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="mathFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="mathFunctions"><refentrytitle>Math Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-May-2013 -->
+</refentry>
+

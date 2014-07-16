@@ -1,0 +1,89 @@
+<!-- from section 6.5 - common stuff for global, local, constant, and private -->
+
+    <para>
+      OpenCL implements the following disjoint named address 
+      spaces: <function>__global</function>,
+      <function>__local</function>, <function>__constant</function>, and
+      <function>__private</function>. The address space qualifier may be used in variable
+      declarations to specify the region of memory that is used to allocate the object. The
+      C syntax for type qualifiers is extended in OpenCL 
+      to include an address space name as a valid type qualifier.
+      If the type of an object is qualified by an address 
+      space name, the object is allocated in the 
+      specified address name; otherwise, the object is 
+      allocated in the generic address space.
+    </para>
+
+    <para>
+      The address space names without the  __  prefix i.e. <function>global</function>,
+      <function>local</function>, <function>constant</function> 
+      and <function>private</function>
+      may be substituted for the corresponding address 
+      space names with the  __  prefix.
+    </para>
+
+    <para>
+        The address space name for arguments to a function 
+        in a program, or local variables of a function 
+        is <function>__private</function>. All function 
+        arguments shall be in the <function>__private</function> address space.
+        The address space for a variable at program scope 
+        or a static variable inside a function can either 
+        be <function>__global</function> or 
+        <function>__constant</function>, but defaults to 
+        <function>__global</function> if not specified.
+    </para>
+
+    <para>
+        OpenCL 2.0 adds support for an unnamed <function>generic</function> 
+        address space. Pointers that are declared 
+        without pointing to a named address space point to the 
+        <function>generic</function> address space. Before 
+        referring to the region pointed to, the pointer 
+        must be associated with a named address space.
+        Functions may be written with arguments and return values that point to the 
+        <function>generic</function> address space.
+    </para>
+
+    <para>
+        kernel function arguments declared to be a pointer or 
+        an array of a type must point to one of 
+        the named address spaces <function>__global</function>, 
+        <function>__local</function> or <function>__constant</function>.
+    </para>
+
+    <para>
+        The named address spaces are a subset of the generic 
+        address space except for the <function>constant</function>
+        address space.
+    </para>
+
+    <para>
+        A pointer to address space A can only be assigned to 
+        a pointer to the same address space A or a 
+        pointer to the <function>generic</function> address 
+        space. Casting a pointer to address space A to a pointer to 
+        address space B is illegal if A and B are named 
+        address spaces and A is not the same as B.
+    </para>
+
+    <para>
+        The <function>__global</function>, <function>__constant</function>, 
+        <function>__local</function>, 
+        <function>__private</function>, <function>__generic</function>, 
+        <function>global</function>, 
+        <function>constant</function>, <function>local</function>, 
+        <function>private</function> and 
+        <function>generic</function> names are reserved for use as address space 
+        qualifiers and shall not be used otherwise.
+    </para>
+
+    <para>
+        The size of pointers to different address spaces 
+        may differ. It is not correct to assume
+        that, for example, <code>sizeof(__global int *)</code> 
+        always equals <code>sizeof(__local int *)</code>.
+    </para>
+
+<!-- 25-Dec-2013, rev. 19 -->
+

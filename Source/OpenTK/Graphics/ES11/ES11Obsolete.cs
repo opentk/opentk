@@ -28,6 +28,8 @@
 #endregion
 
 using System;
+using System.Text;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Graphics.ES11
 {
@@ -60,4 +62,3 @@ namespace OpenTK.Graphics.ES11
         public static int GetClipPlanex(OpenTK.Graphics.ES11.All plane) { throw new NotImplementedException(); }
     }
 }
-

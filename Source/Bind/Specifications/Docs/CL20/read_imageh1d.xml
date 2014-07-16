@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+<!ENTITY imageFunctionsInc SYSTEM "imageFunctionsInc.xml">
+<!ENTITY imageMappingInc SYSTEM "imageMappingInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>read_imageh (1D, Half)</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>read_image (1D, Half)</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="read_image1d">
+        <refname>read_imageh (1D, Half)</refname>
+
+        <refpurpose>
+            Do an element lookup in the 1D image object, returning half floating-point values.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <function>
+                        read_imageh
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="sampler_t.html">sampler_t</link>
+                    <parameter>sampler</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <function>
+                        read_imageh
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="sampler_t.html">sampler_t</link>
+                    <parameter>sampler</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">float</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+<!-- SAMPLER-LESS FORMS -->
+
+         <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <function>
+                        read_imageh
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <function>
+                        read_imageh
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_buffer_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <function>
+                        read_imageh
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_array_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+<!-- ARRAY FORMS -->
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <function>
+                        read_imageh
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_array_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="sampler_t.html">sampler_t</link>
+                    <parameter>sampler</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <function>
+                        read_imageh
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_array_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="sampler_t.html">sampler_t</link>
+                    <parameter>sampler</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">float4</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+
+      <para>
+        An application that wants to use <type>half</type> and
+        <type>half<replaceable>n</replaceable></type> types will need to include the <code>#pragma
+        OPENCL EXTENSION <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry>
+        : enable</code> directive.
+      </para>
+
+        <para>
+          For forms that take <type>an</type> image1d_t, use <varname>coord</varname> 
+          to do an element lookup in the 1D image object specified by
+          <varname>image</varname>.
+        </para>
+
+        <para>
+          For forms that take an <type>image1d_array_t</type>, Use <emphasis>coord.x</emphasis>
+          to do an element lookup in the 1D image identified by <emphasis>coord.y</emphasis>
+          in the 1D image array specified by <varname>image</varname>.
+        </para>
+
+        <para>
+          The samplerless read image functions behave exactly as the corresponding read
+          image functions that take integer coordinates and a sampler with filter mode
+          set to <constant>CLK_FILTER_NEAREST</constant>, normalized coordinates set
+          to <constant>CLK_NORMALIZED_COORDS_FALSE</constant> and addressing mode to
+          <constant>CLK_ADDRESS_NONE</constant>.
+        </para>
+
+        <para>
+          <function>read_imageh</function> returns half precision floating-point values in the range
+          [0.0... 1.0] for image objects created with <varname>image_channel_data_type</varname>
+          set to one of the predefined packed formats or <constant>CL_UNORM_INT8</constant>
+          or <constant>CL_UNORM_INT16</constant>.
+        </para>
+
+        <para>
+          <function>read_imageh</function> returns half precision floating-point values in the range
+          [-1.0... 1.0] for image objects created with <varname>image_channel_data_type</varname>
+          set to <constant>CL_SNORM_INT8</constant>, or <constant>CL_SNORM_INT16</constant>.
+        </para>
+
+        <para>
+          <function>read_imageh</function> returns half precision floating-point values for
+          image objects created with <varname>image_channel_data_type</varname> set to
+          <constant>CL_HALF_FLOAT</constant>.
+        </para>
+
+        <para>
+          The <function>read_imageh</function> calls that take integer coordinates must
+          use a sampler with filter mode set to <constant>CLK_FILTER_NEAREST</constant>,
+          normalized coordinates set to <constant>CLK_NORMALIZED_COORDS_FALSE</constant>
+          and addressing mode set to <constant>CLK_ADDRESS_CLAMP_TO_EDGE</constant>,
+          <constant>CLK_ADDRESS_CLAMP</constant> or <constant>CLK_ADDRESS_NONE</constant>;
+          otherwise the values returned are undefined.
+        </para>
+
+        <para>
+          Values returned by <function>read_imageh</function> for image objects with
+          <varname>image_channel_data_type</varname> values not specified in the description
+          above are undefined.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          General information about the <function>read_image</function>* functions follows.
+        </para>
+
+        &imageFunctionsInc;
+
+        &imageMappingInc;
+
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page -->
+
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="imageFunctionsHalf">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_mipmap_image</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>sampler_t</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 17-Dec-2013, rev. 19 -->
+</refentry>
+

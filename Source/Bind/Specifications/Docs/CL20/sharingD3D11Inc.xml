@@ -1,0 +1,69 @@
+
+    <bridgehead>Sharing Memory Objects with Direct3D 11 Resources</bridgehead>
+
+    <para>
+      The goal of this extension is to provide interoperability between
+      OpenCL and Direct3D 11. This is designed to function analogously
+      to the <citerefentry href="cl_khr_gl_sharing"><refentrytitle>OpenGL
+      interoperability</refentrytitle></citerefentry> as defined in sections 9.7 and 9.8.
+      If this extension is supported by an implementation, the string "cl_khr_d3d11_sharing"
+      will be present in the <constant>CL_PLATFORM_EXTENSIONS</constant>
+      or <constant>CL_DEVICE_EXTENSIONS</constant> string described in
+      the table of allowed values for <varname>param_name</varname> for
+      <citerefentry><refentrytitle>clGetDeviceInfo</refentrytitle></citerefentry> or
+      <citerefentry><refentrytitle>clGetPlatformInfo</refentrytitle></citerefentry>.
+    </para>
+
+    <para>
+      As currently proposed the interfaces for this extension would be provided in
+      <code>cl_d3d11.h</code>.
+    </para>
+
+    <para>
+      This section discusses OpenCL functions that allow
+      applications to use Direct3D 11 resources as OpenCL memory objects. This allows efficient
+      sharing of data between OpenCL and Direct3D 11. The OpenCL API may be used to execute
+      kernels that read and/or write memory objects that are also Direct3D 11 resources. An
+      OpenCL image object may be created from a Direct3D 11 texture resource. An OpenCL buffer
+      object may be created from a Direct3D 11 buffer resource. OpenCL memory objects may be
+      created from Direct3D 11 objects if and only if the OpenCL context has been created from
+      a Direct3D 11 device.
+    </para>
+
+    <bridgehead>Lifetime of Shared Objects</bridgehead>
+
+    <para>
+      An OpenCL memory object created from a
+      Direct3D 11 resource remains valid as long as the corresponding Direct3D 11 resource has
+      not been deleted. If the Direct3D 11 resource is deleted through the Direct3D 11 API,
+      subsequent use of the OpenCL memory object will result in undefined behavior, including
+      but not limited to possible OpenCL errors, data corruption, and program termination.
+    </para>
+
+    <para>
+      The successful creation of a
+      cl_context against a Direct3D 11 device specified via the context create parameter
+      <constant>CL_CONTEXT_D3D11_DEVICE_KHR</constant> will increment the internal Direct3D
+      reference count on the specified Direct3D 11 device. The internal Direct3D reference
+      count on that Direct3D 11 device will be decremented when the OpenCL reference count on
+      the returned OpenCL context drops to zero.
+    </para>
+
+    <para>
+      The OpenCL context and corresponding command-queues are dependent on the
+      existence of the Direct3D 11 device from which the OpenCL context was created. If the
+      Direct3D 11 device is deleted through the Direct3D 11 API, subsequent use of the OpenCL
+      context will result in undefined behavior, including but not limited to possible OpenCL
+      errors, data corruption, and program termination.
+    </para>
+
+    <para>
+      Properties of Direct3D 11 objects may be queried
+      using <citerefentry><refentrytitle>clGetMemObjectInfo</refentrytitle></citerefentry>
+      and <citerefentry><refentrytitle>clGetImageInfo</refentrytitle></citerefentry>
+      with <varname>param_name</varname> <constant>CL_MEM_D3D11_RESOURCE_KHR</constant> and
+      <constant>CL_IMAGE_D3D11_SUBRESOURCE_KHR</constant>. 
+    </para>
+
+<!-- 22-Dec-2013, rev. 19 -->
+

@@ -1,0 +1,18 @@
+    <!-- gentype - applies only to bitselect and select -->
+
+    <para>
+      The argment type <type>gentype</type> can be <type>char</type>,
+      <type>char<replaceable>n</replaceable></type>, <type>uchar</type>,
+      <type>uchar<replaceable>n</replaceable></type>, <type>short</type>,
+      <type>short<replaceable>n</replaceable></type>, <type>ushort</type>,
+      <type>ushort<replaceable>n</replaceable></type>, <type>int</type>,
+      <type>int<replaceable>n</replaceable></type>, <type>uint</type>,
+      <type>uint<replaceable>n</replaceable></type>, <type>long</type>,
+      <type>long<replaceable>n</replaceable></type>, <type>ulong</type>,
+      <type>ulong<replaceable>n</replaceable></type>, <type>float</type>,
+      <type>float<replaceable>n</replaceable></type>, <type>double</type>, and
+      <type>double<replaceable>n</replaceable></type>.
+    </para>
+
+<!-- 13-Dec-2013, rev. 19 -->
+

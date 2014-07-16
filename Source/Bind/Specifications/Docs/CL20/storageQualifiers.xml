@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>Storage-class Qualifiers</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>Storage-class Qualifiers</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="Storage-classQualifiers">
+        <refname>Storage-class Qualifiers</refname>
+
+        <refpurpose>
+            The typedef, extern and static storage-class specifiers.
+        </refpurpose>
+    </refnamediv>
+
+    <!-- ALTERNATIVE SYNTAX SYNOPSIS (NON-FUNCTION) -->
+    <refsect2 id="synopsis">
+        <title>
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+typedef
+extern
+static
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          The <code>typedef</code>, <code>extern</code>, and <code>static</code> storage-class
+          specifiers are supported. The <code>auto</code> and <code>register</code> storage-class
+          specifiers are not supported.
+        </para>
+
+        <para>
+          The <code>extern</code> storage-class specifier can only be used for functions
+          (kernel and non-kernel functions) and global variables declared in program scope
+            or variables declared inside a function 
+            (kernel and non-kernel functions)
+          The <code>static</code> storage-class specifier can only be used for non-kernel
+          functions and global variables declared in program scope
+            and variables inside a function
+            declared in the <code>global</code> or <code>constant</code> address space.
+        </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+        extern constant float4 noise_table[256];
+        static constant float4 color_table[256];
+
+        extern kernel void my_foo(image2d_t img);
+        extern void my_bar(global float *a);
+
+        kernel void my_func(image2d_t img, global float *a)
+        {
+            extern constant float4 a;
+            static constant float4 b = (float4)(1.0f); // OK.
+            static float c; // Error: No implicit address space
+            global int hurl; // Error: Must be static
+            ...
+            my_foo(img);
+            ...
+            my_bar(a);
+            ...
+            while (1)
+            {
+                static global int inside; // OK.
+                ...
+            }
+            ...
+        }
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="storageQualifiers">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>qualifiers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Dec-2013, rev. 19 -->
+</refentry>
+

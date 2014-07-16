@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>mul24</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>mul24</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="mul24">
+        <refname>mul24</refname>
+
+        <refpurpose>
+Fast integer function to multiply 24-bit integer values.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    gentype
+                    <function>
+                        mul24
+                    </function>
+                </funcdef>
+                <paramdef>gentype<parameter>x</parameter></paramdef>
+                <paramdef>gentype<parameter>y</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          <function>mul24</function> multiplies two 24-bit integer values
+          <varname>x</varname> and <varname>y</varname>. <varname>x</varname> and
+          <varname>y</varname> are 32-bit integers but only the low 24-bits are used
+          to perform the multiplication. <function>mul24</function> should only be
+          used when values in <varname>x</varname> and <varname>y</varname> are in the
+          range [-2<superscript>23</superscript>, 2<superscript>23</superscript>-1] if
+          <varname>x</varname> and <varname>y</varname> are signed integers and in the range [0,
+          2<superscript>24</superscript>-1] if <varname>x</varname> and <varname>y</varname>
+          are unsigned integers. If <varname>x</varname> and <varname>y</varname> are not in
+          this range, the multiplication result is implementation-defined.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+          Fast integer functions can be used for optimizing performance of kernels. We
+          use the generic type name <type>gentype</type> to indicate that the function can
+          take <type>int</type>, <type>int2</type>, <type>int3</type>, <type>int4</type>,
+          <type>int8</type>, <type>int16</type>, <type>uint</type>, <type>uint2</type>,
+          <type>uint3</type>, <type>uint4</type>, <type>uint8</type>, or <type>uint16</type>
+          as the type for the arguments.
+        </para>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="integerFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="integerFunctions"><refentrytitle>Integer Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-May-2013 -->
+</refentry>
+

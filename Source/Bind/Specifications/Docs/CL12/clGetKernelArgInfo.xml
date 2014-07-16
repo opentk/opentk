@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>
+                clGetKernelArgInfo
+            </keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clGetKernelArgInfo
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2011</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetKernelArgInfo">
+        <refname>
+            clGetKernelArgInfo
+        </refname>
+
+        <refpurpose>
+            Returns information about the arguments of a kernel.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link>
+                    <function>clGetKernelArgInfo</function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="abstractDataTypes.html">cl_kernel</link>
+                    <parameter>kernel</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">cl_uint</link>
+                    <parameter>arg_indx</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="enums.html#cl_kernel_arg_info">cl_kernel_arg_info</link>
+                    <parameter>param_name</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>param_value_size</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <parameter>*param_value</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">size_t</link>
+                    <parameter>*param_value_size_ret</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term> <varname> kernel </varname> </term>
+                <listitem>
+                    <para>
+                        Specifies the kernel object being queried.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> arg_indx </varname> </term>
+                <listitem>
+                    <para>
+                      The argument index. Arguments to the kernel are referred by indices that
+                      go from 0 for the leftmost argument to <varname>n</varname> - 1, where
+                      <varname>n</varname> is the total number of arguments declared by a kernel.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_name </varname> </term>
+                <listitem>
+                    <para>
+                        Specifies the argument information to query. The list of supported
+                        <varname>param_name</varname> types and the information returned in
+                        <varname>param_value</varname> by <function>clGetKernelArgInfo</function>
+                        is described in the table below.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value </varname> </term>
+                <listitem>
+                    <para>
+                        A pointer to memory where the appropriate result being queried is returned.
+                        If <varname>param_value</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value_size </varname> </term>
+                <listitem>
+                    <para>
+                        Used to specify the size in bytes of memory pointed to by <varname>param_value</varname>.
+                        This size must be &gt; size of return type as described in the table below.
+                    </para>
+
+                    <!-- table 5.17 -->
+                    <informaltable frame="all"><anchor id="cl_kernel_info"/>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colname="col1" colnum="1" />
+                        <colspec colname="col2" colnum="2" />
+                        <colspec colname="col3" colnum="3" />
+                        <thead>
+                            <row>
+                                <entry>cl_kernel_arg_info</entry>
+                                <entry>Return Type</entry>
+                                <entry>Info. returned in <varname>param_value</varname></entry>
+                            </row>
+                        </thead>
+
+                        <tbody>
+                            <row>
+                                <entry><constant>CL_KERNEL_ARG_ADDRESS_QUALIFIER</constant></entry>
+                                <entry>cl_kernel_arg_-
+                                    address_qualifier</entry>
+                                <entry>
+                                    <para>
+                                        Returns the address qualifier specified for the argument given by <varname>arg_indx</varname>.
+                                        This can be one of the following values:
+
+                                        <literallayout>
+<constant>CL_KERNEL_ARG_ADDRESS_GLOBAL</constant>
+<constant>CL_KERNEL_ARG_ADDRESS_LOCAL</constant>
+<constant>CL_KERNEL_ARG_ADDRESS_CONSTANT</constant>
+<constant>CL_KERNEL_ARG_ADDRESS_PRIVATE</constant>
+                                        </literallayout>
+                                    </para>
+
+                                    <para>
+                                        If no address qualifier is specified, the default address
+                                        qualifier which is <constant>CL_KERNEL_ARG_ADDRESS_PRIVATE</constant> is returned.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_KERNEL_ARG_ACCESS_QUALIFIER</constant></entry>
+                                <entry>cl_kernel_arg_-
+                                    access_qualifier</entry>
+                                <entry>
+                                    <para>
+                                        Returns the access qualifier specified for the argument given by <varname>arg_indx</varname>.
+                                        This can be one of the following values:
+
+                                        <literallayout>
+<constant>CL_KERNEL_ARG_ACCESS_READ_ONLY</constant>
+<constant>CL_KERNEL_ARG_ACCESS_WRITE_ONLY</constant>
+<constant>CL_KERNEL_ARG_ACCESS_READ_WRITE</constant>
+<constant>CL_KERNEL_ARG_ACCESS_NONE</constant>
+                                        </literallayout>
+                                    </para>
+
+                                    <para>
+                                      If argument is not an image type,
+                                      <constant>CL_KERNEL_ARG_ACCESS_NONE</constant> is
+                                      returned. If argument is an image type, the access qualifier
+                                      specified or the default access qualifier is returned.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_KERNEL_ARG_TYPE_NAME</constant></entry>
+                                <entry>char[]</entry>
+                                <entry>
+                                    <para>
+                                      Returns the type name specified for the argument given
+                                      by <varname>arg_indx</varname>.  The type name returned
+                                      will be the argument type name as it was declared with any
+                                      whitespace removed.  If argument type name is an unsigned
+                                      scalar type (i.e. unsigned char, unsigned short, unsigned
+                                      int, unsigned long), uchar, ushort, uint and ulong will
+                                      be returned.  The argument type name returned does not
+                                      include any type qualifiers.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_KERNEL_ARG_TYPE_QUALIFIER</constant></entry>
+                                <entry>cl_kernel_arg-
+type_qualifier</entry>
+                                <entry>
+                                    <para>
+                                      Returns the type qualifier specified for the argument
+                                      given by <varname>arg_indx</varname>.  The returned value
+                                      can be: <constant>CL_KERNEL_ARG_TYPE_CONST</constant>,
+                                      <constant>CL_KERNEL_ARG_TYPE_RESTRICT</constant>,
+                                      <constant>CL_KERNEL_ARG_TYPE_VOLATILE</constant>,
+                                      a combination of the above enums or
+                                      <constant>CL_KERNEL_ARG_TYPE_NONE</constant>.
+                                    </para> 
+
+                                    <para>
+                                      NOTE: <constant>CL_KERNEL_ARG_TYPE_VOLATILE</constant>
+                                      is returned if the argument is a pointer and the pointer
+                                      is declared with the volatile qualifier.
+                                    </para>
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_KERNEL_ARG_NAME</constant></entry>
+                                <entry>char[]</entry>
+                                <entry>
+                                    <para>
+                                        Returns the  name specified for the argument given by <varname>arg_indx</varname>.
+                                    </para>
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                    </informaltable>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>
+                        param_value_size_ret
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para>
+                        Returns the actual size in bytes of data copied to <varname>param_value</varname>.
+                        If <varname>param_value_size_ret</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+          Kernel argument information is only available if the program
+          object associated with <varname>kernel</varname> is created with
+          <citerefentry><refentrytitle>clCreateProgramWithSource</refentrytitle></citerefentry>
+          and the program executable is built with the -cl-kernel-arg-info
+          option specified in <varname>options</varname> argument to
+          <citerefentry><refentrytitle>clBuildProgram</refentrytitle></citerefentry> or
+          <citerefentry><refentrytitle>clCompileProgram</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully. Otherwise,
+            it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+                <errorname>CL_INVALID_ARG_INDEX</errorname> if <varname>arg_indx</varname>
+                is not a valid argument index.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_VALUE</errorname> if <varname>param_name</varname>
+                is not valid, or if size in bytes specified by
+                <varname>param_value_size</varname> is &lt; size of return type as
+                described in the table above and <varname>param_value</varname> is not NULL
+            </listitem>
+
+            <listitem>
+                <errorname>CL_KERNEL_ARG_INFO_NOT_AVAILABLE</errorname> if the argument
+                information is not available for kernel.
+            </listitem>
+
+            <listitem>
+                <errorname>CL_INVALID_KERNEL</errorname> if <varname>kernel</varname>
+                is not a valid kernel object.
+            </listitem>
+
+        </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clGetKernelArgInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clCreateKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelInfo</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clCreateKernelsInProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clRetainKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clReleaseKernel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clSetKernelArg</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>clGetKernelWorkGroupInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 11-Nov-2011 -->
+</refentry>
+

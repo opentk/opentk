@@ -14,5 +14,5 @@ before_install:
  - sudo installer -pkg "MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" -target / || true
 
 script:
- - xbuild && xbuild /p:Configuration=Release
-
+ - xbuild OpenTK.sln /p:Configuration=Debug
+ - xbuild OpenTK.sln /p:Configuration=Release

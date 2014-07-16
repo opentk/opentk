@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>clGetImageInfo</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>
+            clGetImageInfo
+        </refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="clGetImageInfo">
+        <refname>
+            clGetImageInfo
+        </refname>
+
+        <refpurpose>
+            Get information specific to an image object created with clCreateImage.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">cl_int</link> <function>clGetImageInfo</function>
+                </funcdef>
+                    <paramdef>
+                        <link xlink:href="abstractDataTypes.html">cl_mem</link>
+                        <parameter>image</parameter>
+                    </paramdef>
+
+                    <paramdef>
+                        <link xlink:href="enums.html#cl_image_info">cl_image_info</link>
+                        <parameter>param_name</parameter>
+                    </paramdef>
+
+                    <paramdef>
+                        <link xlink:href="scalarDataTypes.html">size_t</link>
+                        <parameter>param_value_size</parameter>
+                    </paramdef>
+
+                    <paramdef>
+                        <link xlink:href="scalarDataTypes.html">void</link>
+                        <parameter>*param_value</parameter>
+                    </paramdef>
+
+                    <paramdef>
+                        <link xlink:href="scalarDataTypes.html">size_t</link>
+                        <parameter>*param_value_size_ret</parameter>
+                    </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ PARAMETERS -->
+
+    <refsect1 id="parameters">
+        <title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term> <varname> image </varname> </term>
+                <listitem>
+                    <para>
+                        Specifies the image object being queried.
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_name </varname> </term>
+                <listitem>
+                    <para>
+                      Specifies the information to query. The list of supported
+                      <varname>param_name</varname> types and the information returned in
+                      <varname>param_value</varname> by <function>clGetImageInfo</function>
+                      is described in the table below (Table 5.9).
+                    </para>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value </varname> </term>
+                <listitem>
+                    <para>
+                        A pointer to memory where the appropriate result being queried is returned.
+                        If <varname>param_value</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term> <varname> param_value_size </varname> </term>
+                <listitem>
+                    <para>
+                      Used to specify the size in bytes of memory pointed to by
+                      <varname>param_value</varname>.  This size must be &ge; size of return
+                      type as described in the table below (Table 5.9).
+                    </para>
+
+                    <!-- table 5.9 -->
+                    <informaltable frame="all">
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colname="col1" colnum="1" />
+                        <colspec colname="col2" colnum="2" />
+                        <colspec colname="col3" colnum="3" />
+                        <thead>
+                            <row>
+                                <entry>cl_image_info</entry><!-- param_name -->
+                                <entry>Return Type</entry>
+                                <entry>Info. returned in  <varname>param_value</varname></entry>
+                            </row>
+                        </thead>
+
+                        <tbody>
+                            <row>
+                                <entry><constant>CL_IMAGE_FORMAT</constant></entry>
+                                <entry>cl_image_format</entry>
+                                <entry>
+                                  Return image format descriptor specified
+                                  when <varname>image</varname> is created with
+                                  <citerefentry><refentrytitle>clCreateImage</refentrytitle></citerefentry>.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_ELEMENT_SIZE</constant></entry>
+                                <entry>size_t</entry>
+                                <entry>
+                                  Return size of each element of the image memory object
+                                  given by <varname>image</varname> in bytes. An element is made up of
+                                  <varname>n</varname> channels. The value of <varname>n</varname>
+                                  is given in
+                                  <citerefentry><refentrytitle>cl_image_format</refentrytitle></citerefentry>
+                                  descriptor.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_ROW_PITCH</constant></entry>
+                                <entry>size_t</entry>
+                                <entry>
+                                  Return calculated row pitch in bytes of a row of elements of the image object
+                                  given by <varname>image</varname>.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_SLICE_PITCH</constant></entry>
+                                <entry>size_t</entry>
+                                <entry>
+                                  Return calculated slice pitch in bytes of a 2D slice for the
+                                  3D image object or size of each image in a 1D or 2D image
+                                  array given by <varname>image</varname>. For a 1D image,
+                                  1D image buffer and 2D image object return 0.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_WIDTH</constant></entry>
+                                <entry>size_t</entry>
+                                <entry>
+                                    Return width of image in pixels.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_HEIGHT</constant></entry>
+                                <entry>size_t</entry>
+                                <entry>
+                                  Return height of image in pixels. For a 1D image, 1D image
+                                  buffer and 1D image array object, height = 0.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_DEPTH</constant></entry>
+                                <entry>size_t</entry>
+                                <entry>
+                                  Return depth of the image in pixels.  For a 1D image, 1D image
+                                  buffer, 2D image or 1D and 2D image array object, depth = 0.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_ARRAY_SIZE</constant></entry>
+                                <entry>size_t</entry>
+                                <entry>
+                                  Return number of images in the image array.
+                                  If <varname>image</varname> is not an image array, 0 is returned.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_NUM_MIP_LEVELS</constant></entry>
+                                <entry>cl_uint</entry>
+                                <entry>
+                                    Return num_mip_levels associated with <varname>image</varname>.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_NUM_SAMPLES</constant></entry>
+                                <entry>cl_uint</entry>
+                                <entry>
+                                    Return num_samples associated with <varname>image</varname>.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_D3D10_SUBRESOURCE_KHR</constant></entry>
+                                <entry>ID3D10Resource *</entry>
+                                <entry>
+                                  (if the
+                                  <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry>
+                                  extension is enabled) If
+                                  <varname>image</varname> was created using
+                                  <citerefentry><refentrytitle>clCreateFromD3D10Texture2DKHR</refentrytitle></citerefentry>
+                                  or
+                                  <citerefentry><refentrytitle>clCreateFromD3D10Texture3DKHR</refentrytitle></citerefentry>,
+                                  returns the <varname>subresource</varname> argument specified
+                                  when <varname>image</varname> was created.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_DX9_MEDIA_PLANE_KHR</constant></entry>
+                                <entry>cl_uint</entry>
+                                <entry>
+                                  Returns the <varname>plane</varname> argument value specified
+                                  when <varname>memobj</varname> is created using
+                                  <citerefentry><refentrytitle>clCreateFromDX9MediaSurfaceKHR</refentrytitle></citerefentry>.
+                                  (If the
+                                  <citerefentry><refentrytitle>cl_khr_dx9_media_sharing</refentrytitle></citerefentry>
+                                  extension is supported)
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_D3D11_-
+SUBRESOURCE_KHR</constant></entry>
+                                <entry>ID3D11Resource *</entry>
+                                <entry>
+                                  If the
+                                  <citerefentry><refentrytitle>cl_khr_d3d11_sharing</refentrytitle></citerefentry>
+                                  extension is suported, If
+                                  <varname>image</varname> was created using
+                                  <citerefentry><refentrytitle>clCreateFromD3D11Texture2DKHR</refentrytitle></citerefentry>,
+                                  or
+                                  <citerefentry><refentrytitle>clCreateFromD3D11Texture3DKHR</refentrytitle></citerefentry>,
+                                  returns the <varname>subresource</varname> argument specified
+                                  when <varname>image</varname> was created.
+                                </entry>
+                            </row>
+
+                            <row>
+                                <entry><constant>CL_IMAGE_D3D11_-
+SUBRESOURCE_KHR</constant></entry>
+                                <entry>UINT</entry>
+                                <entry>
+                                  If the
+                                  <citerefentry><refentrytitle>cl_khr_d3d11_sharing</refentrytitle></citerefentry>
+                                  extension is suported, If
+                                  <varname>image</varname> was created using
+                                  <citerefentry><refentrytitle>clCreateFromD3D11Texture2DKHR</refentrytitle></citerefentry>,
+                                  or
+                                  <citerefentry><refentrytitle>clCreateFromD3D11Texture3DKHR</refentrytitle></citerefentry>,
+                                  returns the <varname>subresource</varname> argument specified
+                                  when <varname>image</varname> was created.
+                                </entry>
+                            </row>
+
+<!-- The spec rev. 19, section  9.10.6, p. 99 says CL_MEM_D3D11_SUBRESOURCE_KHR, but that's probably a typo for CL_IMAGE_D3D11_SUBRESOURCE_KHR -->
+                            <row>
+                                <entry><constant>CL_IMAGE_D3D11_-
+SUBRESOURCE_KHR</constant></entry>
+                                <entry>UINT</entry>
+                                <entry>
+                                  If the
+                                  <citerefentry><refentrytitle>cl_khr_d3d11_sharing</refentrytitle></citerefentry>
+                                  extension is suported, If
+                                  <varname>image</varname> was created using
+                                  <citerefentry><refentrytitle>clCreateFromD3D11Texture2DKHR</refentrytitle></citerefentry>,
+                                  or
+                                  <citerefentry><refentrytitle>clCreateFromD3D11Texture3DKHR</refentrytitle></citerefentry>,
+                                  returns the <varname>subresource</varname> argument specified
+                                  when <varname>image</varname> was created.
+                                </entry>
+                            </row>
+
+                            </tbody>
+                        </tgroup>
+                    </informaltable>
+               </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <varname>
+                        param_value_size_ret
+                    </varname>
+                </term>
+
+                <listitem>
+                    <para>
+                        Returns the actual size in bytes of data being queried by <varname>param_value</varname>.
+                        If <varname>param_value_size_ret</varname> is NULL, it is ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            To get information that is common to all memory objects, use the
+            <citerefentry><refentrytitle>clGetMemObjectInfo</refentrytitle></citerefentry> function.
+        </para>
+    </refsect1>
+
+<!-- ================================ ERRORS  -->
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            Returns <errorname>CL_SUCCESS</errorname> if the function is executed successfully.
+            Otherwise, it returns one of the following errors:
+        </para>
+
+        <itemizedlist mark="disc">
+            <listitem>
+              <errorname>CL_INVALID_VALUE</errorname> if <varname>param_name</varname> is not
+              valid, or if size in bytes specified by <varname>param_value_size</varname>
+              is &lt; size of return type as described in the table above and
+              <varname>param_value</varname> is not NULL.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_MEM_OBJECT</errorname> if <varname>image</varname> is a
+              not a valid image object.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_RESOURCES</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the device.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_OUT_OF_HOST_MEMORY</errorname> if there is a failure to allocate
+              resources required by the OpenCL implementation on the host.
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_DX9_MEDIA_SURFACE_KHR</errorname> if
+              <varname>param_name</varname> is <constant>CL_IMAGE_DX9_MEDIA_PLANE_KHR</constant>
+              and <varname>image</varname> was not created by the function
+              <citerefentry><refentrytitle>clCreateFromDX9MediaSurfaceKHR</refentrytitle></citerefentry>.
+              (If the
+              <citerefentry><refentrytitle>cl_khr_dx9_media_sharing</refentrytitle></citerefentry>
+              extension is supported)
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_D3D10_RESOURCE_KHR</errorname> if
+              <varname>param_name</varname> is <constant>CL_MEM_D3D10_SUBRESOURCE_KHR</constant>
+              and <varname>image</varname> was not created by the function
+              <citerefentry><refentrytitle>clCreateFromD3D10Texture2DKHR</refentrytitle></citerefentry>
+              or
+              <citerefentry><refentrytitle>clCreateFromD3D10Texture3DKHR</refentrytitle></citerefentry>.
+              (If the
+              <citerefentry><refentrytitle>cl_khr_d3d10_sharing</refentrytitle></citerefentry>
+              extension is supported)
+            </listitem>
+
+            <listitem>
+              <errorname>CL_INVALID_D3D11_RESOURCE_KHR</errorname> if
+              <varname>param_name</varname> is <constant>CL_MEM_D3D11_SUBRESOURCE_KHR</constant>
+              and <varname>image</varname> was not created by the function
+              <citerefentry><refentrytitle>clCreateFromD3D11Texture2DKHR</refentrytitle></citerefentry>
+              or
+              <citerefentry><refentrytitle>clCreateFromD3D11Texture3DKHR</refentrytitle></citerefentry>.
+              (If the
+              <citerefentry><refentrytitle>cl_khr_d3d11_sharing</refentrytitle></citerefentry>
+              extension is supported)
+            </listitem>
+     </itemizedlist>
+    </refsect1>
+
+<!-- ================================ EXAMPLE  -->
+<!-- DO NOT DELETE IN CASE AN EXAMPLE IS ADDED IN THE FUTURE -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                            Example goes here - it will be set in "code" type with white space preserved.
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="clGetImageInfo">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry><refentrytitle>clGetMemObjectInfo</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ================================ COPYRIGHT  -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 24-Dec-2013, rev. 19 -->
+</refentry>
+

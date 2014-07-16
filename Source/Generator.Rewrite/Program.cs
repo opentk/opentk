@@ -102,10 +102,18 @@ namespace OpenTK.Rewrite
                 {
                     foreach (var reference in module.AssemblyReferences)
                     {
-                        var resolved = module.AssemblyResolver.Resolve(reference);
-                        if (reference.Name == "mscorlib")
+                        try
                         {
-                            mscorlib = resolved;
+                            var resolved = module.AssemblyResolver.Resolve(reference);
+                            if (reference.Name == "mscorlib")
+                            {
+                                mscorlib = resolved;
+                                break;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Error.WriteLine(e.ToString());
                         }
                     }
                 }
@@ -511,17 +519,32 @@ namespace OpenTK.Rewrite
         {
             foreach (var p in wrapper.Parameters)
             {
+                bool is_array = p.ParameterType.IsArray;
+                bool is_ref = p.ParameterType.IsByReference;
+
+                if (is_array && is_ref && p.ParameterType.GetElementType().Name == "String")
+                {
+                    // Note: ref string[] parameters are not supported!
+                    Console.Error.WriteLine("Error: parameter '{0}' not supported in function '{1}'",
+                        p, wrapper);
+                }
+
                 if (p.ParameterType.Name == "StringBuilder")
                 {
                     EmitStringBuilderEpilogue(wrapper, native, p, body, il);
                 }
 
-                if (!p.ParameterType.IsArray && p.ParameterType.Name == "String")
+                if (!is_array && !is_ref && p.ParameterType.Name == "String")
                 {
                     EmitStringEpilogue(wrapper, p, body, il);
                 }
 
-                if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String")
+                if (is_ref && p.ParameterType.GetElementType().Name == "String")
+                {
+                    EmitStringReferenceEpilogue(wrapper, p, body, il);
+                }
+
+                if (is_array && p.ParameterType.GetElementType().Name == "String")
                 {
                     EmitStringArrayEpilogue(wrapper, p, body, il);
                 }
@@ -680,7 +703,42 @@ namespace OpenTK.Rewrite
             il.Emit(OpCodes.Call, free);
         }
 
-        static void EmitConvenienceWrapper(MethodDefinition wrapper,
+        static void EmitStringReferenceParameter(MethodDefinition wrapper, ParameterReference parameter, MethodBody body, ILProcessor il)
+        {
+            var p = parameter.ParameterType;
+
+            // ref string masrhaling:
+            // IntPtr ptr = MarshalStringRefToPtr(strings);
+            // try { calli }
+            // finally { FreeStringRefPtr(ptr); }
+            var marshal_str_ref_to_ptr = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringRefToPtr"));
+
+            // IntPtr ptr;
+            var variable_name = parameter.Name + "_string_ref_ptr";
+            body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
+            int index = body.Variables.Count - 1;
+
+            // ptr = MarshalStringRefToPtr(strings);
+            il.Emit(OpCodes.Call, marshal_str_ref_to_ptr);
+            il.Emit(OpCodes.Stloc, index);
+            il.Emit(OpCodes.Ldloc, index);
+
+            // The finally block will be emitted in the function epilogue
+        }
+
+        static void EmitStringReferenceEpilogue(MethodDefinition wrapper, ParameterReference parameter, MethodBody body, ILProcessor il)
+        {
+            var p = parameter.ParameterType;
+            var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringRefPtr"));
+
+            // FreeStringRefPtr(ptr)
+            var variable_name = parameter.Name + "_string_ref_ptr";
+            var v = body.Variables.First(m => m.Name == variable_name);
+            il.Emit(OpCodes.Ldloc, v.Index);
+            il.Emit(OpCodes.Call, free);
+        }
+
+        private static void EmitConvenienceWrapper(MethodDefinition wrapper,
             MethodDefinition native, int difference, MethodBody body, ILProcessor il)
         {
             if (wrapper.Parameters.Count > 2)
@@ -756,17 +814,24 @@ namespace OpenTK.Rewrite
                 {
                     EmitStringBuilderParameter(method, parameter, body, il);
                 }
-                else if (p.Name == "String" && !p.IsArray)
+                else if (p.Name == "String" && !p.IsArray && !p.IsByReference)
                 {
                     EmitStringParameter(method, parameter, body, il);
                 }
                 else if (p.IsByReference)
                 {
-                    body.Variables.Add(new VariableDefinition(new PinnedType(p)));
-                    var index = body.Variables.Count - 1;
-                    il.Emit(OpCodes.Stloc, index);
-                    il.Emit(OpCodes.Ldloc, index);
-                    il.Emit(OpCodes.Conv_I);
+                    if (p.Name != "String&")
+                    {
+                        body.Variables.Add(new VariableDefinition(new PinnedType(p)));
+                        var index = body.Variables.Count - 1;
+                        il.Emit(OpCodes.Stloc, index);
+                        il.Emit(OpCodes.Ldloc, index);
+                        il.Emit(OpCodes.Conv_I);
+                    }
+                    else
+                    {
+                        EmitStringReferenceParameter(method, parameter, body, il);
+                    }
                 }
                 else if (p.IsArray)
                 {

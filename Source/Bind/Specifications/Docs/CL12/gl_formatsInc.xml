@@ -1,0 +1,90 @@
+
+    <para>
+      <!-- ext. spec p. 52, section 9.7.3.1, Table 9.4 --> The table below (Table 9.4) describes
+      the list of GL texture internal formats and the corresponding CL image formats. If a GL
+      texture object with an internal format from the table below is successfully created by
+      OpenGL, then there is guaranteed to be a mapping to one of the corresponding CL image
+      format(s) in that table. Texture objects created with other OpenGL internal formats may
+      (but are not guaranteed to) have a mapping to a CL image format; if such mappings exist,
+      they are guaranteed to preserve all color components, data types, and at least the number
+      of bits/component actually allocated by OpenGL for that format.
+    </para>
+
+    <informaltable frame="all">
+        <tgroup cols="2" align="center" colsep="1" rowsep="1">
+            <colspec colname="col1" colnum="1" />
+            <colspec colname="col2" colnum="2" />
+            <thead>
+                <row>
+                    <entry>GL internal format</entry>
+                    <entry>CL image format (channel order, channel data type)</entry>
+                </row>
+            </thead>
+
+            <tbody>
+                <row>
+                    <entry><constant>GL_RGBA8</constant></entry>
+                    <entry><constant>CL_RGBA, CL_UNORM_INT8 or CL_BGRA, CL_UNORM_INT8</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_RGBA</constant>, <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant></entry>
+                    <entry><constant>CL_RGBA, CL_UNORM_INT8</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_BGRA</constant>, <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant></entry>
+                    <entry><constant>CL_BGRA, CL_UNORM_INT8</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_RGBA16</constant></entry>
+                    <entry><constant>CL_RGBA, CL_UNORM_INT16</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_RGBA8I, GL_RGBA8I_EXT</constant></entry>
+                    <entry><constant>CL_RGBA, CL_SIGNED_INT8</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_RGBA16I, GL_RGBA16I_EXT</constant></entry>
+                    <entry><constant>CL_RGBA, CL_SIGNED_INT16</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_RGBA32I, GL_RGBA32I_EXT</constant></entry>
+                    <entry><constant>CL_RGBA, CL_SIGNED_INT32</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_RGBA8UI, GL_RGBA8UI_EXT</constant></entry>
+                    <entry><constant>CL_RGBA, CL_UNSIGNED_INT8</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_RGBA16UI, GL_RGBA16UI_EXT</constant></entry>
+                    <entry><constant>CL_RGBA, CL_UNSIGNED_INT16</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_RGBA32UI, GL_RGBA32UI_EXT</constant></entry>
+                    <entry><constant>CL_RGBA, CL_UNSIGNED_INT32</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_RGBA16F, GL_RGBA16F_ARB</constant></entry>
+                    <entry><constant>CL_RGBA, CL_HALF_FLOAT</constant></entry>
+                </row>
+
+                <row>
+                    <entry><constant>GL_RGBA32F, GL_RGBA32F_ARB</constant></entry>
+                    <entry><constant>CL_RGBA, CL_FLOAT</constant></entry>
+                </row>
+
+            </tbody>
+        </tgroup>
+    </informaltable>
+
+<!-- 16-Oct-2011 -->
+

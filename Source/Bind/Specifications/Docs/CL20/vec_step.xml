@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>vec_step</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>vec_step</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="shuffle">
+        <refname>vec_step</refname>
+
+        <refpurpose>
+            Takes a built-in scalar or vector data type argument and returns an integer value representing the
+            number of elements in the scalar or vector.
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef>gentype<replaceable>n</replaceable><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">char3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">uchar3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">short3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">ushort3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">half3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">int3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">uint3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">long3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">ulong3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">float3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><link xlink:href="vectorDataTypes.html">double3</link><parameter>a</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+       <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <function>
+                        vec_step
+                    </function>
+                </funcdef>
+                <paramdef><parameter>type</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+        <para>
+          The <function>vec_step</function> built-in function takes a built-in scalar or vector
+          data type argument and returns an integer value representing the number of elements
+          in the scalar or vector.
+        </para>
+
+        <para>
+            For all scalar types, <function>vec_step</function> returns 1.
+        </para>
+
+        <para>
+            The <function>vec_step</function> built-in functions that take a 3-component vector return 4.
+        </para>
+
+        <para>
+          <function>vec_step</function> may also take a pure type as an argument,
+          e.g. <function>vec_step</function>(<type>float2</type>)
+        </para>
+
+        <para>
+          We use the generic type name <type>gentype<replaceable>n</replaceable></type>
+          (or <type>gentype<replaceable>m</replaceable></type>) to indicate the
+          built-in data types <type>char{2|4|8|16}</type>, <type>uchar{2|4|8|16}</type>,
+          <type>short{2|4|8|16}</type>, <type>ushort{2|4|8|16}</type>, <type>int{2|4|8|16}</type>,
+          <type>uint{2|4|8|16}</type>, <type>long{2|4|8|16}</type>, <type>ulong{2|4|8|16}</type>,
+          <type>float{2|4|8|16}</type> or <type>double{2|4|8|16}</type> 
+          as the type for the arguments unless otherwise
+          stated. We use the generic name <type>ugentype<replaceable>n</replaceable></type>
+          to indicate the built-in unsigned integer data types.
+        </para>
+
+        <para>
+          The generic type name <type>gentype<replaceable>n</replaceable></type>
+          (or <type>gentype<replaceable>m</replaceable></type>)
+          may indicate the data type <type>half{2|4|8|16}</type> if the
+          <citerefentry><refentrytitle>cl_khr_fp16</refentrytitle></citerefentry> extension
+          is supported.
+        </para>
+    </refsect1>
+
+<!-- ================================ NOTES
+
+    <refsect1 id="notes"><title>Notes</title>
+
+    </refsect1>-->
+
+<!-- ================================ EXAMPLE  -->
+<!--
+    <refsect2 id="example1">
+        <title>
+            Example
+        </title>
+
+        <informaltable frame="none">
+            <tgroup cols="1" align="left" colsep="0" rowsep="0">
+                <colspec colname="col1" colnum="1" />
+                <tbody>
+                    <row>
+                        <entry>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect2>
+-->
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="miscVectorFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="miscVectorFunctions"><refentrytitle>Miscellaneous Vector Functions</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 16-Dec-2013, rev. 19 -->
+</refentry>
+

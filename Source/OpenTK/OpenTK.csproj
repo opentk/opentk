@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -46,7 +46,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;WIN32;CARBON;COCOA;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <DocumentationFile>..\..\Binaries\OpenTK\Debug\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>False</Optimize>
@@ -63,7 +63,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;</DefineConstants>
+    <DefineConstants>TRACE;WIN32;CARBON;COCOA;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
@@ -81,7 +81,7 @@
     <DebugType>pdbonly</DebugType>
     <WarningLevel>4</WarningLevel>
     <Optimize>True</Optimize>
-    <DefineConstants>TRACE;</DefineConstants>
+    <DefineConstants>TRACE;WIN32;CARBON;COCOA;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
@@ -92,7 +92,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;</DefineConstants>
+    <DefineConstants>TRACE;WIN32;CARBON;COCOA;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
@@ -433,21 +433,6 @@
     <Compile Include="Graphics\OpenGL\ErrorHelper.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\ES10\ES.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES10\Enums.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES10\ErrorHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES10\Helper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES10\Core.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Graphics\ES11\ErrorHelper.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -583,64 +568,7 @@
     <Compile Include="Math\BezierCurveCubic.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Compute\Memory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Device.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Platform.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Sampler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Kernel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Profiler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Program.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Enums.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CommandQueue.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CLHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Event.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Structs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\Configuration.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\ComputeContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CL10\Enums.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Compute\CL10\ErrorHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CL10\Delegates.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CL10\Core.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CL10\CLHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Compute\CL10\CL.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Compute\CL10\ImageFormat.cs">
@@ -806,6 +734,40 @@
     <Compile Include="Platform\X11\XI2Input.cs" />
     <Compile Include="Platform\X11\XI2MouseKeyboard.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSFloat.cs" />
+    <Compile Include="Compute\CL20\CL20.Enums.cs" />
+    <Compile Include="Compute\CL20\CL20.cs" />
+    <Compile Include="Compute\CL20\CL20.Helper.cs" />
+    <Compile Include="Compute\CL12\CL12.Enums.cs" />
+    <Compile Include="Compute\CL12\CL12.cs" />
+    <Compile Include="Compute\CL10\CL10.Enums.cs" />
+    <Compile Include="Compute\CL10\CL10.cs" />
+    <Compile Include="Compute\CL12\CL12.Helper.cs" />
+    <Compile Include="Compute\CL10\CL10.Helper.cs" />
+    <Compile Include="Compute\CL12\CL12.Extensions.cs" />
+    <Compile Include="Compute\CL10\CL10.Extensions.cs" />
+    <Compile Include="Extensions\ValueTypeExtensions.cs" />
+    <Compile Include="Compute\CL20\CL20.Extensions.cs" />
+    <Compile Include="Graphics\ES20\ES20Obsolete.cs" />
+    <Compile Include="Graphics\ES30\ES30Obsolete.cs" />
+    <Compile Include="Compute\ComputeBindingsBase.cs" />
+    <Compile Include="Compute\ComputeContextHandle.cs" />
+    <Compile Include="Compute\ComputeEventHandle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\IntPtrExtensions.cs" />
+    <Compile Include="Compute\CL11\CL11.Enums.cs" />
+    <Compile Include="Compute\CL11\CL11.Extensions.cs" />
+    <Compile Include="Compute\CL11\CL11.cs" />
+    <Compile Include="Compute\CL11\CL11.Helper.cs" />
+    <Compile Include="Graphics\ES10\ES10.Extensions.cs" />
+    <Compile Include="Graphics\ES10\ES10.Enums.cs" />
+    <Compile Include="Graphics\ES10\ES10.cs" />
+    <Compile Include="Graphics\ES10\ES10.Helper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\ES10\ES10.ErrorHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -835,5 +797,11 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Compute\CL20\" />
+    <Folder Include="Compute\CL12\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Compute\CL11\" />
+    <Folder Include="Graphics\ES10\" />
+  </ItemGroup>
 </Project>

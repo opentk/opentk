@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">[
+<!ENTITY imageFunctionsInc SYSTEM "imageFunctionsInc.xml">
+<!ENTITY imageMappingInc SYSTEM "imageMappingInc.xml">
+]>
+
+<refentry>
+    <refentryinfo>
+        <keywordset>
+            <keyword>write_image1d</keyword>
+        </keywordset>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>write_image (1D)</refentrytitle>
+
+        <refmiscinfo>
+            <copyright>
+                <year>2007-2013</year>
+                <holder>The Khronos Group Inc.
+ Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the condition that this copyright notice and permission notice shall be included
+in all copies or substantial portions of the Materials.</holder>
+            </copyright>
+        </refmiscinfo>
+        <manvolnum>3</manvolnum>
+    </refmeta>
+
+<!-- ================================ SYNOPSIS -->
+
+    <refnamediv id="write_image1d">
+        <refname>write_image1d</refname>
+
+        <refpurpose>
+            Write <varname>color</varname> value to location in a 1D image object.
+        </refpurpose>
+    </refnamediv>
+
+<!-- FLOAT -->
+
+    <refsynopsisdiv xmlns:xlink="http://www.w3.org/1999/xlink"><title></title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagef
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">float4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagef
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_buffer_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">float4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagef
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_array_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">float4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+<!-- INT -->
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagei
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagei
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_buffer_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagei
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_array_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+<!-- UINT -->
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imageui
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">uint4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imageui
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_buffer_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">uint4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imageui
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_array_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">uint4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+<!-- HALF -->
+
+        <bridgehead>Functions added with half precision support enabled by extension 
+        <code>cl_khr_fp16</code>:</bridgehead>
+
+         <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imageh
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imageh
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_buffer_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imageh
+                    </function>
+                </funcdef>
+
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_array_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">half4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <bridgehead>Functions added with mipmap support enabled by extension 
+        <code>cl_khr_mipmap_image</code>:</bridgehead>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagef
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>lod</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">float4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagei
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>lod</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imageui
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>lod</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">uint4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagef
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_array_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>lod</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">float4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imagei
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_array_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>lod</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>
+                    <link xlink:href="scalarDataTypes.html">void</link>
+                    <function>
+                        write_imageui
+                    </function>
+                </funcdef>
+                <paramdef>
+                    <link xlink:href="otherDataTypes.html">image1d_array_t</link>
+                    <parameter>image</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">int2</link>
+                    <parameter>coord</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="scalarDataTypes.html">int</link>
+                    <parameter>lod</parameter>
+                </paramdef>
+                <paramdef>
+                    <link xlink:href="vectorDataTypes.html">uint4</link>
+                    <parameter>color</parameter>
+                </paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+<!-- ================================ DESCRIPTION  -->
+
+    <refsect1 id="description"><title>Description</title>
+       
+        <bridgehead>For <function>write_imagef</function>, <function>write_imagei</function>,
+and <function>write_imageui</function> forms that take <type>image1d_t</type> or <type>image1d_buffer_t</type></bridgehead>:
+
+        <para>
+            Write <varname>color</varname> value to location 
+            specified by <varname>coord</varname> in 
+            the 1D image or 1D image buffer object specified by 
+            <varname>image</varname>. Appropriate data format conversion to the 
+            specified image format is done before writing the 
+            color value. <varname>coord</varname> is considered to be unnormalized 
+            coordinates and must be in the range 0 ... image 
+            width – 1.
+       </para>
+       
+        <para>
+         <function>write_imagef</function> can only be used with image objects created with
+         <varname>image_channel_data_type</varname> set to one of the pre-defined packed formats
+         or set to <constant>CL_SNORM_INT8</constant>, <constant>CL_UNORM_INT8</constant>,
+         <constant>CL_SNORM_INT16</constant>, <constant>CL_UNORM_INT16</constant>,
+         <constant>CL_HALF_FLOAT</constant>, or <constant>CL_FLOAT</constant>. Appropriate data
+         format conversion will be done to convert channel data from a floating-point value to
+         actual data format in which the channels are stored.
+       </para>
+
+       <para>
+         <function>write_imagei</function> functions can only be used with image objects
+         created with <varname>image_channel_data_type</varname> set to one of the following
+         values: <constant>CL_SIGNED_INT8</constant>, <constant>CL_SIGNED_INT16</constant>,
+         or <constant>CL_SIGNED_INT32</constant>.
+       </para>
+
+       <para>
+         <function>write_imageui</function> functions can only be used with image objects
+         created with <varname>image_channel_data_type</varname> set to one of the following
+         values: <constant>CL_UNSIGNED_INT8</constant>, <constant>CL_UNSIGNED_INT16</constant>,
+         or <constant>CL_UNSIGNED_INT32</constant>.
+       </para>
+
+       <para>
+          The behavior of <function>write_imagef</function>,
+          <function>write_imagei</function> and <function>write_imageui</function> for image
+          objects created with <varname>image_channel_data_type</varname> values not specified
+          in the description above or with coordinate values that is not in the range 
+          (0 &hellip; image width - 1), is undefined.
+       </para>
+
+
+        <bridgehead>For <function>write_imagef</function>, <function>write_imagei</function>,
+and <function>write_imageui</function> forms that take <type>image1d_array_t</type></bridgehead>:
+
+
+        <para>
+            Write <varname>color</varname> value to location 
+            specified by <varname>coord.x</varname> in 
+            the 1D image identified by <varname>coord.y</varname> 
+            in the 1D image array specified by 
+            <varname>image</varname>. Appropriate data format conversion to the 
+            specified image format is done before writing the 
+            color value. <varname>coord.x</varname> and 
+            <varname>coord.y</varname> are considered to be unnormalized 
+            coordinates and must be in the range 0 ... image 
+            width – 1 and 0 … image number of layers – 1.
+       </para>
+
+        <para>
+         <function>write_imagef</function> can only be used with image objects created with
+         <varname>image_channel_data_type</varname> set to one of the pre-defined packed formats
+         or set to <constant>CL_SNORM_INT8</constant>, <constant>CL_UNORM_INT8</constant>,
+         <constant>CL_SNORM_INT16</constant>, <constant>CL_UNORM_INT16</constant>,
+         <constant>CL_HALF_FLOAT</constant>, or <constant>CL_FLOAT</constant>. Appropriate data
+         format conversion will be done to convert channel data from a floating-point value to
+         actual data format in which the channels are stored.
+       </para>
+
+       <para>
+         <function>write_imagei</function> functions can only be used with image objects
+         created with <varname>image_channel_data_type</varname> set to one of the following
+         values: <constant>CL_SIGNED_INT8</constant>, <constant>CL_SIGNED_INT16</constant>,
+         or <constant>CL_SIGNED_INT32</constant>.
+       </para>
+
+       <para>
+         <function>write_imageui</function> functions can only be used with image objects
+         created with <varname>image_channel_data_type</varname> set to one of the following
+         values: <constant>CL_UNSIGNED_INT8</constant>, <constant>CL_UNSIGNED_INT16</constant>,
+         or <constant>CL_UNSIGNED_INT32</constant>.
+       </para>
+
+       <para>
+          The behavior of <function>write_imagef</function>,
+          <function>write_imagei</function> and <function>write_imageui</function> for image
+          objects created with <varname>image_channel_data_type</varname> values not specified
+          in the description above or with (x, y) coordinate values that are not in the range 
+          (0 &hellip; image width - 1, 0 &hellip;image number of layers - 1), respectively, is undefined.
+       </para>
+
+       <bridgehead>For <function>write_imageh</function></bridgehead>:
+
+       <para>
+         The <function>write_imageh</function> functions are enabled when the half type is
+          supported and can only be used with image objects created with
+         <varname>image_channel_data_type</varname> set to one of the pre-defined packed formats
+         or set to <constant>CL_SNORM_INT8</constant>, <constant>CL_UNORM_INT8</constant>,
+         <constant>CL_SNORM_INT16</constant>, <constant>CL_UNORM_INT16</constant> or
+         <constant>CL_HALF_FLOAT</constant>.
+         Appropriate data format conversion to the specified 
+         image format is done before writing the color value. 
+         <varname>x</varname> &amp; <varname>y</varname> are 
+         considered to be unnormalized coordinates 
+         and must be in the range 0 ... width – 1, and 0 … 
+         height – 1.
+       </para>
+
+
+       <bridgehead>Mipmap write image functions enabled by 
+<citerefentry href="cl_khr_mipmap_image"><refentrytitle>cl_khr_mipmap_image</refentrytitle></citerefentry>:</bridgehead>
+
+
+        <para>
+            For the image write 1D functions enabled by the mipmap extension 
+            that take an <type>image1d_t</type> object,
+            write <varname>color</varname> value to location specified by 
+            <varname>coord</varname> in the mip-level specified by 
+            <varname>lod</varname> in the 1D image
+            object specified by <varname>image</varname>. Appropriate data format
+            conversion to the specified image format is done
+            before writing the color value. <varname>coord</varname> is considered to be 
+            an unnormalized coordinate and
+            must be in the range 0&hellip; image width of the mip-level
+            specified by <varname>lod</varname> – 1.
+        </para>
+
+        <para>
+            In these functions, the behavior of <function>write_imagef</function>, 
+            <function>write_imagei</function>, and
+            <function>write_imageui</function> if the coordinate value is not in
+            the range (0&hellip; image width of the mip-level
+            specified by <varname>lod</varname> – 1) or <varname>lod</varname> value exceeds the
+            (number of mip-levels in the image – 1) is
+            undefined.
+        </para>
+
+        <para>
+            For the image write 1D functions enabled by the mipmap extension 
+            that take an <type>image1d_array_t</type> object,
+            write <varname>color</varname> value to location specified by 
+            <varname>coord.x</varname> in the 1D image
+             specified by <varname>coord.y</varname> and mip-level <varname>lod</varname> 
+            in the 1D image array specified by <varname>image</varname>. Appropriate data format
+            conversion to the specified image format is done
+            before writing the color value. <varname>coord.x</varname> and  
+            <varname>coord.y</varname> are considered to be unnormalized 
+            coordinates and
+            must be in the range 0&hellip; image width of mip-level
+            specified by <varname>lod</varname> - 1 and 0&hellip; image number of layers - 1.
+        </para>
+
+        <para>
+            In these functions, the behavior of <function>write_imagef</function>, 
+            <function>write_imagei</function>, and
+            <function>write_imageui</function> if (<emphasis>x, y</emphasis>) 
+            coordinate values are not
+            in the range (0&hellip; image width of the mip-level
+            specified by <varname>lod</varname> – 1, 0&hellip; image number of
+            layers – 1), respectively or <varname>lod</varname> value exceeds the
+            (number of mip-levels in the image – 1), is
+            undefined.
+        </para>
+
+    </refsect1>
+
+<!-- ================================ NOTES  -->
+
+    <refsect1 id="notes"><title>Notes</title>
+
+      &imageFunctionsInc;
+
+      &imageMappingInc;
+
+    </refsect1>
+
+
+<!-- ================================ SPECIFICATION  -->
+<!-- Set the "uri" attribute in the <olink /> element to the "named destination" for the PDF page
+-->
+    <refsect1 id="specification"><title>Specification</title>
+        <para>
+            <imageobject>
+                <imagedata fileref="pdficon_small1.gif" format="gif" />
+            </imageobject>
+
+            <olink uri="imageFunctions">OpenCL Specification</olink>
+        </para>
+    </refsect1>
+
+<!-- ================================ ALSO SEE  -->
+
+    <refsect1 id="seealso"><title>Also see</title>
+        <para>
+            <citerefentry href="imageFunctions"><refentrytitle>Image Functions</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>cl_khr_mipmap_image</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>sampler_t</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+
+<!-- ============================== COPYRIGHT -->
+<!-- Content included from copyright.inc.xsl -->
+
+    <refsect3 id="Copyright"><title></title>
+        <imageobject>
+                <imagedata fileref="KhronosLogo.jpg" format="jpg" />
+        </imageobject>
+        <para />
+    </refsect3>
+
+<!-- 17-Dec-2013, rev. 19 -->
+</refentry>
+
