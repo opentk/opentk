@@ -183,29 +183,31 @@ namespace OpenTK.Platform.Linux
                 {
                     OnMouseUp(i);
                 }
+            }
 
-                if (mouse.Position != previous_mouse.Position)
-                {
-                    OnMouseMove(mouse.X, mouse.Y);
-                }
+            if (mouse.X != previous_mouse.X || mouse.Y != previous_mouse.Y)
+            {
+                OnMouseMove(mouse.X, mouse.Y);
+            }
 
-                if (mouse.Scroll != previous_mouse.Scroll)
-                {
-                    OnMouseWheel(mouse.Scroll.X, mouse.Scroll.Y);
-                }
+            if (mouse.Scroll != previous_mouse.Scroll)
+            {
+                float dx = mouse.Scroll.X - previous_mouse.Scroll.X;
+                float dy = mouse.Scroll.Y - previous_mouse.Scroll.Y;
+                OnMouseWheel(dx, dy);
+            }
 
-                // Note: focus follows mouse. Literally.
-                bool cursor_in = Bounds.Contains(new Point(mouse.X, mouse.Y));
-                if (!cursor_in && Focused)
-                {
-                    OnMouseLeave(EventArgs.Empty);
-                    SetFocus(false);
-                }
-                else if (cursor_in && !Focused)
-                {
-                    OnMouseEnter(EventArgs.Empty);
-                    SetFocus(true);
-                }
+            // Note: focus follows mouse. Literally.
+            bool cursor_in = Bounds.Contains(new Point(mouse.X, mouse.Y));
+            if (!cursor_in && Focused)
+            {
+                OnMouseLeave(EventArgs.Empty);
+                SetFocus(false);
+            }
+            else if (cursor_in && !Focused)
+            {
+                OnMouseEnter(EventArgs.Empty);
+                SetFocus(true);
             }
 
             return mouse;
