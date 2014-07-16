@@ -28,6 +28,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
@@ -359,10 +360,9 @@ namespace OpenTK.Platform.Linux
                     return MouseButton.Button8;
                 case EvdevButton.BTN8:
                     return MouseButton.Button9;
-                case EvdevButton.BTN9:
-                    return MouseButton.LastButton;
                 default:
-                    return MouseButton.LastButton;
+                    Debug.Print("[Input] Unknown EvdevButton {0}", button);
+                    return MouseButton.Left;
             }
         }
     }

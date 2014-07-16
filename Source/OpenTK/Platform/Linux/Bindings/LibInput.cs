@@ -258,9 +258,8 @@ namespace OpenTK.Platform.Linux
         public Fixed24 DeltaY { get { return GetDY(@event); } }
         public Fixed24 X { get { return GetAbsX(@event); } }
         public Fixed24 Y { get { return GetAbsY(@event); } }
-        // Are the following useful?
-        //public Fixed24 TransformedX(int width) { return GetAbsXTransformed(@event, width); }
-        //public Fixed24 TransformedY(int height) { return GetAbsXTransformed(@event, height); }
+        public Fixed24 TransformedX(int width) { return GetAbsXTransformed(@event, width); }
+        public Fixed24 TransformedY(int height) { return GetAbsYTransformed(@event, height); }
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_time", CallingConvention = CallingConvention.Cdecl)]
         static extern uint GetTime(IntPtr @event);

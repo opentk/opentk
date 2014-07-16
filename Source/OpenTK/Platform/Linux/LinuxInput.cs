@@ -28,7 +28,9 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Input;
@@ -107,6 +109,9 @@ namespace OpenTK.Platform.Linux
         static long DeviceFDCount;
         DeviceCollection<KeyboardDevice> Keyboards = new DeviceCollection<KeyboardDevice>();
         DeviceCollection<MouseDevice> Mice = new DeviceCollection<MouseDevice>();
+
+        // Todo: do we need to maintain the geometry of each display separately?
+        Rectangle bounds;
 
         // Global mouse cursor state
         Vector2 CursorPosition = Vector2.Zero;
@@ -210,6 +215,12 @@ namespace OpenTK.Platform.Linux
                     ret < 0 && !(error == ErrorNumber.Again || error == ErrorNumber.Interrupted) ||
                     (poll_fd.revents & (PollFlags.Hup | PollFlags.Error | PollFlags.Invalid)) != 0;
 
+                // We need to query the desktop bounds in order to position the mouse cursor correctly.
+                // This value will be used for the current bunch of input events. If a monitor changes
+                // resolution in the meantime, we might be slightly off in our calculations - this error
+                // will be corrected when the next bunch of input events arrives.
+                UpdateDisplayBounds();
+
                 if (ret > 0 && (poll_fd.revents & (PollFlags.In | PollFlags.Pri)) != 0)
                 {
                     ProcessEvents(input_context);
@@ -223,6 +234,19 @@ namespace OpenTK.Platform.Linux
                 }
             }
             Debug.Print("[Input] Exited input loop.", poll_fd.fd, poll_fd.events);
+        }
+
+        void UpdateDisplayBounds()
+        {
+            bounds = Rectangle.Empty;
+            for (DisplayIndex i = DisplayIndex.First; i < DisplayIndex.Sixth; i++)
+            {
+                DisplayDevice display = DisplayDevice.GetDisplay(i);
+                if (display != null)
+                {
+                    bounds = Rectangle.Union(bounds, display.Bounds);
+                }
+            }
         }
 
         void Setup()
@@ -425,16 +449,22 @@ namespace OpenTK.Platform.Linux
             {
                 mouse.State.Position += delta;
             }
+
+            CursorPosition = new Vector2(
+                MathHelper.Clamp(CursorPosition.X + delta.X, bounds.Left, bounds.Right),
+                MathHelper.Clamp(CursorPosition.Y + delta.Y, bounds.Top, bounds.Bottom));
         }
 
         void HandlePointerMotionAbsolute(MouseDevice mouse, PointerEvent e)
         {
-            Vector2 position = new Vector2(e.X, e.Y);
             if (mouse != null)
             {
-                mouse.State.Position = position;
+                mouse.State.Position = new Vector2(e.X, e.Y);
             }
-            CursorPosition = position; // update global cursor position
+
+            CursorPosition = new Vector2(
+                e.TransformedX(bounds.Width),
+                e.TransformedY(bounds.Height));
         }
 
         static int GetId(IntPtr device)

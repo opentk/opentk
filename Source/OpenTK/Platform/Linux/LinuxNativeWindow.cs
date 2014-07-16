@@ -32,6 +32,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
+using OpenTK.Input;
 using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform.Linux
@@ -43,9 +44,13 @@ namespace OpenTK.Platform.Linux
         LinuxWindowInfo window;
         string title;
         Icon icon;
-        bool exists;
         Rectangle bounds;
         Size client_size;
+        bool exists;
+        bool is_focused;
+
+        KeyboardState previous_keyboard;
+        MouseState previous_mouse;
 
         public LinuxNativeWindow(IntPtr display, IntPtr gbm, int fd,
             int x, int y, int width, int height, string title,
@@ -147,10 +152,83 @@ namespace OpenTK.Platform.Linux
             return SurfaceFormat.RGBA8888;
         }
 
+        KeyboardState ProcessKeyboard(KeyboardState keyboard)
+        {
+            for (Key i = 0; i < Key.LastKey; i++)
+            {
+                if (keyboard[i])
+                {
+                    OnKeyDown(i, previous_keyboard[i]);
+                    // Todo: implement libxkb-common binding for text input
+                }
+
+                if (!keyboard[i] && previous_keyboard[i])
+                {
+                    OnKeyUp(i);
+                }
+            }
+            return keyboard;
+        }
+
+        MouseState ProcessMouse(MouseState mouse)
+        {
+            for (MouseButton i = 0; i < MouseButton.LastButton; i++)
+            {
+                if (mouse[i] && !previous_mouse[i])
+                {
+                    OnMouseDown(i);
+                }
+
+                if (!mouse[i] && previous_mouse[i])
+                {
+                    OnMouseUp(i);
+                }
+
+                if (mouse.Position != previous_mouse.Position)
+                {
+                    OnMouseMove(mouse.X, mouse.Y);
+                }
+
+                if (mouse.Scroll != previous_mouse.Scroll)
+                {
+                    OnMouseWheel(mouse.Scroll.X, mouse.Scroll.Y);
+                }
+
+                // Note: focus follows mouse. Literally.
+                bool cursor_in = Bounds.Contains(new Point(mouse.X, mouse.Y));
+                if (!cursor_in && Focused)
+                {
+                    OnMouseLeave(EventArgs.Empty);
+                    SetFocus(false);
+                }
+                else if (cursor_in && !Focused)
+                {
+                    OnMouseEnter(EventArgs.Empty);
+                    SetFocus(true);
+                }
+            }
+
+            return mouse;
+        }
+
+        void SetFocus(bool focus)
+        {
+            if (is_focused != focus)
+            {
+                is_focused = focus;
+                OnFocusedChanged(EventArgs.Empty);
+            }
+        }
+
         #region INativeWindow Members
 
         public override void ProcessEvents()
         {
+            // Note: there is no event-based keyboard/mouse input available.
+            // We will fake that by polling OpenTK.Input.
+            previous_keyboard = ProcessKeyboard(Keyboard.GetState());
+            previous_mouse = ProcessMouse(Mouse.GetCursorState());
+
             base.ProcessEvents();
         }
 
@@ -216,7 +294,7 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                return true;
+                return is_focused;
             }
         }
 
