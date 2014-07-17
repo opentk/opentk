@@ -260,6 +260,7 @@ namespace OpenTK.Platform.Linux
 
         MouseState ProcessMouse(MouseState mouse)
         {
+            // Handle mouse buttons
             for (MouseButton i = 0; i < MouseButton.LastButton; i++)
             {
                 if (mouse[i] && !previous_mouse[i])
@@ -273,11 +274,29 @@ namespace OpenTK.Platform.Linux
                 }
             }
 
-            if (mouse.X != previous_mouse.X || mouse.Y != previous_mouse.Y)
+            // Handle mouse movement
             {
-                OnMouseMove(mouse.X, mouse.Y);
+                int x = mouse.X;
+                int y = mouse.Y;
+
+                // Make sure the mouse cannot leave the GameWindow when captured
+                if (!CursorVisible)
+                {
+                    x = MathHelper.Clamp(mouse.X, Bounds.Left, Bounds.Right - 1);
+                    y = MathHelper.Clamp(mouse.X, Bounds.Top, Bounds.Bottom - 1);
+                    if (x != mouse.X || y != mouse.Y)
+                    {
+                        Mouse.SetPosition(x, y);
+                    }
+                }
+
+                if (X != previous_mouse.X || Y != previous_mouse.Y)
+                {
+                    OnMouseMove(x, y);
+                }
             }
 
+            // Handle mouse scroll
             if (mouse.Scroll != previous_mouse.Scroll)
             {
                 float dx = mouse.Scroll.X - previous_mouse.Scroll.X;
@@ -285,6 +304,7 @@ namespace OpenTK.Platform.Linux
                 OnMouseWheel(dx, dy);
             }
 
+            // Handle mouse focus
             // Note: focus follows mouse. Literally.
             bool cursor_in = Bounds.Contains(new Point(mouse.X, mouse.Y));
             if (!cursor_in && Focused)

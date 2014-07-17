@@ -255,7 +255,7 @@ namespace OpenTK.Platform.Linux
                 (int)Math.Round(CursorPosition.X + CursorOffset.X),
                 (int)Math.Round(CursorPosition.Y + CursorOffset.Y));
 
-            DisplayDevice display = DisplayDevice.FromPoint(p.X, p.Y);
+            DisplayDevice display = DisplayDevice.FromPoint(p.X, p.Y) ?? DisplayDevice.Default;
             if (display != null)
             {
                 LinuxDisplay d = (LinuxDisplay)display.Id;
@@ -465,8 +465,8 @@ namespace OpenTK.Platform.Linux
             }
 
             CursorPosition = new Vector2(
-                MathHelper.Clamp(CursorPosition.X + delta.X, bounds.Left, bounds.Right),
-                MathHelper.Clamp(CursorPosition.Y + delta.Y, bounds.Top, bounds.Bottom));
+                MathHelper.Clamp(CursorPosition.X + delta.X, bounds.Left, bounds.Right - 1),
+                MathHelper.Clamp(CursorPosition.Y + delta.Y, bounds.Top, bounds.Bottom - 1));
             UpdateCursor();
         }
 
