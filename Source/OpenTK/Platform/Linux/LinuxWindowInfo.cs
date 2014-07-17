@@ -46,6 +46,7 @@ namespace OpenTK.Platform.Linux
                 throw new ArgumentNullException();
 
             FD = fd;
+            BufferManager = gbm;
             DisplayDevice = display_device;
             // The window handle and surface handle must
             // be filled in manually once they are known.

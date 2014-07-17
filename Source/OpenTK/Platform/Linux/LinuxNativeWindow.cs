@@ -56,6 +56,7 @@ namespace OpenTK.Platform.Linux
         MouseCursor cursor_current;
         BufferObject cursor_custom;
         BufferObject cursor_default;
+        BufferObject cursor_empty;
 
         IntPtr gbm_surface;
 
@@ -114,6 +115,7 @@ namespace OpenTK.Platform.Linux
             Debug.Print("[KMS] Created EGL surface {0:x}", window.Surface);
 
             cursor_default = CreateCursor(gbm, Cursors.Default);
+            cursor_empty = CreateCursor(gbm, Cursors.Empty);
             Cursor = MouseCursor.Default;
             exists = true;
         }
@@ -133,13 +135,16 @@ namespace OpenTK.Platform.Linux
             int height = 64;
             SurfaceFormat format = SurfaceFormat.ARGB8888;
             SurfaceFlags usage = SurfaceFlags.Cursor64x64 | SurfaceFlags.Write;
+
+            Debug.Print("[KMS] Gbm.CreateBuffer({0:X}, {1}, {2}, {3}, {4}).",
+                gbm, width, height, format, usage);
+
             BufferObject bo = Gbm.CreateBuffer(
                 gbm, width, height, format, usage);
 
             if (bo == BufferObject.Zero)
             {
-                Debug.Print("[KMS] Gbm.CreateBuffer({0:X}, {1}, {2}, {3}, {4}) failed.",
-                    gbm, width, height, format, usage);
+                Debug.Print("[KMS] Failed to create buffer.");
                 return bo;
             }
 
@@ -169,15 +174,28 @@ namespace OpenTK.Platform.Linux
             }
             else if (cursor == MouseCursor.Empty)
             {
-                // nothing to do
+                bo = cursor_empty;
             }
             else
             {
+                if (cursor_custom != BufferObject.Zero)
+                    cursor_custom.Dispose();
                 cursor_custom = CreateCursor(window.BufferManager, cursor);
+                bo = cursor_custom;
             }
 
-            Drm.SetCursor(window.FD, window.DisplayDevice.Id,
-                bo.Handle, bo.Width, bo.Height, cursor.X, cursor.Y);
+            // If we failed to create a proper cursor, try falling back
+            // to the empty cursor. We do not want to crash here!
+            if (bo == BufferObject.Zero)
+            {
+                bo = cursor_empty;
+            }
+
+            if (bo != BufferObject.Zero)
+            {
+                Drm.SetCursor(window.FD, window.DisplayDevice.Id,
+                    bo.Handle, bo.Width, bo.Height, cursor.X, cursor.Y);
+            }
         }
 
         static SurfaceFormat GetSurfaceFormat(IntPtr display, GraphicsMode mode)
@@ -464,9 +482,15 @@ namespace OpenTK.Platform.Linux
             }
             set
             {
-                if (value)
+                if (value && !is_cursor_visible)
                 {
+                    SetCursor(cursor_current);
                 }
+                else if (!value && is_cursor_visible)
+                {
+                    SetCursor(MouseCursor.Empty);
+                }
+                is_cursor_visible = value;
             }
         }
 
@@ -485,8 +509,10 @@ namespace OpenTK.Platform.Linux
                         cursor_custom.Dispose();
                     }
 
-                    SetCursor(value);
-
+                    if (CursorVisible)
+                    {
+                        SetCursor(value);
+                    }
                     cursor_current = value;
                 }
             }
