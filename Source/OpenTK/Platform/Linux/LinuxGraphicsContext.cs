@@ -72,7 +72,11 @@ namespace OpenTK.Platform.Linux
 
             if (is_flip_queued)
             {
-                WaitFlip(SwapInterval > 0);
+                // Todo: if we don't wait for the page flip,
+                // we drop all rendering buffers and get a crash
+                // in Egl.SwapBuffers(). We need to fix that
+                // before we can disable vsync.
+                WaitFlip(true); // WaitFlip(SwapInterval > 0)
                 if (is_flip_queued)
                 {
                     Debug.Print("[KMS] Dropping frame");
