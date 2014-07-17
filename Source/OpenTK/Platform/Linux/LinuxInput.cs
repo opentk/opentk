@@ -249,6 +249,20 @@ namespace OpenTK.Platform.Linux
             }
         }
 
+        void UpdateCursor()
+        {
+            Point p = new Point(
+                (int)Math.Round(CursorPosition.X + CursorOffset.X),
+                (int)Math.Round(CursorPosition.Y + CursorOffset.Y));
+
+            DisplayDevice display = DisplayDevice.FromPoint(p.X, p.Y);
+            if (display != null)
+            {
+                LinuxDisplay d = (LinuxDisplay)display.Id;
+                Drm.MoveCursor(d.FD, d.Id, p.X, p.Y);
+            }
+        }
+
         void Setup()
         {
             // Todo: add static path fallback when udev is not installed.
@@ -453,6 +467,7 @@ namespace OpenTK.Platform.Linux
             CursorPosition = new Vector2(
                 MathHelper.Clamp(CursorPosition.X + delta.X, bounds.Left, bounds.Right),
                 MathHelper.Clamp(CursorPosition.Y + delta.Y, bounds.Top, bounds.Bottom));
+            UpdateCursor();
         }
 
         void HandlePointerMotionAbsolute(MouseDevice mouse, PointerEvent e)
@@ -465,6 +480,7 @@ namespace OpenTK.Platform.Linux
             CursorPosition = new Vector2(
                 e.TransformedX(bounds.Width),
                 e.TransformedY(bounds.Height));
+            UpdateCursor();
         }
 
         static int GetId(IntPtr device)
@@ -580,7 +596,10 @@ namespace OpenTK.Platform.Linux
         {
             // Todo: this does not appear to be supported in libinput.
             // We will have to emulate this in the KMS mouse rendering code.
-            CursorOffset = new Vector2((float)x, (float)y);
+            CursorOffset = new Vector2(
+                (float)x - CursorPosition.X,
+                (float)y - CursorPosition.Y);
+            UpdateCursor();
         }
 
         MouseState IMouseDriver2.GetCursorState()

@@ -1,11 +1,11 @@
-#region License
+﻿#region License
 //
-// LinuxWindowInfo.cs
+// Kms.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 Stefanos Apostolopoulos
+// Copyright (c) 2006-2014 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,28 +28,19 @@
 #endregion
 
 using System;
-using System.Diagnostics;
-using OpenTK.Platform.Egl;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Linux
 {
-    class LinuxWindowInfo : EglWindowInfo
+    class Kms
     {
-        public int FD { get; private set; }
-        public LinuxDisplay DisplayDevice { get; private set; }
-        public IntPtr BufferManager { get; private set; }
+        const string lib = "libkms";
 
-        public LinuxWindowInfo(IntPtr display, int fd, IntPtr gbm, LinuxDisplay display_device)
-            : base(IntPtr.Zero, display, IntPtr.Zero)
-        {
-            if (display_device == null)
-                throw new ArgumentNullException();
+        [DllImport(lib, EntryPoint = "kms_bo_map", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int MapBuffer(IntPtr bo, out IntPtr @out);
 
-            FD = fd;
-            DisplayDevice = display_device;
-            // The window handle and surface handle must
-            // be filled in manually once they are known.
-        }
+        [DllImport(lib, EntryPoint = "kms_bo_unmap", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int UnmapBuffer(IntPtr bo);
     }
 }
 

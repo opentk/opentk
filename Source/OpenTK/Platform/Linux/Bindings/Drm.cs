@@ -89,6 +89,13 @@ namespace OpenTK.Platform.Linux
         [DllImport(lib, EntryPoint = "drmModeSetCrtc", CallingConvention = CallingConvention.Cdecl)]
         unsafe public static extern int ModeSetCrtc(int fd, int crtcId, int bufferId,
             int x, int y, int* connectors, int count, ModeInfo* mode);
+
+        [DllImport(lib, EntryPoint = "drmModeSetCursor2", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetCursor(int fd, int crtcId, int bo_handle, int width, int height, int hot_x, int hot_y);
+
+        [DllImport(lib, EntryPoint = "drmModeMoveCursor", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int MoveCursor(int fd, int crtcId, int x, int y);
+
     }
 
     enum ModeConnection

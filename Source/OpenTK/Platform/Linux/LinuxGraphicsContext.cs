@@ -46,7 +46,7 @@ namespace OpenTK.Platform.Linux
     /// </remarks>
     class LinuxGraphicsContext : Egl.EglUnixContext
     {
-        IntPtr bo, bo_next;
+        BufferObject bo, bo_next;
         int fd;
         bool is_flip_queued;
         int swap_interval;
@@ -192,29 +192,29 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        IntPtr LockSurface()
+        BufferObject LockSurface()
         {
             IntPtr gbm_surface = WindowInfo.Handle;
             return Gbm.LockFrontBuffer(gbm_surface);
         }
 
-        int GetFramebuffer(IntPtr bo)
+        int GetFramebuffer(BufferObject bo)
         {
-            if (bo == IntPtr.Zero)
+            if (bo == BufferObject.Zero)
                 goto fail;
 
-            int bo_handle = Gbm.BOGetHandle(bo).ToInt32();
+            int bo_handle = bo.Handle;
             if (bo_handle == 0)
             {
                 Debug.Print("[KMS] Gbm.BOGetHandle({0:x}) failed.", bo);
                 goto fail;
             }
 
-            int width = Gbm.BOGetWidth(bo);
-            int height = Gbm.BOGetHeight(bo);
+            int width = bo.Width;
+            int height = bo.Height;
             int bpp = Mode.ColorFormat.BitsPerPixel;
             int depth = Mode.Depth;
-            int stride = Gbm.BOGetStride(bo);
+            int stride = bo.Stride;
 
             if (width == 0 || height == 0 || bpp == 0)
             {
@@ -235,7 +235,7 @@ namespace OpenTK.Platform.Linux
                 goto fail;
             }
 
-            Gbm.BOSetUserData(bo, (IntPtr)buffer, DestroyFB);
+            bo.SetUserData((IntPtr)buffer, DestroyFB);
             return buffer;
 
             fail:
@@ -255,9 +255,9 @@ namespace OpenTK.Platform.Linux
         }
 
         static readonly DestroyUserDataCallback DestroyFB = HandleDestroyFB;
-        static void HandleDestroyFB(IntPtr bo, IntPtr data)
+        static void HandleDestroyFB(BufferObject bo, IntPtr data)
         {
-            IntPtr gbm = Gbm.BOGetDevice(bo);
+            IntPtr gbm = bo.Device;
             int fb = data.ToInt32();
             Debug.Print("[KMS] Destroying framebuffer {0}", fb);
 

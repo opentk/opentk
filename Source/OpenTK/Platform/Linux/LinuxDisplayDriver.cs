@@ -38,6 +38,7 @@ namespace OpenTK.Platform.Linux
     // Stores platform-specific information about a display
     class LinuxDisplay
     {
+        public int FD;
         public IntPtr Connector;
         public IntPtr Crtc;
         public IntPtr Encoder;
@@ -77,8 +78,9 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        public LinuxDisplay(IntPtr c, IntPtr e, IntPtr r)
+        public LinuxDisplay(int fd, IntPtr c, IntPtr e, IntPtr r)
         {
+            FD = fd;
             Connector = c;
             Encoder = e;
             Crtc = r;
@@ -327,7 +329,7 @@ namespace OpenTK.Platform.Linux
             if (crtc == null)
                 return false;
 
-            display = new LinuxDisplay((IntPtr)c, (IntPtr)encoder, (IntPtr)crtc);
+            display = new LinuxDisplay(fd, (IntPtr)c, (IntPtr)encoder, (IntPtr)crtc);
             return true;
         }
 

@@ -351,6 +351,26 @@ namespace OpenTK
 
         #endregion
 
+        #region FromPoint
+
+        internal static DisplayDevice FromPoint(int x, int y)
+        {
+            for (DisplayIndex i = DisplayIndex.First; i < DisplayIndex.Sixth; i++)
+            {
+                DisplayDevice display = DisplayDevice.GetDisplay(i);
+                if (display != null)
+                {
+                    if (display.Bounds.Contains(x, y))
+                    {
+                        return display;
+                    }
+                }
+            }
+            return null;
+        }
+
+        #endregion
+
         #endregion
 
         #region --- Private Methods ---

@@ -48,9 +48,16 @@ namespace OpenTK.Platform.Linux
         Size client_size;
         bool exists;
         bool is_focused;
+        bool is_cursor_visible = true;
 
         KeyboardState previous_keyboard;
         MouseState previous_mouse;
+
+        MouseCursor cursor_current;
+        BufferObject cursor_custom;
+        BufferObject cursor_default;
+
+        IntPtr gbm_surface;
 
         public LinuxNativeWindow(IntPtr display, IntPtr gbm, int fd,
             int x, int y, int width, int height, string title,
@@ -67,7 +74,7 @@ namespace OpenTK.Platform.Linux
                 throw new NotSupportedException("[KMS] Driver does not currently support headless systems");
             }
 
-            window = new LinuxWindowInfo(display, fd, display_device.Id as LinuxDisplay);
+            window = new LinuxWindowInfo(display, fd, gbm, display_device.Id as LinuxDisplay);
 
             // Note: we only support fullscreen windows on KMS.
             // We implicitly override the requested width and height
@@ -106,11 +113,74 @@ namespace OpenTK.Platform.Linux
             window.CreateWindowSurface(mode.Index.Value);
             Debug.Print("[KMS] Created EGL surface {0:x}", window.Surface);
 
-            // Todo: create mouse cursor
+            cursor_default = CreateCursor(gbm, Cursors.Default);
+            Cursor = MouseCursor.Default;
             exists = true;
         }
 
-        SurfaceFormat GetSurfaceFormat(IntPtr display, GraphicsMode mode)
+        #region Private Members
+
+        static BufferObject CreateCursor(IntPtr gbm, MouseCursor cursor)
+        {
+            if (cursor.Width > 64 || cursor.Height > 64)
+            {
+                Debug.Print("[KMS] Cursor size {0}x{1} unsupported. Maximum is 64x64.",
+                    cursor.Width, cursor.Height);
+                return default(BufferObject);
+            }
+
+            int width = 64;
+            int height = 64;
+            SurfaceFormat format = SurfaceFormat.ARGB8888;
+            SurfaceFlags usage = SurfaceFlags.Cursor64x64 | SurfaceFlags.Write;
+            BufferObject bo = Gbm.CreateBuffer(
+                gbm, width, height, format, usage);
+
+            if (bo == BufferObject.Zero)
+            {
+                Debug.Print("[KMS] Gbm.CreateBuffer({0:X}, {1}, {2}, {3}, {4}) failed.",
+                    gbm, width, height, format, usage);
+                return bo;
+            }
+
+            // Copy cursor.Data into a new buffer of the correct size
+            byte[] cursor_data = new byte[width * height * 4];
+            for (int y = 0; y < cursor.Height; y++)
+            {
+                int dst_offset = y * width * 4;
+                int src_offset = y * cursor.Width * 4;
+                int src_length = cursor.Width * 4;
+                Array.Copy(
+                    cursor.Data, src_offset,
+                    cursor_data, dst_offset,
+                    src_length);
+            }
+            bo.Write(cursor_data);
+
+            return bo;
+        }
+
+        void SetCursor(MouseCursor cursor)
+        {
+            BufferObject bo = default(BufferObject);
+            if (cursor == MouseCursor.Default)
+            {
+                bo = cursor_default;
+            }
+            else if (cursor == MouseCursor.Empty)
+            {
+                // nothing to do
+            }
+            else
+            {
+                cursor_custom = CreateCursor(window.BufferManager, cursor);
+            }
+
+            Drm.SetCursor(window.FD, window.DisplayDevice.Id,
+                bo.Handle, bo.Width, bo.Height, cursor.X, cursor.Y);
+        }
+
+        static SurfaceFormat GetSurfaceFormat(IntPtr display, GraphicsMode mode)
         {
             // Use EGL 1.4 EGL_NATIVE_VISUAL_ID to retrieve
             // the corresponding surface format. If that fails
@@ -221,6 +291,8 @@ namespace OpenTK.Platform.Linux
                 OnFocusedChanged(EventArgs.Empty);
             }
         }
+
+        #endregion
 
         #region INativeWindow Members
 
@@ -388,10 +460,13 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                return false;
+                return is_cursor_visible;
             }
             set
             {
+                if (value)
+                {
+                }
             }
         }
 
@@ -399,10 +474,21 @@ namespace OpenTK.Platform.Linux
         {
             get
             {
-                return MouseCursor.Empty;
+                return cursor_current;
             }
             set
             {
+                if (cursor_current != value)
+                {
+                    if (cursor_custom != BufferObject.Zero)
+                    {
+                        cursor_custom.Dispose();
+                    }
+
+                    SetCursor(value);
+
+                    cursor_current = value;
+                }
             }
         }
 

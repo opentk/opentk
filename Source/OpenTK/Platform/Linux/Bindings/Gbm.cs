@@ -32,9 +32,8 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Linux
 {
-    using Device = IntPtr; // opaque pointer "struct gbm_device*"
+    using Device = IntPtr; // struct gbm_device*
     using Surface = IntPtr;
-    using BufferObject = IntPtr;
     using BufferObjectHandle = IntPtr;
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -44,23 +43,32 @@ namespace OpenTK.Platform.Linux
     {
         const string lib = "gbm";
 
+        [DllImport(lib, EntryPoint = "gbm_bo_create", CallingConvention = CallingConvention.Cdecl)]
+        public static extern BufferObject CreateBuffer(Device gbm, int width, int height, SurfaceFormat format, SurfaceFlags flags);
+
+        [DllImport(lib, EntryPoint = "gbm_bo_destroy", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void DestroyBuffer(BufferObject bo);
+
+        [DllImport(lib, EntryPoint = "gbm_bo_write", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BOWrite(IntPtr bo, IntPtr buf, IntPtr count);
+
         [DllImport(lib, EntryPoint = "gbm_bo_get_device", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Device BOGetDevice(BufferObject bo);
+        public static extern Device BOGetDevice(IntPtr bo);
 
         [DllImport(lib, EntryPoint = "gbm_bo_get_handle", CallingConvention = CallingConvention.Cdecl)]
-        public static extern BufferObjectHandle BOGetHandle(BufferObject bo);
+        public static extern BufferObjectHandle BOGetHandle(IntPtr bo);
 
         [DllImport(lib, EntryPoint = "gbm_bo_get_height", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int BOGetHeight(BufferObject bo);
+        public static extern int BOGetHeight(IntPtr bo);
 
         [DllImport(lib, EntryPoint = "gbm_bo_get_width", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int BOGetWidth(BufferObject bo);
+        public static extern int BOGetWidth(IntPtr bo);
 
         [DllImport(lib, EntryPoint = "gbm_bo_get_stride", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int BOGetStride(BufferObject bo);
+        public static extern int BOGetStride(IntPtr bo);
 
         [DllImport(lib, EntryPoint = "gbm_bo_set_user_data", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void BOSetUserData(BufferObject bo, IntPtr data, DestroyUserDataCallback callback);
+        public static extern void BOSetUserData(IntPtr bo, IntPtr data, DestroyUserDataCallback callback);
 
         [DllImport(lib, EntryPoint = "gbm_create_device", CallingConvention = CallingConvention.Cdecl)]
         public static extern Device CreateDevice(int fd);
@@ -173,6 +181,98 @@ namespace OpenTK.Platform.Linux
         Cursor64x64 = (1 << 1),
         Rendering = (1 << 2),
         Write = (1 << 3),
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct BufferObject : IEquatable<BufferObject>
+    {
+        IntPtr buffer;
+
+        public static readonly BufferObject Zero =
+            default(BufferObject);
+
+        public int Write(byte[] data)
+        {
+            unsafe
+            {
+                fixed (byte* pdata = data)
+                {
+                    return Gbm.BOWrite(buffer, (IntPtr)pdata, (IntPtr)data.Length);
+                }
+            }
+        }
+
+        public void SetUserData(IntPtr data, DestroyUserDataCallback destroyFB)
+        {
+            Gbm.BOSetUserData(buffer, data, destroyFB);
+        }
+
+        public Device Device
+        {
+            get { return Gbm.BOGetDevice(buffer); }
+        }
+
+        public int Handle
+        {
+            get { return Gbm.BOGetHandle(buffer).ToInt32(); }
+        }
+
+        public int Width
+        {
+            get { return Gbm.BOGetWidth(buffer); }
+        }
+
+        public int Height
+        {
+            get { return Gbm.BOGetHeight(buffer); }
+        }
+
+        public int Stride
+        {
+            get { return Gbm.BOGetStride(buffer); }
+        }
+
+        public void Dispose()
+        {
+            Gbm.DestroyBuffer(this);
+            buffer = IntPtr.Zero;
+        }
+
+        public static bool operator ==(BufferObject left, BufferObject right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(BufferObject left, BufferObject right)
+        {
+            return !left.Equals(right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is BufferObject &&
+                this.Equals((BufferObject)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return buffer.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[BufferObject: {0}]", buffer);
+        }
+
+        #region IEquatable implementation
+
+        public bool Equals(BufferObject other)
+        {
+            return buffer == other.buffer;
+        }
+
+        #endregion
     }
 }
 
