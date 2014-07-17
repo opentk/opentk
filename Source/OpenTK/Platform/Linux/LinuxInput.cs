@@ -372,14 +372,14 @@ namespace OpenTK.Platform.Linux
             {
                 KeyboardDevice keyboard = new KeyboardDevice(device, Keyboards.Count);
                 Keyboards.Add(keyboard.Id, keyboard);
-                Debug.Print("[Input] Added keyboard device {0}", keyboard.Id);
+                Debug.Print("[Input] Added keyboard device {0} '{1}'", keyboard.Id, keyboard.Name);
             }
 
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Mouse))
             {
                 MouseDevice mouse = new MouseDevice(device, Mice.Count);
                 Mice.Add(mouse.Id, mouse);
-                Debug.Print("[Input] Added mouse device {0}", mouse.Id);
+                Debug.Print("[Input] Added mouse device {0} '{1}'", mouse.Id, mouse.Name);
             }
 
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Touch))
