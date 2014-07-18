@@ -82,6 +82,9 @@ namespace OpenTK.Platform.Linux
             }
         }
 
+        [DllImport(lib, EntryPoint = "libinput_device_get_seat", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr DeviceGetSeat(IntPtr device);
+
         [DllImport(lib, EntryPoint = "libinput_device_has_capability", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DeviceHasCapability(IntPtr device, DeviceCapability capability);
@@ -115,6 +118,26 @@ namespace OpenTK.Platform.Linux
 
         [DllImport(lib, EntryPoint = "libinput_suspend", CallingConvention = CallingConvention.Cdecl)]
         public static extern void Suspend(IntPtr libinput);
+
+        [DllImport(lib, EntryPoint = "libinput_seat_get_logical_name", CallingConvention = CallingConvention.Cdecl)]
+        static extern public IntPtr SeatGetLogicalNameInternal(IntPtr seat);
+        public static string SeatGetLogicalName(IntPtr seat)
+        {
+            unsafe
+            {
+                return new string((sbyte*)SeatGetLogicalNameInternal(seat));
+            }
+        }
+
+        [DllImport(lib, EntryPoint = "libinput_seat_get_physical_name", CallingConvention = CallingConvention.Cdecl)]
+        static extern public IntPtr SeatGetPhysicalNameInternal(IntPtr seat);
+        public static string SeatGetPhysicalName(IntPtr seat)
+        {
+            unsafe
+            {
+                return new string((sbyte*)SeatGetPhysicalName(seat));
+            }
+        }
     }
 
     enum DeviceCapability

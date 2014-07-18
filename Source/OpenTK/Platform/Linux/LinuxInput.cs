@@ -44,6 +44,8 @@ namespace OpenTK.Platform.Linux
             readonly IntPtr Device;
             string name;
             string output;
+            string logical_seat;
+            string physical_seat;
 
             public DeviceBase(IntPtr device, int id)
             {
@@ -69,6 +71,32 @@ namespace OpenTK.Platform.Linux
                 {
                     name = name ?? LibInput.DeviceGetName(Device);
                     return name;
+                }
+            }
+
+            public IntPtr Seat
+            {
+                get
+                {
+                    return LibInput.DeviceGetSeat(Device);
+                }
+            }
+
+            public string LogicalSeatName
+            {
+                get
+                {
+                    logical_seat = logical_seat ?? LibInput.SeatGetLogicalName(Seat);
+                    return logical_seat;
+                }
+            }
+
+            public string PhysicalSeatName
+            {
+                get
+                {
+                    physical_seat = physical_seat ?? LibInput.SeatGetPhysicalName(Seat);
+                    return physical_seat;
                 }
             }
 
@@ -372,14 +400,16 @@ namespace OpenTK.Platform.Linux
             {
                 KeyboardDevice keyboard = new KeyboardDevice(device, Keyboards.Count);
                 Keyboards.Add(keyboard.Id, keyboard);
-                Debug.Print("[Input] Added keyboard device {0} '{1}'", keyboard.Id, keyboard.Name);
+                Debug.Print("[Input] Added keyboard device {0} '{1}' on '{2}' ('{3}')",
+                    keyboard.Id, keyboard.Name, keyboard.LogicalSeatName, keyboard.PhysicalSeatName);
             }
 
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Mouse))
             {
                 MouseDevice mouse = new MouseDevice(device, Mice.Count);
                 Mice.Add(mouse.Id, mouse);
-                Debug.Print("[Input] Added mouse device {0} '{1}'", mouse.Id, mouse.Name);
+                Debug.Print("[Input] Added mouse device {0} '{1}' on '{2}' ('{3}')",
+                    mouse.Id, mouse.Name, mouse.LogicalSeatName, mouse.PhysicalSeatName);
             }
 
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Touch))
