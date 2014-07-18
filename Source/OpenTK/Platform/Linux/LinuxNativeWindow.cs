@@ -290,7 +290,7 @@ namespace OpenTK.Platform.Linux
                     }
                 }
 
-                if (X != previous_mouse.X || Y != previous_mouse.Y)
+                if (x != previous_mouse.X || y != previous_mouse.Y)
                 {
                     OnMouseMove(x, y);
                 }
