@@ -283,7 +283,7 @@ namespace OpenTK.Platform.Linux
                 if (!CursorVisible)
                 {
                     x = MathHelper.Clamp(mouse.X, Bounds.Left, Bounds.Right - 1);
-                    y = MathHelper.Clamp(mouse.X, Bounds.Top, Bounds.Bottom - 1);
+                    y = MathHelper.Clamp(mouse.Y, Bounds.Top, Bounds.Bottom - 1);
                     if (x != mouse.X || y != mouse.Y)
                     {
                         Mouse.SetPosition(x, y);
