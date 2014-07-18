@@ -825,7 +825,7 @@ namespace OpenTK.Platform.X11
                     case XEventName.ClientMessage:
                         if (!isExiting && e.ClientMessageEvent.ptr1 == _atom_wm_destroy)
                         {
-                            Debug.WriteLine("Exit message received.");
+                            Debug.Print("[X11] Exit message received for window {0:X} on display {1:X}", window.Handle, window.Display);
                             CancelEventArgs ce = new CancelEventArgs();
                             OnClosing(ce);
 
@@ -1624,6 +1624,8 @@ namespace OpenTK.Platform.X11
 
         public void Exit()
         {
+            Debug.Print("[X11] Sending exit message window {0:X} on display {1:X}", window.Handle, window.Display);
+
             XEvent ev = new XEvent();
             ev.type = XEventName.ClientMessage;
             ev.ClientMessageEvent.format = 32;
@@ -1644,10 +1646,12 @@ namespace OpenTK.Platform.X11
 
         public void DestroyWindow()
         {
-            Debug.WriteLine("X11GLNative shutdown sequence initiated.");
+            Debug.Print("[X11] Destroying window {0:X} on display {1:X}", window.Handle, window.Display);
+
             using (new XLock(window.Display))
             {
-                Functions.XSync(window.Display, true);
+                Functions.XUnmapWindow(window.Display, window.Handle);
+                Functions.XSync(window.Display, false);
                 Functions.XDestroyWindow(window.Display, window.Handle);
                 exists = false;
             }
