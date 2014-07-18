@@ -378,8 +378,13 @@ namespace OpenTK.Platform.Linux
         {
             if (disposing)
             {
+                Debug.Print("[KMS] Destroying window {0}.", window.Handle);
                 window.Dispose();
                 Gbm.DestroySurface(window.Handle);
+            }
+            else
+            {
+                Debug.Print("[KMS] {0} leaked. Did you forget to call Dispose()?", GetType().FullName);
             }
         }
 

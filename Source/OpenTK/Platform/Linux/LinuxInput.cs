@@ -655,6 +655,7 @@ namespace OpenTK.Platform.Linux
             {
                 if (input_context != IntPtr.Zero)
                 {
+                    Debug.Print("[Input] Destroying libinput context");
                     LibInput.Suspend(input_context);
                     Interlocked.Increment(ref exit);
 
@@ -664,11 +665,16 @@ namespace OpenTK.Platform.Linux
 
                 if (udev != IntPtr.Zero)
                 {
+                    Debug.Print("[Input] Destroying udev context");
                     Udev.Destroy(udev);
                     udev = IntPtr.Zero;
                 }
 
                 input_interface = null;
+            }
+            else
+            {
+                Debug.Print("[Input] {0} leaked. Did you forget to call Dispose()?", GetType().FullName);
             }
         }
 

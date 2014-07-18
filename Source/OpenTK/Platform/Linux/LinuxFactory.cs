@@ -169,16 +169,19 @@ namespace OpenTK.Platform.Linux
         {
             if (egl_display != IntPtr.Zero)
             {
+                Debug.Print("[KMS] Terminating EGL.");
                 Egl.Terminate(egl_display);
                 egl_display = IntPtr.Zero;
             }
             if (gbm_device != IntPtr.Zero)
             {
+                Debug.Print("[KMS] Destroying GBM device.");
                 Gbm.DestroyDevice(gbm_device);
                 gbm_device = IntPtr.Zero;
             }
             if (_fd >= 0)
             {
+                Debug.Print("[KMS] Closing GPU fd.");
                 Libc.close(_fd);
             }
 
