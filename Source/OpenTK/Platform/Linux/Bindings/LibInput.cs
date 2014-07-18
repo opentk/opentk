@@ -135,7 +135,7 @@ namespace OpenTK.Platform.Linux
         {
             unsafe
             {
-                return new string((sbyte*)SeatGetPhysicalName(seat));
+                return new string((sbyte*)SeatGetPhysicalNameInternal(seat));
             }
         }
     }
