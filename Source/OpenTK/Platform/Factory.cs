@@ -54,6 +54,7 @@ namespace OpenTK.Platform
             // Create regular platform backend
             if (Configuration.RunningOnSdl2) Default = new SDL2.Sdl2Factory();
             else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
+            else if (Configuration.RunningOnLinux) Default = new Linux.LinuxFactory();
             else if (Configuration.RunningOnWindows) Default = new Windows.WinFactory();
             else if (Configuration.RunningOnMacOS) Default = new MacOS.MacOSFactory();
             else Default = new UnsupportedPlatform();
@@ -70,7 +71,8 @@ namespace OpenTK.Platform
             }
             else if (Egl.Egl.IsSupported)
             {
-                if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
+                if (Configuration.RunningOnLinux) Embedded = Default;
+                else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
                 else if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
                 else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
                 else Embedded = new UnsupportedPlatform();

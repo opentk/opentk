@@ -23,15 +23,34 @@ namespace Examples.Tests
                 DisplayDevice dev = DisplayDevice.GetDisplay(DisplayIndex.First + i);
                 if (dev != null)
                 {
-                    Trace.WriteLine(dev.ToString());
-                    MessageBox.Show(dev.ToString());
+                    Print(dev.ToString());
+
                     dev.ChangeResolution(dev.SelectResolution(640, 480, 32, 60.0f));
                     Thread.Sleep(1000);
-                    MessageBox.Show(dev.ToString());
+                    Print(dev.ToString());
+
                     dev.RestoreResolution();
                     Thread.Sleep(1000);
-                    MessageBox.Show(dev.ToString());
+                    Print(dev.ToString());
                 }
+            }
+        }
+
+        static void Print(string msg)
+        {
+            Trace.WriteLine(msg);
+
+            // Also display a MessageBox when running on a platform
+            // with WinForms support.
+            try
+            {
+                if (Configuration.RunningOnWindows || Configuration.RunningOnX11 || Configuration.RunningOnMacOS)
+                {
+                    MessageBox.Show(msg);
+                }
+            }
+            catch
+            {
             }
         }
     }
