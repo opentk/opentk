@@ -892,7 +892,7 @@ namespace OpenTK.Platform.X11
                         int x = e.MotionEvent.x;
                         int y = e.MotionEvent.y;
 
-                        if (x != 0 || y != 0)
+                        if (x != MouseState.X || y != MouseState.Y)
                         {
                             OnMouseMove(
                                 MathHelper.Clamp(x, 0, Width),
