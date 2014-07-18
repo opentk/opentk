@@ -259,7 +259,7 @@ namespace OpenTK.Platform.Linux
         unsafe static void GetModes(LinuxDisplay display, DisplayResolution[] modes, out DisplayResolution current)
         {
             int mode_count = display.pConnector->count_modes;
-            Debug.Print("[KMS] Display supports {0} modes", mode_count);
+            Debug.Print("[KMS] Display supports {0} mode(s)", mode_count);
             for (int i = 0; i < mode_count; i++)
             {
                 ModeInfo* mode = display.pConnector->modes + i;
