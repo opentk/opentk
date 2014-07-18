@@ -286,8 +286,8 @@ namespace OpenTK.Platform.Linux
                         Drm.ModeSetCrtc(fd,
                             wnd.DisplayDevice.pCrtc->crtc_id,
                             wnd.DisplayDevice.pCrtc->buffer_id,
-                            wnd.DisplayDevice.pCrtc->width,
-                            wnd.DisplayDevice.pCrtc->height,
+                            wnd.DisplayDevice.pCrtc->x,
+                            wnd.DisplayDevice.pCrtc->y,
                             &connector_id,
                             1,
                             &mode);
