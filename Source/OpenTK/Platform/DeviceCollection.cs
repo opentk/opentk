@@ -77,14 +77,22 @@ namespace OpenTK.Platform
 
         public void Remove(int id)
         {
-            if (!Map.ContainsKey(id))
+            if (!TryRemove(id))
             {
                 Debug.Print("Invalid DeviceCollection<{0}> id: {1}", typeof(T).FullName, id);
-                return;
+            }
+        }
+
+        public bool TryRemove(int id)
+        {
+            if (!Map.ContainsKey(id))
+            {
+                return false;
             }
 
             Devices[Map[id]] = default(T);
             Map.Remove(id);
+            return true;
         }
 
         public T FromIndex(int index)

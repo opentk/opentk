@@ -117,7 +117,6 @@ namespace OpenTK.Platform.Linux
             public KeyboardDevice(IntPtr device, int id)
                 : base(device, id)
             {
-                State.SetIsConnected(true);
             }
         }
 
@@ -128,13 +127,23 @@ namespace OpenTK.Platform.Linux
             public MouseDevice(IntPtr device, int id)
                 : base(device, id)
             {
-                State.SetIsConnected(true);
             }
         }
 
         static readonly object Sync = new object();
         static readonly Key[] KeyMap = Evdev.KeyMap;
         static long DeviceFDCount;
+
+        // libinput returns various devices with keyboard/pointer even though
+        // they are not traditional keyboards/mice (for example "Integrated Camera"
+        // can be detected as a keyboard.)
+        // Since there is no API to retrieve actual device capabilities,
+        // we add all detected devices to a "candidate" list and promote them
+        // to an actual keyboard/mouse only when we receive a valid input event.
+        // This is far from optimal, but it appears to be the only viable solution
+        // unless a new API is added to libinput.
+        DeviceCollection<KeyboardDevice> KeyboardCandidates = new DeviceCollection<KeyboardDevice>();
+        DeviceCollection<MouseDevice> MouseCandidates = new DeviceCollection<MouseDevice>();
         DeviceCollection<KeyboardDevice> Keyboards = new DeviceCollection<KeyboardDevice>();
         DeviceCollection<MouseDevice> Mice = new DeviceCollection<MouseDevice>();
 
@@ -399,7 +408,7 @@ namespace OpenTK.Platform.Linux
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Keyboard))
             {
                 KeyboardDevice keyboard = new KeyboardDevice(device, Keyboards.Count);
-                Keyboards.Add(keyboard.Id, keyboard);
+                KeyboardCandidates.Add(keyboard.Id, keyboard);
                 Debug.Print("[Input] Added keyboard device {0} '{1}' on '{2}' ('{3}')",
                     keyboard.Id, keyboard.Name, keyboard.LogicalSeatName, keyboard.PhysicalSeatName);
             }
@@ -407,7 +416,7 @@ namespace OpenTK.Platform.Linux
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Mouse))
             {
                 MouseDevice mouse = new MouseDevice(device, Mice.Count);
-                Mice.Add(mouse.Id, mouse);
+                MouseCandidates.Add(mouse.Id, mouse);
                 Debug.Print("[Input] Added mouse device {0} '{1}' on '{2}' ('{3}')",
                     mouse.Id, mouse.Name, mouse.LogicalSeatName, mouse.PhysicalSeatName);
             }
@@ -423,13 +432,15 @@ namespace OpenTK.Platform.Linux
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Keyboard))
             {
                 int id = GetId(device);
-                Keyboards.Remove(id);
+                Keyboards.TryRemove(id);
+                KeyboardCandidates.TryRemove(id);
             }
 
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Mouse))
             {
                 int id = GetId(device);
-                Mice.Remove(id);
+                Mice.TryRemove(id);
+                MouseCandidates.TryRemove(id);
             }
         }
 
@@ -437,6 +448,9 @@ namespace OpenTK.Platform.Linux
         {
             if (device != null)
             {
+                device.State.SetIsConnected(true);
+                Debug.Print("[Input] Added keyboard {0}", device.Id);
+
                 Key key = Key.Unknown;
                 uint raw = e.Key;
                 if (raw >= 0 && raw < KeyMap.Length)
@@ -457,6 +471,8 @@ namespace OpenTK.Platform.Linux
         {
             if (mouse != null)
             {
+                mouse.State.SetIsConnected(true);
+
                 double value = e.AxisValue;
                 PointerAxis axis = e.Axis;
                 switch (axis)
@@ -480,6 +496,8 @@ namespace OpenTK.Platform.Linux
         {
             if (mouse != null)
             {
+                mouse.State.SetIsConnected(true);
+
                 MouseButton button = Evdev.GetMouseButton(e.Button);
                 ButtonState state = e.ButtonState;
                 mouse.State[(MouseButton)button] = state == ButtonState.Pressed;
@@ -491,6 +509,7 @@ namespace OpenTK.Platform.Linux
             Vector2 delta = new Vector2((float)e.X, (float)e.Y);
             if (mouse != null)
             {
+                mouse.State.SetIsConnected(true);
                 mouse.State.Position += delta;
             }
 
@@ -504,6 +523,7 @@ namespace OpenTK.Platform.Linux
         {
             if (mouse != null)
             {
+                mouse.State.SetIsConnected(true);
                 mouse.State.Position = new Vector2(e.X, e.Y);
             }
 
@@ -521,8 +541,12 @@ namespace OpenTK.Platform.Linux
         KeyboardDevice GetKeyboard(IntPtr device)
         {
             int id = GetId(device);
-            KeyboardDevice keyboard = Keyboards.FromHardwareId(id);
-            if (keyboard == null)
+            KeyboardDevice keyboard = KeyboardCandidates.FromHardwareId(id);
+            if (keyboard != null)
+            {
+                Keyboards.Add(id, keyboard);
+            }
+            else
             {
                 Debug.Print("[Input] Keyboard {0} does not exist in device list.", id);
             }
@@ -532,8 +556,12 @@ namespace OpenTK.Platform.Linux
         MouseDevice GetMouse(IntPtr device)
         {
             int id = GetId(device);
-            MouseDevice mouse = Mice.FromHardwareId(id);
-            if (mouse == null)
+            MouseDevice mouse = MouseCandidates.FromHardwareId(id);
+            if (mouse != null)
+            {
+                Mice.Add(id, mouse);
+            }
+            else
             {
                 Debug.Print("[Input] Mouse {0} does not exist in device list.", id);
             }
