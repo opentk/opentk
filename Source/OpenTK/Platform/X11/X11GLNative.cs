@@ -140,7 +140,7 @@ namespace OpenTK.Platform.X11
         #region Constructors
 
         public X11GLNative(int x, int y, int width, int height, string title,
-            GraphicsMode mode,GameWindowFlags options, DisplayDevice device)
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             : this()
         {
             if (width <= 0)
@@ -154,17 +154,13 @@ namespace OpenTK.Platform.X11
             
             using (new XLock(window.Display))
             {
-                if (!mode.Index.HasValue)
-                {
-                    mode = new X11GraphicsMode().SelectGraphicsMode(
-                        mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
-                        mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
-                }
+                IntPtr visual;
+                IntPtr fbconfig;
+                window.GraphicsMode = new X11GraphicsMode()
+                    .SelectGraphicsMode(mode, out visual, out fbconfig);
 
-                info.VisualID = mode.Index.Value;
-                int dummy;
-                window.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(
-                    Functions.XGetVisualInfo(window.Display, XVisualInfoMask.ID, ref info, out dummy), typeof(XVisualInfo));
+                window.Visual = visual;
+                window.FBConfig = fbconfig;
 
                 // Create a window on this display using the visual above
                 Debug.Write("Opening render window... ");
