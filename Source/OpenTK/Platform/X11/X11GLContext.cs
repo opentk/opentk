@@ -93,7 +93,7 @@ namespace OpenTK.Platform.X11
                 Mode = currentWindow.GraphicsMode;
             }
 
-            if (!Mode.Index.HasValue)
+            if (Mode == null || !Mode.Index.HasValue)
             {
                 Mode = ModeSelector.SelectGraphicsMode(mode, out visual, out fbconfig);
             }
@@ -120,7 +120,7 @@ namespace OpenTK.Platform.X11
             
             if (Handle == ContextHandle.Zero)
             {
-                Handle = CreateContextLegacy(Display, currentWindow.VisualInfo, direct, shareHandle);
+                Handle = CreateContextLegacy(Display, visual, direct, shareHandle);
             }
             
             if (Handle != ContextHandle.Zero)
@@ -201,19 +201,18 @@ namespace OpenTK.Platform.X11
         }
 
         static ContextHandle CreateContextLegacy(IntPtr display,
-            XVisualInfo info, bool direct, ContextHandle shareContext)
+            IntPtr info, bool direct, ContextHandle shareContext)
         {
             Debug.Write("Using legacy context creation... ");
             IntPtr context;
 
             using (new XLock(display))
             {
-                // Cannot pass a Property by reference.
-                context = Glx.CreateContext(display, ref info, shareContext.Handle, direct);
+                context = Glx.CreateContext(display, info, shareContext.Handle, direct);
                 if (context == IntPtr.Zero)
                 {
                     Debug.WriteLine(String.Format("failed. Trying direct: {0}... ", !direct));
-                    context = Glx.CreateContext(display, ref info, IntPtr.Zero, !direct);
+                    context = Glx.CreateContext(display, info, shareContext.Handle, !direct);
                 }
             }
 
