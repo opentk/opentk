@@ -77,7 +77,22 @@ namespace OpenTK
             if (control == null)
                 throw new ArgumentNullException("control");
 
-            this.mode = mode;
+            // Note: the X11 window is created with a default XVisualInfo,
+            // that is not necessarily compatible with the desired GraphicsMode.
+            // This manifests in Nvidia binary drivers that fail in Glx.MakeCurrent()
+            // when GraphicsMode has a 32bpp color format.
+            // To work around this issue, we implicitly select a 24bpp color format when 32bpp is
+            // requested - this appears to work correctly in all cases.
+            // (The loss of the alpha channel does not matter, since WinForms do not support
+            // translucent windows on X11 in the first place.)
+            this.mode = new GraphicsMode(
+                new ColorFormat(mode.ColorFormat.Red, mode.ColorFormat.Green, mode.ColorFormat.Blue, 0),
+                mode.Depth,
+                mode.Stencil,
+                mode.Samples,
+                mode.AccumulatorFormat,
+                mode.Buffers,
+                mode.Stereo);
 
             if (xplatui == null) throw new PlatformNotSupportedException(
                     "System.Windows.Forms.XplatUIX11 missing. Unsupported platform or Mono runtime version, aborting.");
@@ -105,6 +120,8 @@ namespace OpenTK
             info = (XVisualInfo)Marshal.PtrToStructure(infoPtr, typeof(XVisualInfo));
 
             // set the X11 colormap.
+            // Note: this only affects windows created in the future
+            // (do we even need this here?)
             SetStaticFieldValue(xplatui, "CustomVisual", info.Visual);
             SetStaticFieldValue(xplatui, "CustomColormap", XCreateColormap(display, rootWindow, info.Visual, 0));
 

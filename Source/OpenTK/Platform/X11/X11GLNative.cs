@@ -140,7 +140,7 @@ namespace OpenTK.Platform.X11
         #region Constructors
 
         public X11GLNative(int x, int y, int width, int height, string title,
-            GraphicsMode mode,GameWindowFlags options, DisplayDevice device)
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             : this()
         {
             if (width <= 0)
@@ -154,17 +154,13 @@ namespace OpenTK.Platform.X11
             
             using (new XLock(window.Display))
             {
-                if (!mode.Index.HasValue)
-                {
-                    mode = new X11GraphicsMode().SelectGraphicsMode(
-                        mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
-                        mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
-                }
+                IntPtr visual;
+                IntPtr fbconfig;
+                window.GraphicsMode = new X11GraphicsMode()
+                    .SelectGraphicsMode(mode, out visual, out fbconfig);
 
-                info.VisualID = mode.Index.Value;
-                int dummy;
-                window.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(
-                    Functions.XGetVisualInfo(window.Display, XVisualInfoMask.ID, ref info, out dummy), typeof(XVisualInfo));
+                window.Visual = visual;
+                window.FBConfig = fbconfig;
 
                 // Create a window on this display using the visual above
                 Debug.Write("Opening render window... ");
@@ -825,7 +821,7 @@ namespace OpenTK.Platform.X11
                     case XEventName.ClientMessage:
                         if (!isExiting && e.ClientMessageEvent.ptr1 == _atom_wm_destroy)
                         {
-                            Debug.WriteLine("Exit message received.");
+                            Debug.Print("[X11] Exit message received for window {0:X} on display {1:X}", window.Handle, window.Display);
                             CancelEventArgs ce = new CancelEventArgs();
                             OnClosing(ce);
 
@@ -892,7 +888,7 @@ namespace OpenTK.Platform.X11
                         int x = e.MotionEvent.x;
                         int y = e.MotionEvent.y;
 
-                        if (x != 0 || y != 0)
+                        if (x != MouseState.X || y != MouseState.Y)
                         {
                             OnMouseMove(
                                 MathHelper.Clamp(x, 0, Width),
@@ -1624,6 +1620,8 @@ namespace OpenTK.Platform.X11
 
         public void Exit()
         {
+            Debug.Print("[X11] Sending exit message window {0:X} on display {1:X}", window.Handle, window.Display);
+
             XEvent ev = new XEvent();
             ev.type = XEventName.ClientMessage;
             ev.ClientMessageEvent.format = 32;
@@ -1644,10 +1642,12 @@ namespace OpenTK.Platform.X11
 
         public void DestroyWindow()
         {
-            Debug.WriteLine("X11GLNative shutdown sequence initiated.");
+            Debug.Print("[X11] Destroying window {0:X} on display {1:X}", window.Handle, window.Display);
+
             using (new XLock(window.Display))
             {
-                Functions.XSync(window.Display, true);
+                Functions.XUnmapWindow(window.Display, window.Handle);
+                Functions.XSync(window.Display, false);
                 Functions.XDestroyWindow(window.Display, window.Handle);
                 exists = false;
             }

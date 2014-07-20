@@ -78,13 +78,26 @@ namespace OpenTK.Platform.X11
                 }
             }
 
-            Mode = ModeSelector.SelectGraphicsMode(
-                mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
-                mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
+            IntPtr visual = IntPtr.Zero;
+            IntPtr fbconfig = IntPtr.Zero;
 
+            // Once a window has a visual, we cannot use a different
+            // visual on the OpenGL context, or glXMakeCurrent might fail.
+            // Note: we should only check X11WindowInfo.Visual, as that
+            // is the only property that can be set by Utilities.CreateX11WindowInfo.
             currentWindow = (X11WindowInfo)window;
-            currentWindow.VisualInfo = SelectVisual(Mode, currentWindow);
-            
+            if (currentWindow.Visual != IntPtr.Zero)
+            {
+                visual = currentWindow.Visual;
+                fbconfig = currentWindow.FBConfig;
+                Mode = currentWindow.GraphicsMode;
+            }
+
+            if (Mode == null || !Mode.Index.HasValue)
+            {
+                Mode = ModeSelector.SelectGraphicsMode(mode, out visual, out fbconfig);
+            }
+
             ContextHandle shareHandle = shared != null ?
                 (shared as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
             
@@ -99,84 +112,15 @@ namespace OpenTK.Platform.X11
             // HACK: It seems that Catalyst 9.1 - 9.4 on Linux have problems with contexts created through
             // GLX_ARB_create_context, including hideous input lag, no vsync and other madness.
             // Use legacy context creation if the user doesn't request a 3.0+ context.
-            if ((major * 10 + minor >= 30) && SupportsCreateContextAttribs(Display, currentWindow))
+            if (fbconfig != IntPtr.Zero && (major * 10 + minor >= 30) && SupportsCreateContextAttribs(Display, currentWindow))
             {
-                Debug.Write("Using GLX_ARB_create_context... ");
-                
-                unsafe
-                {
-                    // We need the FB config for the current GraphicsMode.
-                    int count;
-                    IntPtr* fbconfigs = Glx.ChooseFBConfig(Display, currentWindow.Screen,
-                        new int[] {
-                        (int)GLXAttribute.VISUAL_ID,
-                        (int)Mode.Index,
-                        0
-                    }, out count);
-                    
-                    if (count > 0)
-                    {
-                        List<int> attributes = new List<int>();
-                        attributes.Add((int)ArbCreateContext.MajorVersion);
-                        attributes.Add(major);
-                        attributes.Add((int)ArbCreateContext.MinorVersion);
-                        attributes.Add(minor);
-                        if (flags != 0)
-                        {
-                            attributes.Add((int)ArbCreateContext.Flags);
-                            attributes.Add((int)GetARBContextFlags(flags));
-                            attributes.Add((int)ArbCreateContext.ProfileMask);
-                            attributes.Add((int)GetARBProfileFlags(flags));
-                        }
-                        // According to the docs, " <attribList> specifies a list of attributes for the context.
-                        // The list consists of a sequence of <name,value> pairs terminated by the
-                        // value 0. [...]"
-                        // Is this a single 0, or a <0, 0> pair? (Defensive coding: add two zeroes just in case).
-                        attributes.Add(0);
-                        attributes.Add(0);
-
-                        using (new XLock(Display))
-                        {
-                            Handle = new ContextHandle(Glx.Arb.CreateContextAttribs(Display, *fbconfigs,
-                                    shareHandle.Handle, direct, attributes.ToArray()));
-
-                            if (Handle == ContextHandle.Zero)
-                            {
-                                Debug.Write(String.Format("failed. Trying direct: {0}... ", !direct));
-                                Handle = new ContextHandle(Glx.Arb.CreateContextAttribs(Display, *fbconfigs,
-                                        shareHandle.Handle, !direct, attributes.ToArray()));
-                            }
-                        }
-                        
-                        if (Handle == ContextHandle.Zero)
-                            Debug.WriteLine("failed.");
-                        else
-                            Debug.WriteLine("success!");
-                        
-                        using (new XLock(Display))
-                        {
-                            Functions.XFree((IntPtr)fbconfigs);
-                        }
-                    }
-                }
+                Handle = CreateContextAttribs(Display, currentWindow.Screen,
+                    fbconfig, direct, major, minor, flags, shareHandle);
             }
             
             if (Handle == ContextHandle.Zero)
             {
-                Debug.Write("Using legacy context creation... ");
-                
-                XVisualInfo info = currentWindow.VisualInfo;
-                using (new XLock(Display))
-                {
-                    // Cannot pass a Property by reference.
-                    Handle = new ContextHandle(Glx.CreateContext(Display, ref info, shareHandle.Handle, direct));
-
-                    if (Handle == ContextHandle.Zero)
-                    {
-                        Debug.WriteLine(String.Format("failed. Trying direct: {0}... ", !direct));
-                        Handle = new ContextHandle(Glx.CreateContext(Display, ref info, IntPtr.Zero, !direct));
-                    }
-                }
+                Handle = CreateContextLegacy(Display, visual, direct, shareHandle);
             }
             
             if (Handle != ContextHandle.Zero)
@@ -208,6 +152,73 @@ namespace OpenTK.Platform.X11
 
         #region --- Private Methods ---
 
+        static ContextHandle CreateContextAttribs(
+            IntPtr display, int screen, IntPtr fbconfig,
+            bool direct, int major, int minor,
+            GraphicsContextFlags flags, ContextHandle shareContext)
+        {
+            Debug.Write("Using GLX_ARB_create_context... ");
+            IntPtr context = IntPtr.Zero;
+
+            {
+                // We need the FB config for the current GraphicsMode.
+                List<int> attributes = new List<int>();
+                attributes.Add((int)ArbCreateContext.MajorVersion);
+                attributes.Add(major);
+                attributes.Add((int)ArbCreateContext.MinorVersion);
+                attributes.Add(minor);
+                if (flags != 0)
+                {
+                    attributes.Add((int)ArbCreateContext.Flags);
+                    attributes.Add((int)GetARBContextFlags(flags));
+                    attributes.Add((int)ArbCreateContext.ProfileMask);
+                    attributes.Add((int)GetARBProfileFlags(flags));
+                }
+                // According to the docs, " <attribList> specifies a list of attributes for the context.
+                // The list consists of a sequence of <name,value> pairs terminated by the
+                // value 0. [...]"
+                // Is this a single 0, or a <0, 0> pair? (Defensive coding: add two zeroes just in case).
+                attributes.Add(0);
+                attributes.Add(0);
+
+                using (new XLock(display))
+                {
+                    context = Glx.Arb.CreateContextAttribs(display, fbconfig, shareContext.Handle, direct, attributes.ToArray());
+                    if (context == IntPtr.Zero)
+                    {
+                        Debug.Write(String.Format("failed. Trying direct: {0}... ", !direct));
+                        context = Glx.Arb.CreateContextAttribs(display, fbconfig, shareContext.Handle, !direct, attributes.ToArray());
+                    }
+                }
+
+                if (context == IntPtr.Zero)
+                    Debug.WriteLine("failed.");
+                else
+                    Debug.WriteLine("success!");
+            }
+
+            return new ContextHandle(context);
+        }
+
+        static ContextHandle CreateContextLegacy(IntPtr display,
+            IntPtr info, bool direct, ContextHandle shareContext)
+        {
+            Debug.Write("Using legacy context creation... ");
+            IntPtr context;
+
+            using (new XLock(display))
+            {
+                context = Glx.CreateContext(display, info, shareContext.Handle, direct);
+                if (context == IntPtr.Zero)
+                {
+                    Debug.WriteLine(String.Format("failed. Trying direct: {0}... ", !direct));
+                    context = Glx.CreateContext(display, info, shareContext.Handle, !direct);
+                }
+            }
+
+            return new ContextHandle(context);
+        }
+
         IntPtr Display
         {
             get { return display; }
@@ -221,38 +232,14 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        #region XVisualInfo SelectVisual(GraphicsMode mode, X11WindowInfo currentWindow)
-
-        XVisualInfo SelectVisual(GraphicsMode mode, X11WindowInfo currentWindow)
-        {
-            XVisualInfo info = new XVisualInfo();
-            info.VisualID = (IntPtr)mode.Index;
-            info.Screen = currentWindow.Screen;
-            int items;
-            
-            lock (API.Lock)
-            {
-                IntPtr vs = Functions.XGetVisualInfo(Display, XVisualInfoMask.ID | XVisualInfoMask.Screen, ref info, out items);
-                if (items == 0)
-                    throw new GraphicsModeException(String.Format("Invalid GraphicsMode specified ({0}).", mode));
-
-                info = (XVisualInfo)Marshal.PtrToStructure(vs, typeof(XVisualInfo));
-                Functions.XFree(vs);
-            }
-
-            return info;
-        }
-
-        #endregion
-
-        ArbCreateContext GetARBContextFlags(GraphicsContextFlags flags)
+        static ArbCreateContext GetARBContextFlags(GraphicsContextFlags flags)
         {
             ArbCreateContext result = 0;
             result |= (flags & GraphicsContextFlags.Debug) != 0 ? ArbCreateContext.DebugBit : 0;
             return result;
         }
 
-        ArbCreateContext GetARBProfileFlags(GraphicsContextFlags flags)
+        static ArbCreateContext GetARBProfileFlags(GraphicsContextFlags flags)
         {
             ArbCreateContext result = 0;
             result |= (flags & GraphicsContextFlags.ForwardCompatible) != 0 ?
