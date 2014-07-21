@@ -136,7 +136,8 @@ namespace Examples.Tutorial
         /// <param name="e">Contains timing information for framerate independent logic.</param>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            if (Keyboard[Key.Escape])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard[Key.Escape])
             {
                 Exit();
             }

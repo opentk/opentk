@@ -46,7 +46,7 @@ namespace Examples.Tutorial
         public SimpleGeometryShader2()
             : base(800, 600)
         {
-            Keyboard.KeyDown += Keyboard_KeyDown;
+            KeyDown += Keyboard_KeyDown;
         }
 
         enum ViewMode
@@ -900,7 +900,8 @@ namespace Examples.Tutorial
             eyePos.X = (float)Math.Cos(elapsed / 3000) * 8;
             eyePos.Z = (float)Math.Sin(elapsed / 2000) * 8;
 
-            if (Keyboard[Key.Space])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard[Key.Space])
             {
                 ErrorCode err = GL.GetError();
                 //Console.WriteLine(err + "  " + Glu.ErrorString((GluErrorCode)err));

@@ -207,7 +207,8 @@ void main(void)
             Matrix4.Mult(ref rotation, ref modelviewMatrix, out modelviewMatrix);
             GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
 
-            if (Keyboard[OpenTK.Input.Key.Escape])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard[OpenTK.Input.Key.Escape])
                 Exit();
         }
 

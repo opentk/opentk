@@ -220,7 +220,8 @@ namespace Examples.Tutorial
         {
             base.OnUpdateFrame(e);
 
-            if (Keyboard[Key.Escape])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard[Key.Escape])
                 this.Exit();
         }
 

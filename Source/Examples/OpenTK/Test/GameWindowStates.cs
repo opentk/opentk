@@ -14,6 +14,8 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
+#pragma warning disable 612,618 // disable obsolete warnings - we need to access these functions
+
 namespace Examples.Tests
 {
     [Example("GameWindow States", ExampleCategory.OpenTK, "GameWindow", 4, Documentation = "GameWindowStates")]

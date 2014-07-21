@@ -100,24 +100,27 @@ namespace Examples.Tutorial
         /// </remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            if (Keyboard[OpenTK.Input.Key.Escape])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            var mouse = OpenTK.Input.Mouse.GetState();
+
+            if (keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
                 return;
             }
 
-            if (Keyboard[OpenTK.Input.Key.F11])
+            if (keyboard[OpenTK.Input.Key.F11])
                 if (WindowState != WindowState.Fullscreen)
                     WindowState = WindowState.Fullscreen;
                 else
                     WindowState = WindowState.Normal;
 
-            if (Mouse[OpenTK.Input.MouseButton.Left])
-                x_angle = Mouse.X;
+            if (mouse[OpenTK.Input.MouseButton.Left])
+                x_angle = mouse.X;
             else
                 x_angle += 0.5f;
 
-             zoom = Mouse.Wheel * 0.5f;   // Mouse.Wheel is broken on both Linux and Windows.
+            zoom = mouse.Wheel * 0.5f;   // Mouse.Wheel is broken on both Linux and Windows.
 
             // Do not leave x_angle drift too far away, as this will cause inaccuracies.
             if (x_angle > 360.0f)

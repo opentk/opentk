@@ -379,9 +379,6 @@
     <Compile Include="OpenTK\Test\TestGraphicsModes.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="OpenTK\Test\InputLogger.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <EmbeddedResource Include="OpenGL\1.x\ImmediateMode.rtf">
     </EmbeddedResource>
     <EmbeddedResource Include="OpenGL\1.x\VBODynamic.rtf">
@@ -475,12 +472,6 @@
     </EmbeddedResource>
     <Compile Include="OpenTK\Test\Extensions.Designer.cs">
       <DependentUpon>Extensions.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="OpenTK\Test\InputLogger.resx">
-      <DependentUpon>InputLogger.cs</DependentUpon>
-    </EmbeddedResource>
-    <Compile Include="OpenTK\Test\InputLogger.Designer.cs">
-      <DependentUpon>InputLogger.cs</DependentUpon>
     </Compile>
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>

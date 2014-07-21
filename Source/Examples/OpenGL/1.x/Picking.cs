@@ -24,11 +24,19 @@ namespace Examples.Tutorial
     [Example("Picking", ExampleCategory.OpenGL, "1.x", Documentation = "Picking")]
     class Picking : GameWindow
     {
+        int mouse_x, mouse_y;
+
         /// <summary>Creates a 800x600 window with the specified title.</summary>
         public Picking()
             : base(800, 600, GraphicsMode.Default, "Picking", GameWindowFlags.Default, DisplayDevice.Default, 1, 1, GraphicsContextFlags.Default)
         {
             VSync = VSyncMode.On;
+
+            MouseMove += (sender, e) =>
+            {
+                mouse_x = e.X;
+                mouse_y = e.Y;
+            };
         }
 
         struct Byte4
@@ -192,7 +200,6 @@ namespace Examples.Tutorial
             GL.UseProgram(0);
 */
             #endregion Shader
-
         }
 
         protected override void OnUnload(EventArgs e)
@@ -224,7 +231,8 @@ namespace Examples.Tutorial
         /// <param name="e">Contains timing information for framerate independent logic.</param>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            if (Keyboard[Key.Escape])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard[Key.Escape])
                 Exit();
         }
 
@@ -256,7 +264,7 @@ namespace Examples.Tutorial
 
             // Read Pixel under mouse cursor
             Byte4 Pixel = new Byte4();
-            GL.ReadPixels(Mouse.X, this.Height - Mouse.Y, 1, 1, PixelFormat.Rgba, PixelType.UnsignedByte, ref Pixel);
+            GL.ReadPixels(mouse_x, this.Height - mouse_y, 1, 1, PixelFormat.Rgba, PixelType.UnsignedByte, ref Pixel);
             SelectedTriangle = Pixel.ToUInt32();
             #endregion Pass 1: Draw Object and pick Triangle
 

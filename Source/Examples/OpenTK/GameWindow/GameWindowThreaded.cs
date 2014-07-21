@@ -43,13 +43,13 @@ namespace Examples.Tutorial
         public ThreadedRendering()
             : base(800, 600)
         {
-            Keyboard.KeyDown += delegate(object sender, KeyboardKeyEventArgs e)
+            KeyDown += delegate(object sender, KeyboardKeyEventArgs e)
             {
                 if (e.Key == Key.Escape)
                     this.Exit();
             };
 
-            Keyboard.KeyUp += delegate(object sender, KeyboardKeyEventArgs e)
+            KeyUp += delegate(object sender, KeyboardKeyEventArgs e)
             {
                 if (e.Key == Key.F11)
                     if (this.WindowState == WindowState.Fullscreen)
