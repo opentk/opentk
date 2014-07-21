@@ -78,8 +78,12 @@ namespace OpenTK
         const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
 
         readonly Stopwatch watch = new Stopwatch();
+
+        #pragma warning disable 612,618
         readonly IJoystickDriver LegacyJoystick =
             Factory.Default.CreateLegacyJoystickDriver();
+        #pragma warning restore 612,618
+
 
         IGraphicsContext glContext;
 

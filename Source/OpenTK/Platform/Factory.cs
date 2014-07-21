@@ -152,6 +152,7 @@ namespace OpenTK.Platform
             return default_implementation.CreateJoystickDriver();
         }
 
+        [Obsolete]
         public IJoystickDriver CreateLegacyJoystickDriver()
         {
             return default_implementation.CreateLegacyJoystickDriver();

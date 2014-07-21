@@ -140,10 +140,8 @@ namespace OpenTK.Platform.X11
             if (height <= 0)
                 throw new ArgumentOutOfRangeException("height", "Must be higher than zero.");
 
-            XVisualInfo info = new XVisualInfo();
-
             Debug.Indent();
-            
+
             using (new XLock(window.Display))
             {
                 IntPtr visual;

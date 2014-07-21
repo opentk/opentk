@@ -141,7 +141,6 @@ namespace OpenTK.Platform.MacOS
         private int normalLevel;
         private bool shouldClose;
         private int suppressResize;
-        private bool cursorInsideWindow = true;
         private MouseCursor selectedCursor = MouseCursor.Default; // user-selected cursor
 
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
