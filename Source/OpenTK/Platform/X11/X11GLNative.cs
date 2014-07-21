@@ -85,19 +85,11 @@ namespace OpenTK.Platform.X11
 
         IntPtr _atom_net_frame_extents;
 
-        IntPtr _atom_wm_class;
-
         readonly IntPtr _atom_xa_cardinal = new IntPtr(6);
-        
-        //IntPtr _atom_motif_wm_hints;
-        //IntPtr _atom_kde_wm_hints;
-        //IntPtr _atom_kde_net_wm_hints;
 
         static readonly IntPtr _atom_remove = (IntPtr)0;
         static readonly IntPtr _atom_add = (IntPtr)1;
         static readonly IntPtr _atom_toggle = (IntPtr)2;
-
-        // Used by OpenTK to detect mouse warp events
 
         Rectangle bounds, client_rectangle;
         int border_left, border_right, border_top, border_bottom;

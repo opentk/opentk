@@ -37,7 +37,6 @@ namespace OpenTK.Platform.SDL2
 
         readonly List<KeyboardDevice> keyboards =
             new List<KeyboardDevice>();
-        readonly IList<KeyboardDevice> keyboards_readonly;
 
         public Sdl2Keyboard()
         {

@@ -3141,6 +3141,9 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         public IntPtr ExtraInfo;
 
+        /// <summary>
+        /// Returns the size of a MouseMovePoint in bytes.
+        /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf(default(MouseMovePoint));
     }
 
