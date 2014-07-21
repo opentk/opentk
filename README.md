@@ -59,9 +59,11 @@ This release resolves a number of identified issues, adds experimental support f
 3. Fixed an issue where `GameWindow` might remain open on Linux/X11 after calling `Close()` or `Dispose()`.
 4. Fixed a potential crash on Mac OS X systems without hardware acceleration (e.g. virtual machines).
 5. Fixed function parameters for the `OES_byte_coordinates` extension.
-6. Improved OpenGL and OpenGL ES documentation on 'count' parameters.
-7. New platform: Linux/KMS. You can now run OpenTK applications on a Linux terminal without an X11 display server.
-8. New OpenGL ES extensions:
+6. Fixed an issue where OpenTK would always perform a full rebuild even when a partial rebuild could work.
+7. Fixed all compilation warnings on VS2013 and Mono 3.4.0.
+8. Improved OpenGL and OpenGL ES documentation on 'count' parameters.
+9. New platform: Linux/KMS. You can now run OpenTK applications on a Linux terminal without an X11 display server.
+10. New OpenGL ES extensions:
   - ANDROID_extension_pack_es31a
 
 OpenTK 1.1.4 is backwards compatible with 1.1.3. Users of previous versions are **strongly** encouraged to upgrade.
