@@ -1,7 +1,9 @@
 OpenTK
 ======
 
-The Open Toolkit is an advanced, low-level C# library that wraps OpenGL, OpenGL ES and OpenAL. It is suitable for games, scientific applications and any other project that requires 3d graphics, audio or compute functionality.
+The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
+
+Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your C# application. Integrate it into your existing user interface or use it standalone without any external dependencies.
 
 Project website: http://www.opentk.com/
 
@@ -12,7 +14,7 @@ Features
 ========
 
 - Create cutting-edge graphics with OpenGL 4.4 and OpenGL ES 3.0
-- Spice up your GUI with 3d graphics
+- Spice up your GUI with 3d acceleration
 - Improve your code flow with strong types and inline documentation
 - Write once run everywhere
 
@@ -32,47 +34,48 @@ Alternatively, download the [OpenTK binaries](http://www.opentk.com) and:
 2. Use "Add reference" to add OpenTK.dll as a project reference
 3. Use "Add files" to add OpenTK.dll.config to your project, and enable the "Copy to Output Directory" option.
 
-If you wish to build OpenTK from source, simply double-click OpenTK.sln and build through your IDE. Alternatively, open a command prompt and type:
+To build OpenTK from source, simply double-click OpenTK.sln and build through your IDE.
 
+Alternatively, open a command prompt and type:
 ```
-msbuild /p:Configuration=Release OpenTK.sln  # Windows
-xbuild  /p:Configuration=Release OpenTK.sln  # Linux and Mac OS X
+git clone https://github.com/opentk/opentk   # Download source code from git
+cd opentk                                    # Enter the source directory
+msbuild /p:Configuration=Release OpenTK.sln  # Build on .Net (Windows)
+xbuild  /p:Configuration=Release OpenTK.sln  # Build on Mono (Linux / Mac OS X)
 ```
+
 
 News
 ====
 
-OpenTK 1.1.3 was released on 20 June 2014.
+OpenTK 1.1.4 was released on 21 July 2014.
 
-This release resolves a number of identified issues and synchronizes the OpenGL and OpenGL ES bindings with the June 2014 Khronos specifications.
+This release resolves a number of identified issues, adds experimental support for Linux/KMS and synchronizes the OpenGL and OpenGL ES bindings with the July 2014 Khronos specifications.
 
 **Changelog:**
 
-1. Fixed a potential crash in bindings accepting a string array.
-2. Fixed a marshalling issue where bindings might return an incorrect boolean value on some architectures.
-3. Fixed a regression where mouse scrolling coordinates on Linux where flipped. Mouse scrolling now uses identical coordinate systems on Windows, Linux and Mac OS X: (+x, +y) = (right, up).
-4. Fixed a potential deadlock when exiting the X11/XInput2 subsystem.
-5. Fixed an issue where single-to-half floating point conversions would return incorrect results for specific numbers.
-6. Added an API compatibility test - backwards-incompatible changes will now cause a compilation failure in the continuous integration server.
-7. New platform: XQuartz (X11 over Mac OS X).
-8. New platform: XWayland (X11 over Wayland).
-9. New OpenGL and OpenGL ES extensions:
-  - EXT_geometry_point_size
-  - EXT_primitive_bounding_box
-  - EXT_texture_array
-  - EXT_tessellation_point_size
+1. Fixed a memory leak in OpenGL functions accepting a string array.
+2. Fixed an issue where `MakeCurrent()` might fail on Linux/X11 when using the Nvidia closed-source drivers.
+3. Fixed an issue where `GameWindow` might remain open on Linux/X11 after calling `Close()` or `Dispose()`.
+4. Fixed a potential crash on Mac OS X systems without hardware acceleration (e.g. virtual machines).
+5. Fixed function parameters for the `OES_byte_coordinates` extension.
+6. Improved OpenGL and OpenGL ES documentation on 'count' parameters.
+7. New platform: Linux/KMS. You can now run OpenTK applications on a Linux terminal without an X11 display server.
+8. New OpenGL ES extensions:
+  - ANDROID_extension_pack_es31a
 
-OpenTK 1.1.3 is backwards compatible with 1.1.2. Users of previous versions are strongly encouraged to upgrade.
+OpenTK 1.1.4 is backwards compatible with 1.1.3. Users of previous versions are **strongly** encouraged to upgrade.
 
 
 Known issues
 ============
 
-The SDL2 backend has a number of limitations compared to the native platform backends. In particular, SDL2 does not support:
-   - `OpenTK.GLControl`. OpenTK will automatically use a native platform backend instead.
+1. The SDL2 backend has a number of limitations compared to the native platform backends. In particular, SDL2 does not support:
+   - `OpenTK.GLControl`. OpenTK will automatically switch to a native platform backend instead.
    - `DisplayDevice.ChangeResolution()` without a fullscreen `INativeWindow`.
-   - changing `INativeWindow.WindowBorder` once a window is created.
-   - high-resolution mouse input. Additionally, it is limited to a single keyboard and mouse device.
+   - Switching between `WindowBorder.Fixed` and `WindowBorder.Resizable`.
+   - High-resolution mouse input. Additionally, it is limited to a single keyboard and mouse device.
+2. OpenTK.Input.GamePad.SetVibration is currently not implemented. This API will be implemented in a future release.
 
 
 Contributing
@@ -90,13 +93,12 @@ Some areas we could really use your help:
 - New platforms:
   - Native Client (NaCL)
   - Blackberry
-  - Raspberry PI
   - Wayland
   - Mir
   - WinRT (via ANGLE)
-  - Linux KMS (EGL without X11)
 - New features:
   - Multitouch
+  - Force feedback
   - Improved joystick support (HID backend for Windows, Linux)
 
 Further ideas for improvement are always welcome!
@@ -139,6 +141,8 @@ http://www.opentk.com/project/license
 
 API compatibility
 =================
+
+OpenTK 1.1.4 is backwards compatible with 1.1.3.
 
 OpenTK 1.1.3 is backwards compatible with 1.1.2.
 
@@ -228,3 +232,10 @@ Change namespace:
 - GL.DisableDriverControlQCOM -> GL.Qcom.DisableDriverControl
 - GL.GetDriverControlsQCOM -> GL.Qcom.GetDriverControls
 - GL.GetDriverControlStringQCOM -> GL.Qcom.GetDriverControlString
+
+
+See also
+========
+
+[Delta Engine](http://deltaengine.net/), a high-level, open-source game engine.
+[MonoGame](https://github.com/mono/monogame), an open-source, cross-platform implementation of XNA.
