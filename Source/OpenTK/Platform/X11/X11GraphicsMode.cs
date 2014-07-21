@@ -102,7 +102,6 @@ namespace OpenTK.Platform.X11
             Debug.Print("Selecting FB config for {0}", mode);
 
             List<int> visualAttributes = new List<int>();
-            IntPtr visual = IntPtr.Zero;
 
             if (mode.ColorFormat.BitsPerPixel > 0)
             {

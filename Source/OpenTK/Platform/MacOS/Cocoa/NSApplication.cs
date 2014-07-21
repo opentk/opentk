@@ -83,7 +83,7 @@ namespace OpenTK.Platform.MacOS
 
             // Disable momentum scrolling and long-press key pop-ups
             IntPtr settings = Cocoa.SendIntPtr(Class.NSDictionary, Selector.Alloc);
-            IntPtr momentum_scrolling = Cocoa.SendIntPtr(Class.NSNumber, Selector.Get("numberWithBool:"), false);
+            //IntPtr momentum_scrolling = Cocoa.SendIntPtr(Class.NSNumber, Selector.Get("numberWithBool:"), false);
             IntPtr press_and_hold = Cocoa.SendIntPtr(Class.NSNumber, Selector.Get("numberWithBool:"), false);
 
             // Initialize and register the settings dictionary

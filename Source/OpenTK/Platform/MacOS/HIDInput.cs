@@ -561,7 +561,6 @@ namespace OpenTK.Platform.MacOS
                 for (int i = 0; i < element_array.Count; i++)
                 {
                     IOHIDElementRef element_ref = element_array[i];
-                    IOHIDElementType type = NativeMethods.IOHIDElementGetType(element_ref);
                     HIDPage page = NativeMethods.IOHIDElementGetUsagePage(element_ref);
                     int usage = NativeMethods.IOHIDElementGetUsage(element_ref);
 

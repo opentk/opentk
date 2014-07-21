@@ -39,7 +39,6 @@ namespace OpenTK.Platform.Windows
 
         // Input event data.
         static RawInput data = new RawInput();
-        static readonly int rawInputStructSize = API.RawInputSize;
 
         WinRawKeyboard keyboard_driver;
         WinRawMouse mouse_driver;

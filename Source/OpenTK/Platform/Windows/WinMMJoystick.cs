@@ -43,7 +43,6 @@ namespace OpenTK.Platform.Windows
         readonly object sync = new object();
 
         List<JoystickDevice> sticks = new List<JoystickDevice>();
-        IList<JoystickDevice> sticks_readonly;
 
         // Matches a WinMM device index to a specific stick above
         readonly Dictionary<int, int> index_to_stick =
@@ -65,7 +64,6 @@ namespace OpenTK.Platform.Windows
 
         public WinMMJoystick()
         {
-            sticks_readonly = sticks.AsReadOnly();
             RefreshDevices();
         }
 

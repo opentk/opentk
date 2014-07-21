@@ -47,9 +47,7 @@ namespace OpenTK.Platform.Windows
             ICD,
         }
 
-        static readonly object SyncRoot = new object();
         readonly IntPtr Device;
-        readonly List<GraphicsMode> modes = new List<GraphicsMode>();
 
         #region Constructors
 

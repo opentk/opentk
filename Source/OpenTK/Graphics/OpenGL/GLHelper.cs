@@ -1355,6 +1355,8 @@ namespace OpenTK.Graphics.OpenGL
         #endregion
     }
 
+    #pragma warning disable 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
+
     /// <summary>
     /// Defines the signature of a debug callback for 
     /// <see cref="GL.Amd.DebugMessageCallback"/>.
@@ -1420,4 +1422,6 @@ namespace OpenTK.Graphics.OpenGL
         DebugSource source, DebugType type, int id,
         DebugSeverity severity, int length, IntPtr message,
         IntPtr userParam);
+
+    #pragma warning restore 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
 }
