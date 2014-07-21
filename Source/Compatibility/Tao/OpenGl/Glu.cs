@@ -29,6 +29,8 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
+#pragma warning disable 169 // private field is never used
+
 namespace Tao.OpenGl
 {
     #region Class Documentation
