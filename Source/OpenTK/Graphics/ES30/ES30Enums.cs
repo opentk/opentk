@@ -9451,6 +9451,13 @@ namespace OpenTK.Graphics.ES30
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum AndroidExtensionPackEs31a : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum AngleDepthTexture : int
     {
         /// <summary>
