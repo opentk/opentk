@@ -4947,7 +4947,7 @@
       <token name="ATC_RGBA_EXPLICIT_ALPHA_AMD" value="0x8C93" />
       <token name="ATC_RGBA_INTERPOLATED_ALPHA_AMD" value="0x87EE" />
     </enum>
-    <enum name="BufferObjects" obsolete="Use enum with correct capitalisation instead.">
+    <enum name="BufferObjects">
       <token name="ARRAY_BUFFER" value="0x8892" />
       <token name="ARRAY_BUFFER_BINDING" value="0x8894" />
       <token name="BUFFER_SIZE" value="0x8764" />
@@ -5259,7 +5259,7 @@
       <token name="SRC2_RGB" value="0x8582" />
       <token name="SUBTRACT" value="0x84E7" />
     </enum>
-    <enum name="TextureUnit" obsolete="Use enum with correct capitalisation instead.">
+    <enum name="TextureUnit">
       <token name="ACTIVE_TEXTURE" value="0x84E0" />
       <token name="CLIENT_ACTIVE_TEXTURE" value="0x84E1" />
       <token name="TEXTURE0" value="0x84C0" />
