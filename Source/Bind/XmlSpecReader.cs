@@ -353,6 +353,8 @@ namespace Bind
                         Type = node.GetAttribute("type", String.Empty).Trim()
                     };
 
+                    e.Obsolete = node.GetAttribute("obsolete", String.Empty).Trim();
+
                     if (String.IsNullOrEmpty(e.Name))
                         throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
 
