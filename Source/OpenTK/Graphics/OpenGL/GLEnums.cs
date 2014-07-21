@@ -45704,6 +45704,10 @@ namespace OpenTK.Graphics.OpenGL
     /// </summary>
     public enum OesByteCoordinates : int
     {
+        /// <summary>
+        /// Original was GL_BYTE = 0x1400
+        /// </summary>
+        Byte = ((int)0x1400)        ,
     }
 
     /// <summary>
