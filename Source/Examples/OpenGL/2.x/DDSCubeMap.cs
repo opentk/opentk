@@ -198,19 +198,21 @@ namespace Examples.Tutorial
         /// <summary>Add your game logic here.</summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-       protected override void OnUpdateFrame( FrameEventArgs e )
+        protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            base.OnUpdateFrame( e );
+            base.OnUpdateFrame(e);
 
-            if ( Keyboard[OpenTK.Input.Key.Escape] )
-                this.Exit( );
-            if ( Keyboard[OpenTK.Input.Key.Space] )
-                Trace.WriteLine( "GL: " + GL.GetError( ) );
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            var mouse = OpenTK.Input.Mouse.GetState();
 
-            Trackball.X = Mouse.X;
-            Trackball.Y = Mouse.Y;
-            Trackball.Z = Mouse.Wheel * 0.5f;
+            if (keyboard[OpenTK.Input.Key.Escape])
+                this.Exit();
+            if (keyboard[OpenTK.Input.Key.Space])
+                Trace.WriteLine("GL: " + GL.GetError());
 
+            Trackball.X = mouse.X;
+            Trackball.Y = mouse.Y;
+            Trackball.Z = mouse.Scroll.Y * 0.5f;
         }
 
         /// <summary>Add your game rendering code here.</summary>

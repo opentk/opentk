@@ -53,7 +53,7 @@ namespace Bind.Structures
             DeprecatedVersion = d.DeprecatedVersion;
             EntryPoint = d.EntryPoint;
             Obsolete = d.Obsolete;
-            CLSCompliant = d.CLSCompliant;
+            cls_compliance_overriden = d.cls_compliance_overriden;
             Slot = d.Slot;
         }
 

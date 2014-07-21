@@ -73,6 +73,8 @@ namespace OpenTK
 
         #region Properties
 
+        #pragma warning disable 3005 // Identifier differing only in case is not CLS-compliant, compiler bug in Mono 3.4.0
+
         /// <summary>
         /// Gets or sets an OpenTK.Vector3d with the X, Y and Z components of this instance.
         /// </summary>
@@ -86,6 +88,8 @@ namespace OpenTK
         /// Gets or sets an OpenTK.Vector3d with the X, Y and Z components of this instance.
         /// </summary>
         public Vector3d Xyz { get { return xyz; } set { xyz = value; } }
+
+        #pragma warning restore 3005
 
         /// <summary>
         /// Gets or sets the X component of this instance.

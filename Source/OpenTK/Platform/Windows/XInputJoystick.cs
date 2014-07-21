@@ -237,6 +237,8 @@ namespace OpenTK.Platform.Windows
             Any = 0xff
         }
 
+#pragma warning disable 0649 // field is never assigned
+
         struct XInputThresholds
         {
             public const int LeftThumbDeadzone = 7849;

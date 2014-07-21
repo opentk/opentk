@@ -75,31 +75,27 @@ namespace OpenTK.Platform.X11
         IntPtr _atom_net_wm_state_fullscreen;
         IntPtr _atom_net_wm_state_maximized_horizontal;
         IntPtr _atom_net_wm_state_maximized_vertical;
-        
+
+        #pragma warning disable 414 // assigned but never used
         IntPtr _atom_net_wm_allowed_actions;
         IntPtr _atom_net_wm_action_resize;
         IntPtr _atom_net_wm_action_maximize_horizontally;
         IntPtr _atom_net_wm_action_maximize_vertically;
+        #pragma warning restore 414
 
         IntPtr _atom_net_wm_icon;
 
         IntPtr _atom_net_frame_extents;
 
-        IntPtr _atom_wm_class;
-
         readonly IntPtr _atom_xa_cardinal = new IntPtr(6);
-        
-        //IntPtr _atom_motif_wm_hints;
-        //IntPtr _atom_kde_wm_hints;
-        //IntPtr _atom_kde_net_wm_hints;
 
         static readonly IntPtr _atom_remove = (IntPtr)0;
         static readonly IntPtr _atom_add = (IntPtr)1;
         static readonly IntPtr _atom_toggle = (IntPtr)2;
 
-        // Used by OpenTK to detect mouse warp events
-
+        #pragma warning disable 649 // never assigned, compiler bug in Mono 3.4.0
         Rectangle bounds, client_rectangle;
+        #pragma warning restore 649
         int border_left, border_right, border_top, border_bottom;
         Icon icon;
         bool has_focus;
@@ -131,9 +127,11 @@ namespace OpenTK.Platform.X11
 
         readonly IntPtr EmptyCursor;
 
+        #pragma warning disable 414 // Field assigned but never used, we do that on purpose
         readonly bool xi2_supported;
         readonly int xi2_opcode;
         readonly int xi2_version;
+        #pragma warning restore 414
 
         #endregion
 
@@ -148,10 +146,8 @@ namespace OpenTK.Platform.X11
             if (height <= 0)
                 throw new ArgumentOutOfRangeException("height", "Must be higher than zero.");
 
-            XVisualInfo info = new XVisualInfo();
-
             Debug.Indent();
-            
+
             using (new XLock(window.Display))
             {
                 IntPtr visual;
@@ -419,15 +415,7 @@ namespace OpenTK.Platform.X11
         bool IsWindowBorderHidden
         {
             get
-            {                
-                //IntPtr actual_atom;
-                //int actual_format;
-                //IntPtr nitems;
-                //IntPtr bytes_after;
-                IntPtr prop = IntPtr.Zero;
-                //IntPtr atom;
-                //XWindowAttributes attributes;
-
+            {
                 using (new XLock(window.Display))
                 {
                     // Test if decorations have been disabled through Motif.

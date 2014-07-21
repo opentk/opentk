@@ -78,11 +78,13 @@ namespace OpenTK
             object id)
             : this()
         {
-#warning "Consolidate current resolution with bounds? Can they fall out of sync right now?"
+            // Todo: Consolidate current resolution with bounds? Can they fall out of sync right now?
             this.current_resolution = currentResolution;
             IsPrimary = primary;
             this.available_resolutions.AddRange(availableResolutions);
+            #pragma warning disable 612,618
             this.bounds = bounds == Rectangle.Empty ? currentResolution.Bounds : bounds;
+            #pragma warning restore 612,618
             this.Id = id;
         }
 

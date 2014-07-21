@@ -58,8 +58,6 @@ namespace OpenTK.Platform.Linux
         BufferObject cursor_default;
         BufferObject cursor_empty;
 
-        IntPtr gbm_surface;
-
         public LinuxNativeWindow(IntPtr display, IntPtr gbm, int fd,
             int x, int y, int width, int height, string title,
             GraphicsMode mode, GameWindowFlags options,

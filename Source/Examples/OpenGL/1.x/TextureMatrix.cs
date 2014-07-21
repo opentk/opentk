@@ -18,6 +18,7 @@ namespace Examples.Tutorial
 
     class TextureMatrix : GameWindow
     {
+        Vector2 orientation;
 
         public TextureMatrix()
             : base(800, 600, new GraphicsMode(32, 16, 0, 4))
@@ -89,8 +90,12 @@ namespace Examples.Tutorial
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            if (Keyboard[Key.Escape])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard[Key.Escape])
                 Exit();
+
+            var mouse = OpenTK.Input.Mouse.GetState();
+            orientation = new Vector2(mouse.X, mouse.Y);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -107,9 +112,10 @@ namespace Examples.Tutorial
 
             GL.Translate(0f, 0f, 1.5f);
 
-            GL.Rotate(Mouse.X, Vector3.UnitY);
-            GL.Rotate(Mouse.Y, Vector3.UnitX);
+            GL.Rotate(orientation.X, Vector3.UnitY);
+            GL.Rotate(orientation.Y, Vector3.UnitX);
 
+            GL.BindTexture(TextureTarget.Texture2D, Texture);
             GL.CallList(list);
 
             SwapBuffers();

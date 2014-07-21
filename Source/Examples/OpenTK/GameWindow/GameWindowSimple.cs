@@ -18,7 +18,7 @@ namespace Examples.Tutorial
     {
         public SimpleWindow() : base(800, 600)
         {
-            Keyboard.KeyDown += Keyboard_KeyDown;
+            KeyDown += Keyboard_KeyDown;
         }
 
         #region Keyboard_KeyDown

@@ -17,7 +17,7 @@ namespace Examples
         public FullscreenAntialias()
             : base(800, 600, new GraphicsMode(32, 0, 0, 4))
         {
-            Keyboard.KeyDown += Keyboard_KeyDown;
+            KeyDown += Keyboard_KeyDown;
         }
 
         #region Keyboard_KeyDown

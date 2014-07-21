@@ -35,6 +35,7 @@ namespace OpenTK.Platform
 {
     // IInputDriver implementation to satisfy INativeWindow
     // while reducing code duplication.
+    [Obsolete]
     class LegacyInputDriver : IInputDriver
     {
         List<KeyboardDevice> dummy_keyboard_list = new List<KeyboardDevice>(1);

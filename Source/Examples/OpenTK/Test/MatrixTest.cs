@@ -19,8 +19,6 @@ namespace Examples.Tests
             float y = 1.0f;
             float z = 1.0f;
 
-            Matrix4 createdTranslation = Matrix4.CreateTranslation(new Vector3(2, 3, -1));
-
             Matrix4 translation = new Matrix4(new Vector4(1, 0, 0, 2), new Vector4(0, 1, 0, 3), new Vector4(0, 0, 1, -1), new Vector4(0, 0, 0, 1));
             Vector4 point = new Vector4(x, y, z, 1);
 
