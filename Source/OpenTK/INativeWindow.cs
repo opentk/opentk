@@ -261,12 +261,12 @@ namespace OpenTK
         event EventHandler<EventArgs> MouseEnter;
 
         /// <summary>
-        /// Occurs whenever a <see cref="MouseButton"/> is clicked.
+        /// Occurs whenever a <see cref="OpenTK.Input.MouseButton"/> is clicked.
         /// </summary>
         event EventHandler<Input.MouseButtonEventArgs> MouseDown;
 
         /// <summary>
-        /// Occurs whenever a <see cref="MouseButton"/> is released.
+        /// Occurs whenever a <see cref="OpenTK.Input.MouseButton"/> is released.
         /// </summary>
         event EventHandler<Input.MouseButtonEventArgs> MouseUp;
 
