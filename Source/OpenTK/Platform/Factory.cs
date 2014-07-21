@@ -155,7 +155,9 @@ namespace OpenTK.Platform
         [Obsolete]
         public IJoystickDriver CreateLegacyJoystickDriver()
         {
+            #pragma warning disable 612,618
             return default_implementation.CreateLegacyJoystickDriver();
+            #pragma warning restore 612,618
         }
 
         class UnsupportedPlatform : PlatformFactoryBase

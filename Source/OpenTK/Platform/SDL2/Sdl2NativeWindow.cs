@@ -943,7 +943,7 @@ namespace OpenTK.Platform.SDL2
                     if (manual)
                     {
                         Debug.Print("Disposing {0}", GetType());
-                        InputDriver.Dispose();
+
                         if (Exists)
                         {
                             DestroyWindow();
