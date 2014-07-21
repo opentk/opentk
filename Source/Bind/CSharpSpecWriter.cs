@@ -507,6 +507,8 @@ namespace Bind
 
                     if (@enum.IsObsolete)
                         sw.WriteLine("[Obsolete(\"{0}\")]", @enum.Obsolete);
+                    if (!@enum.CLSCompliant)
+                        sw.WriteLine("[CLSCompliant(false)]");
                     if (@enum.IsFlagCollection)
                         sw.WriteLine("[Flags]");
                     sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
