@@ -698,7 +698,7 @@
     <Compile Include="Platform\X11\X11Mouse.cs" />
     <Compile Include="Input\ButtonState.cs" />
     <EmbeddedResource Include="OpenTK.dll.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <Compile Include="Platform\MacOS\HIDInput.cs" />
     <Compile Include="IntPtrEqualityComparer.cs" />
