@@ -10,6 +10,8 @@ using System.IO;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 
+#pragma warning disable 219 // variable assigned but never used, we do that on purpose
+
 namespace Examples
 {
     [Example("Playback", ExampleCategory.OpenAL, "1.1", Documentation="Playback")]

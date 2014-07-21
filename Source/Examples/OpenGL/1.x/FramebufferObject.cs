@@ -21,8 +21,6 @@ namespace Examples.Tutorial
         {
         }
 
-        Font sans = new Font(System.Drawing.FontFamily.GenericSansSerif, 16.0f);
-
         uint ColorTexture;
         uint DepthTexture;
         uint FBOHandle;

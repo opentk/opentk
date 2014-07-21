@@ -115,6 +115,7 @@ namespace Examples.Tutorial
             GL.Rotate(orientation.X, Vector3.UnitY);
             GL.Rotate(orientation.Y, Vector3.UnitX);
 
+            GL.BindTexture(TextureTarget.Texture2D, Texture);
             GL.CallList(list);
 
             SwapBuffers();

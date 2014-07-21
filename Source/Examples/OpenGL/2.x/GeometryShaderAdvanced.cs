@@ -83,7 +83,6 @@ namespace Examples.Tutorial
         int vboSphere;
         int vboSphereStride = BlittableValueType<VertexPositionNormalTexture>.Stride;
         int eboSphere;
-        int sphereElementCount;
 
         ViewMode mode = ViewMode.Scene;
         Vector3 eyePos = new Vector3(0, -8, 0);
@@ -551,7 +550,6 @@ namespace Examples.Tutorial
         {
             VertexPositionNormalTexture[] sphereVertices = CalculateSphereVertices(1, 1, 16, 16);
             ushort[] sphereElements = CalculateSphereElements(1, 1, 16, 16);
-            sphereElementCount = sphereElements.Length;
 
             GL.GenBuffers(1, out vboSphere);
             GL.BindBuffer(BufferTarget.ArrayBuffer, vboSphere);
