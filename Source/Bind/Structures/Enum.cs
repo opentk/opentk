@@ -69,6 +69,9 @@ namespace Bind.Structures
         {
             ConstantCollection.Add(constant.Name, constant);
         }
+
+        public string Obsolete { get; set; }
+        public bool IsObsolete { get { return !String.IsNullOrEmpty(Obsolete); } }
     }
 
     #endregion
