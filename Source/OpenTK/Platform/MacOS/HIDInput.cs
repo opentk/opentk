@@ -94,7 +94,7 @@ namespace OpenTK.Platform.MacOS
         readonly Dictionary<int, IntPtr> JoystickIndexToDevice =
             new Dictionary<int, IntPtr>();
 
-        readonly CFRunLoop RunLoop = CF.CFRunLoopGetMain();
+        readonly CFRunLoop RunLoop;
         readonly CFString InputLoopMode = CF.RunLoopModeDefault;
         readonly CFDictionary DeviceTypes = new CFDictionary();
 
@@ -117,6 +117,16 @@ namespace OpenTK.Platform.MacOS
         public HIDInput()
         {
             Debug.Print("Using HIDInput.");
+
+            RunLoop = CF.CFRunLoopGetMain();
+            if (RunLoop == IntPtr.Zero)
+                RunLoop = CF.CFRunLoopGetCurrent();
+            if (RunLoop == IntPtr.Zero)
+            {
+                Debug.Print("[Error] No CFRunLoop found for {0}", GetType().FullName);
+                throw new InvalidOperationException();
+            }
+            CF.CFRetain(RunLoop);
 
             HandleDeviceAdded = DeviceAdded;
             HandleDeviceRemoved = DeviceRemoved;
@@ -1775,6 +1785,11 @@ namespace OpenTK.Platform.MacOS
                     {
                         NativeMethods.IOHIDManagerClose(hidmanager, IOOptionBits.Zero);
                         hidmanager = IntPtr.Zero;
+                    }
+
+                    if (RunLoop != IntPtr.Zero)
+                    {
+                        CF.CFRelease(RunLoop);
                     }
                 }
                 else
