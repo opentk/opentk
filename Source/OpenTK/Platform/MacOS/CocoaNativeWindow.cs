@@ -128,6 +128,7 @@ namespace OpenTK.Platform.MacOS
         private CocoaWindowInfo windowInfo;
         private IntPtr windowClass;
         private IntPtr trackingArea;
+        private IntPtr current_icon_handle;
         private bool disposed = false;
         private bool exists;
         private bool cursorVisible = true;
@@ -573,20 +574,7 @@ namespace OpenTK.Platform.MacOS
             if (shouldClose)
             {
                 shouldClose = false;
-
-                // PerformClose is equivalent to pressing the close-button, which
-                // does not work in a borderless window. Handle this special case.
-                if (GetStyleMask() == NSWindowStyle.Borderless)
-                {
-                    if (WindowShouldClose(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero))
-                    {
-                        Cocoa.SendVoid(windowInfo.Handle, selClose);
-                    }
-                }
-                else
-                {
-                    Cocoa.SendVoid(windowInfo.Handle, selPerformClose, windowInfo.Handle);
-                }
+                CloseWindow();
             }
         }
 
@@ -613,13 +601,35 @@ namespace OpenTK.Platform.MacOS
             get { return icon; }
             set
             {
-                icon = value;
-                using (Image img = icon.ToBitmap())
+                if (value != null && value != icon)
                 {
-                    IntPtr nsimg = Cocoa.ToNSImage(img);
-                    Cocoa.SendVoid(NSApplication.Handle, selSetApplicationIconImage, nsimg);
+                    // Create and set new icon
+                    IntPtr nsimg = IntPtr.Zero;
+                    using (Image img = value.ToBitmap())
+                    {
+                        nsimg = Cocoa.ToNSImage(img);
+                        if (nsimg != IntPtr.Zero)
+                        {
+                            Cocoa.SendVoid(NSApplication.Handle, selSetApplicationIconImage, nsimg);
+                        }
+                        else
+                        {
+                            Debug.Print("[Mac] Failed to create NSImage for {0}", value);
+                            return;
+                        }
+                    }
+
+                    // Release previous icon
+                    if (current_icon_handle != IntPtr.Zero)
+                    {
+                        Cocoa.SendVoid(current_icon_handle, Selector.Release);
+                    }
+
+                    // Raise IconChanged event
+                    current_icon_handle = nsimg;
+                    icon = value;
+                    OnIconChanged(EventArgs.Empty);
                 }
-                OnIconChanged(EventArgs.Empty);
             }
         }
 
@@ -889,21 +899,19 @@ namespace OpenTK.Platform.MacOS
             // effect on output quality."
             IntPtr imgdata =
                 Cocoa.SendIntPtr(
-                    Cocoa.SendIntPtr(
-                        Cocoa.SendIntPtr(NSBitmapImageRep, Selector.Alloc),
-                        selInitWithBitmapDataPlanes,
-                        IntPtr.Zero,
-                        cursor.Width,
-                        cursor.Height,
-                        8,
-                        4,
-                        1,
-                        0,
-                        NSDeviceRGBColorSpace,
-                        NSBitmapFormat.AlphaFirst,
-                        4 * cursor.Width,
-                        32),
-                    Selector.Autorelease);
+                    Cocoa.SendIntPtr(NSBitmapImageRep, Selector.Alloc),
+                    selInitWithBitmapDataPlanes,
+                    IntPtr.Zero,
+                    cursor.Width,
+                    cursor.Height,
+                    8,
+                    4,
+                    1,
+                    0,
+                    NSDeviceRGBColorSpace,
+                    NSBitmapFormat.AlphaFirst,
+                    4 * cursor.Width,
+                    32);
             if (imgdata == IntPtr.Zero)
             {
                 Debug.Print("Failed to create NSBitmapImageRep with size ({0},{1]})",
@@ -935,14 +943,13 @@ namespace OpenTK.Platform.MacOS
             // Construct the actual NSImage
             IntPtr img = 
                 Cocoa.SendIntPtr(
-                    Cocoa.SendIntPtr(
-                        Cocoa.SendIntPtr(NSImage, Selector.Alloc),
-                        selInitWithSize,
-                        new SizeF(cursor.Width, cursor.Height)),
-                    Selector.Autorelease);
+                    Cocoa.SendIntPtr(NSImage, Selector.Alloc),
+                    selInitWithSize,
+                    new SizeF(cursor.Width, cursor.Height));
             if (img == IntPtr.Zero)
             {
                 Debug.Print("Failed to construct NSImage from NSBitmapImageRep");
+                Cocoa.SendVoid(imgdata, Selector.Release);
                 return IntPtr.Zero;
             }
             Cocoa.SendVoid(img, selAddRepresentation, imgdata);
@@ -950,14 +957,13 @@ namespace OpenTK.Platform.MacOS
             // Convert the NSImage to a NSCursor
             IntPtr nscursor =
                 Cocoa.SendIntPtr(
-                    Cocoa.SendIntPtr(
-                        Cocoa.SendIntPtr(NSCursor, Selector.Alloc),
-                        selInitWithImageHotSpot,
-                        img,
-                        new PointF(cursor.X, cursor.Y)
-                    ),
-                    Selector.Autorelease);
+                    Cocoa.SendIntPtr(NSCursor, Selector.Alloc),
+                    selInitWithImageHotSpot,
+                    img,
+                    new PointF(cursor.X, cursor.Y));
 
+            Cocoa.SendVoid(imgdata, Selector.Release);
+            Cocoa.SendVoid(img, Selector.Release);
             return nscursor;
         }
 
@@ -1015,8 +1021,10 @@ namespace OpenTK.Platform.MacOS
             NSApplication.Quit -= ApplicationQuit;
 
             CursorVisible = true;
-            disposed = true;
-            exists = false;
+            if (exists)
+            {
+                CloseWindow();
+            }
 
             if (disposing)
             {
@@ -1027,9 +1035,11 @@ namespace OpenTK.Platform.MacOS
                     trackingArea = IntPtr.Zero;
                 }
 
+                Debug.Print("[Mac] Disposing {0}", windowInfo);
                 windowInfo.Dispose();
             }
 
+            disposed = true;
             OnDisposed(EventArgs.Empty);
         }
 
@@ -1119,5 +1129,25 @@ namespace OpenTK.Platform.MacOS
         {
             return (NSWindowStyle)Cocoa.SendUint(windowInfo.Handle, selStyleMask);
         }
+
+        void CloseWindow()
+        {
+            exists = false;
+
+            // PerformClose is equivalent to pressing the close-button, which
+            // does not work in a borderless window. Handle this special case.
+            if (GetStyleMask() == NSWindowStyle.Borderless)
+            {
+                if (WindowShouldClose(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero))
+                {
+                    Cocoa.SendVoid(windowInfo.Handle, selClose);
+                }
+            }
+            else
+            {
+                Cocoa.SendVoid(windowInfo.Handle, selPerformClose, windowInfo.Handle);
+            }
+        }
+
     }
 }
