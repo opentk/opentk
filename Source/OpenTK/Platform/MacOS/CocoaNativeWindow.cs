@@ -1000,15 +1000,15 @@ namespace OpenTK.Platform.MacOS
             get { return cursorVisible; }
             set
             {
-                cursorVisible = value;
-                if (value)
+                if (value && !cursorVisible)
                 {
                     SetCursorVisible(true);
                 }
-                else
+                else if (!value && cursorVisible)
                 {
                     SetCursorVisible(false);
                 }
+                cursorVisible = value;
             }
         }
 
