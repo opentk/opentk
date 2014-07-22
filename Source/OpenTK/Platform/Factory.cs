@@ -46,7 +46,7 @@ namespace OpenTK.Platform
 
         #region Constructors
 
-        static Factory()
+        public Factory()
         {
             // Ensure we are correctly initialized.
             Toolkit.Init();
