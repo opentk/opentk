@@ -28,9 +28,9 @@ namespace Examples.Tests
         public BasicMouseInput()
             : base(800, 600)
         {
-            Mouse.Move += (sender, e) =>
+            MouseMove += (sender, e) =>
             {
-                if (Mouse[MouseButton.Left])
+                if (e.Mouse[MouseButton.Left])
                 {
                     // Scale mouse coordinates from
                     // (0, 0):(Width, Height) to
@@ -48,7 +48,7 @@ namespace Examples.Tests
 
         protected override void OnLoad(EventArgs e)
         {
-            this.Mouse.ButtonUp += (object sender, MouseButtonEventArgs buttonEvent) => {
+            MouseUp += (object sender, MouseButtonEventArgs buttonEvent) => {
                 Console.WriteLine("Mouse button up: " + buttonEvent.Button + " at: " + buttonEvent.Position);
             };
         }
@@ -65,10 +65,12 @@ namespace Examples.Tests
                Console.WriteLine("The A key is down!");
             }
 
-            if (Keyboard[OpenTK.Input.Key.Escape])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+
+            if (keyboard[OpenTK.Input.Key.Escape])
                 this.Exit();
 
-            if (Keyboard[OpenTK.Input.Key.F11])
+            if (keyboard[OpenTK.Input.Key.F11])
                 if (WindowState != WindowState.Fullscreen)
                     WindowState = WindowState.Fullscreen;
                 else
@@ -94,8 +96,9 @@ namespace Examples.Tests
             GL.End();
 
             SwapBuffers();
-            
-            if (Keyboard[Key.Space])
+
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard[Key.Space])
             {
                 // Simulate high load (4 fps) to check
                 // mouse input behavior

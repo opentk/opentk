@@ -42,7 +42,7 @@ namespace Examples.Tutorial
             : base(800, 600, new GraphicsMode(new ColorFormat(8, 8, 8, 8), 24, 8)) // request 8-bit stencil buffer
         {
             base.VSync = VSyncMode.Off;
-            Keyboard.KeyDown += delegate(object sender, KeyboardKeyEventArgs e)
+            KeyDown += delegate(object sender, KeyboardKeyEventArgs e)
             {
                 switch (e.Key)
                 {
@@ -174,11 +174,10 @@ namespace Examples.Tutorial
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            #region Magic numbers for camera
-            CameraRotX = -Mouse.X * .5f;
-            CameraRotY = Mouse.Y * .5f;
-            CameraZoom = Mouse.Wheel * .2f;
-            #endregion Magic numbers for camera
+            var mouse = OpenTK.Input.Mouse.GetState();
+            CameraRotX = -mouse.X * .5f;
+            CameraRotY = mouse.Y * .5f;
+            CameraZoom = mouse.Wheel * .2f;
         }
 
         public void DrawOperandB()

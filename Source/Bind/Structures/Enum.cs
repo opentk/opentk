@@ -19,6 +19,11 @@ namespace Bind.Structures
     {
         string _name, _type;
 
+        public Enum()
+        {
+            CLSCompliant = true;
+        }
+
         // Returns true if the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...
         public bool IsFlagCollection
         {
@@ -69,6 +74,11 @@ namespace Bind.Structures
         {
             ConstantCollection.Add(constant.Name, constant);
         }
+
+        public string Obsolete { get; set; }
+        public bool IsObsolete { get { return !String.IsNullOrEmpty(Obsolete); } }
+
+        public bool CLSCompliant { get; set; }
     }
 
     #endregion

@@ -23,7 +23,7 @@ namespace Examples.Tutorial
         public MouseCursorSimple()
             : base(800, 600)
         {
-            Keyboard.KeyDown += Keyboard_KeyDown;
+            KeyDown += Keyboard_KeyDown;
 
             using (Bitmap bitmap = new Bitmap("Data/Textures/cursor.png"))
             {
@@ -37,8 +37,8 @@ namespace Examples.Tutorial
                 Cursor = MyCursor;
             }
 
-            Mouse.Move += Mouse_Move;
-            Mouse.ButtonDown += Mouse_ButtonDown;
+            MouseMove += Mouse_Move;
+            MouseDown += Mouse_ButtonDown;
         }
 
         void AddLine(float x, float y)
@@ -71,7 +71,7 @@ namespace Examples.Tutorial
 
         void Mouse_Move(object sender, MouseMoveEventArgs e)
         {
-            if (Mouse[MouseButton.Left])
+            if (e.Mouse[MouseButton.Left])
             {
                 AddLine(e.X, e.Y);
             }

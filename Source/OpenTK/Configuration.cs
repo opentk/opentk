@@ -95,7 +95,7 @@ namespace OpenTK
 
         #region public static bool RunningOnLinux
 
-        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.</summary>
+        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on the Linux kernel.</summary>
         public static bool RunningOnLinux { get { return runningOnLinux; } }
 
         #endregion

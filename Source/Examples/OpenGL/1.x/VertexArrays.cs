@@ -36,7 +36,7 @@ namespace Examples.Tutorial
             : base(800, 600)
         {
             //this.VSync = VSyncMode.On;
-            this.Keyboard.KeyUp += Keyboard_KeyUp;
+            KeyUp += Keyboard_KeyUp;
         }
 
         void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
@@ -107,14 +107,15 @@ namespace Examples.Tutorial
         /// </remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            // Escape quits.
-            if (Keyboard[Key.Escape])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+
+            if (keyboard[Key.Escape])
             {
                 this.Exit();
                 return;
             }
 
-            if (Keyboard[Key.F11])
+            if (keyboard[Key.F11])
                 if (WindowState != WindowState.Fullscreen)
                     WindowState = WindowState.Fullscreen;
                 else
@@ -122,14 +123,14 @@ namespace Examples.Tutorial
 
             // Plus/Minus change the target render frequency.
             // PageUp/PageDown change the target update frequency.
-            if (Keyboard[Key.Plus] || Keyboard[Key.KeypadAdd]) TargetRenderFrequency++;
-            if (Keyboard[Key.Minus] || Keyboard[Key.KeypadSubtract]) TargetRenderFrequency--;
-            if (Keyboard[Key.PageUp]) TargetUpdateFrequency++;
-            if (Keyboard[Key.PageDown]) TargetUpdateFrequency--;
+            if (keyboard[Key.Plus] || keyboard[Key.KeypadAdd]) TargetRenderFrequency++;
+            if (keyboard[Key.Minus] || keyboard[Key.KeypadSubtract]) TargetRenderFrequency--;
+            if (keyboard[Key.PageUp]) TargetUpdateFrequency++;
+            if (keyboard[Key.PageDown]) TargetUpdateFrequency--;
 
             // Right/Left control the rotation speed and direction.
-            if (Keyboard[Key.Right]) rotation_speed += 0.5f;
-            if (Keyboard[Key.Left]) rotation_speed -= 0.5f;
+            if (keyboard[Key.Right]) rotation_speed += 0.5f;
+            if (keyboard[Key.Left]) rotation_speed -= 0.5f;
         }
 
         #endregion

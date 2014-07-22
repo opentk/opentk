@@ -26,6 +26,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Graphics
@@ -84,6 +85,8 @@ namespace OpenTK.Graphics
         // validation necessary.)
         internal override void LoadEntryPoints()
         {
+            Debug.Print("Loading entry points for {0}", GetType().FullName);
+
             IGraphicsContext context = GraphicsContext.CurrentContext;
             if (context == null)
                 throw new GraphicsContextMissingException();

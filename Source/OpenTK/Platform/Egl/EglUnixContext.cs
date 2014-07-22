@@ -28,14 +28,16 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
     class EglUnixContext : EglContext
     {
-        readonly IntPtr ES1 = OpenTK.Platform.X11.DL.Open("libGLESv1_CM", X11.DLOpenFlags.Lazy);
-        readonly IntPtr ES2 = OpenTK.Platform.X11.DL.Open("libGLESv2", X11.DLOpenFlags.Lazy);
+        IntPtr ES1 = OpenTK.Platform.X11.DL.Open("libGLESv1_CM", X11.DLOpenFlags.Lazy);
+        IntPtr ES2 = OpenTK.Platform.X11.DL.Open("libGLESv2", X11.DLOpenFlags.Lazy);
+        IntPtr GL = OpenTK.Platform.X11.DL.Open("libGL", X11.DLOpenFlags.Lazy);
 
         public EglUnixContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -59,6 +61,10 @@ namespace OpenTK.Platform.Egl
             {
                 return X11.DL.Symbol(ES2, function);
             }
+            else if ((renderable & RenderableFlags.GL) != 0 && GL != IntPtr.Zero)
+            {
+                return X11.DL.Symbol(GL, function);
+            }
             return IntPtr.Zero;
         }
 
@@ -72,8 +78,32 @@ namespace OpenTK.Platform.Egl
             {
                 X11.DL.Close(ES2);
             }
+            if (GL != IntPtr.Zero)
+            {
+                X11.DL.Close(GL);
+            }
+
+            GL = ES1 = ES2 = IntPtr.Zero;
 
             base.Dispose(manual);
+        }
+
+        public override void LoadAll()
+        {
+            // Modern unices can use EGL to create
+            // both GL and ES contexts, so we need
+            // to load all entry points. This is
+            // especially true on KMS, Wayland and Mir.
+
+            Stopwatch time = Stopwatch.StartNew();
+
+            new OpenTK.Graphics.OpenGL.GL().LoadEntryPoints();
+            new OpenTK.Graphics.OpenGL4.GL().LoadEntryPoints();
+            new OpenTK.Graphics.ES11.GL().LoadEntryPoints();
+            new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
+            new OpenTK.Graphics.ES30.GL().LoadEntryPoints();
+
+            Debug.Print("Bindings loaded in {0} ms.", time.Elapsed.TotalMilliseconds);
         }
     }
 }

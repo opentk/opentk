@@ -6123,6 +6123,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum Amdcompressed3Dctexture : int
     {
         /// <summary>
@@ -6142,6 +6144,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum AmdCompressed3DcTexture : int
     {
         /// <summary>
@@ -6157,6 +6160,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum AmdcompressedAtctexture : int
     {
         /// <summary>
@@ -6180,6 +6185,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum AmdCompressedAtcTexture : int
     {
         /// <summary>
@@ -7930,6 +7936,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum ExttextureFilterAnisotropic : int
     {
         /// <summary>
@@ -7949,6 +7957,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum ExtTextureFilterAnisotropic : int
     {
         /// <summary>
@@ -7964,6 +7973,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum ExttextureFormatBgra8888 : int
     {
         /// <summary>
@@ -7979,6 +7990,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum ExtTextureFormatBgra8888 : int
     {
         /// <summary>
@@ -10673,6 +10685,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum ImgreadFormat : int
     {
         /// <summary>
@@ -10696,6 +10710,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum ImgReadFormat : int
     {
         /// <summary>
@@ -10711,6 +10726,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum ImgtextureCompressionPvrtc : int
     {
         /// <summary>
@@ -10738,6 +10755,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum ImgTextureCompressionPvrtc : int
     {
         /// <summary>
@@ -10761,6 +10779,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum ImgtextureEnvEnhancedFixedFunction : int
     {
         /// <summary>
@@ -10800,6 +10820,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum ImgTextureEnvEnhancedFixedFunction : int
     {
         /// <summary>
@@ -10835,6 +10856,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum ImguserClipPlane : int
     {
         /// <summary>
@@ -10874,6 +10897,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum ImgUserClipPlane : int
     {
         /// <summary>
@@ -12031,6 +12055,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum Nvfence : int
     {
         /// <summary>
@@ -12054,6 +12080,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum NvFence : int
     {
         /// <summary>
@@ -12101,6 +12128,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesblendEquationSeparate : int
     {
         /// <summary>
@@ -12120,6 +12149,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesBlendEquationSeparate : int
     {
         /// <summary>
@@ -12135,6 +12165,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesblendFuncSeparate : int
     {
         /// <summary>
@@ -12162,6 +12194,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesBlendFuncSeparate : int
     {
         /// <summary>
@@ -12185,6 +12218,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesblendSubtract : int
     {
         /// <summary>
@@ -12212,6 +12247,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesBlendSubtract : int
     {
         /// <summary>
@@ -12235,6 +12271,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesbyteCoordinates : int
     {
         /// <summary>
@@ -12246,13 +12284,20 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesByteCoordinates : int
     {
+        /// <summary>
+        /// Original was GL_BYTE = 0x1400
+        /// </summary>
+        Byte = ((int)0x1400)        ,
     }
 
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OescompressedEtc1Rgb8Texture : int
     {
         /// <summary>
@@ -12268,6 +12313,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesCompressedEtc1Rgb8Texture : int
     {
         /// <summary>
@@ -12279,6 +12325,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OescompressedPalettedTexture : int
     {
         /// <summary>
@@ -12330,6 +12378,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesCompressedPalettedTexture : int
     {
         /// <summary>
@@ -12377,6 +12426,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum Oesdepth24 : int
     {
         /// <summary>
@@ -12392,6 +12443,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesDepth24 : int
     {
         /// <summary>
@@ -12403,6 +12455,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum Oesdepth32 : int
     {
         /// <summary>
@@ -12418,6 +12472,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesDepth32 : int
     {
         /// <summary>
@@ -12429,6 +12484,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesdrawTexture : int
     {
         /// <summary>
@@ -12444,6 +12501,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesDrawTexture : int
     {
         /// <summary>
@@ -12455,6 +12513,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum Oeseglimage : int
     {
         /// <summary>
@@ -12466,6 +12526,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesEglImage : int
     {
     }
@@ -12496,6 +12557,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OeselementIndexUint : int
     {
         /// <summary>
@@ -12507,6 +12570,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesElementIndexUint : int
     {
         /// <summary>
@@ -12518,6 +12582,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesextendedMatrixPalette : int
     {
         /// <summary>
@@ -12529,6 +12595,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesExtendedMatrixPalette : int
     {
     }
@@ -12536,6 +12603,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesfboRenderMipmap : int
     {
         /// <summary>
@@ -12547,6 +12616,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesFboRenderMipmap : int
     {
     }
@@ -12554,6 +12624,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesfixedPoint : int
     {
         /// <summary>
@@ -12569,6 +12641,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesFixedPoint : int
     {
         /// <summary>
@@ -12580,6 +12653,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesframebufferObject : int
     {
         /// <summary>
@@ -12723,6 +12798,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesFramebufferObject : int
     {
         /// <summary>
@@ -12862,6 +12938,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum Oesmapbuffer : int
     {
         /// <summary>
@@ -12889,6 +12967,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesMapbuffer : int
     {
         /// <summary>
@@ -12912,6 +12991,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesmatrixGet : int
     {
         /// <summary>
@@ -12935,6 +13016,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesMatrixGet : int
     {
         /// <summary>
@@ -12954,6 +13036,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesmatrixPalette : int
     {
         /// <summary>
@@ -13029,6 +13113,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesMatrixPalette : int
     {
         /// <summary>
@@ -13100,6 +13185,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OespackedDepthStencil : int
     {
         /// <summary>
@@ -13123,6 +13210,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesPackedDepthStencil : int
     {
         /// <summary>
@@ -13142,6 +13230,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OespointSizeArray : int
     {
         /// <summary>
@@ -13173,6 +13263,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesPointSizeArray : int
     {
         /// <summary>
@@ -13200,6 +13291,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OespointSprite : int
     {
         /// <summary>
@@ -13219,6 +13312,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesPointSprite : int
     {
         /// <summary>
@@ -13234,6 +13328,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesqueryMatrix : int
     {
         /// <summary>
@@ -13245,6 +13341,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesQueryMatrix : int
     {
     }
@@ -13252,6 +13349,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesreadFormat : int
     {
         /// <summary>
@@ -13271,6 +13370,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesReadFormat : int
     {
         /// <summary>
@@ -13353,6 +13453,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum Oesrgb8Rgba8 : int
     {
         /// <summary>
@@ -13372,6 +13474,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesRgb8Rgba8 : int
     {
         /// <summary>
@@ -13387,6 +13490,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OessinglePrecision : int
     {
         /// <summary>
@@ -13398,6 +13503,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesSinglePrecision : int
     {
     }
@@ -13405,6 +13511,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum Oesstencil1 : int
     {
         /// <summary>
@@ -13420,6 +13528,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesStencil1 : int
     {
         /// <summary>
@@ -13431,6 +13540,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum Oesstencil4 : int
     {
         /// <summary>
@@ -13446,6 +13557,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesStencil4 : int
     {
         /// <summary>
@@ -13457,6 +13569,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum Oesstencil8 : int
     {
         /// <summary>
@@ -13472,6 +13586,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesStencil8 : int
     {
         /// <summary>
@@ -13483,6 +13598,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OesstencilWrap : int
     {
         /// <summary>
@@ -13502,6 +13619,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesStencilWrap : int
     {
         /// <summary>
@@ -13517,6 +13635,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OestextureCubeMap : int
     {
         /// <summary>
@@ -13580,6 +13700,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesTextureCubeMap : int
     {
         /// <summary>
@@ -13639,6 +13760,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OestextureEnvCrossbar : int
     {
         /// <summary>
@@ -13650,6 +13773,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesTextureEnvCrossbar : int
     {
     }
@@ -13657,6 +13781,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum OestextureMirroredRepeat : int
     {
         /// <summary>
@@ -13672,6 +13798,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum OesTextureMirroredRepeat : int
     {
         /// <summary>
@@ -13694,6 +13821,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
     public enum OpenGlescoreVersions : int
     {
         /// <summary>
@@ -14604,6 +14732,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum QcomdriverControl : int
     {
         /// <summary>
@@ -14615,6 +14745,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum QcomDriverControl : int
     {
     }
@@ -14680,6 +14811,8 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
+    [CLSCompliant(false)]
     public enum QcomperfmonGlobalMode : int
     {
         /// <summary>
@@ -14695,6 +14828,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [CLSCompliant(false)]
     public enum QcomPerfmonGlobalMode : int
     {
         /// <summary>
@@ -15135,6 +15269,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Obsolete("Use enum with correct capitalisation instead.")]
     public enum TextureCombineDot3 : int
     {
         /// <summary>

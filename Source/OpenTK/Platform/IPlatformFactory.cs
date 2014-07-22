@@ -53,6 +53,7 @@ namespace OpenTK.Platform
 
         Input.IJoystickDriver2 CreateJoystickDriver();
 
+        [Obsolete]
         Input.IJoystickDriver CreateLegacyJoystickDriver();
     }
 }

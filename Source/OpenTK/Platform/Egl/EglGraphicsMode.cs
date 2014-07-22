@@ -35,6 +35,15 @@ namespace OpenTK.Platform.Egl
     class EglGraphicsMode
     {
         public GraphicsMode SelectGraphicsMode(EglWindowInfo window,
+            GraphicsMode mode, RenderableFlags flags)
+        {
+            return SelectGraphicsMode(window,
+                mode.ColorFormat, mode.Depth, mode.Stencil,
+                mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
+                flags);
+        }
+
+        public GraphicsMode SelectGraphicsMode(EglWindowInfo window,
             ColorFormat color, int depth, int stencil,
             int samples, ColorFormat accum, int buffers, bool stereo,
             RenderableFlags renderable_flags)

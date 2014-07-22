@@ -119,8 +119,6 @@ namespace Examples.Shapes
                 double _Six = 0.66666666666666; // 2/3
                 double _One = 1.0; // 3/3 
 
-                double ThirdLength = SideLength / 3f;
-
                 Vector3d C0 = Center + new Vector3d( -SideLength, -SideLength, +SideLength );
                 Vector3d C1 = Center + new Vector3d( +SideLength, -SideLength, +SideLength );
                 Vector3d C2 = Center + new Vector3d( +SideLength, +SideLength, +SideLength );

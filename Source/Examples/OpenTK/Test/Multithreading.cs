@@ -39,7 +39,7 @@ namespace Examples.Tests
             using (Tutorial.T03_Immediate_Mode_Cube game = new Examples.Tutorial.T03_Immediate_Mode_Cube())
             {
                 Utilities.SetWindowTitle(game);
-                game.Keyboard.KeyUp += delegate(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+                game.KeyUp += delegate(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
                 {
                     if (e.Key == OpenTK.Input.Key.F11)
                     {

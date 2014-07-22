@@ -575,7 +575,6 @@ namespace OpenTK.Platform.X11
         { 
             int width = image.Width;
             int height = image.Height;
-            int size = width * height; 
 
             BitmapData data = image.LockBits(new Rectangle(0, 0, width, height),
                 ImageLockMode.ReadOnly,
@@ -591,7 +590,7 @@ namespace OpenTK.Platform.X11
             
             XFreeGC(display, gc);
             image.UnlockBits(data);
-                                         
+
             return pixmap; 
         } 
         

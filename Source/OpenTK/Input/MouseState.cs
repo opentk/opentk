@@ -38,7 +38,8 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        int x, y;
+        internal const int MaxButtons = 16; // we are storing in an ushort
+        Vector2 position;
         MouseScroll scroll;
         ushort buttons;
         bool is_connected;
@@ -101,7 +102,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="OpenTK.Input.MouseScrollWheel"/> instance,
+        /// Gets a <see cref="OpenTK.Input.MouseScroll"/> instance,
         /// representing the current state of the mouse scroll wheel.
         /// </summary>
         public MouseScroll Scroll
@@ -114,8 +115,8 @@ namespace OpenTK.Input
         /// </summary>
         public int X
         {
-            get { return x; }
-            internal set { x = value; }
+            get { return (int)Math.Round(position.X); }
+            internal set { position.X = value; }
         }
 
         /// <summary>
@@ -123,8 +124,8 @@ namespace OpenTK.Input
         /// </summary>
         public int Y
         {
-            get { return y; }
-            internal set { y = value; }
+            get { return (int)Math.Round(position.Y); }
+            internal set { position.Y = value; }
         }
 
         /// <summary>
@@ -271,6 +272,12 @@ namespace OpenTK.Input
         #endregion
 
         #region Internal Members
+
+        internal Vector2 Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
 
         internal bool ReadBit(int offset)
         {

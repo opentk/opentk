@@ -146,8 +146,6 @@ namespace CHeaderToXML
                 .Concat(groups)
                 .OrderBy(f => TrimName(f.Attribute("name").Value)))
             {
-                var category = TrimName(feature.Attribute("name").Value);
-                var extension = feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
                 var version = feature.Attribute("number") != null ? feature.Attribute("number").Value : null;
                 var apinames = GetApiNames(feature);
 

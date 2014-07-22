@@ -75,7 +75,7 @@ namespace OpenTK.Platform.Egl
 
         #region Public Members
 
-        public IntPtr Handle { get { return handle; } private set { handle = value; } }
+        public IntPtr Handle { get { return handle; } set { handle = value; } }
 
         public IntPtr Display { get { return display; } private set { display = value; } }
 
@@ -87,7 +87,7 @@ namespace OpenTK.Platform.Egl
 			if (Surface==IntPtr.Zero)
 			{
                 throw new GraphicsContextException(String.Format(
-					"[Error] Failed to create EGL window surface, error {0}.", Egl.GetError()));
+                    "[EGL] Failed to create window surface, error {0}.", Egl.GetError()));
 			}
         }
 
