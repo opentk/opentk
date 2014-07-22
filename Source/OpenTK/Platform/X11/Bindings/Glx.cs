@@ -344,9 +344,9 @@ namespace OpenTK.Platform.X11
 
         [DllImport(Library, EntryPoint = "glXQueryDrawable")]
         public static extern ErrorCode QueryDrawable(IntPtr dpy, IntPtr drawable, GLXAttribute attribute, out int value);
-        
+
         [DllImport(Library, EntryPoint = "glXQueryExtension")]
-        public static extern bool QueryExtension(IntPtr dpy, ref int errorBase, ref int eventBase);
+        public static extern bool QueryExtension(IntPtr dpy, out int errorBase, out int eventBase);
 
         [DllImport(Library, EntryPoint = "glXQueryExtensionsString")]
         static extern IntPtr QueryExtensionsStringInternal(IntPtr dpy, int screen);
@@ -355,6 +355,9 @@ namespace OpenTK.Platform.X11
         {
             return Marshal.PtrToStringAnsi(QueryExtensionsStringInternal(dpy, screen));
         }
+
+        [DllImport(Library, EntryPoint = "glXQueryVersion")]
+        public static extern bool QueryVersion(IntPtr dpy, out int major, out int minor);
 
         [DllImport(Library, EntryPoint = "glXCreateContext")]
         public static extern IntPtr CreateContext(IntPtr dpy, IntPtr vis, IntPtr shareList, bool direct);

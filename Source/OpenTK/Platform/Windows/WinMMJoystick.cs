@@ -36,14 +36,13 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    sealed class WinMMJoystick : IJoystickDriver, IJoystickDriver2
+    sealed class WinMMJoystick : IJoystickDriver2
     {
         #region Fields
 
         readonly object sync = new object();
 
         List<JoystickDevice> sticks = new List<JoystickDevice>();
-        IList<JoystickDevice> sticks_readonly;
 
         // Matches a WinMM device index to a specific stick above
         readonly Dictionary<int, int> index_to_stick =
@@ -65,7 +64,6 @@ namespace OpenTK.Platform.Windows
 
         public WinMMJoystick()
         {
-            sticks_readonly = sticks.AsReadOnly();
             RefreshDevices();
         }
 
@@ -224,111 +222,6 @@ namespace OpenTK.Platform.Windows
         {
             int offset = (ushort.MaxValue * (pos - min)) / (max - min) - short.MaxValue;
             return (short)offset;
-        }
-
-        #endregion
-
-        #region IJoystickDriver
-
-        public int DeviceCount
-        {
-            get { return sticks.Count; }
-        }
-
-        public IList<JoystickDevice> Joysticks
-        {
-            get { return sticks_readonly; }
-        }
-
-        public void Poll()
-        {
-            lock (sync)
-            {
-                foreach (JoystickDevice<WinMMJoyDetails> js in sticks)
-                {
-                    JoyInfoEx info = new JoyInfoEx();
-                    info.Size = JoyInfoEx.SizeInBytes;
-                    info.Flags = JoystickFlags.All;
-                    UnsafeNativeMethods.joyGetPosEx(js.Id, ref info);
-
-                    int num_axes = js.Axis.Count;
-                    if ((js.Details.PovType & PovType.Exists) != 0)
-                        num_axes -= 2; // Because the last two axis are used for POV input.
-
-                    int axis = 0;
-                    if (axis < num_axes)
-                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.XPos, axis)); axis++; }
-                    if (axis < num_axes)
-                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.YPos, axis)); axis++; }
-                    if (axis < num_axes)
-                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.ZPos, axis)); axis++; }
-                    if (axis < num_axes)
-                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.RPos, axis)); axis++; }
-                    if (axis < num_axes)
-                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.UPos, axis)); axis++; }
-                    if (axis < num_axes)
-                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.VPos, axis)); axis++; }
-
-                    if ((js.Details.PovType & PovType.Exists) != 0)
-                    {
-                        float x = 0, y = 0;
-
-                        // A discrete POV returns specific values for left, right, etc.
-                        // A continuous POV returns an integer indicating an angle in degrees * 100, e.g. 18000 == 180.00 degrees.
-                        // The vast majority of joysticks have discrete POVs, so we'll treat all of them as discrete for simplicity.
-                        if ((JoystickPovPosition)info.Pov != JoystickPovPosition.Centered)
-                        {
-                            if (info.Pov > (int)JoystickPovPosition.Left || info.Pov < (int)JoystickPovPosition.Right)
-                            { y = 1; }
-                            if ((info.Pov > (int)JoystickPovPosition.Forward) && (info.Pov < (int)JoystickPovPosition.Backward))
-                            { x = 1; }
-                            if ((info.Pov > (int)JoystickPovPosition.Right) && (info.Pov < (int)JoystickPovPosition.Left))
-                            { y = -1; }
-                            if (info.Pov > (int)JoystickPovPosition.Backward)
-                            { x = -1; }
-                        }
-                        //if ((js.Details.PovType & PovType.Discrete) != 0)
-                        //{
-                        //    if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Centered)
-                        //    { x = 0; y = 0; }
-                        //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Forward)
-                        //    { x = 0; y = -1; }
-                        //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Left)
-                        //    { x = -1; y = 0; }
-                        //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Backward)
-                        //    { x = 0; y = 1; }
-                        //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Right)
-                        //    { x = 1; y = 0; }
-                        //}
-                        //else if ((js.Details.PovType & PovType.Continuous) != 0)
-                        //{
-                        //    if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Centered)
-                        //    {
-                        //        // This approach moves the hat on a circle, not a square as it should.
-                        //        float angle = (float)(System.Math.PI * info.Pov / 18000.0 + System.Math.PI / 2);
-                        //        x = (float)System.Math.Cos(angle);
-                        //        y = (float)System.Math.Sin(angle);
-                        //        if (x < 0.001)
-                        //            x = 0;
-                        //        if (y < 0.001)
-                        //            y = 0;
-                        //    }
-                        //}
-                        //else
-                        //    throw new NotImplementedException("Please post an issue report at http://www.opentk.com/issues");
-
-                        js.SetAxis((JoystickAxis)axis++, x);
-                        js.SetAxis((JoystickAxis)axis++, y);
-                    }
-
-                    int button = 0;
-                    while (button < js.Button.Count)
-                    {
-                        js.SetButton((JoystickButton)button, (info.Buttons & (1 << button)) != 0);
-                        button++;
-                    }
-                }
-            }
         }
 
         #endregion

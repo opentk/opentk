@@ -228,7 +228,7 @@ namespace OpenTK
 
                 mantissa = mantissa + 0x00000fff + ((mantissa >> 13) & 1);
 
-                if ((mantissa & 0x00800000) == 1)
+                if ((mantissa & 0x00800000) != 0)
                 {
                     mantissa = 0;        // overflow in significand,
                     exponent += 1;        // adjust exponent

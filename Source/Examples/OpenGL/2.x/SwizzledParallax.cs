@@ -224,52 +224,62 @@ namespace Examples.Tutorial
             base.OnResize( e );
         }
 
+        protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.Keyboard[OpenTK.Input.Key.Escape])
+                this.Exit();
+            if (e.Keyboard[OpenTK.Input.Key.Space])
+                Trace.WriteLine("GL: " + GL.GetError());
+            if (e.Keyboard[OpenTK.Input.Key.Q])
+            {
+                MaterialScaleAndBiasAndShininess.X += 0.01f;
+                Trace.WriteLine("Scale: " + MaterialScaleAndBiasAndShininess.X + " Bias: " + MaterialScaleAndBiasAndShininess.Y);
+            }
+            if (e.Keyboard[OpenTK.Input.Key.A])
+            {
+                MaterialScaleAndBiasAndShininess.X -= 0.01f;
+                Trace.WriteLine("Scale: " + MaterialScaleAndBiasAndShininess.X + " Bias: " + MaterialScaleAndBiasAndShininess.Y);
+            }
+            if (e.Keyboard[OpenTK.Input.Key.W])
+            {
+                MaterialScaleAndBiasAndShininess.Y += 0.01f;
+                Trace.WriteLine("Scale: " + MaterialScaleAndBiasAndShininess.X + " Bias: " + MaterialScaleAndBiasAndShininess.Y);
+            }
+            if (e.Keyboard[OpenTK.Input.Key.S])
+            {
+                MaterialScaleAndBiasAndShininess.Y -= 0.01f;
+                Trace.WriteLine("Scale: " + MaterialScaleAndBiasAndShininess.X + " Bias: " + MaterialScaleAndBiasAndShininess.Y);
+            }
+            if (e.Keyboard[OpenTK.Input.Key.E])
+            {
+                MaterialScaleAndBiasAndShininess.Z += 1f;
+                Trace.WriteLine("Shininess: " + MaterialScaleAndBiasAndShininess.Z);
+            }
+            if (e.Keyboard[OpenTK.Input.Key.D])
+            {
+                MaterialScaleAndBiasAndShininess.Z -= 1f;
+                Trace.WriteLine("Shininess: " + MaterialScaleAndBiasAndShininess.Z);
+            }
+        }
+
+        protected override void OnMouseMove(OpenTK.Input.MouseMoveEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            LightPosition.X = (-(this.Width / 2) + e.Mouse.X) / 100f;
+            LightPosition.Y = ((this.Height / 2) - e.Mouse.Y) / 100f;
+
+            EyePos.Y = e.Mouse.Wheel * 0.5f;
+        }
+
         /// <summary>Add your game logic here.</summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-      protected override void OnUpdateFrame( FrameEventArgs e )
+        protected override void OnUpdateFrame( FrameEventArgs e )
         {
             base.OnUpdateFrame( e );
-
-            if ( Keyboard[OpenTK.Input.Key.Escape] )
-                this.Exit( );
-            if ( Keyboard[OpenTK.Input.Key.Space] )
-                Trace.WriteLine( "GL: " + GL.GetError( ) );
-            if ( Keyboard[OpenTK.Input.Key.Q] )
-            {
-                MaterialScaleAndBiasAndShininess.X += 0.01f;
-                Trace.WriteLine( "Scale: " + MaterialScaleAndBiasAndShininess.X + " Bias: " + MaterialScaleAndBiasAndShininess.Y );
-            }
-            if ( Keyboard[OpenTK.Input.Key.A] )
-            {
-                MaterialScaleAndBiasAndShininess.X -= 0.01f;
-                Trace.WriteLine( "Scale: " + MaterialScaleAndBiasAndShininess.X + " Bias: " + MaterialScaleAndBiasAndShininess.Y );
-            }
-            if ( Keyboard[OpenTK.Input.Key.W] )
-            {
-                MaterialScaleAndBiasAndShininess.Y += 0.01f;
-                Trace.WriteLine( "Scale: " + MaterialScaleAndBiasAndShininess.X + " Bias: " + MaterialScaleAndBiasAndShininess.Y );
-            }
-            if ( Keyboard[OpenTK.Input.Key.S] )
-            {
-                MaterialScaleAndBiasAndShininess.Y -= 0.01f;
-                Trace.WriteLine( "Scale: " + MaterialScaleAndBiasAndShininess.X + " Bias: " + MaterialScaleAndBiasAndShininess.Y );
-            }
-            if ( Keyboard[OpenTK.Input.Key.E] )
-            {
-                MaterialScaleAndBiasAndShininess.Z += 1f;
-                Trace.WriteLine( "Shininess: " + MaterialScaleAndBiasAndShininess.Z );
-            }
-            if ( Keyboard[OpenTK.Input.Key.D] )
-            {
-                MaterialScaleAndBiasAndShininess.Z -= 1f;
-                Trace.WriteLine( "Shininess: " + MaterialScaleAndBiasAndShininess.Z );
-            }
-
-            LightPosition.X = ( -( this.Width / 2 ) + Mouse.X ) / 100f;
-            LightPosition.Y = ( ( this.Height / 2 ) - Mouse.Y ) / 100f;
-
-            EyePos.Y = Mouse.Wheel * 0.5f;
         }
 
         /// <summary>Add your game rendering code here.</summary>

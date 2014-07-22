@@ -53,7 +53,7 @@ namespace OpenTK.Input
         /// typically between 200 and 2000 DPI.
         /// Use <see cref="OpenTK.Input.Mouse.GetState(int)"/> to retrieve the state of a specific mouse device.
         /// Use <see cref="OpenTK.Input.Mouse.GetCursorState()"/> to retrieve the absolute coordinates of the mouse cursor.
-        /// Use <see cref="OpenTK.GameWindow.MouseMove"/> for event-based mouse input.
+        /// Use <see cref="OpenTK.INativeWindow.MouseMove"/> for event-based mouse input.
         /// </summary>
         /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure representing the combined state of all mouse devices.</returns>
         public static MouseState GetState()
@@ -71,7 +71,7 @@ namespace OpenTK.Input
         /// typically between 200 and 2000 DPI.
         /// Use <see cref="OpenTK.Input.Mouse.GetState()"/> to retrieve the combined state of all mouse devices.
         /// Use <see cref="OpenTK.Input.Mouse.GetCursorState()"/> to retrieve the absolute coordinates of the mouse cursor.
-        /// Use <see cref="OpenTK.GameWindow.MouseMove"/> for event-based mouse input.
+        /// Use <see cref="OpenTK.INativeWindow.MouseMove"/> for event-based mouse input.
         /// </summary>
         /// <param name="index">The index of the mouse device.</param>
         /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure representing the state for the specified mouse device.</returns>

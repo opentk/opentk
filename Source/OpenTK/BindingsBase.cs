@@ -202,10 +202,25 @@ namespace OpenTK
                     throw new OutOfMemoryException();
                 }
 
-                for (int i = 0; i < str_array.Length; i++)
+                int i = 0;
+                try
                 {
-                    IntPtr str = MarshalStringToPtr(str_array[i]);
-                    Marshal.WriteIntPtr(ptr, i * IntPtr.Size, str);
+                    for (i = 0; i < str_array.Length; i++)
+                    {
+                        IntPtr str = MarshalStringToPtr(str_array[i]);
+                        Marshal.WriteIntPtr(ptr, i * IntPtr.Size, str);
+                    }
+                }
+                catch (OutOfMemoryException)
+                {
+                    for (i = i - 1; i >= 0; --i)
+                    {
+                        Marshal.FreeHGlobal(Marshal.ReadIntPtr(ptr, i * IntPtr.Size));
+                    }
+
+                    Marshal.FreeHGlobal(ptr);
+
+                    throw;
                 }
             }
             return ptr;
@@ -220,7 +235,7 @@ namespace OpenTK
         {
             for (int i = 0; i < length; i++)
             {
-                Marshal.FreeHGlobal(Marshal.ReadIntPtr(ptr, length * IntPtr.Size));
+                Marshal.FreeHGlobal(Marshal.ReadIntPtr(ptr, i * IntPtr.Size));
             }
             Marshal.FreeHGlobal(ptr);
         }

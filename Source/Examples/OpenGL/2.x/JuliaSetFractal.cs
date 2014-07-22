@@ -157,8 +157,8 @@ namespace Examples.Tutorial
                 bitmap.UnlockBits(data);
             }
             #endregion Textures
-            
-            Keyboard.KeyUp += Keyboard_KeyUp;
+
+            KeyUp += Keyboard_KeyUp;
         }
 
         int i = 0;
@@ -233,7 +233,8 @@ namespace Examples.Tutorial
         {
             base.OnUpdateFrame(e);
 
-            if (Keyboard[OpenTK.Input.Key.Escape])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
             }

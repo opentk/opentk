@@ -195,14 +195,15 @@ namespace Examples.Tutorial
         {
             base.OnUpdateFrame(e);
 
-            if (Keyboard[Key.Space])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard[Key.Space])
             {
                 ErrorCode err = GL.GetError();
                 //Console.WriteLine(err + "  " + Glu.ErrorString((GluErrorCode)err));
                 Console.WriteLine("GL error code: {0}", err);
             }
 
-            if (Keyboard[Key.Escape])
+            if (keyboard[Key.Escape])
                 this.Exit();
         }
 

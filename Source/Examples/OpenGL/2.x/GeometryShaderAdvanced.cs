@@ -46,7 +46,7 @@ namespace Examples.Tutorial
         public SimpleGeometryShader2()
             : base(800, 600)
         {
-            Keyboard.KeyDown += Keyboard_KeyDown;
+            KeyDown += Keyboard_KeyDown;
         }
 
         enum ViewMode
@@ -83,7 +83,6 @@ namespace Examples.Tutorial
         int vboSphere;
         int vboSphereStride = BlittableValueType<VertexPositionNormalTexture>.Stride;
         int eboSphere;
-        int sphereElementCount;
 
         ViewMode mode = ViewMode.Scene;
         Vector3 eyePos = new Vector3(0, -8, 0);
@@ -551,7 +550,6 @@ namespace Examples.Tutorial
         {
             VertexPositionNormalTexture[] sphereVertices = CalculateSphereVertices(1, 1, 16, 16);
             ushort[] sphereElements = CalculateSphereElements(1, 1, 16, 16);
-            sphereElementCount = sphereElements.Length;
 
             GL.GenBuffers(1, out vboSphere);
             GL.BindBuffer(BufferTarget.ArrayBuffer, vboSphere);
@@ -900,7 +898,8 @@ namespace Examples.Tutorial
             eyePos.X = (float)Math.Cos(elapsed / 3000) * 8;
             eyePos.Z = (float)Math.Sin(elapsed / 2000) * 8;
 
-            if (Keyboard[Key.Space])
+            var keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard[Key.Space])
             {
                 ErrorCode err = GL.GetError();
                 //Console.WriteLine(err + "  " + Glu.ErrorString((GluErrorCode)err));

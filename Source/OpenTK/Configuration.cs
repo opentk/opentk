@@ -95,7 +95,7 @@ namespace OpenTK
 
         #region public static bool RunningOnLinux
 
-        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.</summary>
+        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on the Linux kernel.</summary>
         public static bool RunningOnLinux { get { return runningOnLinux; } }
 
         #endregion
@@ -201,31 +201,54 @@ namespace OpenTK
             bool supported = false;
 
             // Detect whether SDL2 is supported
+            // We require:
+            // - SDL2 version 2.0.0 or higher (previous beta
+            //   versions are not ABI-compatible)
+            // - Successful SDL2 initialization (sometimes the
+            //   binary exists but fails to initialize correctly)
+            var version = new Platform.SDL2.Version();
             try
             {
-                if (!OpenTK.Platform.SDL2.SDL.WasInit(0))
+                version = Platform.SDL2.SDL.Version;
+                    if (version.Number >= 2000)
                 {
-                    var flags =
-                        OpenTK.Platform.SDL2.SystemFlags.VIDEO | Platform.SDL2.SystemFlags.TIMER;
-                    if (OpenTK.Platform.SDL2.SDL.Init(flags) == 0)
+                    if (Platform.SDL2.SDL.WasInit(0))
                     {
                         supported = true;
                     }
                     else
                     {
-                        Debug.Print("SDL2 init failed with error: {0}", OpenTK.Platform.SDL2.SDL.GetError());
+                        // Attempt to initialize SDL2.
+                        var flags =
+                            Platform.SDL2.SystemFlags.VIDEO |
+                            Platform.SDL2.SystemFlags.TIMER;
+
+                        if (Platform.SDL2.SDL.Init(flags) == 0)
+                        {
+                            supported = true;
+                        }
+                        else
+                        {
+                            Debug.Print("SDL2 init failed with error: {0}",
+                                Platform.SDL2.SDL.GetError());
+                        }
                     }
-                }
-                else
-                {
-                    supported = true;
                 }
             }
             catch (Exception e)
             {
                 Debug.Print("SDL2 init failed with exception: {0}", e);
             }
-            Debug.Print("SDL2 is {0}", supported ? "supported" : "not supported");
+
+            if (!supported)
+            {
+                Debug.Print("SDL2 is not supported");
+            }
+            else
+            {
+                Debug.Print("SDL2 is supported. Version is {0}.{1}.{2}",
+                    version.Major, version.Minor, version.Patch);
+            }
 
             return supported;
         }

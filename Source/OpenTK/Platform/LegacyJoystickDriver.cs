@@ -33,6 +33,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform
 {
+    [Obsolete]
     internal class LegacyJoystickDriver : IJoystickDriver
     {
         static readonly string ConnectedName = "Connected Joystick";

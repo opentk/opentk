@@ -71,10 +71,8 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XSynchronize")]
         public extern static IntPtr XSynchronize(IntPtr display, bool onoff);
 
-        //[DllImport("libX11", EntryPoint = "XCreateWindow"), CLSCompliant(false)]
-        //public extern static IntPtr XCreateWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, int depth, int xclass, IntPtr visual, UIntPtr valuemask, ref XSetWindowAttributes attributes);
         [DllImport("libX11", EntryPoint = "XCreateWindow")]
-        public extern static IntPtr XCreateWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, int depth, int xclass, IntPtr visual, IntPtr valuemask, ref XSetWindowAttributes attributes);
+        public unsafe extern static IntPtr XCreateWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, int depth, int xclass, IntPtr visual, IntPtr valuemask, XSetWindowAttributes* attributes);
 
         [DllImport("libX11", EntryPoint = "XCreateSimpleWindow")]//, CLSCompliant(false)]
         public extern static IntPtr XCreateSimpleWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, UIntPtr border, UIntPtr background);
@@ -103,7 +101,8 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11")]
         public extern static Bool XCheckTypedEvent(Display display, XEventName event_type, out XEvent event_return);
 
-
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public delegate Bool EventPredicate(IntPtr display, ref XEvent e, IntPtr arg);
         [DllImport("libX11")]
         public extern static Bool XIfEvent(Display display, ref XEvent e, IntPtr predicate, IntPtr arg );
@@ -576,7 +575,6 @@ namespace OpenTK.Platform.X11
         { 
             int width = image.Width;
             int height = image.Height;
-            int size = width * height; 
 
             BitmapData data = image.LockBits(new Rectangle(0, 0, width, height),
                 ImageLockMode.ReadOnly,
@@ -592,7 +590,7 @@ namespace OpenTK.Platform.X11
             
             XFreeGC(display, gc);
             image.UnlockBits(data);
-                                         
+
             return pixmap; 
         } 
         

@@ -2,10 +2,10 @@ language: objective-c
 
 env:
  global:
-  - EnableNuGetPackageRestore=true 
+  - EnableNuGetPackageRestore=true
  matrix:
   - MONO_VER="2.10.11"
-  - MONO_VER="3.2.6"
+  - MONO_VER="3.4.0"
 
 before_install:
  - wget "http://download.mono-project.com/archive/${MONO_VER}/macos-10-x86/MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" "http://download.mono-project.com/archive/${MONO_VER}/macos-10-x86/MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.dmg" || true
@@ -15,4 +15,3 @@ before_install:
 
 script:
  - xbuild && xbuild /p:Configuration=Release
-

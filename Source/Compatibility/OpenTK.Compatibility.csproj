@@ -471,7 +471,7 @@
       <Link>OpenTK.snk</Link>
     </None>
     <None Include="OpenTK.Compatibility.dll.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

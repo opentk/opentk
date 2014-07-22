@@ -74,6 +74,7 @@ namespace OpenTK.Platform
 
         public abstract IJoystickDriver2 CreateJoystickDriver();
 
+        [Obsolete]
         public virtual IJoystickDriver CreateLegacyJoystickDriver()
         {
             return new LegacyJoystickDriver();

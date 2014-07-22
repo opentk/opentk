@@ -198,10 +198,6 @@ namespace CHeaderToXML
 
                 var parameters_string = Regex.Match(line, @"\(.*\)").Captures[0].Value.TrimStart('(').TrimEnd(')');
 
-                var parameters =
-                    (from item in get_param.Matches(parameters_string).OfType<Match>()
-                    select item.Captures[0].Value.TrimEnd(',')).ToList();
-
                 var fun =
                     new
                     {

@@ -324,8 +324,6 @@ namespace OpenTK.Platform.X11
         {
             short rate = 0;
             IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
-            ushort rotation = 0;
-            int size = Functions.XRRConfigCurrentConfiguration(screen_config, out rotation);
             rate = Functions.XRRConfigCurrentRate(screen_config);
             Functions.XRRFreeScreenConfigInfo(screen_config);
             return (float)rate;

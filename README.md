@@ -1,7 +1,9 @@
 OpenTK
 ======
 
-The Open Toolkit is an advanced, low-level C# library that wraps OpenGL, OpenGL ES and OpenAL. It is suitable for games, scientific applications and any other project that requires 3d graphics, audio or compute functionality.
+The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
+
+Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your C# application. Integrate it into your existing user interface or use it standalone without any external dependencies.
 
 Project website: http://www.opentk.com/
 
@@ -12,7 +14,7 @@ Features
 ========
 
 - Create cutting-edge graphics with OpenGL 4.4 and OpenGL ES 3.0
-- Spice up your GUI with 3d graphics
+- Spice up your GUI with 3d acceleration
 - Improve your code flow with strong types and inline documentation
 - Write once run everywhere
 
@@ -32,71 +34,50 @@ Alternatively, download the [OpenTK binaries](http://www.opentk.com) and:
 2. Use "Add reference" to add OpenTK.dll as a project reference
 3. Use "Add files" to add OpenTK.dll.config to your project, and enable the "Copy to Output Directory" option.
 
-If you wish to build OpenTK from source, simply double-click OpenTK.sln
+To build OpenTK from source, simply double-click OpenTK.sln and build through your IDE.
+
+Alternatively, open a command prompt and type:
+```
+git clone https://github.com/opentk/opentk   # Download source code from git
+cd opentk                                    # Enter the source directory
+msbuild /p:Configuration=Release OpenTK.sln  # Build on .Net (Windows)
+xbuild  /p:Configuration=Release OpenTK.sln  # Build on Mono (Linux / Mac OS X)
+```
 
 
 News
 ====
 
-OpenTK 1.1.2 was released on 19 May 2014.
+OpenTK 1.1.4 was released on 21 July 2014.
 
-It contains performance and stability improvements and synchronizes the OpenGL and OpenGL ES bindings with the May 2014 Khronos specifications.
+This release resolves a number of identified issues, adds experimental support for Linux/KMS and synchronizes the OpenGL and OpenGL ES bindings with the July 2014 Khronos specifications.
 
 **Changelog:**
 
-1. New Cocoa backend for Mac OS X, with support for OpenGL 4.x and retina displays. Huge thanks to [Ollhax](https://github.com/Ollhax) for implementing the backend from scratch, including the necessary Cocoa bindings!
-2. Custom hardware cursors are now supported: `INativeWindow.Cursor = new MouseCursor(...)`
-3. Up to 2000% improvement in binding loading speed. The exact numbers depend on the operating system and hardware configuration. On a Nvidia 650M GPU and a 2.3GHz processor:
-   - Linux: 6.5ms instead of  45ms
-   - MacOS: 9.5ms instead of 165ms
-   - Win64: 5.9ms instead of 108ms
-4. Up to 1000% improvement in memory consumption. The object graph has been reduced from 9000 to 900 objects, consuming between 185-220KB of memory depending on the platform and hardware configuration.
-5. Support for high-resolution X/Y scrolling on all platforms:
-   - `OpenTK.Input.MouseState.Scroll.X/Y`
-6. Improved mouse input APIs:
-   - new INativeWindow.MouseMove, MouseUp, MouseDown and MouseWheel events
-   - new OpenTK.Mouse.GetCursorPos() API to retrieve the state of the system cursor
-   - all mouse event arguments now carry the current MouseState
-7. Improved keyboard input APIs:
-   - support for non-US layouts on Linux/X11
-   - all keyboard event arguments now carry the current KeyboardState
-   - all keyboard event arguments now report the correct KeyModifiers state
-8. New OpenGL extensions:
-   - AMD_gcn_shader
-   - AMD_gpu_shader_int64
-   - AMD_transform_feedback4
-   - EXT_shader_image_load_formatted
-   - NV_shader_thread_group
-   - NV_shader_thread_shuffle
-9. New OpenGL ES extensions:
-   - ARM_shader_framebuffer_fetch
-   - ARM_shader_framebuffer_fetch_depth_stencil
-   - EXT_shader_pixel_local_storage
-   - KHR_blend_equation_advanced
-   - OES_sample_shading
-   - OES_sample_variables
-   - OES_shader_image_atomic
-   - OES_shader_multisample_interpolation
-   - OES_texture_stencil8
-   - OES_texture_storage_multisample_2d_array
-10. Improved OpenGL ES documentation tooltips.
-11. Improved stability when using EGL on Linux and Windows/ANGLE.
-12. Improved stability when using SDL2 on 32bit platforms.
-13. Improved the shutdown sequence on X11.
-14. Fixed a marshaling issue affecting 2d and 3d arrays on Windows/.Net.
+1. Fixed a memory leak in OpenGL functions accepting a string array.
+2. Fixed an issue where `MakeCurrent()` might fail on Linux/X11 when using the Nvidia closed-source drivers.
+3. Fixed an issue where `GameWindow` might remain open on Linux/X11 after calling `Close()` or `Dispose()`.
+4. Fixed a potential crash on Mac OS X systems without hardware acceleration (e.g. virtual machines).
+5. Fixed function parameters for the `OES_byte_coordinates` extension.
+6. Fixed an issue where OpenTK would always perform a full rebuild even when a partial rebuild could work.
+7. Fixed all compilation warnings on VS2013 and Mono 3.4.0.
+8. Improved OpenGL and OpenGL ES documentation on 'count' parameters.
+9. New platform: Linux/KMS. You can now run OpenTK applications on a Linux terminal without an X11 display server.
+10. New OpenGL ES extensions:
+  - ANDROID_extension_pack_es31a
 
-
-OpenTK 1.1.2 is backwards compatible with 1.1.1. Users of previous versions are encouraged to upgrade.
+OpenTK 1.1.4 is backwards compatible with 1.1.3. Users of previous versions are **strongly** encouraged to upgrade.
 
 
 Known issues
 ============
 
-The SDL2 backend has a number of limitations compared to the native platform backends. In particular, SDL2 does not support:
-   - `OpenTK.GLControl`. OpenTK will automatically use a native platform backend instead.
+1. The SDL2 backend has a number of limitations compared to the native platform backends. In particular, SDL2 does not support:
+   - `OpenTK.GLControl`. OpenTK will automatically switch to a native platform backend instead.
    - `DisplayDevice.ChangeResolution()` without a fullscreen `INativeWindow`.
-   - changing `INativeWindow.WindowBorder` once a window is created.
-   - high-resolution mouse input. Additionally, it is limited to a single keyboard and mouse device.
+   - Switching between `WindowBorder.Fixed` and `WindowBorder.Resizable`.
+   - High-resolution mouse input. Additionally, it is limited to a single keyboard and mouse device.
+2. OpenTK.Input.GamePad.SetVibration is currently not implemented. This API will be implemented in a future release.
 
 
 Contributing
@@ -113,17 +94,16 @@ Some areas we could really use your help:
 - Tutorials for OpenGL 3.x and 4.x. [Inspiration here](https://github.com/Groovounet/ogl-samples)
 - New platforms:
   - Native Client (NaCL)
-  - Raspberry PI (EGL without X11)
+  - Blackberry
   - Wayland
   - Mir
   - WinRT (via ANGLE)
 - New features:
   - Multitouch
-  - Clipboard
-  - Input Method Editors (IMEs)
-  - USB HID joystick backend (Windows, Linux)
+  - Force feedback
+  - Improved joystick support (HID backend for Windows, Linux)
 
-Further ideas for improvement are always welcome.
+Further ideas for improvement are always welcome!
 
 
 Requirements
@@ -163,6 +143,10 @@ http://www.opentk.com/project/license
 
 API compatibility
 =================
+
+OpenTK 1.1.4 is backwards compatible with 1.1.3.
+
+OpenTK 1.1.3 is backwards compatible with 1.1.2.
 
 OpenTK 1.1.2 is backwards compatible with 1.1.1.
 
@@ -250,3 +234,10 @@ Change namespace:
 - GL.DisableDriverControlQCOM -> GL.Qcom.DisableDriverControl
 - GL.GetDriverControlsQCOM -> GL.Qcom.GetDriverControls
 - GL.GetDriverControlStringQCOM -> GL.Qcom.GetDriverControlString
+
+
+See also
+========
+
+[Delta Engine](http://deltaengine.net/), a high-level, open-source game engine.
+[MonoGame](https://github.com/mono/monogame), an open-source, cross-platform implementation of XNA.

@@ -30671,6 +30671,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         MaxVertexUniformBlocks = ((int)0x8A2B)        ,
         /// <summary>
+        /// Original was GL_MAX_GEOMETRY_UNIFORM_BLOCKS = 0x8A2C
+        /// </summary>
+        MaxGeometryUniformBlocks = ((int)0x8A2C)        ,
+        /// <summary>
         /// Original was GL_MAX_FRAGMENT_UNIFORM_BLOCKS = 0x8A2D
         /// </summary>
         MaxFragmentUniformBlocks = ((int)0x8A2D)        ,
@@ -30690,6 +30694,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS = 0x8A31
         /// </summary>
         MaxCombinedVertexUniformComponents = ((int)0x8A31)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS = 0x8A32
+        /// </summary>
+        MaxCombinedGeometryUniformComponents = ((int)0x8A32)        ,
         /// <summary>
         /// Original was GL_MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS = 0x8A33
         /// </summary>
@@ -30762,6 +30770,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER = 0x8A44
         /// </summary>
         UniformBlockReferencedByVertexShader = ((int)0x8A44)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER = 0x8A45
+        /// </summary>
+        UniformBlockReferencedByGeometryShader = ((int)0x8A45)        ,
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER = 0x8A46
         /// </summary>
@@ -32116,6 +32128,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_CONTEXT_FLAG_DEBUG_BIT = 0x00000002
         /// </summary>
         ContextFlagDebugBit = ((int)0x00000002)        ,
+        /// <summary>
+        /// Original was GL_COMPUTE_SHADER_BIT = 0x00000020
+        /// </summary>
+        ComputeShaderBit = ((int)0x00000020)        ,
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BARRIER_BIT = 0x00002000
         /// </summary>

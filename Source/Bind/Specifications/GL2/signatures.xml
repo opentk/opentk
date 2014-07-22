@@ -5474,7 +5474,9 @@
       <token name="QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD" value="0x00000008" />
       <token name="QUERY_ALL_EVENT_BITS_AMD" value="0xFFFFFFFF" />
     </enum>
-    <enum name="OES_byte_coordinates" />
+    <enum name="OES_byte_coordinates">
+      <token name="BYTE" value="0x1400" />
+    </enum>
     <enum name="OES_compressed_paletted_texture">
       <token name="PALETTE4_RGB8_OES" value="0x8B90" />
       <token name="PALETTE4_RGBA8_OES" value="0x8B91" />
@@ -9273,7 +9275,7 @@
       <param name="layer" type="CheckedInt32" flow="in" />
       <returns type="void" />
     </function>
-    <function name="FramebufferTextureLayerEXT" category="NV_geometry_program4" extension="EXT">
+    <function name="FramebufferTextureLayerEXT" category="EXT_texture_array|NV_geometry_program4" extension="EXT" version="">
       <param name="target" type="FramebufferTarget" flow="in" />
       <param name="attachment" type="FramebufferAttachment" flow="in" />
       <param name="texture" type="Texture" flow="in" />
@@ -9514,7 +9516,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="uniformBlockIndex" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(program, uniformBlockIndex, pname)" />
       <returns type="void" />
     </function>
     <function name="GetActiveUniformBlockName" category="ARB_uniform_buffer_object" extension="Core">
@@ -9536,9 +9538,9 @@
     <function name="GetActiveUniformsiv" category="ARB_uniform_buffer_object" extension="Core">
       <param name="program" type="GLuint" flow="in" />
       <param name="uniformCount" type="GLsizei" flow="in" />
-      <param name="uniformIndices" type="GLuint *" flow="in" count="COMPSIZE(uniformCount)" />
+      <param name="uniformIndices" type="GLuint *" flow="in" count="uniformCount" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(uniformCount, pname)" />
       <returns type="void" />
     </function>
     <function name="GetActiveVaryingNV" category="NV_transform_feedback" extension="NV">
@@ -11374,19 +11376,19 @@
     <function name="GetUniformdv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLdouble *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLdouble *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformfvARB" category="ARB_shader_objects" extension="ARB">
       <param name="programObj" type="handleARB" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformi64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLint64EXT *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLint64EXT *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformIndices" category="ARB_uniform_buffer_object" extension="Core">
@@ -11399,7 +11401,7 @@
     <function name="GetUniformivARB" category="ARB_shader_objects" extension="ARB">
       <param name="programObj" type="handleARB" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformLocationARB" category="ARB_shader_objects" extension="ARB">
@@ -16961,7 +16963,7 @@
       <returns type="void" />
     </function>
     <function name="TransformFeedbackAttribsNV" category="NV_transform_feedback" extension="NV">
-      <param name="count" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
       <param name="attribs" type="GLint *" flow="in" count="COMPSIZE(count)" />
       <param name="bufferMode" type="GLenum" flow="in" />
       <returns type="void" />
@@ -17009,7 +17011,7 @@
     <function name="Uniform1dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform1fARB" category="ARB_shader_objects" extension="ARB">
@@ -17020,7 +17022,7 @@
     <function name="Uniform1fvARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform1i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
@@ -17031,7 +17033,7 @@
     <function name="Uniform1i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint64EXT *" flow="in" count="count" />
+      <param name="value" type="GLint64EXT *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform1iARB" category="ARB_shader_objects" extension="ARB">
@@ -17042,7 +17044,7 @@
     <function name="Uniform1ivARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform1ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
@@ -17053,7 +17055,7 @@
     <function name="Uniform1ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint64EXT *" flow="in" count="count" />
+      <param name="value" type="GLuint64EXT *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform1uiEXT" category="EXT_gpu_shader4" extension="EXT">
@@ -17064,7 +17066,7 @@
     <function name="Uniform1uivEXT" category="EXT_gpu_shader4" extension="EXT">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint *" flow="in" count="count" />
+      <param name="value" type="GLuint *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform2d" category="ARB_gpu_shader_fp64" extension="Core">
@@ -17076,7 +17078,7 @@
     <function name="Uniform2dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform2fARB" category="ARB_shader_objects" extension="ARB">
@@ -17088,7 +17090,7 @@
     <function name="Uniform2fvARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform2i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
@@ -17112,7 +17114,7 @@
     <function name="Uniform2ivARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform2ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
@@ -17149,7 +17151,7 @@
     <function name="Uniform3dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform3fARB" category="ARB_shader_objects" extension="ARB">
@@ -17162,7 +17164,7 @@
     <function name="Uniform3fvARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform3i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
@@ -17188,7 +17190,7 @@
     <function name="Uniform3ivARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform3ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
@@ -17228,7 +17230,7 @@
     <function name="Uniform4dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="Uniform4fARB" category="ARB_shader_objects" extension="ARB">
@@ -17242,7 +17244,7 @@
     <function name="Uniform4fvARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="Uniform4i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
@@ -17270,7 +17272,7 @@
     <function name="Uniform4ivARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="Uniform4ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
@@ -17339,84 +17341,84 @@
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2fvARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x3dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x4dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*9" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3fvARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*9" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x2dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x4dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*16" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4fvARB" category="ARB_shader_objects" extension="ARB">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*16" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x2dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x3dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformSubroutinesuiv" category="ARB_shader_subroutine" extension="Core">
@@ -17433,7 +17435,7 @@
     <function name="Uniformui64vNV" category="NV_shader_buffer_load" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint64EXT *" flow="in" count="count" />
+      <param name="value" type="GLuint64EXT *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="UnlockArraysEXT" category="EXT_compiled_vertex_array" extension="EXT">
@@ -17607,6 +17609,7 @@
     </function>
     <function name="Vertex2bOES" category="OES_byte_coordinates" extension="OES">
       <param name="x" type="GLbyte" flow="in" />
+      <param name="y" type="GLbyte" flow="in" />
       <returns type="void" />
     </function>
     <function name="Vertex2bvOES" category="OES_byte_coordinates" extension="OES">
@@ -17633,6 +17636,7 @@
     <function name="Vertex3bOES" category="OES_byte_coordinates" extension="OES">
       <param name="x" type="GLbyte" flow="in" />
       <param name="y" type="GLbyte" flow="in" />
+      <param name="z" type="GLbyte" flow="in" />
       <returns type="void" />
     </function>
     <function name="Vertex3bvOES" category="OES_byte_coordinates" extension="OES">
@@ -17662,6 +17666,7 @@
       <param name="x" type="GLbyte" flow="in" />
       <param name="y" type="GLbyte" flow="in" />
       <param name="z" type="GLbyte" flow="in" />
+      <param name="w" type="GLbyte" flow="in" />
       <returns type="void" />
     </function>
     <function name="Vertex4bvOES" category="OES_byte_coordinates" extension="OES">
@@ -22895,13 +22900,13 @@
     <function name="GetUniformfv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformiv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformLocation" category="VERSION_2_0" extension="Core" version="2.0">
@@ -22979,7 +22984,7 @@
     <function name="Uniform1fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform1i" category="VERSION_2_0" extension="Core" version="2.0">
@@ -22990,7 +22995,7 @@
     <function name="Uniform1iv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform2f" category="VERSION_2_0" extension="Core" version="2.0">
@@ -23002,7 +23007,7 @@
     <function name="Uniform2fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform2i" category="VERSION_2_0" extension="Core" version="2.0">
@@ -23014,7 +23019,7 @@
     <function name="Uniform2iv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform3f" category="VERSION_2_0" extension="Core" version="2.0">
@@ -23027,7 +23032,7 @@
     <function name="Uniform3fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform3i" category="VERSION_2_0" extension="Core" version="2.0">
@@ -23040,7 +23045,7 @@
     <function name="Uniform3iv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform4f" category="VERSION_2_0" extension="Core" version="2.0">
@@ -23054,7 +23059,7 @@
     <function name="Uniform4fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="Uniform4i" category="VERSION_2_0" extension="Core" version="2.0">
@@ -23068,28 +23073,28 @@
     <function name="Uniform4iv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*9" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*16" />
       <returns type="void" />
     </function>
     <function name="UseProgram" category="VERSION_2_0" extension="Core" version="2.0">
@@ -23341,42 +23346,42 @@
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="6" />
+      <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x4fv" category="VERSION_2_1" extension="Core" version="2.1">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="8" />
+      <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x2fv" category="VERSION_2_1" extension="Core" version="2.1">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="6" />
+      <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x4fv" category="VERSION_2_1" extension="Core" version="2.1">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="12" />
+      <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x2fv" category="VERSION_2_1" extension="Core" version="2.1">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="8" />
+      <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x3fv" category="VERSION_2_1" extension="Core" version="2.1">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="12" />
+      <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
   </add>
@@ -23939,7 +23944,7 @@
     <function name="Uniform1uiv" category="VERSION_3_0" extension="Core" version="3.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint *" flow="in" count="count" />
+      <param name="value" type="GLuint *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform2ui" category="VERSION_3_0" extension="Core" version="3.0">
@@ -24137,11 +24142,13 @@
       <token name="UNIFORM_BUFFER_START" value="0x8A29" />
       <token name="UNIFORM_BUFFER_SIZE" value="0x8A2A" />
       <token name="MAX_VERTEX_UNIFORM_BLOCKS" value="0x8A2B" />
+      <token name="MAX_GEOMETRY_UNIFORM_BLOCKS" value="0x8A2C" />
       <token name="MAX_FRAGMENT_UNIFORM_BLOCKS" value="0x8A2D" />
       <token name="MAX_COMBINED_UNIFORM_BLOCKS" value="0x8A2E" />
       <token name="MAX_UNIFORM_BUFFER_BINDINGS" value="0x8A2F" />
       <token name="MAX_UNIFORM_BLOCK_SIZE" value="0x8A30" />
       <token name="MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS" value="0x8A31" />
+      <token name="MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS" value="0x8A32" />
       <token name="MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS" value="0x8A33" />
       <token name="UNIFORM_BUFFER_OFFSET_ALIGNMENT" value="0x8A34" />
       <token name="ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH" value="0x8A35" />
@@ -24160,6 +24167,7 @@
       <token name="UNIFORM_BLOCK_ACTIVE_UNIFORMS" value="0x8A42" />
       <token name="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" value="0x8A43" />
       <token name="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" value="0x8A44" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER" value="0x8A45" />
       <token name="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" value="0x8A46" />
       <token name="INVALID_INDEX" value="0xFFFFFFFF" />
     </enum>
@@ -24190,7 +24198,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="uniformBlockIndex" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(program, uniformBlockIndex, pname)" />
       <returns type="void" />
     </function>
     <function name="GetActiveUniformBlockName" category="VERSION_3_1" extension="Core" version="3.1">
@@ -24212,9 +24220,9 @@
     <function name="GetActiveUniformsiv" category="VERSION_3_1" extension="Core" version="3.1">
       <param name="program" type="GLuint" flow="in" />
       <param name="uniformCount" type="GLsizei" flow="in" />
-      <param name="uniformIndices" type="GLuint *" flow="in" count="COMPSIZE(uniformCount)" />
+      <param name="uniformIndices" type="GLuint *" flow="in" count="uniformCount" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(uniformCount, pname)" />
       <returns type="void" />
     </function>
     <function name="GetUniformBlockIndex" category="VERSION_3_1" extension="Core" version="3.1">
@@ -24998,7 +25006,7 @@
     <function name="GetUniformdv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLdouble *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLdouble *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformSubroutineuiv" category="VERSION_4_0" extension="Core" version="4.0">
@@ -25039,7 +25047,7 @@
     <function name="Uniform1dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform2d" category="VERSION_4_0" extension="Core" version="4.0">
@@ -25051,7 +25059,7 @@
     <function name="Uniform2dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform3d" category="VERSION_4_0" extension="Core" version="4.0">
@@ -25064,7 +25072,7 @@
     <function name="Uniform3dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform4d" category="VERSION_4_0" extension="Core" version="4.0">
@@ -25078,70 +25086,70 @@
     <function name="Uniform4dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x3dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x4dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*9" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x2dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x4dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*16" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x2dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x3dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformSubroutinesuiv" category="VERSION_4_0" extension="Core" version="4.0">
@@ -26027,6 +26035,7 @@
       <token name="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER" value="0x90ED" />
       <token name="DISPATCH_INDIRECT_BUFFER" value="0x90EE" />
       <token name="DISPATCH_INDIRECT_BUFFER_BINDING" value="0x90EF" />
+      <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="DEBUG_OUTPUT_SYNCHRONOUS" value="0x8242" />
       <token name="DEBUG_NEXT_LOGGED_MESSAGE_LENGTH" value="0x8243" />
       <token name="DEBUG_CALLBACK_FUNCTION" value="0x8244" />
@@ -29998,7 +30007,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="uniformBlockIndex" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(program, uniformBlockIndex, pname)" />
       <returns type="void" />
     </function>
     <function name="GetActiveUniformBlockName" category="ARB_uniform_buffer_object" extension="Core">
@@ -30020,9 +30029,9 @@
     <function name="GetActiveUniformsiv" category="ARB_uniform_buffer_object" extension="Core">
       <param name="program" type="GLuint" flow="in" />
       <param name="uniformCount" type="GLsizei" flow="in" />
-      <param name="uniformIndices" type="GLuint *" flow="in" count="COMPSIZE(uniformCount)" />
+      <param name="uniformIndices" type="GLuint *" flow="in" count="uniformCount" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(uniformCount, pname)" />
       <returns type="void" />
     </function>
     <function name="GetColorTable" category="ARB_imaging" extension="Core">
@@ -30567,7 +30576,7 @@
     <function name="GetUniformdv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLdouble *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLdouble *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformIndices" category="ARB_uniform_buffer_object" extension="Core">
@@ -31576,7 +31585,7 @@
     <function name="Uniform1dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform2d" category="ARB_gpu_shader_fp64" extension="Core">
@@ -31588,7 +31597,7 @@
     <function name="Uniform2dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform3d" category="ARB_gpu_shader_fp64" extension="Core">
@@ -31601,7 +31610,7 @@
     <function name="Uniform3dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform4d" category="ARB_gpu_shader_fp64" extension="Core">
@@ -31615,7 +31624,7 @@
     <function name="Uniform4dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformBlockBinding" category="ARB_uniform_buffer_object" extension="Core">
@@ -31639,63 +31648,63 @@
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x3dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x4dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*9" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x2dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x4dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*16" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x2dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x3dv" category="ARB_gpu_shader_fp64" extension="Core">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformSubroutinesuiv" category="ARB_shader_subroutine" extension="Core">
@@ -33142,13 +33151,13 @@
     <function name="GetUniformfv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformiv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformLocation" category="VERSION_2_0" extension="Core" version="2.0">
@@ -33226,7 +33235,7 @@
     <function name="Uniform1fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform1i" category="VERSION_2_0" extension="Core" version="2.0">
@@ -33237,7 +33246,7 @@
     <function name="Uniform1iv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform2f" category="VERSION_2_0" extension="Core" version="2.0">
@@ -33249,7 +33258,7 @@
     <function name="Uniform2fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform2i" category="VERSION_2_0" extension="Core" version="2.0">
@@ -33261,7 +33270,7 @@
     <function name="Uniform2iv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform3f" category="VERSION_2_0" extension="Core" version="2.0">
@@ -33274,7 +33283,7 @@
     <function name="Uniform3fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform3i" category="VERSION_2_0" extension="Core" version="2.0">
@@ -33287,7 +33296,7 @@
     <function name="Uniform3iv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform4f" category="VERSION_2_0" extension="Core" version="2.0">
@@ -33301,7 +33310,7 @@
     <function name="Uniform4fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="Uniform4i" category="VERSION_2_0" extension="Core" version="2.0">
@@ -33315,28 +33324,28 @@
     <function name="Uniform4iv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*9" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4fv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*16" />
       <returns type="void" />
     </function>
     <function name="UseProgram" category="VERSION_2_0" extension="Core" version="2.0">
@@ -33581,42 +33590,42 @@
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="6" />
+      <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x4fv" category="VERSION_2_1" extension="Core" version="2.1">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="8" />
+      <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x2fv" category="VERSION_2_1" extension="Core" version="2.1">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="6" />
+      <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x4fv" category="VERSION_2_1" extension="Core" version="2.1">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="12" />
+      <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x2fv" category="VERSION_2_1" extension="Core" version="2.1">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="8" />
+      <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x3fv" category="VERSION_2_1" extension="Core" version="2.1">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="12" />
+      <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
   </add>
@@ -34174,7 +34183,7 @@
     <function name="Uniform1uiv" category="VERSION_3_0" extension="Core" version="3.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint *" flow="in" count="count" />
+      <param name="value" type="GLuint *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform2ui" category="VERSION_3_0" extension="Core" version="3.0">
@@ -34372,11 +34381,13 @@
       <token name="UNIFORM_BUFFER_START" value="0x8A29" />
       <token name="UNIFORM_BUFFER_SIZE" value="0x8A2A" />
       <token name="MAX_VERTEX_UNIFORM_BLOCKS" value="0x8A2B" />
+      <token name="MAX_GEOMETRY_UNIFORM_BLOCKS" value="0x8A2C" />
       <token name="MAX_FRAGMENT_UNIFORM_BLOCKS" value="0x8A2D" />
       <token name="MAX_COMBINED_UNIFORM_BLOCKS" value="0x8A2E" />
       <token name="MAX_UNIFORM_BUFFER_BINDINGS" value="0x8A2F" />
       <token name="MAX_UNIFORM_BLOCK_SIZE" value="0x8A30" />
       <token name="MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS" value="0x8A31" />
+      <token name="MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS" value="0x8A32" />
       <token name="MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS" value="0x8A33" />
       <token name="UNIFORM_BUFFER_OFFSET_ALIGNMENT" value="0x8A34" />
       <token name="ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH" value="0x8A35" />
@@ -34395,6 +34406,7 @@
       <token name="UNIFORM_BLOCK_ACTIVE_UNIFORMS" value="0x8A42" />
       <token name="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" value="0x8A43" />
       <token name="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" value="0x8A44" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER" value="0x8A45" />
       <token name="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" value="0x8A46" />
       <token name="INVALID_INDEX" value="0xFFFFFFFF" />
     </enum>
@@ -34425,7 +34437,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="uniformBlockIndex" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(program, uniformBlockIndex, pname)" />
       <returns type="void" />
     </function>
     <function name="GetActiveUniformBlockName" category="VERSION_3_1" extension="Core" version="3.1">
@@ -34447,9 +34459,9 @@
     <function name="GetActiveUniformsiv" category="VERSION_3_1" extension="Core" version="3.1">
       <param name="program" type="GLuint" flow="in" />
       <param name="uniformCount" type="GLsizei" flow="in" />
-      <param name="uniformIndices" type="GLuint *" flow="in" count="COMPSIZE(uniformCount)" />
+      <param name="uniformIndices" type="GLuint *" flow="in" count="uniformCount" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(uniformCount, pname)" />
       <returns type="void" />
     </function>
     <function name="GetUniformBlockIndex" category="VERSION_3_1" extension="Core" version="3.1">
@@ -35233,7 +35245,7 @@
     <function name="GetUniformdv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLdouble *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLdouble *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformSubroutineuiv" category="VERSION_4_0" extension="Core" version="4.0">
@@ -35274,7 +35286,7 @@
     <function name="Uniform1dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform2d" category="VERSION_4_0" extension="Core" version="4.0">
@@ -35286,7 +35298,7 @@
     <function name="Uniform2dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform3d" category="VERSION_4_0" extension="Core" version="4.0">
@@ -35299,7 +35311,7 @@
     <function name="Uniform3dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform4d" category="VERSION_4_0" extension="Core" version="4.0">
@@ -35313,70 +35325,70 @@
     <function name="Uniform4dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x3dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x4dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*9" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x2dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x4dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*16" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x2dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x3dv" category="VERSION_4_0" extension="Core" version="4.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLdouble *" flow="in" count="count" />
+      <param name="value" type="GLdouble *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformSubroutinesuiv" category="VERSION_4_0" extension="Core" version="4.0">
@@ -36262,6 +36274,7 @@
       <token name="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER" value="0x90ED" />
       <token name="DISPATCH_INDIRECT_BUFFER" value="0x90EE" />
       <token name="DISPATCH_INDIRECT_BUFFER_BINDING" value="0x90EF" />
+      <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
       <token name="DEBUG_OUTPUT_SYNCHRONOUS" value="0x8242" />
       <token name="DEBUG_NEXT_LOGGED_MESSAGE_LENGTH" value="0x8243" />
       <token name="DEBUG_CALLBACK_FUNCTION" value="0x8244" />
@@ -38387,7 +38400,9 @@
       <token name="FUNC_SUBTRACT_OES" value="0x800A" />
       <token name="FUNC_REVERSE_SUBTRACT_OES" value="0x800B" />
     </enum>
-    <enum name="OES_byte_coordinates" />
+    <enum name="OES_byte_coordinates">
+      <token name="BYTE" value="0x1400" />
+    </enum>
     <enum name="OES_compressed_ETC1_RGB8_texture">
       <token name="ETC1_RGB8_OES" value="0x8D64" />
     </enum>
@@ -40384,6 +40399,7 @@
     </function>
     <function name="Vertex2bOES" category="OES_byte_coordinates" extension="OES">
       <param name="x" type="GLbyte" flow="in" />
+      <param name="y" type="GLbyte" flow="in" />
       <returns type="void" />
     </function>
     <function name="Vertex2bvOES" category="OES_byte_coordinates" extension="OES">
@@ -40401,6 +40417,7 @@
     <function name="Vertex3bOES" category="OES_byte_coordinates" extension="OES">
       <param name="x" type="GLbyte" flow="in" />
       <param name="y" type="GLbyte" flow="in" />
+      <param name="z" type="GLbyte" flow="in" />
       <returns type="void" />
     </function>
     <function name="Vertex3bvOES" category="OES_byte_coordinates" extension="OES">
@@ -40420,6 +40437,7 @@
       <param name="x" type="GLbyte" flow="in" />
       <param name="y" type="GLbyte" flow="in" />
       <param name="z" type="GLbyte" flow="in" />
+      <param name="w" type="GLbyte" flow="in" />
       <returns type="void" />
     </function>
     <function name="Vertex4bvOES" category="OES_byte_coordinates" extension="OES">
@@ -41643,6 +41661,7 @@
     <enum name="AMD_program_binary_Z400">
       <token name="Z400_BINARY_AMD" value="0x8740" />
     </enum>
+    <enum name="ANDROID_extension_pack_es31a" />
     <enum name="ANGLE_depth_texture">
       <token name="DEPTH_COMPONENT" value="0x1902" />
       <token name="DEPTH_STENCIL_OES" value="0x84F9" />
@@ -42175,6 +42194,7 @@
       <token name="SRC_ALPHA_SATURATE" value="0x0308" />
     </enum>
     <enum name="EXT_draw_instanced" />
+    <enum name="EXT_geometry_point_size" />
     <enum name="EXT_geometry_shader">
       <token name="GEOMETRY_SHADER_EXT" value="0x8DD9" />
       <token name="GEOMETRY_SHADER_BIT_EXT" value="0x00000004" />
@@ -42243,6 +42263,9 @@
       <token name="QUERY_RESULT_EXT" value="0x8866" />
       <token name="QUERY_RESULT_AVAILABLE_EXT" value="0x8867" />
     </enum>
+    <enum name="EXT_primitive_bounding_box">
+      <token name="PRIMITIVE_BOUNDING_BOX_EXT" value="0x92BE" />
+    </enum>
     <enum name="EXT_pvrtc_sRGB">
       <token name="COMPRESSED_SRGB_PVRTC_2BPPV1_EXT" value="0x8A54" />
       <token name="COMPRESSED_SRGB_PVRTC_4BPPV1_EXT" value="0x8A55" />
@@ -42302,6 +42325,7 @@
     <enum name="EXT_sRGB_write_control">
       <token name="FRAMEBUFFER_SRGB_EXT" value="0x8DB9" />
     </enum>
+    <enum name="EXT_tessellation_point_size" />
     <enum name="EXT_tessellation_shader">
       <token name="PATCHES_EXT" value="0x000E" />
       <token name="PATCH_VERTICES_EXT" value="0x8E72" />
@@ -45463,6 +45487,17 @@
     <function name="PopGroupMarkerEXT" category="EXT_debug_marker" extension="EXT">
       <returns type="void" />
     </function>
+    <function name="PrimitiveBoundingBoxEXT" category="EXT_primitive_bounding_box" extension="EXT">
+      <param name="minX" type="GLfloat" flow="in" />
+      <param name="minY" type="GLfloat" flow="in" />
+      <param name="minZ" type="GLfloat" flow="in" />
+      <param name="minW" type="GLfloat" flow="in" />
+      <param name="maxX" type="GLfloat" flow="in" />
+      <param name="maxY" type="GLfloat" flow="in" />
+      <param name="maxZ" type="GLfloat" flow="in" />
+      <param name="maxW" type="GLfloat" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="ProgramBinaryOES" category="OES_get_program_binary" extension="OES">
       <param name="program" type="GLuint" flow="in" />
       <param name="binaryFormat" type="GLenum" flow="in" />
@@ -45975,42 +46010,42 @@
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="6" />
+      <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x4fvNV" category="NV_non_square_matrices" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="8" />
+      <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x2fvNV" category="NV_non_square_matrices" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="6" />
+      <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x4fvNV" category="NV_non_square_matrices" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="12" />
+      <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x2fvNV" category="NV_non_square_matrices" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="8" />
+      <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x3fvNV" category="NV_non_square_matrices" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="12" />
+      <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UnmapBufferOES" category="OES_mapbuffer" extension="OES">
@@ -46777,13 +46812,13 @@
     <function name="GetUniformfv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformiv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(location)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(program, location)" />
       <returns type="void" />
     </function>
     <function name="GetUniformLocation" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -46998,7 +47033,7 @@
     <function name="Uniform1fv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform1i" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -47009,7 +47044,7 @@
     <function name="Uniform1iv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform2f" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -47021,7 +47056,7 @@
     <function name="Uniform2fv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform2i" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -47033,7 +47068,7 @@
     <function name="Uniform2iv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
     <function name="Uniform3f" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -47046,7 +47081,7 @@
     <function name="Uniform3fv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform3i" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -47059,7 +47094,7 @@
     <function name="Uniform3iv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
     <function name="Uniform4f" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -47073,7 +47108,7 @@
     <function name="Uniform4fv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="Uniform4i" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -47087,28 +47122,28 @@
     <function name="Uniform4iv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLint *" flow="in" count="count" />
+      <param name="value" type="GLint *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2fv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3fv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*9" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4fv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="count" />
+      <param name="value" type="GLfloat *" flow="in" count="count*16" />
       <returns type="void" />
     </function>
     <function name="UseProgram" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -47720,7 +47755,7 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="uniformBlockIndex" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(program, uniformBlockIndex, pname)" />
       <returns type="void" />
     </function>
     <function name="GetActiveUniformBlockName" category="ES_VERSION_3_0" extension="Core" version="3.0">
@@ -47734,9 +47769,9 @@
     <function name="GetActiveUniformsiv" category="ES_VERSION_3_0" extension="Core" version="3.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="uniformCount" type="GLsizei" flow="in" />
-      <param name="uniformIndices" type="GLuint *" flow="in" count="COMPSIZE(uniformCount)" />
+      <param name="uniformIndices" type="GLuint *" flow="in" count="uniformCount" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(uniformCount, pname)" />
       <returns type="void" />
     </function>
     <function name="GetBufferParameteri64v" category="ES_VERSION_3_0" extension="Core" version="3.0">
@@ -48023,7 +48058,7 @@
     <function name="Uniform1uiv" category="ES_VERSION_3_0" extension="Core" version="3.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="value" type="GLuint *" flow="in" count="count" />
+      <param name="value" type="GLuint *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
     <function name="Uniform2ui" category="ES_VERSION_3_0" extension="Core" version="3.0">
@@ -48075,42 +48110,42 @@
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="6" />
+      <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix2x4fv" category="ES_VERSION_3_0" extension="Core" version="3.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="8" />
+      <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x2fv" category="ES_VERSION_3_0" extension="Core" version="3.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="6" />
+      <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix3x4fv" category="ES_VERSION_3_0" extension="Core" version="3.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="12" />
+      <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x2fv" category="ES_VERSION_3_0" extension="Core" version="3.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="8" />
+      <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
     <function name="UniformMatrix4x3fv" category="ES_VERSION_3_0" extension="Core" version="3.0">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="transpose" type="Boolean" flow="in" />
-      <param name="value" type="GLfloat *" flow="in" count="12" />
+      <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
     <function name="UnmapBuffer" category="ES_VERSION_3_0" extension="Core" version="3.0">

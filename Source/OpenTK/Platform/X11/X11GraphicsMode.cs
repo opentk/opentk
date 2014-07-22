@@ -16,7 +16,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.X11
 {
-    class X11GraphicsMode : IGraphicsMode
+    class X11GraphicsMode
     {
         // Todo: Add custom visual selection algorithm, instead of ChooseFBConfig/ChooseVisual.
         // It seems the Choose* methods do not take multisampling into account (at least on some
@@ -32,34 +32,45 @@ namespace OpenTK.Platform.X11
 
         #region IGraphicsMode Members
 
-        public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum,
-                                               int buffers, bool stereo)
+        public GraphicsMode SelectGraphicsMode(GraphicsMode desired_mode, out IntPtr visual, out IntPtr fbconfig)
         {
             GraphicsMode gfx;
-            // The actual GraphicsMode that will be selected.
-            IntPtr visual = IntPtr.Zero;
+            GraphicsMode mode = new GraphicsMode(desired_mode);
+            visual = IntPtr.Zero;
+            fbconfig = IntPtr.Zero;
             IntPtr display = API.DefaultDisplay;
 
             do
             {
                 // Try to select a visual using Glx.ChooseFBConfig and Glx.GetVisualFromFBConfig.
                 // This is only supported on GLX 1.3 - if it fails, fall back to Glx.ChooseVisual.
-                visual = SelectVisualUsingFBConfig(color, depth, stencil, samples, accum, buffers, stereo);
+                fbconfig = SelectFBConfig(mode);
+                if (fbconfig != IntPtr.Zero)
+                    visual = Glx.GetVisualFromFBConfig(display, fbconfig);
                 
                 if (visual == IntPtr.Zero)
-                    visual = SelectVisualUsingChooseVisual(color, depth, stencil, samples, accum, buffers, stereo);
+                    visual = SelectVisual(mode);
                 
                 if (visual == IntPtr.Zero)
                 {
                     // Relax parameters and retry
-                    if (!Utilities.RelaxGraphicsMode(ref color, ref depth, ref stencil, ref samples, ref accum, ref buffers, ref stereo))
+                    if (!Utilities.RelaxGraphicsMode(ref mode))
                         throw new GraphicsModeException("Requested GraphicsMode not available.");
                 }
             }
             while (visual == IntPtr.Zero);
 
             XVisualInfo info = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
+            gfx = CreateGraphicsMode(display, ref info);
+            return gfx;
+        }
 
+        #endregion
+
+        #region Private Members
+
+        static GraphicsMode CreateGraphicsMode(IntPtr display, ref XVisualInfo info)
+        {
             // See what we *really* got:
             int r, g, b, a;
             Glx.GetConfig(display, ref info, GLXAttribute.ALPHA_SIZE, out a);
@@ -71,99 +82,83 @@ namespace OpenTK.Platform.X11
             Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_RED_SIZE, out ar);
             Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_GREEN_SIZE, out ag);
             Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_BLUE_SIZE, out ab);
+            int depth, stencil, samples, buffers;
             Glx.GetConfig(display, ref info, GLXAttribute.DEPTH_SIZE, out depth);
             Glx.GetConfig(display, ref info, GLXAttribute.STENCIL_SIZE, out stencil);
             Glx.GetConfig(display, ref info, GLXAttribute.SAMPLES, out samples);
             Glx.GetConfig(display, ref info, GLXAttribute.DOUBLEBUFFER, out buffers);
-            ++buffers;
-            // the above lines returns 0 - false and 1 - true.
             int st;
             Glx.GetConfig(display, ref info, GLXAttribute.STEREO, out st);
-            stereo = st != 0;
-            
-            gfx = new GraphicsMode(info.VisualID, new ColorFormat(r, g, b, a), depth, stencil, samples,
-            new ColorFormat(ar, ag, ab, aa), buffers, stereo);
-            
-            using (new XLock(display))
-            {
-                Functions.XFree(visual);
-            }
-            
-            return gfx;
+
+            // Note: Glx.GetConfig return buffers = 0 (false) or 1 (true).
+            // OpenTK expects buffers = 1 (single-) or 2 (double-buffering),
+            // so increase the GLX value by one.
+            return new GraphicsMode(info.VisualID, new ColorFormat(r, g, b, a), depth, stencil, samples,
+                new ColorFormat(ar, ag, ab, aa), buffers + 1, st != 0);
         }
 
-        #endregion
-
-        #region Private Members
-
-        // See http://publib.boulder.ibm.com/infocenter/systems/index.jsp?topic=/com.ibm.aix.opengl/doc/openglrf/glXChooseFBConfig.htm
-        // for the attribute declarations. Note that the attributes are different than those used in Glx.ChooseVisual.
-        IntPtr SelectVisualUsingFBConfig(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum,
-                                               int buffers, bool stereo)
+        IntPtr SelectFBConfig(GraphicsMode mode)
         {
+            Debug.Print("Selecting FB config for {0}", mode);
+
             List<int> visualAttributes = new List<int>();
-            IntPtr visual = IntPtr.Zero;
 
-            Debug.Print("Bits per pixel: {0}", color.BitsPerPixel);
-
-            if (color.BitsPerPixel > 0)
+            if (mode.ColorFormat.BitsPerPixel > 0)
             {
-                if (!color.IsIndexed)
+                if (!mode.ColorFormat.IsIndexed)
                 {
-                    visualAttributes.Add((int)GLXAttribute.RGBA);
-                    visualAttributes.Add(1);
+                    visualAttributes.Add((int)GLXAttribute.RENDER_TYPE);
+                    visualAttributes.Add((int)GLXRenderTypeMask.RGBA_BIT);
                 }
                 visualAttributes.Add((int)GLXAttribute.RED_SIZE);
-                visualAttributes.Add(color.Red);
+                visualAttributes.Add(mode.ColorFormat.Red);
                 visualAttributes.Add((int)GLXAttribute.GREEN_SIZE);
-                visualAttributes.Add(color.Green);
+                visualAttributes.Add(mode.ColorFormat.Green);
                 visualAttributes.Add((int)GLXAttribute.BLUE_SIZE);
-                visualAttributes.Add(color.Blue);
+                visualAttributes.Add(mode.ColorFormat.Blue);
                 visualAttributes.Add((int)GLXAttribute.ALPHA_SIZE);
-                visualAttributes.Add(color.Alpha);
+                visualAttributes.Add(mode.ColorFormat.Alpha);
             }
 
-            Debug.Print("Depth: {0}", depth);
-
-            if (depth > 0)
+            if (mode.Depth > 0)
             {
                 visualAttributes.Add((int)GLXAttribute.DEPTH_SIZE);
-                visualAttributes.Add(depth);
+                visualAttributes.Add(mode.Depth);
             }
 
-            if (buffers > 1)
+            if (mode.Buffers > 1)
             {
                 visualAttributes.Add((int)GLXAttribute.DOUBLEBUFFER);
                 visualAttributes.Add(1);
             }
 
-            if (stencil > 1)
+            if (mode.Stereo)
             {
                 visualAttributes.Add((int)GLXAttribute.STENCIL_SIZE);
-                visualAttributes.Add(stencil);
+                visualAttributes.Add(mode.Stereo ? 1 : 0);
             }
 
-            if (accum.BitsPerPixel > 0)
+            if (mode.AccumulatorFormat.BitsPerPixel > 0)
             {
                 visualAttributes.Add((int)GLXAttribute.ACCUM_ALPHA_SIZE);
-                visualAttributes.Add(accum.Alpha);
+                visualAttributes.Add(mode.AccumulatorFormat.Alpha);
                 visualAttributes.Add((int)GLXAttribute.ACCUM_BLUE_SIZE);
-                visualAttributes.Add(accum.Blue);
+                visualAttributes.Add(mode.AccumulatorFormat.Blue);
                 visualAttributes.Add((int)GLXAttribute.ACCUM_GREEN_SIZE);
-                visualAttributes.Add(accum.Green);
+                visualAttributes.Add(mode.AccumulatorFormat.Green);
                 visualAttributes.Add((int)GLXAttribute.ACCUM_RED_SIZE);
-                visualAttributes.Add(accum.Red);
+                visualAttributes.Add(mode.AccumulatorFormat.Red);
             }
-            
-            if (samples > 0)
+
+            if (mode.Samples > 0)
             {
                 visualAttributes.Add((int)GLXAttribute.SAMPLE_BUFFERS);
                 visualAttributes.Add(1);
                 visualAttributes.Add((int)GLXAttribute.SAMPLES);
-                visualAttributes.Add(samples);
+                visualAttributes.Add(mode.Samples);
             }
 
-            if (stereo)
+            if (mode.Stereo)
             {
                 visualAttributes.Add((int)GLXAttribute.STEREO);
                 visualAttributes.Add(1);
@@ -173,6 +168,7 @@ namespace OpenTK.Platform.X11
 
             // Select a visual that matches the parameters set by the user.
             IntPtr display = API.DefaultDisplay;
+            IntPtr result = IntPtr.Zero;
             using (new XLock(display))
             {
                 try
@@ -180,7 +176,7 @@ namespace OpenTK.Platform.X11
                     int screen = Functions.XDefaultScreen(display);
                     IntPtr root = Functions.XRootWindow(display, screen);
                     Debug.Print("Display: {0}, Screen: {1}, RootWindow: {2}", display, screen, root);
-    
+
                     unsafe
                     {
                         Debug.Print("Getting FB config.");
@@ -190,81 +186,82 @@ namespace OpenTK.Platform.X11
                         if (fbcount > 0 && fbconfigs != null)
                         {
                             // We want to use the first GLXFBConfig from the fbconfigs array (the first one is the best match).
-                            visual = Glx.GetVisualFromFBConfig(display, *fbconfigs);
+                            Debug.Print("Selected FB config: {0}", *fbconfigs);
+                            result = *fbconfigs;
                             Functions.XFree((IntPtr)fbconfigs);
+                        }
+                        else
+                        {
+                            Debug.Print("No matching FB config found.");
                         }
                     }
                 }
                 catch (EntryPointNotFoundException)
                 {
                     Debug.Print("Function glXChooseFBConfig not supported.");
-                    return IntPtr.Zero;
                 }
             }
 
-            return visual;
+            return result;
         }
 
-        // See http://publib.boulder.ibm.com/infocenter/systems/index.jsp?topic=/com.ibm.aix.opengl/doc/openglrf/glXChooseVisual.htm
-        IntPtr SelectVisualUsingChooseVisual(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum,
-                                                  int buffers, bool stereo)
+        IntPtr SelectVisual(GraphicsMode mode)
         {
+            Debug.Print("Selecting FB config for {0}", mode);
+
             List<int> visualAttributes = new List<int>();
 
-            Debug.Print("Bits per pixel: {0}", color.BitsPerPixel);
-
-            if (color.BitsPerPixel > 0)
+            if (mode.ColorFormat.BitsPerPixel > 0)
             {
-                if (!color.IsIndexed)
+                if (!mode.ColorFormat.IsIndexed)
                     visualAttributes.Add((int)GLXAttribute.RGBA);
                 visualAttributes.Add((int)GLXAttribute.RED_SIZE);
-                visualAttributes.Add(color.Red);
+                visualAttributes.Add(mode.ColorFormat.Red);
                 visualAttributes.Add((int)GLXAttribute.GREEN_SIZE);
-                visualAttributes.Add(color.Green);
+                visualAttributes.Add(mode.ColorFormat.Green);
                 visualAttributes.Add((int)GLXAttribute.BLUE_SIZE);
-                visualAttributes.Add(color.Blue);
+                visualAttributes.Add(mode.ColorFormat.Blue);
                 visualAttributes.Add((int)GLXAttribute.ALPHA_SIZE);
-                visualAttributes.Add(color.Alpha);
+                visualAttributes.Add(mode.ColorFormat.Alpha);
             }
 
-            Debug.Print("Depth: {0}", depth);
 
-            if (depth > 0)
+            if (mode.Depth > 0)
             {
                 visualAttributes.Add((int)GLXAttribute.DEPTH_SIZE);
-                visualAttributes.Add(depth);
+                visualAttributes.Add(mode.Depth);
             }
 
-            if (buffers > 1)
+            if (mode.Buffers > 1)
                 visualAttributes.Add((int)GLXAttribute.DOUBLEBUFFER);
 
-            if (stencil > 1)
+            if (mode.Stencil > 1)
             {
                 visualAttributes.Add((int)GLXAttribute.STENCIL_SIZE);
-                visualAttributes.Add(stencil);
+                visualAttributes.Add(mode.Stencil);
             }
 
-            if (accum.BitsPerPixel > 0)
+            if (mode.AccumulatorFormat.BitsPerPixel > 0)
             {
                 visualAttributes.Add((int)GLXAttribute.ACCUM_ALPHA_SIZE);
-                visualAttributes.Add(accum.Alpha);
+                visualAttributes.Add(mode.AccumulatorFormat.Alpha);
                 visualAttributes.Add((int)GLXAttribute.ACCUM_BLUE_SIZE);
-                visualAttributes.Add(accum.Blue);
+                visualAttributes.Add(mode.AccumulatorFormat.Blue);
                 visualAttributes.Add((int)GLXAttribute.ACCUM_GREEN_SIZE);
-                visualAttributes.Add(accum.Green);
+                visualAttributes.Add(mode.AccumulatorFormat.Green);
                 visualAttributes.Add((int)GLXAttribute.ACCUM_RED_SIZE);
-                visualAttributes.Add(accum.Red);
+                visualAttributes.Add(mode.AccumulatorFormat.Red);
             }
-            
-            if (samples > 0)
+
+            if (mode.Samples > 0)
             {
                 visualAttributes.Add((int)GLXAttribute.SAMPLE_BUFFERS);
                 visualAttributes.Add(1);
                 visualAttributes.Add((int)GLXAttribute.SAMPLES);
-                visualAttributes.Add(samples);
+                visualAttributes.Add(mode.Samples);
             }
 
-            if (stereo)
+            if (mode.Stereo)
                 visualAttributes.Add((int)GLXAttribute.STEREO);
 
             visualAttributes.Add(0);

@@ -75,31 +75,27 @@ namespace OpenTK.Platform.X11
         IntPtr _atom_net_wm_state_fullscreen;
         IntPtr _atom_net_wm_state_maximized_horizontal;
         IntPtr _atom_net_wm_state_maximized_vertical;
-        
+
+        #pragma warning disable 414 // assigned but never used
         IntPtr _atom_net_wm_allowed_actions;
         IntPtr _atom_net_wm_action_resize;
         IntPtr _atom_net_wm_action_maximize_horizontally;
         IntPtr _atom_net_wm_action_maximize_vertically;
+        #pragma warning restore 414
 
         IntPtr _atom_net_wm_icon;
 
         IntPtr _atom_net_frame_extents;
 
-        IntPtr _atom_wm_class;
-
         readonly IntPtr _atom_xa_cardinal = new IntPtr(6);
-        
-        //IntPtr _atom_motif_wm_hints;
-        //IntPtr _atom_kde_wm_hints;
-        //IntPtr _atom_kde_net_wm_hints;
 
         static readonly IntPtr _atom_remove = (IntPtr)0;
         static readonly IntPtr _atom_add = (IntPtr)1;
         static readonly IntPtr _atom_toggle = (IntPtr)2;
 
-        // Used by OpenTK to detect mouse warp events
-
+        #pragma warning disable 649 // never assigned, compiler bug in Mono 3.4.0
         Rectangle bounds, client_rectangle;
+        #pragma warning restore 649
         int border_left, border_right, border_top, border_bottom;
         Icon icon;
         bool has_focus;
@@ -131,16 +127,18 @@ namespace OpenTK.Platform.X11
 
         readonly IntPtr EmptyCursor;
 
+        #pragma warning disable 414 // Field assigned but never used, we do that on purpose
         readonly bool xi2_supported;
         readonly int xi2_opcode;
         readonly int xi2_version;
+        #pragma warning restore 414
 
         #endregion
 
         #region Constructors
 
         public X11GLNative(int x, int y, int width, int height, string title,
-            GraphicsMode mode,GameWindowFlags options, DisplayDevice device)
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             : this()
         {
             if (width <= 0)
@@ -148,23 +146,17 @@ namespace OpenTK.Platform.X11
             if (height <= 0)
                 throw new ArgumentOutOfRangeException("height", "Must be higher than zero.");
 
-            XVisualInfo info = new XVisualInfo();
-
             Debug.Indent();
-            
+
             using (new XLock(window.Display))
             {
-                if (!mode.Index.HasValue)
-                {
-                    mode = new X11GraphicsMode().SelectGraphicsMode(
-                        mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
-                        mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
-                }
+                IntPtr visual;
+                IntPtr fbconfig;
+                window.GraphicsMode = new X11GraphicsMode()
+                    .SelectGraphicsMode(mode, out visual, out fbconfig);
 
-                info.VisualID = mode.Index.Value;
-                int dummy;
-                window.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(
-                    Functions.XGetVisualInfo(window.Display, XVisualInfoMask.ID, ref info, out dummy), typeof(XVisualInfo));
+                window.Visual = visual;
+                window.FBConfig = fbconfig;
 
                 // Create a window on this display using the visual above
                 Debug.Write("Opening render window... ");
@@ -181,12 +173,13 @@ namespace OpenTK.Platform.X11
                                    EventMask.PropertyChangeMask;
                 attributes.event_mask = (IntPtr)window.EventMask;
 
-                uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
-                    (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
+                SetWindowValuemask mask =
+                    SetWindowValuemask.ColorMap | SetWindowValuemask.EventMask |
+                    SetWindowValuemask.BackPixel | SetWindowValuemask.BorderPixel;
 
                 window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
                     x, y, width, height, 0, window.VisualInfo.Depth/*(int)CreateWindowArgs.CopyFromParent*/,
-                    (int)CreateWindowArgs.InputOutput, window.VisualInfo.Visual, (UIntPtr)mask, ref attributes);
+                    CreateWindowArgs.InputOutput, window.VisualInfo.Visual, mask, attributes);
 
                 if (window.Handle == IntPtr.Zero)
                     throw new ApplicationException("XCreateWindow call failed (returned 0).");
@@ -422,15 +415,7 @@ namespace OpenTK.Platform.X11
         bool IsWindowBorderHidden
         {
             get
-            {                
-                //IntPtr actual_atom;
-                //int actual_format;
-                //IntPtr nitems;
-                //IntPtr bytes_after;
-                IntPtr prop = IntPtr.Zero;
-                //IntPtr atom;
-                //XWindowAttributes attributes;
-
+            {
                 using (new XLock(window.Display))
                 {
                     // Test if decorations have been disabled through Motif.
@@ -824,7 +809,7 @@ namespace OpenTK.Platform.X11
                     case XEventName.ClientMessage:
                         if (!isExiting && e.ClientMessageEvent.ptr1 == _atom_wm_destroy)
                         {
-                            Debug.WriteLine("Exit message received.");
+                            Debug.Print("[X11] Exit message received for window {0:X} on display {1:X}", window.Handle, window.Display);
                             CancelEventArgs ce = new CancelEventArgs();
                             OnClosing(ce);
 
@@ -891,7 +876,7 @@ namespace OpenTK.Platform.X11
                         int x = e.MotionEvent.x;
                         int y = e.MotionEvent.y;
 
-                        if (x != 0 || y != 0)
+                        if (x != MouseState.X || y != MouseState.Y)
                         {
                             OnMouseMove(
                                 MathHelper.Clamp(x, 0, Width),
@@ -1623,6 +1608,8 @@ namespace OpenTK.Platform.X11
 
         public void Exit()
         {
+            Debug.Print("[X11] Sending exit message window {0:X} on display {1:X}", window.Handle, window.Display);
+
             XEvent ev = new XEvent();
             ev.type = XEventName.ClientMessage;
             ev.ClientMessageEvent.format = 32;
@@ -1643,10 +1630,12 @@ namespace OpenTK.Platform.X11
 
         public void DestroyWindow()
         {
-            Debug.WriteLine("X11GLNative shutdown sequence initiated.");
+            Debug.Print("[X11] Destroying window {0:X} on display {1:X}", window.Handle, window.Display);
+
             using (new XLock(window.Display))
             {
-                Functions.XSync(window.Display, true);
+                Functions.XUnmapWindow(window.Display, window.Handle);
+                Functions.XSync(window.Display, false);
                 Functions.XDestroyWindow(window.Display, window.Handle);
                 exists = false;
             }

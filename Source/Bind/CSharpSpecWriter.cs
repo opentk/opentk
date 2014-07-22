@@ -384,7 +384,7 @@ namespace Bind
                     else
                     {
                         Console.Error.WriteLine(
-                            "[Warning] Parameter '{0}' in function '{1}' not found in documentation '{{{3}}}'",
+                            "[Warning] Parameter '{0}' in function '{1}' not found in documentation '{{{2}}}'",
                             param.Name, f.Name,
                             String.Join(",", docs.Parameters.Select(p => p.Name).ToArray()));
                         sw.WriteLine("/// <param name=\"{0}\">{1}</param>",
@@ -505,6 +505,10 @@ namespace Bind
                         sw.WriteLine("/// </summary>");
                     }
 
+                    if (@enum.IsObsolete)
+                        sw.WriteLine("[Obsolete(\"{0}\")]", @enum.Obsolete);
+                    if (!@enum.CLSCompliant)
+                        sw.WriteLine("[CLSCompliant(false)]");
                     if (@enum.IsFlagCollection)
                         sw.WriteLine("[Flags]");
                     sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);

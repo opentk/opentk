@@ -33,11 +33,9 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2Keyboard : IKeyboardDriver2
     {
+        #pragma warning disable 649 // Field never assigned to, compiler bug in Mono 3.4.0
         KeyboardState state;
-
-        readonly List<KeyboardDevice> keyboards =
-            new List<KeyboardDevice>();
-        readonly IList<KeyboardDevice> keyboards_readonly;
+        #pragma warning restore 649
 
         public Sdl2Keyboard()
         {
@@ -79,7 +77,6 @@ namespace OpenTK.Platform.SDL2
             bool pressed = e.State != 0;
             var scancode = e.Keysym.Scancode;
             Key key = Sdl2KeyMap.GetKey(scancode);
-            KeyModifiers mods = Sdl2KeyMap.GetModifiers(e.Keysym.Mod);
 
             if (key != Key.Unknown)
             {

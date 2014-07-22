@@ -343,9 +343,6 @@
     <Compile Include="Platform\X11\X11WindowInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\X11\X11Joystick.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\X11\Functions.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -701,7 +698,7 @@
     <Compile Include="Platform\X11\X11Mouse.cs" />
     <Compile Include="Input\ButtonState.cs" />
     <EmbeddedResource Include="OpenTK.dll.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <Compile Include="Platform\MacOS\HIDInput.cs" />
     <Compile Include="IntPtrEqualityComparer.cs" />
@@ -806,6 +803,27 @@
     <Compile Include="Platform\X11\XI2Input.cs" />
     <Compile Include="Platform\X11\XI2MouseKeyboard.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSFloat.cs" />
+    <Compile Include="Platform\Linux\Bindings\Drm.cs" />
+    <Compile Include="Platform\Linux\LinuxFactory.cs" />
+    <Compile Include="Platform\Linux\LinuxNativeWindow.cs" />
+    <Compile Include="Platform\Linux\Bindings\Gbm.cs" />
+    <Compile Include="Platform\Linux\LinuxDisplayDriver.cs" />
+    <Compile Include="Platform\Linux\LinuxJoystick.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Platform\Linux\Bindings\Libc.cs" />
+    <Compile Include="Platform\Linux\LinuxWindowInfo.cs" />
+    <Compile Include="Platform\Linux\LinuxGraphicsContext.cs" />
+    <Compile Include="Platform\Linux\Bindings\Poll.cs" />
+    <Compile Include="Platform\Linux\LinuxKeyboardTTY.cs" />
+    <Compile Include="Platform\Linux\Bindings\Udev.cs" />
+    <Compile Include="Platform\Linux\Bindings\LibInput.cs" />
+    <Compile Include="Platform\Linux\LinuxInput.cs" />
+    <Compile Include="Platform\Linux\Bindings\Terminal.cs" />
+    <Compile Include="Platform\DeviceCollection.cs" />
+    <Compile Include="Platform\Linux\Bindings\Evdev.cs" />
+    <Compile Include="Platform\Linux\DefaultCursor.cs" />
+    <Compile Include="Platform\Linux\Bindings\Kms.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -836,4 +854,8 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Platform\Linux\" />
+    <Folder Include="Platform\Linux\Bindings\" />
+  </ItemGroup>
 </Project>

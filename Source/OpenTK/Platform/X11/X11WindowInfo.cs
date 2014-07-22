@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace OpenTK.Platform.X11
@@ -87,7 +88,17 @@ namespace OpenTK.Platform.X11
         /// <summary>Gets or sets the X11 screen.</summary>
         public int Screen { get { return screen; } set { screen = value; } }
         /// <summary>Gets or sets the X11 VisualInfo.</summary>
-        public XVisualInfo VisualInfo { get { return visualInfo; } set { visualInfo = value; } }
+        public XVisualInfo VisualInfo
+        {
+            get
+            {
+                if (Visual != IntPtr.Zero)
+                {
+                    return (XVisualInfo)Marshal.PtrToStructure(Visual, typeof(XVisualInfo));
+                }
+                return default(XVisualInfo);
+            }
+        }
         /// <summary>Gets or sets the X11 EventMask.</summary>
         public EventMask EventMask { get { return eventMask; } set { eventMask = value; } }
 
@@ -95,6 +106,10 @@ namespace OpenTK.Platform.X11
         // a good idea to access internal APIs through reflection
         // (e.g. MonoGame)
         public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
+
+        public IntPtr Visual { get; set; }
+        public IntPtr FBConfig { get; set; }
+        public Graphics.GraphicsMode GraphicsMode { get; set; }
 
         #endregion
 
