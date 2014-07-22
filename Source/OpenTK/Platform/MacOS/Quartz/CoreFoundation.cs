@@ -113,6 +113,9 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static extern IntPtr CFDictionaryGetValue(IntPtr theDictionary, IntPtr theKey);
 
         [DllImport(appServices)]
+        internal static extern IntPtr CFRetain(CFTypeRef cf);
+
+        [DllImport(appServices)]
         internal static extern void CFRelease(CFTypeRef cf);
 
         // this mirrors the definition in CFString.h.
