@@ -77,7 +77,7 @@ namespace OpenTK.Platform.MacOS
                 new Dictionary<IOHIDElementRef, JoystickHat>(new IntPtrEqualityComparer());
         }
 
-        readonly IOHIDManagerRef hidmanager;
+        IOHIDManagerRef hidmanager;
 
         readonly Dictionary<IntPtr, MouseData> MouseDevices =
             new Dictionary<IntPtr, MouseData>(new IntPtrEqualityComparer());
@@ -124,6 +124,12 @@ namespace OpenTK.Platform.MacOS
 
             // For retrieving input directly from the hardware
             hidmanager = CreateHIDManager();
+            if (hidmanager == IntPtr.Zero)
+            {
+                Debug.Print("[Mac] Failed to create IO HID manager, HIDInput driver not supported.");
+                throw new NotSupportedException();
+            }
+
             RegisterHIDCallbacks(hidmanager);
 
             // For retrieving the global cursor position
@@ -1032,7 +1038,11 @@ namespace OpenTK.Platform.MacOS
 
             [DllImport(hid)]
             public static extern IOHIDManagerRef IOHIDManagerCreate(
-                CFAllocatorRef allocator, IOOptionBits options) ;
+                CFAllocatorRef allocator, IOOptionBits options);
+
+            [DllImport(hid)]
+            public static extern IOReturn IOHIDManagerClose(
+                IOHIDManagerRef allocator, IOOptionBits options);
 
             // This routine will be called when a new (matching) device is connected.
             [DllImport(hid)]
@@ -1724,6 +1734,17 @@ namespace OpenTK.Platform.MacOS
             {
                 if (manual)
                 {
+                    if (MouseEventTap != IntPtr.Zero)
+                    {
+                        CF.CFRelease(MouseEventTap);
+                        MouseEventTap = IntPtr.Zero;
+                    }
+                    if (MouseEventTapSource != IntPtr.Zero)
+                    {
+                        CF.CFRelease(MouseEventTapSource);
+                        MouseEventTapSource = IntPtr.Zero;
+                    }
+
                     NativeMethods.IOHIDManagerRegisterDeviceMatchingCallback(
                         hidmanager, IntPtr.Zero, IntPtr.Zero);
                     NativeMethods.IOHIDManagerRegisterDeviceRemovalCallback(
@@ -1750,15 +1771,10 @@ namespace OpenTK.Platform.MacOS
                     HandleDeviceRemoved = null;
                     HandleDeviceValueReceived = null;
 
-                    if (MouseEventTap != IntPtr.Zero)
+                    if (hidmanager != IntPtr.Zero)
                     {
-                        CF.CFRelease(MouseEventTap);
-                        MouseEventTap = IntPtr.Zero;
-                    }
-                    if (MouseEventTapSource != IntPtr.Zero)
-                    {
-                        CF.CFRelease(MouseEventTapSource);
-                        MouseEventTapSource = IntPtr.Zero;
+                        NativeMethods.IOHIDManagerClose(hidmanager, IOOptionBits.Zero);
+                        hidmanager = IntPtr.Zero;
                     }
                 }
                 else
