@@ -55,6 +55,9 @@ namespace OpenTK.Platform.MacOS
         [DllImport (Cocoa.LibObjC)]
         extern static void objc_registerClassPair(IntPtr classToRegister);
 
+        [DllImport (Cocoa.LibObjC)]
+        extern static void objc_disposeClassPair(IntPtr cls);
+
         public static IntPtr Get(string name)
         {
             var id = objc_getClass(name);
@@ -73,6 +76,11 @@ namespace OpenTK.Platform.MacOS
         public static void RegisterClass(IntPtr handle)
         {
             objc_registerClassPair(handle);
+        }
+
+        public static void DisposeClass(IntPtr handle)
+        {
+            objc_disposeClassPair(handle);
         }
 
         static List<Delegate> storedDelegates = new List<Delegate>();
