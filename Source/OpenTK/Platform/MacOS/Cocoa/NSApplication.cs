@@ -48,7 +48,7 @@ namespace OpenTK.Platform.MacOS
 
             // Register a Quit method to be called on cmd-q
             IntPtr nsapp = Class.Get("NSApplication");
-            Class.RegisterMethod(nsapp, new OnQuitDelegate(OnQuit), "quit", "v@:");
+            Class.RegisterMethod(nsapp, OnQuitHandler, "quit", "v@:");
 
             // Fetch the application handle
             Handle = Cocoa.SendIntPtr(nsapp, Selector.Get("sharedApplication"));
@@ -102,6 +102,7 @@ namespace OpenTK.Platform.MacOS
         internal static event EventHandler<CancelEventArgs> Quit = delegate { };
 
         delegate void OnQuitDelegate(IntPtr self, IntPtr cmd);
+        static OnQuitDelegate OnQuitHandler = OnQuit;
         static void OnQuit(IntPtr self, IntPtr cmd)
         {
             var e = new CancelEventArgs();

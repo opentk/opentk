@@ -146,26 +146,44 @@ namespace OpenTK.Platform.MacOS
 
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
+            // Create callback methods. We need to store those,
+            // otherwise the GC may collect them while they are
+            // still active.
+            WindowKeyDownHandler = WindowKeyDown;
+            WindowDidResizeHandler = WindowDidResize;
+            WindowDidMoveHandler = WindowDidMove;
+            WindowDidBecomeKeyHandler = WindowDidBecomeKey;
+            WindowDidResignKeyHandler = WindowDidResignKey;
+            WindowWillMiniaturizeHandler = WindowWillMiniaturize;
+            WindowDidMiniaturizeHandler = WindowDidMiniaturize;
+            WindowDidDeminiaturizeHandler = WindowDidDeminiaturize;
+            WindowShouldZoomToFrameHandler = WindowShouldZoomToFrame;
+            WindowShouldCloseHandler = WindowShouldClose;
+            AcceptsFirstResponderHandler = AcceptsFirstResponder;
+            CanBecomeKeyWindowHandler = CanBecomeKeyWindow;
+            CanBecomeMainWindowHandler = CanBecomeMainWindow;
+            ResetCursorRectsHandler = ResetCursorRects;
+
             // Create the window class
             int unique_id = Interlocked.Increment(ref UniqueId);
             windowClass = Class.AllocateClass("OpenTK_GameWindow" + unique_id, "NSWindow");
-            Class.RegisterMethod(windowClass, new WindowKeyDownDelegate(WindowKeyDown), "keyDown:", "v@:@");
-            Class.RegisterMethod(windowClass, new WindowDidResizeDelegate(WindowDidResize), "windowDidResize:", "v@:@");
-            Class.RegisterMethod(windowClass, new WindowDidMoveDelegate(WindowDidMove), "windowDidMove:", "v@:@");
-            Class.RegisterMethod(windowClass, new WindowDidBecomeKeyDelegate(WindowDidBecomeKey), "windowDidBecomeKey:", "v@:@");
-            Class.RegisterMethod(windowClass, new WindowDidResignKeyDelegate(WindowDidResignKey), "windowDidResignKey:", "v@:@");
-            Class.RegisterMethod(windowClass, new WindowWillMiniaturizeDelegate(WindowWillMiniaturize), "windowWillMiniaturize:", "v@:@");
-            Class.RegisterMethod(windowClass, new WindowDidMiniaturizeDelegate(WindowDidMiniaturize), "windowDidMiniaturize:", "v@:@");
-            Class.RegisterMethod(windowClass, new WindowDidDeminiaturizeDelegate(WindowDidDeminiaturize), "windowDidDeminiaturize:", "v@:@");
-            Class.RegisterMethod(windowClass, new WindowShouldZoomToFrameDelegate(WindowShouldZoomToFrame), "windowShouldZoom:toFrame:", "b@:@{NSRect={NSPoint=ff}{NSSize=ff}}");
-            Class.RegisterMethod(windowClass, new WindowShouldCloseDelegate(WindowShouldClose), "windowShouldClose:", "b@:@");
-            Class.RegisterMethod(windowClass, new AcceptsFirstResponderDelegate(AcceptsFirstResponder), "acceptsFirstResponder", "b@:");
-            Class.RegisterMethod(windowClass, new CanBecomeKeyWindowDelegate(CanBecomeKeyWindow), "canBecomeKeyWindow", "b@:");
-            Class.RegisterMethod(windowClass, new CanBecomeMainWindowDelegate(CanBecomeMainWindow), "canBecomeMainWindow", "b@:");
+            Class.RegisterMethod(windowClass, WindowKeyDownHandler, "keyDown:", "v@:@");
+            Class.RegisterMethod(windowClass, WindowDidResizeHandler, "windowDidResize:", "v@:@");
+            Class.RegisterMethod(windowClass, WindowDidMoveHandler, "windowDidMove:", "v@:@");
+            Class.RegisterMethod(windowClass, WindowDidBecomeKeyHandler, "windowDidBecomeKey:", "v@:@");
+            Class.RegisterMethod(windowClass, WindowDidResignKeyHandler, "windowDidResignKey:", "v@:@");
+            Class.RegisterMethod(windowClass, WindowWillMiniaturizeHandler, "windowWillMiniaturize:", "v@:@");
+            Class.RegisterMethod(windowClass, WindowDidMiniaturizeHandler, "windowDidMiniaturize:", "v@:@");
+            Class.RegisterMethod(windowClass, WindowDidDeminiaturizeHandler, "windowDidDeminiaturize:", "v@:@");
+            Class.RegisterMethod(windowClass, WindowShouldZoomToFrameHandler, "windowShouldZoom:toFrame:", "b@:@{NSRect={NSPoint=ff}{NSSize=ff}}");
+            Class.RegisterMethod(windowClass, WindowShouldCloseHandler, "windowShouldClose:", "b@:@");
+            Class.RegisterMethod(windowClass, AcceptsFirstResponderHandler, "acceptsFirstResponder", "b@:");
+            Class.RegisterMethod(windowClass, CanBecomeKeyWindowHandler, "canBecomeKeyWindow", "b@:");
+            Class.RegisterMethod(windowClass, CanBecomeMainWindowHandler, "canBecomeMainWindow", "b@:");
             Class.RegisterClass(windowClass);
 
             IntPtr viewClass = Class.AllocateClass("OpenTK_NSView" + unique_id, "NSView");
-            Class.RegisterMethod(viewClass, new ResetCursorRectsDelegate(ResetCursorRects), "resetCursorRects", "v@:");
+            Class.RegisterMethod(viewClass, ResetCursorRectsHandler, "resetCursorRects", "v@:");
             Class.RegisterClass(viewClass);
 
             // Create window instance
@@ -253,6 +271,21 @@ namespace OpenTK.Platform.MacOS
         delegate bool CanBecomeKeyWindowDelegate(IntPtr self, IntPtr cmd);
         delegate bool CanBecomeMainWindowDelegate(IntPtr self, IntPtr cmd);
         delegate void ResetCursorRectsDelegate(IntPtr self, IntPtr cmd);
+
+        WindowKeyDownDelegate WindowKeyDownHandler;
+        WindowDidResizeDelegate WindowDidResizeHandler;
+        WindowDidMoveDelegate WindowDidMoveHandler;
+        WindowDidBecomeKeyDelegate WindowDidBecomeKeyHandler;
+        WindowDidResignKeyDelegate WindowDidResignKeyHandler;
+        WindowWillMiniaturizeDelegate WindowWillMiniaturizeHandler;
+        WindowDidMiniaturizeDelegate WindowDidMiniaturizeHandler;
+        WindowDidDeminiaturizeDelegate WindowDidDeminiaturizeHandler;
+        WindowShouldZoomToFrameDelegate WindowShouldZoomToFrameHandler;
+        WindowShouldCloseDelegate WindowShouldCloseHandler;
+        AcceptsFirstResponderDelegate AcceptsFirstResponderHandler;
+        CanBecomeKeyWindowDelegate CanBecomeKeyWindowHandler;
+        CanBecomeMainWindowDelegate CanBecomeMainWindowHandler;
+        ResetCursorRectsDelegate ResetCursorRectsHandler;
 
         private void WindowKeyDown(IntPtr self, IntPtr cmd, IntPtr notification)
         {
@@ -1041,7 +1074,7 @@ namespace OpenTK.Platform.MacOS
             if (disposed)
                 return;
 
-            Debug.Print("Disposing of CocoaNativeWindow.");
+            Debug.Print("Disposing of CocoaNativeWindow (disposing={0}).", disposing);
             NSApplication.Quit -= ApplicationQuit;
 
             if (disposing)
