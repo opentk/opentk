@@ -326,17 +326,7 @@ namespace OpenTK
 
         #region IDisposable Members
 
-        ~CocoaContext()
-        {
-            Dispose(false);
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-        }
-
-        void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (IsDisposed || Handle.Handle == IntPtr.Zero)
                 return;

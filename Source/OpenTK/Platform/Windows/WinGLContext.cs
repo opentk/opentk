@@ -465,13 +465,7 @@ namespace OpenTK.Platform.Windows
 
         #region IDisposable Members
 
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool calledManually)
+        protected override void Dispose(bool calledManually)
         {
             if (!IsDisposed)
             {
@@ -479,18 +473,8 @@ namespace OpenTK.Platform.Windows
                 {
                     DestroyContext();
                 }
-                else
-                {
-                    Debug.Print("[Warning] OpenGL context {0} leaked. Did you forget to call IGraphicsContext.Dispose()?",
-                        Handle.Handle);
-                }
                 IsDisposed = true;
             }
-        }
-
-        ~WinGLContext()
-        {
-            Dispose(false);
         }
 
         #region private void DestroyContext()
