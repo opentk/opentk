@@ -67,22 +67,17 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendVoid(Handle, Selector.Get("activateIgnoringOtherApps:"), true);
 
             // Create the menu bar
-            var menubar = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc),
-                Selector.Autorelease);
-
-            var menuItem = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc),
-                Selector.Autorelease);
+            var menubar = Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc);
+            var menuItem = Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc);
 
             // Add menu item to bar, and bar to application
             Cocoa.SendIntPtr(menubar, Selector.Get("addItem:"), menuItem);
             Cocoa.SendIntPtr(Handle, Selector.Get("setMainMenu:"), menubar);
 
             // Add a "Quit" menu item and bind the button.
-            var appMenu = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc),
-                Selector.Autorelease);
-            var quitMenuItem = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc),
-                Selector.Get("initWithTitle:action:keyEquivalent:"), Cocoa.ToNSString("Quit"), selQuit, Cocoa.ToNSString("q")),
-                Selector.Autorelease);
+            var appMenu = Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc);
+            var quitMenuItem = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc),
+                Selector.Get("initWithTitle:action:keyEquivalent:"), Cocoa.ToNSString("Quit"), selQuit, Cocoa.ToNSString("q"));
 
             Cocoa.SendIntPtr(appMenu, Selector.Get("addItem:"), quitMenuItem);
             Cocoa.SendIntPtr(menuItem, Selector.Get("setSubmenu:"), appMenu);
