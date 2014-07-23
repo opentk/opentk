@@ -165,6 +165,11 @@ namespace OpenTK.Platform
             #pragma warning restore 612,618
         }
 
+        public void RegisterResource(IDisposable resource)
+        {
+            default_implementation.RegisterResource(resource);
+        }
+
         class UnsupportedPlatform : PlatformFactoryBase
         {
             #region Fields

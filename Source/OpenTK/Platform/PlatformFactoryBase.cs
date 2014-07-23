@@ -52,18 +52,6 @@ namespace OpenTK.Platform
         {
         }
 
-        #region Protected Members
-
-        protected void RegisterResource(IDisposable resource)
-        {
-            lock (sync)
-            {
-                Resources.Add(resource);
-            }
-        }
-
-        #endregion
-
         #region IPlatformFactory Members
 
         public abstract INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device);
@@ -94,6 +82,14 @@ namespace OpenTK.Platform
         public virtual IJoystickDriver CreateLegacyJoystickDriver()
         {
             return new LegacyJoystickDriver();
+        }
+
+        public void RegisterResource(IDisposable resource)
+        {
+            lock (sync)
+            {
+                Resources.Add(resource);
+            }
         }
 
         #endregion
