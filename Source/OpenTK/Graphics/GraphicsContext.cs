@@ -150,6 +150,7 @@ namespace OpenTK.Graphics
 
                         implementation = factory.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
                         handle_cached = ((IGraphicsContextInternal)implementation).Context;
+                        factory.RegisterResource(this);
                     }
 
                     AddContext(this);
