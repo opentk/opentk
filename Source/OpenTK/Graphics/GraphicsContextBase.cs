@@ -36,7 +36,7 @@ using OpenTK.Platform;
 namespace OpenTK.Graphics
 {
     // Provides the foundation for all IGraphicsContext implementations.
-    abstract class GraphicsContextBase : IGraphicsContext, IGraphicsContextInternal
+    abstract class GraphicsContextBase : IGraphicsContext, IGraphicsContextInternal, IEquatable<IGraphicsContextInternal>
     {
         #region Fields
 
@@ -125,6 +125,37 @@ namespace OpenTK.Graphics
                 GetType().FullName, Handle);
         }
         #endif
+
+        #endregion
+
+        #region IEquatable<IGraphicsContextInternal> Members
+
+        public bool Equals(IGraphicsContextInternal other)
+        {
+            return Context.Equals(other.Context);
+        }
+
+        #endregion
+
+        #region Public Members
+
+        public override string ToString()
+        {
+            return string.Format("[{0}: IsCurrent={1}, IsDisposed={2}, VSync={3}, SwapInterval={4}, GraphicsMode={5}, ErrorChecking={6}, Implementation={7}, Context={8}]",
+                GetType().Name, IsCurrent, IsDisposed, VSync, SwapInterval, GraphicsMode, ErrorChecking, Implementation, Context);
+        }
+
+        public override int GetHashCode()
+        {
+            return Handle.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return 
+                obj is IGraphicsContextInternal &&
+                Equals((IGraphicsContextInternal)obj);
+        }
 
         #endregion
     }
