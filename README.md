@@ -48,9 +48,9 @@ xbuild  /p:Configuration=Release OpenTK.sln  # Build on Mono (Linux / Mac OS X)
 News
 ====
 
-OpenTK 1.1.4b was released on 24 July 2014.
+OpenTK 1.1.4c was released on 24 July 2014.
 
-This is a hotfix release that improves stability on Mac OS X. Moreover, it synchronizes the GamePad configuration database with SDL 2.0.4.
+This is a hotfix release that improves stability on Mac OS X. Moreover, it synchronizes the GamePad configuration database with SDL 2.0.4 and fixes an invalid GUID introduced in 1.1.4b.
 
 OpenTK 1.1.4 was released on 21 July 2014.
 
