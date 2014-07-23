@@ -250,8 +250,6 @@ namespace OpenTK.Platform.MacOS
 
             NativeMethods.IOHIDManagerSetDeviceMatching(hidmanager, DeviceTypes.Ref);
             NativeMethods.IOHIDManagerOpen(hidmanager, IOOptionBits.Zero);
-
-            OpenTK.Platform.MacOS.Carbon.CF.CFRunLoopRunInMode(InputLoopMode, 0.0, true);
         }
 
         void DeviceAdded(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
