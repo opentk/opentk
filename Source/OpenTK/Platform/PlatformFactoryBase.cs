@@ -28,6 +28,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using OpenTK.Graphics;
 using OpenTK.Input;
@@ -42,11 +43,26 @@ namespace OpenTK.Platform
     /// </summary>
     abstract class PlatformFactoryBase : IPlatformFactory
     {
+        static readonly object sync = new object();
+        readonly List<IDisposable> Resources = new List<IDisposable>();
+
         protected bool IsDisposed;
 
         public PlatformFactoryBase()
         {
         }
+
+        #region Protected Members
+
+        protected void RegisterResource(IDisposable resource)
+        {
+            lock (sync)
+            {
+                Resources.Add(resource);
+            }
+        }
+
+        #endregion
 
         #region IPlatformFactory Members
 
@@ -96,6 +112,13 @@ namespace OpenTK.Platform
             {
                 if (manual)
                 {
+                    lock (sync)
+                    {
+                        foreach (var resource in Resources)
+                        {
+                            resource.Dispose();
+                        }
+                    }
                 }
                 else
                 {
