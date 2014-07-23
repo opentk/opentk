@@ -29,7 +29,9 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using OpenTK.Platform.MacOS;
 
 namespace OpenTK.Platform.MacOS
@@ -40,6 +42,9 @@ namespace OpenTK.Platform.MacOS
         internal static IntPtr AutoreleasePool;
 
         static readonly IntPtr selQuit = Selector.Get("quit");
+
+        static readonly int ThreadId =
+            System.Threading.Thread.CurrentThread.ManagedThreadId;
 
         internal static void Initialize() { }
 
@@ -103,9 +108,26 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendVoid(settings, Selector.Release);
         }
 
+        internal static bool IsUIThread
+        {
+            get
+            {
+                int thread_id = Thread.CurrentThread.ManagedThreadId;
+                bool is_ui_thread = thread_id == NSApplication.ThreadId;
+                if (!is_ui_thread)
+                {
+                    Debug.Print("[Warning] UI resources must be disposed in the UI thread #{0}, not #{1}.",
+                        NSApplication.ThreadId, thread_id);
+                }
+                return is_ui_thread;
+            }
+        }
+
         internal static event EventHandler<CancelEventArgs> Quit = delegate { };
 
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void OnQuitDelegate(IntPtr self, IntPtr cmd);
+
         static OnQuitDelegate OnQuitHandler = OnQuit;
         static void OnQuit(IntPtr self, IntPtr cmd)
         {
