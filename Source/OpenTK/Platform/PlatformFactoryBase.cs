@@ -114,11 +114,13 @@ namespace OpenTK.Platform
                         {
                             resource.Dispose();
                         }
+                        Resources.Clear();
                     }
                 }
                 else
                 {
-                    Debug.Print("[OpenTK] {0} leaked, did you forget to call Dispose()?", GetType());
+                    Debug.Print("[OpenTK] {0} leaked with {1} live resources, did you forget to call Dispose()?",
+                        GetType().FullName, Resources.Count);
                 }
                 IsDisposed = true;
             }
