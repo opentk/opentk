@@ -113,6 +113,9 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static extern IntPtr CFDictionaryGetValue(IntPtr theDictionary, IntPtr theKey);
 
         [DllImport(appServices)]
+        internal static extern IntPtr CFRetain(CFTypeRef cf);
+
+        [DllImport(appServices)]
         internal static extern void CFRelease(CFTypeRef cf);
 
         // this mirrors the definition in CFString.h.
@@ -227,6 +230,12 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         [DllImport(appServices, EntryPoint = "CFRunLoopAddSource")]
         internal static extern void RunLoopAddSource(
+            CFRunLoopRef rl,
+            CFRunLoopSourceRef source,
+            CFStringRef mode);
+
+        [DllImport(appServices, EntryPoint = "CFRunLoopRemoveSource")]
+        internal static extern void RunLoopRemoveSource(
             CFRunLoopRef rl,
             CFRunLoopSourceRef source,
             CFStringRef mode);

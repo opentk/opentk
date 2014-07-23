@@ -43,7 +43,13 @@ namespace OpenTK.Platform.MacOS
         internal const float ScrollFactor = 0.1f;
         internal static bool ExclusiveFullscreen = false;
 
-        readonly IInputDriver2 InputDriver = new HIDInput();
+        readonly IInputDriver2 InputDriver;
+
+        public MacOSFactory()
+        {
+            NSApplication.Initialize();
+            InputDriver = new HIDInput();
+        }
 
         #region IPlatformFactory Members
 

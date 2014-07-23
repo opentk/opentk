@@ -55,5 +55,7 @@ namespace OpenTK.Platform
 
         [Obsolete]
         Input.IJoystickDriver CreateLegacyJoystickDriver();
+
+        void RegisterResource(IDisposable resource);
     }
 }
