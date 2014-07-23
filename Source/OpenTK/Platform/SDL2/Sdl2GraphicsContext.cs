@@ -376,7 +376,7 @@ namespace OpenTK.Platform.SDL2
 
         #region IDisposable Members
 
-        void Dispose(bool manual)
+        protected override void Dispose(bool manual)
         {
             if (!IsDisposed)
             {
@@ -395,17 +395,6 @@ namespace OpenTK.Platform.SDL2
                 }
                 IsDisposed = true;
             }
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~Sdl2GraphicsContext()
-        {
-            Dispose(false);
         }
 
         #endregion

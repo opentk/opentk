@@ -77,7 +77,7 @@ namespace OpenTK.Platform.MacOS
                 new Dictionary<IOHIDElementRef, JoystickHat>(new IntPtrEqualityComparer());
         }
 
-        readonly IOHIDManagerRef hidmanager;
+        IOHIDManagerRef hidmanager;
 
         readonly Dictionary<IntPtr, MouseData> MouseDevices =
             new Dictionary<IntPtr, MouseData>(new IntPtrEqualityComparer());
@@ -94,7 +94,7 @@ namespace OpenTK.Platform.MacOS
         readonly Dictionary<int, IntPtr> JoystickIndexToDevice =
             new Dictionary<int, IntPtr>();
 
-        readonly CFRunLoop RunLoop = CF.CFRunLoopGetMain();
+        readonly CFRunLoop RunLoop;
         readonly CFString InputLoopMode = CF.RunLoopModeDefault;
         readonly CFDictionary DeviceTypes = new CFDictionary();
 
@@ -118,12 +118,28 @@ namespace OpenTK.Platform.MacOS
         {
             Debug.Print("Using HIDInput.");
 
+            RunLoop = CF.CFRunLoopGetMain();
+            if (RunLoop == IntPtr.Zero)
+                RunLoop = CF.CFRunLoopGetCurrent();
+            if (RunLoop == IntPtr.Zero)
+            {
+                Debug.Print("[Error] No CFRunLoop found for {0}", GetType().FullName);
+                throw new InvalidOperationException();
+            }
+            CF.CFRetain(RunLoop);
+
             HandleDeviceAdded = DeviceAdded;
             HandleDeviceRemoved = DeviceRemoved;
             HandleDeviceValueReceived = DeviceValueReceived;
 
             // For retrieving input directly from the hardware
             hidmanager = CreateHIDManager();
+            if (hidmanager == IntPtr.Zero)
+            {
+                Debug.Print("[Mac] Failed to create IO HID manager, HIDInput driver not supported.");
+                throw new NotSupportedException();
+            }
+
             RegisterHIDCallbacks(hidmanager);
 
             // For retrieving the global cursor position
@@ -164,53 +180,61 @@ namespace OpenTK.Platform.MacOS
             IntPtr @event,
             IntPtr refcon)
         {
-            CursorState.SetIsConnected(true);
-
-            switch (type)
+            try
             {
-                case CGEventType.MouseMoved:
-                case CGEventType.LeftMouseDragged:
-                case CGEventType.RightMouseDragged:
-                case CGEventType.OtherMouseDragged:
-                    {
-                        Carbon.HIPoint p = CG.EventGetLocation(@event);
-                        CursorState.X = (int)Math.Round(p.X);
-                        CursorState.Y = (int)Math.Round(p.Y);
-                    }
-                    break;
+                CursorState.SetIsConnected(true);
 
-                case CGEventType.ScrollWheel:
-                    {
-                        // Note: OpenTK follows the win32 convention, where
-                        // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
-                        // so we need to flip the horizontal scroll direction.
-                        double h = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis2) * MacOSFactory.ScrollFactor;
-                        double v = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis1) * MacOSFactory.ScrollFactor;
-                        CursorState.SetScrollRelative((float)(-h), (float)v);
-                    }
-                    break;
+                switch (type)
+                {
+                    case CGEventType.MouseMoved:
+                    case CGEventType.LeftMouseDragged:
+                    case CGEventType.RightMouseDragged:
+                    case CGEventType.OtherMouseDragged:
+                        {
+                            Carbon.HIPoint p = CG.EventGetLocation(@event);
+                            CursorState.X = (int)Math.Round(p.X);
+                            CursorState.Y = (int)Math.Round(p.Y);
+                        }
+                        break;
 
-                case CGEventType.LeftMouseDown:
-                case CGEventType.RightMouseDown:
-                case CGEventType.OtherMouseDown:
-                    {
-                        int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
-                        n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
-                        MouseButton b = MouseButton.Left + n;
-                        CursorState[b] = true;
-                    }
-                    break;
+                    case CGEventType.ScrollWheel:
+                        {
+                            // Note: OpenTK follows the win32 convention, where
+                            // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
+                            // so we need to flip the horizontal scroll direction.
+                            double h = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis2) * MacOSFactory.ScrollFactor;
+                            double v = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis1) * MacOSFactory.ScrollFactor;
+                            CursorState.SetScrollRelative((float)(-h), (float)v);
+                        }
+                        break;
 
-                case CGEventType.LeftMouseUp:
-                case CGEventType.RightMouseUp:
-                case CGEventType.OtherMouseUp:
-                    {
-                        int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
-                        n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
-                        MouseButton b = MouseButton.Left + n;
-                        CursorState[b] = false;
-                    }
-                    break;
+                    case CGEventType.LeftMouseDown:
+                    case CGEventType.RightMouseDown:
+                    case CGEventType.OtherMouseDown:
+                        {
+                            int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
+                            n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
+                            MouseButton b = MouseButton.Left + n;
+                            CursorState[b] = true;
+                        }
+                        break;
+
+                    case CGEventType.LeftMouseUp:
+                    case CGEventType.RightMouseUp:
+                    case CGEventType.OtherMouseUp:
+                        {
+                            int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
+                            n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
+                            MouseButton b = MouseButton.Left + n;
+                            CursorState[b] = false;
+                        }
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                // Do not let any exceptions escape into unmanaged code!
+                Debug.Print(e.ToString());
             }
 
             return @event;
@@ -234,8 +258,6 @@ namespace OpenTK.Platform.MacOS
 
             NativeMethods.IOHIDManagerSetDeviceMatching(hidmanager, DeviceTypes.Ref);
             NativeMethods.IOHIDManagerOpen(hidmanager, IOOptionBits.Zero);
-
-            OpenTK.Platform.MacOS.Carbon.CF.CFRunLoopRunInMode(InputLoopMode, 0.0, true);
         }
 
         void DeviceAdded(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
@@ -322,6 +344,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, IntPtr.Zero, IntPtr.Zero);
                     NativeMethods.IOHIDDeviceUnscheduleFromRunLoop(device, RunLoop, InputLoopMode);
+                    NativeMethods.IOHIDDeviceClose(device, IOOptionBits.Zero);
                 }
             }
             catch (Exception e)
@@ -1032,7 +1055,11 @@ namespace OpenTK.Platform.MacOS
 
             [DllImport(hid)]
             public static extern IOHIDManagerRef IOHIDManagerCreate(
-                CFAllocatorRef allocator, IOOptionBits options) ;
+                CFAllocatorRef allocator, IOOptionBits options);
+
+            [DllImport(hid)]
+            public static extern IOReturn IOHIDManagerClose(
+                IOHIDManagerRef allocator, IOOptionBits options);
 
             // This routine will be called when a new (matching) device is connected.
             [DllImport(hid)]
@@ -1075,7 +1102,7 @@ namespace OpenTK.Platform.MacOS
             [DllImport(hid)]
             public static extern void IOHIDManagerSetDeviceMatching(
                 IOHIDManagerRef manager,
-                CFDictionaryRef matching) ;
+                CFDictionaryRef matching);
 
             [DllImport(hid)]
             public static extern IOReturn IOHIDManagerOpen(
@@ -1086,6 +1113,11 @@ namespace OpenTK.Platform.MacOS
             public static extern IOReturn IOHIDDeviceOpen(
                 IOHIDDeviceRef manager,
                 IOOptionBits opts);
+
+            [DllImport(hid)]
+            public static extern IOReturn IOHIDDeviceClose(
+                IOHIDDeviceRef device,
+                IOOptionBits options);
 
             [DllImport(hid)]
             public static extern CFTypeRef IOHIDDeviceGetProperty(
@@ -1724,6 +1756,15 @@ namespace OpenTK.Platform.MacOS
             {
                 if (manual)
                 {
+                    if (MouseEventTapSource != IntPtr.Zero)
+                    {
+                        // Note: releasing the mach port (tap source)
+                        // automatically releases the event tap.
+                        CF.RunLoopRemoveSource(RunLoop, MouseEventTapSource, CF.RunLoopModeDefault);
+                        CF.CFRelease(MouseEventTapSource);
+                        MouseEventTapSource = IntPtr.Zero;
+                    }
+
                     NativeMethods.IOHIDManagerRegisterDeviceMatchingCallback(
                         hidmanager, IntPtr.Zero, IntPtr.Zero);
                     NativeMethods.IOHIDManagerRegisterDeviceRemovalCallback(
@@ -1746,19 +1787,15 @@ namespace OpenTK.Platform.MacOS
                         DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
                     }
 
-                    HandleDeviceAdded = null;
-                    HandleDeviceRemoved = null;
-                    HandleDeviceValueReceived = null;
-
-                    if (MouseEventTap != IntPtr.Zero)
+                    if (hidmanager != IntPtr.Zero)
                     {
-                        CF.CFRelease(MouseEventTap);
-                        MouseEventTap = IntPtr.Zero;
+                        NativeMethods.IOHIDManagerClose(hidmanager, IOOptionBits.Zero);
+                        hidmanager = IntPtr.Zero;
                     }
-                    if (MouseEventTapSource != IntPtr.Zero)
+
+                    if (RunLoop != IntPtr.Zero)
                     {
-                        CF.CFRelease(MouseEventTapSource);
-                        MouseEventTapSource = IntPtr.Zero;
+                        CF.CFRelease(RunLoop);
                     }
                 }
                 else

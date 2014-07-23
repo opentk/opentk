@@ -113,7 +113,7 @@ namespace OpenTK.Platform.Dummy
 
         #region --- IDisposable Members ---
 
-        public override void Dispose() { IsDisposed = true; }
+        protected override void Dispose(bool disposing) { IsDisposed = true; }
 
         #endregion
     }

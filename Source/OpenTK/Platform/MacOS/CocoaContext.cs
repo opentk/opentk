@@ -326,22 +326,15 @@ namespace OpenTK
 
         #region IDisposable Members
 
-        ~CocoaContext()
-        {
-            Dispose(false);
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-        }
-
-        void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (IsDisposed || Handle.Handle == IntPtr.Zero)
                 return;
 
             Debug.Print("Disposing of Cocoa context.");
+
+            if (!NSApplication.IsUIThread)
+                return;
 
             Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
             Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));

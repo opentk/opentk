@@ -48,6 +48,11 @@ namespace OpenTK.Platform
 
         static Factory()
         {
+            Toolkit.Init();
+        }
+
+        public Factory()
+        {
             // Ensure we are correctly initialized.
             Toolkit.Init();
 
@@ -158,6 +163,11 @@ namespace OpenTK.Platform
             #pragma warning disable 612,618
             return default_implementation.CreateLegacyJoystickDriver();
             #pragma warning restore 612,618
+        }
+
+        public void RegisterResource(IDisposable resource)
+        {
+            default_implementation.RegisterResource(resource);
         }
 
         class UnsupportedPlatform : PlatformFactoryBase

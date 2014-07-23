@@ -178,22 +178,19 @@ namespace OpenTK
                     }
                 }
             }
-            else
-            {
-                Debug.Print("OpenTK.Toolkit leaked, did you forget to call Dispose()?");
-                platform_factory = null;
-                toolkit = null;
-                initialized = false;
-            }
         }
 
+        #if DEBUG
         /// <summary>
         /// Finalizes this instance.
         /// </summary>
         ~Toolkit()
         {
-            Dispose(false);
+            Debug.Print("[Warning] {0} leaked, did you forget to call Dispose()?");
+            // We may not Dispose() the toolkit from the finalizer thread,
+            // as that will crash on many operating systems.
         }
+        #endif
 
         #endregion
     }

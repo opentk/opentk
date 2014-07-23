@@ -180,15 +180,9 @@ namespace OpenTK.Platform.Egl
 
         #region IDisposable Members
 
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         // Todo: cross-reference the specs. What should happen if the context is destroyed from a different
         // thread?
-        protected virtual void Dispose(bool manual)
+        protected override void Dispose(bool manual)
         {
             if (!IsDisposed)
             {
@@ -197,17 +191,8 @@ namespace OpenTK.Platform.Egl
                     Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
                     Egl.DestroyContext(WindowInfo.Display, HandleAsEGLContext);
                 }
-                else
-                {
-                    Debug.Print("[Warning] {0}:{1} was not disposed.", this.GetType().Name, HandleAsEGLContext);
-                }
                 IsDisposed = true;
             }
-        }
-
-        ~EglContext()
-        {
-            Dispose(false);
         }
 
         #endregion
