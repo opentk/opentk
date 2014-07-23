@@ -104,12 +104,12 @@ namespace OpenTK.Platform.MacOS
         {
             if (!IsDisposed)
             {
-                base.Dispose(manual);
-
                 if (manual)
                 {
                     InputDriver.Dispose();
                 }
+
+                base.Dispose(manual);
             }
         }
 
