@@ -41,8 +41,12 @@ namespace OpenTK.Platform.MacOS
 
         static readonly IntPtr selQuit = Selector.Get("quit");
 
-        internal static void Initialize()
+        internal static void Initialize() { }
+
+        static NSApplication()
         {
+            Cocoa.Initialize();
+
             // Create the NSAutoreleasePool
             AutoreleasePool = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.NSAutoreleasePool, Selector.Alloc), Selector.Init);
 
