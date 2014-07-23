@@ -147,8 +147,8 @@ namespace OpenTK.Platform.MacOS
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             // Create the window class
-            Interlocked.Increment(ref UniqueId);
-            windowClass = Class.AllocateClass("OpenTK_GameWindow" + UniqueId, "NSWindow");
+            int unique_id = Interlocked.Increment(ref UniqueId);
+            windowClass = Class.AllocateClass("OpenTK_GameWindow" + unique_id, "NSWindow");
             Class.RegisterMethod(windowClass, new WindowKeyDownDelegate(WindowKeyDown), "keyDown:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidResizeDelegate(WindowDidResize), "windowDidResize:", "v@:@");
             Class.RegisterMethod(windowClass, new WindowDidMoveDelegate(WindowDidMove), "windowDidMove:", "v@:@");
@@ -164,7 +164,7 @@ namespace OpenTK.Platform.MacOS
             Class.RegisterMethod(windowClass, new CanBecomeMainWindowDelegate(CanBecomeMainWindow), "canBecomeMainWindow", "b@:");
             Class.RegisterClass(windowClass);
 
-            IntPtr viewClass = Class.AllocateClass("OpenTK_NSView" + UniqueId, "NSView");
+            IntPtr viewClass = Class.AllocateClass("OpenTK_NSView" + unique_id, "NSView");
             Class.RegisterMethod(viewClass, new ResetCursorRectsDelegate(ResetCursorRects), "resetCursorRects", "v@:");
             Class.RegisterClass(viewClass);
 
@@ -183,15 +183,34 @@ namespace OpenTK.Platform.MacOS
             var style = GetStyleMask(windowBorder);
             var bufferingType = NSBackingStore.Buffered;
 
-            IntPtr windowPtr;
-            windowPtr = Cocoa.SendIntPtr(windowClass, Selector.Alloc);
-            windowPtr = Cocoa.SendIntPtr(windowPtr, Selector.Get("initWithContentRect:styleMask:backing:defer:"), contentRect, (int)style, (int)bufferingType, false);
+            IntPtr classPtr;
+            classPtr = Cocoa.SendIntPtr(windowClass, Selector.Alloc);
+            if (classPtr == IntPtr.Zero)
+            {
+                Debug.Print("[Error] Failed to allocate window class.");
+                throw new PlatformException();
+            }
+
+            bool defer = false;
+            IntPtr windowPtr = Cocoa.SendIntPtr(classPtr, Selector.Get("initWithContentRect:styleMask:backing:defer:"), contentRect, (int)style, (int)bufferingType, defer);
+            if (windowPtr == IntPtr.Zero)
+            {
+                Debug.Print("[Error] Failed to initialize window with ({0}, {1}, {2}, {3}).",
+                    contentRect, style, bufferingType, defer);
+                throw new PlatformException();
+            }
 
             // Replace view with our custom implementation
             // that overrides resetCursorRects (maybe there is
             // a better way to implement this override?)
             // Existing view:
             IntPtr viewPtr = Cocoa.SendIntPtr(windowPtr, Selector.Get("contentView"));
+            if (viewPtr == IntPtr.Zero)
+            {
+                Debug.Print("[Error] Failed to retrieve content view for window {0}.", windowPtr);
+                throw new PlatformException();
+            }
+
             // Our custom view with the same bounds:
             viewPtr = Cocoa.SendIntPtr(
                 Cocoa.SendIntPtr(viewClass, Selector.Alloc),
@@ -200,6 +219,11 @@ namespace OpenTK.Platform.MacOS
             if (viewPtr != IntPtr.Zero)
             {
                 Cocoa.SendVoid(windowPtr, Selector.Get("setContentView:"), viewPtr);
+            }
+            else
+            {
+                Debug.Print("[Error] Failed to initialize content view with frame {0}.", selBounds);
+                throw new PlatformException();
             }
 
             windowInfo = new CocoaWindowInfo(windowPtr);
@@ -574,7 +598,7 @@ namespace OpenTK.Platform.MacOS
             if (shouldClose)
             {
                 shouldClose = false;
-                CloseWindow();
+                CloseWindow(false);
             }
         }
 
@@ -1020,14 +1044,14 @@ namespace OpenTK.Platform.MacOS
             Debug.Print("Disposing of CocoaNativeWindow.");
             NSApplication.Quit -= ApplicationQuit;
 
-            CursorVisible = true;
-            if (exists)
-            {
-                CloseWindow();
-            }
-
             if (disposing)
             {
+                CursorVisible = true;
+                if (exists)
+                {
+                    CloseWindow(true);
+                }
+
                 if (trackingArea != IntPtr.Zero)
                 {
                     Cocoa.SendVoid(windowInfo.ViewHandle, selRemoveTrackingArea, trackingArea);
@@ -1037,6 +1061,10 @@ namespace OpenTK.Platform.MacOS
 
                 Debug.Print("[Mac] Disposing {0}", windowInfo);
                 windowInfo.Dispose();
+            }
+            else
+            {
+                Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType().FullName);
             }
 
             disposed = true;
@@ -1130,13 +1158,13 @@ namespace OpenTK.Platform.MacOS
             return (NSWindowStyle)Cocoa.SendUint(windowInfo.Handle, selStyleMask);
         }
 
-        void CloseWindow()
+        void CloseWindow(bool shutdown)
         {
             exists = false;
 
             // PerformClose is equivalent to pressing the close-button, which
             // does not work in a borderless window. Handle this special case.
-            if (GetStyleMask() == NSWindowStyle.Borderless)
+            if (GetStyleMask() == NSWindowStyle.Borderless || shutdown)
             {
                 if (WindowShouldClose(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero))
                 {
