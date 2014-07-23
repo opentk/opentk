@@ -1756,13 +1756,11 @@ namespace OpenTK.Platform.MacOS
             {
                 if (manual)
                 {
-                    if (MouseEventTap != IntPtr.Zero)
-                    {
-                        CF.CFRelease(MouseEventTap);
-                        MouseEventTap = IntPtr.Zero;
-                    }
                     if (MouseEventTapSource != IntPtr.Zero)
                     {
+                        // Note: releasing the mach port (tap source)
+                        // automatically releases the event tap.
+                        CF.RunLoopRemoveSource(RunLoop, MouseEventTapSource, CF.RunLoopModeDefault);
                         CF.CFRelease(MouseEventTapSource);
                         MouseEventTapSource = IntPtr.Zero;
                     }

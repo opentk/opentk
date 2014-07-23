@@ -233,5 +233,11 @@ namespace OpenTK.Platform.MacOS.Carbon
             CFRunLoopRef rl,
             CFRunLoopSourceRef source,
             CFStringRef mode);
+
+        [DllImport(appServices, EntryPoint = "CFRunLoopRemoveSource")]
+        internal static extern void RunLoopRemoveSource(
+            CFRunLoopRef rl,
+            CFRunLoopSourceRef source,
+            CFStringRef mode);
     }
 }
