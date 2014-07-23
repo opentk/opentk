@@ -49,22 +49,29 @@ namespace OpenTK.Platform.MacOS
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            return new CocoaNativeWindow(x, y, width, height, title, mode, options, device);
+            INativeWindow window = new CocoaNativeWindow(x, y, width, height, title, mode, options, device);
+            RegisterResource(window);
+            return window;
         }
 
         public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
+            // Does not implement IDisposable
             return new QuartzDisplayDeviceDriver();
         }
 
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return new CocoaContext(mode, window, shareContext, major, minor);
+            IGraphicsContext context = new CocoaContext(mode, window, shareContext, major, minor);
+            RegisterResource(context);
+            return context;
         }
 
         public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return new CocoaContext(handle, window, shareContext, major, minor);
+            IGraphicsContext context = new CocoaContext(handle, window, shareContext, major, minor);
+            RegisterResource(context);
+            return context;
         }
 
         public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
@@ -98,12 +105,12 @@ namespace OpenTK.Platform.MacOS
         {
             if (!IsDisposed)
             {
+                base.Dispose(manual);
+
                 if (manual)
                 {
                     InputDriver.Dispose();
                 }
-
-                base.Dispose(manual);
             }
         }
 
