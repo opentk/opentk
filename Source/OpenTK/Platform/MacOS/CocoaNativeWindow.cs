@@ -257,19 +257,33 @@ namespace OpenTK.Platform.MacOS
             NSApplication.Quit += ApplicationQuit;
         }
 
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void WindowKeyDownDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void WindowDidResizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void WindowDidMoveDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void WindowDidBecomeKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void WindowDidResignKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void WindowWillMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void WindowDidMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void WindowDidDeminiaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate bool WindowShouldZoomToFrameDelegate(IntPtr self, IntPtr cmd, IntPtr nsWindow, RectangleF toFrame);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate bool WindowShouldCloseDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate bool AcceptsFirstResponderDelegate(IntPtr self, IntPtr cmd);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate bool CanBecomeKeyWindowDelegate(IntPtr self, IntPtr cmd);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate bool CanBecomeMainWindowDelegate(IntPtr self, IntPtr cmd);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void ResetCursorRectsDelegate(IntPtr self, IntPtr cmd);
 
         WindowKeyDownDelegate WindowKeyDownHandler;
@@ -294,7 +308,14 @@ namespace OpenTK.Platform.MacOS
 
         private void WindowDidResize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
-            OnResize(true);
+            try
+            {
+                OnResize(true);
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.ToString());
+            }
         }
 
         private void OnResize(bool resetTracking)
@@ -316,77 +337,141 @@ namespace OpenTK.Platform.MacOS
 
         private void ApplicationQuit(object sender, CancelEventArgs e)
         {
-            bool close = WindowShouldClose(windowInfo.Handle, IntPtr.Zero, IntPtr.Zero);
-            e.Cancel |= !close;
+            try
+            {
+                bool close = WindowShouldClose(windowInfo.Handle, IntPtr.Zero, IntPtr.Zero);
+                e.Cancel |= !close;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.ToString());
+            }
         }
 
         private void WindowDidMove(IntPtr self, IntPtr cmd, IntPtr notification)
         {
-            // Problem: Called only when you stop moving for a brief moment,
-            // not each frame as it is on PC.
-            OnMove(EventArgs.Empty);
+            try
+            {
+                // Problem: Called only when you stop moving for a brief moment,
+                // not each frame as it is on PC.
+                OnMove(EventArgs.Empty);
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.ToString());
+            }
         }
 
         private void WindowDidBecomeKey(IntPtr self, IntPtr cmd, IntPtr notification)
         {
-            OnFocusedChanged(EventArgs.Empty);
+            try
+            {
+                OnFocusedChanged(EventArgs.Empty);
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.ToString());
+            }
         }
 
         private void WindowDidResignKey(IntPtr self, IntPtr cmd, IntPtr notification)
         {
-            OnFocusedChanged(EventArgs.Empty);
+            try
+            {
+                OnFocusedChanged(EventArgs.Empty);
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.ToString());
+            }
         }
 
         private void WindowWillMiniaturize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
-            // Can get stuck in weird states if we maximize, then minimize; 
-            // restoring to the old state would override the normalBounds.
-            // To avoid this without adding complexity, just restore state here.
-            RestoreWindowState(); // Avoid getting in weird states
+            try
+            {
+                // Can get stuck in weird states if we maximize, then minimize; 
+                // restoring to the old state would override the normalBounds.
+                // To avoid this without adding complexity, just restore state here.
+                RestoreWindowState(); // Avoid getting in weird states
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.ToString());
+            }
         }
 
         private void WindowDidMiniaturize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
-            windowState = WindowState.Minimized;
-            OnWindowStateChanged(EventArgs.Empty);
-            OnResize(false); // Don't set tracking area when we minimize
+            try
+            {
+                windowState = WindowState.Minimized;
+                OnWindowStateChanged(EventArgs.Empty);
+                OnResize(false); // Don't set tracking area when we minimize
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.ToString());
+            }
         }
 
         private void WindowDidDeminiaturize(IntPtr self, IntPtr cmd, IntPtr notification)
         {
-            windowState = WindowState.Normal;
-            OnWindowStateChanged(EventArgs.Empty);
-            OnResize(true);
+            try
+            {
+                windowState = WindowState.Normal;
+                OnWindowStateChanged(EventArgs.Empty);
+                OnResize(true);
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.ToString());
+            }
         }
 
         private bool WindowShouldZoomToFrame(IntPtr self, IntPtr cmd, IntPtr nsWindow, RectangleF toFrame)
         {
-            if (windowState == WindowState.Maximized)
+            try
             {
-                WindowState = WindowState.Normal;
+                if (windowState == WindowState.Maximized)
+                {
+                    WindowState = WindowState.Normal;
+                }
+                else
+                {
+                    previousBounds = InternalBounds;
+                    previousWindowBorder = WindowBorder;
+
+                    InternalBounds = toFrame;
+                    windowState = WindowState.Maximized;
+
+                    OnWindowStateChanged(EventArgs.Empty);
+                }
             }
-            else
+            catch (Exception e)
             {
-                previousBounds = InternalBounds;
-                previousWindowBorder = WindowBorder;
-
-                InternalBounds = toFrame;
-                windowState = WindowState.Maximized;
-
-                OnWindowStateChanged(EventArgs.Empty);
+                Debug.Print(e.ToString());
             }
+
             return false;
         }
 
         private bool WindowShouldClose(IntPtr self, IntPtr cmd, IntPtr sender)
         {
-            var cancelArgs = new CancelEventArgs();
-            OnClosing(cancelArgs);
-
-            if (!cancelArgs.Cancel)
+            try
             {
-                OnClosed(EventArgs.Empty);
-                return true;
+                var cancelArgs = new CancelEventArgs();
+                OnClosing(cancelArgs);
+
+                if (!cancelArgs.Cancel)
+                {
+                    OnClosed(EventArgs.Empty);
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.ToString());
             }
 
             return false;
@@ -409,24 +494,31 @@ namespace OpenTK.Platform.MacOS
 
         private void ResetTrackingArea()
         {
-            var owner = windowInfo.ViewHandle;
-            if (trackingArea != IntPtr.Zero)
+            try
             {
-                Cocoa.SendVoid(owner, selRemoveTrackingArea, trackingArea);
-                Cocoa.SendVoid(trackingArea, Selector.Release);
+                var owner = windowInfo.ViewHandle;
+                if (trackingArea != IntPtr.Zero)
+                {
+                    Cocoa.SendVoid(owner, selRemoveTrackingArea, trackingArea);
+                    Cocoa.SendVoid(trackingArea, Selector.Release);
+                }
+
+                var ownerBounds = Cocoa.SendRect(owner, selBounds);
+                var options = (int)(
+                    NSTrackingAreaOptions.MouseEnteredAndExited |
+                    NSTrackingAreaOptions.ActiveInKeyWindow |
+                    NSTrackingAreaOptions.MouseMoved |
+                    NSTrackingAreaOptions.CursorUpdate);
+
+                trackingArea = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSTrackingArea"), Selector.Alloc),
+                    selInitWithRect, ownerBounds, options, owner, IntPtr.Zero);
+
+                Cocoa.SendVoid(owner, selAddTrackingArea, trackingArea);
             }
-
-            var ownerBounds = Cocoa.SendRect(owner, selBounds);
-            var options = (int)(
-                NSTrackingAreaOptions.MouseEnteredAndExited |
-                NSTrackingAreaOptions.ActiveInKeyWindow |
-                NSTrackingAreaOptions.MouseMoved |
-                NSTrackingAreaOptions.CursorUpdate);
-
-            trackingArea = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSTrackingArea"), Selector.Alloc),
-                selInitWithRect, ownerBounds, options, owner, IntPtr.Zero);
-
-            Cocoa.SendVoid(owner, selAddTrackingArea, trackingArea);
+            catch (Exception e)
+            {
+                Debug.Print(e.ToString());
+            }
         }
 
         public override void Close()
@@ -1075,6 +1167,10 @@ namespace OpenTK.Platform.MacOS
                 return;
 
             Debug.Print("Disposing of CocoaNativeWindow (disposing={0}).", disposing);
+
+            if (!NSApplication.IsUIThread)
+                return;
+
             NSApplication.Quit -= ApplicationQuit;
 
             if (disposing)
@@ -1193,6 +1289,9 @@ namespace OpenTK.Platform.MacOS
 
         void CloseWindow(bool shutdown)
         {
+            if (!Exists)
+                return;
+
             exists = false;
 
             // PerformClose is equivalent to pressing the close-button, which
