@@ -483,13 +483,7 @@ namespace OpenTK.Platform.X11
 
         #region --- IDisposable Members ---
 
-        public override void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool manuallyCalled)
+        protected override void Dispose(bool manuallyCalled)
         {
             if (!IsDisposed)
             {
@@ -515,12 +509,6 @@ namespace OpenTK.Platform.X11
                 Debug.Print("[Warning] {0} leaked.", this.GetType().Name);
             }
             IsDisposed = true;
-        }
-        
-
-        ~X11GLContext()
-        {
-            this.Dispose(false);
         }
 
         #endregion

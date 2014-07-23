@@ -209,14 +209,13 @@ namespace OpenTK.Platform.MacOS
 
                 fixed (byte* pBytes = b)
                 {
-                    IntPtr nsData = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSData"), Selector.Alloc),
-                        Selector.Get("initWithBytes:length:"), (IntPtr)pBytes, b.Length),
-                        Selector.Autorelease);
+                    IntPtr nsData = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSData"), Selector.Alloc),
+                        Selector.Get("initWithBytes:length:"), (IntPtr)pBytes, b.Length);
 
-                    IntPtr nsImage = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSImage"), Selector.Alloc), 
-                        Selector.Get("initWithData:"), nsData),
-                        Selector.Autorelease);
+                    IntPtr nsImage = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSImage"), Selector.Alloc), 
+                        Selector.Get("initWithData:"), nsData);
 
+                    Cocoa.SendVoid(nsData, Selector.Release);
                     return nsImage;
                 }
             }

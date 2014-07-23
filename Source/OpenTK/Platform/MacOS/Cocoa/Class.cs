@@ -55,6 +55,9 @@ namespace OpenTK.Platform.MacOS
         [DllImport (Cocoa.LibObjC)]
         extern static void objc_registerClassPair(IntPtr classToRegister);
 
+        [DllImport (Cocoa.LibObjC)]
+        extern static void objc_disposeClassPair(IntPtr cls);
+
         public static IntPtr Get(string name)
         {
             var id = objc_getClass(name);
@@ -75,7 +78,10 @@ namespace OpenTK.Platform.MacOS
             objc_registerClassPair(handle);
         }
 
-        static List<Delegate> storedDelegates = new List<Delegate>();
+        public static void DisposeClass(IntPtr handle)
+        {
+            objc_disposeClassPair(handle);
+        }
 
         public static void RegisterMethod(IntPtr handle, Delegate d, string selector, string typeString)
         {
@@ -89,8 +95,6 @@ namespace OpenTK.Platform.MacOS
             {
                 throw new ArgumentException("Could not register method " + d + " in class + " + class_getName(handle));
             }
-
-            storedDelegates.Add(d); // Don't let the garbage collector eat our delegates.
         }
     }
 }

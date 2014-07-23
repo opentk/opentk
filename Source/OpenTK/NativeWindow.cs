@@ -102,7 +102,9 @@ namespace OpenTK
             this.options = options;
             this.device = device;
 
-            implementation = Factory.Default.CreateNativeWindow(x, y, width, height, title, mode, options, this.device);
+            IPlatformFactory factory = Factory.Default;
+            implementation = factory.CreateNativeWindow(x, y, width, height, title, mode, options, this.device);
+            factory.RegisterResource(this);
 
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {
