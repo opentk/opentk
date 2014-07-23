@@ -1775,10 +1775,6 @@ namespace OpenTK.Platform.MacOS
                         DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
                     }
 
-                    HandleDeviceAdded = null;
-                    HandleDeviceRemoved = null;
-                    HandleDeviceValueReceived = null;
-
                     if (hidmanager != IntPtr.Zero)
                     {
                         NativeMethods.IOHIDManagerClose(hidmanager, IOOptionBits.Zero);
