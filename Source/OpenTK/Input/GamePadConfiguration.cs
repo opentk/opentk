@@ -175,8 +175,11 @@ namespace OpenTK.Input
                     return new GamePadConfigurationSource(ParseButton(item));
 
                 case 'h':
-                    throw new NotImplementedException();
-                    //return new MapItem(ParseHat(item));
+                    {
+                        HatPosition position;
+                        JoystickHat hat = ParseHat(item, out position);
+                        return new GamePadConfigurationSource(hat, position);
+                    }
 
                 default:
                     throw new InvalidOperationException("[Input] Invalid GamePad configuration value");
@@ -193,10 +196,36 @@ namespace OpenTK.Input
 
         static JoystickButton ParseButton(string item)
         {
-            // item is in the format "b#" where # a zero-based integer nubmer
+            // item is in the format "b#" where # a zero-based integer number
             JoystickButton button = JoystickButton.Button0;
             int id = Int32.Parse(item.Substring(1));
             return button + id;
+        }
+
+        static JoystickHat ParseHat(string item, out HatPosition position)
+        {
+            // item is in the format "h#.#" where:
+            // - the 1st # is the zero-based hat id
+            // - the 2nd # is a bit-flag defining the hat position
+            JoystickHat hat = JoystickHat.Hat0;
+            int id = Int32.Parse(item.Substring(1, 1));
+            int pos = Int32.Parse(item.Substring(3));
+
+            position = HatPosition.Centered;
+            switch (pos)
+            {
+                case 1: position = HatPosition.Up; break;
+                case 2: position = HatPosition.Right; break;
+                case 3: position = HatPosition.UpRight; break;
+                case 4: position = HatPosition.Down ; break;
+                case 6: position = HatPosition.DownRight; break;
+                case 8: position = HatPosition.Left; break;
+                case 9: position = HatPosition.UpLeft; break;
+                case 12: position = HatPosition.DownLeft; break;
+                default: position = HatPosition.Centered; break;
+            }
+
+            return hat + id;
         }
 
         #endregion

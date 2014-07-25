@@ -117,6 +117,28 @@ namespace OpenTK.Platform
                                 }
                             }
                             break;
+
+                        case ConfigurationType.Hat:
+                            {
+                                // JoystickHat -> Buttons/GamePadAxes mapping
+                                JoystickHat source_hat = map.Source.Hat;
+                                bool pressed = joy.GetHat(source_hat).Position == map.Source.HatPosition;
+
+                                switch (map.Target.Type)
+                                {
+                                    case ConfigurationType.Axis:
+                                        // Todo: if SDL2 GameController config is ever updated to
+                                        // distinguish between negative/positive axes, then update
+                                        // the following line to support both.
+                                        pad.SetAxis(map.Target.Axis, pressed ? short.MaxValue : (short)0);
+                                        break;
+
+                                    case ConfigurationType.Button:
+                                        pad.SetButton(map.Target.Button, pressed);
+                                        break;
+                                }
+                            }
+                            break;
                     }
                 }
             }
