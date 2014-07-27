@@ -122,7 +122,26 @@ namespace OpenTK.Platform
                             {
                                 // JoystickHat -> Buttons/GamePadAxes mapping
                                 JoystickHat source_hat = map.Source.Hat;
-                                bool pressed = joy.GetHat(source_hat).Position == map.Source.HatPosition;
+
+	                            bool pressed = false;
+								switch (map.Source.HatPosition)
+	                            {
+									case HatPosition.Down:
+			                            pressed = joy.GetHat(source_hat).IsDown;
+			                            break;
+
+									case HatPosition.Up:
+										pressed = joy.GetHat(source_hat).IsUp;
+			                            break;
+
+									case HatPosition.Left:
+										pressed = joy.GetHat(source_hat).IsLeft;
+			                            break;
+
+									case HatPosition.Right:
+										pressed = joy.GetHat(source_hat).IsRight;
+			                            break;
+	                            }
 
                                 switch (map.Target.Type)
                                 {
