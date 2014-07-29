@@ -117,6 +117,48 @@ namespace OpenTK.Platform
                                 }
                             }
                             break;
+
+                        case ConfigurationType.Hat:
+                            {
+                                // JoystickHat -> Buttons/GamePadAxes mapping
+                                JoystickHat source_hat = map.Source.Hat;
+                                JoystickHatState state = joy.GetHat(source_hat);
+
+                                bool pressed = false;
+                                switch (map.Source.HatPosition)
+                                {
+                                    case HatPosition.Down:
+                                        pressed = state.IsDown;
+                                        break;
+
+                                    case HatPosition.Up:
+                                        pressed = state.IsUp;
+                                        break;
+
+                                    case HatPosition.Left:
+                                        pressed = state.IsLeft;
+                                        break;
+
+                                    case HatPosition.Right:
+                                        pressed = state.IsRight;
+                                        break;
+                                }
+
+                                switch (map.Target.Type)
+                                {
+                                    case ConfigurationType.Axis:
+                                        // Todo: if SDL2 GameController config is ever updated to
+                                        // distinguish between negative/positive axes, then update
+                                        // the following line to support both.
+                                        pad.SetAxis(map.Target.Axis, pressed ? short.MaxValue : (short)0);
+                                        break;
+
+                                    case ConfigurationType.Button:
+                                        pad.SetButton(map.Target.Button, pressed);
+                                        break;
+                                }
+                            }
+                            break;
                     }
                 }
             }
