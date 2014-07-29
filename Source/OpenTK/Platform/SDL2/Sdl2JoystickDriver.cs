@@ -127,28 +127,28 @@ namespace OpenTK.Platform.SDL2
 
         OpenTK.Input.HatPosition TranslateHat(HatPosition value)
         {
-			if ((value & HatPosition.LeftUp) == HatPosition.LeftUp)
+            if ((value & HatPosition.LeftUp) == HatPosition.LeftUp)
                 return OpenTK.Input.HatPosition.UpLeft;
 
-			if ((value & HatPosition.RightUp) == HatPosition.RightUp)
+            if ((value & HatPosition.RightUp) == HatPosition.RightUp)
                 return OpenTK.Input.HatPosition.UpRight;
 
-			if ((value & HatPosition.LeftDown) == HatPosition.LeftDown)
+            if ((value & HatPosition.LeftDown) == HatPosition.LeftDown)
                 return OpenTK.Input.HatPosition.DownLeft;
 
-			if ((value & HatPosition.RightDown) == HatPosition.RightDown)
+            if ((value & HatPosition.RightDown) == HatPosition.RightDown)
                 return OpenTK.Input.HatPosition.DownRight;
 
-			if ((value & HatPosition.Up) == HatPosition.Up)
+            if ((value & HatPosition.Up) == HatPosition.Up)
                 return OpenTK.Input.HatPosition.Up;
 
-			if ((value & HatPosition.Right) == HatPosition.Right)
+            if ((value & HatPosition.Right) == HatPosition.Right)
                 return OpenTK.Input.HatPosition.Right;
 
-			if ((value & HatPosition.Down) == HatPosition.Down)
+            if ((value & HatPosition.Down) == HatPosition.Down)
                 return OpenTK.Input.HatPosition.Down;
 
-			if ((value & HatPosition.Left) == HatPosition.Left)
+            if ((value & HatPosition.Left) == HatPosition.Left)
                 return OpenTK.Input.HatPosition.Left;
 
             return OpenTK.Input.HatPosition.Centered;
