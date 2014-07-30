@@ -347,7 +347,7 @@ namespace OpenTK.Platform.Windows
                     }
                 }
 
-                return new JoystickCapabilities(axes, buttons, true);
+                return new JoystickCapabilities(axes, buttons, 0, true);
             }
             return new JoystickCapabilities();
         }

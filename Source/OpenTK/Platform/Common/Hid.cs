@@ -145,6 +145,12 @@ namespace OpenTK.Platform.Common
         VendorDefinedStart = 0xFF00
     }
 
+    // Consumer electronic devices
+    enum HIDUsageCD
+    {
+        ACPan = 0x0238
+    }
+
     // Generic desktop usage
     enum HIDUsageGD : ushort
     {

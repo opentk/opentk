@@ -62,6 +62,15 @@ namespace OpenTK.Input
 
         #endregion
 
+        #region Internal Members
+
+        internal void SetIsConnected(bool value)
+        {
+            is_connected = value;
+        }
+
+        #endregion
+
         #region Public Members
 
         /// <summary>
@@ -105,7 +114,7 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{Axes: {0}; Buttons: {1}; Hats: {2}; IsConnected: {2}}}",
+                "{{Axes: {0}; Buttons: {1}; Hats: {2}; IsConnected: {3}}}",
                 AxisCount, ButtonCount, HatCount, IsConnected);
         }
 
