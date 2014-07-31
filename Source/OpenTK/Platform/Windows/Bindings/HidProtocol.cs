@@ -165,7 +165,7 @@ namespace OpenTK.Platform.Windows
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    public struct HidProtocolData
+    struct HidProtocolData
     {
         [FieldOffset(0)] public short DataIndex;
         //[FieldOffset(2)] public short Reserved;
