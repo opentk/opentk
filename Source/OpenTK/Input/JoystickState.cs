@@ -223,6 +223,11 @@ namespace OpenTK.Input
             }
         }
 
+        internal void ClearButtons()
+        {
+            buttons = 0;
+        }
+
         internal void SetButton(JoystickButton button, bool value)
         {
             int index = (int)button;

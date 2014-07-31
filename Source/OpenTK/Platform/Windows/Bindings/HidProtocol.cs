@@ -87,6 +87,12 @@ namespace OpenTK.Platform.Windows
             [In] byte[] PreparsedData);
 
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetUsages")]
+        unsafe public static extern HidProtocolStatus GetUsages(HidProtocolReportType type,
+            HIDPage usage_page, short link_collection, short* usage_list, ref int usage_length,
+            [In] byte[] preparsed_data, IntPtr report, int report_length);
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetUsageValue")]
         public static extern HidProtocolStatus GetUsageValue(HidProtocolReportType type,
             HIDPage usage_page, short link_collection, short usage, ref uint usage_value,
