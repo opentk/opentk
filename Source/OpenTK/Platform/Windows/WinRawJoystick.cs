@@ -131,7 +131,8 @@ namespace OpenTK.Platform.Windows
                 int key = MakeKey(page, usage);
                 if (!axes.ContainsKey(key))
                 {
-                    axes.Add(key, JoystickAxis.Axis0 + axes.Count);
+                    JoystickAxis axis = HidHelper.TranslateJoystickAxis(page, usage);
+                    axes.Add(key, axis);
                 }
                 return axes[key];
             }
@@ -319,12 +320,60 @@ namespace OpenTK.Platform.Windows
 
                     UpdateButtons(rin, stick, button_caps_count);
 
-                    //UpdateAxes(stick, caps, AxisCaps, axis_caps_count, DataBuffer, size);
+                    for (int i = 0; i < axis_caps_count; i++)
+                    {
+                        if (AxisCaps[i].IsRange)
+                        {
+                            Debug.Print("[{0}] Axis range collections not implemented. Please report your controller type at http://www.opentk.com",
+                                GetType().Name);
+                            continue;
+                        }
+
+                        HIDPage page = AxisCaps[i].UsagePage;
+                        short usage = AxisCaps[i].NotRange.Usage;
+                        uint value = 0;
+
+                        HidProtocolStatus status = HidProtocol.GetUsageValue(
+                            HidProtocolReportType.Input,
+                            page, 0, usage, ref value,
+                            PreparsedData,
+                            new IntPtr((void*)&rin->Data.HID.RawData),
+                            rin->Data.HID.Size);
+
+                        if (status != HidProtocolStatus.Success)
+                        {
+                            Debug.Print("[{0}] HidProtocol.GetScaledUsageValue() failed. Error: {1}",
+                                GetType().Name, status);
+                            continue;
+                        }
+
+                        if (page == HIDPage.GenericDesktop && (HIDUsageGD)usage == HIDUsageGD.Hatswitch)
+                        {
+                            stick.SetHat(page, usage, GetHatPosition(value, AxisCaps[i]));
+                        }
+                        else
+                        {
+                            short scaled_value = (short)HidHelper.ScaleValue(
+                                (int)((long)value + AxisCaps[i].LogicalMin),
+                                AxisCaps[i].LogicalMin, AxisCaps[i].LogicalMax,
+                                Int16.MinValue, Int16.MaxValue);
+                            stick.SetAxis(page, usage, scaled_value);
+                        }
+                    }
+
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private HatPosition GetHatPosition(uint value, HidProtocolValueCaps caps)
+        {
+            if (caps.LogicalMax == 8)
+                return (HatPosition)value;
+            else
+                return HatPosition.Centered;
         }
 
         unsafe void UpdateButtons(RawInput* rin, Device stick, int button_caps_count)
@@ -333,7 +382,7 @@ namespace OpenTK.Platform.Windows
 
             for (int i = 0; i < button_caps_count; i++)
             {
-                short* usage_list = stackalloc short[(int)JoystickButton.Last];
+                short* usage_list = stackalloc short[(int)JoystickButton.Last + 1];
                 int usage_length = (int)JoystickButton.Last;
                 HIDPage page = ButtonCaps[i].UsagePage;
 
@@ -353,7 +402,8 @@ namespace OpenTK.Platform.Windows
 
                 for (int j = 0; j < usage_length; j++)
                 {
-                    stick.SetButton(page, *(usage_list + j), true);
+                    short usage = *(usage_list + j);
+                    stick.SetButton(page, usage, true);
                 }
             }
         }
@@ -462,7 +512,7 @@ namespace OpenTK.Platform.Windows
                         case HIDPage.Button:
                             if (is_range)
                             {
-                                for (short usage = ButtonCaps[i].Range.UsageMin; usage < ButtonCaps[i].Range.UsageMax; usage++)
+                                for (short usage = ButtonCaps[i].Range.UsageMin; usage <= ButtonCaps[i].Range.UsageMax; usage++)
                                 {
                                     buttons++;
                                     stick.SetButton(page, usage, false);
