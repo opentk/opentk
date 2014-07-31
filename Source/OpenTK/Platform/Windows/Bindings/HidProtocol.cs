@@ -43,54 +43,73 @@ namespace OpenTK.Platform.Windows
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetButtonCaps")]
         public static extern HidProtocolStatus GetButtonCaps(HidProtocolReportType hidProtocolReportType,
-            IntPtr button_caps, ref ushort p, byte[] preparsed_data);
+            IntPtr button_caps, ref ushort p, [In] byte[] preparsed_data);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetButtonCaps")]
         public static extern HidProtocolStatus GetButtonCaps(HidProtocolReportType hidProtocolReportType,
-            HidProtocolButtonCaps[] button_caps, ref ushort p, byte[] preparsed_data);
+            [Out] HidProtocolButtonCaps[] button_caps, ref ushort p, [In] byte[] preparsed_data);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetCaps")]
-        public static extern HidProtocolStatus GetCaps(byte[] preparsed_data, ref HidProtocolCaps capabilities);
+        public static extern HidProtocolStatus GetCaps([In] byte[] preparsed_data, ref HidProtocolCaps capabilities);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetData")]
         public static extern HidProtocolStatus GetData(HidProtocolReportType type,
             IntPtr data, ref int data_length,
-            byte[] preparsed_data, IntPtr report, int report_length);
+            [In] byte[] preparsed_data, IntPtr report, int report_length);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetData")]
         public static extern HidProtocolStatus GetData(HidProtocolReportType type,
-            HidProtocolData[] data, ref int data_length,
-            byte[] preparsed_data, IntPtr report, int report_length);
+            [Out] HidProtocolData[] data, ref int data_length,
+            [In] byte[] preparsed_data, IntPtr report, int report_length);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetLinkCollectionNodes")]
+        public static extern HidProtocolStatus GetLinkCollectionNodes(
+            [Out] HidProtocolLinkCollectionNode[] LinkCollectionNodes,
+            ref int LinkCollectionNodesLength,
+            [In] byte[] PreparsedData);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetScaledUsageValue")]
         static public extern HidProtocolStatus GetScaledUsageValue(HidProtocolReportType type,
             HIDPage usage_page, short link_collection, short usage, ref int usage_value,
-            byte[] preparsed_data, IntPtr report, int report_length);
+            [In] byte[] preparsed_data, IntPtr report, int report_length);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetSpecificButtonCaps")]
+        public static extern HidProtocolStatus GetSpecificButtonCaps(HidProtocolReportType ReportType,
+            HIDPage UsagePage, ushort LinkCollection, ushort Usage,
+            [Out] HidProtocolButtonCaps[] ButtonCaps, ref ushort ButtonCapsLength,
+            [In] byte[] PreparsedData);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetUsageValue")]
         public static extern HidProtocolStatus GetUsageValue(HidProtocolReportType type,
             HIDPage usage_page, short link_collection, short usage, ref uint usage_value,
-            byte[] preparsed_data, IntPtr report, int report_length);
+            [In] byte[] preparsed_data, IntPtr report, int report_length);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetValueCaps")]
         public static extern HidProtocolStatus GetValueCaps(HidProtocolReportType type,
-            IntPtr caps, ref ushort caps_length, byte[] preparsed_data);
+            IntPtr caps, ref ushort caps_length, [In] byte[] preparsed_data);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetValueCaps")]
         public static extern HidProtocolStatus GetValueCaps(HidProtocolReportType type,
-            HidProtocolValueCaps[] caps, ref ushort caps_length, byte[] preparsed_data);
+            [Out] HidProtocolValueCaps[] caps, ref ushort caps_length, [In] byte[] preparsed_data);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_MaxDataListLength")]
-        public static extern int MaxDataListLength(HidProtocolReportType type, byte[] preparsed_data);
+        public static extern int MaxDataListLength(HidProtocolReportType type, [In] byte[] preparsed_data);
+    }
+
+    enum HidProtocolCollectionType : byte
+    {
+
     }
 
     enum HidProtocolReportType : ushort
@@ -124,6 +143,7 @@ namespace OpenTK.Platform.Windows
         [FieldOffset(56)] public HidProtocolNotRange NotRange;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
     struct HidProtocolCaps
     {
         public short Usage;
@@ -153,6 +173,7 @@ namespace OpenTK.Platform.Windows
         [FieldOffset(4), MarshalAs(UnmanagedType.U1)] public bool On;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
     struct HidProtocolNotRange
     {
         public short Usage;
@@ -163,6 +184,35 @@ namespace OpenTK.Platform.Windows
         short Reserved3;
         public short DataIndex;
         short Reserved4;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct HidProtocolLinkCollectionNode
+    {
+        public ushort LinkUsage;
+        public HIDPage LinkUsagePage;
+        public ushort Parent;
+        public ushort NumberOfChildren;
+        public ushort NextSibling;
+        public ushort FirstChild;
+        int bitfield;
+        public IntPtr   UserContext;
+
+        public HidProtocolCollectionType CollectionType
+        {
+            get
+            {
+                return (HidProtocolCollectionType)(bitfield & 0xff);
+            }
+        }
+
+        public bool IsAlias
+        {
+            get
+            {
+                return (bitfield & 0x100) == 1;
+            }
+        }
     }
 
     struct HidProtocolRange
