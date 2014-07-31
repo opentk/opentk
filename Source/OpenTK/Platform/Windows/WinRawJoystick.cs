@@ -224,9 +224,15 @@ namespace OpenTK.Platform.Windows
                 if (dev.Type != RawInputDeviceType.HID)
                     continue;
 
+                // We use the device handle as the hardware id.
+                // This works, but the handle will change whenever the
+                // device is unplugged/replugged. We compensate for this
+                // by checking device GUIDs, below.
+                // Note: we cannot use the GUID as the hardware id,
+                // because it is costly to query (and we need to query
+                // that every time we process a device event.)
                 IntPtr handle = dev.Device;
                 Guid guid = GetDeviceGuid(handle);
-                //long hardware_id = guid.GetHashCode();
                 long hardware_id = handle.ToInt64();
 
                 Device device = Devices.FromHardwareId(hardware_id);
@@ -244,6 +250,22 @@ namespace OpenTK.Platform.Windows
                     QueryDeviceCaps(device);
 
                     device.SetConnected(true);
+
+                    // Check if a disconnected device with identical GUID already exists.
+                    // If so, replace that device with this instance.
+                    Device match = null;
+                    foreach (Device candidate in Devices)
+                    {
+                        if (candidate.GetGuid() == guid && !candidate.GetCapabilities().IsConnected)
+                        {
+                            match = candidate;
+                        }
+                    }
+                    if (match != null)
+                    {
+                        Devices.Remove(match.Handle.ToInt64());
+                    }
+
                     Devices.Add(hardware_id, device);
 
                     Debug.Print("[{0}] Connected joystick {1} ({2})",
