@@ -83,7 +83,7 @@ namespace OpenTK.Platform
             Devices[Map[id]] = device;
         }
 
-        public void Remove(int id)
+        public void Remove(long id)
         {
             if (!TryRemove(id))
             {
@@ -91,7 +91,7 @@ namespace OpenTK.Platform
             }
         }
 
-        public bool TryRemove(int id)
+        public bool TryRemove(long id)
         {
             if (!Map.ContainsKey(id))
             {
