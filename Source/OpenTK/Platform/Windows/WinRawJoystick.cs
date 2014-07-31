@@ -135,10 +135,7 @@ namespace OpenTK.Platform.Windows
 
         readonly IntPtr Window;
         readonly object UpdateLock = new object();
-        readonly Dictionary<IntPtr, Device> Devices =
-            new Dictionary<IntPtr, Device>(new IntPtrEqualityComparer());
-        readonly Dictionary<int, IntPtr> IndexToDevice =
-            new Dictionary<int, IntPtr>();
+        readonly DeviceCollection<Device> Devices = new DeviceCollection<Device>();
 
         byte[] PreparsedData = new byte[1024];
         HidProtocolValueCaps[] AxisCaps = new HidProtocolValueCaps[4];
@@ -180,28 +177,42 @@ namespace OpenTK.Platform.Windows
         public void RefreshDevices()
         {
             // Mark all devices as disconnected. We will check which of those
-            // are connected later on.
-            for (int i = 0; i < IndexToDevice.Count; i++)
+            // are connected below.
+            foreach (var device in Devices)
             {
-                Devices[IndexToDevice[i]].SetConnected(false);
+                device.SetConnected(false);
             }
 
+            // Discover joystick devices
             foreach (RawInputDeviceList dev in WinRawInput.GetDeviceList())
             {
+                // Skip non-joystick devices
                 if (dev.Type != RawInputDeviceType.HID)
                     continue;
 
                 IntPtr handle = dev.Device;
                 Guid guid = GetDeviceGuid(handle);
-                JoystickCapabilities caps = GetDeviceCaps(handle);
+                long hardware_id = guid.GetHashCode();
 
-                if (!Devices.ContainsKey(handle))
-                    Devices.Add(handle, new Device(handle, guid, caps));
-                
-                Device stick = Devices[handle];
-                stick.SetConnected(true);
+                Device device = Devices.FromHardwareId(hardware_id);
+                if (device != null)
+                {
+                    // We have already opened this device, mark it as connected
+                    device.SetConnected(true);
+                }
+                else
+                {
+                    // This is a new device, query its capabilities and add it
+                    // to the device list
+                    JoystickCapabilities caps = GetDeviceCaps(handle);
+
+                    device = new Device(handle, guid, caps);
+                    device.SetConnected(true);
+                    Devices.Add(hardware_id, device);
+
+                    Debug.Print("[{0}] Connected joystick {1} ({2})", GetType().Name, guid, caps);
+                }
             }
-
         }
 
         public unsafe bool ProcessEvent(ref RawInput rin)
@@ -219,6 +230,7 @@ namespace OpenTK.Platform.Windows
                 return false;
             }
 
+            // Detect which axes / buttons are contained in this report
             HidProtocolCaps caps;
             int axis_caps_count;
             int button_caps_count;
@@ -460,7 +472,7 @@ namespace OpenTK.Platform.Windows
                 }
 
                 // Allocate memory and retrieve the DEVICENAME string
-                char* pname = stackalloc char[size + 1];
+                sbyte* pname = stackalloc sbyte[size + 1];
                 if (Functions.GetRawInputDeviceInfo(handle, RawInputDeviceInfoEnum.DEVICENAME, (IntPtr)pname, ref size) < 0)
                 {
                     Debug.Print("[WinRawJoystick] Functions.GetRawInputDeviceInfo(DEVICENAME) failed with error {0}",
@@ -478,9 +490,9 @@ namespace OpenTK.Platform.Windows
 
                 // The GUID is stored in the last part of the string
                 string[] parts = name.Split('#');
-                if (parts.Length >= 3)
+                if (parts.Length > 3)
                 {
-                    guid = new Guid(parts[2]);
+                    guid = new Guid(parts[3]);
                 }
             }
 
@@ -558,11 +570,12 @@ namespace OpenTK.Platform.Windows
 
         Device GetDevice(IntPtr handle)
         {
+            long hardware_id = handle.ToInt64();
             bool is_device_known = false;
 
             lock (UpdateLock)
             {
-                is_device_known = Devices.ContainsKey(handle);
+                is_device_known = Devices.FromHardwareId(hardware_id) != null;
             }
 
             if (!is_device_known)
@@ -572,13 +585,13 @@ namespace OpenTK.Platform.Windows
 
             lock (UpdateLock)
             {
-                return Devices.ContainsKey(handle) ? Devices[handle] : null;
+                return Devices.FromHardwareId(hardware_id);
             }
         }
 
         bool IsValid(int index)
         {
-            return IndexToDevice.ContainsKey(index);
+            return Devices.FromIndex(index) != null;
         }
 
         #endregion
@@ -591,7 +604,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (IsValid(index))
                 {
-                    return Devices[IndexToDevice[index]].GetState();
+                    return Devices.FromIndex(index).GetState();
                 }
                 return new JoystickState();
             }
@@ -603,7 +616,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (IsValid(index))
                 {
-                    return Devices[IndexToDevice[index]].GetCapabilities();
+                    return Devices.FromIndex(index).GetCapabilities();
                 }
                 return new JoystickCapabilities();
             }
@@ -615,7 +628,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (IsValid(index))
                 {
-                    return Devices[IndexToDevice[index]].GetGuid();
+                    return Devices.FromIndex(index).GetGuid();
                 }
                 return new Guid();
             }
