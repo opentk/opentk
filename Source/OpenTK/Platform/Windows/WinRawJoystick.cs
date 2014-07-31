@@ -46,6 +46,11 @@ namespace OpenTK.Platform.Windows
             JoystickState State;
             Guid Guid;
 
+            internal readonly List<HidProtocolValueCaps> AxisCaps =
+                new List<HidProtocolValueCaps>();
+            internal readonly List<HidProtocolButtonCaps> ButtonCaps =
+                new List<HidProtocolButtonCaps>();
+
             readonly Dictionary<int, JoystickAxis> axes =
                 new Dictionary<int,JoystickAxis>();
             readonly Dictionary<int, JoystickButton> buttons =
@@ -169,8 +174,6 @@ namespace OpenTK.Platform.Windows
 
         byte[] HIDData = new byte[1024];
         byte[] PreparsedData = new byte[1024];
-        HidProtocolValueCaps[] AxisCaps = new HidProtocolValueCaps[4];
-        HidProtocolButtonCaps[] ButtonCaps = new HidProtocolButtonCaps[4];
         HidProtocolData[] DataBuffer = new HidProtocolData[16];
 
         public WinRawJoystick(IntPtr window)
@@ -279,17 +282,6 @@ namespace OpenTK.Platform.Windows
                         return false;
                     }
 
-                    // Detect which axes / buttons are contained in this report
-                    HidProtocolCaps caps;
-                    int axis_caps_count;
-                    int button_caps_count;
-                    if (!GetDeviceCaps(PreparsedData, out caps,
-                        ref AxisCaps, out axis_caps_count,
-                        ref ButtonCaps, out button_caps_count))
-                    {
-                        return false;
-                    }
-
                     // Query current state
                     // Allocate enough storage to hold the data of the current report
                     int report_count = HidProtocol.MaxDataListLength(HidProtocolReportType.Input, PreparsedData);
@@ -318,19 +310,19 @@ namespace OpenTK.Platform.Windows
                     }
                     */
 
-                    UpdateButtons(rin, stick, button_caps_count);
+                    UpdateButtons(rin, stick);
 
-                    for (int i = 0; i < axis_caps_count; i++)
+                    for (int i = 0; i < stick.AxisCaps.Count; i++)
                     {
-                        if (AxisCaps[i].IsRange)
+                        if (stick.AxisCaps[i].IsRange)
                         {
                             Debug.Print("[{0}] Axis range collections not implemented. Please report your controller type at http://www.opentk.com",
                                 GetType().Name);
                             continue;
                         }
 
-                        HIDPage page = AxisCaps[i].UsagePage;
-                        short usage = AxisCaps[i].NotRange.Usage;
+                        HIDPage page = stick.AxisCaps[i].UsagePage;
+                        short usage = stick.AxisCaps[i].NotRange.Usage;
                         uint value = 0;
 
                         HidProtocolStatus status = HidProtocol.GetUsageValue(
@@ -349,13 +341,13 @@ namespace OpenTK.Platform.Windows
 
                         if (page == HIDPage.GenericDesktop && (HIDUsageGD)usage == HIDUsageGD.Hatswitch)
                         {
-                            stick.SetHat(page, usage, GetHatPosition(value, AxisCaps[i]));
+                            stick.SetHat(page, usage, GetHatPosition(value, stick.AxisCaps[i]));
                         }
                         else
                         {
                             short scaled_value = (short)HidHelper.ScaleValue(
-                                (int)((long)value + AxisCaps[i].LogicalMin),
-                                AxisCaps[i].LogicalMin, AxisCaps[i].LogicalMax,
+                                (int)((long)value + stick.AxisCaps[i].LogicalMin),
+                                stick.AxisCaps[i].LogicalMin, stick.AxisCaps[i].LogicalMax,
                                 Int16.MinValue, Int16.MaxValue);
                             stick.SetAxis(page, usage, scaled_value);
                         }
@@ -376,15 +368,15 @@ namespace OpenTK.Platform.Windows
                 return HatPosition.Centered;
         }
 
-        unsafe void UpdateButtons(RawInput* rin, Device stick, int button_caps_count)
+        unsafe void UpdateButtons(RawInput* rin, Device stick)
         {
             stick.ClearButtons();
 
-            for (int i = 0; i < button_caps_count; i++)
+            for (int i = 0; i < stick.ButtonCaps.Count; i++)
             {
                 short* usage_list = stackalloc short[(int)JoystickButton.Last + 1];
                 int usage_length = (int)JoystickButton.Last;
-                HIDPage page = ButtonCaps[i].UsagePage;
+                HIDPage page = stick.ButtonCaps[i].UsagePage;
 
                 HidProtocolStatus status = HidProtocol.GetUsages(
                     HidProtocolReportType.Input,
@@ -446,8 +438,6 @@ namespace OpenTK.Platform.Windows
         void QueryDeviceCaps(Device stick)
         {
             HidProtocolCaps caps;
-            int axis_count;
-            int button_count;
 
             // Discovered elements
             int axes = 0;
@@ -455,23 +445,21 @@ namespace OpenTK.Platform.Windows
             int buttons = 0;
 
             if (GetPreparsedData(stick.Handle, ref PreparsedData) &&
-                GetDeviceCaps(PreparsedData, out caps,
-                    ref AxisCaps, out axis_count,
-                    ref ButtonCaps, out button_count))
+                GetDeviceCaps(stick, PreparsedData, out caps))
             {
-                for (int i = 0; i < axis_count; i++)
+                for (int i = 0; i < stick.AxisCaps.Count; i++)
                 {
-                    if (AxisCaps[i].IsRange)
+                    if (stick.AxisCaps[i].IsRange)
                     {
                         Debug.Print("[WinRawJoystick] Range axis elements not implemented.");
                         continue;
                     }
 
-                    HIDPage page = AxisCaps[i].UsagePage;
+                    HIDPage page = stick.AxisCaps[i].UsagePage;
                     switch (page)
                     {
                         case HIDPage.GenericDesktop:
-                            switch ((HIDUsageGD)AxisCaps[i].NotRange.Usage)
+                            switch ((HIDUsageGD)stick.AxisCaps[i].NotRange.Usage)
                             {
                                 case HIDUsageGD.X:
                                 case HIDUsageGD.Y:
@@ -482,37 +470,37 @@ namespace OpenTK.Platform.Windows
                                 case HIDUsageGD.Slider:
                                 case HIDUsageGD.Dial:
                                 case HIDUsageGD.Wheel:
-                                    stick.SetAxis(page, AxisCaps[i].NotRange.Usage, 0);
+                                    stick.SetAxis(page, stick.AxisCaps[i].NotRange.Usage, 0);
                                     break;
 
                                 case HIDUsageGD.Hatswitch:
-                                    stick.SetHat(page, AxisCaps[i].NotRange.Usage, HatPosition.Centered);
+                                    stick.SetHat(page, stick.AxisCaps[i].NotRange.Usage, HatPosition.Centered);
                                     break;
                             }
                             break;
 
                         case HIDPage.Simulation:
-                            switch ((HIDUsageSim)AxisCaps[i].NotRange.Usage)
+                            switch ((HIDUsageSim)stick.AxisCaps[i].NotRange.Usage)
                             {
                                 case HIDUsageSim.Rudder:
                                 case HIDUsageSim.Throttle:
-                                    stick.SetAxis(page, AxisCaps[i].NotRange.Usage, 0);
+                                    stick.SetAxis(page, stick.AxisCaps[i].NotRange.Usage, 0);
                                     break;
                             }
                             break;
                     }
                 }
 
-                for (int i = 0; i < button_count; i++)
+                for (int i = 0; i < stick.ButtonCaps.Count; i++)
                 {
-                    bool is_range = ButtonCaps[i].IsRange;
-                    HIDPage page = ButtonCaps[i].UsagePage;
+                    bool is_range = stick.ButtonCaps[i].IsRange;
+                    HIDPage page = stick.ButtonCaps[i].UsagePage;
                     switch (page)
                     {
                         case HIDPage.Button:
                             if (is_range)
                             {
-                                for (short usage = ButtonCaps[i].Range.UsageMin; usage <= ButtonCaps[i].Range.UsageMax; usage++)
+                                for (short usage = stick.ButtonCaps[i].Range.UsageMin; usage <= stick.ButtonCaps[i].Range.UsageMax; usage++)
                                 {
                                     buttons++;
                                     stick.SetButton(page, usage, false);
@@ -521,7 +509,7 @@ namespace OpenTK.Platform.Windows
                             else
                             {
                                 buttons++;
-                                stick.SetButton(page, ButtonCaps[i].NotRange.Usage, false);
+                                stick.SetButton(page, stick.ButtonCaps[i].NotRange.Usage, false);
                             }
                             break;
 
@@ -535,12 +523,10 @@ namespace OpenTK.Platform.Windows
             stick.SetCapabilities(new JoystickCapabilities(axes, buttons, dpads, true));
         }
 
-        static bool GetDeviceCaps(byte[] preparsed_data, out HidProtocolCaps caps,
-            ref HidProtocolValueCaps[] axis_caps, out int axis_caps_count,
-            ref HidProtocolButtonCaps[] button_caps, out int button_caps_count)
+        static bool GetDeviceCaps(Device stick, byte[] preparsed_data, out HidProtocolCaps caps)
         {
-            axis_caps_count = 0;
-            button_caps_count = 0;
+            int axis_caps_count = 0;
+            int button_caps_count = 0;
 
             // Query joystick capabilities
             caps = new HidProtocolCaps();
@@ -552,14 +538,8 @@ namespace OpenTK.Platform.Windows
             }
 
             // Make sure our caps arrays are big enough
-            if (axis_caps.Length < caps.NumberInputValueCaps)
-            {
-                Array.Resize(ref axis_caps, caps.NumberInputValueCaps);
-            }
-            if (button_caps.Length < caps.NumberInputButtonCaps)
-            {
-                Array.Resize(ref button_caps, caps.NumberInputButtonCaps);
-            }
+            HidProtocolValueCaps[] axis_caps = new HidProtocolValueCaps[caps.NumberInputValueCaps];
+            HidProtocolButtonCaps[] button_caps = new HidProtocolButtonCaps[caps.NumberInputButtonCaps];
 
             // Axis capabilities
             ushort axis_count = (ushort)axis_caps.Length;
@@ -584,6 +564,12 @@ namespace OpenTK.Platform.Windows
                 return false;
             }
             button_caps_count = (int)button_count;
+
+            stick.AxisCaps.Clear();
+            stick.AxisCaps.AddRange(axis_caps);
+
+            stick.ButtonCaps.Clear();
+            stick.ButtonCaps.AddRange(button_caps);
 
             return true;
         }
