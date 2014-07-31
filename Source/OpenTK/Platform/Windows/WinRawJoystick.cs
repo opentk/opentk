@@ -320,61 +320,8 @@ namespace OpenTK.Platform.Windows
                         Array.Resize(ref DataBuffer, report_count);
                     }
 
-                    /*
-                    if (HidProtocol.GetData(HidProtocolReportType.Input,
-                        DataBuffer, ref size, PreparsedData,
-                        new IntPtr((void*)&rin->Data.HID.RawData),
-                        rin->Data.HID.Size) != HidProtocolStatus.Success)
-                    {
-                        Debug.Print("[WinRawJoystick] HidProtocol.GetData() failed with {0}",
-                            Marshal.GetLastWin32Error());
-                        return false;
-                    }
-                    */
-
+                    UpdateAxes(rin, stick);
                     UpdateButtons(rin, stick);
-
-                    for (int i = 0; i < stick.AxisCaps.Count; i++)
-                    {
-                        if (stick.AxisCaps[i].IsRange)
-                        {
-                            Debug.Print("[{0}] Axis range collections not implemented. Please report your controller type at http://www.opentk.com",
-                                GetType().Name);
-                            continue;
-                        }
-
-                        HIDPage page = stick.AxisCaps[i].UsagePage;
-                        short usage = stick.AxisCaps[i].NotRange.Usage;
-                        uint value = 0;
-
-                        HidProtocolStatus status = HidProtocol.GetUsageValue(
-                            HidProtocolReportType.Input,
-                            page, 0, usage, ref value,
-                            PreparsedData,
-                            new IntPtr((void*)&rin->Data.HID.RawData),
-                            rin->Data.HID.Size);
-
-                        if (status != HidProtocolStatus.Success)
-                        {
-                            Debug.Print("[{0}] HidProtocol.GetScaledUsageValue() failed. Error: {1}",
-                                GetType().Name, status);
-                            continue;
-                        }
-
-                        if (page == HIDPage.GenericDesktop && (HIDUsageGD)usage == HIDUsageGD.Hatswitch)
-                        {
-                            stick.SetHat(page, usage, GetHatPosition(value, stick.AxisCaps[i]));
-                        }
-                        else
-                        {
-                            short scaled_value = (short)HidHelper.ScaleValue(
-                                (int)((long)value + stick.AxisCaps[i].LogicalMin),
-                                stick.AxisCaps[i].LogicalMin, stick.AxisCaps[i].LogicalMax,
-                                Int16.MinValue, Int16.MaxValue);
-                            stick.SetAxis(page, usage, scaled_value);
-                        }
-                    }
-
                     return true;
                 }
             }
@@ -382,12 +329,56 @@ namespace OpenTK.Platform.Windows
             return false;
         }
 
-        private HatPosition GetHatPosition(uint value, HidProtocolValueCaps caps)
+        HatPosition GetHatPosition(uint value, HidProtocolValueCaps caps)
         {
             if (caps.LogicalMax == 8)
                 return (HatPosition)value;
             else
                 return HatPosition.Centered;
+        }
+
+        unsafe void UpdateAxes(RawInput* rin, Device stick)
+        {
+            for (int i = 0; i < stick.AxisCaps.Count; i++)
+            {
+                if (stick.AxisCaps[i].IsRange)
+                {
+                    Debug.Print("[{0}] Axis range collections not implemented. Please report your controller type at http://www.opentk.com",
+                        GetType().Name);
+                    continue;
+                }
+
+                HIDPage page = stick.AxisCaps[i].UsagePage;
+                short usage = stick.AxisCaps[i].NotRange.Usage;
+                uint value = 0;
+
+                HidProtocolStatus status = HidProtocol.GetUsageValue(
+                    HidProtocolReportType.Input,
+                    page, 0, usage, ref value,
+                    PreparsedData,
+                    new IntPtr((void*)&rin->Data.HID.RawData),
+                    rin->Data.HID.Size);
+
+                if (status != HidProtocolStatus.Success)
+                {
+                    Debug.Print("[{0}] HidProtocol.GetScaledUsageValue() failed. Error: {1}",
+                        GetType().Name, status);
+                    continue;
+                }
+
+                if (page == HIDPage.GenericDesktop && (HIDUsageGD)usage == HIDUsageGD.Hatswitch)
+                {
+                    stick.SetHat(page, usage, GetHatPosition(value, stick.AxisCaps[i]));
+                }
+                else
+                {
+                    short scaled_value = (short)HidHelper.ScaleValue(
+                        (int)((long)value + stick.AxisCaps[i].LogicalMin),
+                        stick.AxisCaps[i].LogicalMin, stick.AxisCaps[i].LogicalMax,
+                        Int16.MinValue, Int16.MaxValue);
+                    stick.SetAxis(page, usage, scaled_value);
+                }
+            }
         }
 
         unsafe void UpdateButtons(RawInput* rin, Device stick)
@@ -640,43 +631,6 @@ namespace OpenTK.Platform.Windows
             }
 
             return guid;
-        }
-
-        static void UpdateAxes(Device stick, HidProtocolCaps caps, HidProtocolValueCaps[] axes, int axes_count, HidProtocolData[] data)
-        {
-            // Use the data indices in the axis and button caps arrays to
-            // access the data buffer we just filled.
-            for (int i = 0; i < axes_count; i++)
-            {
-                if (!axes[i].IsRange)
-                {
-                    int index = axes[i].NotRange.DataIndex;
-                    if (index < 0 || index >= caps.NumberInputValueCaps)
-                    {
-                        // Should never happen
-                        Debug.Print("[WinRawJoystick] Error: DataIndex out of range");
-                        continue;
-                    }
-
-                    if (data[index].DataIndex != i)
-                    {
-                        // Should also never happen
-                        Debug.Print("[WinRawJoystick] DataIndex != index ({0} != {1})",
-                            data[index].DataIndex, i);
-                        continue;
-                    }
-
-                    short value = (short)HidHelper.ScaleValue(data[i].RawValue,
-                        axes[i].LogicalMin, axes[i].LogicalMax,
-                        short.MinValue, short.MaxValue);
-
-                    stick.SetAxis(axes[i].UsagePage, axes[i].NotRange.Usage, value);
-                }
-                else
-                {
-                    // Todo: fall back to HidProtocol.GetLinkCollectionNodes
-                }
-            }
         }
 
         Device GetDevice(IntPtr handle)
