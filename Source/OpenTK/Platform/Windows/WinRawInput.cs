@@ -94,30 +94,28 @@ namespace OpenTK.Platform.Windows
                 switch (message)
                 {
                     case WindowMessage.INPUT:
-                        int size = BlittableValueType<RawInput>.Stride;
-                        RawInput data;
-
-                        //RawInput data;
-                        // Read the actual raw input structure
-                        if (size == Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                            out data, ref size, API.RawInputHeaderSize))
                         {
-                            switch (data.Header.Type)
+                            // Retrieve the raw input data buffer
+                            RawInputHeader header;
+                            if (Functions.GetRawInputData(lParam, out header) == RawInputHeader.SizeInBytes)
                             {
-                                case RawInputDeviceType.KEYBOARD:
-                                    if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(ref data))
-                                        return IntPtr.Zero;
-                                    break;
+                                switch (header.Type)
+                                {
+                                    case RawInputDeviceType.KEYBOARD:
+                                        if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(lParam))
+                                            return IntPtr.Zero;
+                                        break;
 
-                                case RawInputDeviceType.MOUSE:
-                                    if (((WinRawMouse)MouseDriver).ProcessMouseEvent(ref data))
-                                        return IntPtr.Zero;
-                                    break;
+                                    case RawInputDeviceType.MOUSE:
+                                        if (((WinRawMouse)MouseDriver).ProcessMouseEvent(lParam))
+                                            return IntPtr.Zero;
+                                        break;
 
-                                case RawInputDeviceType.HID:
-                                    if (((WinRawJoystick)JoystickDriver).ProcessEvent(ref data))
-                                        return IntPtr.Zero;
-                                    break;
+                                    case RawInputDeviceType.HID:
+                                        if (((WinRawJoystick)JoystickDriver).ProcessEvent(lParam))
+                                            return IntPtr.Zero;
+                                        break;
+                                }
                             }
                         }
                         break;

@@ -137,6 +137,7 @@ namespace OpenTK.Platform.Windows
         readonly object UpdateLock = new object();
         readonly DeviceCollection<Device> Devices = new DeviceCollection<Device>();
 
+        byte[] HIDData = new byte[1024];
         byte[] PreparsedData = new byte[1024];
         HidProtocolValueCaps[] AxisCaps = new HidProtocolValueCaps[4];
         HidProtocolButtonCaps[] ButtonCaps = new HidProtocolButtonCaps[4];
@@ -153,8 +154,8 @@ namespace OpenTK.Platform.Windows
             Window = window;
             DeviceTypes = new RawInputDevice[]
             {
-                new RawInputDevice(HIDUsageGD.Joystick, RawInputDeviceFlags.INPUTSINK, window),
-                new RawInputDevice(HIDUsageGD.GamePad, RawInputDeviceFlags.INPUTSINK, window),
+                new RawInputDevice(HIDUsageGD.Joystick, RawInputDeviceFlags.DEVNOTIFY | RawInputDeviceFlags.EXINPUTSINK, window),
+                new RawInputDevice(HIDUsageGD.GamePad, RawInputDeviceFlags.DEVNOTIFY | RawInputDeviceFlags.EXINPUTSINK, window),
             };
 
             if (!Functions.RegisterRawInputDevices(DeviceTypes, DeviceTypes.Length, API.RawInputDeviceSize))
@@ -192,7 +193,8 @@ namespace OpenTK.Platform.Windows
 
                 IntPtr handle = dev.Device;
                 Guid guid = GetDeviceGuid(handle);
-                long hardware_id = guid.GetHashCode();
+                //long hardware_id = guid.GetHashCode();
+                long hardware_id = handle.ToInt64();
 
                 Device device = Devices.FromHardwareId(hardware_id);
                 if (device != null)
@@ -215,64 +217,80 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public unsafe bool ProcessEvent(ref RawInput rin)
+        public unsafe bool ProcessEvent(IntPtr raw)
         {
-            IntPtr handle = rin.Header.Device;
-            Device stick = GetDevice(handle);
-            if (stick == null)
+            // Query the size of the raw HID data buffer
+            int size = 0;
+            Functions.GetRawInputData(raw, GetRawInputDataEnum.INPUT, IntPtr.Zero, ref size, RawInputHeader.SizeInBytes);
+            if (size > HIDData.Length)
             {
-                Debug.Print("[WinRawJoystick] Unknown device {0}", handle);
-                return false;
+                Array.Resize(ref HIDData, size);
             }
 
-            if (!GetPreparsedData(handle, ref PreparsedData))
+            // Retrieve the raw HID data buffer
+            if (Functions.GetRawInputData(raw, HIDData) > 0)
             {
-                return false;
-            }
-
-            // Detect which axes / buttons are contained in this report
-            HidProtocolCaps caps;
-            int axis_caps_count;
-            int button_caps_count;
-            if (!GetDeviceCaps(PreparsedData, out caps,
-                ref AxisCaps, out axis_caps_count,
-                ref ButtonCaps, out button_caps_count))
-            {
-                return false;
-            }
-
-            // Query current state
-            // Allocate enough storage to hold the data of the current report
-            int size = HidProtocol.MaxDataListLength(HidProtocolReportType.Input, PreparsedData);
-            if (size == 0)
-            {
-                Debug.Print("[WinRawJoystick] HidProtocol.MaxDataListLength() failed with {0}",
-                    Marshal.GetLastWin32Error());
-                return false;
-            }
-
-            // Fill the data buffer
-            if (DataBuffer.Length < size)
-            {
-                Array.Resize(ref DataBuffer, size);
-            }
-
-            fixed (void* pdata = &rin.Data.HID.RawData)
-            {
-                if (HidProtocol.GetData(HidProtocolReportType.Input,
-                    DataBuffer, ref size, PreparsedData,
-                    (IntPtr)pdata, rin.Data.HID.Size) != HidProtocolStatus.Success)
+                fixed (byte* pdata = HIDData)
                 {
-                    Debug.Print("[WinRawJoystick] HidProtocol.GetData() failed with {0}",
-                        Marshal.GetLastWin32Error());
-                    return false;
+                    RawInput* rin = (RawInput*)pdata;
+
+                    IntPtr handle = rin->Header.Device;
+                    Device stick = GetDevice(handle);
+                    if (stick == null)
+                    {
+                        Debug.Print("[WinRawJoystick] Unknown device {0}", handle);
+                        return false;
+                    }
+
+                    if (!GetPreparsedData(handle, ref PreparsedData))
+                    {
+                        return false;
+                    }
+
+                    // Detect which axes / buttons are contained in this report
+                    HidProtocolCaps caps;
+                    int axis_caps_count;
+                    int button_caps_count;
+                    if (!GetDeviceCaps(PreparsedData, out caps,
+                        ref AxisCaps, out axis_caps_count,
+                        ref ButtonCaps, out button_caps_count))
+                    {
+                        return false;
+                    }
+
+                    // Query current state
+                    // Allocate enough storage to hold the data of the current report
+                    int report_count = HidProtocol.MaxDataListLength(HidProtocolReportType.Input, PreparsedData);
+                    if (report_count == 0)
+                    {
+                        Debug.Print("[WinRawJoystick] HidProtocol.MaxDataListLength() failed with {0}",
+                            Marshal.GetLastWin32Error());
+                        return false;
+                    }
+
+                    // Fill the data buffer
+                    if (DataBuffer.Length < report_count)
+                    {
+                        Array.Resize(ref DataBuffer, report_count);
+                    }
+
+                    if (HidProtocol.GetData(HidProtocolReportType.Input,
+                        DataBuffer, ref size, PreparsedData,
+                        new IntPtr((void*)&rin->Data.HID.RawData),
+                        rin->Data.HID.Size) != HidProtocolStatus.Success)
+                    {
+                        Debug.Print("[WinRawJoystick] HidProtocol.GetData() failed with {0}",
+                            Marshal.GetLastWin32Error());
+                        return false;
+                    }
+
+                    UpdateAxes(stick, caps, AxisCaps, axis_caps_count, DataBuffer);
+                    UpdateButtons(stick, caps, ButtonCaps, button_caps_count, DataBuffer);
+                    return true;
                 }
             }
 
-            UpdateAxes(stick, caps, AxisCaps, axis_caps_count, DataBuffer);
-            UpdateButtons(stick, caps, ButtonCaps, button_caps_count, DataBuffer);
-
-            return true;
+            return false;
         }
 
         #endregion
