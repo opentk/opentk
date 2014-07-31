@@ -94,6 +94,7 @@ namespace OpenTK.Platform.Windows
     using TIMERPROC = Functions.TimerProc;
 
     using REGSAM = System.UInt32;
+    using System.Diagnostics;
 
     #endregion
 
@@ -1646,6 +1647,52 @@ namespace OpenTK.Platform.Windows
             INT SizeHeader
         );
 
+        internal static int GetRawInputData(IntPtr raw, out RawInputHeader header)
+        {
+            int size = RawInputHeader.SizeInBytes;
+            unsafe
+            {
+                fixed (RawInputHeader* pheader = &header)
+                {
+                    if (GetRawInputData(raw, GetRawInputDataEnum.HEADER,
+                        (IntPtr)pheader, ref size, API.RawInputHeaderSize) != RawInputHeader.SizeInBytes)
+                    {
+                        Debug.Print("[Error] Failed to retrieve raw input header. Error: {0}",
+                            Marshal.GetLastWin32Error());
+                    }
+                }
+            }
+            return size;
+        }
+
+        internal static int GetRawInputData(IntPtr raw, out RawInput data)
+        {
+            int size = RawInput.SizeInBytes;
+            unsafe
+            {
+                fixed (RawInput* pdata = &data)
+                {
+                    GetRawInputData(raw, GetRawInputDataEnum.INPUT,
+                        (IntPtr)pdata, ref size, API.RawInputHeaderSize);
+                }
+            }
+            return size;
+        }
+
+        internal static int GetRawInputData(IntPtr raw, byte[] data)
+        {
+            int size = data.Length;
+            unsafe
+            {
+                fixed (byte* pdata = data)
+                {
+                    GetRawInputData(raw, GetRawInputDataEnum.INPUT,
+                        (IntPtr)pdata, ref size, API.RawInputHeaderSize);
+                }
+            }
+            return size;
+        }
+
         #endregion
 
         #region IntPtr NextRawInputStructure(IntPtr data)
@@ -2529,6 +2576,9 @@ namespace OpenTK.Platform.Windows
     {
         public RawInputHeader Header;
         public RawInputData Data;
+
+        public static readonly int SizeInBytes =
+            BlittableValueType<RawInput>.Stride;
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -2540,6 +2590,9 @@ namespace OpenTK.Platform.Windows
         internal RawKeyboard Keyboard;
         [FieldOffset(0)]
         internal RawHID HID;
+
+        public static readonly int SizeInBytes =
+            BlittableValueType<RawInputData>.Stride;
     }
 
     #endregion
@@ -2572,6 +2625,9 @@ namespace OpenTK.Platform.Windows
         /// Value passed in the wParam parameter of the WM_INPUT message.
         /// </summary>
         internal WPARAM Param;
+
+        public static readonly int SizeInBytes =
+            BlittableValueType<RawInputHeader>.Stride;
     }
 
     #endregion
