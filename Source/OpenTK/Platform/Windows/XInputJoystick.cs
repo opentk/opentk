@@ -60,29 +60,60 @@ namespace OpenTK.Platform.Windows
 
                 state.SetAxis(JoystickAxis.Axis0, xstate.GamePad.ThumbLX);
                 state.SetAxis(JoystickAxis.Axis1, xstate.GamePad.ThumbLY);
-                state.SetAxis(JoystickAxis.Axis2, xstate.GamePad.ThumbRX);
-                state.SetAxis(JoystickAxis.Axis3, xstate.GamePad.ThumbRY);
-                state.SetAxis(JoystickAxis.Axis4, xstate.GamePad.LeftTrigger);
-                state.SetAxis(JoystickAxis.Axis5, xstate.GamePad.RightTrigger);
+                state.SetAxis(JoystickAxis.Axis2, (short)Common.HidHelper.ScaleValue(xstate.GamePad.LeftTrigger, 0, byte.MaxValue, 0, short.MaxValue));
+                state.SetAxis(JoystickAxis.Axis3, xstate.GamePad.ThumbRX);
+                state.SetAxis(JoystickAxis.Axis4, xstate.GamePad.ThumbRY);
+                state.SetAxis(JoystickAxis.Axis5, (short)Common.HidHelper.ScaleValue(xstate.GamePad.RightTrigger, 0, byte.MaxValue, 0, short.MaxValue));
 
-                state.SetButton(JoystickButton.Button0, (xstate.GamePad.Buttons & XInputButtons.DPadUp) != 0);
-                state.SetButton(JoystickButton.Button1, (xstate.GamePad.Buttons & XInputButtons.DPadDown) != 0);
-                state.SetButton(JoystickButton.Button2, (xstate.GamePad.Buttons & XInputButtons.DPadLeft) != 0);
-                state.SetButton(JoystickButton.Button3, (xstate.GamePad.Buttons & XInputButtons.DPadRight) != 0);
-                state.SetButton(JoystickButton.Button4, (xstate.GamePad.Buttons & XInputButtons.Start) != 0);
-                state.SetButton(JoystickButton.Button5, (xstate.GamePad.Buttons & XInputButtons.Back) != 0);
-                state.SetButton(JoystickButton.Button6, (xstate.GamePad.Buttons & XInputButtons.LeftThumb) != 0);
-                state.SetButton(JoystickButton.Button7, (xstate.GamePad.Buttons & XInputButtons.RightThumb) != 0);
-                state.SetButton(JoystickButton.Button8, (xstate.GamePad.Buttons & XInputButtons.LeftShoulder) != 0);
-                state.SetButton(JoystickButton.Button9, (xstate.GamePad.Buttons & XInputButtons.RightShoulder) != 0);
-                state.SetButton(JoystickButton.Button10, (xstate.GamePad.Buttons & XInputButtons.A) != 0);
-                state.SetButton(JoystickButton.Button11, (xstate.GamePad.Buttons & XInputButtons.B) != 0);
-                state.SetButton(JoystickButton.Button12, (xstate.GamePad.Buttons & XInputButtons.X) != 0);
-                state.SetButton(JoystickButton.Button13, (xstate.GamePad.Buttons & XInputButtons.Y) != 0);
-                state.SetButton(JoystickButton.Button14, (xstate.GamePad.Buttons & XInputButtons.Guide) != 0);
+                state.SetButton(JoystickButton.Button0, (xstate.GamePad.Buttons & XInputButtons.A) != 0);
+                state.SetButton(JoystickButton.Button1, (xstate.GamePad.Buttons & XInputButtons.B) != 0);
+                state.SetButton(JoystickButton.Button2, (xstate.GamePad.Buttons & XInputButtons.X) != 0);
+                state.SetButton(JoystickButton.Button3, (xstate.GamePad.Buttons & XInputButtons.Y) != 0);
+                state.SetButton(JoystickButton.Button4, (xstate.GamePad.Buttons & XInputButtons.LeftShoulder) != 0);
+                state.SetButton(JoystickButton.Button5, (xstate.GamePad.Buttons & XInputButtons.RightShoulder) != 0);
+                state.SetButton(JoystickButton.Button6, (xstate.GamePad.Buttons & XInputButtons.Back) != 0);
+                state.SetButton(JoystickButton.Button7, (xstate.GamePad.Buttons & XInputButtons.Start) != 0);
+                state.SetButton(JoystickButton.Button8, (xstate.GamePad.Buttons & XInputButtons.LeftThumb) != 0);
+                state.SetButton(JoystickButton.Button9, (xstate.GamePad.Buttons & XInputButtons.RightThumb) != 0);
+                state.SetButton(JoystickButton.Button10, (xstate.GamePad.Buttons & XInputButtons.Guide) != 0);
+
+                state.SetHat(JoystickHat.Hat0, new JoystickHatState(TranslateHat(xstate.GamePad.Buttons)));
             }
 
             return state;
+        }
+
+        private HatPosition TranslateHat(XInputButtons buttons)
+        {
+            XInputButtons dir = 0;
+
+            dir =XInputButtons.DPadUp | XInputButtons.DPadLeft;
+            if ((buttons & dir) == dir)
+                return HatPosition.UpLeft;
+            dir = XInputButtons.DPadUp | XInputButtons.DPadRight;
+            if ((buttons & dir) == dir)
+                return HatPosition.UpRight;
+            dir = XInputButtons.DPadDown | XInputButtons.DPadLeft;
+            if ((buttons & dir) == dir)
+                return HatPosition.DownLeft;
+            dir = XInputButtons.DPadDown | XInputButtons.DPadRight;
+            if ((buttons & dir) == dir)
+                return HatPosition.DownRight;
+
+            dir = XInputButtons.DPadUp;
+            if ((buttons & dir) == dir)
+                return HatPosition.Up;
+            dir = XInputButtons.DPadRight;
+            if ((buttons & dir) == dir)
+                return HatPosition.Right;
+            dir = XInputButtons.DPadDown;
+            if ((buttons & dir) == dir)
+                return HatPosition.Down;
+            dir = XInputButtons.DPadLeft;
+            if ((buttons & dir) == dir)
+                return HatPosition.Left;
+
+            return HatPosition.Centered;
         }
 
         public JoystickCapabilities GetCapabilities(int index)
