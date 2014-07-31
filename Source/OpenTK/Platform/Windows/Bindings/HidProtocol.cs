@@ -125,9 +125,27 @@ namespace OpenTK.Platform.Windows
         Feature
     }
 
-    enum HidProtocolStatus
+    enum HidProtocolStatus : uint
     {
         Success = 0x00110000,
+        Null = 0x80110001,
+        InvalidPreparsedData = 0xc0110001,
+        InvalidReportType = 0xc0110002,
+        InvalidReportLength = 0xc0110003,
+        UsageNotFound = 0xc0110004,
+        ValueOutOfRange = 0xc0110005,
+        BadLogPhyValues = 0xc0110006,
+        BufferTooSmall = 0xc0110007,
+        InternallError = 0xc0110008,
+        I8042TransNotKnown = 0xc0110009,
+        IncompatibleReportId = 0xc011000a,
+        NotValueArray = 0xc011000b,
+        IsValueArray = 0xc011000c,
+        DataIndexNotFound = 0xc011000d,
+        DataIndexOutOfRange = 0xc011000e,
+        ButtonNotPressed = 0xc011000f,
+        ReportDoesNotExist = 0xc0110010,
+        NotImplemented = 0xc0110020,
     }
 
     [StructLayout(LayoutKind.Explicit)]
