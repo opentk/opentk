@@ -220,7 +220,11 @@ namespace OpenTK.Platform.Windows
             }
 
             HidProtocolCaps caps;
-            if (!GetDeviceCaps(PreparsedData, out caps, ref AxisCaps, ref ButtonCaps))
+            int axis_caps_count;
+            int button_caps_count;
+            if (!GetDeviceCaps(PreparsedData, out caps,
+                ref AxisCaps, out axis_caps_count,
+                ref ButtonCaps, out button_caps_count))
             {
                 return false;
             }
@@ -253,8 +257,8 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            UpdateAxes(stick, caps, AxisCaps, DataBuffer);
-            UpdateButtons(stick, caps, ButtonCaps, DataBuffer);
+            UpdateAxes(stick, caps, AxisCaps, axis_caps_count, DataBuffer);
+            UpdateButtons(stick, caps, ButtonCaps, button_caps_count, DataBuffer);
 
             return true;
         }
@@ -297,16 +301,25 @@ namespace OpenTK.Platform.Windows
         JoystickCapabilities GetDeviceCaps(IntPtr handle)
         {
             HidProtocolCaps caps;
+            int axis_count;
+            int button_count;
+
             if (GetPreparsedData(handle, ref PreparsedData) &&
-                GetDeviceCaps(PreparsedData, out caps, ref AxisCaps, ref ButtonCaps))
+                GetDeviceCaps(PreparsedData, out caps,
+                    ref AxisCaps, out axis_count,
+                    ref ButtonCaps, out button_count))
             {
                 int axes = 0;
                 int dpads = 0;
                 int buttons = 0;
-                for (int i = 0; i < caps.NumberInputValueCaps; i++)
+
+                for (int i = 0; i < axis_count; i++)
                 {
                     if (AxisCaps[i].IsRange)
-                        continue; // Todo: range values not currently supported
+                    {
+                        Debug.Print("[WinRawJoystick] Range axis elements not implemented.");
+                        continue;
+                    }
 
                     switch (AxisCaps[i].UsagePage)
                     {
@@ -347,14 +360,41 @@ namespace OpenTK.Platform.Windows
                     }
                 }
 
-                return new JoystickCapabilities(axes, buttons, 0, true);
+                for (int i = 0; i < button_count; i++)
+                {
+                    bool is_range = ButtonCaps[i].IsRange;
+                    HIDPage page = ButtonCaps[i].UsagePage;
+                    switch (page)
+                    {
+                        case HIDPage.Button:
+                            if (is_range)
+                            {
+                                buttons += ButtonCaps[i].Range.UsageMax - ButtonCaps[i].Range.UsageMin + 1;
+                            }
+                            else
+                            {
+                                buttons++;
+                            }
+                            break;
+
+                        default:
+                            Debug.Print("[WinRawJoystick] Unknown HIDPage {0} for button.", page);
+                            break;
+                    }
+                }
+
+                    return new JoystickCapabilities(axes, buttons, dpads, true);
             }
             return new JoystickCapabilities();
         }
 
         static bool GetDeviceCaps(byte[] preparsed_data, out HidProtocolCaps caps,
-            ref HidProtocolValueCaps[] axes, ref HidProtocolButtonCaps[] buttons)
+            ref HidProtocolValueCaps[] axis_caps, out int axis_caps_count,
+            ref HidProtocolButtonCaps[] button_caps, out int button_caps_count)
         {
+            axis_caps_count = 0;
+            button_caps_count = 0;
+
             // Query joystick capabilities
             caps = new HidProtocolCaps();
             if (HidProtocol.GetCaps(preparsed_data, ref caps) != HidProtocolStatus.Success)
@@ -365,34 +405,38 @@ namespace OpenTK.Platform.Windows
             }
 
             // Make sure our caps arrays are big enough
-            if (axes.Length < caps.NumberInputValueCaps)
+            if (axis_caps.Length < caps.NumberInputValueCaps)
             {
-                Array.Resize(ref axes, caps.NumberInputValueCaps);
+                Array.Resize(ref axis_caps, caps.NumberInputValueCaps);
             }
-            if (buttons.Length < caps.NumberInputButtonCaps)
+            if (button_caps.Length < caps.NumberInputButtonCaps)
             {
-                Array.Resize(ref buttons, caps.NumberInputButtonCaps);
+                Array.Resize(ref button_caps, caps.NumberInputButtonCaps);
             }
 
             // Axis capabilities
+            ushort axis_count = (ushort)axis_caps.Length;
             if (HidProtocol.GetValueCaps(HidProtocolReportType.Input,
-                axes, ref caps.NumberInputValueCaps, preparsed_data) !=
+                axis_caps, ref axis_count, preparsed_data) !=
                 HidProtocolStatus.Success)
             {
                 Debug.Print("[WinRawJoystick] HidProtocol.GetValueCaps() failed with {0}",
                     Marshal.GetLastWin32Error());
                 return false;
             }
+            axis_caps_count = (int)axis_count;
 
             // Button capabilities
+            ushort button_count = (ushort)button_caps.Length;
             if (HidProtocol.GetButtonCaps(HidProtocolReportType.Input,
-                buttons, ref caps.NumberInputButtonCaps, preparsed_data) !=
+                button_caps, ref button_count, preparsed_data) !=
                 HidProtocolStatus.Success)
             {
                 Debug.Print("[WinRawJoystick] HidProtocol.GetButtonCaps() failed with {0}",
                     Marshal.GetLastWin32Error());
                 return false;
             }
+            button_caps_count = (int)button_count;
 
             return true;
         }
@@ -443,11 +487,11 @@ namespace OpenTK.Platform.Windows
             return guid;
         }
 
-        static void UpdateAxes(Device stick, HidProtocolCaps caps, HidProtocolValueCaps[] axes, HidProtocolData[] data)
+        static void UpdateAxes(Device stick, HidProtocolCaps caps, HidProtocolValueCaps[] axes, int axes_count, HidProtocolData[] data)
         {
             // Use the data indices in the axis and button caps arrays to
             // access the data buffer we just filled.
-            for (int i = 0; i < caps.NumberInputValueCaps; i++)
+            for (int i = 0; i < axes_count; i++)
             {
                 if (!axes[i].IsRange)
                 {
@@ -480,9 +524,9 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        unsafe static void UpdateButtons(Device stick, HidProtocolCaps caps, HidProtocolButtonCaps[] buttons, HidProtocolData[] data)
+        unsafe static void UpdateButtons(Device stick, HidProtocolCaps caps, HidProtocolButtonCaps[] buttons, int buttons_count, HidProtocolData[] data)
         {
-            for (int i = 0; i < caps.NumberInputButtonCaps; i++)
+            for (int i = 0; i < buttons_count; i++)
             {
                 if (!buttons[i].IsRange)
                 {
