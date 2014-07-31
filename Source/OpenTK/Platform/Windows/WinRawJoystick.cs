@@ -50,6 +50,8 @@ namespace OpenTK.Platform.Windows
                 new List<HidProtocolValueCaps>();
             internal readonly List<HidProtocolButtonCaps> ButtonCaps =
                 new List<HidProtocolButtonCaps>();
+            internal readonly bool IsXInput;
+            internal readonly int XInputIndex;
 
             readonly Dictionary<int, JoystickAxis> axes =
                 new Dictionary<int,JoystickAxis>();
@@ -60,10 +62,12 @@ namespace OpenTK.Platform.Windows
 
             #region Constructors
 
-            public Device(IntPtr handle, Guid guid)
+            public Device(IntPtr handle, Guid guid, bool is_xinput, int xinput_index)
             {
                 Handle = handle;
                 Guid = guid;
+                IsXInput = is_xinput;
+                XInputIndex = xinput_index;
             }
 
             #endregion
@@ -165,6 +169,8 @@ namespace OpenTK.Platform.Windows
             #endregion
         }
 
+        XInputJoystick XInput = new XInputJoystick();
+
         // Defines which types of HID devices we are interested in
         readonly RawInputDevice[] DeviceTypes;
 
@@ -218,6 +224,7 @@ namespace OpenTK.Platform.Windows
             }
 
             // Discover joystick devices
+            int xinput_device_count = 0;
             foreach (RawInputDeviceList dev in WinRawInput.GetDeviceList())
             {
                 // Skip non-joystick devices
@@ -232,7 +239,8 @@ namespace OpenTK.Platform.Windows
                 // because it is costly to query (and we need to query
                 // that every time we process a device event.)
                 IntPtr handle = dev.Device;
-                Guid guid = GetDeviceGuid(handle);
+                bool is_xinput;
+                Guid guid = GetDeviceGuid(handle, out is_xinput);
                 long hardware_id = handle.ToInt64();
 
                 Device device = Devices.FromHardwareId(hardware_id);
@@ -243,7 +251,8 @@ namespace OpenTK.Platform.Windows
                 }
                 else
                 {
-                    device = new Device(handle, guid);
+                    device = new Device(handle, guid, is_xinput,
+                        is_xinput ? xinput_device_count++ : 0);
 
                     // This is a new device, query its capabilities and add it
                     // to the device list
@@ -297,6 +306,11 @@ namespace OpenTK.Platform.Windows
                     {
                         Debug.Print("[WinRawJoystick] Unknown device {0}", handle);
                         return false;
+                    }
+
+                    if (stick.IsXInput)
+                    {
+                        return true;
                     }
 
                     if (!GetPreparsedData(handle, ref PreparsedData))
@@ -589,8 +603,9 @@ namespace OpenTK.Platform.Windows
 
         // Retrieves the GUID of a device, which is stored
         // in the last part of the DEVICENAME string
-        Guid GetDeviceGuid(IntPtr handle)
+        Guid GetDeviceGuid(IntPtr handle, out bool is_xinput)
         {
+            is_xinput = false;
             Guid guid = new Guid();
 
             unsafe
@@ -628,6 +643,8 @@ namespace OpenTK.Platform.Windows
                 {
                     guid = new Guid(parts[3]);
                 }
+
+                is_xinput = name.Contains("IG_");
             }
 
             return guid;
@@ -669,7 +686,15 @@ namespace OpenTK.Platform.Windows
             {
                 if (IsValid(index))
                 {
-                    return Devices.FromIndex(index).GetState();
+                    Device dev = Devices.FromIndex(index);
+                    if (dev.IsXInput)
+                    {
+                        return XInput.GetState(dev.XInputIndex);
+                    }
+                    else
+                    {
+                        return dev.GetState();
+                    }
                 }
                 return new JoystickState();
             }
@@ -681,7 +706,15 @@ namespace OpenTK.Platform.Windows
             {
                 if (IsValid(index))
                 {
-                    return Devices.FromIndex(index).GetCapabilities();
+                    Device dev = Devices.FromIndex(index);
+                    if (dev.IsXInput)
+                    {
+                        return XInput.GetCapabilities(dev.XInputIndex);
+                    }
+                    else
+                    {
+                        return dev.GetCapabilities();
+                    }
                 }
                 return new JoystickCapabilities();
             }
@@ -693,7 +726,15 @@ namespace OpenTK.Platform.Windows
             {
                 if (IsValid(index))
                 {
-                    return Devices.FromIndex(index).GetGuid();
+                    Device dev = Devices.FromIndex(index);
+                    if (dev.IsXInput)
+                    {
+                        return XInput.GetGuid(dev.XInputIndex);
+                    }
+                    else
+                    {
+                        return dev.GetGuid();
+                    }
                 }
                 return new Guid();
             }
