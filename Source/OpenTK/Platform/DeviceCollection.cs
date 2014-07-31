@@ -41,7 +41,7 @@ namespace OpenTK.Platform
     //        that is added.
     class DeviceCollection<T> : IEnumerable<T>
     {
-        readonly Dictionary<int, int> Map = new Dictionary<int, int>();
+        readonly Dictionary<long, int> Map = new Dictionary<long, int>();
         readonly List<T> Devices = new List<T>();
 
         #region IEnumerable<T> Members
@@ -64,7 +64,15 @@ namespace OpenTK.Platform
 
         #region Public Members
 
-        public void Add(int id, T device)
+        /// \internal
+        /// <summary>
+        /// Adds or replaces a device based on its hardware id.
+        /// A zero-based device index will be generated automatically
+        /// for the first available device slot.
+        /// </summary>
+        /// <param name="id">The hardware id for the device.</param>
+        /// <param name="device">The device instance.</param>
+        public void Add(long id, T device)
         {
             if (!Map.ContainsKey(id))
             {
@@ -107,7 +115,7 @@ namespace OpenTK.Platform
             }
         }
 
-        public T FromHardwareId(int id)
+        public T FromHardwareId(long id)
         {
             if (Map.ContainsKey(id))
             {
