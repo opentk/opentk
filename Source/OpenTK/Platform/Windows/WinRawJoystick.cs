@@ -171,9 +171,7 @@ namespace OpenTK.Platform.Windows
             #endregion
         }
 
-#if DEBUG
         static readonly string TypeName = typeof(WinRawJoystick).Name;
-#endif
 
         XInputJoystick XInput = new XInputJoystick();
 
