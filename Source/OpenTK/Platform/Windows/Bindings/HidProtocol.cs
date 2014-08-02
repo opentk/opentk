@@ -258,7 +258,7 @@ namespace OpenTK.Platform.Windows
         [FieldOffset(2)] public byte ReportID;
         [FieldOffset(3), MarshalAs(UnmanagedType.U1)] public bool IsAlias;
         [FieldOffset(4)] public ushort BitField;
-        [FieldOffset(6)] public ushort LinkCollection;
+        [FieldOffset(6)] public short LinkCollection;
         [FieldOffset(8)] public ushort LinkUsage;
         [FieldOffset(10)] public ushort LinkUsagePage;
         [FieldOffset(12), MarshalAs(UnmanagedType.U1)] public bool IsRange;
