@@ -29,6 +29,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
@@ -36,6 +37,10 @@ namespace OpenTK.Platform.Linux
     // Bindings for linux/input.h
     class Evdev
     {
+        public const int KeyCount = 0x300;
+        public const int AxisCount = 0x40;
+        public const int EventCount = (int)EvdevType.CNT;
+
         #region KeyMap
 
         public static readonly Key[] KeyMap = new Key[]
@@ -365,9 +370,101 @@ namespace OpenTK.Platform.Linux
                     return MouseButton.Left;
             }
         }
+
+        static uint IOCreate(DirectionFlags dir, int number, int length)
+        {
+            long v =
+                ((byte)dir << 30) |
+                ((byte)'E' << 8) |
+                (number << 0) |
+                (length << 16);
+            return (uint)v;
+        }
+
+        public static int GetBit(int fd, EvdevType ev, int length, IntPtr data)
+        {
+            // EVIOCGBIT = _IOC(_IOC_READ, 'E', 0x20 + (ev), len)
+            uint ioctl = IOCreate(DirectionFlags.Read, (int)ev + 0x20, length);
+            int retval = Libc.ioctl(fd, ioctl, data);
+            return retval;
+        }
+
+        public static int GetName(int fd, out string name)
+        {
+            unsafe
+            {
+                sbyte* pname = stackalloc sbyte[129];
+                int ret = Libc.ioctl(fd, EvdevIoctl.Name128, new IntPtr(pname));
+                name = new string(pname);
+                return ret;
+            }
+        }
+
+        public static int GetId(int fd, out EvdevInputId id)
+        {
+            id = default(EvdevInputId);
+            unsafe
+            {
+                fixed (EvdevInputId* pid = &id)
+                {
+                    return Libc.ioctl(fd, EvdevIoctl.Id, new IntPtr(pid));
+                }
+            }
+        }
     }
 
-    enum EvdevButton : uint
+    enum EvdevAxis
+    {
+        X           = 0x00,
+        Y           = 0x01,
+        Z           = 0x02,
+        RX          = 0x03,
+        RY          = 0x04,
+        RZ          = 0x05,
+        THROTTLE    = 0x06,
+        RUDDER      = 0x07,
+        WHEEL       = 0x08,
+        GAS         = 0x09,
+        BRAKE       = 0x0a,
+        HAT0X       = 0x10,
+        HAT0Y       = 0x11,
+        HAT1X       = 0x12,
+        HAT1Y       = 0x13,
+        HAT2X       = 0x14,
+        HAT2Y       = 0x15,
+        HAT3X       = 0x16,
+        HAT3Y       = 0x17,
+        PRESSURE    = 0x18,
+        DISTANCE    = 0x19,
+        TILT_X      = 0x1a,
+        TILT_Y      = 0x1b,
+        TOOL_WIDTH  = 0x1c,
+
+        VOLUME      = 0x20,
+
+        MISC        = 0x28,
+
+        MT_SLOT     = 0x2f,    /* MT slot being modified */
+        MT_TOUCH_MAJOR  = 0x30,    /* Major axis of touching ellipse */
+        MT_TOUCH_MINOR  = 0x31,    /* Minor axis (omit if circular) */
+        MT_WIDTH_MAJOR  = 0x32,    /* Major axis of approaching ellipse */
+        MT_WIDTH_MINOR  = 0x33,    /* Minor axis (omit if circular) */
+        MT_ORIENTATION  = 0x34,    /* Ellipse orientation */
+        MT_POSITION_X   = 0x35,    /* Center X touch position */
+        MT_POSITION_Y   = 0x36,    /* Center Y touch position */
+        MT_TOOL_TYPE    = 0x37,    /* Type of touching device */
+        MT_BLOB_ID      = 0x38,    /* Group a set of packets as a blob */
+        MT_TRACKING_ID  = 0x39,    /* Unique ID of initiated contact */
+        MT_PRESSURE     = 0x3a,    /* Pressure on contact area */
+        MT_DISTANCE     = 0x3b,    /* Contact hover distance */
+        MT_TOOL_X       = 0x3c,    /* Center X tool position */
+        MT_TOOL_Y       = 0x3d,    /* Center Y tool position */
+
+        MAX         = 0x3f,
+        CNT         = (MAX+1),
+    }
+
+    enum EvdevButton
     {
         MISC        = 0x100,
         BTN0        = 0x100,
@@ -447,6 +544,64 @@ namespace OpenTK.Platform.Linux
         WHEEL       = 0x150,
         GEAR_DOWN   = 0x150,
         GEAR_UP     = 0x151,
+
+        DPAD_UP     = 0x220,
+        DPAD_DOWN   = 0x221,
+        DPAD_LEFT   = 0x222,
+        DPAD_RIGHT  = 0x223,
+
+        Last = 0x300,
+    }
+
+    enum EvdevType : byte
+    {
+        SYN = 0x00,
+        KEY = 0x01,
+        REL = 0x02,
+        ABS = 0x03,
+        MSC = 0x04,
+        SW =  0x05,
+        LED = 0x11,
+        SND = 0x12,
+        REP = 0x14,
+        FF =  0x15,
+        PWR = 0x16,
+        FF_STATUS = 0x17,
+        MAX = 0x1f,
+        CNT = (MAX+1),
+    }
+
+    enum EvdevIoctl : uint
+    {
+        Id = (2u << 30) | ((byte)'E' << 8) | (0x02u << 0) | (8u << 16), //EVIOCGID = _IOR('E', 0x02, struct input_id)
+        Name128 = (2u << 30) | ((byte)'E' << 8) | (0x06u << 0) | (128u << 16), //EVIOCGNAME(len) = _IOC(_IOC_READ, 'E', 0x06, len)
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct InputId
+    {
+        public ushort BusType;
+        public ushort Vendor;
+        public ushort Product;
+        public ushort Version;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct InputEvent
+    {
+        public TimeVal Time;
+        ushort type;
+        public ushort Code;
+        public int Value;
+
+        public EvdevType Type { get { return (EvdevType)type; } }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct TimeVal
+    {
+        public IntPtr Seconds;
+        public IntPtr MicroSeconds;
     }
 }
 
