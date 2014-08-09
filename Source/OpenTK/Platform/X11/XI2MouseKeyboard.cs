@@ -402,6 +402,13 @@ namespace OpenTK.Platform.X11
                                                         Debug.WriteLine("\tRelative Y movement");
                                                         d.MotionY = *valuator;
                                                     }
+                                                    else
+                                                    {
+                                                        IntPtr label = Functions.XGetAtomName(window.Display, valuator->label);
+                                                        Debug.Print("\tUnknown valuator {0}",
+                                                            Marshal.PtrToStringAnsi(label));
+                                                        Functions.XFree(label);
+                                                    }
                                                 }
                                                 break;
                                         }
@@ -555,10 +562,18 @@ namespace OpenTK.Platform.X11
         {
             // Note: we use the raw values here, without pointer
             // ballistics and any other modification.
-            double x = ReadRawValue(ref raw, d.MotionX.number);
-            double y = ReadRawValue(ref raw, d.MotionY.number);
-            double h = ReadRawValue(ref raw, d.ScrollX.number) / d.ScrollX.increment;
-            double v = ReadRawValue(ref raw, d.ScrollY.number) / d.ScrollY.increment;
+            double x = 0;
+            double y = 0;
+            double h = 0;
+            double v = 0;
+            if (d.MotionX.number != -1)
+                x = ReadRawValue(ref raw, d.MotionX.number);
+            if (d.MotionY.number != -1)
+                y = ReadRawValue(ref raw, d.MotionY.number);
+            if (d.ScrollX.number != -1)
+                h = ReadRawValue(ref raw, d.ScrollX.number) / d.ScrollX.increment;
+            if (d.ScrollY.number != -1)
+                v = ReadRawValue(ref raw, d.ScrollY.number) / d.ScrollY.increment;
 
             d.State.X += (int)Math.Round(x);
             d.State.Y += (int)Math.Round(y);
