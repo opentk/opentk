@@ -136,4 +136,10 @@ namespace OpenTK.Platform.X11
         SlaveKeyboard = 4,
         FloatingSlave = 5,
     }
+
+    enum XIMode
+    {
+        Relative = 0,
+        Absolute = 1
+    }
 }

@@ -1732,7 +1732,7 @@ namespace OpenTK.Platform.X11
         public double max;
         public double value;
         public int resolution;
-        public int mode;
+        public XIMode mode;
     }
 
     struct XIDeviceEvent
