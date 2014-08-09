@@ -1527,21 +1527,22 @@ namespace OpenTK.Platform.SDL2
 
     struct JoystickGuid
     {
-        unsafe fixed byte data[16];
+        long data0;
+        long data1;
 
         public Guid ToGuid()
         {
-            byte[] bytes = new byte[16];
+            byte[] data = new byte[16];
 
             unsafe
             {
-                fixed (byte* pdata = data)
+                fixed (JoystickGuid* pdata = &this)
                 {
-                    Marshal.Copy(new IntPtr(pdata), bytes, 0, bytes.Length); 
+                    Marshal.Copy(new IntPtr(pdata), data, 0, data.Length); 
                 }
             }
 
-            return new Guid(bytes);
+            return new Guid(data);
         }
     }
 
