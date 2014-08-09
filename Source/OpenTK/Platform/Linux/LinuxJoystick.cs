@@ -35,6 +35,12 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
 {
+    struct AxisInfo
+    {
+        public JoystickAxis Axis;
+        public InputAbsInfo Info;
+    }
+
     class LinuxJoystickDetails
     {
         public Guid Guid;
@@ -44,17 +50,22 @@ namespace OpenTK.Platform.Linux
         public JoystickState State;
         public JoystickCapabilities Caps;
 
-        public readonly Dictionary<EvdevAxis, JoystickAxis> AxisMap =
-            new Dictionary<EvdevAxis, JoystickAxis>();
+        public readonly Dictionary<EvdevAxis, AxisInfo> AxisMap =
+            new Dictionary<EvdevAxis, AxisInfo>();
         public readonly Dictionary<EvdevButton, JoystickButton> ButtonMap =
             new Dictionary<EvdevButton, JoystickButton>();
-        public readonly Dictionary<int, JoystickHat> HatMap =
-            new Dictionary<int, JoystickHat>();
     }
 
     sealed class LinuxJoystick : IJoystickDriver2
     {
         #region Fields
+
+        static readonly HatPosition[,] HatPositions = new HatPosition[,]
+        {
+            { HatPosition.UpLeft, HatPosition.Up, HatPosition.UpRight },
+            { HatPosition.Left, HatPosition.Centered, HatPosition.Right },
+            { HatPosition.DownLeft, HatPosition.Down, HatPosition.DownRight }
+        };
 
         readonly object sync = new object();
 
@@ -141,7 +152,6 @@ namespace OpenTK.Platform.Linux
                     if (stick != null)
                     {
                         CloseJoystick(stick);
-                        Sticks.TryRemove(number);
                     }
                 }
             }
@@ -198,77 +208,53 @@ namespace OpenTK.Platform.Linux
             return (*(ptr + byte_offset) & (1 << bit_offset)) != 0;
         }
 
-        unsafe static int AddAxes(LinuxJoystickDetails stick, byte* axisbit, int bytecount)
+        unsafe static void QueryCapabilities(LinuxJoystickDetails stick,
+            byte* axisbit, int axisbytes,
+            byte* keybit, int keybytes,
+            out int axes, out int buttons, out int hats)
         {
-            JoystickAxis axes = 0;
-            JoystickHat hats = 0;
-            int bitcount = bytecount * 8;
-            for (EvdevAxis axis = 0; axis < EvdevAxis.CNT && (int)axis < bitcount; axis++)
-            {
-                if (axis >= EvdevAxis.HAT0X && axis <= EvdevAxis.HAT3Y)
-                {
-                    // Axis is analogue hat - skip
-                    continue;
-                }
+            // Note: since we are trying to be compatible with the SDL2 gamepad database,
+            // we have to match SDL2 behavior bug-for-bug. This means:
+            // HAT0-HAT3 are all reported as hats (even if the docs say that HAT1 and HAT2 can be analogue triggers)
+            // DPAD buttons are reported as buttons, not as hats (unlike Windows and Mac OS X)
 
-                if (TestBit(axisbit, (int)axis))
+            axes = buttons = hats = 0;
+            for (EvdevAxis axis = 0; axis < EvdevAxis.CNT && (int)axis < axisbytes * 8; axis++)
+            {
+                InputAbsInfo info;
+                bool is_valid = true;
+                is_valid &= TestBit(axisbit, (int)axis);
+                is_valid &= Evdev.GetAbs(stick.FileDescriptor, axis, out info) >= 0;
+                if (is_valid)
                 {
-                    stick.AxisMap.Add(axis, axes++);
-                }
-                else
-                {
-                    stick.AxisMap.Add(axis, (JoystickAxis)(-1));
+                    if (axis >= EvdevAxis.HAT0X && axis <= EvdevAxis.HAT3Y)
+                    {
+                        // Analogue hat
+                        stick.AxisMap.Add(axis, new AxisInfo
+                        {
+                            Axis = (JoystickAxis)(JoystickHat)hats++,
+                            Info = info
+                        });
+                    }
+                    else
+                    {
+                        // Regular axis
+                        stick.AxisMap.Add(axis, new AxisInfo
+                        {
+                            Axis = (JoystickAxis)axes++,
+                            Info = info
+                        });
+                    }
                 }
             }
-            return (int)axes;
-        }
 
-        unsafe static int AddButtons(LinuxJoystickDetails stick, byte* keybit, int bytecount)
-        {
-            JoystickButton buttons = 0;
-            int bitcount = bytecount * 8;
-            for (EvdevButton button = 0; button < EvdevButton.Last && (int)button < bitcount; button++)
+            for (EvdevButton button = 0; button < EvdevButton.Last && (int)button < keybytes * 8; button++)
             {
-                if (button >= EvdevButton.DPAD_UP && button <= EvdevButton.DPAD_RIGHT)
-                {
-                    // Button is dpad (hat) - skip
-                    continue;
-                }
-
                 if (TestBit(keybit, (int)button))
                 {
-                    stick.ButtonMap.Add(button, buttons++);
-                }
-                else
-                {
-                    stick.ButtonMap.Add(button, (JoystickButton)(-1));
+                    stick.ButtonMap.Add(button, (JoystickButton)buttons++);
                 }
             }
-            return (int)buttons;
-        }
-
-        unsafe static int AddHats(LinuxJoystickDetails stick,
-            byte* axisbit, int axiscount,
-            byte* keybit, int keycount)
-        {
-            JoystickHat hats = 0;
-            for (EvdevAxis hat = EvdevAxis.HAT0X; hat < EvdevAxis.HAT3Y && (int)hat < axiscount * 8; hat++)
-            {
-                if (TestBit(axisbit, (int)hat))
-                {
-                    stick.HatMap.Add((int)hat, hats++);
-                }
-            }
-
-            for (EvdevButton dpad = EvdevButton.DPAD_UP; dpad < EvdevButton.DPAD_RIGHT && (int)dpad < keycount * 8; dpad++)
-            {
-                if (TestBit(axisbit, (int)dpad))
-                {
-                    stick.HatMap.Add((int)dpad, hats++);
-                }
-            }
-
-            return (int)hats;
         }
 
         LinuxJoystickDetails OpenJoystick(string path)
@@ -322,12 +308,15 @@ namespace OpenTK.Platform.Linux
                                 Name = name,
                                 Guid = CreateGuid(id, name),
                             };
-                            stick.Caps = new JoystickCapabilities(
-                                AddAxes(stick, axisbit, axissize),
-                                AddButtons(stick, keybit, keysize),
-                                AddHats(stick, axisbit, axissize, keybit, keysize),
-                                true);
-                            stick.State.SetIsConnected(true);
+
+                            int axes, buttons, hats;
+                            QueryCapabilities(stick, axisbit, axissize, keybit, keysize,
+                                out axes, out buttons, out hats);
+
+                            stick.Caps = new JoystickCapabilities(axes, buttons, hats, true);
+
+                            // Poll the joystick once, to initialize its state
+                            PollJoystick(stick);
                         }
                     }
 
@@ -360,6 +349,11 @@ namespace OpenTK.Platform.Linux
             js.Caps = new JoystickCapabilities();
         }
 
+        JoystickHatState TranslateHat(int x, int y)
+        {
+            return new JoystickHatState(HatPositions[x, y]);
+        }
+
         void PollJoystick(LinuxJoystickDetails js)
         {
             unsafe
@@ -381,13 +375,71 @@ namespace OpenTK.Platform.Linux
                         switch (e->Type)
                         {
                             case EvdevType.ABS:
-                                break;
+                                {
+                                    AxisInfo axis;
+                                    if (js.AxisMap.TryGetValue((EvdevAxis)e->Code, out axis))
+                                    {
+                                        if (axis.Info.Maximum > axis.Info.Minimum)
+                                        {
+                                            if (e->Code >= (int)EvdevAxis.HAT0X && e->Code <= (int)EvdevAxis.HAT3Y)
+                                            {
+                                                // We currently treat analogue hats as digital hats
+                                                // to maintain compatibility with SDL2. We can do
+                                                // better than this, however.
+                                                JoystickHat hat = JoystickHat.Hat0 + (e->Code - (int)EvdevAxis.HAT0X) / 2;
+                                                JoystickHatState pos = js.State.GetHat(hat);
+                                                int xy_axis = (int)axis.Axis & 0x1;
+                                                switch (xy_axis)
+                                                {
+                                                    case 0:
+                                                        // X-axis
+                                                        pos = TranslateHat(
+                                                            e->Value.CompareTo(0) + 1,
+                                                            pos.IsUp ? 0 : pos.IsDown ? 2 : 1);
+                                                        break;
+
+                                                    case 1:
+                                                        // Y-axis
+                                                        pos = TranslateHat(
+                                                            pos.IsLeft ? 0 : pos.IsRight ? 2 : 1,
+                                                            e->Value.CompareTo(0) + 1);
+                                                        break;
+                                                }
+
+                                                js.State.SetHat(hat, pos);
+                                            }
+                                            else
+                                            {
+                                                // This axis represents a regular axis or trigger
+                                                js.State.SetAxis(
+                                                    axis.Axis,
+                                                    (short)Common.HidHelper.ScaleValue(e->Value,
+                                                        axis.Info.Minimum, axis.Info.Maximum,
+                                                        short.MinValue, short.MaxValue));
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
 
                             case EvdevType.KEY:
-                                break;
+                                {
+                                    JoystickButton button;
+                                    if (js.ButtonMap.TryGetValue((EvdevButton)e->Code, out button))
+                                    {
+                                        js.State.SetButton(button, e->Value != 0);
+                                    }
+                                    break;
+                                }
                         }
 
-                        //js.State.SetPacketNumber(unchecked((int)e->Time.Seconds));
+                        // Create a serial number (total seconds in 24.8 fixed point format)
+                        int sec = (int)((long)e->Time.Seconds & 0xffffffff);
+                        int msec = (int)e->Time.MicroSeconds / 1000;
+                        int packet =
+                            ((sec & 0x00ffffff) << 24) |
+                            Common.HidHelper.ScaleValue(msec, 0, 1000, 0, 255);
+                        js.State.SetPacketNumber(unchecked((int)e->Time.Seconds));
                     }
                 }
             }

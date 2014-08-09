@@ -381,6 +381,23 @@ namespace OpenTK.Platform.Linux
             return (uint)v;
         }
 
+        // Get absolute value / limits
+        public static int GetAbs(int fd, EvdevAxis axis, out InputAbsInfo info)
+        {
+            info = default(InputAbsInfo);
+            unsafe
+            {
+                fixed (InputAbsInfo* pinfo = &info)
+                {
+                    // EVIOCGABS(abs) = _IOR('E', 0x40 + (abs), struct input_absinfo)
+                    uint ioctl = IOCreate(DirectionFlags.Read, (int)axis + 0x40, BlittableValueType<InputAbsInfo>.Stride);
+                    int retval = Libc.ioctl(fd, ioctl, new IntPtr(pinfo));
+                    return retval;
+                }
+            }
+        }
+
+        // Get supported event bits
         public static int GetBit(int fd, EvdevType ev, int length, IntPtr data)
         {
             // EVIOCGBIT = _IOC(_IOC_READ, 'E', 0x20 + (ev), len)
@@ -576,6 +593,17 @@ namespace OpenTK.Platform.Linux
         Id = (2u << 30) | ((byte)'E' << 8) | (0x02u << 0) | (8u << 16), //EVIOCGID = _IOR('E', 0x02, struct input_id)
         Name128 = (2u << 30) | ((byte)'E' << 8) | (0x06u << 0) | (128u << 16), //EVIOCGNAME(len) = _IOC(_IOC_READ, 'E', 0x06, len)
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct InputAbsInfo
+    {
+        public int Value;
+        public int Minimum;
+        public int Maximum;
+        public int Fuzz;
+        public int Flat;
+        public int Resolution;
+    };
 
     [StructLayout(LayoutKind.Sequential)]
     struct InputId
