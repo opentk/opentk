@@ -60,21 +60,6 @@ namespace OpenTK.Platform.X11
             public string Name;
         }
 
-        // Atoms
-        //static readonly IntPtr ButtonLeft;
-        //static readonly IntPtr ButtonMiddle;
-        ////static readonly IntPtr ButtonRight;
-        //static readonly IntPtr ButtonWheelUp;
-        //static readonly IntPtr ButtonWheelDown;
-        //static readonly IntPtr ButtonWheelLeft;
-        //static readonly IntPtr ButtonWheelRight;
-        static readonly IntPtr RelX;
-        static readonly IntPtr RelY;
-        //static readonly IntPtr RelHorizScroll;
-        //static readonly IntPtr RelVertScroll;
-        //static readonly IntPtr RelHorizWheel;
-        //static readonly IntPtr RelVertWheel;
-
         long cursor_x, cursor_y; // For GetCursorState()
         List<XIMouse> devices = new List<XIMouse>(); // list of connected mice
         Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps hardware device ids to XIMouse ids
@@ -93,31 +78,6 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(API.DefaultDisplay))
             {
-                // Mouse
-                //ButtonLeft = Functions.XInternAtom(API.DefaultDisplay, "Button Left", false);
-                //ButtonMiddle = Functions.XInternAtom(API.DefaultDisplay, "Button Middle", false);
-                //ButtonRight = Functions.XInternAtom(API.DefaultDisplay, "Button Right", false);
-                //ButtonWheelUp = Functions.XInternAtom(API.DefaultDisplay, "Button Wheel Up", false);
-                //ButtonWheelDown = Functions.XInternAtom(API.DefaultDisplay, "Button Wheel Down", false);
-                //ButtonWheelLeft = Functions.XInternAtom(API.DefaultDisplay, "Button Horiz Wheel Left", false);
-                //ButtonWheelRight = Functions.XInternAtom(API.DefaultDisplay, "Button Horiz Wheel Right", false);
-                RelX = Functions.XInternAtom(API.DefaultDisplay, "Rel X", false);
-                RelY = Functions.XInternAtom(API.DefaultDisplay, "Rel Y", false);
-                //RelHorizWheel = Functions.XInternAtom(API.DefaultDisplay, "Rel Horiz Wheel", false);
-                //RelVertWheel = Functions.XInternAtom(API.DefaultDisplay, "Rel Vert Wheel", false);
-                //RelHorizScroll = Functions.XInternAtom(API.DefaultDisplay, "Rel Horiz Scroll", false);
-                //RelVertScroll = Functions.XInternAtom(API.DefaultDisplay, "Rel Vert Scroll", false);
-
-                // Multitouch
-                //TouchX = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Position X", false);
-                //TouchY = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Position Y", false);
-                //TouchMajor = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Touch Major", false);
-                //TouchMinor = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Touch Minor", false);
-                //TouchPressure = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Pressure", false);
-                //TouchId = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Tracking ID", false);
-                //TouchMaxContacts = Functions.XInternAtom(API.DefaultDisplay, "Max Contacts", false);
-
-                // Custom
                 ExitAtom = Functions.XInternAtom(API.DefaultDisplay, "Exit Input Thread Message", false);
             }
         }
@@ -391,16 +351,38 @@ namespace OpenTK.Platform.X11
 
                                             case XIClassType.Valuator:
                                                 {
+                                                    // We use relative x/y valuators for mouse movement.
+                                                    // Iff these are not available, we fall back to
+                                                    // absolute x/y valuators.
                                                     XIValuatorClassInfo* valuator = (XIValuatorClassInfo*)class_info;
-                                                    if (valuator->label == RelX)
+                                                    if (valuator->label == XI.RelativeX)
                                                     {
                                                         Debug.WriteLine("\tRelative X movement");
                                                         d.MotionX = *valuator;
                                                     }
-                                                    else if (valuator->label == RelY)
+                                                    else if (valuator->label == XI.RelativeY)
                                                     {
                                                         Debug.WriteLine("\tRelative Y movement");
                                                         d.MotionY = *valuator;
+                                                    }
+                                                    else if (valuator->label == XI.AbsoluteX)
+                                                    {
+                                                        Debug.WriteLine("\tAbsolute X movement");
+                                                        if (d.MotionX.number == -1)
+                                                            d.MotionX = *valuator;
+                                                    }
+                                                    else if (valuator->label == XI.AbsoluteY)
+                                                    {
+                                                        Debug.WriteLine("\tAbsolute X movement");
+                                                        if (d.MotionY.number == -1)
+                                                            d.MotionY = *valuator;
+                                                    }
+                                                    else
+                                                    {
+                                                        IntPtr label = Functions.XGetAtomName(window.Display, valuator->label);
+                                                        Debug.Print("\tUnknown valuator {0}",
+                                                            Marshal.PtrToStringAnsi(label));
+                                                        Functions.XFree(label);
                                                     }
                                                 }
                                                 break;
@@ -508,6 +490,8 @@ namespace OpenTK.Platform.X11
                                 float dx, dy;
                                 MouseButton button = X11KeyMap.TranslateButton(raw.detail, out dx, out dy);
                                 mouse.State[button] = raw.evtype == XIEventType.RawButtonPress;
+                                if (mouse.ScrollX.number == -1 && mouse.ScrollY.number == -1)
+                                    mouse.State.SetScrollRelative(dx, dy);
                             }
                             break;
 
@@ -555,13 +539,27 @@ namespace OpenTK.Platform.X11
         {
             // Note: we use the raw values here, without pointer
             // ballistics and any other modification.
-            double x = ReadRawValue(ref raw, d.MotionX.number);
-            double y = ReadRawValue(ref raw, d.MotionY.number);
-            double h = ReadRawValue(ref raw, d.ScrollX.number) / d.ScrollX.increment;
-            double v = ReadRawValue(ref raw, d.ScrollY.number) / d.ScrollY.increment;
+            double x = 0;
+            double y = 0;
+            double h = 0;
+            double v = 0;
+            if (d.MotionX.number != -1)
+                x = ReadRawValue(ref raw, d.MotionX.number);
+            if (d.MotionY.number != -1)
+                y = ReadRawValue(ref raw, d.MotionY.number);
+            if (d.ScrollX.number != -1)
+                h = ReadRawValue(ref raw, d.ScrollX.number) / d.ScrollX.increment;
+            if (d.ScrollY.number != -1)
+                v = ReadRawValue(ref raw, d.ScrollY.number) / d.ScrollY.increment;
 
-            d.State.X += (int)Math.Round(x);
-            d.State.Y += (int)Math.Round(y);
+            if (d.MotionX.mode == XIMode.Relative)
+                d.State.X += (int)Math.Round(x);
+            else
+                d.State.X = (int)Math.Round(x);
+            if (d.MotionY.mode == XIMode.Relative)
+                d.State.Y += (int)Math.Round(y);
+            else
+                d.State.Y = (int)Math.Round(y);
 
             // Note: OpenTK follows the windows scrolling convention where
             // (+h, +v) = (right, up). XI2 uses (+h, +v) = (right, down)
