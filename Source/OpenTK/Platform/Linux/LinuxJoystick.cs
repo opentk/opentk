@@ -439,7 +439,7 @@ namespace OpenTK.Platform.Linux
                         int packet =
                             ((sec & 0x00ffffff) << 24) |
                             Common.HidHelper.ScaleValue(msec, 0, 1000, 0, 255);
-                        js.State.SetPacketNumber(unchecked((int)e->Time.Seconds));
+                        js.State.SetPacketNumber(packet);
                     }
                 }
             }
