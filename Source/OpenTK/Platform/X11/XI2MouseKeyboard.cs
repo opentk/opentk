@@ -490,6 +490,8 @@ namespace OpenTK.Platform.X11
                                 float dx, dy;
                                 MouseButton button = X11KeyMap.TranslateButton(raw.detail, out dx, out dy);
                                 mouse.State[button] = raw.evtype == XIEventType.RawButtonPress;
+                                if (mouse.ScrollX.number == -1 && mouse.ScrollY.number == -1)
+                                    mouse.State.SetScrollRelative(dx, dy);
                             }
                             break;
 
@@ -554,7 +556,7 @@ namespace OpenTK.Platform.X11
                 d.State.X += (int)Math.Round(x);
             else
                 d.State.X = (int)Math.Round(x);
-            if (d.MotionY.mode == XIMode.Absolute)
+            if (d.MotionY.mode == XIMode.Relative)
                 d.State.Y += (int)Math.Round(y);
             else
                 d.State.Y = (int)Math.Round(y);
