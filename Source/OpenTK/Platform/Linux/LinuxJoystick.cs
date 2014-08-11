@@ -163,29 +163,35 @@ namespace OpenTK.Platform.Linux
 
         Guid CreateGuid(EvdevInputId id, string name)
         {
+            // Note: the first 8bytes of the Guid are byteswapped
+            // in three parts when using `new Guid(byte[])`:
+            // (int, short, short).
+            // We need to take that into account to match the expected
+            // Guid in the database. Ugh.
+
             byte[] bytes = new byte[16];
 
             int i = 0;
-            byte[] bus = BitConverter.GetBytes(id.BusType);
-            bytes[i++] = bus[0];
+            byte[] bus = BitConverter.GetBytes((int)id.BusType);
+            bytes[i++] = bus[3];
+            bytes[i++] = bus[2];
             bytes[i++] = bus[1];
-            bytes[i++] = 0;
-            bytes[i++] = 0;
+            bytes[i++] = bus[0];
 
             if (id.Vendor != 0 && id.Product != 0 && id.Version != 0)
             {
                 byte[] vendor = BitConverter.GetBytes(id.Vendor);
                 byte[] product = BitConverter.GetBytes(id.Product);
                 byte[] version = BitConverter.GetBytes(id.Version);
-                bytes[i++] = vendor[0];
                 bytes[i++] = vendor[1];
+                bytes[i++] = vendor[0];
                 bytes[i++] = 0;
                 bytes[i++] = 0;
-                bytes[i++] = product[0];
+                bytes[i++] = product[0]; // no byteswapping
                 bytes[i++] = product[1];
                 bytes[i++] = 0;
                 bytes[i++] = 0;
-                bytes[i++] = version[0];
+                bytes[i++] = version[0]; // no byteswapping
                 bytes[i++] = version[1];
                 bytes[i++] = 0;
                 bytes[i++] = 0;
@@ -313,7 +319,7 @@ namespace OpenTK.Platform.Linux
                             QueryCapabilities(stick, axisbit, axissize, keybit, keysize,
                                 out axes, out buttons, out hats);
 
-                            stick.Caps = new JoystickCapabilities(axes, buttons, hats, true);
+                            stick.Caps = new JoystickCapabilities(axes, buttons, hats, false);
 
                             // Poll the joystick once, to initialize its state
                             PollJoystick(stick);
@@ -367,6 +373,12 @@ namespace OpenTK.Platform.Linux
                     length = (long)Libc.read(js.FileDescriptor, (void*)events, (UIntPtr)(sizeof(InputEvent) * EventCount));
                     if (length <= 0)
                         break;
+
+                    // Only mark the joystick as connected when we actually start receiving events.
+                    // Otherwise, the Xbox wireless receiver will register 4 joysticks even if no
+                    // actual joystick is connected to the receiver.
+                    js.Caps.SetIsConnected(true);
+                    js.State.SetIsConnected(true);
 
                     length /= sizeof(InputEvent);
                     for (int i = 0; i < length; i++)
