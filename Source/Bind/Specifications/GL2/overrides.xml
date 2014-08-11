@@ -3594,6 +3594,8 @@
       <use enum="VERSION_4_3" token="MAX_COMPUTE_IMAGE_UNIFORMS" />
       <use enum="VERSION_4_5" token="CLIP_ORIGIN" />
       <use enum="VERSION_4_5" token="CLIP_DEPTH_MODE" />
+      <use enum="VERSION_4_5" token="MAX_CULL_DISTANCES" />
+      <use enum="VERSION_4_5" token="MAX_COMBINED_CLIP_AND_CULL_DISTANCES" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
