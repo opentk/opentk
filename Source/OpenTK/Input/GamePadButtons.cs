@@ -175,6 +175,8 @@ namespace OpenTK.Input
                 sb.Append("St");
             if (BigButton == ButtonState.Pressed)
                 sb.Append("Gd");
+            if (Back == ButtonState.Pressed)
+                sb.Append("Bk");
             if (LeftShoulder == ButtonState.Pressed)
                 sb.Append("L");
             if (RightShoulder == ButtonState.Pressed)
