@@ -4911,6 +4911,11 @@
     <enum name="AMD_vertex_shader_tesselator">
       <reuse enum="AMD_vertex_shader_tessellator" />
     </enum>
+
+    <!-- KHR_blend_equation_advanced -->
+    <enum name="KHR_blend_equation_advanced">
+      <use enum="KHR_blend_equation_advanced_coherent" token="BLEND_ADVANCED_COHERENT_KHR" obsolete="Use KHR_blend_equation_advanced_coherent instead"/>
+    </enum>
   </add>
   
   <!--- gles1 -->
@@ -6342,7 +6347,12 @@
       <token name="OutOfMemory" value="0X0505" />
       <token name="InvalidFramebufferOperation " value="0X0506" />
     </enum>
-    
+
+    <!-- KHR_blend_equation_advanced -->
+    <enum name="KHR_blend_equation_advanced">
+      <use enum="KHR_blend_equation_advanced_coherent" token="BLEND_ADVANCED_COHERENT_KHR" obsolete="Use KHR_blend_equation_advanced_coherent instead"/>
+    </enum>
+
     <!-- KHR_debug -->
     <!-- Note that KHR_debug is part of the gles registry,
     but is actually written against the desktop 4.2 spec.
