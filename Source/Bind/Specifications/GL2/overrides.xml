@@ -1237,6 +1237,13 @@
       </param>
     </function>
 
+    <!-- Version 4.5 -->
+
+    <function name="ClipControl">
+      <param name="origin"><type>ClipOrigin</type></param>
+      <param name="depth"><type>ClipDepthMode</type></param>
+    </function>
+
     <!-- Amd -->
     <!-- AMD_performance_monitors is not const-correct -->
     <function name="DeletePerfMonitors" extension="AMD">
@@ -2936,6 +2943,16 @@
     <enum name="ClearBufferMask">
       <use enum="VERSION_1_1" token="NONE" />
     </enum>
+    <enum name="ClipDepthMode">
+      <use enum="VERSION_4_5" token="NEGATIVE_ONE_TO_ONE" />
+      <use enum="VERSION_4_5" token="ZERO_TO_ONE" />
+    </enum>
+    <enum name="ClipOrigin">
+      <use enum="VERSION_4_5" token="LOWER_LEFT" />
+      <use enum="VERSION_4_5" token="UPPER_LEFT" />
+    </enum>
+    <enum name="ClipControl">
+    </enum>
     <enum name="ColorPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
       <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
@@ -3575,6 +3592,8 @@
       <use enum="VERSION_4_2" token="MAX_FRAGMENT_IMAGE_UNIFORMS" />
       <use enum="VERSION_4_2" token="MAX_COMBINED_IMAGE_UNIFORMS" />
       <use enum="VERSION_4_3" token="MAX_COMPUTE_IMAGE_UNIFORMS" />
+      <use enum="VERSION_4_5" token="CLIP_ORIGIN" />
+      <use enum="VERSION_4_5" token="CLIP_DEPTH_MODE" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
