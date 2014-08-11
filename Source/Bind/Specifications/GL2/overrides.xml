@@ -2975,6 +2975,10 @@
       <token name="QUERY_BY_REGION_WAIT" value="0x8E15" />
       <token name="QUERY_NO_WAIT" value="0x8E14" />
       <token name="QUERY_WAIT" value="0x8E13" />
+      <use enum="VERSION_4_5" token="QUERY_BY_REGION_NO_WAIT_INVERTED" />
+      <use enum="VERSION_4_5" token="QUERY_BY_REGION_WAIT_INVERTED" />
+      <use enum="VERSION_4_5" token="QUERY_NO_WAIT_INVERTED" />
+      <use enum="VERSION_4_5" token="QUERY_WAIT_INVERTED" />
     </enum>
     <enum name="ConvolutionParameter">
       <token name="CONVOLUTION_BORDER_MODE" value="0x8013" />
