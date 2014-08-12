@@ -1244,6 +1244,11 @@
       <param name="depth"><type>ClipDepthMode</type></param>
     </function>
 
+    <function name="GetTextureSubImage">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+
     <!-- Amd -->
     <!-- AMD_performance_monitors is not const-correct -->
     <function name="DeletePerfMonitors" extension="AMD">
@@ -6732,7 +6737,7 @@
       <token name="PolygonOffsetFill" value="0X8037" />
       <token name="SampleAlphaToCoverage" value="0X809e" />
       <token name="SampleCoverage" value="0X80a0" />
-      <use enum="KHR_context_flush_control" name="CONTEXT_RELEASE_BEHAVIOR_KHR" />
+      <use enum="KHR_context_flush_control" token="CONTEXT_RELEASE_BEHAVIOR_KHR" />
     </enum>
 
     <enum name="ShaderBinaryFormat">
@@ -7263,7 +7268,7 @@
       <use token="IMPLEMENTATION_COLOR_READ_FORMAT" />
       <use token="COPY_READ_BUFFER_BINDING" />
       <use token="COPY_WRITE_BUFFER_BINDING" />
-      <use enum="KHR_context_flush_control" name="CONTEXT_RELEASE_BEHAVIOR_KHR" />
+      <use enum="KHR_context_flush_control" token="CONTEXT_RELEASE_BEHAVIOR_KHR" />
     </enum>
     <enum name="GetProgramParameterName">
       <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
