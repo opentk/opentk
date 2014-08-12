@@ -2866,6 +2866,7 @@
       <use enum="VERSION_3_0" token="BUFFER_MAP_OFFSET" />
       <use enum="VERSION_3_0" token="BUFFER_MAP_LENGTH" />
       <use enum="VERSION_4_4" token="BUFFER_IMMUTABLE_STORAGE" />
+      <use enum="VERSION_4_4" token="BUFFER_STORAGE_FLAGS" />
     </enum>
     <enum name="BufferParameterNameARB">
       <token name="BUFFER_ACCESS" value="0x88BB" />
@@ -3673,6 +3674,14 @@
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_B" />
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_A" />
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_RGBA" />
+      <use enum="VERSION_4_2" token="IMAGE_FORMAT_COMPATIBILITY_TYPE" />
+      <use enum="VERSION_4_2" token="TEXTURE_IMMUTABLE_FORMAT" />
+      <use enum="VERSION_4_3" token="TEXTURE_IMMUTABLE_LEVELS" />
+      <use enum="VERSION_4_3" token="TEXTURE_VIEW_MIN_LEVEL" />
+      <use enum="VERSION_4_3" token="TEXTURE_VIEW_NUM_LEVELS" />
+      <use enum="VERSION_4_3" token="TEXTURE_VIEW_MIN_LAYER" />
+      <use enum="VERSION_4_3" token="TEXTURE_VIEW_NUM_LEVELS" />
+      <use enum="VERSION_4_3" token="TEXTURE_VIEW_NUM_LAYERS" />
     </enum>
     <enum name="HintTarget">
       <token name="FRAGMENT_SHADER_DERIVATIVE_HINT" value="0x8B8B" />
