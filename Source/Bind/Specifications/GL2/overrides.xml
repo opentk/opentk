@@ -3600,6 +3600,7 @@
       <use enum="VERSION_4_5" token="CLIP_DEPTH_MODE" />
       <use enum="VERSION_4_5" token="MAX_CULL_DISTANCES" />
       <use enum="VERSION_4_5" token="MAX_COMBINED_CLIP_AND_CULL_DISTANCES" />
+      <use enum="VERSION_4_5" token="CONTEXT_RELEASE_BEHAVIOR" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -6731,6 +6732,7 @@
       <token name="PolygonOffsetFill" value="0X8037" />
       <token name="SampleAlphaToCoverage" value="0X809e" />
       <token name="SampleCoverage" value="0X80a0" />
+      <use enum="KHR_context_flush_control" name="CONTEXT_RELEASE_BEHAVIOR_KHR" />
     </enum>
 
     <enum name="ShaderBinaryFormat">
@@ -7261,6 +7263,7 @@
       <use token="IMPLEMENTATION_COLOR_READ_FORMAT" />
       <use token="COPY_READ_BUFFER_BINDING" />
       <use token="COPY_WRITE_BUFFER_BINDING" />
+      <use enum="KHR_context_flush_control" name="CONTEXT_RELEASE_BEHAVIOR_KHR" />
     </enum>
     <enum name="GetProgramParameterName">
       <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
