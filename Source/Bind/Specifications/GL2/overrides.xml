@@ -1244,7 +1244,16 @@
       <param name="depth"><type>ClipDepthMode</type></param>
     </function>
 
+    <function name="GetGraphicsResetStatus">
+      <returns>ResetStatus</returns>
+    </function>
+
     <function name="GetTextureSubImage">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+
+    <function name="ReadnPixels">
       <param name="format"><type>PixelFormat</type></param>
       <param name="type"><type>PixelType</type></param>
     </function>
@@ -3152,6 +3161,7 @@
     <enum name="ErrorCode">
       <use enum="ARB_framebuffer_object" token="INVALID_FRAMEBUFFER_OPERATION" />
       <token name="INVALID_FRAMEBUFFER_OPERATION_EXT" value="0x0506" />
+      <use enum="VERSION_4_5" token="CONTEXT_LOST" />
     </enum>
     <!-- Referenced group in several methods, but not defined in the registry -->
     <enum name="FogCoordinatePointerType">
@@ -3606,6 +3616,8 @@
       <use enum="VERSION_4_5" token="MAX_CULL_DISTANCES" />
       <use enum="VERSION_4_5" token="MAX_COMBINED_CLIP_AND_CULL_DISTANCES" />
       <use enum="VERSION_4_5" token="CONTEXT_RELEASE_BEHAVIOR" />
+      <use enum="VERSION_4_5" token="CONTEXT_ROBUST_ACCESS" />
+      <use enum="VERSION_4_5" token="RESET_NOTIFICATION_STRATEGY" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -4400,6 +4412,12 @@
     <enum name="RenderbufferTarget">
       <use enum="ARB_framebuffer_object" token="RENDERBUFFER" />
       <token name="RENDERBUFFER_EXT" value="0x8D41" />
+    </enum>
+    <enum name="ResetStatus">
+      <use enum="VERSION_4_5" token="NO_ERROR" />
+      <use enum="VERSION_4_5" token="GUILTY_CONTEXT_RESET" />
+      <use enum="VERSION_4_5" token="INNOCENT_CONTEXT_RESET" />
+      <use enum="VERSION_4_5" token="UNKNOWN_CONTEXT_RESET" />
     </enum>
     <enum name="SamplerParameter">
       <token name="TextureWrapS" value = "0x2802" />
@@ -5802,7 +5820,16 @@
     <function name="QueryCounter">
       <param name="target">QueryCounterTarget</param>
     </function>
-    
+
+    <!-- KHR_context_robustness -->
+    <function name="GetGraphicsResetStatus">
+      <returns>ResetStatus</returns>
+    </function>
+    <function name="ReadnPixels">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+
     <!-- KHR_debug -->
     <function name="DebugMessageControl">
       <param name="source"><type>DebugSourceControl</type></param>
@@ -6148,6 +6175,21 @@
       <use token="ALPHA16F_EXT" />
       <use token="LUMINANCE16F_EXT" />
       <use token="LUMINANCE_ALPHA16F_EXT" />
+    </enum>
+
+    <!-- KHR_context_robustness -->
+    <enum name="ErrorCode">
+      <use token="CONTEXT_LOST" />
+    </enum>
+    <enum name="GetPName">
+      <use token="CONTEXT_ROBUST_ACCESS" />
+      <use token="RESET_NOTIFICATION_STRATEGY" />
+    </enum>
+    <enum name="ResetStatus">
+      <use token="NO_ERROR" />
+      <use token="GUILTY_CONTEXT_RESET" />
+      <use token="INNOCENT_CONTEXT_RESET" />
+      <use token="UNKNOWN_CONTEXT_RESET" />
     </enum>
 
     <!-- KHR_debug -->
