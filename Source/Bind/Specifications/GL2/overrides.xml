@@ -2503,6 +2503,12 @@
     </function>
   </overload>
 
+  <add name="gl">
+    <enum name="VertexAttribDPointerType">
+      <use token="DOUBLE" />
+    </enum>
+  </add>
+
   <add name="gl|glcore">
     <enum name="ActiveAttribType">
       <use enum="VERSION_1_1" token="NONE" />
