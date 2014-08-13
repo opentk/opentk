@@ -88,7 +88,7 @@
       <param name="pname"><type>FramebufferDefaultParameter</type></param>
     </function>
     <function name="NamedFramebufferDrawBuffer">
-      <param name="buf"><type>DrawBuffersMode</type></param>
+      <param name="buf"><type>DrawBufferMode</type></param>
     </function>
     <function name="NamedFramebufferDrawBuffers">
       <param name="bufs"><type>DrawBuffersEnum</type></param>

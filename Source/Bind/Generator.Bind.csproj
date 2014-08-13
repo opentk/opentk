@@ -233,7 +233,6 @@
     </None>
     <None Include="Specifications\License.txt">
     </None>
-    <None Include="Specifications\GL2\overrides.xml" />
     <Compile Include="ES\ES2Generator.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -242,7 +241,8 @@
     </Compile>
     <Compile Include="GL2\GL2Generator.cs" />
     <Compile Include="Structures\Documentation.cs" />
-    <None Include="Specifications\GL2\Overrides\ARB_direct_state_access.xml" />
+    <None Include="Specifications\GL2\overrides.xml" />
+    <None Include="Specifications\GL2\GL\4.5\ARB_direct_state_access.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">
@@ -272,6 +272,5 @@
   </ProjectExtensions>
   <ItemGroup>
     <Folder Include="Specifications\Docs\" />
-    <Folder Include="Specifications\GL2\Overrides\" />
   </ItemGroup>
 </Project>
