@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <replace name="gles2" version="3.1">
+    <function name="UseProgramStages" extension="Core">
+      <param name="stages"><type>ProgramStageMask</type></param>
+    </function>
+  </replace>
+
+  </signatures>

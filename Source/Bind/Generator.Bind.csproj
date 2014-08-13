@@ -243,6 +243,12 @@
     <Compile Include="Structures\Documentation.cs" />
     <None Include="Specifications\GL2\overrides.xml" />
     <None Include="Specifications\GL2\GL\4.5\ARB_direct_state_access.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_compute_shader.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_separate_shader_objects.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_draw_indirect.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_explicit_uniform_location.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_framebuffer_no_attachments.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_program_interface_queries.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">
@@ -272,5 +278,7 @@
   </ProjectExtensions>
   <ItemGroup>
     <Folder Include="Specifications\Docs\" />
+    <Folder Include="Specifications\GL2\ES\" />
+    <Folder Include="Specifications\GL2\ES\3.1\" />
   </ItemGroup>
 </Project>
