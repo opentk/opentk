@@ -249,6 +249,13 @@
     <None Include="Specifications\GL2\ES\3.1\KHR_explicit_uniform_location.xml" />
     <None Include="Specifications\GL2\ES\3.1\KHR_framebuffer_no_attachments.xml" />
     <None Include="Specifications\GL2\ES\3.1\KHR_program_interface_queries.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_shader_atomic_counters.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_shader_image_load_store.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_shader_storage_buffer_object.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_stencil_texturing.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_texture_gather.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_texture_storage_multisample.xml" />
+    <None Include="Specifications\GL2\ES\3.1\KHR_vertex_attrib_binding.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">
