@@ -39,12 +39,12 @@ namespace Bind
 {
     class EnumProcessor
     {
-        string Overrides { get; set; }
+        readonly IEnumerable<string> Overrides;
 
         IBind Generator { get; set; }
         Settings Settings { get { return Generator.Settings; } }
 
-        public EnumProcessor(IBind generator, string overrides)
+        public EnumProcessor(IBind generator, IEnumerable<string> overrides)
         {
             if (generator == null)
                 throw new ArgumentNullException("generator");
@@ -57,9 +57,14 @@ namespace Bind
 
         public EnumCollection Process(EnumCollection enums, string apiname)
         {
-            var nav = new XPathDocument(Overrides).CreateNavigator();
-            enums = ProcessNames(enums, nav, apiname);
-            enums = ProcessConstants(enums, nav, apiname);
+            foreach (var file in Overrides)
+            {
+                Console.WriteLine("Processing enums in {0}.", file);
+
+                var nav = new XPathDocument(file).CreateNavigator();
+                enums = ProcessNames(enums, nav, apiname);
+                enums = ProcessConstants(enums, nav, apiname);
+            }
             return enums;
         }
 
