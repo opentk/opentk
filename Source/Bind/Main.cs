@@ -29,6 +29,7 @@ namespace Bind
         ES11,
         ES20,
         ES30,
+        ES31,
         CL10,
     }
 
@@ -186,12 +187,13 @@ namespace Bind
                 {
                     case GeneratorMode.All:
                         Console.WriteLine("Using 'all' generator mode.");
-                        Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30' to select a specific mode.");
+                        Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30/es31' to select a specific mode.");
                         Generators.Add(new GL2Generator(Settings, dirName));
                         Generators.Add(new GL4Generator(Settings, dirName));
                         Generators.Add(new ESGenerator(Settings, dirName));
                         Generators.Add(new ES2Generator(Settings, dirName));
                         Generators.Add(new ES3Generator(Settings, dirName));
+                        Generators.Add(new ES31Generator(Settings, dirName));
                         break;
 
                     case GeneratorMode.GL2:
@@ -217,6 +219,10 @@ namespace Bind
 
                     case GeneratorMode.ES30:
                         Generators.Add(new ES3Generator(Settings, dirName));
+                        break;
+
+                    case GeneratorMode.ES31:
+                        Generators.Add(new ES31Generator(Settings, dirName));
                         break;
 
                     case GeneratorMode.CL10:
@@ -313,6 +319,11 @@ namespace Bind
                 case "es30":
                     mode = GeneratorMode.ES30;
                     Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
+                    break;
+
+                case "es31":
+                    mode = GeneratorMode.ES31;
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES31";
                     break;
 
                 case "cl":
