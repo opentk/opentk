@@ -2,38 +2,13 @@
 <signatures version="2">
 
   <replace name="gl|glcore" version="4.5">
-    <function name="BindImageTexture">
-      <param name="access"><type>TextureAccess</type></param>
-      <param name="format"><type>SizedInternalFormat</type></param>
-    </function>
-    <function name="GetBooleani_v">
-      <param name="target"><type>GetIndexedPName</type></param>
-    </function>
-    <function name="MemoryBarrier">
-      <param name="barriers"><type>MemoryBarrierMask</type></param>
-    </function>
     <function name="MemoryBarrierByRegion">
-      <param name="barriers"><type>MemoryBarrierRegionMask</type></param>
+      <param name="barriers"><type>MemoryBarrierRegionFlags</type></param>
     </function>
   </replace>
 
   <add name="gl|glcore" version="4.5">
-    <enum name="MemoryBarrierMask">
-      <use token="GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT"/>
-      <use token="GL_ELEMENT_ARRAY_BARRIER_BIT"/>
-      <use token="GL_UNIFORM_BARRIER_BIT"/>
-      <use token="GL_TEXTURE_FETCH_BARRIER_BIT"/>
-      <use token="GL_SHADER_IMAGE_ACCESS_BARRIER_BIT"/>
-      <use token="GL_COMMAND_BARRIER_BIT"/>
-      <use token="GL_PIXEL_BUFFER_BARRIER_BIT"/>
-      <use token="GL_TEXTURE_UPDATE_BARRIER_BIT"/>
-      <use token="GL_BUFFER_UPDATE_BARRIER_BIT"/>
-      <use token="GL_FRAMEBUFFER_BARRIER_BIT"/>
-      <use token="GL_TRANSFORM_FEEDBACK_BARRIER_BIT"/>
-      <use token="GL_ATOMIC_COUNTER_BARRIER_BIT"/>
-      <use token="GL_ALL_BARRIER_BITS"/>
-    </enum>
-    <enum name="MemoryBarrierRegionMask">
+    <enum name="MemoryBarrierRegionFlags">
       <use token="GL_ATOMIC_COUNTER_BARRIER_BIT"/>
       <use token="GL_FRAMEBUFFER_BARRIER_BIT"/>
       <use token="GL_SHADER_IMAGE_ACCESS_BARRIER_BIT"/>
