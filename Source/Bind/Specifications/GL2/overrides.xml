@@ -4927,6 +4927,9 @@
       <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
       <use enum="VERSION_4_1" token="FIXED" />
     </enum>
+    <enum name="VertexAttribD_PointerType">
+      <use enum="VERSION_1_1" token="DOUBLE" />
+    </enum>
     <enum name="VertexAttribPointerTypeARB">
       <use enum="DataType" token="BYTE" />
       <use enum="DataType" token="UNSIGNED_BYTE" />
