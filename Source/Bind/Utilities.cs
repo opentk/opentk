@@ -104,7 +104,15 @@ namespace Bind
         public static Regex Extensions { get; private set; }
         public static Regex Acronyms { get; private set; }
 
-        static List<string> extension_names = new List<string>();
+        // Both GL and ES contains SGI extension enums, even though no function
+        // uses them. This is a remnant from the glory days of gl.spec and GL 1.1.
+        // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH OPENTK 1.0,
+        // WRT THE ES 1.1 API.
+        // You have been warned.
+        static List<string> extension_names = new List<string>
+        {
+            "SGI", "SGIS", "SGIX", "IBM", "AMD", "INTEL", 
+        };
 
         public static void AddExtensions(IEnumerable<string> extensions)
         {
