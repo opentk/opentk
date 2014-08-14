@@ -10,10 +10,10 @@
       <param name="target"><type>GetIndexedPName</type></param>
     </function>
     <function name="MemoryBarrier">
-      <param name="barriers"><type>MemoryBarrierMask</type></param>
+      <param name="barriers"><type>MemoryBarrierFlags</type></param>
     </function>
     <function name="MemoryBarrierByRegion">
-      <param name="barriers"><type>MemoryBarrierRegionMask</type></param>
+      <param name="barriers"><type>MemoryBarrierRegionFlags</type></param>
     </function>
   </replace>
 
@@ -47,7 +47,7 @@
     <enum name="GetTextureParameterName">
       <use token="GL_IMAGE_FORMAT_COMPATIBILITY_TYPE"/>
     </enum>
-    <enum name="MemoryBarrierMask">
+    <enum name="MemoryBarrierFlags">
       <use token="GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT"/>
       <use token="GL_ELEMENT_ARRAY_BARRIER_BIT"/>
       <use token="GL_UNIFORM_BARRIER_BIT"/>
@@ -62,7 +62,7 @@
       <use token="GL_ATOMIC_COUNTER_BARRIER_BIT"/>
       <use token="GL_ALL_BARRIER_BITS"/>
     </enum>
-    <enum name="MemoryBarrierRegionMask">
+    <enum name="MemoryBarrierRegionFlags">
       <use token="GL_ATOMIC_COUNTER_BARRIER_BIT"/>
       <use token="GL_FRAMEBUFFER_BARRIER_BIT"/>
       <use token="GL_SHADER_IMAGE_ACCESS_BARRIER_BIT"/>

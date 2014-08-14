@@ -256,6 +256,10 @@
     <None Include="Specifications\GL2\ES\3.1\KHR_texture_gather.xml" />
     <None Include="Specifications\GL2\ES\3.1\KHR_texture_storage_multisample.xml" />
     <None Include="Specifications\GL2\ES\3.1\KHR_vertex_attrib_binding.xml" />
+    <Compile Include="ES\ES31Generator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="Specifications\GL2\GL\4.5\ARB_ES3_1_compatibility.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">
