@@ -9,7 +9,7 @@
       <use token="GL_COMPUTE_WORK_GROUP_SIZE" />
     </enum>
     <enum name="GetPName">
-      <uso token="GL_DISPATCH_INDIRECT_BUFFER_BINDING"/>
+      <use token="GL_DISPATCH_INDIRECT_BUFFER_BINDING"/>
       <use token="GL_MAX_COMPUTE_UNIFORM_BLOCKS"/>
       <use token="GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS"/>
       <use token="GL_MAX_COMPUTE_IMAGE_UNIFORMS"/>
