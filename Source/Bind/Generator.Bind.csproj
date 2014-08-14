@@ -55,6 +55,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>full</DebugType>
+    <Commandlineparameters>-mode:es11</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BaseAddress>285212672</BaseAddress>
@@ -260,6 +261,7 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="Specifications\GL2\GL\4.5\ARB_ES3_1_compatibility.xml" />
+    <None Include="Specifications\GL2\ES\1.1\obsolete.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">
@@ -291,5 +293,6 @@
     <Folder Include="Specifications\Docs\" />
     <Folder Include="Specifications\GL2\ES\" />
     <Folder Include="Specifications\GL2\ES\3.1\" />
+    <Folder Include="Specifications\GL2\ES\1.1\" />
   </ItemGroup>
 </Project>
