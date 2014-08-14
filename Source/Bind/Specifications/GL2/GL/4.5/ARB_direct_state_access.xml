@@ -198,7 +198,7 @@
       <use token="TEXTURE_BINDING_BUFFER" />
       <use token="TEXTURE_BINDING_CUBE_MAP" />
       <use token="TEXTURE_BINDING_CUBE_MAP_ARRAY" />
-      <use token="TEXTURE_BINDING_CUBE_RECTANGLE" />
+      <use token="TEXTURE_BINDING_RECTANGLE" />
       <use token="TEXTURE_BINDING" />
     </enum>
     <enum name="GetTextureParameter">
