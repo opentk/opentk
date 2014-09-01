@@ -452,7 +452,7 @@ namespace OpenTK
             return MathHelper.Clamp(elapsed, 0.0, 1.0);
         }
 
-        void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
+        protected void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
         {
             int is_running_slowly_retries = 4;
             double timestamp = watch.Elapsed.TotalSeconds;
@@ -496,7 +496,7 @@ namespace OpenTK
             }
         }
 
-        void RaiseUpdateFrame(double elapsed, ref double timestamp)
+		protected void RaiseUpdateFrame( double elapsed, ref double timestamp )
         {
             // Raise UpdateFrame event
             update_args.Time = elapsed;
@@ -512,7 +512,7 @@ namespace OpenTK
         }
 
 
-        void RaiseRenderFrame(double elapsed, ref double timestamp)
+		protected void RaiseRenderFrame( double elapsed, ref double timestamp )
         {
             // Raise RenderFrame event
             render_args.Time = elapsed;
