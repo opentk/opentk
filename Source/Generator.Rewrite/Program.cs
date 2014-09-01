@@ -260,7 +260,7 @@ namespace OpenTK.Rewrite
             // Patch convenience wrappers
             if (wrapper.Parameters.Count == native.Parameters.Count)
             {
-                EmitParameters(wrapper, body, il);
+                EmitParameters(wrapper, native, body, il);
             }
             else
             {
@@ -715,7 +715,7 @@ namespace OpenTK.Rewrite
                     //   return result;
                     // }
                     body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
-                    EmitParameters(wrapper, body, il);
+                    EmitParameters(wrapper, native, body, il);
                     il.Emit(OpCodes.Ldloca, body.Variables.Count - 1);
                 }
                 else
@@ -743,7 +743,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        static int EmitParameters(MethodDefinition method, MethodBody body, ILProcessor il)
+        static int EmitParameters(MethodDefinition method, MethodDefinition native, MethodBody body, ILProcessor il)
         {
             int i;
             for (i = 0; i < method.Parameters.Count; i++)
@@ -752,7 +752,13 @@ namespace OpenTK.Rewrite
                 var p = method.Module.Import(method.Parameters[i].ParameterType);
                 il.Emit(OpCodes.Ldarg, i);
 
-                if (p.Name == "StringBuilder")
+                if (p.Name.Contains("Int32") && native.Parameters[i].ParameterType.Name.Contains("IntPtr"))
+                {
+                    // This is a convenience Int32 overload for an IntPtr (size_t) parameter.
+                    // We need to convert the loaded argument to IntPtr.
+                    il.Emit(OpCodes.Conv_I);
+                }
+                else if (p.Name == "StringBuilder")
                 {
                     EmitStringBuilderParameter(method, parameter, body, il);
                 }
