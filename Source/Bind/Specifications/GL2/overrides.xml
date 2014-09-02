@@ -1645,6 +1645,13 @@
   </replace>
 
   <overload name="glcore">
+    <!-- For symmetry with gl namespace (issue #171) -->
+    <function name="DrawElements" extension="Core">
+      <param name="indices">
+        <type>int</type>
+      </param>
+    </function>
+    <!-- For backwards compatibility -->
     <function name="GetObjectLabel" extension="Core" obsolete="Use out overload instead">
       <param name="length">
         <count>0</count>
