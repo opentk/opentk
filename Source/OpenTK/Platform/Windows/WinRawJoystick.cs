@@ -243,8 +243,8 @@ namespace OpenTK.Platform.Windows
                 // because it is costly to query (and we need to query
                 // that every time we process a device event.)
                 IntPtr handle = dev.Device;
-                bool is_xinput;
-                Guid guid = GetDeviceGuid(handle, out is_xinput);
+                bool is_xinput = IsXInput(handle);
+                Guid guid = GetDeviceGuid(handle);
                 long hardware_id = handle.ToInt64();
 
                 Device device = Devices.FromHardwareId(hardware_id);
@@ -499,7 +499,8 @@ namespace OpenTK.Platform.Windows
                         switch (page)
                         {
                             case HIDPage.GenericDesktop:
-                                switch ((HIDUsageGD)stick.AxisCaps[i].NotRange.Usage)
+                                HIDUsageGD gd_usage = (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage;
+                                switch (gd_usage)
                                 {
                                     case HIDUsageGD.X:
                                     case HIDUsageGD.Y:
@@ -522,6 +523,11 @@ namespace OpenTK.Platform.Windows
                                             page, (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage);
                                         stick.SetHat(collection, page, stick.AxisCaps[i].NotRange.Usage, HatPosition.Centered);
                                         break;
+
+                                    default:
+                                        Debug.Print("Unknown usage {0} for page {1}",
+                                            gd_usage, page);
+                                        break;
                                 }
                                 break;
 
@@ -536,6 +542,10 @@ namespace OpenTK.Platform.Windows
                                         stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
                                         break;
                                 }
+                                break;
+
+                            default:
+                                Debug.Print("Unknown page {0}", page);
                                 break;
                         }
                     }
@@ -642,12 +652,41 @@ namespace OpenTK.Platform.Windows
             return true;
         }
 
-        // Retrieves the GUID of a device, which is stored
-        // in the last part of the DEVICENAME string
-        Guid GetDeviceGuid(IntPtr handle, out bool is_xinput)
+        // Get a DirectInput-compatible Guid
+        // (equivalent to DIDEVICEINSTANCE guidProduct field)
+        Guid GetDeviceGuid(IntPtr handle)
         {
-            is_xinput = false;
-            Guid guid = new Guid();
+            // Retrieve a RID_DEVICE_INFO struct which contains the VID and PID
+            RawInputDeviceInfo info = new RawInputDeviceInfo();
+            int size = info.Size;
+            if (Functions.GetRawInputDeviceInfo(handle, RawInputDeviceInfoEnum.DEVICEINFO, info, ref size) < 0)
+            {
+                Debug.Print("[WinRawJoystick] Functions.GetRawInputDeviceInfo(DEVICEINFO) failed with error {0}",
+                    Marshal.GetLastWin32Error());
+                return Guid.Empty;
+            }
+
+            // Todo: this Guid format is only valid for USB joysticks.
+            // Bluetooth devices, such as OUYA controllers, have a totally
+            // different PID/VID format in DirectInput.
+            // Do we need to use the same guid or could we simply use PID/VID
+            // there too? (Test with an OUYA controller.)
+            int vid = info.Device.HID.VendorId;
+            int pid = info.Device.HID.ProductId;
+            return new Guid(
+                (pid << 16) | vid,
+                0, 0,
+                0, 0,
+                (byte)'P', (byte)'I', (byte)'D',
+                (byte)'V', (byte)'I', (byte)'D');
+        }
+
+        // Checks whether this is an XInput device.
+        // XInput devices should be handled through
+        // the XInput API.
+        bool IsXInput(IntPtr handle)
+        {
+            bool is_xinput = false;
 
             unsafe
             {
@@ -658,7 +697,7 @@ namespace OpenTK.Platform.Windows
                 {
                     Debug.Print("[WinRawJoystick] Functions.GetRawInputDeviceInfo(DEVICENAME) failed with error {0}",
                         Marshal.GetLastWin32Error());
-                    return guid;
+                    return is_xinput;
                 }
 
                 // Allocate memory and retrieve the DEVICENAME string
@@ -667,7 +706,7 @@ namespace OpenTK.Platform.Windows
                 {
                     Debug.Print("[WinRawJoystick] Functions.GetRawInputDeviceInfo(DEVICENAME) failed with error {0}",
                         Marshal.GetLastWin32Error());
-                    return guid;
+                    return is_xinput;
                 }
 
                 // Convert the buffer to a .Net string, and split it into parts
@@ -675,20 +714,13 @@ namespace OpenTK.Platform.Windows
                 if (String.IsNullOrEmpty(name))
                 {
                     Debug.Print("[WinRawJoystick] Failed to construct device name");
-                    return guid;
-                }
-
-                // The GUID is stored in the last part of the string
-                string[] parts = name.Split('#');
-                if (parts.Length > 3)
-                {
-                    guid = new Guid(parts[3]);
+                    return is_xinput;
                 }
 
                 is_xinput = name.Contains("IG_");
             }
 
-            return guid;
+            return is_xinput;
         }
 
         Device GetDevice(IntPtr handle)
