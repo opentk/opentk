@@ -260,8 +260,10 @@ namespace OpenTK.Platform.Windows
 
                     // This is a new device, query its capabilities and add it
                     // to the device list
-                    QueryDeviceCaps(device);
-
+                    if (!QueryDeviceCaps(device))
+                    {
+                        continue;
+                    }
                     device.SetConnected(true);
 
                     // Check if a disconnected device with identical GUID already exists.
@@ -468,7 +470,7 @@ namespace OpenTK.Platform.Windows
             return true;
         }
 
-        void QueryDeviceCaps(Device stick)
+        bool QueryDeviceCaps(Device stick)
         {
             Debug.Print("[{0}] Querying joystick {1}",
                 TypeName, stick.GetGuid());
@@ -481,6 +483,14 @@ namespace OpenTK.Platform.Windows
                 if (GetPreparsedData(stick.Handle, ref PreparsedData) &&
                     GetDeviceCaps(stick, PreparsedData, out caps))
                 {
+                    if (stick.AxisCaps.Count >= JoystickState.MaxAxes ||
+                        stick.ButtonCaps.Count >= JoystickState.MaxButtons)
+                    {
+                        Debug.Print("Device {0} has {1} and {2} buttons. This might be a touch device - skipping.",
+                            stick.Handle, stick.AxisCaps.Count, stick.ButtonCaps.Count);
+                        return false;
+                    }
+
                     for (int i = 0; i < stick.AxisCaps.Count; i++)
                     {
                         Debug.Print("Analyzing value collection {0} {1} {2}",
@@ -599,6 +609,8 @@ namespace OpenTK.Platform.Windows
             {
                 Debug.Unindent();
             }
+
+            return true;
         }
 
         static bool GetDeviceCaps(Device stick, byte[] preparsed_data, out HidProtocolCaps caps)
