@@ -324,17 +324,16 @@ namespace Bind
                 }
                 else
                 {
-                    // Todo: what is the point of this here? It is overwritten below.
-                    // A few translations for consistency
-                    switch (type.CurrentType.ToLower())
-                    {
-                        case "string":
-                            type.QualifiedType = "String";
-                            break;
-                    }
-
                     type.QualifiedType = s;
                 }
+            }
+
+            if ((type.Array == 0 && type.Pointer == 0 && !type.Reference) &&
+                (type.QualifiedType.ToLower().Contains("buffersize") ||
+                type.QualifiedType.ToLower().Contains("sizeiptr") ||
+                type.QualifiedType.Contains("size_t")))
+            {
+                type.WrapperType |= WrapperTypes.SizeParameter;
             }
 
             type.CurrentType =
@@ -957,6 +956,27 @@ namespace Bind
                         // If we have a convenience overload, we should turn its name from plural into singular
                         f.TrimmedName = f.TrimmedName.Replace("Queries", "Query").TrimEnd('s');
 
+                        convenience_wrappers.Add(f);
+                    }
+                }
+
+                // Check for IntPtr parameters that correspond to size_t (e.g. GLsizei)
+                // and add Int32 overloads for convenience.
+                {
+                    Function f = null;
+                    int i = 0;
+                    foreach (var p in d.Parameters)
+                    {
+                        if ((p.WrapperType & WrapperTypes.SizeParameter) != 0)
+                        {
+                            f = f ?? new Function(d);
+                            f.Parameters[i].QualifiedType = "Int32";
+                        }
+                        i++;
+                    }
+
+                    if (f != null)
+                    {
                         convenience_wrappers.Add(f);
                     }
                 }
