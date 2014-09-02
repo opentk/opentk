@@ -29,6 +29,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace OpenTK.Input
@@ -48,11 +49,18 @@ namespace OpenTK.Input
         internal JoystickCapabilities(int axis_count, int button_count, int hat_count, bool is_connected)
         {
             if (axis_count < 0 || axis_count > JoystickState.MaxAxes)
-                throw new ArgumentOutOfRangeException("axis_count");
+                Debug.Print("[{0}] Axis count {1} out of range (0, {2})",
+                    typeof(JoystickCapabilities).Name, axis_count, JoystickState.MaxAxes);
             if (button_count < 0 || button_count > JoystickState.MaxButtons)
-                throw new ArgumentOutOfRangeException("axis_count");
+                Debug.Print("[{0}] Button count {1} out of range (0, {2})",
+                    typeof(JoystickCapabilities).Name, button_count, JoystickState.MaxButtons);
             if (hat_count < 0 || hat_count > JoystickState.MaxHats)
-                throw new ArgumentOutOfRangeException("hat_count");
+                Debug.Print("[{0}] Hat count {1} out of range (0, {2})",
+                    typeof(JoystickCapabilities).Name, hat_count, JoystickState.MaxHats);
+
+            axis_count = MathHelper.Clamp(axis_count, 0, JoystickState.MaxAxes);
+            button_count = MathHelper.Clamp(button_count, 0, JoystickState.MaxButtons);
+            hat_count = MathHelper.Clamp(hat_count, 0, JoystickState.MaxHats);
 
             this.axis_count = (byte)axis_count;
             this.button_count = (byte)button_count;
