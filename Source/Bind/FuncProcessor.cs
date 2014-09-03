@@ -75,7 +75,7 @@ namespace Bind
         {
             foreach (var file in Overrides)
             {
-                Console.WriteLine("Processing delegates in {0}.", file);
+                Console.WriteLine("Processing funcs in {0}.", file);
 
                 var nav = new XPathDocument(file).CreateNavigator();
                 foreach (var version in apiversion.Split('|'))
