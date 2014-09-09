@@ -592,6 +592,37 @@ namespace OpenTK
 
         #endregion
 
+        #region CreateFromRotationMatrix
+
+        public static Matrix4 CreateFromRotationMatrix(Matrix3 rotation)
+        {
+            Matrix4 result;
+            CreateFromRotationMatrix(ref rotation, out result);
+            return result;
+        }
+
+        public static void CreateFromRotationMatrix(ref Matrix3 rotation, out Matrix4 result)
+        {
+            result.Row0.X = rotation.Row0.X;
+            result.Row0.Y = rotation.Row0.Y;
+            result.Row0.Z = rotation.Row0.Z;
+            result.Row0.W = 0;
+            result.Row1.X = rotation.Row1.X;
+            result.Row1.Y = rotation.Row1.Y;
+            result.Row1.Z = rotation.Row1.Z;
+            result.Row1.W = 0;
+            result.Row2.X = rotation.Row2.X;
+            result.Row2.Y = rotation.Row2.Y;
+            result.Row2.Z = rotation.Row2.Z;
+            result.Row2.W = 0;
+            result.Row3.X = 0;
+            result.Row3.Y = 0;
+            result.Row3.Z = 0;
+            result.Row3.W = 1;
+        }
+
+        #endregion
+
         #region CreateRotation[XYZ]
 
         /// <summary>
