@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5FDFF4B6-0000-0000-0000-000000000000}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -54,7 +54,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>full</DebugType>
-    <Commandlineparameters>-p:gl -v:4.4 -t:xml -o:../../../Source/Bind/Specifications/GL2/signatures.xml https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml</Commandlineparameters>
+    <Commandlineparameters>-p:gl -v:4.5 -t:xml -o:../../../Source/Bind/Specifications/GL2/signatures.xml https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BaseAddress>285212672</BaseAddress>
