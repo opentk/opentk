@@ -161,6 +161,29 @@ namespace OpenTK.Input
 
         #region --- Public Methods ---
 
+        /// <summary>
+        /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
+        /// This method is equivalent to <see cref="OpenTK.Input.Keyboard.GetState()"/>.
+        /// </summary>
+        /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
+        /// <seealso cref="OpenTK.Input.Keyboard.GetState()"/>
+        public KeyboardState GetState()
+        {
+            return Keyboard.GetState();
+        }
+
+        /// <summary>
+        /// Retrieves the <see cref="OpenTK.Input.KeyboardState"/> for the specified keyboard device.
+        /// This method is equivalent to <see cref="OpenTK.Input.Keyboard.GetState(int)"/>.
+        /// </summary>
+        /// <param name="index">The index of the keyboard device.</param>
+        /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
+        /// <seealso cref="OpenTK.Input.Keyboard.GetState(int)"/>
+        public KeyboardState GetState(int index)
+        {
+            return Keyboard.GetState(index);
+        }
+
         /// <summary>Returns the hash code for this KeyboardDevice.</summary>
         /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()

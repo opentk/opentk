@@ -88,6 +88,40 @@ namespace OpenTK.Input
 
         #region --- Public Members ---
 
+        /// <summary>
+        /// Retrieves the combined hardware <see cref="OpenTK.Input.MouseState"/> for all specified mouse devices.
+        /// This method is equivalent to <see cref="OpenTK.Input.Mouse.GetState()"/>.
+        /// </summary>
+        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure representing the state for the specified mouse device.</returns>
+        /// <seealso cref="OpenTK.Input.Mouse.GetState()"/>
+        public MouseState GetState()
+        {
+            return Mouse.GetState();
+        }
+
+        /// <summary>
+        /// Retrieves the hardware <see cref="OpenTK.Input.MouseState"/> for the specified mouse device.
+        /// This method is equivalent to <see cref="OpenTK.Input.Mouse.GetState(int)"/>.
+        /// </summary>
+        /// <param name="index">The index of the mouse device.</param>
+        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure representing the state for the specified mouse device.</returns>
+        /// <seealso cref="OpenTK.Input.Mouse.GetState(int)"/>
+        public MouseState GetState(int index)
+        {
+            return Mouse.GetState(index);
+        }
+
+        /// <summary>
+        /// Retreves the <see cref="OpenTK.Input.MouseState"/> for the mouse cursor.
+        /// This method is equivalent to <see cref="OpenTK.Input.Mouse.GetCursorState"/>.
+        /// </summary>
+        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure representing the state of the mouse cursor.</returns>
+        /// <seealso cref="OpenTK.Input.Mouse.GetCursorState()"/>
+        public MouseState GetCursorState()
+        {
+            return Mouse.GetCursorState();
+        }
+
         #region public int NumberOfButtons
 
         /// <summary>
