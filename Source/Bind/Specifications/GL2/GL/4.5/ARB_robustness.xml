@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <overload name="gl">
+    <function name="ReadnPixels" extension="Arb" obsolete="Use strongly-typed overload instead">
+      <param name="format"><type>ArbRobustness</type></param>
+      <param name="type"><type>ArbRobustness</type></param>
+    </function>
+  </overload>
+
+  <overload name="glcore">
+    <function name="ReadnPixels" extension="Arb" obsolete="Use strongly-typed overload instead">
+      <param name="format"><type>All</type></param>
+      <param name="type"><type>All</type></param>
+    </function>
+  </overload>
+
+</signatures>

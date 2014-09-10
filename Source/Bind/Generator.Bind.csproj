@@ -261,6 +261,7 @@
     </Compile>
     <None Include="Specifications\GL2\GL\4.5\ARB_ES3_1_compatibility.xml" />
     <None Include="Specifications\GL2\ES\1.1\obsolete.xml" />
+    <None Include="Specifications\GL2\GL\4.5\ARB_robustness.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\GL2\signatures.xml">

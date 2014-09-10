@@ -119,20 +119,20 @@
     <function name="NamedRenderbufferStorage">
       <param name="internalformat"><type>RenderbufferStorage</type></param>
     </function>
-    <function name="NamedRenderbufferStorageMultisample" extension="Ext">
+    <function name="NamedRenderbufferStorageMultisample">
       <param name="internalformat"><type>RenderbufferStorage</type></param>
     </function>
   </replace>
 
   <!-- Texture object functions -->
   <replace name="gl|glcore">
-    <function name="CompressedTextureSubImage1D" extension="Core">
+    <function name="CompressedTextureSubImage1D">
       <param name="format"><type>PixelFormat</type></param>
     </function>
-    <function name="CompressedTextureSubImage2D" extension="Core">
+    <function name="CompressedTextureSubImage2D">
       <param name="format"><type>PixelFormat</type></param>
     </function>
-    <function name="CompressedTextureSubImage3D" extension="Core">
+    <function name="CompressedTextureSubImage3D">
       <param name="format"><type>PixelFormat</type></param>
     </function>
     <function name="CreateTextures">
@@ -157,30 +157,30 @@
     <function name="TextureParameter">
       <param name="pname"><type>TextureParameterName</type></param>
     </function>
-    <function name="TextureStorage1D" extension="Core">
+    <function name="TextureStorage1D">
       <param name="internalformat"><type>SizedInternalFormat</type></param>
     </function>
-    <function name="TextureStorage2D" extension="Core">
+    <function name="TextureStorage2D">
       <param name="internalformat"><type>SizedInternalFormat</type></param>
     </function>
-    <function name="TextureStorage3D" extension="Core">
+    <function name="TextureStorage3D">
       <param name="internalformat"><type>SizedInternalFormat</type></param>
     </function>
-    <function name="TextureStorage2DMultisample" extension="Core">
+    <function name="TextureStorage2DMultisample">
       <param name="internalformat"><type>SizedInternalFormat</type></param>
     </function>
-    <function name="TextureStorage3DMultisample" extension="Core">
+    <function name="TextureStorage3DMultisample">
       <param name="internalformat"><type>SizedInternalFormat</type></param>
     </function>
-    <function name="TextureSubImage1D" extension="Core">
+    <function name="TextureSubImage1D">
       <param name="format"><type>PixelFormat</type></param>
       <param name="type"><type>PixelType</type></param>
     </function>
-    <function name="TextureSubImage2D" extension="Core">
+    <function name="TextureSubImage2D">
       <param name="format"><type>PixelFormat</type></param>
       <param name="type"><type>PixelType</type></param>
     </function>
-    <function name="TextureSubImage3D" extension="Core">
+    <function name="TextureSubImage3D">
       <param name="format"><type>PixelFormat</type></param>
       <param name="type"><type>PixelType</type></param>
     </function>
@@ -208,19 +208,19 @@
 
   <!-- Vertex Array object functions -->
   <replace name="gl|glcore">
-    <function name="GetVertexArrayiv" extension="Core">
+    <function name="GetVertexArrayiv">
       <param name="pname"><type>VertexArrayParameter</type></param>
     </function>
-    <function name="GetVertexArrayIndexediv" extension="Core">
+    <function name="GetVertexArrayIndexediv">
       <param name="pname"><type>VertexArrayIndexedParameter</type></param>
     </function>
-    <function name="GetVertexArrayIndexed64iv" extension="Core">
+    <function name="GetVertexArrayIndexed64iv">
       <param name="pname"><type>VertexArrayIndexed64Parameter</type></param>
     </function>
-    <function name="VertexArrayAttribFormat" extension="Core">
+    <function name="VertexArrayAttribFormat">
       <param name="type"><type>VertexAttribType</type></param>
     </function>
-    <function name="VertexArrayAttribIFormat" extension="Core">
+    <function name="VertexArrayAttribIFormat">
       <param name="type"><type>VertexAttribType</type></param>
     </function>
 
@@ -258,5 +258,79 @@
       <use token="QUERY_TARGET" />
     </enum>
   </add>
+
+  <overload name="gl|glcore">
+    <function name="ClearNamedBufferData" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="ClearNamedBufferSubData" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+    </function>
+    <function name="ClearNamedBufferSubData" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+      <param name="format"><type>int</type></param>
+    </function>
+    <function name="GetNamedBufferParameter" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="pname"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="GetNamedBufferParameter" extension="NV" obsolete="Use strongly typed overload instead">
+      <param name="pname"><type>NvShaderBufferLoad</type></param>
+    </function>
+    <function name="GetNamedBufferPointer" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="pname"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="MapNamedBuffer" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="access"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedBufferData" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="usage"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedBufferStorage" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="flags"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedBufferStorage" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="flags"><type>uint</type></param>
+    </function>
+    <function name="NamedFramebufferParameter" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="pname"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedFramebufferParameter" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="pname"><type>FramebufferParameterName</type></param>
+    </function>
+    <function name="NamedRenderbufferStorage" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedRenderbufferStorage" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+    <function name="NamedRenderbufferStorageMultisample" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedRenderbufferStorageMultisample" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+    <function name="TextureBuffer" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureBufferRange" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureStorage1D" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureStorage2D" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureStorage3D" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureStorage2DMultisample" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureStorage3DMultisample" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+  </overload>
 
 </signatures>

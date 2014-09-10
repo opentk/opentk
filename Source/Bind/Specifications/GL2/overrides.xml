@@ -1244,7 +1244,7 @@
       <param name="depth"><type>ClipDepthMode</type></param>
     </function>
 
-    <function name="GetGraphicsResetStatus">
+    <function name="GetGraphicsResetStatus" extension="Core">
       <returns>ResetStatus</returns>
     </function>
 
@@ -5519,7 +5519,7 @@
     </function>
 
     <!-- KHR_context_robustness -->
-    <function name="GetGraphicsResetStatus">
+    <function name="GetGraphicsResetStatus" extension="Core">
       <returns>ResetStatus</returns>
     </function>
     <function name="ReadnPixels">
