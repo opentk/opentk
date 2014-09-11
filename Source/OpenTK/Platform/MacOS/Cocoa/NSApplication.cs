@@ -79,10 +79,13 @@ namespace OpenTK.Platform.MacOS
 
                 Cocoa.SendIntPtr(appMenu, Selector.Get("addItem:"), quitMenuItem);
                 Cocoa.SendIntPtr(menuItem, Selector.Get("setSubmenu:"), appMenu);
-            }
 
-            // Tell cocoa we're ready to run the application (usually called by [NSApp run]). 
-            Cocoa.SendVoid(Handle, Selector.Get("finishLaunching"));
+                // Tell cocoa we're ready to run the application (usually called by [NSApp run]). 
+                // Note: if a main menu exists, then this method has already been called and
+                // calling it again will result in a crash. For this reason, we only call it
+                // when we create our own main menu.
+                Cocoa.SendVoid(Handle, Selector.Get("finishLaunching"));
+            }
 
             // Disable momentum scrolling and long-press key pop-ups
             IntPtr settings = Cocoa.SendIntPtr(Class.NSDictionary, Selector.Alloc);
