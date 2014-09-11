@@ -117,6 +117,30 @@ namespace OpenTK
             Row3 = new Vector4(m30, m31, m32, m33);
         }
 
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="topLeft">The top left 3x3 of the matrix.</param>
+        public Matrix4(Matrix3 topLeft)
+        {
+            Row0.X = topLeft.Row0.X;
+            Row0.Y = topLeft.Row0.Y;
+            Row0.Z = topLeft.Row0.Z;
+            Row0.W = 0;
+            Row1.X = topLeft.Row1.X;
+            Row1.Y = topLeft.Row1.Y;
+            Row1.Z = topLeft.Row1.Z;
+            Row1.W = 0;
+            Row2.X = topLeft.Row2.X;
+            Row2.Y = topLeft.Row2.Y;
+            Row2.Z = topLeft.Row2.Z;
+            Row2.W = 0;
+            Row3.X = 0;
+            Row3.Y = 0;
+            Row3.Z = 0;
+            Row3.W = 1;
+        }
+
         #endregion
 
         #region Public Members
@@ -588,37 +612,6 @@ namespace OpenTK
             Matrix4 result;
             CreateFromQuaternion(ref q, out result);
             return result;
-        }
-
-        #endregion
-
-        #region CreateFromRotationMatrix
-
-        public static Matrix4 CreateFromRotationMatrix(Matrix3 rotation)
-        {
-            Matrix4 result;
-            CreateFromRotationMatrix(ref rotation, out result);
-            return result;
-        }
-
-        public static void CreateFromRotationMatrix(ref Matrix3 rotation, out Matrix4 result)
-        {
-            result.Row0.X = rotation.Row0.X;
-            result.Row0.Y = rotation.Row0.Y;
-            result.Row0.Z = rotation.Row0.Z;
-            result.Row0.W = 0;
-            result.Row1.X = rotation.Row1.X;
-            result.Row1.Y = rotation.Row1.Y;
-            result.Row1.Z = rotation.Row1.Z;
-            result.Row1.W = 0;
-            result.Row2.X = rotation.Row2.X;
-            result.Row2.Y = rotation.Row2.Y;
-            result.Row2.Z = rotation.Row2.Z;
-            result.Row2.W = 0;
-            result.Row3.X = 0;
-            result.Row3.Y = 0;
-            result.Row3.Z = 0;
-            result.Row3.W = 1;
         }
 
         #endregion
