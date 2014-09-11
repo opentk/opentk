@@ -76,7 +76,6 @@ namespace Bind.GL2
             enumSpecExt = String.Empty;
             glSpec = Path.Combine(dirName, "signatures.xml");
             glSpecExt = String.Empty;
-            Settings.OverridesFile = Path.Combine(dirName, "overrides.xml");
 
             Settings.ImportsClass = "Core";
             Settings.DelegatesClass = "Delegates";
@@ -91,6 +90,27 @@ namespace Bind.GL2
 
         #endregion
 
+        #region Private Members
+
+        IEnumerable<string> GetFiles(string path)
+        {
+            path = Path.Combine(Settings.InputPath, path);
+            if ((File.GetAttributes(path) & FileAttributes.Directory) != 0)
+            {
+                foreach (var file in Directory.GetFiles(
+                    path, "*.xml", SearchOption.AllDirectories))
+                {
+                    yield return file;
+                }
+            }
+            else
+            {
+                yield return path;
+            }
+        }
+
+        #endregion
+
         #region IBind Members
 
         public DelegateCollection Delegates { get; private set; }
@@ -101,15 +121,24 @@ namespace Bind.GL2
 
         public virtual void Process()
         {
-            string overrides = Path.Combine(Settings.InputPath, Settings.OverridesFile);
-            
+            var overrides = Settings.OverridesFiles.SelectMany(GetFiles);
+
             GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, glTypemap));
             CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, csTypemap));
 
+            // Read enum signatures
             SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, Profile, Version);
-            SpecReader.ReadEnums(overrides, Enums, Profile, Version);
+            foreach (var file in overrides)
+            {
+                SpecReader.ReadEnums(file, Enums, Profile, Version);
+            }
+
+            // Read delegate signatures
             SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, Profile, Version);
-            SpecReader.ReadDelegates(overrides, Delegates, Profile, Version);
+            foreach (var file in overrides)
+            {
+                SpecReader.ReadDelegates(file, Delegates, Profile, Version);
+            }
 
             var enum_processor = new EnumProcessor(this, overrides);
             var func_processor = new FuncProcessor(this, overrides);

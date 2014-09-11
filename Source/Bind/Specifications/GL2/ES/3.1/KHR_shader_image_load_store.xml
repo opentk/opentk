@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <replace name="gles2" version="3.1">
+    <function name="BindImageTexture">
+      <param name="access"><type>TextureAccess</type></param>
+      <param name="format"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="GetBooleani_v">
+      <param name="target"><type>GetIndexedPName</type></param>
+    </function>
+    <function name="MemoryBarrier">
+      <param name="barriers"><type>MemoryBarrierFlags</type></param>
+    </function>
+    <function name="MemoryBarrierByRegion">
+      <param name="barriers"><type>MemoryBarrierRegionFlags</type></param>
+    </function>
+  </replace>
+
+  <add name="gles2" version="3.1">
+    <enum name="ActiveUniformType">
+      <use token="GL_IMAGE_2D"/>
+      <use token="GL_IMAGE_3D"/>
+      <use token="GL_IMAGE_CUBE"/>
+      <use token="GL_IMAGE_2D_ARRAY"/>
+      <use token="GL_INT_IMAGE_2D"/>
+      <use token="GL_INT_IMAGE_3D"/>
+      <use token="GL_INT_IMAGE_CUBE"/>
+      <use token="GL_INT_IMAGE_2D_ARRAY"/>
+      <use token="GL_UNSIGNED_INT_IMAGE_2D"/>
+      <use token="GL_UNSIGNED_INT_IMAGE_3D"/>
+      <use token="GL_UNSIGNED_INT_IMAGE_CUBE"/>
+      <use token="GL_UNSIGNED_INT_IMAGE_2D_ARRAY"/>
+    </enum>
+    <enum name="GetPName">
+      <use token="GL_MAX_VERTEX_IMAGE_UNIFORMS"/>
+      <use token="GL_MAX_FRAGMENT_IMAGE_UNIFORMS"/>
+      <use token="GL_MAX_COMPUTE_IMAGE_UNIFORMS"/>
+      <use token="GL_MAX_COMBINED_IMAGE_UNIFORMS"/>
+      <use token="GL_IMAGE_BINDING_NAME"/>
+      <use token="GL_IMAGE_BINDING_LEVEL"/>
+      <use token="GL_IMAGE_BINDING_LAYERED"/>
+      <use token="GL_IMAGE_BINDING_LAYER"/>
+      <use token="GL_IMAGE_BINDING_ACCESS"/>
+      <use token="GL_IMAGE_BINDING_FORMAT"/>
+    </enum>
+    <enum name="GetTextureParameterName">
+      <use token="GL_IMAGE_FORMAT_COMPATIBILITY_TYPE"/>
+    </enum>
+    <enum name="MemoryBarrierFlags">
+      <use token="GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT"/>
+      <use token="GL_ELEMENT_ARRAY_BARRIER_BIT"/>
+      <use token="GL_UNIFORM_BARRIER_BIT"/>
+      <use token="GL_TEXTURE_FETCH_BARRIER_BIT"/>
+      <use token="GL_SHADER_IMAGE_ACCESS_BARRIER_BIT"/>
+      <use token="GL_COMMAND_BARRIER_BIT"/>
+      <use token="GL_PIXEL_BUFFER_BARRIER_BIT"/>
+      <use token="GL_TEXTURE_UPDATE_BARRIER_BIT"/>
+      <use token="GL_BUFFER_UPDATE_BARRIER_BIT"/>
+      <use token="GL_FRAMEBUFFER_BARRIER_BIT"/>
+      <use token="GL_TRANSFORM_FEEDBACK_BARRIER_BIT"/>
+      <use token="GL_ATOMIC_COUNTER_BARRIER_BIT"/>
+      <use token="GL_ALL_BARRIER_BITS"/>
+    </enum>
+    <enum name="MemoryBarrierRegionFlags">
+      <use token="GL_ATOMIC_COUNTER_BARRIER_BIT"/>
+      <use token="GL_FRAMEBUFFER_BARRIER_BIT"/>
+      <use token="GL_SHADER_IMAGE_ACCESS_BARRIER_BIT"/>
+      <use token="GL_TEXTURE_FETCH_BARRIER_BIT"/>
+      <use token="GL_UNIFORM_BARRIER_BIT"/>
+      <use token="GL_ALL_BARRIER_BITS"/>
+    </enum>
+    <enum name="TextureAccess">
+      <use token="READ_ONLY" />
+      <use token="WRITE_ONLY" />
+      <use token="READ_WRITE" />
+    </enum>
+  </add>
+
+</signatures>

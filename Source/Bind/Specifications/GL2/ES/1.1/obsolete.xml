@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <add name="gles1">
+    <!-- Enums from old ESCL parser -->
+    <!-- Required for OpenTK 1.0 compatibility -->
+    <enum name="Amdcompressed3Dctexture" obsolete="Use enum with correct capitalisation instead.">
+      <token name="3DC_X_AMD" value="0x87F9" />
+      <token name="3DC_XY_AMD" value="0x87FA" />
+      <token name="AMD_compressed_3DC_texture" value="1" />
+    </enum>
+    <enum name="AmdcompressedAtctexture" obsolete="Use enum with correct capitalisation instead.">
+      <token name="AMD_compressed_ATC_texture" value="1" />
+      <token name="ATC_RGB_AMD" value="0x8C92" />
+      <token name="ATC_RGBA_EXPLICIT_ALPHA_AMD" value="0x8C93" />
+      <token name="ATC_RGBA_INTERPOLATED_ALPHA_AMD" value="0x87EE" />
+    </enum>
+    <enum name="ExttextureFilterAnisotropic" obsolete="Use enum with correct capitalisation instead.">
+      <token name="EXT_texture_filter_anisotropic" value="1" />
+      <token name="MAX_TEXTURE_MAX_ANISOTROPY_EXT" value="0x84FF" />
+      <token name="TEXTURE_MAX_ANISOTROPY_EXT" value="0x84FE" />
+    </enum>
+    <enum name="ExttextureFormatBgra8888" obsolete="Use enum with correct capitalisation instead.">
+      <token name="BGRA" value="0x80E1" />
+      <token name="EXT_texture_format_BGRA8888" value="1" />
+    </enum>
+    <enum name="ImgreadFormat" obsolete="Use enum with correct capitalisation instead.">
+      <token name="BGRA" value="0x80E1" />
+      <token name="IMG_read_format" value="1" />
+      <token name="UNSIGNED_SHORT_1_5_5_5_REV" value="0x8366" />
+      <token name="UNSIGNED_SHORT_4_4_4_4_REV" value="0x8365" />
+    </enum>
+    <enum name="ImgtextureCompressionPvrtc" obsolete="Use enum with correct capitalisation instead.">
+      <token name="COMPRESSED_RGB_PVRTC_2BPPV1_IMG" value="0x8C01" />
+      <token name="COMPRESSED_RGB_PVRTC_4BPPV1_IMG" value="0x8C00" />
+      <token name="COMPRESSED_RGBA_PVRTC_2BPPV1_IMG" value="0x8C03" />
+      <token name="COMPRESSED_RGBA_PVRTC_4BPPV1_IMG" value="0x8C02" />
+      <token name="IMG_texture_compression_pvrtc" value="1" />
+    </enum>
+    <enum name="ImgtextureEnvEnhancedFixedFunction" obsolete="Use enum with correct capitalisation instead.">
+      <token name="ADD_BLEND_IMG" value="0x8C09" />
+      <token name="DOT3_RGBA_IMG" value="0x86AF" />
+      <token name="FACTOR_ALPHA_MODULATE_IMG" value="0x8C07" />
+      <token name="FRAGMENT_ALPHA_MODULATE_IMG" value="0x8C08" />
+      <token name="IMG_texture_env_enhanced_fixed_function" value="1" />
+      <token name="MODULATE_COLOR_IMG" value="0x8C04" />
+      <token name="RECIP_ADD_SIGNED_ALPHA_IMG" value="0x8C05" />
+      <token name="TEXTURE_ALPHA_MODULATE_IMG" value="0x8C06" />
+    </enum>
+    <enum name="ImguserClipPlane" obsolete="Use enum with correct capitalisation instead.">
+      <token name="CLIP_PLANE0_IMG" value="0x3000" />
+      <token name="CLIP_PLANE1_IMG" value="0x3001" />
+      <token name="CLIP_PLANE2_IMG" value="0x3002" />
+      <token name="CLIP_PLANE3_IMG" value="0x3003" />
+      <token name="CLIP_PLANE4_IMG" value="0x3004" />
+      <token name="CLIP_PLANE5_IMG" value="0x3005" />
+      <token name="IMG_user_clip_plane" value="1" />
+      <token name="MAX_CLIP_PLANES_IMG" value="0x0D32" />
+    </enum>
+    <enum name="Nvfence" obsolete="Use enum with correct capitalisation instead.">
+      <token name="ALL_COMPLETED_NV" value="0x84F2" />
+      <token name="FENCE_CONDITION_NV" value="0x84F4" />
+      <token name="FENCE_STATUS_NV" value="0x84F3" />
+      <token name="NV_fence" value="1" />
+    </enum>
+    <enum name="OesblendEquationSeparate" obsolete="Use enum with correct capitalisation instead.">
+      <token name="BLEND_EQUATION_ALPHA_OES" value="0x883D" />
+      <token name="BLEND_EQUATION_RGB_OES" value="0x8009" />
+      <token name="OES_blend_equation_separate" value="1" />
+    </enum>
+    <enum name="OesblendFuncSeparate" obsolete="Use enum with correct capitalisation instead.">
+      <token name="BLEND_DST_ALPHA_OES" value="0x80CA" />
+      <token name="BLEND_DST_RGB_OES" value="0x80C8" />
+      <token name="BLEND_SRC_ALPHA_OES" value="0x80CB" />
+      <token name="BLEND_SRC_RGB_OES" value="0x80C9" />
+      <token name="OES_blend_func_separate" value="1" />
+    </enum>
+    <enum name="OesblendSubtract" obsolete="Use enum with correct capitalisation instead.">
+      <token name="BLEND_EQUATION_OES" value="0x8009" />
+      <token name="FUNC_ADD_OES" value="0x8006" />
+      <token name="FUNC_REVERSE_SUBTRACT_OES" value="0x800B" />
+      <token name="FUNC_SUBTRACT_OES" value="0x800A" />
+      <token name="OES_blend_subtract" value="1" />
+    </enum>
+    <enum name="OesbyteCoordinates" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_byte_coordinates" value="1" />
+    </enum>
+    <enum name="OescompressedEtc1Rgb8Texture" obsolete="Use enum with correct capitalisation instead.">
+      <token name="ETC1_RGB8_OES" value="0x8D64" />
+      <token name="OES_compressed_ETC1_RGB8_texture" value="1" />
+    </enum>
+    <enum name="OescompressedPalettedTexture" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_compressed_paletted_texture" value="1" />
+      <token name="PALETTE4_R5_G6_B5_OES" value="0x8B92" />
+      <token name="PALETTE4_RGB5_A1_OES" value="0x8B94" />
+      <token name="PALETTE4_RGB8_OES" value="0x8B90" />
+      <token name="PALETTE4_RGBA4_OES" value="0x8B93" />
+      <token name="PALETTE4_RGBA8_OES" value="0x8B91" />
+      <token name="PALETTE8_R5_G6_B5_OES" value="0x8B97" />
+      <token name="PALETTE8_RGB5_A1_OES" value="0x8B99" />
+      <token name="PALETTE8_RGB8_OES" value="0x8B95" />
+      <token name="PALETTE8_RGBA4_OES" value="0x8B98" />
+      <token name="PALETTE8_RGBA8_OES" value="0x8B96" />
+    </enum>
+    <enum name="Oesdepth24" obsolete="Use enum with correct capitalisation instead.">
+      <token name="DEPTH_COMPONENT24_OES" value="0x81A6" />
+      <token name="OES_depth24" value="1" />
+    </enum>
+    <enum name="Oesdepth32" obsolete="Use enum with correct capitalisation instead.">
+      <token name="DEPTH_COMPONENT32_OES" value="0x81A7" />
+      <token name="OES_depth32" value="1" />
+    </enum>
+    <enum name="OesdrawTexture" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_draw_texture" value="1" />
+      <token name="TEXTURE_CROP_RECT_OES" value="0x8B9D" />
+    </enum>
+    <enum name="Oeseglimage" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_EGL_image" value="1" />
+    </enum>
+    <enum name="OeselementIndexUint" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_element_index_uint" value="1" />
+    </enum>
+    <enum name="OesextendedMatrixPalette" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_extended_matrix_palette" value="1" />
+    </enum>
+    <enum name="OesfboRenderMipmap" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_fbo_render_mipmap" value="1" />
+    </enum>
+    <enum name="OesfixedPoint" obsolete="Use enum with correct capitalisation instead.">
+      <token name="FIXED_OES" value="0x140C" />
+      <token name="OES_fixed_point" value="1" />
+    </enum>
+    <enum name="OesframebufferObject" obsolete="Use enum with correct capitalisation instead.">
+      <token name="COLOR_ATTACHMENT0_OES" value="0x8CE0" />
+      <token name="DEPTH_ATTACHMENT_OES" value="0x8D00" />
+      <token name="DEPTH_COMPONENT16_OES" value="0x81A5" />
+      <token name="FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_OES" value="0x8CD1" />
+      <token name="FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_OES" value="0x8CD0" />
+      <token name="FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_OES" value="0x8CD3" />
+      <token name="FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_OES" value="0x8CD2" />
+      <token name="FRAMEBUFFER_BINDING_OES" value="0x8CA6" />
+      <token name="FRAMEBUFFER_COMPLETE_OES" value="0x8CD5" />
+      <token name="FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES" value="0x8CD6" />
+      <token name="FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES" value="0x8CD9" />
+      <token name="FRAMEBUFFER_INCOMPLETE_FORMATS_OES" value="0x8CDA" />
+      <token name="FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES" value="0x8CD7" />
+      <token name="FRAMEBUFFER_OES" value="0x8D40" />
+      <token name="FRAMEBUFFER_UNSUPPORTED_OES" value="0x8CDD" />
+      <token name="INVALID_FRAMEBUFFER_OPERATION_OES" value="0x0506" />
+      <token name="MAX_RENDERBUFFER_SIZE_OES" value="0x84E8" />
+      <token name="NONE_OES" value="0" />
+      <token name="OES_framebuffer_object" value="1" />
+      <token name="RENDERBUFFER_ALPHA_SIZE_OES" value="0x8D53" />
+      <token name="RENDERBUFFER_BINDING_OES" value="0x8CA7" />
+      <token name="RENDERBUFFER_BLUE_SIZE_OES" value="0x8D52" />
+      <token name="RENDERBUFFER_DEPTH_SIZE_OES" value="0x8D54" />
+      <token name="RENDERBUFFER_GREEN_SIZE_OES" value="0x8D51" />
+      <token name="RENDERBUFFER_HEIGHT_OES" value="0x8D43" />
+      <token name="RENDERBUFFER_INTERNAL_FORMAT_OES" value="0x8D44" />
+      <token name="RENDERBUFFER_OES" value="0x8D41" />
+      <token name="RENDERBUFFER_RED_SIZE_OES" value="0x8D50" />
+      <token name="RENDERBUFFER_STENCIL_SIZE_OES" value="0x8D55" />
+      <token name="RENDERBUFFER_WIDTH_OES" value="0x8D42" />
+      <token name="RGB5_A1_OES" value="0x8057" />
+      <token name="RGB565_OES" value="0x8D62" />
+      <token name="RGBA4_OES" value="0x8056" />
+      <token name="STENCIL_ATTACHMENT_OES" value="0x8D20" />
+    </enum>
+    <enum name="Oesmapbuffer" obsolete="Use enum with correct capitalisation instead.">
+      <token name="BUFFER_ACCESS_OES" value="0x88BB" />
+      <token name="BUFFER_MAP_POINTER_OES" value="0x88BD" />
+      <token name="BUFFER_MAPPED_OES" value="0x88BC" />
+      <token name="OES_mapbuffer" value="1" />
+      <token name="WRITE_ONLY_OES" value="0x88B9" />
+    </enum>
+    <enum name="OesmatrixGet" obsolete="Use enum with correct capitalisation instead.">
+      <token name="MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES" value="0x898D" />
+      <token name="OES_matrix_get" value="1" />
+      <token name="PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES" value="0x898E" />
+      <token name="TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES" value="0x898F" />
+    </enum>
+    <enum name="OesmatrixPalette" obsolete="Use enum with correct capitalisation instead.">
+      <token name="CURRENT_PALETTE_MATRIX_OES" value="0x8843" />
+      <token name="MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES" value="0x8B9E" />
+      <token name="MATRIX_INDEX_ARRAY_OES" value="0x8844" />
+      <token name="MATRIX_INDEX_ARRAY_POINTER_OES" value="0x8849" />
+      <token name="MATRIX_INDEX_ARRAY_SIZE_OES" value="0x8846" />
+      <token name="MATRIX_INDEX_ARRAY_STRIDE_OES" value="0x8848" />
+      <token name="MATRIX_INDEX_ARRAY_TYPE_OES" value="0x8847" />
+      <token name="MATRIX_PALETTE_OES" value="0x8840" />
+      <token name="MAX_PALETTE_MATRICES_OES" value="0x8842" />
+      <token name="MAX_VERTEX_UNITS_OES" value="0x86A4" />
+      <token name="OES_matrix_palette" value="1" />
+      <token name="WEIGHT_ARRAY_BUFFER_BINDING_OES" value="0x889E" />
+      <token name="WEIGHT_ARRAY_OES" value="0x86AD" />
+      <token name="WEIGHT_ARRAY_POINTER_OES" value="0x86AC" />
+      <token name="WEIGHT_ARRAY_SIZE_OES" value="0x86AB" />
+      <token name="WEIGHT_ARRAY_STRIDE_OES" value="0x86AA" />
+      <token name="WEIGHT_ARRAY_TYPE_OES" value="0x86A9" />
+    </enum>
+    <enum name="OespackedDepthStencil" obsolete="Use enum with correct capitalisation instead.">
+      <token name="DEPTH_STENCIL_OES" value="0x84F9" />
+      <token name="DEPTH24_STENCIL8_OES" value="0x88F0" />
+      <token name="OES_packed_depth_stencil" value="1" />
+      <token name="UNSIGNED_INT_24_8_OES" value="0x84FA" />
+    </enum>
+    <enum name="OespointSizeArray" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_point_size_array" value="1" />
+      <token name="POINT_SIZE_ARRAY_BUFFER_BINDING_OES" value="0x8B9F" />
+      <token name="POINT_SIZE_ARRAY_OES" value="0x8B9C" />
+      <token name="POINT_SIZE_ARRAY_POINTER_OES" value="0x898C" />
+      <token name="POINT_SIZE_ARRAY_STRIDE_OES" value="0x898B" />
+      <token name="POINT_SIZE_ARRAY_TYPE_OES" value="0x898A" />
+    </enum>
+    <enum name="OespointSprite" obsolete="Use enum with correct capitalisation instead.">
+      <token name="COORD_REPLACE_OES" value="0x8862" />
+      <token name="OES_point_sprite" value="1" />
+      <token name="POINT_SPRITE_OES" value="0x8861" />
+    </enum>
+    <enum name="OesqueryMatrix" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_query_matrix" value="1" />
+    </enum>
+    <enum name="OesreadFormat" obsolete="Use enum with correct capitalisation instead.">
+      <token name="IMPLEMENTATION_COLOR_READ_FORMAT_OES" value="0x8B9B" />
+      <token name="IMPLEMENTATION_COLOR_READ_TYPE_OES" value="0x8B9A" />
+      <token name="OES_read_format" value="1" />
+    </enum>
+    <enum name="Oesrgb8Rgba8" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_rgb8_rgba8" value="1" />
+      <token name="RGB8_OES" value="0x8051" />
+      <token name="RGBA8_OES" value="0x8058" />
+    </enum>
+    <enum name="OessinglePrecision" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_single_precision" value="1" />
+    </enum>
+    <enum name="Oesstencil1" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_stencil1" value="1" />
+      <token name="STENCIL_INDEX1_OES" value="0x8D46" />
+    </enum>
+    <enum name="Oesstencil4" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_stencil4" value="1" />
+      <token name="STENCIL_INDEX4_OES" value="0x8D47" />
+    </enum>
+    <enum name="Oesstencil8" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_stencil8" value="1" />
+      <token name="STENCIL_INDEX8_OES" value="0x8D48" />
+    </enum>
+    <enum name="OesstencilWrap" obsolete="Use enum with correct capitalisation instead.">
+      <token name="DECR_WRAP_OES" value="0x8508" />
+      <token name="INCR_WRAP_OES" value="0x8507" />
+      <token name="OES_stencil_wrap" value="1" />
+    </enum>
+    <enum name="OestextureCubeMap" obsolete="Use enum with correct capitalisation instead.">
+      <token name="MAX_CUBE_MAP_TEXTURE_SIZE_OES" value="0x851C" />
+      <token name="NORMAL_MAP_OES" value="0x8511" />
+      <token name="OES_texture_cube_map" value="1" />
+      <token name="REFLECTION_MAP_OES" value="0x8512" />
+      <token name="TEXTURE_BINDING_CUBE_MAP_OES" value="0x8514" />
+      <token name="TEXTURE_CUBE_MAP_NEGATIVE_X_OES" value="0x8516" />
+      <token name="TEXTURE_CUBE_MAP_NEGATIVE_Y_OES" value="0x8518" />
+      <token name="TEXTURE_CUBE_MAP_NEGATIVE_Z_OES" value="0x851A" />
+      <token name="TEXTURE_CUBE_MAP_OES" value="0x8513" />
+      <token name="TEXTURE_CUBE_MAP_POSITIVE_X_OES" value="0x8515" />
+      <token name="TEXTURE_CUBE_MAP_POSITIVE_Y_OES" value="0x8517" />
+      <token name="TEXTURE_CUBE_MAP_POSITIVE_Z_OES" value="0x8519" />
+      <token name="TEXTURE_GEN_MODE_OES" value="0x2500" />
+      <token name="TEXTURE_GEN_STR_OES" value="0x8D60" />
+    </enum>
+    <enum name="OestextureEnvCrossbar" obsolete="Use enum with correct capitalisation instead.">
+      <token name="OES_texture_env_crossbar" value="1" />
+    </enum>
+    <enum name="OestextureMirroredRepeat" obsolete="Use enum with correct capitalisation instead.">
+      <token name="MIRRORED_REPEAT_OES" value="0x8370" />
+      <token name="OES_texture_mirrored_repeat" value="1" />
+    </enum>
+    <enum name="OpenGlescoreVersions" obsolete="Use enum with correct capitalisation instead.">
+      <token name="VERSION_ES_CL_1_0" value="1" />
+      <token name="VERSION_ES_CL_1_1" value="1" />
+      <token name="VERSION_ES_CM_1_0" value="1" />
+      <token name="VERSION_ES_CM_1_1" value="1" />
+    </enum>
+    <enum name="QcomdriverControl" obsolete="Use enum with correct capitalisation instead.">
+      <token name="QCOM_driver_control" value="1" />
+    </enum>
+    <enum name="QcomperfmonGlobalMode" obsolete="Use enum with correct capitalisation instead.">
+      <token name="PERFMON_GLOBAL_MODE_QCOM" value="0x8FA0" />
+      <token name="QCOM_perfmon_global_mode" value="1" />
+    </enum>
+    <enum name="TextureCombineDot3" obsolete="Use enum with correct capitalisation instead.">
+      <token name="ADD_SIGNED" value="0x8574" />
+      <token name="ALPHA_SCALE" value="0x0D1C" />
+      <token name="COMBINE" value="0x8570" />
+      <token name="COMBINE_ALPHA" value="0x8572" />
+      <token name="COMBINE_RGB" value="0x8571" />
+      <token name="CONSTANT" value="0x8576" />
+      <token name="DOT3_RGB" value="0x86AE" />
+      <token name="DOT3_RGBA" value="0x86AF" />
+      <token name="INTERPOLATE" value="0x8575" />
+      <token name="OPERAND0_ALPHA" value="0x8598" />
+      <token name="OPERAND0_RGB" value="0x8590" />
+      <token name="OPERAND1_ALPHA" value="0x8599" />
+      <token name="OPERAND1_RGB" value="0x8591" />
+      <token name="OPERAND2_ALPHA" value="0x859A" />
+      <token name="OPERAND2_RGB" value="0x8592" />
+      <token name="PREVIOUS" value="0x8578" />
+      <token name="PRIMARY_COLOR" value="0x8577" />
+      <token name="RGB_SCALE" value="0x8573" />
+      <token name="SRC0_ALPHA" value="0x8588" />
+      <token name="SRC0_RGB" value="0x8580" />
+      <token name="SRC1_ALPHA" value="0x8589" />
+      <token name="SRC1_RGB" value="0x8581" />
+      <token name="SRC2_ALPHA" value="0x858A" />
+      <token name="SRC2_RGB" value="0x8582" />
+      <token name="SUBTRACT" value="0x84E7" />
+    </enum>
+  </add>
+
+</signatures>

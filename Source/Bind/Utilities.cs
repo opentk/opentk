@@ -103,31 +103,50 @@ namespace Bind
         public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
         public static Regex Extensions { get; private set; }
         public static Regex Acronyms { get; private set; }
-        //public static readonly Regex Extensions = new Regex(
-        //    "ARB|EXT|ATIX|ATI|AMDX|AMD|NV|NVX|SUNX|SUN|SGIS|SGIX|SGI|MESAX|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D|ARM|ANGLE|OES|QCOM|VIV|IMG",
-        //    RegexOptions.Compiled);
-        //public static readonly Regex Acronyms = new Regex(Extensions.ToString() + "|EGL|3TC|DXT|ES|GL|CL|RGBA|BGRA|RGB|BGR|ETC",
-        //    RegexOptions.Compiled);
 
-        public static void InitExtensions(IEnumerable<string> extensions)
+        // Both GL and ES contains SGI extension enums, even though no function
+        // uses them. This is a remnant from the glory days of gl.spec and GL 1.1.
+        // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH OPENTK 1.0,
+        // WRT THE ES 1.1 API.
+        // You have been warned.
+        static List<string> extension_names = new List<string>
         {
-            var acronyms = new string[]
-            {
-                "EGL",  "ES", "GL", "CL",
-                "RGBA", "BGRA", "RGB", "BGR",
-                "SRGB", "YCBCR",
-                "3TC", "DXT", "BPTC", "RGTC",
-                "3DC", "ATC", "ETC",
-                "ANGLE",  "MESAX", "MESA",
-            };
+            "SGI", "SGIS", "SGIX", "IBM", "AMD", "INTEL", 
+        };
 
-            Extensions = new Regex(
-                String.Join("|", extensions.ToArray()),
-                RegexOptions.Compiled);
-                        
-            Acronyms = new Regex(
-                String.Join("|", extensions.Concat(acronyms).ToArray()),
-                RegexOptions.Compiled);
+        public static void AddExtensions(IEnumerable<string> extensions)
+        {
+            // Merge the new extensions with the current list of extensions
+            int extension_count = extension_names.Count;
+            extension_names.AddRange(
+                extensions.Where(n => !extension_names.Contains(n)));
+
+            // If any new extensions have been added,
+            // recreate the Extensions regex.
+            if (extension_names.Count != extension_count)
+            {
+                // Sort longest extensions first, otherwise SGIS may be
+                // incorrectly matched as SGI.
+                extension_names.Sort((a, b) => b.Length.CompareTo(a.Length));
+
+                Extensions = new Regex(
+                    String.Join("|", extension_names.ToArray()),
+                    RegexOptions.Compiled);
+
+                var acronyms = new string[]
+                {
+                    "EGL",  "ES", "GL", "CL",
+                    "RGBA", "BGRA", "RGB", "BGR",
+                    "SRGB", "YCBCR",
+                    "3TC", "DXT", "BPTC", "RGTC",
+                    "3DC", "ATC", "ETC",
+                    "ANGLE",  "MESAX", "MESA",
+                };
+
+                var acronym_names = extensions.Concat(acronyms).ToList();
+                acronym_names.Sort((a, b) => b.Length.CompareTo(a.Length));
+                Acronyms = new Regex(String.Join("|", acronym_names.ToArray()), RegexOptions.Compiled);
+            }
         }
 
         #region internal StreamReader OpenSpecFile(string file)
@@ -272,13 +291,21 @@ namespace Bind
 
         internal static string GetGL2Extension(string name)
         {
+            return GetExtension(name, false);
+        }
+
+        internal static string GetExtension(string name, bool return_unmodified)
+        {
             var match = Extensions.Match(name);
             if (match.Success)
             {
                 string ext = match.Value;
-                if (ext.Length > 2)
+                if (!return_unmodified)
                 {
-                    ext = ext[0] + ext.Substring(1).ToLower();
+                    if (ext.Length > 2)
+                    {
+                        ext = ext[0] + ext.Substring(1).ToLower();
+                    }
                 }
                 return ext;
             }

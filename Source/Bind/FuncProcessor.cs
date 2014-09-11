@@ -54,12 +54,12 @@ namespace Bind
             RegexOptions.Compiled);
         static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
-        string Overrides { get; set; }
+        readonly IEnumerable<string> Overrides;
 
         IBind Generator { get; set; }
         Settings Settings { get { return Generator.Settings; } }
 
-        public FuncProcessor(IBind generator, string overrides)
+        public FuncProcessor(IBind generator, IEnumerable<string> overrides)
         {
             if (generator == null)
                 throw new ArgumentNullException("generator");
@@ -73,43 +73,47 @@ namespace Bind
         public FunctionCollection Process(EnumProcessor enum_processor, DocProcessor doc_processor,
             DelegateCollection delegates, EnumCollection enums, string apiname, string apiversion)
         {
-            Console.WriteLine("Processing delegates.");
-            var nav = new XPathDocument(Overrides).CreateNavigator();
-            foreach (var version in apiversion.Split('|'))
+            foreach (var file in Overrides)
             {
-                // Translate each delegate:
-                // 1st using the <replace> elements in overrides.xml
-                // 2nd using the hardcoded rules in FuncProcessor (e.g. char* -> string)
-                foreach (var signatures in delegates.Values)
-                {
-                    foreach (var d in signatures)
-                    {
-                        var replace = GetFuncOverride(nav, d, apiname, apiversion);
-                        TranslateExtension(d);
-                        TranslateReturnType(d, replace, nav, enum_processor, enums, apiname, version);
-                        TranslateParameters(d, replace, nav, enum_processor, enums, apiname, version);
-                        TranslateAttributes(d, replace, nav, apiname, version);
-                    }
-                }
+                Console.WriteLine("Processing funcs in {0}.", file);
 
-                // Create overloads for backwards compatibility,
-                // by resolving <overload> elements
-                var overload_list = new List<Delegate>();
-                foreach (var d in delegates.Values.Select(v => v.First()))
+                var nav = new XPathDocument(file).CreateNavigator();
+                foreach (var version in apiversion.Split('|'))
                 {
-                    var overload_elements = GetFuncOverload(nav, d, apiname, apiversion);
-                    foreach (XPathNavigator overload_element in overload_elements)
+                    // Translate each delegate:
+                    // 1st using the <replace> elements in overrides.xml
+                    // 2nd using the hardcoded rules in FuncProcessor (e.g. char* -> string)
+                    foreach (var signatures in delegates.Values)
                     {
-                        var overload = new Delegate(d);
-                        TranslateReturnType(overload, overload_element, nav, enum_processor, enums, apiname, version);
-                        TranslateParameters(overload, overload_element, nav, enum_processor, enums, apiname, version);
-                        TranslateAttributes(overload, overload_element, nav, apiname, version);
-                        overload_list.Add(overload);
+                        foreach (var d in signatures)
+                        {
+                            var replace = GetFuncOverride(nav, d, apiname, apiversion);
+                            TranslateExtension(d);
+                            TranslateReturnType(d, replace, nav, enum_processor, enums, apiname, version);
+                            TranslateParameters(d, replace, nav, enum_processor, enums, apiname, version);
+                            TranslateAttributes(d, replace, nav, apiname, version);
+                        }
                     }
-                }
-                foreach (var overload in overload_list)
-                {
-                    delegates.Add(overload);
+
+                    // Create overloads for backwards compatibility,
+                    // by resolving <overload> elements
+                    var overload_list = new List<Delegate>();
+                    foreach (var d in delegates.Values.Select(v => v.First()))
+                    {
+                        var overload_elements = GetFuncOverload(nav, d, apiname, apiversion);
+                        foreach (XPathNavigator overload_element in overload_elements)
+                        {
+                            var overload = new Delegate(d);
+                            TranslateReturnType(overload, overload_element, nav, enum_processor, enums, apiname, version);
+                            TranslateParameters(overload, overload_element, nav, enum_processor, enums, apiname, version);
+                            TranslateAttributes(overload, overload_element, nav, apiname, version);
+                            overload_list.Add(overload);
+                        }
+                    }
+                    foreach (var overload in overload_list)
+                    {
+                        delegates.Add(overload);
+                    }
                 }
             }
 

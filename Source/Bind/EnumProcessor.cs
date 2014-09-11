@@ -39,12 +39,12 @@ namespace Bind
 {
     class EnumProcessor
     {
-        string Overrides { get; set; }
+        readonly IEnumerable<string> Overrides;
 
         IBind Generator { get; set; }
         Settings Settings { get { return Generator.Settings; } }
 
-        public EnumProcessor(IBind generator, string overrides)
+        public EnumProcessor(IBind generator, IEnumerable<string> overrides)
         {
             if (generator == null)
                 throw new ArgumentNullException("generator");
@@ -57,9 +57,14 @@ namespace Bind
 
         public EnumCollection Process(EnumCollection enums, string apiname)
         {
-            var nav = new XPathDocument(Overrides).CreateNavigator();
-            enums = ProcessNames(enums, nav, apiname);
-            enums = ProcessConstants(enums, nav, apiname);
+            foreach (var file in Overrides)
+            {
+                Console.WriteLine("Processing enums in {0}.", file);
+
+                var nav = new XPathDocument(file).CreateNavigator();
+                enums = ProcessNames(enums, nav, apiname);
+                enums = ProcessConstants(enums, nav, apiname);
+            }
             return enums;
         }
 
@@ -134,6 +139,17 @@ namespace Bind
             return name;
         }
 
+        static bool IsAlreadyProcessed(string name)
+        {
+            string extension = Utilities.GetExtension(name, true);
+            bool unprocessed = false;
+            unprocessed |= name.Contains("_") || name.Contains("-");
+            unprocessed |= Char.IsDigit(name[0]);
+            unprocessed |= name.All(c => Char.IsUpper(c));
+            unprocessed |= !String.IsNullOrEmpty(extension) && extension.All(c => Char.IsUpper(c));
+            return !unprocessed;
+        }
+
         public string TranslateEnumName(string name)
         {
             if (String.IsNullOrEmpty(name))
@@ -142,70 +158,73 @@ namespace Bind
             if (Utilities.Keywords(Settings.Language).Contains(name))
                 return name;
 
-            if (Char.IsDigit(name[0]))
-                name = Settings.ConstantPrefix + name;
-
-            StringBuilder translator = new StringBuilder(name);
-
-            // Split on IHV names and acronyms, to ensure that characters appearing after these name are uppercase.
-            var match = Utilities.Acronyms.Match(name);
-            int offset = 0; // Everytime we insert a match, we must increase offset to compensate.
-            while (match.Success)
+            if (!IsAlreadyProcessed(name))
             {
-                int insert_pos = match.Index + match.Length + offset++;
-                translator.Insert(insert_pos, "_");
-                match = match.NextMatch();
-            }
-            name = translator.ToString();
-            translator.Remove(0, translator.Length);
+                if (Char.IsDigit(name[0]))
+                    name = Settings.ConstantPrefix + name;
 
-            // Process according to these rules:
-            //     1. if current char is '_', '-' remove it and make next char uppercase
-            //     2. if current char is  or '0-9' keep it and make next char uppercase.
-            //     3. if current char is uppercase make next char lowercase.
-            //     4. if current char is lowercase, respect next char case.
-            bool is_after_underscore_or_number = true;
-            bool is_previous_uppercase = false;
-            foreach (char c in name)
-            {
-                char char_to_add;
-                if (c == '_' || c == '-')
+                StringBuilder translator = new StringBuilder(name);
+
+                // Split on IHV names and acronyms, to ensure that characters appearing after these name are uppercase.
+                var match = Utilities.Acronyms.Match(name);
+                int offset = 0; // Everytime we insert a match, we must increase offset to compensate.
+                while (match.Success)
                 {
-                    is_after_underscore_or_number = true;
-                    continue; // skip this character
+                    int insert_pos = match.Index + match.Length + offset++;
+                    translator.Insert(insert_pos, "_");
+                    match = match.NextMatch();
                 }
-                else if (Char.IsDigit(c))
+                name = translator.ToString();
+                translator.Remove(0, translator.Length);
+
+                // Process according to these rules:
+                //     1. if current char is '_', '-' remove it and make next char uppercase
+                //     2. if current char is  or '0-9' keep it and make next char uppercase.
+                //     3. if current char is uppercase make next char lowercase.
+                //     4. if current char is lowercase, respect next char case.
+                bool is_after_underscore_or_number = true;
+                bool is_previous_uppercase = false;
+                foreach (char c in name)
                 {
-                    is_after_underscore_or_number = true;
+                    char char_to_add;
+                    if (c == '_' || c == '-')
+                    {
+                        is_after_underscore_or_number = true;
+                        continue; // skip this character
+                    }
+                    else if (Char.IsDigit(c))
+                    {
+                        is_after_underscore_or_number = true;
+                    }
+
+                    if (is_after_underscore_or_number)
+                        char_to_add = Char.ToUpper(c);
+                    else if (is_previous_uppercase)
+                        char_to_add = Char.ToLower(c);
+                    else
+                        char_to_add = c;
+
+                    translator.Append(char_to_add);
+
+                    is_previous_uppercase = Char.IsUpper(c);
+                    is_after_underscore_or_number = false;
                 }
 
-                if (is_after_underscore_or_number)
-                    char_to_add = Char.ToUpper(c);
-                else if (is_previous_uppercase)
-                    char_to_add = Char.ToLower(c);
-                else
-                    char_to_add = c;
+                // First letter should always be uppercase in order 
+                // to conform to .Net style guidelines.
+                translator[0] = Char.ToUpper(translator[0]);
 
-                translator.Append(char_to_add);
+                // Replace a number of words that do not play well
+                // with the previous process (i.e. they have two
+                // consecutive uppercase letters).
+                translator.Replace("Pname", "PName");
+                translator.Replace("AttribIp", "AttribIP");
+                translator.Replace("SRgb", "Srgb");
 
-                is_previous_uppercase = Char.IsUpper(c);
-                is_after_underscore_or_number = false;
+                name = translator.ToString();
+                if (name.StartsWith(Settings.EnumPrefix))
+                    name = name.Substring(Settings.EnumPrefix.Length);
             }
-
-            // First letter should always be uppercase in order 
-            // to conform to .Net style guidelines.
-            translator[0] = Char.ToUpper(translator[0]);
-
-            // Replace a number of words that do not play well
-            // with the previous process (i.e. they have two
-            // consecutive uppercase letters).
-            translator.Replace("Pname", "PName");
-            translator.Replace("AttribIp", "AttribIP");
-            translator.Replace("SRgb", "Srgb");
-
-            name = translator.ToString();
-            if (name.StartsWith(Settings.EnumPrefix))
-                name = name.Substring(Settings.EnumPrefix.Length);
 
             return name;
         }

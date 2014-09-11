@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <add name="gles2" version="3.1">
+    <enum name="BufferTarget">
+      <use token="GL_DISPATCH_INDIRECT_BUFFER"/>
+    </enum>
+    <enum name="GetProgramParameterName">
+      <use token="GL_COMPUTE_WORK_GROUP_SIZE" />
+    </enum>
+    <enum name="GetPName">
+      <use token="GL_DISPATCH_INDIRECT_BUFFER_BINDING"/>
+      <use token="GL_MAX_COMPUTE_UNIFORM_BLOCKS"/>
+      <use token="GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS"/>
+      <use token="GL_MAX_COMPUTE_IMAGE_UNIFORMS"/>
+      <use token="GL_MAX_COMPUTE_SHARED_MEMORY_SIZE"/>
+      <use token="GL_MAX_COMPUTE_UNIFORM_COMPONENTS"/>
+      <use token="GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS"/>
+      <use token="GL_MAX_COMPUTE_ATOMIC_COUNTERS"/>
+      <use token="GL_MAX_COMBINED_COMPUTE_UNIFORM_COMPONENTS"/>
+      <use token="GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS"/>
+      <use token="GL_MAX_COMPUTE_WORK_GROUP_COUNT"/>
+      <use token="GL_MAX_COMPUTE_WORK_GROUP_SIZE"/>
+    </enum>
+    <enum name="ProgramStageMask">
+      <use token="GL_COMPUTE_SHADER_BIT" />
+    </enum>
+    <enum name="ShaderType">
+      <use token="GL_COMPUTE_SHADER" />
+    </enum>
+  </add>
+
+</signatures>

@@ -25,6 +25,9 @@ namespace Bind.ES
             Settings.DefaultDocPath = Path.Combine(
                 Settings.DefaultDocPath, "ES20"); // no ES11 docbook sources available
 
+            Settings.OverridesFiles.Add("GL2/overrides.xml");
+            Settings.OverridesFiles.Add("GL2/ES/1.1/");
+
             // Khronos releases a combined 1.0+1.1 specification,
             // so we cannot distinguish between the two.
             // Todo: add support for common and light profiles.

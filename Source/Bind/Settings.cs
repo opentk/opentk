@@ -5,6 +5,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -14,9 +15,9 @@ namespace Bind
     [Serializable]
     class Settings
     {
-        // Disable BeforeFieldInit.
         public Settings()
         {
+            OverridesFiles = new List<string>();
         }
 
         public string DefaultInputPath = "../../../Source/Bind/Specifications";
@@ -25,7 +26,6 @@ namespace Bind
         public string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
         public string DefaultFallbackDocPath = "../../../Source/Bind/Specifications/Docs/GL";
         public string DefaultLicenseFile = "License.txt";
-        public string DefaultOverridesFile = "GL2/gloverrides.xml";
         public string DefaultLanguageTypeMapFile = "csharp.tm";
         public string DefaultKeywordEscapeCharacter = "@";
         public string DefaultImportsFile = "Core.cs";
@@ -34,7 +34,7 @@ namespace Bind
         public string DefaultWrappersFile = "GL.cs";
         public Legacy DefaultCompatibility = Legacy.NoDropMultipleTokens;
 
-        string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile, overridesFile,
+        string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
             languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
             wrappersFile;
         Nullable<Legacy> compatibility;
@@ -44,7 +44,7 @@ namespace Bind
         public string DocPath { get { return docPath ?? DefaultDocPath; } set { docPath = value; } }
         public string FallbackDocPath { get { return fallbackDocPath ?? DefaultFallbackDocPath; } set { fallbackDocPath = value; } }
         public string LicenseFile { get { return licenseFile ?? DefaultLicenseFile; } set { licenseFile = value; } }
-        public string OverridesFile { get { return overridesFile ?? DefaultOverridesFile; } set { overridesFile = value; } }
+        public List<string> OverridesFiles { get; private set; }
         public string LanguageTypeMapFile { get { return languageTypeMapFile ?? DefaultLanguageTypeMapFile; } set { languageTypeMapFile = value; } }
         public string KeywordEscapeCharacter { get { return keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter; } set { keywordEscapeCharacter = value; } }
         public string ImportsFile { get { return importsFile ?? DefaultImportsFile; } set { importsFile = value; } }
