@@ -1652,7 +1652,7 @@
       </param>
     </function>
     <!-- For backwards compatibility -->
-    <function name="GetObjectLabel" extension="Core" obsolete="Use out overload instead">
+    <function name="GetObjectLabel" extension="Core">
       <param name="length">
         <count>0</count>
       </param>
@@ -1821,7 +1821,7 @@
         <count>0</count>
       </param>
     </function>
-    <function name="GetObjectLabel" extension="Core" obsolete="Use out overload instead">
+    <function name="GetObjectLabel" extension="Core">
       <param name="length">
         <count>0</count>
       </param>
@@ -1956,7 +1956,7 @@
         <type>ExtDirectStateAccess</type>
       </param>
     </function>
-    <function name="GetObjectLabel" extension="Ext" obsolete="Use out overload instead">
+    <function name="GetObjectLabel" extension="Ext">
       <param name="length">
         <count>0</count>
       </param>
@@ -5793,7 +5793,7 @@
 
      <!-- gles2 overloads for backwards compatibility (2.0 and 3.0) -->
   <overload name="gles2">
-    <function name="GetObjectLabel" obsolete="Use out overload instead">
+    <function name="GetObjectLabel">
       <param name="length"><count>0</count></param>
     </function>
     <function name="GetObjectPtrLabel" obsolete="Use out overload instead">
