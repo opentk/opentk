@@ -558,7 +558,18 @@ namespace OpenTK.Platform.MacOS
                 guid_bytes.AddRange(name_bytes);
             }
 
-            return new Guid(guid_bytes.ToArray());
+            // The Guid(byte[]) constructor performs byte-swapping on the first 4+2+2 bytes, while
+            // the Guid(string) constructor does not. Since our database is using the string
+            // constructor, we need to compensate for this difference or the database lookups
+            // will fail.
+            byte[] guid_array = guid_bytes.ToArray();
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(guid_array, 0, 4);
+                Array.Reverse(guid_array, 4, 2);
+                Array.Reverse(guid_array, 6, 2);
+            }
+            return new Guid(guid_array);
         }
 
         JoystickData CreateJoystick(IntPtr sender, IntPtr device)
