@@ -1542,6 +1542,16 @@ namespace OpenTK.Platform.SDL2
                 }
             }
 
+            // The Guid(byte[]) constructor swaps the first 4+2+2 bytes.
+            // Compensate for that, otherwise we will not be able to match
+            // the Guids in the configuration database.
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(data, 0, 4);
+                Array.Reverse(data, 4, 2);
+                Array.Reverse(data, 6, 2);
+            }
+
             return new Guid(data);
         }
     }
