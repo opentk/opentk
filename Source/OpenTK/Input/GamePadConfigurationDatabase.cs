@@ -34,6 +34,8 @@ namespace OpenTK.Input
 {
     class GamePadConfigurationDatabase
     {
+        internal const string UnmappedName = "Unmapped Controller";
+
         readonly Dictionary<Guid, string> Configurations = new Dictionary<Guid, string>();
 
         internal GamePadConfigurationDatabase()

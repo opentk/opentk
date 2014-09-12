@@ -204,7 +204,8 @@ namespace OpenTK.Platform
                     GamePadType.GamePad, // Todo: detect different types
                     mapped_axes,
                     mapped_buttons,
-                    true);
+                    joy.IsConnected,
+                    configuration.Name != GamePadConfigurationDatabase.UnmappedName);
             }
             else
             {
