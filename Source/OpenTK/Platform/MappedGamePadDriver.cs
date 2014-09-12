@@ -110,7 +110,7 @@ namespace OpenTK.Platform
                                         // the following line to support both.
                                         short value = pressed ?
                                             short.MaxValue :
-                                            map.Target.Axis == GamePadAxes.LeftTrigger || map.Target.Axis == GamePadAxes.RightTrigger ?
+                                            (map.Target.Axis & (GamePadAxes.LeftTrigger | GamePadAxes.RightTrigger)) != 0 ?
                                                 short.MinValue :
                                                 (short)0;
                                         pad.SetAxis(map.Target.Axis, value);
@@ -157,7 +157,7 @@ namespace OpenTK.Platform
                                         // the following line to support both.
                                         short value = pressed ?
                                             short.MaxValue :
-                                            map.Target.Axis == GamePadAxes.LeftTrigger || map.Target.Axis == GamePadAxes.RightTrigger ?
+                                            (map.Target.Axis & (GamePadAxes.LeftTrigger | GamePadAxes.RightTrigger)) != 0 ?
                                                 short.MinValue :
                                                 (short)0;
                                         pad.SetAxis(map.Target.Axis, value);
