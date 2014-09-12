@@ -1037,8 +1037,33 @@ namespace OpenTK.Platform.MacOS
                 {
                     // 0 = up; 1 = up-right; 2 = right; 3 = right-down;
                     // 4 = down; 5 = down-left; 6 = left; 7 = up-left
-                    // Our HatPosition enum 
-                    position = (HatPosition)value;
+                    switch (value)
+                    {
+                        case 0:
+                            position = HatPosition.Up;
+                            break;
+                        case 1:
+                            position = HatPosition.UpRight;
+                            break;
+                        case 2:
+                            position = HatPosition.Right;
+                            break;
+                        case 3:
+                            position = HatPosition.DownRight;
+                            break;
+                        case 4:
+                            position = HatPosition.Down;
+                            break;
+                        case 5:
+                            position = HatPosition.DownLeft;
+                            break;
+                        case 6:
+                            position = HatPosition.Left;
+                            break;
+                        case 7:
+                            position = HatPosition.UpLeft;
+                            break;
+                    }
                 }
                 else
                 {
