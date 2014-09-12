@@ -77,26 +77,23 @@ namespace OpenTK.Platform.MacOS
             readonly public Dictionary<IOHIDElementCookie, JoystickElement> Elements =
                 new Dictionary<IOHIDElementCookie, JoystickElement>();
 
-            public void AddElement(
-                IntPtr element, IntPtr cookie, int order,
-                HIDPage page, int usage,
-                int min, int max)
+            public void AddElement(JoystickElement e)
             {
-                if (!Elements.ContainsKey(cookie))
+                if (!Elements.ContainsKey(e.Cookie))
                 {
-                    Elements.Add(cookie, new JoystickElement(element, cookie, order, page, usage, min, max));
+                    Elements.Add(e.Cookie, new JoystickElement(e.Element, e.Cookie, e.Order, e.Page, e.Usage, e.Min, e.Max));
                     Debug.Print("[{0}] Discovered joystick element {1:x} ({2}/{3})",
-                        typeof(HIDInput).Name, cookie, page, usage);
+                        typeof(HIDInput).Name, e.Cookie, e.Page, e.Usage);
                 }
                 else
                 {
                     Debug.Print("[{0}] Attempted to add joystick element {1:x} ({2}/{3}) twice, ignoring.",
-                        typeof(HIDInput).Name, cookie, page, usage);
+                        typeof(HIDInput).Name, e.Cookie, e.Page, e.Usage);
                 }
             }
         }
 
-        class JoystickElement
+        class JoystickElement : IComparable<JoystickElement>, IEquatable<JoystickElement>
         {
             public IntPtr Element;
             public IntPtr Cookie;
@@ -126,6 +123,24 @@ namespace OpenTK.Platform.MacOS
                 MinReported = min;
                 MaxReported = max;
             }
+
+            #region IComparable implementation
+
+            public int CompareTo(JoystickElement other)
+            {
+                return Usage.CompareTo(other.Usage);
+            }
+
+            #endregion
+
+            #region IEquatable implementation
+
+            public bool Equals(JoystickElement other)
+            {
+                return Cookie.Equals(other.Cookie);
+            }
+
+            #endregion
         }
 
         IOHIDManagerRef hidmanager;
@@ -150,6 +165,12 @@ namespace OpenTK.Platform.MacOS
         readonly CFDictionary DeviceTypes = new CFDictionary();
 
         readonly MappedGamePadDriver mapped_gamepad = new MappedGamePadDriver();
+
+        // Used for device discovery
+        readonly List<JoystickElement> axis_elements = new List<JoystickElement>();
+        readonly List<JoystickElement> button_elements = new List<JoystickElement>();
+        readonly List<JoystickElement> hat_elements = new List<JoystickElement>();
+        readonly List<JoystickElement> vendor_elements = new List<JoystickElement>();
 
         IntPtr MouseEventTap;
         IntPtr MouseEventTapSource;
@@ -641,87 +662,44 @@ namespace OpenTK.Platform.MacOS
 
                 Guid guid = CreateJoystickGuid(device, name);
 
-                CFArray element_array = new CFArray(element_array_ref);
-                for (int i = 0; i < element_array.Count; i++)
+                axis_elements.Clear();
+                button_elements.Clear();
+                hat_elements.Clear();
+                vendor_elements.Clear();
+                AddElements(joy, element_array_ref, ref axes, ref buttons, ref hats, ref vendor);
+
+                // Ensure a stable sorting order that matches SDL2.
+                // (This is necessary for the gamepad database).
+                axis_elements.Sort();
+                for (int i = 0; i < axis_elements.Count; i++)
                 {
-                    IOHIDElementRef element_ref = element_array[i];
-                    IOHIDElementCookie cookie = NativeMethods.IOHIDElementGetCookie(element_ref);
-                    HIDPage page = NativeMethods.IOHIDElementGetUsagePage(element_ref);
-                    int usage = NativeMethods.IOHIDElementGetUsage(element_ref);
+                    JoystickElement e = axis_elements[i];
+                    e.Order = i;
+                    joy.AddElement(e);
+                }
 
-                    switch (page)
-                    {
-                        case HIDPage.GenericDesktop:
-                            switch ((HIDUsageGD)usage)
-                            {
-                                case HIDUsageGD.X:
-                                case HIDUsageGD.Y:
-                                case HIDUsageGD.Z:
-                                case HIDUsageGD.Rx:
-                                case HIDUsageGD.Ry:
-                                case HIDUsageGD.Rz:
-                                case HIDUsageGD.Slider:
-                                case HIDUsageGD.Dial:
-                                case HIDUsageGD.Wheel:
-                                    if (axes < JoystickState.MaxAxes)
-                                    {
-                                        joy.AddElement(element_ref, cookie, axes++, page, usage, 0, 0);
-                                    }
-                                    else
-                                    {
-                                        Debug.Print("[{0}] Failed to add axis (limit of {1} has been reached).",
-                                            GetType().Name, JoystickState.MaxAxes);
-                                    }
-                                    break;
+                button_elements.Sort();
+                for (int i = 0; i < button_elements.Count; i++)
+                {
+                    JoystickElement e = button_elements[i];
+                    e.Order = i;
+                    joy.AddElement(e);
+                }
 
-                                case HIDUsageGD.Hatswitch:
-                                    if (hats < JoystickState.MaxHats)
-                                    {
-                                        joy.AddElement(element_ref, cookie, hats++, page, usage, 0, 0);
-                                    }
-                                    else
-                                    {
-                                        Debug.Print("[{0}] Failed to add hat (limit of {1} has been reached).",
-                                            GetType().Name, JoystickState.MaxHats);
-                                    }
-                                    break;
-                            }
-                            break;
+                hat_elements.Sort();
+                for (int i = 0; i < hat_elements.Count; i++)
+                {
+                    JoystickElement e = hat_elements[i];
+                    e.Order = i;
+                    joy.AddElement(e);
+                }
 
-                        case HIDPage.Simulation:
-                            switch ((HIDUsageSim)usage)
-                            {
-                                case HIDUsageSim.Rudder:
-                                case HIDUsageSim.Throttle:
-                                    if (axes < JoystickState.MaxAxes)
-                                    {
-                                        joy.AddElement(element_ref, cookie, axes++, page, usage, 0, 0);
-                                    }
-                                    else
-                                    {
-                                        Debug.Print("[{0}] Failed to add axis (limit of {1} has been reached).",
-                                            GetType().Name, JoystickState.MaxAxes);
-                                    }
-                                    break;
-                            }
-                            break;
-
-                        case HIDPage.Button:
-                            if (buttons < JoystickState.MaxButtons)
-                            {
-                                joy.AddElement(element_ref, cookie, buttons++, page, usage, 0, 0);
-                            }
-                            else
-                            {
-                                Debug.Print("[{0}] Failed to add button (limit of {1} has been reached).",
-                                    GetType().Name, JoystickState.MaxButtons);
-                            }
-                            break;
-
-                        case HIDPage.VendorDefinedStart:
-                            joy.AddElement(element_ref, cookie, vendor++, page, usage, 0, 0);
-                            break;
-                    }
+                vendor_elements.Sort();
+                for (int i = 0; i < vendor_elements.Count; i++)
+                {
+                    JoystickElement e = vendor_elements[i];
+                    e.Order = i;
+                    joy.AddElement(e);
                 }
 
                 if (axes > JoystickState.MaxAxes)
@@ -751,6 +729,133 @@ namespace OpenTK.Platform.MacOS
             CF.CFRelease(element_array_ref);
 
             return joy;
+        }
+
+        void AddElements(JoystickData joy, CFArrayRef element_array_ref, ref int axes, ref int buttons, ref int hats, ref int vendor)
+        {
+            CFArray element_array = new CFArray(element_array_ref);
+            for (int i = 0; i < element_array.Count; i++)
+            {
+                IOHIDElementRef element_ref = element_array[i];
+
+                if (element_ref != IntPtr.Zero && CF.CFGetTypeID(element_ref) == NativeMethods.IOHIDElementGetTypeID())
+                {
+                    IOHIDElementCookie cookie = NativeMethods.IOHIDElementGetCookie(element_ref);
+                    HIDPage page = NativeMethods.IOHIDElementGetUsagePage(element_ref);
+                    int usage = NativeMethods.IOHIDElementGetUsage(element_ref);
+
+                    switch (NativeMethods.IOHIDElementGetType(element_ref))
+                    {
+                        case IOHIDElementType.Input_Axis:
+                        case IOHIDElementType.Input_Button:
+                        case IOHIDElementType.Input_Misc:
+                            switch (page)
+                            {
+                                case HIDPage.GenericDesktop:
+                                    switch ((HIDUsageGD)usage)
+                                    {
+                                        case HIDUsageGD.X:
+                                        case HIDUsageGD.Y:
+                                        case HIDUsageGD.Z:
+                                        case HIDUsageGD.Rx:
+                                        case HIDUsageGD.Ry:
+                                        case HIDUsageGD.Rz:
+                                        case HIDUsageGD.Slider:
+                                        case HIDUsageGD.Dial:
+                                        case HIDUsageGD.Wheel:
+                                            if (axes < JoystickState.MaxAxes)
+                                            {
+                                                var e = new JoystickElement(element_ref, cookie, axes++, page, usage, 0, 0);
+                                                if (!axis_elements.Contains(e))
+                                                {
+                                                    axis_elements.Add(e);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Debug.Print("[{0}] Failed to add axis (limit of {1} has been reached).",
+                                                    GetType().Name, JoystickState.MaxAxes);
+                                            }
+                                            break;
+
+                                        case HIDUsageGD.Hatswitch:
+                                            if (hats < JoystickState.MaxHats)
+                                            {
+                                                var e = new JoystickElement(element_ref, cookie, axes++, page, usage, 0, 0);
+                                                if (!hat_elements.Contains(e))
+                                                {
+                                                    hat_elements.Add(e);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Debug.Print("[{0}] Failed to add hat (limit of {1} has been reached).",
+                                                    GetType().Name, JoystickState.MaxHats);
+                                            }
+                                            break;
+                                    }
+                                    break;
+
+                                case HIDPage.Simulation:
+                                    switch ((HIDUsageSim)usage)
+                                    {
+                                        case HIDUsageSim.Rudder:
+                                        case HIDUsageSim.Throttle:
+                                            if (axes < JoystickState.MaxAxes)
+                                            {
+                                                JoystickElement e = new JoystickElement(element_ref, cookie, axes++, page, usage, 0, 0);
+                                                if (!axis_elements.Contains(e))
+                                                {
+                                                    axis_elements.Add(e);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Debug.Print("[{0}] Failed to add axis (limit of {1} has been reached).",
+                                                    GetType().Name, JoystickState.MaxAxes);
+                                            }
+                                            break;
+                                    }
+                                    break;
+
+                                case HIDPage.Button:
+                                    if (buttons < JoystickState.MaxButtons)
+                                    {
+                                        JoystickElement e = new JoystickElement(element_ref, cookie, buttons++, page, usage, 0, 0);
+                                        if (!button_elements.Contains(e))
+                                        {
+                                            button_elements.Add(e);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Debug.Print("[{0}] Failed to add button (limit of {1} has been reached).",
+                                            GetType().Name, JoystickState.MaxButtons);
+                                    }
+                                    break;
+
+                                case HIDPage.VendorDefinedStart:
+                                    {
+                                        JoystickElement e = new JoystickElement(element_ref, cookie, vendor++, page, usage, 0, 0);
+                                        if (!vendor_elements.Contains(e))
+                                        {
+                                            vendor_elements.Add(e);
+                                        }
+                                    }
+                                    break;
+                            }
+                            break;
+
+                        case IOHIDElementType.Collection:
+                            CFArrayRef children_array_ref = NativeMethods.IOHIDElementGetChildren(element_ref);
+                            if (children_array_ref != IntPtr.Zero)
+                            {
+                                AddElements(joy, children_array_ref, ref axes, ref buttons, ref hats, ref vendor);
+                            }
+                            break;
+                    }
+                }
+            }
         }
 
         JoystickData GetJoystick(int index)
@@ -1195,6 +1300,9 @@ namespace OpenTK.Platform.MacOS
             public static extern IOHIDElementRef IOHIDValueGetElement(IOHIDValueRef @value);
 
             [DllImport(hid)]
+            public static extern CFArrayRef IOHIDElementGetChildren(IOHIDElementRef element_ref);
+
+            [DllImport(hid)]
             public static extern IOHIDElementCookie IOHIDElementGetCookie(IOHIDElementRef element);
 
             [DllImport(hid)]
@@ -1208,6 +1316,9 @@ namespace OpenTK.Platform.MacOS
             [DllImport(hid)]
             public static extern IOHIDElementType IOHIDElementGetType(
                 IOHIDElementRef element);
+
+            [DllImport(hid)]
+            public static extern IOHIDElementCookie IOHIDElementGetTypeID();
 
             [DllImport(hid)]
             public static extern int IOHIDElementGetUsage(IOHIDElementRef elem);
