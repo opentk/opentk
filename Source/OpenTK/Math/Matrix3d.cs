@@ -664,7 +664,25 @@ namespace OpenTK
         }
         
         #endregion
-        
+
+        #region Add Functions
+
+        public static Matrix3d Add(Matrix3d left, Matrix3d right)
+        {
+            Matrix3d result;
+            Add(ref left, ref right, out result);
+            return result;
+        }
+
+        public static void Add(ref Matrix3d left, ref Matrix3d right, out Matrix3d result)
+        {
+            Vector3d.Add(ref left.Row0, ref right.Row0, out result.Row0);
+            Vector3d.Add(ref left.Row1, ref right.Row1, out result.Row1);
+            Vector3d.Add(ref left.Row2, ref right.Row2, out result.Row2);
+        }
+
+        #endregion
+
         #region Multiply Functions
 
         /// <summary>
