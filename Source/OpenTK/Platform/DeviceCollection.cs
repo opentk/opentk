@@ -115,6 +115,20 @@ namespace OpenTK.Platform
             }
         }
 
+        public bool FromIndex(int index, out T device)
+        {
+            if (index >= 0 && index < Devices.Count)
+            {
+                device = Devices[index];
+                return true;
+            }
+            else
+            {
+                device = default(T);
+                return false;
+            }
+        }
+
         public T FromHardwareId(long id)
         {
             if (Map.ContainsKey(id))
@@ -124,6 +138,20 @@ namespace OpenTK.Platform
             else
             {
                 return default(T);
+            }
+        }
+
+        public bool FromHardwareId(long id, out T device)
+        {
+            if (Map.ContainsKey(id))
+            {
+                device = FromIndex(Map[id]);
+                return true;
+            }
+            else
+            {
+                device = default(T);
+                return false;
             }
         }
 
