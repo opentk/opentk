@@ -241,6 +241,7 @@ namespace OpenTK.Platform.Windows
 
     struct HidProtocolRange
     {
+#pragma warning disable 0649
         public short UsageMin;
         public short UsageMax;
         public short StringMin;
@@ -249,6 +250,7 @@ namespace OpenTK.Platform.Windows
         public short DesignatorMax;
         public short DataIndexMin;
         public short DataIndexMax;
+#pragma warning restore 0649
     }
 
     [StructLayout(LayoutKind.Explicit)]
