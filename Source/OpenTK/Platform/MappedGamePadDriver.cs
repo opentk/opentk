@@ -108,7 +108,12 @@ namespace OpenTK.Platform
                                         // Todo: if SDL2 GameController config is ever updated to
                                         // distinguish between negative/positive axes, then update
                                         // the following line to support both.
-                                        pad.SetAxis(map.Target.Axis, pressed ? short.MaxValue : (short)0);
+                                        short value = pressed ?
+                                            short.MaxValue :
+                                            (map.Target.Axis & (GamePadAxes.LeftTrigger | GamePadAxes.RightTrigger)) != 0 ?
+                                                short.MinValue :
+                                                (short)0;
+                                        pad.SetAxis(map.Target.Axis, value);
                                         break;
 
                                     case ConfigurationType.Button:
@@ -150,7 +155,12 @@ namespace OpenTK.Platform
                                         // Todo: if SDL2 GameController config is ever updated to
                                         // distinguish between negative/positive axes, then update
                                         // the following line to support both.
-                                        pad.SetAxis(map.Target.Axis, pressed ? short.MaxValue : (short)0);
+                                        short value = pressed ?
+                                            short.MaxValue :
+                                            (map.Target.Axis & (GamePadAxes.LeftTrigger | GamePadAxes.RightTrigger)) != 0 ?
+                                                short.MinValue :
+                                                (short)0;
+                                        pad.SetAxis(map.Target.Axis, value);
                                         break;
 
                                     case ConfigurationType.Button:
@@ -194,7 +204,8 @@ namespace OpenTK.Platform
                     GamePadType.GamePad, // Todo: detect different types
                     mapped_axes,
                     mapped_buttons,
-                    true);
+                    joy.IsConnected,
+                    configuration.Name != GamePadConfigurationDatabase.UnmappedName);
             }
             else
             {

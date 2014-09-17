@@ -162,11 +162,14 @@
     <Compile Include="Math\Matrix4x2d.cs" />
     <Compile Include="Math\Matrix4x3.cs" />
     <Compile Include="Math\Matrix4x3d.cs" />
+    <Compile Include="Platform\Common\Hid.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
     <Compile Include="Platform\Egl\EglWinContext.cs" />
     <Compile Include="Platform\MappedGamePadDriver.cs" />
+    <Compile Include="Platform\Windows\Bindings\HidProtocol.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
+    <Compile Include="Platform\Windows\WinRawJoystick.cs" />
     <Compile Include="Platform\Windows\XInputJoystick.cs" />
     <Compile Include="Platform\X11\Bindings\DL.cs" />
     <Compile Include="Platform\X11\Bindings\INotify.cs" />
@@ -323,9 +326,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\Windows\WinGLContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\Windows\WinMMJoystick.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\Windows\WglHelper.cs">

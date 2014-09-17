@@ -33,6 +33,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Win32;
 #endif
 using OpenTK.Input;
+using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
 {
@@ -152,51 +153,57 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public bool ProcessKeyboardEvent(RawInput rin)
+        public bool ProcessKeyboardEvent(IntPtr raw)
         {
             bool processed = false;
 
-            bool pressed =
-                rin.Data.Keyboard.Message == (int)WindowMessage.KEYDOWN ||
-                rin.Data.Keyboard.Message == (int)WindowMessage.SYSKEYDOWN;
-            var scancode = rin.Data.Keyboard.MakeCode;
-            var vkey = rin.Data.Keyboard.VKey;
-
-            bool extended0 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E0) != 0;
-            bool extended1 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E1) != 0;
-
-            bool is_valid = true;
-
-            ContextHandle handle = new ContextHandle(rin.Header.Device);
-            KeyboardState keyboard;
-            if (!rawids.ContainsKey(handle))
+            RawInput rin;
+            if (Functions.GetRawInputData(raw, out rin) > 0)
             {
-                RefreshDevices();
+                bool pressed =
+                    rin.Data.Keyboard.Message == (int)WindowMessage.KEYDOWN ||
+                    rin.Data.Keyboard.Message == (int)WindowMessage.SYSKEYDOWN;
+                var scancode = rin.Data.Keyboard.MakeCode;
+                var vkey = rin.Data.Keyboard.VKey;
+
+                bool extended0 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E0) != 0;
+                bool extended1 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E1) != 0;
+
+                bool is_valid = true;
+
+                ContextHandle handle = new ContextHandle(rin.Header.Device);
+                KeyboardState keyboard;
+                if (!rawids.ContainsKey(handle))
+                {
+                    RefreshDevices();
+                }
+
+                if (keyboards.Count == 0)
+                    return false;
+
+                // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
+                // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
+                // That's problematic, because no device has a "0" id.
+                // As a workaround, we'll add those buttons to the first device (if any).
+                int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
+                keyboard = keyboards[keyboard_handle];
+
+                Key key = WinKeyMap.TranslateKey(scancode, vkey, extended0, extended1, out is_valid);
+
+                if (is_valid)
+                {
+                    keyboard.SetKeyState(key, pressed);
+                    processed = true;
+                }
+
+                lock (UpdateLock)
+                {
+                    keyboards[keyboard_handle] = keyboard;
+                    processed = true;
+                }
             }
 
-            if (keyboards.Count == 0)
-                return false;
-
-            // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
-            // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
-            // That's problematic, because no device has a "0" id.
-            // As a workaround, we'll add those buttons to the first device (if any).
-            int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
-            keyboard = keyboards[keyboard_handle];
-
-            Key key = WinKeyMap.TranslateKey(scancode, vkey, extended0, extended1, out is_valid);
-
-            if (is_valid)
-            {
-                keyboard.SetKeyState(key, pressed);
-                processed = true;
-            }
-
-            lock (UpdateLock)
-            {
-                keyboards[keyboard_handle] = keyboard;
-                return processed;
-            }
+            return processed;
         }
 
         #endregion
@@ -230,7 +237,7 @@ namespace OpenTK.Platform.Windows
 
         static string GetDeviceName(RawInputDeviceList dev)
         {
-            uint size = 0;
+            int size = 0;
             Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
             IntPtr name_ptr = Marshal.AllocHGlobal((IntPtr)size);
             Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
@@ -241,13 +248,10 @@ namespace OpenTK.Platform.Windows
 
         static void RegisterKeyboardDevice(IntPtr window, string name)
         {
-            RawInputDevice[] rid = new RawInputDevice[1];
-            // Keyboard is 1/6 (page/id). See http://www.microsoft.com/whdc/device/input/HID_HWID.mspx
-            rid[0] = new RawInputDevice();
-            rid[0].UsagePage = 1;
-            rid[0].Usage = 6;
-            rid[0].Flags = RawInputDeviceFlags.INPUTSINK;
-            rid[0].Target = window;
+            RawInputDevice[] rid = new RawInputDevice[]
+            {
+                new RawInputDevice(HIDUsageGD.Keyboard, RawInputDeviceFlags.INPUTSINK, window)
+            };
 
             if (!Functions.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
             {

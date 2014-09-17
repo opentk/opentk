@@ -83,7 +83,7 @@ namespace OpenTK.Platform.Windows
         const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
 
         const long ExtendedBit = 1 << 24;           // Used to distinguish left and right control, alt and enter keys.
-        
+
         public static readonly uint ShiftLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LSHIFT, 0);
         public static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);
         public static readonly uint ControlLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LCONTROL, 0);

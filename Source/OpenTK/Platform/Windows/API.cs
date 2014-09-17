@@ -1,11 +1,32 @@
-#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * Contributions from Erik Ylvisaker
- * See license.txt for license info
- */
+#region License
+//
+// WinRawJoystick.cs
+//
+// Author:
+//       Stefanos A. <stapostol@gmail.com>
+//
+// Copyright (c) 2006 Stefanos Apostolopoulos
+// Copyright (c) 2007 Erik Ylvisaker
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 #endregion
-
-#region --- Using Directives ---
 
 using System;
 #if !MINIMAL
@@ -14,8 +35,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Security;
-
-#endregion
+using OpenTK.Platform.Common;
 
 /* TODO: Update the description of TimeBeginPeriod and other native methods. Update Timer. */
 
@@ -74,6 +94,7 @@ namespace OpenTK.Platform.Windows
     using TIMERPROC = Functions.TimerProc;
 
     using REGSAM = System.UInt32;
+    using System.Diagnostics;
 
     #endregion
 
@@ -1480,22 +1501,22 @@ namespace OpenTK.Platform.Windows
         /// <para>If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.</para>
         /// <para>Call GetLastError to identify any other errors.</para>
         /// </returns>
-        [CLSCompliant(false)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern UINT GetRawInputDeviceInfo(
-            HANDLE Device,
-            [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
-            [In, Out] LPVOID Data,
-            [In, Out] ref UINT Size
-        );
-
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputDeviceInfo(
             HANDLE Device,
             [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
             [In, Out] LPVOID Data,
+            [In, Out] ref INT Size
+        );
+
+        [CLSCompliant(false)]
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern INT GetRawInputDeviceInfo(
+            HANDLE Device,
+            [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
+            [In, Out] byte[] Data,
             [In, Out] ref INT Size
         );
 
@@ -1625,6 +1646,52 @@ namespace OpenTK.Platform.Windows
             [In, Out] ref INT Size,
             INT SizeHeader
         );
+
+        internal static int GetRawInputData(IntPtr raw, out RawInputHeader header)
+        {
+            int size = RawInputHeader.SizeInBytes;
+            unsafe
+            {
+                fixed (RawInputHeader* pheader = &header)
+                {
+                    if (GetRawInputData(raw, GetRawInputDataEnum.HEADER,
+                        (IntPtr)pheader, ref size, API.RawInputHeaderSize) != RawInputHeader.SizeInBytes)
+                    {
+                        Debug.Print("[Error] Failed to retrieve raw input header. Error: {0}",
+                            Marshal.GetLastWin32Error());
+                    }
+                }
+            }
+            return size;
+        }
+
+        internal static int GetRawInputData(IntPtr raw, out RawInput data)
+        {
+            int size = RawInput.SizeInBytes;
+            unsafe
+            {
+                fixed (RawInput* pdata = &data)
+                {
+                    GetRawInputData(raw, GetRawInputDataEnum.INPUT,
+                        (IntPtr)pdata, ref size, API.RawInputHeaderSize);
+                }
+            }
+            return size;
+        }
+
+        internal static int GetRawInputData(IntPtr raw, byte[] data)
+        {
+            int size = data.Length;
+            unsafe
+            {
+                fixed (byte* pdata = data)
+                {
+                    GetRawInputData(raw, GetRawInputDataEnum.INPUT,
+                        (IntPtr)pdata, ref size, API.RawInputHeaderSize);
+                }
+            }
+            return size;
+        }
 
         #endregion
 
@@ -2424,8 +2491,7 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Top level collection Usage page for the raw input device.
         /// </summary>
-        //internal USHORT UsagePage;
-        internal SHORT UsagePage;
+        internal HIDPage UsagePage;
         /// <summary>
         /// Top level collection Usage for the raw input device.
         /// </summary>
@@ -2442,6 +2508,22 @@ namespace OpenTK.Platform.Windows
         /// Handle to the target window. If NULL it follows the keyboard focus.
         /// </summary>
         internal HWND Target;
+
+        public RawInputDevice(HIDUsageGD usage, RawInputDeviceFlags flags, HWND target)
+        {
+            UsagePage = HIDPage.GenericDesktop;
+            Usage = (short)usage;
+            Flags = flags;
+            Target = target;
+        }
+
+        public RawInputDevice(HIDUsageSim usage, RawInputDeviceFlags flags, HWND target)
+        {
+            UsagePage = HIDPage.Simulation;
+            Usage = (short)usage;
+            Flags = flags;
+            Target = target;
+        }
 
         public override string ToString()
         {
@@ -2494,6 +2576,9 @@ namespace OpenTK.Platform.Windows
     {
         public RawInputHeader Header;
         public RawInputData Data;
+
+        public static readonly int SizeInBytes =
+            BlittableValueType<RawInput>.Stride;
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -2505,6 +2590,9 @@ namespace OpenTK.Platform.Windows
         internal RawKeyboard Keyboard;
         [FieldOffset(0)]
         internal RawHID HID;
+
+        public static readonly int SizeInBytes =
+            BlittableValueType<RawInputData>.Stride;
     }
 
     #endregion
@@ -2537,6 +2625,9 @@ namespace OpenTK.Platform.Windows
         /// Value passed in the wParam parameter of the WM_INPUT message.
         /// </summary>
         internal WPARAM Param;
+
+        public static readonly int SizeInBytes =
+            BlittableValueType<RawInputHeader>.Stride;
     }
 
     #endregion
@@ -2715,16 +2806,31 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Size, in bytes, of each HID input in bRawData.
         /// </summary>
-        internal DWORD SizeHid;
+        internal DWORD Size;
         /// <summary>
         /// Number of HID inputs in bRawData.
         /// </summary>
         internal DWORD Count;
-        // The RawData field must be marshalled manually.
-        ///// <summary>
-        ///// Raw input data as an array of bytes.
-        ///// </summary>
-        //internal IntPtr RawData;
+        /// <summary>
+        /// Raw input data as an array of bytes.
+        /// </summary>
+        internal byte RawData;
+
+        internal byte this[int index]
+        {
+            get
+            {
+                if (index < 0 || index > Size * Count)
+                    throw new ArgumentOutOfRangeException("index");
+                unsafe
+                {
+                    fixed (byte* data = &RawData)
+                    {
+                        return *(data + index);
+                    }
+                }
+            }
+        }
     }
 
     #endregion
@@ -2741,7 +2847,7 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Size, in bytes, of the RawInputDeviceInfo structure.
         /// </summary>
-        DWORD Size = Marshal.SizeOf(typeof(RawInputDeviceInfo)); 
+        internal DWORD Size = Marshal.SizeOf(typeof(RawInputDeviceInfo)); 
         /// <summary>
         /// Type of raw input data.
         /// </summary>
