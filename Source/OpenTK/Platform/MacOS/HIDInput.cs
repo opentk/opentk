@@ -1704,19 +1704,28 @@ namespace OpenTK.Platform.MacOS
                     NativeMethods.IOHIDManagerUnscheduleFromRunLoop(
                         hidmanager, RunLoop, InputLoopMode);
 
-                    foreach (var device in MouseDevices)
+                    for (int i = 0; i < Math.Max(MouseDevices.Count, 4); i++)
                     {
-                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device.Id);
+                        if (MouseDevices[i] != null)
+                        {
+                            DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, MouseDevices[i].Id);
+                        }
                     }
 
-                    foreach (var device in KeyboardDevices)
+                    for (int i = 0; i < Math.Max(KeyboardDevices.Count, 4); i++)
                     {
-                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device.Id);
+                        if (KeyboardDevices[i] != null)
+                        {
+                            DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, KeyboardDevices[i].Id);
+                        }
                     }
 
-                    foreach (var device in JoystickDevices)
+                    for (int i = 0; i < Math.Max(JoystickDevices.Count, 4); i++)
                     {
-                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device.Id);
+                        if (JoystickDevices[i] != null)
+                        {
+                            DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, JoystickDevices[i].Id);
+                        }
                     }
 
                     if (hidmanager != IntPtr.Zero)
