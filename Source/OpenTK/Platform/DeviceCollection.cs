@@ -46,7 +46,7 @@ namespace OpenTK.Platform
 
         #region IEnumerable<T> Members
 
-        public IEnumerator<T> GetEnumerator()
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
             return Devices.GetEnumerator();
         }
@@ -63,6 +63,17 @@ namespace OpenTK.Platform
         #endregion
 
         #region Public Members
+
+        // This avoids boxing when using foreach loops
+        public List<T>.Enumerator GetEnumerator()
+        {
+            return Devices.GetEnumerator();
+        }
+
+        public T this[int index]
+        {
+            get { return FromIndex(index); }
+        }
 
         /// \internal
         /// <summary>
