@@ -163,7 +163,12 @@ namespace OpenTK.Platform.Windows
             {
                 if (manual)
                 {
-                    rawinput_driver.Dispose();
+                    WinRawInput raw = rawinput_driver;
+                    if (raw != null)
+                    {
+                        raw.Dispose();
+                        rawinput_driver = null;
+                    }
                 }
 
                 base.Dispose(manual);
