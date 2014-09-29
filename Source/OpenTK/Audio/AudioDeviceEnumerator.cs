@@ -204,12 +204,22 @@ namespace OpenTK.Audio
             {
                 Debug.Unindent();
 
-                // clean up the dummy context
-                Alc.MakeContextCurrent(ContextHandle.Zero);
-                if (dummy_context != ContextHandle.Zero && dummy_context.Handle != IntPtr.Zero)
-                    Alc.DestroyContext(dummy_context);
-                if (dummy_device != IntPtr.Zero)
-                    Alc.CloseDevice(dummy_device);
+                if (openal_supported)
+                {
+                    try
+                    {
+                        // clean up the dummy context
+                        Alc.MakeContextCurrent(ContextHandle.Zero);
+                        if (dummy_context != ContextHandle.Zero && dummy_context.Handle != IntPtr.Zero)
+                            Alc.DestroyContext(dummy_context);
+                        if (dummy_device != IntPtr.Zero)
+                            Alc.CloseDevice(dummy_device);
+                    }
+                    catch
+                    {
+                        openal_supported = false;
+                    }
+                }
             }
         }
 
