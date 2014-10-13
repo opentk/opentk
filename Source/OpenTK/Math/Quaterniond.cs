@@ -67,6 +67,39 @@ namespace OpenTK
             : this(new Vector3d(x, y, z), w)
         { }
 
+        /// <summary>
+        /// Construct a new Quaterniond from given Euler angles
+        /// </summary>
+        /// <param name="pitch">The pitch (attitude), rotation around X axis</param>
+        /// <param name="yaw">The yaw (heading), rotation around Y axis</param>
+        /// <param name="roll">The roll (bank), rotation around Z axis</param>
+        public Quaterniond(double pitch, double yaw, double roll)
+        {
+            yaw *= 0.5;
+            pitch *= 0.5;
+            roll *= 0.5;
+
+            double c1 = Math.Cos(yaw);
+            double c2 = Math.Cos(pitch);
+            double c3 = Math.Cos(roll);
+            double s1 = Math.Sin(yaw);
+            double s2 = Math.Sin(pitch);
+            double s3 = Math.Sin(roll);
+
+            this.w = c1 * c2 * c3 - s1 * s2 * s3;
+            this.xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
+            this.xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
+            this.xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+        }
+
+        /// <summary>
+        /// Construct a new Quaterniond from given Euler angles
+        /// </summary>
+        /// <param name="eulerAngles">The euler angles as a Vector3d</param>
+        public Quaterniond(Vector3d eulerAngles)
+            :this(eulerAngles.X, eulerAngles.Y, eulerAngles.Z)
+        { }
+
         #endregion
 
         #region Public Members
@@ -507,6 +540,52 @@ namespace OpenTK
             result.W = (double)System.Math.Cos(angle);
 
             return Normalize(result);
+        }
+
+        #endregion
+
+        #region FromEulerAngles
+
+        /// <summary>
+        /// Builds a Quaterniond from the given euler angles
+        /// </summary>
+        /// <param name="pitch">The pitch (attitude), rotation around X axis</param>
+        /// <param name="yaw">The yaw (heading), rotation around Y axis</param>
+        /// <param name="roll">The roll (bank), rotation around Z axis</param>
+        /// <returns></returns>
+        public static Quaterniond FromEulerAngles(double pitch, double yaw, double roll)
+        {
+            return new Quaterniond(pitch, yaw, roll);
+        }
+
+        /// <summary>
+        /// Builds a Quaterniond from the given euler angles
+        /// </summary>
+        /// <param name="eulerAngles">The euler angles as a vector</param>
+        /// <returns>The equivalent Quaterniond</returns>
+        public static Quaterniond FromEulerAngles(Vector3d eulerAngles)
+        {
+            return new Quaterniond(eulerAngles);
+        }
+
+        /// <summary>
+        /// Builds a Quaterniond from the given euler angles
+        /// </summary>
+        /// <param name="eulerAngles">The euler angles a vector</param>
+        /// <param name="result">The equivalent Quaterniond</param>
+        public static void FromEulerAngles(ref Vector3d eulerAngles, out Quaterniond result)
+        {
+            double c1 = Math.Cos(eulerAngles.Y * 0.5);
+            double c2 = Math.Cos(eulerAngles.X * 0.5);
+            double c3 = Math.Cos(eulerAngles.Z * 0.5);
+            double s1 = Math.Sin(eulerAngles.Y * 0.5);
+            double s2 = Math.Sin(eulerAngles.X * 0.5);
+            double s3 = Math.Sin(eulerAngles.Z * 0.5);
+
+            result.w = c1 * c2 * c3 - s1 * s2 * s3;
+            result.xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
+            result.xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
+            result.xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
         }
 
         #endregion
