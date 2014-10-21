@@ -54,6 +54,10 @@ namespace OpenTK
         private bool cursor_visible = true;
         private bool previous_cursor_visible = true;
 
+        /// <summary>
+        /// System.Threading.Thread.CurrentThread.ManagedThreadId of the thread that created this <see cref="OpenTK.NativeWindow"/>.
+        /// </summary>
+        private int thread_id;
         #endregion
 
         #region --- Contructors ---
@@ -101,6 +105,8 @@ namespace OpenTK
 
             this.options = options;
             this.device = device;
+
+            this.thread_id = System.Threading.Thread.CurrentThread.ManagedThreadId;
 
             IPlatformFactory factory = Factory.Default;
             implementation = factory.CreateNativeWindow(x, y, width, height, title, mode, options, this.device);
@@ -1049,6 +1055,10 @@ namespace OpenTK
         protected void ProcessEvents(bool retainEvents)
         {
             EnsureUndisposed();
+            if (this.thread_id != System.Threading.Thread.CurrentThread.ManagedThreadId)
+            {
+                throw new InvalidOperationException("ProcessEvents must be called on the same thread that created the window.");
+            }
             if (!retainEvents && !events) Events = true;
             implementation.ProcessEvents();
         }
