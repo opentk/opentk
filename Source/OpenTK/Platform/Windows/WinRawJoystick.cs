@@ -178,7 +178,6 @@ namespace OpenTK.Platform.Windows
         // Defines which types of HID devices we are interested in
         readonly RawInputDevice[] DeviceTypes;
 
-        readonly IntPtr Window;
         readonly object UpdateLock = new object();
         readonly DeviceCollection<Device> Devices = new DeviceCollection<Device>();
 
@@ -194,7 +193,6 @@ namespace OpenTK.Platform.Windows
             if (window == IntPtr.Zero)
                 throw new ArgumentNullException("window");
 
-            Window = window;
             DeviceTypes = new RawInputDevice[]
             {
                 new RawInputDevice(HIDUsageGD.Joystick, RawInputDeviceFlags.DEVNOTIFY | RawInputDeviceFlags.INPUTSINK, window),
@@ -615,9 +613,6 @@ namespace OpenTK.Platform.Windows
 
         static bool GetDeviceCaps(Device stick, byte[] preparsed_data, out HidProtocolCaps caps)
         {
-            int axis_caps_count = 0;
-            int button_caps_count = 0;
-
             // Query joystick capabilities
             caps = new HidProtocolCaps();
             if (HidProtocol.GetCaps(preparsed_data, ref caps) != HidProtocolStatus.Success)
@@ -641,7 +636,6 @@ namespace OpenTK.Platform.Windows
                     Marshal.GetLastWin32Error());
                 return false;
             }
-            axis_caps_count = (int)axis_count;
 
             // Button capabilities
             ushort button_count = (ushort)button_caps.Length;
@@ -653,7 +647,6 @@ namespace OpenTK.Platform.Windows
                     Marshal.GetLastWin32Error());
                 return false;
             }
-            button_caps_count = (int)button_count;
 
             stick.AxisCaps.Clear();
             stick.AxisCaps.AddRange(axis_caps);
