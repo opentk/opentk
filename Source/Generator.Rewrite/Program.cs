@@ -50,7 +50,6 @@ namespace OpenTK.Rewrite
         // mscorlib types
         static AssemblyDefinition mscorlib;
         static TypeDefinition TypeMarshal;
-        static TypeDefinition TypeStringArray;
         static TypeDefinition TypeStringBuilder;
         static TypeDefinition TypeVoid;
         static TypeDefinition TypeIntPtr;
@@ -116,7 +115,6 @@ namespace OpenTK.Rewrite
                     return;
                 }
                 TypeMarshal = mscorlib.MainModule.GetType("System.Runtime.InteropServices.Marshal");
-                TypeStringArray = mscorlib.MainModule.GetType("System.String").MakeArrayType().Resolve();
                 TypeStringBuilder = mscorlib.MainModule.GetType("System.Text.StringBuilder");
                 TypeVoid = mscorlib.MainModule.GetType("System.Void");
                 TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
