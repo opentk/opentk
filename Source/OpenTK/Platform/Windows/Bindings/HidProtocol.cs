@@ -200,6 +200,7 @@ namespace OpenTK.Platform.Windows
     [StructLayout(LayoutKind.Sequential)]
     struct HidProtocolNotRange
     {
+        #pragma warning disable 169 // private field is never used
         public short Usage;
         short Reserved1;
         public short StringIndex;
@@ -208,6 +209,7 @@ namespace OpenTK.Platform.Windows
         short Reserved3;
         public short DataIndex;
         short Reserved4;
+        #pragma warning restore 169
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -256,6 +258,7 @@ namespace OpenTK.Platform.Windows
     [StructLayout(LayoutKind.Explicit)]
     struct HidProtocolValueCaps
     {
+        #pragma warning disable 169 // private field is never used
         [FieldOffset(0)] public HIDPage UsagePage;
         [FieldOffset(2)] public byte ReportID;
         [FieldOffset(3), MarshalAs(UnmanagedType.U1)] public bool IsAlias;
@@ -284,5 +287,6 @@ namespace OpenTK.Platform.Windows
         [FieldOffset(52)] public int PhysicalMax;
         [FieldOffset(56)] public HidProtocolRange Range;
         [FieldOffset(56)] public HidProtocolNotRange NotRange;
+        #pragma warning restore 169
     }
 }
