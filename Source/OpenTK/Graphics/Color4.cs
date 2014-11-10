@@ -914,6 +914,98 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region Color conversions
+
+        #region sRGB
+
+        /// <summary>
+        /// Converts sRGB color values to RGB color values.
+        /// </summary>
+        /// <returns>
+        /// Returns the converted color value.
+        /// </returns>
+        /// <param name="srgb">
+        /// Color value to convert in sRGB.
+        /// </param>
+        public static Color4 FromSrgb(Color4 srgb)
+        {
+            float r, g, b;
+
+            if (srgb.R <= 0.04045f)
+            {
+                r = srgb.R / 12.92f;
+            }
+            else
+            {
+                r = (float)Math.Pow((srgb.R + 0.055f) / (1.0f + 0.055f), 2.4f);
+            }
+
+            if (srgb.G <= 0.04045f)
+            {
+                g = srgb.G / 12.92f;
+            }
+            else
+            {
+                g = (float)Math.Pow((srgb.G + 0.055f) / (1.0f + 0.055f), 2.4f);
+            }
+
+            if (srgb.B <= 0.04045f)
+            {
+                b = srgb.B / 12.92f;
+            }
+            else
+            {
+                b = (float)Math.Pow((srgb.B + 0.055f) / (1.0f + 0.055f), 2.4f);
+            }
+
+            return new Color4(r, g, b, srgb.A);
+        }
+
+        /// <summary>
+        /// Converts RGB color values to sRGB color values.
+        /// </summary>
+        /// <returns>
+        /// Returns the converted color value.
+        /// </returns>
+        /// <param name="rgb">Color value to convert.</param>
+        public static Color4 ToSrgb(Color4 rgb)
+        {
+            float r, g, b;
+
+            if (rgb.R <= 0.0031308)
+            {
+                r = 12.92f * rgb.R;
+            }
+            else
+            {
+                r = (1.0f + 0.055f) * (float)Math.Pow(rgb.R, 1.0f / 2.4f) - 0.055f;
+            }
+
+            if (rgb.G <= 0.0031308)
+            {
+                g = 12.92f * rgb.G;
+            }
+            else
+            {
+                g = (1.0f + 0.055f) * (float)Math.Pow(rgb.G, 1.0f / 2.4f) - 0.055f;
+            }
+
+            if (rgb.B <= 0.0031308)
+            {
+                b = 12.92f * rgb.B;
+            }
+            else
+            {
+                b = (1.0f + 0.055f) * (float)Math.Pow(rgb.B, 1.0f / 2.4f) - 0.055f;
+            }
+
+            return new Color4(r, g, b, rgb.A);
+        }
+
+        #endregion
+
+        #endregion
+
         #region IEquatable<Color4> Members
 
         /// <summary>
