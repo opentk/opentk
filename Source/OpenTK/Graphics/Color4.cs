@@ -1238,6 +1238,46 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region XYZ
+
+        /// <summary>
+        /// Converts XYZ color values to RGB color values.
+        /// </summary>
+        /// <returns>
+        /// Returns the converted color value.
+        /// </returns>
+        /// <param name="xyz">
+        /// Color value to convert with the trisimulus values of X, Y, and Z in the corresponding element, and the W element with Alpha (which is copied to the output's Alpha value).
+        /// Each has a range of 0.0 to 1.0.
+        /// </param>
+        /// <remarks>Uses the CIE XYZ colorspace.</remarks>
+        public static Color4 FromXyz(Vector4 xyz)
+        {
+            var r = 0.41847f * xyz.X + -0.15866f * xyz.Y + -0.082835f * xyz.Z;
+            var g = -0.091169f * xyz.X + 0.25243f * xyz.Y + 0.015708f * xyz.Z;
+            var b = 0.00092090f * xyz.X + -0.0025498f * xyz.Y + 0.17860f * xyz.Z;
+            return new Color4(r, g, b, xyz.W);
+        }
+
+        /// <summary>
+        /// Converts RGB color values to XYZ color values.
+        /// </summary>
+        /// <returns>
+        /// Returns the converted color value with the trisimulus values of X, Y, and Z in the corresponding element, and the W element with Alpha (a copy of the input's Alpha value).
+        /// Each has a range of 0.0 to 1.0.
+        /// </returns>
+        /// <param name="rgb">Color value to convert.</param>
+        /// <remarks>Uses the CIE XYZ colorspace.</remarks>
+        public static Vector4 ToXyz(Color4 rgb)
+        {
+            var x = (0.49f * rgb.R + 0.31f * rgb.G + 0.20f * rgb.B) / 0.17697f;
+            var y = (0.17697f * rgb.R + 0.81240f * rgb.G + 0.01063f * rgb.B) / 0.17697f;
+            var z = (0.00f * rgb.R + 0.01f * rgb.G + 0.99f * rgb.B) / 0.17697f;
+            return new Vector4(x, y, z, rgb.A);
+        }
+
+        #endregion
+
         #endregion
 
         #region IEquatable<Color4> Members
