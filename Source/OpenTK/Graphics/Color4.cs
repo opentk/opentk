@@ -1124,6 +1124,120 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region HSV
+
+        /// <summary>
+        /// Converts HSV color values to RGB color values.
+        /// </summary>
+        /// <returns>
+        /// Returns the converted color value.
+        /// </returns>
+        /// <param name="hsv">
+        /// Color value to convert in hue, saturation, value (HSV).
+        /// The X element is Hue (H), the Y element is Saturation (S), the Z element is Value (V), and the W element is Alpha (which is copied to the output's Alpha value).
+        /// Each has a range of 0.0 to 1.0.
+        /// </param>
+        public static Color4 FromHsv(Vector4 hsv)
+        {
+            var hue = hsv.X * 360.0f;
+            var saturation = hsv.Y;
+            var value = hsv.Z;
+
+            var C = value * saturation;
+
+            var h = hue / 60.0f;
+            var X = C * (1.0f - Math.Abs(h % 2.0f - 1.0f));
+
+            float r, g, b;
+            if (0.0f <= h && h < 1.0f)
+            {
+                r = C;
+                g = X;
+                b = 0.0f;
+            }
+            else if (1.0f <= h && h < 2.0f)
+            {
+                r = X;
+                g = C;
+                b = 0.0f;
+            }
+            else if (2.0f <= h && h < 3.0f)
+            {
+                r = 0.0f;
+                g = C;
+                b = X;
+            }
+            else if (3.0f <= h && h < 4.0f)
+            {
+                r = 0.0f;
+                g = X;
+                b = C;
+            }
+            else if (4.0f <= h && h < 5.0f)
+            {
+                r = X;
+                g = 0.0f;
+                b = C;
+            }
+            else if (5.0f <= h && h < 6.0f)
+            {
+                r = C;
+                g = 0.0f;
+                b = X;
+            }
+            else
+            {
+                r = 0.0f;
+                g = 0.0f;
+                b = 0.0f;
+            }
+
+            var m = value - C;
+            return new Color4(r + m, g + m, b + m, hsv.W);
+        }
+
+        /// <summary>
+        /// Converts RGB color values to HSV color values.
+        /// </summary>
+        /// <returns>
+        /// Returns the converted color value.
+        /// The X element is Hue (H), the Y element is Saturation (S), the Z element is Value (V), and the W element is Alpha (a copy of the input's Alpha value).
+        /// Each has a range of 0.0 to 1.0.
+        /// </returns>
+        /// <param name="rgb">Color value to convert.</param>
+        public static Vector4 ToHsv(Color4 rgb)
+        {
+            var M = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
+            var m = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
+            var C = M - m;
+
+            float h = 0.0f;
+            if (M == rgb.R)
+            {
+                h = ((rgb.G - rgb.B) / C) % 6.0f;
+            }
+            else if (M == rgb.G)
+            {
+                h = ((rgb.B - rgb.R) / C) + 2.0f;
+            }
+            else if (M == rgb.B)
+            {
+                h = ((rgb.R - rgb.G) / C) + 4.0f;
+            }
+
+            var hue = (h * 60.0f) / 360.0f;
+
+            var saturation = 0.0f;
+            if (0.0f != M)
+            {
+                saturation = C / M;
+            }
+
+            return new Vector4(hue, saturation, M, rgb.A);
+        }
+
+        #endregion
+
         #endregion
 
         #region IEquatable<Color4> Members
