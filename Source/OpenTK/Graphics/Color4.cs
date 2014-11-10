@@ -1276,6 +1276,47 @@ namespace OpenTK.Graphics
             return new Vector4(x, y, z, rgb.A);
         }
 
+        #endregion        
+
+        #region YUV
+
+        /// <summary>
+        /// Converts YCbCr color values to RGB color values.
+        /// </summary>
+        /// <returns>
+        /// Returns the converted color value.
+        /// </returns>
+        /// <param name="ycbcr">
+        /// Color value to convert in Luma-Chrominance (YCbCr) aka YUV.
+        /// The X element contains Luma (Y, 0.0 to 1.0), the Y element contains Blue-difference chroma (U, -0.5 to 0.5), the Z element contains the Red-difference chroma (V, -0.5 to 0.5), and the W element contains the Alpha (which is copied to the output's Alpha value).
+        /// </param>
+        /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
+        public static Color4 FromYcbcr(Vector4 ycbcr)
+        {
+            var r = 1.0f * ycbcr.X + 0.0f * ycbcr.Y + 1.402f * ycbcr.Z;
+            var g = 1.0f * ycbcr.X + -0.344136f * ycbcr.Y + -0.714136f * ycbcr.Z;
+            var b = 1.0f * ycbcr.X + 1.772f * ycbcr.Y + 0.0f * ycbcr.Z;
+            return new Color4(r, g, b, ycbcr.W);
+        }
+
+        /// <summary>
+        /// Converts RGB color values to YUV color values.
+        /// </summary>
+        /// <returns>
+        /// Returns the converted color value in Luma-Chrominance (YCbCr) aka YUV.
+        /// The X element contains Luma (Y, 0.0 to 1.0), the Y element contains Blue-difference chroma (U, -0.5 to 0.5), the Z element contains the Red-difference chroma (V, -0.5 to 0.5), and the W element contains the Alpha (a copy of the input's Alpha value).
+        /// Each has a range of 0.0 to 1.0.
+        /// </returns>
+        /// <param name="rgb">Color value to convert.</param>
+        /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
+        public static Vector4 ToYcbcr(Color4 rgb)
+        {
+            var y = 0.299f * rgb.R + 0.587f * rgb.G + 0.114f * rgb.B;
+            var u = -0.168736f * rgb.R + -0.331264f * rgb.G + 0.5f * rgb.B;
+            var v = 0.5f * rgb.R + -0.418688f * rgb.G + -0.081312f * rgb.B;
+            return new Vector4(y, u, v, rgb.A);
+        }
+
         #endregion
 
         #endregion
