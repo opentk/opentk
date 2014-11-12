@@ -194,8 +194,25 @@ namespace OpenTK.Platform.X11
             hints.flags = (IntPtr)(XSizeHintsFlags.PSize | XSizeHintsFlags.PPosition);
 
             XClassHint class_hint = new XClassHint();
-            class_hint.Name = Assembly.GetEntryAssembly().GetName().Name.ToLower();
-            class_hint.Class = Assembly.GetEntryAssembly().GetName().Name;
+            var entry_assembly = Assembly.GetEntryAssembly();
+            // May not have an entry assembly, try to find a "matching" assembly in the AppDomain
+            if (entry_assembly == null)
+            {
+                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    if (AppDomain.CurrentDomain.FriendlyName.EndsWith(assembly.ManifestModule.Name))
+                    {
+                        if (entry_assembly == null || assembly.ManifestModule.Name.Length > entry_assembly.ManifestModule.Name.Length)
+                        {
+                            entry_assembly = assembly;
+                        }
+                    }
+                }
+            }
+
+            var name = entry_assembly.GetName().Name;
+            class_hint.Class = name;
+            class_hint.Name = name.ToLower();
 
             using (new XLock(window.Display))
             {
