@@ -140,6 +140,19 @@ namespace OpenTK.Input
             get { return GetButton(Buttons.Start); }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether any button is pressed.
+        /// </summary>
+        /// <value><c>true</c> if any button is pressed; otherwise, <c>false</c>.</value>
+        public bool IsAnyButtonPressed
+        {
+            get
+            {
+                // If any bit is set then a button is down.
+                return buttons != 0;
+            }
+        }
+
         /// <param name="left">A <see cref="GamePadButtons"/> instance to test for equality.</param>
         /// <param name="right">A <see cref="GamePadButtons"/> instance to test for equality.</param>
         public static bool operator ==(GamePadButtons left, GamePadButtons right)
