@@ -70,7 +70,7 @@ namespace Examples.Tests
             : base(800, 600, GraphicsMode.Default)
         {
             VSync = VSyncMode.On;
-            Keyboard.KeyRepeat = true;
+            Keyboard.KeyRepeat = false;
             KeyDown += KeyDownHandler;
             KeyUp += KeyUpHandler;
             KeyPress += KeyPressHandler;
@@ -159,22 +159,26 @@ namespace Examples.Tests
                     p = PointToScreen(p);
                     OpenTK.Input.Mouse.SetPosition(p.X, p.Y);
                     break;
+
+				case Key.R:
+					Keyboard.KeyRepeat = !Keyboard.KeyRepeat;
+					break;
             }
 
             if (!keyboard_keys.ContainsKey(e.Key))
             {
                 keyboard_keys.Add(e.Key, 0);
             }
-            keyboard_keys[e.Key] = e.IsRepeat ? 1 : 0;
+			keyboard_keys[e.Key] = keyboard_keys[e.Key] + 1;
             keyboard_modifiers = e.Modifiers;
             keyboard_state = e.Keyboard;
         }
 
         void KeyUpHandler(object sender, KeyboardKeyEventArgs e)
         {
-            keyboard_keys.Remove(e.Key);
-            keyboard_modifiers = e.Modifiers;
-            keyboard_state = e.Keyboard;
+			keyboard_keys.Remove(e.Key);
+			keyboard_modifiers = e.Modifiers;
+			keyboard_state = e.Keyboard;
         }
 
         void KeyboardDeviceDownHandler(object sender, KeyboardKeyEventArgs e)
@@ -183,14 +187,14 @@ namespace Examples.Tests
             {
                 legacy_keyboard_keys.Add(e.Key, 0);
             }
-            legacy_keyboard_keys[e.Key] = e.IsRepeat ? 1 : 0;
+			legacy_keyboard_keys[e.Key] = legacy_keyboard_keys[e.Key] + 1;
             legacy_keyboard_modifiers = e.Modifiers;
             legacy_keyboard_state = e.Keyboard;
         }
 
         void KeyboardDeviceUpHandler(object sender, KeyboardKeyEventArgs e)
         {
-            legacy_keyboard_keys.Remove(e.Key);
+			legacy_keyboard_keys.Remove(e.Key);
             legacy_keyboard_modifiers = e.Modifiers;
             legacy_keyboard_state = e.Keyboard;
         }
