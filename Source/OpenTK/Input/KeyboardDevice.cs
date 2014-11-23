@@ -210,7 +210,15 @@ namespace OpenTK.Input
         internal void HandleKeyDown(object sender, KeyboardKeyEventArgs e)
         {
             state = e.Keyboard;
-            KeyDown(this, e);
+            // KeyRepeat IsRepeat KeyDown
+            // False     False    True
+            // False     True     False
+            // True      False    True
+            // True      True     True
+            if (this.KeyRepeat || !e.IsRepeat)
+            {
+                KeyDown(this, e);
+            }
         }
 
         internal void HandleKeyUp(object sender, KeyboardKeyEventArgs e)
@@ -218,36 +226,6 @@ namespace OpenTK.Input
             state = e.Keyboard;
             KeyUp(this, e);
         }
-
-        #if false
-        internal void SetKey(Key key, uint scancode, KeyModifiers mods, bool pressed)
-        {
-            if (state[key] != pressed || KeyRepeat)
-            {
-                // limit scancode to 8bits, otherwise the assignment
-                // below will crash randomly
-                scancode &= 0xff;
-
-                keys[(int)key] = scancodes[scancode] = state;
-
-                if (state && KeyDown != null)
-                {
-
-                    args.Key = key;
-                    args.ScanCode = scancode;
-                    args.Modifiers = mods;
-                    KeyDown(this, args);
-                }
-                else if (!state && KeyUp != null)
-                {
-                    args.Key = key;
-                    args.ScanCode = scancode;
-                    args.Modifiers = mods;
-                    KeyUp(this, args);
-                }
-            }
-        }
-        #endif
 
         #endregion
     }
