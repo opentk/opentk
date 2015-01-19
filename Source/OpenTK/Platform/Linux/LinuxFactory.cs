@@ -242,6 +242,11 @@ namespace OpenTK.Platform.Linux
             }
         }
 
+        public override OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        {
+            return new MappedGamePadDriver();
+        }
+
         #endregion
     }
 }
