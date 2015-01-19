@@ -95,6 +95,11 @@ namespace OpenTK.Platform.MacOS
         {
             return InputDriver.JoystickDriver;
         }
+
+        public override OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        {
+            return new MappedGamePadDriver();
+        }
         
         #endregion
 
