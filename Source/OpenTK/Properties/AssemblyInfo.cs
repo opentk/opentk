@@ -13,7 +13,3 @@ using System.Runtime.InteropServices;
 [assembly: Guid("7652241e-158d-4eb1-85f4-ed40ee356791")]
 
 [assembly: CLSCompliant(true)]
-[assembly: System.Security.AllowPartiallyTrustedCallers]
-#if NET40
-[assembly: System.Security.SecurityRules(System.Security.SecurityRuleSet.Level1)]
-#endif
