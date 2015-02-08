@@ -1,0 +1,3 @@
+﻿For better usability of this test suite install NUnit tools.
+
+For Visual Studio, go to Tools -> Extensions and Updates and search for NUnit Test Adapter.
