@@ -1222,6 +1222,120 @@ namespace OpenTK
 
         #endregion
 
+        #region Project
+
+        /// <summary>
+        /// Projects a vector from object space into screen space.
+        /// </summary>
+        /// <param name="vector">The vector to project.</param>
+        /// <param name="x">The X coordinate of the viewport.</param>
+        /// <param name="y">The Y coordinate of the viewport.</param>
+        /// <param name="width">The width of the viewport.</param>
+        /// <param name="height">The height of the viewport.</param>
+        /// <param name="minZ">The minimum depth of the viewport.</param>
+        /// <param name="maxZ">The maximum depth of the viewport.</param>
+        /// <param name="worldViewProjection">The world-view-projection matrix.</param>
+        /// <returns>The vector in screen space.</returns>
+        /// <remarks>
+        /// To project to normalized device coordinates (NDC) use the following parameters:
+        /// Project(vector, -1, -1, 2, 2, -1, 1, worldViewProjection).
+        /// </remarks>
+        public static Vector3 Project(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4 worldViewProjection)
+        {
+            Vector4 result;
+
+            result.X = 
+                vector.X * worldViewProjection.M11 + 
+                vector.Y * worldViewProjection.M21 + 
+                vector.Z * worldViewProjection.M31 + 
+                worldViewProjection.M41;
+
+            result.Y =
+                vector.X * worldViewProjection.M12 +
+                vector.Y * worldViewProjection.M22 +
+                vector.Z * worldViewProjection.M32 +
+                worldViewProjection.M42;
+
+            result.Z =
+                vector.X * worldViewProjection.M13 +
+                vector.Y * worldViewProjection.M23 +
+                vector.Z * worldViewProjection.M33 +
+                worldViewProjection.M43;
+
+            result.W =
+                vector.X * worldViewProjection.M14 +
+                vector.Y * worldViewProjection.M24 +
+                vector.Z * worldViewProjection.M34 +
+                worldViewProjection.M44;
+
+            result /= result.W;
+
+            result.X = x + (width * ((result.X + 1.0f) / 2.0f));
+            result.Y = y + (height * ((result.Y + 1.0f) / 2.0f));
+            result.Z = minZ + ((maxZ - minZ) * ((result.Z + 1.0f) / 2.0f));
+
+            return new Vector3(result.X, result.Y, result.Z);
+        }
+
+        #endregion
+
+        #region Unproject
+
+        /// <summary>
+        /// Projects a vector from screen space into object space.
+        /// </summary>
+        /// <param name="vector">The vector to project.</param>
+        /// <param name="x">The X coordinate of the viewport.</param>
+        /// <param name="y">The Y coordinate of the viewport.</param>
+        /// <param name="width">The width of the viewport.</param>
+        /// <param name="height">The height of the viewport.</param>
+        /// <param name="minZ">The minimum depth of the viewport.</param>
+        /// <param name="maxZ">The maximum depth of the viewport.</param>
+        /// <param name="worldViewProjection">The inverse of the world-view-projection matrix.</param>
+        /// <returns>The vector in object space.</returns>
+        /// <remarks>
+        /// To project from normalized device coordinates (NDC) use the following parameters:
+        /// Project(vector, -1, -1, 2, 2, -1, 1, inverseWorldViewProjection).
+        /// </remarks>
+        public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4 inverseWorldViewProjection)
+        {
+            Vector4 result;
+
+            result.X = ((((vector.X - x) / width) * 2.0f) - 1.0f);
+            result.Y = ((((vector.Y - y) / height) * 2.0f) - 1.0f);
+            result.Z = (((vector.Z / (maxZ - minZ)) * 2.0f) - 1.0f);
+
+            result.X =
+                result.X * inverseWorldViewProjection.M11 +
+                result.Y * inverseWorldViewProjection.M21 +
+                result.Z * inverseWorldViewProjection.M31 +
+                inverseWorldViewProjection.M41;
+
+            result.Y =
+                result.X * inverseWorldViewProjection.M12 +
+                result.Y * inverseWorldViewProjection.M22 +
+                result.Z * inverseWorldViewProjection.M32 +
+                inverseWorldViewProjection.M42;
+
+            result.Z =
+                result.X * inverseWorldViewProjection.M13 +
+                result.Y * inverseWorldViewProjection.M23 +
+                result.Z * inverseWorldViewProjection.M33 +
+                inverseWorldViewProjection.M43;
+
+            result.W =
+                result.X * inverseWorldViewProjection.M14 +
+                result.Y * inverseWorldViewProjection.M24 +
+                result.Z * inverseWorldViewProjection.M34 +
+                inverseWorldViewProjection.M44;
+
+            result /= result.W;
+
+            return new Vector3(result.X, result.Y, result.Z);
+        }
+
+        #endregion
+
         #endregion
 
         #region Swizzle
