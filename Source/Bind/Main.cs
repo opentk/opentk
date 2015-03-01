@@ -57,7 +57,7 @@ namespace Bind
 
             Console.WriteLine("OpenGL binding generator {0} for OpenTK.",
                 Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
+            Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
             Console.WriteLine();
 
             string dirName =  "GL2";
