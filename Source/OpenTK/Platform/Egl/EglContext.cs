@@ -64,7 +64,18 @@ namespace OpenTK.Platform.Egl
             Renderable = RenderableFlags.GL;
             if ((flags & GraphicsContextFlags.Embedded) != 0)
             {
-                Renderable = major > 1 ? RenderableFlags.ES2 : RenderableFlags.ES;
+                switch (major)
+                {
+                    case 2:
+                        Renderable = RenderableFlags.ES2;
+                        break;
+                    case 3:
+                        Renderable = RenderableFlags.ES3;
+                        break;
+                    default:
+                        Renderable = RenderableFlags.ES;
+                        break;
+                }
             }
 
             RenderApi api = (Renderable & RenderableFlags.GL) != 0 ? RenderApi.GL : RenderApi.ES;

@@ -53,6 +53,7 @@ namespace OpenTK.Platform.Egl
     {
         ES = Egl.OPENGL_ES_BIT,
         ES2 = Egl.OPENGL_ES2_BIT,
+        ES3 = Egl.OPENGL_ES3_BIT,
         GL = Egl.OPENGL_BIT,
         VG = Egl.OPENVG_BIT,
     }
@@ -141,6 +142,7 @@ namespace OpenTK.Platform.Egl
         public const int OPENVG_BIT = 2;
         public const int OPENGL_ES2_BIT = 4;
         public const int OPENGL_BIT = 8;
+        public const int OPENGL_ES3_BIT = 64;
         public const int VENDOR = 12371;
         public const int VERSION = 12372;
         public const int EXTENSIONS = 12373;
