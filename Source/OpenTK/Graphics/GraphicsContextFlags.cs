@@ -56,6 +56,30 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Indicates that this GraphicsContext is targeting OpenGL|ES.
         /// </summary>
-        Embedded = 0x0004
+        Embedded = 0x0004,
+        /// <summary>
+        /// Indicates that this GraphicsContext is intended for offscreen rendering.
+        /// </summary>
+        Offscreen = 0x0008,
+        /// <summary>
+        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle 
+        /// and that angle-specific extensions are available.
+        /// </summary>
+        Angle = 0x0010,
+        /// <summary>
+        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle 
+        /// and uses Direct3D9 as rendering backend.
+        /// </summary>
+        AngleD3D9 = 0x0020,
+        /// <summary>
+        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle 
+        /// and uses Direct3D11 as rendering backend.
+        /// </summary>
+        AngleD3D11 = 0x0040,
+        /// <summary>
+        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle 
+        /// and uses OpenGL as rendering backend.
+        /// </summary>
+        AngleOpenGL = 0x0080,
     }
 }
