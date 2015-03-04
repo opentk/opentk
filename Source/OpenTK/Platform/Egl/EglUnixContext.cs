@@ -53,13 +53,13 @@ namespace OpenTK.Platform.Egl
 
         protected override IntPtr GetStaticAddress(IntPtr function, RenderableFlags renderable)
         {
-            if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
-            {
-                return X11.DL.Symbol(ES1, function);
-            }
-            else if ((renderable & RenderableFlags.ES2) != 0 && ES2 != IntPtr.Zero)
+            if ((renderable & (RenderableFlags.ES2 | RenderableFlags.ES3)) != 0 && ES2 != IntPtr.Zero)
             {
                 return X11.DL.Symbol(ES2, function);
+            }
+            else if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
+            {
+                return X11.DL.Symbol(ES1, function);
             }
             else if ((renderable & RenderableFlags.GL) != 0 && GL != IntPtr.Zero)
             {
