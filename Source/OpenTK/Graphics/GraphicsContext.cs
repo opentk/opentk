@@ -112,6 +112,16 @@ namespace OpenTK.Graphics
                 if (minor < 0)
                     minor = 0;
 
+                // Angle needs an embedded context
+                var use_angle = GraphicsContextFlags.Angle
+                                | GraphicsContextFlags.AngleD3D9
+                                | GraphicsContextFlags.AngleD3D11
+                                | GraphicsContextFlags.AngleOpenGL;
+                if ((flags & use_angle) != 0)
+                {
+                    flags |= GraphicsContextFlags.Embedded;
+                }
+
                 Debug.Print("Creating GraphicsContext.");
                 try
                 {
