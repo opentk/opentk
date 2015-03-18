@@ -40,6 +40,7 @@ namespace OpenTK.Platform.Egl
     using EGLDisplay = IntPtr;
     using EGLSurface = IntPtr;
     using EGLClientBuffer = IntPtr;
+    using EGLPlatformAngle = IntPtr;
 
     enum RenderApi
     {
@@ -53,6 +54,7 @@ namespace OpenTK.Platform.Egl
     {
         ES = Egl.OPENGL_ES_BIT,
         ES2 = Egl.OPENGL_ES2_BIT,
+        ES3 = Egl.OPENGL_ES3_BIT,
         GL = Egl.OPENGL_BIT,
         VG = Egl.OPENVG_BIT,
     }
@@ -141,6 +143,7 @@ namespace OpenTK.Platform.Egl
         public const int OPENVG_BIT = 2;
         public const int OPENGL_ES2_BIT = 4;
         public const int OPENGL_BIT = 8;
+        public const int OPENGL_ES3_BIT = 64;
         public const int VENDOR = 12371;
         public const int VERSION = 12372;
         public const int EXTENSIONS = 12373;
@@ -188,11 +191,28 @@ namespace OpenTK.Platform.Egl
         public const int ALPHA_FORMAT_NONPRE = VG_ALPHA_FORMAT_NONPRE;
         public const int ALPHA_FORMAT_PRE = VG_ALPHA_FORMAT_PRE;
 
+        public const int PLATFORM_ANGLE = 0x3202;
+        public const int PLATFORM_ANGLE_TYPE = 0x3203;
+        public const int PLATFORM_ANGLE_MAX_VERSION_MAJOR = 0x3204;
+        public const int PLATFORM_ANGLE_MAX_VERSION_MINOR = 0x3205;
+        public const int PLATFORM_ANGLE_TYPE_DEFAULT = 0x3206;
+        public const int PLATFORM_ANGLE_TYPE_D3D9 = 0x3207;
+        public const int PLATFORM_ANGLE_TYPE_D3D11 = 0x3208;
+        public const int PLATFORM_ANGLE_DEVICE_TYPE = 0x3209;
+        public const int PLATFORM_ANGLE_DEVICE_TYPE_HARDWARE = 0x320A;
+        public const int PLATFORM_ANGLE_DEVICE_TYPE_WARP = 0x320B;
+        public const int PLATFORM_ANGLE_DEVICE_TYPE_REFERENCE = 0x320C;
+        public const int PLATFORM_ANGLE_TYPE_OPENGL = 0x320D;
+        public const int PLATFORM_ANGLE_TYPE_OPENGLES = 0x320E;
+
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetError")]
         public static extern ErrorCode GetError();
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetDisplay")]
         public static extern EGLDisplay GetDisplay(EGLNativeDisplayType display_id);
+
+        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetPlatformDisplayEXT")]
+        public static extern EGLDisplay GetPlatformDisplay(EGLPlatformAngle platform, EGLNativeDisplayType display_id, int[] attrib_list);
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglInitialize")]
         //[return: MarshalAsAttribute(UnmanagedType.I1)]
