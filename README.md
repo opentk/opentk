@@ -118,8 +118,8 @@ Requirements
 ============
 
 - Windows (XP/Vista/7/8), Linux, Mac OS X, *BSD, SteamOS, Android or iOS
-- For graphics, OpenGL drivers or a suitable emulator, such as [ANGLE](https://github.com/opentk/opentk/tree/Dependencies/Readme.txt)
-- For audio, OpenAL drivers or [OpenAL Soft](https://github.com/opentk/opentk/tree/Dependencies/Readme.txt)
+- For graphics, OpenGL drivers or a suitable emulator, such as [ANGLE](https://github.com/opentk/opentk/tree/develop/Dependencies/Readme.txt)
+- For audio, OpenAL drivers or [OpenAL Soft](https://github.com/opentk/opentk/tree/develop/Dependencies/Readme.txt)
 - To develop desktop applications: Visual Studio, Xamarin Studio, MonoDevelop or SharpDevelop
 - To develop Android applications: Xamarin Studio or the Xamarin Extensions for Visual Studio
 - To develop iOS applications: Xamarin Studio and XCode
