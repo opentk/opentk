@@ -5056,7 +5056,7 @@
 </add>
 
   <!-- gles2 replacements for 2.0 and 3.0 -->
-  <replace name="gles2" version="2.0|3.0">
+  <replace name="gles2" version="2.0|3.0|3.1">
     <!-- Buffer Objects [2.9] -->
     <function name="BindBuffer">
       <param name="target"><type>BufferTarget</type></param>
@@ -6497,7 +6497,7 @@
   </add>
 
   <!-- gles2 3.0 enums -->
-  <add name="gles2" version="3.0">
+  <add name="gles2" version="3.0|3.1">
     <enum name="ActiveAttribType">
       <use token="FLOAT" />
       <use token="FLOAT_VEC2" />

@@ -132,6 +132,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DisplayIndex.cs" />
+    <Compile Include="Graphics\ES31\ErrorHelper.cs" />
+    <Compile Include="Graphics\ES31\ES31.cs" />
+    <Compile Include="Graphics\ES31\ES31.Enums.cs" />
+    <Compile Include="Graphics\ES31\Helper.cs" />
     <Compile Include="Graphics\GraphicsModeComparer.cs" />
     <Compile Include="Input\GamePadThumbSticks.cs" />
     <Compile Include="Input\GamePadTriggers.cs" />
