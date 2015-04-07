@@ -28,6 +28,7 @@
 using System;
 using System.Diagnostics;
 using OpenTK.Graphics;
+using OpenTK.Graphics.ES20;
 
 namespace OpenTK.Platform.Egl
 {
@@ -36,9 +37,9 @@ namespace OpenTK.Platform.Egl
         #region Fields
 
         protected readonly RenderableFlags Renderable;
-        protected EglWindowInfo WindowInfo;
+        internal EglWindowInfo WindowInfo;
 
-        IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
+        internal IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
         int swap_interval = 1; // Default interval is defined as 1 in EGL.
 
         #endregion
@@ -100,10 +101,20 @@ namespace OpenTK.Platform.Egl
             IntPtr config = Mode.Index.Value;
 
             if (window.Surface == IntPtr.Zero)
-                window.CreateWindowSurface(config);
+            {
+                if ((flags & GraphicsContextFlags.Offscreen) == 0)
+                {
+                    window.CreateWindowSurface(config);
+                }
+                else
+                {
+                    window.CreatePbufferSurface(config);
+                }
+            }
 
             int[] attrib_list = new int[] { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
-            HandleAsEGLContext = Egl.CreateContext(window.Display, config, shared != null ? shared.HandleAsEGLContext : IntPtr.Zero, attrib_list);
+            var share_context = shared != null ? shared.HandleAsEGLContext : IntPtr.Zero;
+            HandleAsEGLContext = Egl.CreateContext(window.Display, config, share_context, attrib_list);
 
             MakeCurrent(window);
         }
@@ -136,6 +147,8 @@ namespace OpenTK.Platform.Egl
             // or the window it was constructed on (which may not be EGL)).
             if (window is EglWindowInfo)
                 WindowInfo = (EglWindowInfo)window;
+            else if (window is AngleOffscreenWindowInfo)
+                WindowInfo = ((AngleOffscreenWindowInfo) window).EglWindowInfo;
             Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext);
         }
 

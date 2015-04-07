@@ -96,16 +96,63 @@ namespace OpenTK.Platform.Egl
         //    Surface = Egl.CreatePixmapSurface(Display, config, Handle, null);
         //}
 
-        //public void CreatePbufferSurface(EGLConfig config)
-        //{
-        //    Surface = Egl.CreatePbufferSurface(Display, config, null);
-        //}
+        public void CreatePbufferSurface(IntPtr config)
+        {
+            int[] attribs = new int[]{Egl.NONE};
+            Surface = Egl.CreatePbufferSurface(Display, config, attribs);
+            if (Surface == IntPtr.Zero)
+            {
+                throw new GraphicsContextException(String.Format(
+                    "[EGL] Failed to create pbuffer surface, error {0}.", Egl.GetError()));
+            }
+        }
+
+        public void CreatePbufferSurface(IntPtr config, int width, int height)
+        {
+            if (surface != IntPtr.Zero)
+            {
+                DestroySurface();
+            }
+            CreatePbufferSurface(config, width, height, out surface); 
+        }
+
+        public void CreatePbufferSurface(IntPtr config, int width, int height, out IntPtr surface_)
+        {
+            int[] attribs = new int[]
+            {
+                Egl.WIDTH, width,
+                Egl.HEIGHT, height,
+                Egl.TEXTURE_TARGET, Egl.TEXTURE_2D,
+                Egl.TEXTURE_FORMAT, Egl.TEXTURE_RGBA,
+                Egl.NONE
+            };
+            surface_ = Egl.CreatePbufferSurface(Display, config, attribs);
+            if (surface_ == IntPtr.Zero)
+            {
+                throw new GraphicsContextException(String.Format(
+                    "[EGL] Failed to create pbuffer surface, error {0}.", Egl.GetError()));
+            }
+
+        }
 
         public void DestroySurface()
         {
-            if (Surface != IntPtr.Zero)
-                if (!Egl.DestroySurface(Display, Surface))
-                    Debug.Print("[Warning] Failed to destroy {0}:{1}.", Surface.GetType().Name, Surface);
+            DestroySurface(ref surface);
+        }
+
+        public void DestroySurface(ref IntPtr surface_)
+        {
+            if (surface_ == IntPtr.Zero)
+            {
+                return;
+            }
+
+            if (Egl.DestroySurface(Display, surface_))
+            {
+                surface_ = IntPtr.Zero;
+                return;
+            }
+            Debug.Print("[Warning] Failed to destroy {0}:{1}.", Surface.GetType().Name, Surface);
         }
 
         #endregion
