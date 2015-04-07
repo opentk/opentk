@@ -53,7 +53,13 @@ namespace OpenTK.Platform.Egl
             if (window == null)
                 throw new ArgumentNullException("window");
 
-            EglContext shared = (EglContext)sharedContext;
+            EglContext shared = null;
+            if (sharedContext != null)
+            {
+                var internalContext = sharedContext as IGraphicsContextInternal;
+                if (internalContext != null)
+                    shared = internalContext.Implementation as EglContext;
+            }
 
             WindowInfo = window;
 
