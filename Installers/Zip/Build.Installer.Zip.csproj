@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)' == 'Documentation'">
     <OutputPath>.\opentk\</OutputPath>
@@ -14,7 +14,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ProjectGuid>{ADC34399-7613-44D2-90B2-19250F06FE7B}</ProjectGuid>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <OutputPath>.\opentk\</OutputPath>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -22,6 +22,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Exe</OutputType>
     <AssemblyName>Build.Installer.Zip</AssemblyName>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Documentation|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -47,6 +48,9 @@
     <OutputPath>opentk\</OutputPath>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
   <Target Name="Build">
     <!-- Zip the copy of the source tree -->
     <Exec Command="7z a -tzip opentk.zip ../../* -xr!opentk*.zip -xr!opentk*.exe -xr!.* -xr!obj -xr!bin -xr!lib -xr!Documentation/Source -xr!Automation -xr!*.suo -xr!*.pidb -xr!*.userprefs -xr!*vshost.exe* -xr!*.log -xr!*.nupkg" />
@@ -54,7 +58,7 @@
     <ReadLinesFromFile File="../../Timestamp.txt">
       <Output TaskParameter="Lines" ItemName="Version" />
     </ReadLinesFromFile>
-    <Move SourceFiles=".\opentk.zip" DestinationFiles="@(Version-&gt;'..\..\opentk-%(Identity).zip')" />
+    <Move SourceFiles=".\opentk.zip" DestinationFiles="@(Version->'..\..\opentk-%(Identity).zip')" />
   </Target>
   <Target Name="Clean">
     <CreateItem Include=".\opentk.zip;..\..\opentk-*.zip">
