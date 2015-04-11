@@ -4,7 +4,6 @@ env:
  global:
   - EnableNuGetPackageRestore=true
  matrix:
-  - MONO_VER="2.10.11"
   - MONO_VER="3.6.0"
 
 before_install:
