@@ -12,4 +12,4 @@ install:
 
 script:
   - xbuild /p:Configuration=Release OpenTK.sln
-  - mono ./testrunner/xunit.runner.console.1.9.2/tools/xunit.console.exe ./Source/Tests/Test.Unit/bin/Release/Test.Unit.dll
+  - mono ./testrunner/xunit.runner.console.2.0.0/tools/xunit.console.exe ./Source/Tests/Test.Unit/bin/Release/Test.Unit.dll
