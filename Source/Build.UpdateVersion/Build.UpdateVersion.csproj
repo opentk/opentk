@@ -5,17 +5,19 @@
     <AssemblyName>Build.UpdateVersion</AssemblyName>
     <RootNamespace>Build.UpdateVersion</RootNamespace>
     <OutputType>Exe</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Documentation' ">
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
     <Optimize>true</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DefineConstants>TRACE;DEBUG</DefineConstants>
@@ -24,24 +26,30 @@
     <WarningLevel>4</WarningLevel>
     <OutputPath>..\..\Binaries\Tools\Debug\</OutputPath>
     <Optimize>false</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
     <Optimize>true</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Nsis' ">
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
     <Optimize>true</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <PropertyGroup>
