@@ -1,17 +1,12 @@
-language: objective-c
+language: csharp
+solution: OpenTK.sln
 
-env:
- global:
-  - EnableNuGetPackageRestore=true
- matrix:
-  - MONO_VER="2.10.11"
-  - MONO_VER="3.6.0"
-
-before_install:
- - wget "http://download.mono-project.com/archive/${MONO_VER}/macos-10-x86/MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" "http://download.mono-project.com/archive/${MONO_VER}/macos-10-x86/MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.dmg" || true
- - hdid "MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.dmg" || true
- - sudo installer -pkg "/Volumes/Mono Framework MDK ${MONO_VER}/MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" -target / || true
- - sudo installer -pkg "MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" -target / || true
+mono:
+ - latest
+ - 3.10.0
+ - 3.8.0
+ - 3.2.8
+ - 2.10.8
 
 script:
- - xbuild && xbuild /p:Configuration=Release
+  - xbuild /p:Configuration=Release OpenTK.sln
