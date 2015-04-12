@@ -5,7 +5,11 @@ mono:
  - latest
  - 3.10.0
  - 3.8.0
- - 3.2.8
+
+install:
+  - nuget restore OpenTK.sln
+  - nuget install xunit.runner.console -Version 2.0.0 -OutputDirectory testrunner
 
 script:
   - xbuild /p:Configuration=Release OpenTK.sln
+  - mono ./testrunner/xunit.runner.console.1.9.2/tools/xunit.console.exe ./Source/Tests/Test.Unit/bin/Release/Test.Unit.dll
