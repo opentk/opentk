@@ -14,7 +14,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ProjectGuid>{ADC34399-7613-44D2-90B2-19250F12FE7B}</ProjectGuid>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <OutputPath>.\obj\</OutputPath>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -22,6 +22,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Exe</OutputType>
     <AssemblyName>Build.Installer.Nuget</AssemblyName>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Documentation|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -79,6 +80,7 @@
     <CallTarget Targets="Build" />
   </Target>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="OpenTK.nuspec" />
     <None Include="OpenTK.GLControl.nuspec" />
   </ItemGroup>

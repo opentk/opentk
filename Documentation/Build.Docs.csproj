@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)' == 'Documentation'">
     <OutputPath>.\Source</OutputPath>
@@ -21,13 +21,14 @@
     <LatexPath>$(OutputPath)\latex</LatexPath>
     <HtmlPath>$(OutputPath)\html</HtmlPath>
     <ProjectGuid>{650C6F3D-33B5-4216-9536-956AB42C0624}</ProjectGuid>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Exe</OutputType>
     <AssemblyName>Build.Docs</AssemblyName>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Documentation|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -54,6 +55,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Doxyfile" />
     <None Include="..\README.md">
       <Link>README.md</Link>
