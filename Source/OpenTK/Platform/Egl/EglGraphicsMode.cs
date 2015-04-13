@@ -49,21 +49,21 @@ namespace OpenTK.Platform.Egl
             RenderableFlags renderable_flags)
         {
             return SelectGraphicsMode(
-                Egl.WINDOW_BIT,
+                SurfaceType.WINDOW_BIT, 
                 window.Display,
                 color, depth, stencil, samples, accum, buffers, stereo, renderable_flags
                 );
         }
 
-        public GraphicsMode SelectGraphicsMode(int backend_bit, IntPtr display,
-            ColorFormat color, int depth, int stencil,
+        public GraphicsMode SelectGraphicsMode(SurfaceType surface_type, 
+            IntPtr display, ColorFormat color, int depth, int stencil,
             int samples, ColorFormat accum, int buffers, bool stereo,
             RenderableFlags renderable_flags)
         {
             IntPtr[] configs = new IntPtr[1];
             int[] attribList = new int[] 
             { 
-                Egl.SURFACE_TYPE, backend_bit,
+                Egl.SURFACE_TYPE, (int) surface_type,
                 Egl.RENDERABLE_TYPE, (int)renderable_flags,
 
                 Egl.RED_SIZE, color.Red, 

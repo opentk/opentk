@@ -86,17 +86,24 @@ namespace OpenTK.Platform.Egl
                 Debug.Print("[EGL] Failed to bind rendering API. Error: {0}", Egl.GetError());
             }
 
-            Mode = new EglGraphicsMode().SelectGraphicsMode(window,
-                mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
-                mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
-                Renderable);
+            bool offscreen = (flags & GraphicsContextFlags.Offscreen) != 0;
+
+            SurfaceType surface_type = offscreen 
+                ? SurfaceType.PBUFFER_BIT 
+                : SurfaceType.WINDOW_BIT;
+
+            Mode = new EglGraphicsMode().SelectGraphicsMode(surface_type,
+                    window.Display, mode.ColorFormat, mode.Depth, mode.Stencil,
+                    mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
+                    Renderable);
+
             if (!Mode.Index.HasValue)
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
             IntPtr config = Mode.Index.Value;
 
             if (window.Surface == IntPtr.Zero)
             {
-                if ((flags & GraphicsContextFlags.Offscreen) == 0)
+                if (!offscreen)
                 {
                     window.CreateWindowSurface(config);
                 }
