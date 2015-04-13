@@ -37,6 +37,7 @@ namespace OpenTK.Platform.Egl
     {
         IntPtr ES1 = OpenTK.Platform.X11.DL.Open("libGLESv1_CM", X11.DLOpenFlags.Lazy);
         IntPtr ES2 = OpenTK.Platform.X11.DL.Open("libGLESv2", X11.DLOpenFlags.Lazy);
+        IntPtr ES3 = OpenTK.Platform.X11.DL.Open("libGLESv2", X11.DLOpenFlags.Lazy);
         IntPtr GL = OpenTK.Platform.X11.DL.Open("libGL", X11.DLOpenFlags.Lazy);
 
         public EglUnixContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
@@ -53,15 +54,19 @@ namespace OpenTK.Platform.Egl
 
         protected override IntPtr GetStaticAddress(IntPtr function, RenderableFlags renderable)
         {
+            if ((renderable & RenderableFlags.ES3) != 0 && ES3 != IntPtr.Zero)
+            {
+                return X11.DL.Symbol(ES3, function);
+            }
+            if ((renderable & RenderableFlags.ES2) != 0 && ES2 != IntPtr.Zero)
+            {
+                return X11.DL.Symbol(ES2, function);
+            }
             if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
             {
                 return X11.DL.Symbol(ES1, function);
             }
-            else if ((renderable & RenderableFlags.ES2) != 0 && ES2 != IntPtr.Zero)
-            {
-                return X11.DL.Symbol(ES2, function);
-            }
-            else if ((renderable & RenderableFlags.GL) != 0 && GL != IntPtr.Zero)
+            if ((renderable & RenderableFlags.GL) != 0 && GL != IntPtr.Zero)
             {
                 return X11.DL.Symbol(GL, function);
             }
@@ -78,12 +83,16 @@ namespace OpenTK.Platform.Egl
             {
                 X11.DL.Close(ES2);
             }
+            if (ES3 != IntPtr.Zero)
+            {
+                X11.DL.Close(ES3);
+            }
             if (GL != IntPtr.Zero)
             {
                 X11.DL.Close(GL);
             }
 
-            GL = ES1 = ES2 = IntPtr.Zero;
+            GL = ES1 = ES2 = ES3 = IntPtr.Zero;
 
             base.Dispose(manual);
         }

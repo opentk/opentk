@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform
 {
@@ -40,7 +41,7 @@ namespace OpenTK.Platform
         #region Fields
 
         bool disposed;
-        static IPlatformFactory default_implementation, embedded_implementation;
+        static IPlatformFactory default_implementation, embedded_implementation, angle_implementation;
 
         #endregion
 
@@ -81,10 +82,12 @@ namespace OpenTK.Platform
                 else if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
                 else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
                 else Embedded = new UnsupportedPlatform();
+                Angle = new Egl.EglAnglePlatformFactory();
             }
             else
             {
                 Embedded = new UnsupportedPlatform();
+                Angle = Embedded;
             }
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
@@ -105,6 +108,12 @@ namespace OpenTK.Platform
         {
             get { return embedded_implementation; }
             private set { embedded_implementation = value; }
+        }
+
+        public static IPlatformFactory Angle
+        {
+            get { return angle_implementation; }
+            private set { angle_implementation = value; }
         }
 
         #endregion

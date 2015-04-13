@@ -112,6 +112,18 @@ namespace OpenTK.Graphics
                 if (minor < 0)
                     minor = 0;
 
+                // Angle needs an embedded context
+                var use_angle_flag = GraphicsContextFlags.Angle
+                                | GraphicsContextFlags.AngleD3D9
+                                | GraphicsContextFlags.AngleD3D11
+                                | GraphicsContextFlags.AngleOpenGL;
+                var use_angle = false;
+                if ((flags & use_angle_flag) != 0)
+                {
+                    flags |= GraphicsContextFlags.Embedded;
+                    use_angle = true;
+                }
+
                 Debug.Print("Creating GraphicsContext.");
                 try
                 {
@@ -133,8 +145,12 @@ namespace OpenTK.Graphics
                         IPlatformFactory factory = null;
                         switch ((flags & GraphicsContextFlags.Embedded) == GraphicsContextFlags.Embedded)
                         {
-                            case false: factory = Factory.Default; break;
-                            case true: factory = Factory.Embedded; break;
+                            case false:
+                                factory = Factory.Default;
+                                break;
+                            case true:
+                                factory = use_angle ? Factory.Angle : Factory.Embedded;
+                                break;
                         }
 
                         // Note: this approach does not allow us to mix native and EGL contexts in the same process.
