@@ -54,13 +54,7 @@ namespace OpenTK.Platform.Egl
             if (window == null)
                 throw new ArgumentNullException("window");
 
-            EglContext shared = null;
-            if (sharedContext != null)
-            {
-                var internalContext = sharedContext as IGraphicsContextInternal;
-                if (internalContext != null)
-                    shared = internalContext.Implementation as EglContext;
-            }
+            EglContext shared = GetSharedEglContext(sharedContext);
 
             WindowInfo = window;
 
@@ -223,6 +217,21 @@ namespace OpenTK.Platform.Egl
                 }
                 IsDisposed = true;
             }
+        }
+
+        private EglContext GetSharedEglContext(IGraphicsContext sharedContext)
+        {
+            if (sharedContext == null)
+            {
+                return null;
+            }
+
+            var internalContext = sharedContext as IGraphicsContextInternal;
+            if (internalContext != null)
+            {
+                return (EglContext) internalContext.Implementation;
+            }
+            return (EglContext) sharedContext;
         }
 
         #endregion
