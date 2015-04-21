@@ -145,8 +145,12 @@ namespace OpenTK.Graphics
                         IPlatformFactory factory = null;
                         switch ((flags & GraphicsContextFlags.Embedded) == GraphicsContextFlags.Embedded)
                         {
-                            case false: factory = Factory.Default; break;
-                            case true: factory = Factory.Embedded; break;
+                            case false:
+                                factory = Factory.Default;
+                                break;
+                            case true:
+                                factory = use_angle ? Factory.Angle : Factory.Embedded;
+                                break;
                         }
 
                         // Note: this approach does not allow us to mix native and EGL contexts in the same process.
