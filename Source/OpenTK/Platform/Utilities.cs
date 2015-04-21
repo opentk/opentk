@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
 using OpenTK.Graphics;
+using OpenTK.Platform.Egl;
 
 #endregion
 
@@ -351,6 +352,22 @@ namespace OpenTK.Platform
                 windowHandle, null);
         }
 
+        #endregion
+
+        #region
+
+        /// <summary>
+        /// Creates an IWindowInfo instance for Angle rendering, based on 
+        /// supplied platform window (e.g. a window created with 
+        /// CreateWindowsWindowInfo, or CreateDummyWindowInfo).
+        /// </summary>
+        /// <param name="platform_window"></param>
+        /// <returns></returns>
+        public static IAngleWindowInfo CreateAngleWindowInfo(IWindowInfo platform_window)
+        {
+            return new AngleWindowInfo(platform_window);
+        }
+        
         #endregion
 
         #endregion
