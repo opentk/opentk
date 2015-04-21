@@ -53,6 +53,8 @@ namespace OpenTK.Platform.Egl
             if (window == null)
                 throw new ArgumentNullException("window");
 
+            EglContext shared = GetSharedEglContext(sharedContext);
+
             WindowInfo = window;
 
             // Select an EGLConfig that matches the desired mode. We cannot use the 'mode'
@@ -214,6 +216,21 @@ namespace OpenTK.Platform.Egl
                 }
                 IsDisposed = true;
             }
+        }
+
+        private EglContext GetSharedEglContext(IGraphicsContext sharedContext)
+        {
+            if (sharedContext == null)
+            {
+                return null;
+            }
+
+            var internalContext = sharedContext as IGraphicsContextInternal;
+            if (internalContext != null)
+            {
+                return (EglContext) internalContext.Implementation;
+            }
+            return (EglContext) sharedContext;
         }
 
         #endregion
