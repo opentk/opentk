@@ -321,6 +321,9 @@ namespace OpenTK.Platform.Linux
 
                             stick.Caps = new JoystickCapabilities(axes, buttons, hats, false);
 
+                            stick.Caps.SetIsConnected(true);
+                            stick.State.SetIsConnected(true);
+
                             // Poll the joystick once, to initialize its state
                             PollJoystick(stick);
                         }
@@ -373,12 +376,6 @@ namespace OpenTK.Platform.Linux
                     length = (long)Libc.read(js.FileDescriptor, (void*)events, (UIntPtr)(sizeof(InputEvent) * EventCount));
                     if (length <= 0)
                         break;
-
-                    // Only mark the joystick as connected when we actually start receiving events.
-                    // Otherwise, the Xbox wireless receiver will register 4 joysticks even if no
-                    // actual joystick is connected to the receiver.
-                    js.Caps.SetIsConnected(true);
-                    js.State.SetIsConnected(true);
 
                     length /= sizeof(InputEvent);
                     for (int i = 0; i < length; i++)
