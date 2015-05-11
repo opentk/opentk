@@ -1,7 +1,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit Library
+// Copyright (c) 2006 - 2015 Stefanos Apostolopoulos for the Open Toolkit Library
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -165,7 +165,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 163 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 165 other functions
     /// </summary>
     public enum All : int
     {
@@ -949,6 +949,14 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_INVALID_FRAMEBUFFER_OPERATION_OES = 0x0506
         /// </summary>
         InvalidFramebufferOperationOes = ((int)0x0506)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST = 0x0507
+        /// </summary>
+        ContextLost = ((int)0x0507)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST_KHR = 0x0507
+        /// </summary>
+        ContextLostKhr = ((int)0x0507)        ,
         /// <summary>
         /// Original was GL_2D = 0x0600
         /// </summary>
@@ -4782,25 +4790,65 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         DebugTypeOtherKhr = ((int)0x8251)        ,
         /// <summary>
+        /// Original was GL_LOSE_CONTEXT_ON_RESET = 0x8252
+        /// </summary>
+        LoseContextOnReset = ((int)0x8252)        ,
+        /// <summary>
         /// Original was GL_LOSE_CONTEXT_ON_RESET_EXT = 0x8252
         /// </summary>
         LoseContextOnResetExt = ((int)0x8252)        ,
+        /// <summary>
+        /// Original was GL_LOSE_CONTEXT_ON_RESET_KHR = 0x8252
+        /// </summary>
+        LoseContextOnResetKhr = ((int)0x8252)        ,
+        /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET = 0x8253
+        /// </summary>
+        GuiltyContextReset = ((int)0x8253)        ,
         /// <summary>
         /// Original was GL_GUILTY_CONTEXT_RESET_EXT = 0x8253
         /// </summary>
         GuiltyContextResetExt = ((int)0x8253)        ,
         /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET_KHR = 0x8253
+        /// </summary>
+        GuiltyContextResetKhr = ((int)0x8253)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET = 0x8254
+        /// </summary>
+        InnocentContextReset = ((int)0x8254)        ,
+        /// <summary>
         /// Original was GL_INNOCENT_CONTEXT_RESET_EXT = 0x8254
         /// </summary>
         InnocentContextResetExt = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET_KHR = 0x8254
+        /// </summary>
+        InnocentContextResetKhr = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET = 0x8255
+        /// </summary>
+        UnknownContextReset = ((int)0x8255)        ,
         /// <summary>
         /// Original was GL_UNKNOWN_CONTEXT_RESET_EXT = 0x8255
         /// </summary>
         UnknownContextResetExt = ((int)0x8255)        ,
         /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET_KHR = 0x8255
+        /// </summary>
+        UnknownContextResetKhr = ((int)0x8255)        ,
+        /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY = 0x8256
+        /// </summary>
+        ResetNotificationStrategy = ((int)0x8256)        ,
+        /// <summary>
         /// Original was GL_RESET_NOTIFICATION_STRATEGY_EXT = 0x8256
         /// </summary>
         ResetNotificationStrategyExt = ((int)0x8256)        ,
+        /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY_KHR = 0x8256
+        /// </summary>
+        ResetNotificationStrategyKhr = ((int)0x8256)        ,
         /// <summary>
         /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
         /// </summary>
@@ -4826,9 +4874,17 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         UndefinedVertexExt = ((int)0x8260)        ,
         /// <summary>
+        /// Original was GL_NO_RESET_NOTIFICATION = 0x8261
+        /// </summary>
+        NoResetNotification = ((int)0x8261)        ,
+        /// <summary>
         /// Original was GL_NO_RESET_NOTIFICATION_EXT = 0x8261
         /// </summary>
         NoResetNotificationExt = ((int)0x8261)        ,
+        /// <summary>
+        /// Original was GL_NO_RESET_NOTIFICATION_KHR = 0x8261
+        /// </summary>
+        NoResetNotificationKhr = ((int)0x8261)        ,
         /// <summary>
         /// Original was GL_DEBUG_TYPE_MARKER = 0x8268
         /// </summary>
@@ -4953,6 +5009,22 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_MAX_LABEL_LENGTH_KHR = 0x82E8
         /// </summary>
         MaxLabelLengthKhr = ((int)0x82E8)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR = 0x82FB
+        /// </summary>
+        ContextReleaseBehavior = ((int)0x82FB)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_KHR = 0x82FB
+        /// </summary>
+        ContextReleaseBehaviorKhr = ((int)0x82FB)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 0x82FC
+        /// </summary>
+        ContextReleaseBehaviorFlush = ((int)0x82FC)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_KHR = 0x82FC
+        /// </summary>
+        ContextReleaseBehaviorFlushKhr = ((int)0x82FC)        ,
         /// <summary>
         /// Original was GL_CONVOLUTION_HINT_SGIX = 0x8316
         /// </summary>
@@ -7202,9 +7274,17 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         MaxMultiviewBuffersExt = ((int)0x90F2)        ,
         /// <summary>
+        /// Original was GL_CONTEXT_ROBUST_ACCESS = 0x90F3
+        /// </summary>
+        ContextRobustAccess = ((int)0x90F3)        ,
+        /// <summary>
         /// Original was GL_CONTEXT_ROBUST_ACCESS_EXT = 0x90F3
         /// </summary>
         ContextRobustAccessExt = ((int)0x90F3)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_ROBUST_ACCESS_KHR = 0x90F3
+        /// </summary>
+        ContextRobustAccessKhr = ((int)0x90F3)        ,
         /// <summary>
         /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY_OES = 0x9102
         /// </summary>
@@ -10296,6 +10376,10 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_INVALID_FRAMEBUFFER_OPERATION_OES = 0x0506
         /// </summary>
         InvalidFramebufferOperationOes = ((int)0x0506)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST = 0x0507
+        /// </summary>
+        ContextLost = ((int)0x0507)        ,
         /// <summary>
         /// Original was GL_TABLE_TOO_LARGE = 0x8031
         /// </summary>
@@ -15101,6 +15185,14 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         SharedTexturePaletteExt = ((int)0x81FB)        ,
         /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY = 0x8256
+        /// </summary>
+        ResetNotificationStrategy = ((int)0x8256)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_KHR = 0x82FB
+        /// </summary>
+        ContextReleaseBehaviorKhr = ((int)0x82FB)        ,
+        /// <summary>
         /// Original was GL_CONVOLUTION_HINT_SGIX = 0x8316
         /// </summary>
         ConvolutionHintSgix = ((int)0x8316)        ,
@@ -15364,6 +15456,10 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_MAX_MULTIVIEW_BUFFERS_EXT = 0x90F2
         /// </summary>
         MaxMultiviewBuffersExt = ((int)0x90F2)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_ROBUST_ACCESS = 0x90F3
+        /// </summary>
+        ContextRobustAccess = ((int)0x90F3)        ,
     }
 
     /// <summary>
@@ -16597,6 +16693,44 @@ namespace OpenTK.Graphics.ES20
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum KhrBlendEquationAdvancedCoherent : int
+    {
+        /// <summary>
+        /// Original was GL_BLEND_ADVANCED_COHERENT_KHR = 0x9285
+        /// </summary>
+        BlendAdvancedCoherentKhr = ((int)0x9285)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum KhrContextFlushControl : int
+    {
+        /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR = 0x82FB
+        /// </summary>
+        ContextReleaseBehavior = ((int)0x82FB)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_KHR = 0x82FB
+        /// </summary>
+        ContextReleaseBehaviorKhr = ((int)0x82FB)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 0x82FC
+        /// </summary>
+        ContextReleaseBehaviorFlush = ((int)0x82FC)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_KHR = 0x82FC
+        /// </summary>
+        ContextReleaseBehaviorFlushKhr = ((int)0x82FC)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum KhrDebug : int
     {
         /// <summary>
@@ -16919,6 +17053,88 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_DEBUG_OUTPUT_KHR = 0x92E0
         /// </summary>
         DebugOutputKhr = ((int)0x92E0)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum KhrRobustBufferAccessBehavior : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum KhrRobustness : int
+    {
+        /// <summary>
+        /// Original was GL_NO_ERROR = 0
+        /// </summary>
+        NoError = ((int)0)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST = 0x0507
+        /// </summary>
+        ContextLost = ((int)0x0507)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST_KHR = 0x0507
+        /// </summary>
+        ContextLostKhr = ((int)0x0507)        ,
+        /// <summary>
+        /// Original was GL_LOSE_CONTEXT_ON_RESET = 0x8252
+        /// </summary>
+        LoseContextOnReset = ((int)0x8252)        ,
+        /// <summary>
+        /// Original was GL_LOSE_CONTEXT_ON_RESET_KHR = 0x8252
+        /// </summary>
+        LoseContextOnResetKhr = ((int)0x8252)        ,
+        /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET = 0x8253
+        /// </summary>
+        GuiltyContextReset = ((int)0x8253)        ,
+        /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET_KHR = 0x8253
+        /// </summary>
+        GuiltyContextResetKhr = ((int)0x8253)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET = 0x8254
+        /// </summary>
+        InnocentContextReset = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET_KHR = 0x8254
+        /// </summary>
+        InnocentContextResetKhr = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET = 0x8255
+        /// </summary>
+        UnknownContextReset = ((int)0x8255)        ,
+        /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET_KHR = 0x8255
+        /// </summary>
+        UnknownContextResetKhr = ((int)0x8255)        ,
+        /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY = 0x8256
+        /// </summary>
+        ResetNotificationStrategy = ((int)0x8256)        ,
+        /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY_KHR = 0x8256
+        /// </summary>
+        ResetNotificationStrategyKhr = ((int)0x8256)        ,
+        /// <summary>
+        /// Original was GL_NO_RESET_NOTIFICATION = 0x8261
+        /// </summary>
+        NoResetNotification = ((int)0x8261)        ,
+        /// <summary>
+        /// Original was GL_NO_RESET_NOTIFICATION_KHR = 0x8261
+        /// </summary>
+        NoResetNotificationKhr = ((int)0x8261)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_ROBUST_ACCESS = 0x90F3
+        /// </summary>
+        ContextRobustAccess = ((int)0x90F3)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_ROBUST_ACCESS_KHR = 0x90F3
+        /// </summary>
+        ContextRobustAccessKhr = ((int)0x90F3)        ,
     }
 
     /// <summary>
@@ -18804,6 +19020,13 @@ namespace OpenTK.Graphics.ES20
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum OesCompressedEtc1Rgb8SubTexture : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum OesCompressedEtc1Rgb8Texture : int
     {
         /// <summary>
@@ -19574,7 +19797,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.CompressedTexSubImage2D, GL.ReadPixels and 3 other functions
+    /// Used in GL.CompressedTexSubImage2D, GL.ReadnPixels and 6 other functions
     /// </summary>
     public enum PixelFormat : int
     {
@@ -20181,7 +20404,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.ReadPixels, GL.TexImage2D and 2 other functions
+    /// Used in GL.ReadnPixels, GL.ReadPixels and 5 other functions
     /// </summary>
     public enum PixelType : int
     {
@@ -20965,6 +21188,29 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_SELECT = 0x1C02
         /// </summary>
         Select = ((int)0x1C02)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ResetStatus : int
+    {
+        /// <summary>
+        /// Original was GL_NO_ERROR = 0
+        /// </summary>
+        NoError = ((int)0)        ,
+        /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET = 0x8253
+        /// </summary>
+        GuiltyContextReset = ((int)0x8253)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET = 0x8254
+        /// </summary>
+        InnocentContextReset = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET = 0x8255
+        /// </summary>
+        UnknownContextReset = ((int)0x8255)        ,
     }
 
     /// <summary>

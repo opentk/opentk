@@ -39,7 +39,7 @@ namespace Bind
     using Enum = Bind.Structures.Enum;
     using Type = Bind.Structures.Type;
 
-    sealed class CSharpSpecWriter : ISpecWriter
+    sealed class CSharpSpecWriter
     {
         IBind Generator { get; set; }
         Settings Settings { get { return Generator.Settings; } }

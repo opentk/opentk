@@ -1,7 +1,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit Library
+// Copyright (c) 2006 - 2015 Stefanos Apostolopoulos for the Open Toolkit Library
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -738,7 +738,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 9 other functions
+    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 14 other functions
     /// </summary>
     public enum All : int
     {
@@ -899,6 +899,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         BlueBitAti = ((int)0x00000004)        ,
         /// <summary>
+        /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT = 0x00000004
+        /// </summary>
+        ContextFlagRobustAccessBit = ((int)0x00000004)        ,
+        /// <summary>
         /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT_ARB = 0x00000004
         /// </summary>
         ContextFlagRobustAccessBitArb = ((int)0x00000004)        ,
@@ -914,6 +918,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_8X_BIT_ATI = 0x00000004
         /// </summary>
         Gl8XBitAti = ((int)0x00000004)        ,
+        /// <summary>
+        /// Original was GL_GL_UNIFORM_BARRIER_BIT = 0x00000004
+        /// </summary>
+        GlUniformBarrierBit = ((int)0x00000004)        ,
         /// <summary>
         /// Original was GL_LINE_BIT = 0x00000004
         /// </summary>
@@ -942,6 +950,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_BIAS_BIT_ATI = 0x00000008
         /// </summary>
         BiasBitAti = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_GL_TEXTURE_FETCH_BARRIER_BIT = 0x00000008
+        /// </summary>
+        GlTextureFetchBarrierBit = ((int)0x00000008)        ,
         /// <summary>
         /// Original was GL_HALF_BIT_ATI = 0x00000008
         /// </summary>
@@ -1002,6 +1014,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_EIGHTH_BIT_ATI = 0x00000020
         /// </summary>
         EighthBitAti = ((int)0x00000020)        ,
+        /// <summary>
+        /// Original was GL_GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x00000020
+        /// </summary>
+        GlShaderImageAccessBarrierBit = ((int)0x00000020)        ,
         /// <summary>
         /// Original was GL_PIXEL_MODE_BIT = 0x00000020
         /// </summary>
@@ -1075,6 +1091,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         FramebufferBarrierBitExt = ((int)0x00000400)        ,
         /// <summary>
+        /// Original was GL_GL_FRAMEBUFFER_BARRIER_BIT = 0x00000400
+        /// </summary>
+        GlFramebufferBarrierBit = ((int)0x00000400)        ,
+        /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT = 0x00000400
         /// </summary>
         StencilBufferBit = ((int)0x00000400)        ,
@@ -1098,6 +1118,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT_EXT = 0x00001000
         /// </summary>
         AtomicCounterBarrierBitExt = ((int)0x00001000)        ,
+        /// <summary>
+        /// Original was GL_GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
+        /// </summary>
+        GlAtomicCounterBarrierBit = ((int)0x00001000)        ,
         /// <summary>
         /// Original was GL_TRANSFORM_BIT = 0x00001000
         /// </summary>
@@ -1523,6 +1547,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         FrontLeft = ((int)0x0400)        ,
         /// <summary>
+        /// Original was GL_SPARSE_STORAGE_BIT_ARB = 0x0400
+        /// </summary>
+        SparseStorageBitArb = ((int)0x0400)        ,
+        /// <summary>
         /// Original was GL_FONT_UNDERLINE_POSITION_BIT_NV = 0x04000000
         /// </summary>
         FontUnderlinePositionBitNv = ((int)0x04000000)        ,
@@ -1626,6 +1654,14 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_INVALID_FRAMEBUFFER_OPERATION_OES = 0x0506
         /// </summary>
         InvalidFramebufferOperationOes = ((int)0x0506)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST = 0x0507
+        /// </summary>
+        ContextLost = ((int)0x0507)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST_KHR = 0x0507
+        /// </summary>
+        ContextLostKhr = ((int)0x0507)        ,
         /// <summary>
         /// Original was GL_HORIZONTAL_LINE_TO_NV = 0x06
         /// </summary>
@@ -2027,6 +2063,14 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         ModelviewStackDepth = ((int)0x0BA3)        ,
         /// <summary>
+        /// Original was GL_PATH_MODELVIEW_STACK_DEPTH_NV = 0x0BA3
+        /// </summary>
+        PathModelviewStackDepthNv = ((int)0x0BA3)        ,
+        /// <summary>
+        /// Original was GL_PATH_PROJECTION_STACK_DEPTH_NV = 0x0BA4
+        /// </summary>
+        PathProjectionStackDepthNv = ((int)0x0BA4)        ,
+        /// <summary>
         /// Original was GL_PROJECTION_STACK_DEPTH = 0x0BA4
         /// </summary>
         ProjectionStackDepth = ((int)0x0BA4)        ,
@@ -2042,6 +2086,14 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_MODELVIEW_MATRIX = 0x0BA6
         /// </summary>
         ModelviewMatrix = ((int)0x0BA6)        ,
+        /// <summary>
+        /// Original was GL_PATH_MODELVIEW_MATRIX_NV = 0x0BA6
+        /// </summary>
+        PathModelviewMatrixNv = ((int)0x0BA6)        ,
+        /// <summary>
+        /// Original was GL_PATH_PROJECTION_MATRIX_NV = 0x0BA7
+        /// </summary>
+        PathProjectionMatrixNv = ((int)0x0BA7)        ,
         /// <summary>
         /// Original was GL_PROJECTION_MATRIX = 0x0BA7
         /// </summary>
@@ -2463,6 +2515,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         MaxModelviewStackDepth = ((int)0x0D36)        ,
         /// <summary>
+        /// Original was GL_PATH_MAX_MODELVIEW_STACK_DEPTH_NV = 0x0D36
+        /// </summary>
+        PathMaxModelviewStackDepthNv = ((int)0x0D36)        ,
+        /// <summary>
         /// Original was GL_MAX_NAME_STACK_DEPTH = 0x0D37
         /// </summary>
         MaxNameStackDepth = ((int)0x0D37)        ,
@@ -2470,6 +2526,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_MAX_PROJECTION_STACK_DEPTH = 0x0D38
         /// </summary>
         MaxProjectionStackDepth = ((int)0x0D38)        ,
+        /// <summary>
+        /// Original was GL_PATH_MAX_PROJECTION_STACK_DEPTH_NV = 0x0D38
+        /// </summary>
+        PathMaxProjectionStackDepthNv = ((int)0x0D38)        ,
         /// <summary>
         /// Original was GL_MAX_TEXTURE_STACK_DEPTH = 0x0D39
         /// </summary>
@@ -2711,6 +2771,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         TextureBorder = ((int)0x1005)        ,
         /// <summary>
+        /// Original was GL_TEXTURE_TARGET = 0x1006
+        /// </summary>
+        TextureTarget = ((int)0x1006)        ,
+        /// <summary>
         /// Original was GL_RELATIVE_SMOOTH_CUBIC_CURVE_TO_NV = 0x11
         /// </summary>
         RelativeSmoothCubicCurveToNv = ((int)0x11)        ,
@@ -2819,13 +2883,25 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Gl2Bytes = ((int)0x1407)        ,
         /// <summary>
+        /// Original was GL_2_BYTES_NV = 0x1407
+        /// </summary>
+        Gl2BytesNv = ((int)0x1407)        ,
+        /// <summary>
         /// Original was GL_3_BYTES = 0x1408
         /// </summary>
         Gl3Bytes = ((int)0x1408)        ,
         /// <summary>
+        /// Original was GL_3_BYTES_NV = 0x1408
+        /// </summary>
+        Gl3BytesNv = ((int)0x1408)        ,
+        /// <summary>
         /// Original was GL_4_BYTES = 0x1409
         /// </summary>
         Gl4Bytes = ((int)0x1409)        ,
+        /// <summary>
+        /// Original was GL_4_BYTES_NV = 0x1409
+        /// </summary>
+        Gl4BytesNv = ((int)0x1409)        ,
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
@@ -2975,6 +3051,14 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Modelview0Ext = ((int)0x1700)        ,
         /// <summary>
+        /// Original was GL_PATH_MODELVIEW_NV = 0x1700
+        /// </summary>
+        PathModelviewNv = ((int)0x1700)        ,
+        /// <summary>
+        /// Original was GL_PATH_PROJECTION_NV = 0x1701
+        /// </summary>
+        PathProjectionNv = ((int)0x1701)        ,
+        /// <summary>
         /// Original was GL_PROJECTION = 0x1701
         /// </summary>
         Projection = ((int)0x1701)        ,
@@ -3079,6 +3163,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         RasterPositionUnclippedIbm = ((int)0x19262)        ,
         /// <summary>
+        /// Original was GL_CONIC_CURVE_TO_NV = 0x1A
+        /// </summary>
+        ConicCurveToNv = ((int)0x1A)        ,
+        /// <summary>
         /// Original was GL_BITMAP = 0x1A00
         /// </summary>
         Bitmap = ((int)0x1A00)        ,
@@ -3179,6 +3267,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         MaxVertexHintPgi = ((int)0x1A22D)        ,
         /// <summary>
+        /// Original was GL_RELATIVE_CONIC_CURVE_TO_NV = 0x1B
+        /// </summary>
+        RelativeConicCurveToNv = ((int)0x1B)        ,
+        /// <summary>
         /// Original was GL_POINT = 0x1B00
         /// </summary>
         Point = ((int)0x1B00)        ,
@@ -3251,6 +3343,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         S = ((int)0x2000)        ,
         /// <summary>
+        /// Original was GL_FONT_NUM_GLYPH_INDICES_BIT_NV = 0x20000000
+        /// </summary>
+        FontNumGlyphIndicesBitNv = ((int)0x20000000)        ,
+        /// <summary>
         /// Original was GL_MULTISAMPLE_BIT = 0x20000000
         /// </summary>
         MultisampleBit = ((int)0x20000000)        ,
@@ -3307,9 +3403,17 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         EyeLinear = ((int)0x2400)        ,
         /// <summary>
+        /// Original was GL_EYE_LINEAR_NV = 0x2400
+        /// </summary>
+        EyeLinearNv = ((int)0x2400)        ,
+        /// <summary>
         /// Original was GL_OBJECT_LINEAR = 0x2401
         /// </summary>
         ObjectLinear = ((int)0x2401)        ,
+        /// <summary>
+        /// Original was GL_OBJECT_LINEAR_NV = 0x2401
+        /// </summary>
+        ObjectLinearNv = ((int)0x2401)        ,
         /// <summary>
         /// Original was GL_SPHERE_MAP = 0x2402
         /// </summary>
@@ -6531,25 +6635,65 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         DebugTypeOtherKhr = ((int)0x8251)        ,
         /// <summary>
+        /// Original was GL_LOSE_CONTEXT_ON_RESET = 0x8252
+        /// </summary>
+        LoseContextOnReset = ((int)0x8252)        ,
+        /// <summary>
         /// Original was GL_LOSE_CONTEXT_ON_RESET_ARB = 0x8252
         /// </summary>
         LoseContextOnResetArb = ((int)0x8252)        ,
+        /// <summary>
+        /// Original was GL_LOSE_CONTEXT_ON_RESET_KHR = 0x8252
+        /// </summary>
+        LoseContextOnResetKhr = ((int)0x8252)        ,
+        /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET = 0x8253
+        /// </summary>
+        GuiltyContextReset = ((int)0x8253)        ,
         /// <summary>
         /// Original was GL_GUILTY_CONTEXT_RESET_ARB = 0x8253
         /// </summary>
         GuiltyContextResetArb = ((int)0x8253)        ,
         /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET_KHR = 0x8253
+        /// </summary>
+        GuiltyContextResetKhr = ((int)0x8253)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET = 0x8254
+        /// </summary>
+        InnocentContextReset = ((int)0x8254)        ,
+        /// <summary>
         /// Original was GL_INNOCENT_CONTEXT_RESET_ARB = 0x8254
         /// </summary>
         InnocentContextResetArb = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET_KHR = 0x8254
+        /// </summary>
+        InnocentContextResetKhr = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET = 0x8255
+        /// </summary>
+        UnknownContextReset = ((int)0x8255)        ,
         /// <summary>
         /// Original was GL_UNKNOWN_CONTEXT_RESET_ARB = 0x8255
         /// </summary>
         UnknownContextResetArb = ((int)0x8255)        ,
         /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET_KHR = 0x8255
+        /// </summary>
+        UnknownContextResetKhr = ((int)0x8255)        ,
+        /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY = 0x8256
+        /// </summary>
+        ResetNotificationStrategy = ((int)0x8256)        ,
+        /// <summary>
         /// Original was GL_RESET_NOTIFICATION_STRATEGY_ARB = 0x8256
         /// </summary>
         ResetNotificationStrategyArb = ((int)0x8256)        ,
+        /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY_KHR = 0x8256
+        /// </summary>
+        ResetNotificationStrategyKhr = ((int)0x8256)        ,
         /// <summary>
         /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
         /// </summary>
@@ -6599,9 +6743,17 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         UndefinedVertex = ((int)0x8260)        ,
         /// <summary>
+        /// Original was GL_NO_RESET_NOTIFICATION = 0x8261
+        /// </summary>
+        NoResetNotification = ((int)0x8261)        ,
+        /// <summary>
         /// Original was GL_NO_RESET_NOTIFICATION_ARB = 0x8261
         /// </summary>
         NoResetNotificationArb = ((int)0x8261)        ,
+        /// <summary>
+        /// Original was GL_NO_RESET_NOTIFICATION_KHR = 0x8261
+        /// </summary>
+        NoResetNotificationKhr = ((int)0x8261)        ,
         /// <summary>
         /// Original was GL_MAX_COMPUTE_SHARED_MEMORY_SIZE = 0x8262
         /// </summary>
@@ -7186,6 +7338,90 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_NUM_SHADING_LANGUAGE_VERSIONS = 0x82E9
         /// </summary>
         NumShadingLanguageVersions = ((int)0x82E9)        ,
+        /// <summary>
+        /// Original was GL_QUERY_TARGET = 0x82EA
+        /// </summary>
+        QueryTarget = ((int)0x82EA)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING = 0x82EB
+        /// </summary>
+        TextureBinding = ((int)0x82EB)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_OVERFLOW_ARB = 0x82EC
+        /// </summary>
+        TransformFeedbackOverflowArb = ((int)0x82EC)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW_ARB = 0x82ED
+        /// </summary>
+        TransformFeedbackStreamOverflowArb = ((int)0x82ED)        ,
+        /// <summary>
+        /// Original was GL_VERTICES_SUBMITTED_ARB = 0x82EE
+        /// </summary>
+        VerticesSubmittedArb = ((int)0x82EE)        ,
+        /// <summary>
+        /// Original was GL_PRIMITIVES_SUBMITTED_ARB = 0x82EF
+        /// </summary>
+        PrimitivesSubmittedArb = ((int)0x82EF)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_SHADER_INVOCATIONS_ARB = 0x82F0
+        /// </summary>
+        VertexShaderInvocationsArb = ((int)0x82F0)        ,
+        /// <summary>
+        /// Original was GL_TESS_CONTROL_SHADER_PATCHES_ARB = 0x82F1
+        /// </summary>
+        TessControlShaderPatchesArb = ((int)0x82F1)        ,
+        /// <summary>
+        /// Original was GL_TESS_EVALUATION_SHADER_INVOCATIONS_ARB = 0x82F2
+        /// </summary>
+        TessEvaluationShaderInvocationsArb = ((int)0x82F2)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED_ARB = 0x82F3
+        /// </summary>
+        GeometryShaderPrimitivesEmittedArb = ((int)0x82F3)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_SHADER_INVOCATIONS_ARB = 0x82F4
+        /// </summary>
+        FragmentShaderInvocationsArb = ((int)0x82F4)        ,
+        /// <summary>
+        /// Original was GL_COMPUTE_SHADER_INVOCATIONS_ARB = 0x82F5
+        /// </summary>
+        ComputeShaderInvocationsArb = ((int)0x82F5)        ,
+        /// <summary>
+        /// Original was GL_CLIPPING_INPUT_PRIMITIVES_ARB = 0x82F6
+        /// </summary>
+        ClippingInputPrimitivesArb = ((int)0x82F6)        ,
+        /// <summary>
+        /// Original was GL_CLIPPING_OUTPUT_PRIMITIVES_ARB = 0x82F7
+        /// </summary>
+        ClippingOutputPrimitivesArb = ((int)0x82F7)        ,
+        /// <summary>
+        /// Original was GL_SPARSE_BUFFER_PAGE_SIZE_ARB = 0x82F8
+        /// </summary>
+        SparseBufferPageSizeArb = ((int)0x82F8)        ,
+        /// <summary>
+        /// Original was GL_MAX_CULL_DISTANCES = 0x82F9
+        /// </summary>
+        MaxCullDistances = ((int)0x82F9)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES = 0x82FA
+        /// </summary>
+        MaxCombinedClipAndCullDistances = ((int)0x82FA)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR = 0x82FB
+        /// </summary>
+        ContextReleaseBehavior = ((int)0x82FB)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_KHR = 0x82FB
+        /// </summary>
+        ContextReleaseBehaviorKhr = ((int)0x82FB)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 0x82FC
+        /// </summary>
+        ContextReleaseBehaviorFlush = ((int)0x82FC)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_KHR = 0x82FC
+        /// </summary>
+        ContextReleaseBehaviorFlushKhr = ((int)0x82FC)        ,
         /// <summary>
         /// Original was GL_CONVOLUTION_HINT_SGIX = 0x8316
         /// </summary>
@@ -8171,6 +8407,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         MaxTextureUnitsArb = ((int)0x84E2)        ,
         /// <summary>
+        /// Original was GL_PATH_TRANSPOSE_MODELVIEW_MATRIX_NV = 0x84E3
+        /// </summary>
+        PathTransposeModelviewMatrixNv = ((int)0x84E3)        ,
+        /// <summary>
         /// Original was GL_TRANSPOSE_MODELVIEW_MATRIX = 0x84E3
         /// </summary>
         TransposeModelviewMatrix = ((int)0x84E3)        ,
@@ -8178,6 +8418,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_TRANSPOSE_MODELVIEW_MATRIX_ARB = 0x84E3
         /// </summary>
         TransposeModelviewMatrixArb = ((int)0x84E3)        ,
+        /// <summary>
+        /// Original was GL_PATH_TRANSPOSE_PROJECTION_MATRIX_NV = 0x84E4
+        /// </summary>
+        PathTransposeProjectionMatrixNv = ((int)0x84E4)        ,
         /// <summary>
         /// Original was GL_TRANSPOSE_PROJECTION_MATRIX = 0x84E4
         /// </summary>
@@ -9026,6 +9270,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_CONSTANT_EXT = 0x8576
         /// </summary>
         ConstantExt = ((int)0x8576)        ,
+        /// <summary>
+        /// Original was GL_CONSTANT_NV = 0x8576
+        /// </summary>
+        ConstantNv = ((int)0x8576)        ,
         /// <summary>
         /// Original was GL_PRIMARY_COLOR = 0x8577
         /// </summary>
@@ -16195,6 +16443,22 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         QueryByRegionNoWaitNv = ((int)0x8E16)        ,
         /// <summary>
+        /// Original was GL_QUERY_WAIT_INVERTED = 0x8E17
+        /// </summary>
+        QueryWaitInverted = ((int)0x8E17)        ,
+        /// <summary>
+        /// Original was GL_QUERY_NO_WAIT_INVERTED = 0x8E18
+        /// </summary>
+        QueryNoWaitInverted = ((int)0x8E18)        ,
+        /// <summary>
+        /// Original was GL_QUERY_BY_REGION_WAIT_INVERTED = 0x8E19
+        /// </summary>
+        QueryByRegionWaitInverted = ((int)0x8E19)        ,
+        /// <summary>
+        /// Original was GL_QUERY_BY_REGION_NO_WAIT_INVERTED = 0x8E1A
+        /// </summary>
+        QueryByRegionNoWaitInverted = ((int)0x8E1A)        ,
+        /// <summary>
         /// Original was GL_MAX_COMBINED_TESS_CONTROL_UNIFORM_COMPONENTS = 0x8E1E
         /// </summary>
         MaxCombinedTessControlUniformComponents = ((int)0x8E1E)        ,
@@ -18103,6 +18367,14 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         DispatchIndirectBufferBinding = ((int)0x90EF)        ,
         /// <summary>
+        /// Original was GL_CONTEXT_ROBUST_ACCESS = 0x90F3
+        /// </summary>
+        ContextRobustAccess = ((int)0x90F3)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_ROBUST_ACCESS_KHR = 0x90F3
+        /// </summary>
+        ContextRobustAccessKhr = ((int)0x90F3)        ,
+        /// <summary>
         /// Original was GL_COMPUTE_PROGRAM_NV = 0x90FB
         /// </summary>
         ComputeProgramNv = ((int)0x90FB)        ,
@@ -18675,6 +18947,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         ConjointNv = ((int)0x9284)        ,
         /// <summary>
+        /// Original was GL_BLEND_ADVANCED_COHERENT_KHR = 0x9285
+        /// </summary>
+        BlendAdvancedCoherentKhr = ((int)0x9285)        ,
+        /// <summary>
         /// Original was GL_BLEND_ADVANCED_COHERENT_NV = 0x9285
         /// </summary>
         BlendAdvancedCoherentNv = ((int)0x9285)        ,
@@ -18727,41 +19003,81 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         PlusDarkerNv = ((int)0x9292)        ,
         /// <summary>
+        /// Original was GL_MULTIPLY_KHR = 0x9294
+        /// </summary>
+        MultiplyKhr = ((int)0x9294)        ,
+        /// <summary>
         /// Original was GL_MULTIPLY_NV = 0x9294
         /// </summary>
         MultiplyNv = ((int)0x9294)        ,
+        /// <summary>
+        /// Original was GL_SCREEN_KHR = 0x9295
+        /// </summary>
+        ScreenKhr = ((int)0x9295)        ,
         /// <summary>
         /// Original was GL_SCREEN_NV = 0x9295
         /// </summary>
         ScreenNv = ((int)0x9295)        ,
         /// <summary>
+        /// Original was GL_OVERLAY_KHR = 0x9296
+        /// </summary>
+        OverlayKhr = ((int)0x9296)        ,
+        /// <summary>
         /// Original was GL_OVERLAY_NV = 0x9296
         /// </summary>
         OverlayNv = ((int)0x9296)        ,
+        /// <summary>
+        /// Original was GL_DARKEN_KHR = 0x9297
+        /// </summary>
+        DarkenKhr = ((int)0x9297)        ,
         /// <summary>
         /// Original was GL_DARKEN_NV = 0x9297
         /// </summary>
         DarkenNv = ((int)0x9297)        ,
         /// <summary>
+        /// Original was GL_LIGHTEN_KHR = 0x9298
+        /// </summary>
+        LightenKhr = ((int)0x9298)        ,
+        /// <summary>
         /// Original was GL_LIGHTEN_NV = 0x9298
         /// </summary>
         LightenNv = ((int)0x9298)        ,
+        /// <summary>
+        /// Original was GL_COLORDODGE_KHR = 0x9299
+        /// </summary>
+        ColordodgeKhr = ((int)0x9299)        ,
         /// <summary>
         /// Original was GL_COLORDODGE_NV = 0x9299
         /// </summary>
         ColordodgeNv = ((int)0x9299)        ,
         /// <summary>
+        /// Original was GL_COLORBURN_KHR = 0x929A
+        /// </summary>
+        ColorburnKhr = ((int)0x929A)        ,
+        /// <summary>
         /// Original was GL_COLORBURN_NV = 0x929A
         /// </summary>
         ColorburnNv = ((int)0x929A)        ,
+        /// <summary>
+        /// Original was GL_HARDLIGHT_KHR = 0x929B
+        /// </summary>
+        HardlightKhr = ((int)0x929B)        ,
         /// <summary>
         /// Original was GL_HARDLIGHT_NV = 0x929B
         /// </summary>
         HardlightNv = ((int)0x929B)        ,
         /// <summary>
+        /// Original was GL_SOFTLIGHT_KHR = 0x929C
+        /// </summary>
+        SoftlightKhr = ((int)0x929C)        ,
+        /// <summary>
         /// Original was GL_SOFTLIGHT_NV = 0x929C
         /// </summary>
         SoftlightNv = ((int)0x929C)        ,
+        /// <summary>
+        /// Original was GL_DIFFERENCE_KHR = 0x929E
+        /// </summary>
+        DifferenceKhr = ((int)0x929E)        ,
         /// <summary>
         /// Original was GL_DIFFERENCE_NV = 0x929E
         /// </summary>
@@ -18770,6 +19086,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_MINUS_NV = 0x929F
         /// </summary>
         MinusNv = ((int)0x929F)        ,
+        /// <summary>
+        /// Original was GL_EXCLUSION_KHR = 0x92A0
+        /// </summary>
+        ExclusionKhr = ((int)0x92A0)        ,
         /// <summary>
         /// Original was GL_EXCLUSION_NV = 0x92A0
         /// </summary>
@@ -18807,17 +19127,33 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         HardmixNv = ((int)0x92A9)        ,
         /// <summary>
+        /// Original was GL_HSL_HUE_KHR = 0x92AD
+        /// </summary>
+        HslHueKhr = ((int)0x92AD)        ,
+        /// <summary>
         /// Original was GL_HSL_HUE_NV = 0x92AD
         /// </summary>
         HslHueNv = ((int)0x92AD)        ,
+        /// <summary>
+        /// Original was GL_HSL_SATURATION_KHR = 0x92AE
+        /// </summary>
+        HslSaturationKhr = ((int)0x92AE)        ,
         /// <summary>
         /// Original was GL_HSL_SATURATION_NV = 0x92AE
         /// </summary>
         HslSaturationNv = ((int)0x92AE)        ,
         /// <summary>
+        /// Original was GL_HSL_COLOR_KHR = 0x92AF
+        /// </summary>
+        HslColorKhr = ((int)0x92AF)        ,
+        /// <summary>
         /// Original was GL_HSL_COLOR_NV = 0x92AF
         /// </summary>
         HslColorNv = ((int)0x92AF)        ,
+        /// <summary>
+        /// Original was GL_HSL_LUMINOSITY_KHR = 0x92B0
+        /// </summary>
+        HslLuminosityKhr = ((int)0x92B0)        ,
         /// <summary>
         /// Original was GL_HSL_LUMINOSITY_NV = 0x92B0
         /// </summary>
@@ -19219,9 +19555,49 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         TransformFeedbackBufferStride = ((int)0x934C)        ,
         /// <summary>
+        /// Original was GL_CLIP_ORIGIN = 0x935C
+        /// </summary>
+        ClipOrigin = ((int)0x935C)        ,
+        /// <summary>
+        /// Original was GL_CLIP_DEPTH_MODE = 0x935D
+        /// </summary>
+        ClipDepthMode = ((int)0x935D)        ,
+        /// <summary>
+        /// Original was GL_NEGATIVE_ONE_TO_ONE = 0x935E
+        /// </summary>
+        NegativeOneToOne = ((int)0x935E)        ,
+        /// <summary>
+        /// Original was GL_ZERO_TO_ONE = 0x935F
+        /// </summary>
+        ZeroToOne = ((int)0x935F)        ,
+        /// <summary>
         /// Original was GL_CLEAR_TEXTURE = 0x9365
         /// </summary>
         ClearTexture = ((int)0x9365)        ,
+        /// <summary>
+        /// Original was GL_FONT_GLYPHS_AVAILABLE_NV = 0x9368
+        /// </summary>
+        FontGlyphsAvailableNv = ((int)0x9368)        ,
+        /// <summary>
+        /// Original was GL_FONT_TARGET_UNAVAILABLE_NV = 0x9369
+        /// </summary>
+        FontTargetUnavailableNv = ((int)0x9369)        ,
+        /// <summary>
+        /// Original was GL_FONT_UNAVAILABLE_NV = 0x936A
+        /// </summary>
+        FontUnavailableNv = ((int)0x936A)        ,
+        /// <summary>
+        /// Original was GL_FONT_UNINTELLIGIBLE_NV = 0x936B
+        /// </summary>
+        FontUnintelligibleNv = ((int)0x936B)        ,
+        /// <summary>
+        /// Original was GL_STANDARD_FONT_FORMAT_NV = 0x936C
+        /// </summary>
+        StandardFontFormatNv = ((int)0x936C)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_INPUT_NV = 0x936D
+        /// </summary>
+        FragmentInputNv = ((int)0x936D)        ,
         /// <summary>
         /// Original was GL_NUM_SAMPLE_COUNTS = 0x9380
         /// </summary>
@@ -19399,6 +19775,38 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         PerfqueryGpaExtendedCountersIntel = ((int)0x9500)        ,
         /// <summary>
+        /// Original was GL_ROUNDED_RECT_NV = 0xE8
+        /// </summary>
+        RoundedRectNv = ((int)0xE8)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_ROUNDED_RECT_NV = 0xE9
+        /// </summary>
+        RelativeRoundedRectNv = ((int)0xE9)        ,
+        /// <summary>
+        /// Original was GL_ROUNDED_RECT2_NV = 0xEA
+        /// </summary>
+        RoundedRect2Nv = ((int)0xEA)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_ROUNDED_RECT2_NV = 0xEB
+        /// </summary>
+        RelativeRoundedRect2Nv = ((int)0xEB)        ,
+        /// <summary>
+        /// Original was GL_ROUNDED_RECT4_NV = 0xEC
+        /// </summary>
+        RoundedRect4Nv = ((int)0xEC)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_ROUNDED_RECT4_NV = 0xED
+        /// </summary>
+        RelativeRoundedRect4Nv = ((int)0xED)        ,
+        /// <summary>
+        /// Original was GL_ROUNDED_RECT8_NV = 0xEE
+        /// </summary>
+        RoundedRect8Nv = ((int)0xEE)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_ROUNDED_RECT8_NV = 0xEF
+        /// </summary>
+        RelativeRoundedRect8Nv = ((int)0xEF)        ,
+        /// <summary>
         /// Original was GL_RESTART_PATH_NV = 0xF0
         /// </summary>
         RestartPathNv = ((int)0xF0)        ,
@@ -19414,6 +19822,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_RECT_NV = 0xF6
         /// </summary>
         RectNv = ((int)0xF6)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_RECT_NV = 0xF7
+        /// </summary>
+        RelativeRectNv = ((int)0xF7)        ,
         /// <summary>
         /// Original was GL_CIRCULAR_CCW_ARC_TO_NV = 0xF8
         /// </summary>
@@ -19458,6 +19870,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_CLIENT_ALL_ATTRIB_BITS = 0xFFFFFFFF
         /// </summary>
         ClientAllAttribBits = unchecked((int)0xFFFFFFFF)        ,
+        /// <summary>
+        /// Original was GL_GL_ALL_BARRIER_BITS = 0xFFFFFFFF
+        /// </summary>
+        GlAllBarrierBits = unchecked((int)0xFFFFFFFF)        ,
         /// <summary>
         /// Original was GL_INVALID_INDEX = 0xFFFFFFFF
         /// </summary>
@@ -20756,6 +21172,37 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ArbClipControl : int
+    {
+        /// <summary>
+        /// Original was GL_LOWER_LEFT = 0x8CA1
+        /// </summary>
+        LowerLeft = ((int)0x8CA1)        ,
+        /// <summary>
+        /// Original was GL_UPPER_LEFT = 0x8CA2
+        /// </summary>
+        UpperLeft = ((int)0x8CA2)        ,
+        /// <summary>
+        /// Original was GL_CLIP_ORIGIN = 0x935C
+        /// </summary>
+        ClipOrigin = ((int)0x935C)        ,
+        /// <summary>
+        /// Original was GL_CLIP_DEPTH_MODE = 0x935D
+        /// </summary>
+        ClipDepthMode = ((int)0x935D)        ,
+        /// <summary>
+        /// Original was GL_NEGATIVE_ONE_TO_ONE = 0x935E
+        /// </summary>
+        NegativeOneToOne = ((int)0x935E)        ,
+        /// <summary>
+        /// Original was GL_ZERO_TO_ONE = 0x935F
+        /// </summary>
+        ZeroToOne = ((int)0x935F)        ,
+    }
+
+    /// <summary>
     /// Used in GL.Arb.ClampColor
     /// </summary>
     public enum ArbColorBufferFloat : int
@@ -20933,6 +21380,29 @@ namespace OpenTK.Graphics.OpenGL
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum ArbConditionalRenderInverted : int
+    {
+        /// <summary>
+        /// Original was GL_QUERY_WAIT_INVERTED = 0x8E17
+        /// </summary>
+        QueryWaitInverted = ((int)0x8E17)        ,
+        /// <summary>
+        /// Original was GL_QUERY_NO_WAIT_INVERTED = 0x8E18
+        /// </summary>
+        QueryNoWaitInverted = ((int)0x8E18)        ,
+        /// <summary>
+        /// Original was GL_QUERY_BY_REGION_WAIT_INVERTED = 0x8E19
+        /// </summary>
+        QueryByRegionWaitInverted = ((int)0x8E19)        ,
+        /// <summary>
+        /// Original was GL_QUERY_BY_REGION_NO_WAIT_INVERTED = 0x8E1A
+        /// </summary>
+        QueryByRegionNoWaitInverted = ((int)0x8E1A)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum ArbConservativeDepth : int
     {
     }
@@ -20965,6 +21435,21 @@ namespace OpenTK.Graphics.OpenGL
     /// </summary>
     public enum ArbCopyImage : int
     {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ArbCullDistance : int
+    {
+        /// <summary>
+        /// Original was GL_MAX_CULL_DISTANCES = 0x82F9
+        /// </summary>
+        MaxCullDistances = ((int)0x82F9)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES = 0x82FA
+        /// </summary>
+        MaxCombinedClipAndCullDistances = ((int)0x82FA)        ,
     }
 
     /// <summary>
@@ -21117,6 +21602,76 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_DEPTH_TEXTURE_MODE_ARB = 0x884B
         /// </summary>
         DepthTextureModeArb = ((int)0x884B)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ArbDerivativeControl : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ArbDirectStateAccess : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE_TARGET = 0x1006
+        /// </summary>
+        TextureTarget = ((int)0x1006)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_1D = 0x8068
+        /// </summary>
+        TextureBinding1D = ((int)0x8068)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D = 0x8069
+        /// </summary>
+        TextureBinding2D = ((int)0x8069)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_3D = 0x806A
+        /// </summary>
+        TextureBinding3D = ((int)0x806A)        ,
+        /// <summary>
+        /// Original was GL_QUERY_TARGET = 0x82EA
+        /// </summary>
+        QueryTarget = ((int)0x82EA)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING = 0x82EB
+        /// </summary>
+        TextureBinding = ((int)0x82EB)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_RECTANGLE = 0x84F6
+        /// </summary>
+        TextureBindingRectangle = ((int)0x84F6)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_CUBE_MAP = 0x8514
+        /// </summary>
+        TextureBindingCubeMap = ((int)0x8514)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_1D_ARRAY = 0x8C1C
+        /// </summary>
+        TextureBinding1DArray = ((int)0x8C1C)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D_ARRAY = 0x8C1D
+        /// </summary>
+        TextureBinding2DArray = ((int)0x8C1D)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_BUFFER = 0x8C2C
+        /// </summary>
+        TextureBindingBuffer = ((int)0x8C2C)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_CUBE_MAP_ARRAY = 0x900A
+        /// </summary>
+        TextureBindingCubeMapArray = ((int)0x900A)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE = 0x9104
+        /// </summary>
+        TextureBinding2DMultisample = ((int)0x9104)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY = 0x9105
+        /// </summary>
+        TextureBinding2DMultisampleArray = ((int)0x9105)        ,
     }
 
     /// <summary>
@@ -21322,6 +21877,13 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_MAX_FRAGMENT_UNIFORM_VECTORS = 0x8DFD
         /// </summary>
         MaxFragmentUniformVectors = ((int)0x8DFD)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ArbEs31Compatibility : int
+    {
     }
 
     /// <summary>
@@ -22249,6 +22811,13 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_PROGRAM_BINARY_FORMATS = 0x87FF
         /// </summary>
         ProgramBinaryFormats = ((int)0x87FF)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ArbGetTextureSubImage : int
+    {
     }
 
     /// <summary>
@@ -23515,6 +24084,57 @@ namespace OpenTK.Graphics.OpenGL
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum ArbPipelineStatisticsQuery : int
+    {
+        /// <summary>
+        /// Original was GL_VERTICES_SUBMITTED_ARB = 0x82EE
+        /// </summary>
+        VerticesSubmittedArb = ((int)0x82EE)        ,
+        /// <summary>
+        /// Original was GL_PRIMITIVES_SUBMITTED_ARB = 0x82EF
+        /// </summary>
+        PrimitivesSubmittedArb = ((int)0x82EF)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_SHADER_INVOCATIONS_ARB = 0x82F0
+        /// </summary>
+        VertexShaderInvocationsArb = ((int)0x82F0)        ,
+        /// <summary>
+        /// Original was GL_TESS_CONTROL_SHADER_PATCHES_ARB = 0x82F1
+        /// </summary>
+        TessControlShaderPatchesArb = ((int)0x82F1)        ,
+        /// <summary>
+        /// Original was GL_TESS_EVALUATION_SHADER_INVOCATIONS_ARB = 0x82F2
+        /// </summary>
+        TessEvaluationShaderInvocationsArb = ((int)0x82F2)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED_ARB = 0x82F3
+        /// </summary>
+        GeometryShaderPrimitivesEmittedArb = ((int)0x82F3)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_SHADER_INVOCATIONS_ARB = 0x82F4
+        /// </summary>
+        FragmentShaderInvocationsArb = ((int)0x82F4)        ,
+        /// <summary>
+        /// Original was GL_COMPUTE_SHADER_INVOCATIONS_ARB = 0x82F5
+        /// </summary>
+        ComputeShaderInvocationsArb = ((int)0x82F5)        ,
+        /// <summary>
+        /// Original was GL_CLIPPING_INPUT_PRIMITIVES_ARB = 0x82F6
+        /// </summary>
+        ClippingInputPrimitivesArb = ((int)0x82F6)        ,
+        /// <summary>
+        /// Original was GL_CLIPPING_OUTPUT_PRIMITIVES_ARB = 0x82F7
+        /// </summary>
+        ClippingOutputPrimitivesArb = ((int)0x82F7)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_SHADER_INVOCATIONS = 0x887F
+        /// </summary>
+        GeometryShaderInvocations = ((int)0x887F)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum ArbPixelBufferObject : int
     {
         /// <summary>
@@ -24670,6 +25290,13 @@ namespace OpenTK.Graphics.OpenGL
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum ArbShaderTextureImageSamples : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum ArbShaderTextureLod : int
     {
     }
@@ -24746,6 +25373,21 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_TEXTURE_COMPARE_FAIL_VALUE_ARB = 0x80BF
         /// </summary>
         TextureCompareFailValueArb = ((int)0x80BF)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.Arb.BufferPageCommitment
+    /// </summary>
+    public enum ArbSparseBuffer : int
+    {
+        /// <summary>
+        /// Original was GL_SPARSE_STORAGE_BIT_ARB = 0x0400
+        /// </summary>
+        SparseStorageBitArb = ((int)0x0400)        ,
+        /// <summary>
+        /// Original was GL_SPARSE_BUFFER_PAGE_SIZE_ARB = 0x82F8
+        /// </summary>
+        SparseBufferPageSizeArb = ((int)0x82F8)        ,
     }
 
     /// <summary>
@@ -25030,6 +25672,13 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_MAX_TESS_EVALUATION_UNIFORM_BLOCKS = 0x8E8A
         /// </summary>
         MaxTessEvaluationUniformBlocks = ((int)0x8E8A)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ArbTextureBarrier : int
+    {
     }
 
     /// <summary>
@@ -25941,6 +26590,21 @@ namespace OpenTK.Graphics.OpenGL
     /// </summary>
     public enum ArbTransformFeedbackInstanced : int
     {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ArbTransformFeedbackOverflowQuery : int
+    {
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_OVERFLOW_ARB = 0x82EC
+        /// </summary>
+        TransformFeedbackOverflowArb = ((int)0x82EC)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW_ARB = 0x82ED
+        /// </summary>
+        TransformFeedbackStreamOverflowArb = ((int)0x82ED)        ,
     }
 
     /// <summary>
@@ -28681,7 +29345,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BlitFramebuffer, GL.Ext.BlitFramebuffer
+    /// Used in GL.BlitFramebuffer, GL.BlitNamedFramebuffer and 1 other function
     /// </summary>
     public enum BlitFramebufferFilter : int
     {
@@ -28711,7 +29375,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.MapBuffer
+    /// Used in GL.MapBuffer, GL.MapNamedBuffer and 1 other function
     /// </summary>
     public enum BufferAccess : int
     {
@@ -28749,7 +29413,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.MapBufferRange, GL.Ext.MapNamedBufferRange
+    /// Used in GL.MapBufferRange, GL.MapNamedBufferRange and 1 other function
     /// </summary>
     [Flags]
     public enum BufferAccessMask : int
@@ -28804,7 +29468,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetBufferParameter
+    /// Used in GL.GetBufferParameter, GL.GetNamedBufferParameter and 2 other functions
     /// </summary>
     public enum BufferParameterName : int
     {
@@ -28812,6 +29476,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_BUFFER_IMMUTABLE_STORAGE = 0x821F
         /// </summary>
         BufferImmutableStorage = ((int)0x821F)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_STORAGE_FLAGS = 0x8220
+        /// </summary>
+        BufferStorageFlags = ((int)0x8220)        ,
         /// <summary>
         /// Original was GL_BUFFER_SIZE = 0x8764
         /// </summary>
@@ -28866,7 +29534,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetBufferPointer
+    /// Used in GL.GetBufferPointer, GL.GetNamedBufferPointer and 1 other function
     /// </summary>
     public enum BufferPointer : int
     {
@@ -28911,7 +29579,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BufferStorage
+    /// Used in GL.BufferStorage, GL.NamedBufferStorage and 1 other function
     /// </summary>
     public enum BufferStorageFlags : int
     {
@@ -29067,7 +29735,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BufferData
+    /// Used in GL.BufferData, GL.NamedBufferData and 1 other function
     /// </summary>
     public enum BufferUsageHint : int
     {
@@ -29148,7 +29816,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.ClearBuffer
+    /// Used in GL.ClearBuffer, GL.ClearNamedFramebuffer
     /// </summary>
     public enum ClearBuffer : int
     {
@@ -29167,7 +29835,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.ClearBuffer
+    /// Used in GL.ClearBuffer, GL.ClearNamedFramebuffer
     /// </summary>
     public enum ClearBufferCombined : int
     {
@@ -29178,7 +29846,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BlitFramebuffer, GL.Clear and 1 other function
+    /// Used in GL.BlitFramebuffer, GL.BlitNamedFramebuffer and 2 other functions
     /// </summary>
     [Flags]
     public enum ClearBufferMask : int
@@ -29242,6 +29910,43 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001
         /// </summary>
         SyncFlushCommandsBit = ((int)0x00000001)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ClipControl : int
+    {
+    }
+
+    /// <summary>
+    /// Used in GL.ClipControl
+    /// </summary>
+    public enum ClipDepthMode : int
+    {
+        /// <summary>
+        /// Original was GL_NEGATIVE_ONE_TO_ONE = 0x935E
+        /// </summary>
+        NegativeOneToOne = ((int)0x935E)        ,
+        /// <summary>
+        /// Original was GL_ZERO_TO_ONE = 0x935F
+        /// </summary>
+        ZeroToOne = ((int)0x935F)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.ClipControl
+    /// </summary>
+    public enum ClipOrigin : int
+    {
+        /// <summary>
+        /// Original was GL_LOWER_LEFT = 0x8CA1
+        /// </summary>
+        LowerLeft = ((int)0x8CA1)        ,
+        /// <summary>
+        /// Original was GL_UPPER_LEFT = 0x8CA2
+        /// </summary>
+        UpperLeft = ((int)0x8CA2)        ,
     }
 
     /// <summary>
@@ -29557,6 +30262,22 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_QUERY_BY_REGION_NO_WAIT = 0x8E16
         /// </summary>
         QueryByRegionNoWait = ((int)0x8E16)        ,
+        /// <summary>
+        /// Original was GL_QUERY_WAIT_INVERTED = 0x8E17
+        /// </summary>
+        QueryWaitInverted = ((int)0x8E17)        ,
+        /// <summary>
+        /// Original was GL_QUERY_NO_WAIT_INVERTED = 0x8E18
+        /// </summary>
+        QueryNoWaitInverted = ((int)0x8E18)        ,
+        /// <summary>
+        /// Original was GL_QUERY_BY_REGION_WAIT_INVERTED = 0x8E19
+        /// </summary>
+        QueryByRegionWaitInverted = ((int)0x8E19)        ,
+        /// <summary>
+        /// Original was GL_QUERY_BY_REGION_NO_WAIT_INVERTED = 0x8E1A
+        /// </summary>
+        QueryByRegionNoWaitInverted = ((int)0x8E1A)        ,
     }
 
     /// <summary>
@@ -30012,7 +30733,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DrawBuffer, GL.Ext.FramebufferDrawBuffer and 1 other function
+    /// Used in GL.DrawBuffer, GL.NamedFramebufferDrawBuffer and 2 other functions
     /// </summary>
     public enum DrawBufferMode : int
     {
@@ -30143,7 +30864,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DrawBuffers
+    /// Used in GL.DrawBuffers, GL.NamedFramebufferDrawBuffers
     /// </summary>
     public enum DrawBuffersEnum : int
     {
@@ -30901,6 +31622,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         InvalidFramebufferOperationOes = ((int)0x0506)        ,
         /// <summary>
+        /// Original was GL_CONTEXT_LOST = 0x0507
+        /// </summary>
+        ContextLost = ((int)0x0507)        ,
+        /// <summary>
         /// Original was GL_TABLE_TOO_LARGE = 0x8031
         /// </summary>
         TableTooLarge = ((int)0x8031)        ,
@@ -31398,7 +32123,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ext.ClearNamedBufferData, GL.Ext.ClearNamedBufferSubData and 54 other functions
+    /// Used in GL.Ext.ClearNamedBufferData, GL.Ext.ClearNamedBufferSubData and 58 other functions
     /// </summary>
     public enum ExtDirectStateAccess : int
     {
@@ -35033,7 +35758,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace and 26 other functions
+    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace and 32 other functions
     /// </summary>
     public enum FramebufferAttachment : int
     {
@@ -35278,7 +36003,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.FramebufferParameter, GL.GetFramebufferParameter
+    /// Used in GL.FramebufferParameter, GL.GetFramebufferParameter and 3 other functions
     /// </summary>
     public enum FramebufferDefaultParameter : int
     {
@@ -35384,7 +36109,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetFramebufferAttachmentParameter, GL.Ext.GetFramebufferAttachmentParameter and 1 other function
+    /// Used in GL.GetFramebufferAttachmentParameter, GL.GetNamedFramebufferAttachmentParameter and 2 other functions
     /// </summary>
     public enum FramebufferParameterName : int
     {
@@ -35467,7 +36192,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace and 25 other functions
+    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace and 26 other functions
     /// </summary>
     public enum FramebufferTarget : int
     {
@@ -35823,6 +36548,30 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         ColorWritemask = ((int)0x0C23)        ,
         /// <summary>
+        /// Original was GL_TEXTURE_BINDING_1D = 0x8068
+        /// </summary>
+        TextureBinding1D = ((int)0x8068)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D = 0x8069
+        /// </summary>
+        TextureBinding2D = ((int)0x8069)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_3D = 0x806A
+        /// </summary>
+        TextureBinding3D = ((int)0x806A)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING = 0x82EB
+        /// </summary>
+        TextureBinding = ((int)0x82EB)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_RECTANGLE = 0x84F6
+        /// </summary>
+        TextureBindingRectangle = ((int)0x84F6)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_CUBE_MAP = 0x8514
+        /// </summary>
+        TextureBindingCubeMap = ((int)0x8514)        ,
+        /// <summary>
         /// Original was GL_UNIFORM_BUFFER_BINDING = 0x8A28
         /// </summary>
         UniformBufferBinding = ((int)0x8A28)        ,
@@ -35834,6 +36583,18 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_UNIFORM_BUFFER_SIZE = 0x8A2A
         /// </summary>
         UniformBufferSize = ((int)0x8A2A)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_1D_ARRAY = 0x8C1C
+        /// </summary>
+        TextureBinding1DArray = ((int)0x8C1C)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D_ARRAY = 0x8C1D
+        /// </summary>
+        TextureBinding2DArray = ((int)0x8C1D)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_BUFFER = 0x8C2C
+        /// </summary>
+        TextureBindingBuffer = ((int)0x8C2C)        ,
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_START = 0x8C84
         /// </summary>
@@ -35850,6 +36611,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_SAMPLE_MASK_VALUE = 0x8E52
         /// </summary>
         SampleMaskValue = ((int)0x8E52)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_CUBE_MAP_ARRAY = 0x900A
+        /// </summary>
+        TextureBindingCubeMapArray = ((int)0x900A)        ,
     }
 
     /// <summary>
@@ -37493,6 +38258,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         ContextFlags = ((int)0x821E)        ,
         /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY = 0x8256
+        /// </summary>
+        ResetNotificationStrategy = ((int)0x8256)        ,
+        /// <summary>
         /// Original was GL_PROGRAM_PIPELINE_BINDING = 0x825A
         /// </summary>
         ProgramPipelineBinding = ((int)0x825A)        ,
@@ -37516,6 +38285,18 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_VIEWPORT_INDEX_PROVOKING_VERTEX = 0x825F
         /// </summary>
         ViewportIndexProvokingVertex = ((int)0x825F)        ,
+        /// <summary>
+        /// Original was GL_MAX_CULL_DISTANCES = 0x82F9
+        /// </summary>
+        MaxCullDistances = ((int)0x82F9)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES = 0x82FA
+        /// </summary>
+        MaxCombinedClipAndCullDistances = ((int)0x82FA)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR = 0x82FB
+        /// </summary>
+        ContextReleaseBehavior = ((int)0x82FB)        ,
         /// <summary>
         /// Original was GL_CONVOLUTION_HINT_SGIX = 0x8316
         /// </summary>
@@ -38373,6 +39154,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         MaxCombinedImageUniforms = ((int)0x90CF)        ,
         /// <summary>
+        /// Original was GL_CONTEXT_ROBUST_ACCESS = 0x90F3
+        /// </summary>
+        ContextRobustAccess = ((int)0x90F3)        ,
+        /// <summary>
         /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE = 0x9104
         /// </summary>
         TextureBinding2DMultisample = ((int)0x9104)        ,
@@ -38412,6 +39197,14 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_MAX_COMPUTE_IMAGE_UNIFORMS = 0x91BD
         /// </summary>
         MaxComputeImageUniforms = ((int)0x91BD)        ,
+        /// <summary>
+        /// Original was GL_CLIP_ORIGIN = 0x935C
+        /// </summary>
+        ClipOrigin = ((int)0x935C)        ,
+        /// <summary>
+        /// Original was GL_CLIP_DEPTH_MODE = 0x935D
+        /// </summary>
+        ClipDepthMode = ((int)0x935D)        ,
     }
 
     /// <summary>
@@ -38610,6 +39403,10 @@ namespace OpenTK.Graphics.OpenGL
     public enum GetQueryObjectParam : int
     {
         /// <summary>
+        /// Original was GL_QUERY_TARGET = 0x82EA
+        /// </summary>
+        QueryTarget = ((int)0x82EA)        ,
+        /// <summary>
         /// Original was GL_QUERY_RESULT = 0x8866
         /// </summary>
         QueryResult = ((int)0x8866)        ,
@@ -38639,7 +39436,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetTexLevelParameter, GL.GetTexParameter and 8 other functions
+    /// Used in GL.GetTexLevelParameter, GL.GetTexParameter and 10 other functions
     /// </summary>
     public enum GetTextureParameter : int
     {
@@ -38671,6 +39468,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_TEXTURE_BORDER = 0x1005
         /// </summary>
         TextureBorder = ((int)0x1005)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_TARGET = 0x1006
+        /// </summary>
+        TextureTarget = ((int)0x1006)        ,
         /// <summary>
         /// Original was GL_TEXTURE_MAG_FILTER = 0x2800
         /// </summary>
@@ -38876,6 +39677,26 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         TextureGequalRSgix = ((int)0x819D)        ,
         /// <summary>
+        /// Original was GL_TEXTURE_VIEW_MIN_LEVEL = 0x82DB
+        /// </summary>
+        TextureViewMinLevel = ((int)0x82DB)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_VIEW_NUM_LEVELS = 0x82DC
+        /// </summary>
+        TextureViewNumLevels = ((int)0x82DC)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_VIEW_MIN_LAYER = 0x82DD
+        /// </summary>
+        TextureViewMinLayer = ((int)0x82DD)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_VIEW_NUM_LAYERS = 0x82DE
+        /// </summary>
+        TextureViewNumLayers = ((int)0x82DE)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_IMMUTABLE_LEVELS = 0x82DF
+        /// </summary>
+        TextureImmutableLevels = ((int)0x82DF)        ,
+        /// <summary>
         /// Original was GL_TEXTURE_MAX_CLAMP_S_SGIX = 0x8369
         /// </summary>
         TextureMaxClampSSgix = ((int)0x8369)        ,
@@ -38968,6 +39789,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         TextureSwizzleRgba = ((int)0x8E46)        ,
         /// <summary>
+        /// Original was GL_IMAGE_FORMAT_COMPATIBILITY_TYPE = 0x90C7
+        /// </summary>
+        ImageFormatCompatibilityType = ((int)0x90C7)        ,
+        /// <summary>
         /// Original was GL_TEXTURE_SAMPLES = 0x9106
         /// </summary>
         TextureSamples = ((int)0x9106)        ,
@@ -38975,6 +39800,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_TEXTURE_FIXED_SAMPLE_LOCATIONS = 0x9107
         /// </summary>
         TextureFixedSampleLocations = ((int)0x9107)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_IMMUTABLE_FORMAT = 0x912F
+        /// </summary>
+        TextureImmutableFormat = ((int)0x912F)        ,
     }
 
     /// <summary>
@@ -40438,6 +41267,115 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum KhrBlendEquationAdvanced : int
+    {
+        /// <summary>
+        /// Original was GL_BLEND_ADVANCED_COHERENT_KHR = 0x9285
+        /// </summary>
+        BlendAdvancedCoherentKhr = ((int)0x9285)        ,
+        /// <summary>
+        /// Original was GL_MULTIPLY_KHR = 0x9294
+        /// </summary>
+        MultiplyKhr = ((int)0x9294)        ,
+        /// <summary>
+        /// Original was GL_SCREEN_KHR = 0x9295
+        /// </summary>
+        ScreenKhr = ((int)0x9295)        ,
+        /// <summary>
+        /// Original was GL_OVERLAY_KHR = 0x9296
+        /// </summary>
+        OverlayKhr = ((int)0x9296)        ,
+        /// <summary>
+        /// Original was GL_DARKEN_KHR = 0x9297
+        /// </summary>
+        DarkenKhr = ((int)0x9297)        ,
+        /// <summary>
+        /// Original was GL_LIGHTEN_KHR = 0x9298
+        /// </summary>
+        LightenKhr = ((int)0x9298)        ,
+        /// <summary>
+        /// Original was GL_COLORDODGE_KHR = 0x9299
+        /// </summary>
+        ColordodgeKhr = ((int)0x9299)        ,
+        /// <summary>
+        /// Original was GL_COLORBURN_KHR = 0x929A
+        /// </summary>
+        ColorburnKhr = ((int)0x929A)        ,
+        /// <summary>
+        /// Original was GL_HARDLIGHT_KHR = 0x929B
+        /// </summary>
+        HardlightKhr = ((int)0x929B)        ,
+        /// <summary>
+        /// Original was GL_SOFTLIGHT_KHR = 0x929C
+        /// </summary>
+        SoftlightKhr = ((int)0x929C)        ,
+        /// <summary>
+        /// Original was GL_DIFFERENCE_KHR = 0x929E
+        /// </summary>
+        DifferenceKhr = ((int)0x929E)        ,
+        /// <summary>
+        /// Original was GL_EXCLUSION_KHR = 0x92A0
+        /// </summary>
+        ExclusionKhr = ((int)0x92A0)        ,
+        /// <summary>
+        /// Original was GL_HSL_HUE_KHR = 0x92AD
+        /// </summary>
+        HslHueKhr = ((int)0x92AD)        ,
+        /// <summary>
+        /// Original was GL_HSL_SATURATION_KHR = 0x92AE
+        /// </summary>
+        HslSaturationKhr = ((int)0x92AE)        ,
+        /// <summary>
+        /// Original was GL_HSL_COLOR_KHR = 0x92AF
+        /// </summary>
+        HslColorKhr = ((int)0x92AF)        ,
+        /// <summary>
+        /// Original was GL_HSL_LUMINOSITY_KHR = 0x92B0
+        /// </summary>
+        HslLuminosityKhr = ((int)0x92B0)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum KhrBlendEquationAdvancedCoherent : int
+    {
+        /// <summary>
+        /// Original was GL_BLEND_ADVANCED_COHERENT_KHR = 0x9285
+        /// </summary>
+        BlendAdvancedCoherentKhr = ((int)0x9285)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum KhrContextFlushControl : int
+    {
+        /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR = 0x82FB
+        /// </summary>
+        ContextReleaseBehavior = ((int)0x82FB)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_KHR = 0x82FB
+        /// </summary>
+        ContextReleaseBehaviorKhr = ((int)0x82FB)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 0x82FC
+        /// </summary>
+        ContextReleaseBehaviorFlush = ((int)0x82FC)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_KHR = 0x82FC
+        /// </summary>
+        ContextReleaseBehaviorFlushKhr = ((int)0x82FC)        ,
+    }
+
+    /// <summary>
     /// Used in GL.Khr.DebugMessageControl, GL.Khr.DebugMessageInsert and 5 other functions
     /// </summary>
     public enum KhrDebug : int
@@ -40762,6 +41700,88 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_DEBUG_OUTPUT_KHR = 0x92E0
         /// </summary>
         DebugOutputKhr = ((int)0x92E0)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum KhrRobustBufferAccessBehavior : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum KhrRobustness : int
+    {
+        /// <summary>
+        /// Original was GL_NO_ERROR = 0
+        /// </summary>
+        NoError = ((int)0)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST = 0x0507
+        /// </summary>
+        ContextLost = ((int)0x0507)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST_KHR = 0x0507
+        /// </summary>
+        ContextLostKhr = ((int)0x0507)        ,
+        /// <summary>
+        /// Original was GL_LOSE_CONTEXT_ON_RESET = 0x8252
+        /// </summary>
+        LoseContextOnReset = ((int)0x8252)        ,
+        /// <summary>
+        /// Original was GL_LOSE_CONTEXT_ON_RESET_KHR = 0x8252
+        /// </summary>
+        LoseContextOnResetKhr = ((int)0x8252)        ,
+        /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET = 0x8253
+        /// </summary>
+        GuiltyContextReset = ((int)0x8253)        ,
+        /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET_KHR = 0x8253
+        /// </summary>
+        GuiltyContextResetKhr = ((int)0x8253)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET = 0x8254
+        /// </summary>
+        InnocentContextReset = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET_KHR = 0x8254
+        /// </summary>
+        InnocentContextResetKhr = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET = 0x8255
+        /// </summary>
+        UnknownContextReset = ((int)0x8255)        ,
+        /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET_KHR = 0x8255
+        /// </summary>
+        UnknownContextResetKhr = ((int)0x8255)        ,
+        /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY = 0x8256
+        /// </summary>
+        ResetNotificationStrategy = ((int)0x8256)        ,
+        /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY_KHR = 0x8256
+        /// </summary>
+        ResetNotificationStrategyKhr = ((int)0x8256)        ,
+        /// <summary>
+        /// Original was GL_NO_RESET_NOTIFICATION = 0x8261
+        /// </summary>
+        NoResetNotification = ((int)0x8261)        ,
+        /// <summary>
+        /// Original was GL_NO_RESET_NOTIFICATION_KHR = 0x8261
+        /// </summary>
+        NoResetNotificationKhr = ((int)0x8261)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_ROBUST_ACCESS = 0x90F3
+        /// </summary>
+        ContextRobustAccess = ((int)0x90F3)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_ROBUST_ACCESS_KHR = 0x90F3
+        /// </summary>
+        ContextRobustAccessKhr = ((int)0x90F3)        ,
     }
 
     /// <summary>
@@ -41954,6 +42974,37 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.MemoryBarrierByRegion
+    /// </summary>
+    public enum MemoryBarrierRegionFlags : int
+    {
+        /// <summary>
+        /// Original was GL_GL_UNIFORM_BARRIER_BIT = 0x00000004
+        /// </summary>
+        GlUniformBarrierBit = ((int)0x00000004)        ,
+        /// <summary>
+        /// Original was GL_GL_TEXTURE_FETCH_BARRIER_BIT = 0x00000008
+        /// </summary>
+        GlTextureFetchBarrierBit = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x00000020
+        /// </summary>
+        GlShaderImageAccessBarrierBit = ((int)0x00000020)        ,
+        /// <summary>
+        /// Original was GL_GL_FRAMEBUFFER_BARRIER_BIT = 0x00000400
+        /// </summary>
+        GlFramebufferBarrierBit = ((int)0x00000400)        ,
+        /// <summary>
+        /// Original was GL_GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
+        /// </summary>
+        GlAtomicCounterBarrierBit = ((int)0x00001000)        ,
+        /// <summary>
+        /// Original was GL_GL_ALL_BARRIER_BITS = 0xFFFFFFFF
+        /// </summary>
+        GlAllBarrierBits = unchecked((int)0xFFFFFFFF)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum MesaPackInvert : int
@@ -42131,6 +43182,13 @@ namespace OpenTK.Graphics.OpenGL
     /// Used in GL.NV.MultiDrawArraysIndirectBindles, GL.NV.MultiDrawElementsIndirectBindles
     /// </summary>
     public enum NvBindlessMultiDrawIndirect : int
+    {
+    }
+
+    /// <summary>
+    /// Used in GL.NV.MultiDrawArraysIndirectBindlessCount, GL.NV.MultiDrawElementsIndirectBindlessCount
+    /// </summary>
+    public enum NvBindlessMultiDrawIndirectCount : int
     {
     }
 
@@ -43251,7 +44309,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NV.CoverFillPathInstanced, GL.NV.CoverFillPath and 22 other functions
+    /// Used in GL.NV.CoverFillPathInstanced, GL.NV.CoverFillPath and 37 other functions
     /// </summary>
     public enum NvPathRendering : int
     {
@@ -43372,6 +44430,22 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         RelativeQuadraticCurveToNv = ((int)0x0B)        ,
         /// <summary>
+        /// Original was GL_PATH_MODELVIEW_STACK_DEPTH_NV = 0x0BA3
+        /// </summary>
+        PathModelviewStackDepthNv = ((int)0x0BA3)        ,
+        /// <summary>
+        /// Original was GL_PATH_PROJECTION_STACK_DEPTH_NV = 0x0BA4
+        /// </summary>
+        PathProjectionStackDepthNv = ((int)0x0BA4)        ,
+        /// <summary>
+        /// Original was GL_PATH_MODELVIEW_MATRIX_NV = 0x0BA6
+        /// </summary>
+        PathModelviewMatrixNv = ((int)0x0BA6)        ,
+        /// <summary>
+        /// Original was GL_PATH_PROJECTION_MATRIX_NV = 0x0BA7
+        /// </summary>
+        PathProjectionMatrixNv = ((int)0x0BA7)        ,
+        /// <summary>
         /// Original was GL_CUBIC_CURVE_TO_NV = 0x0C
         /// </summary>
         CubicCurveToNv = ((int)0x0C)        ,
@@ -43379,6 +44453,14 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_RELATIVE_CUBIC_CURVE_TO_NV = 0x0D
         /// </summary>
         RelativeCubicCurveToNv = ((int)0x0D)        ,
+        /// <summary>
+        /// Original was GL_PATH_MAX_MODELVIEW_STACK_DEPTH_NV = 0x0D36
+        /// </summary>
+        PathMaxModelviewStackDepthNv = ((int)0x0D36)        ,
+        /// <summary>
+        /// Original was GL_PATH_MAX_PROJECTION_STACK_DEPTH_NV = 0x0D38
+        /// </summary>
+        PathMaxProjectionStackDepthNv = ((int)0x0D38)        ,
         /// <summary>
         /// Original was GL_SMOOTH_QUADRATIC_CURVE_TO_NV = 0x0E
         /// </summary>
@@ -43420,6 +44502,18 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         SmallCwArcToNv = ((int)0x14)        ,
         /// <summary>
+        /// Original was GL_2_BYTES_NV = 0x1407
+        /// </summary>
+        Gl2BytesNv = ((int)0x1407)        ,
+        /// <summary>
+        /// Original was GL_3_BYTES_NV = 0x1408
+        /// </summary>
+        Gl3BytesNv = ((int)0x1408)        ,
+        /// <summary>
+        /// Original was GL_4_BYTES_NV = 0x1409
+        /// </summary>
+        Gl4BytesNv = ((int)0x1409)        ,
+        /// <summary>
         /// Original was GL_RELATIVE_SMALL_CW_ARC_TO_NV = 0x15
         /// </summary>
         RelativeSmallCwArcToNv = ((int)0x15)        ,
@@ -43432,6 +44526,14 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         RelativeLargeCcwArcToNv = ((int)0x17)        ,
         /// <summary>
+        /// Original was GL_PATH_MODELVIEW_NV = 0x1700
+        /// </summary>
+        PathModelviewNv = ((int)0x1700)        ,
+        /// <summary>
+        /// Original was GL_PATH_PROJECTION_NV = 0x1701
+        /// </summary>
+        PathProjectionNv = ((int)0x1701)        ,
+        /// <summary>
         /// Original was GL_LARGE_CW_ARC_TO_NV = 0x18
         /// </summary>
         LargeCwArcToNv = ((int)0x18)        ,
@@ -43440,9 +44542,29 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         RelativeLargeCwArcToNv = ((int)0x19)        ,
         /// <summary>
+        /// Original was GL_CONIC_CURVE_TO_NV = 0x1A
+        /// </summary>
+        ConicCurveToNv = ((int)0x1A)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_CONIC_CURVE_TO_NV = 0x1B
+        /// </summary>
+        RelativeConicCurveToNv = ((int)0x1B)        ,
+        /// <summary>
         /// Original was GL_GLYPH_VERTICAL_BEARING_X_BIT_NV = 0x20
         /// </summary>
         GlyphVerticalBearingXBitNv = ((int)0x20)        ,
+        /// <summary>
+        /// Original was GL_FONT_NUM_GLYPH_INDICES_BIT_NV = 0x20000000
+        /// </summary>
+        FontNumGlyphIndicesBitNv = ((int)0x20000000)        ,
+        /// <summary>
+        /// Original was GL_EYE_LINEAR_NV = 0x2400
+        /// </summary>
+        EyeLinearNv = ((int)0x2400)        ,
+        /// <summary>
+        /// Original was GL_OBJECT_LINEAR_NV = 0x2401
+        /// </summary>
+        ObjectLinearNv = ((int)0x2401)        ,
         /// <summary>
         /// Original was GL_GLYPH_VERTICAL_BEARING_Y_BIT_NV = 0x40
         /// </summary>
@@ -43452,6 +44574,14 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         GlyphVerticalBearingAdvanceBitNv = ((int)0x80)        ,
         /// <summary>
+        /// Original was GL_PATH_TRANSPOSE_MODELVIEW_MATRIX_NV = 0x84E3
+        /// </summary>
+        PathTransposeModelviewMatrixNv = ((int)0x84E3)        ,
+        /// <summary>
+        /// Original was GL_PATH_TRANSPOSE_PROJECTION_MATRIX_NV = 0x84E4
+        /// </summary>
+        PathTransposeProjectionMatrixNv = ((int)0x84E4)        ,
+        /// <summary>
         /// Original was GL_PRIMARY_COLOR_NV = 0x852C
         /// </summary>
         PrimaryColorNv = ((int)0x852C)        ,
@@ -43459,6 +44589,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_SECONDARY_COLOR_NV = 0x852D
         /// </summary>
         SecondaryColorNv = ((int)0x852D)        ,
+        /// <summary>
+        /// Original was GL_CONSTANT_NV = 0x8576
+        /// </summary>
+        ConstantNv = ((int)0x8576)        ,
         /// <summary>
         /// Original was GL_PRIMARY_COLOR = 0x8577
         /// </summary>
@@ -43740,6 +44874,62 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         PathCoverDepthFuncNv = ((int)0x90BF)        ,
         /// <summary>
+        /// Original was GL_FONT_GLYPHS_AVAILABLE_NV = 0x9368
+        /// </summary>
+        FontGlyphsAvailableNv = ((int)0x9368)        ,
+        /// <summary>
+        /// Original was GL_FONT_TARGET_UNAVAILABLE_NV = 0x9369
+        /// </summary>
+        FontTargetUnavailableNv = ((int)0x9369)        ,
+        /// <summary>
+        /// Original was GL_FONT_UNAVAILABLE_NV = 0x936A
+        /// </summary>
+        FontUnavailableNv = ((int)0x936A)        ,
+        /// <summary>
+        /// Original was GL_FONT_UNINTELLIGIBLE_NV = 0x936B
+        /// </summary>
+        FontUnintelligibleNv = ((int)0x936B)        ,
+        /// <summary>
+        /// Original was GL_STANDARD_FONT_FORMAT_NV = 0x936C
+        /// </summary>
+        StandardFontFormatNv = ((int)0x936C)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_INPUT_NV = 0x936D
+        /// </summary>
+        FragmentInputNv = ((int)0x936D)        ,
+        /// <summary>
+        /// Original was GL_ROUNDED_RECT_NV = 0xE8
+        /// </summary>
+        RoundedRectNv = ((int)0xE8)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_ROUNDED_RECT_NV = 0xE9
+        /// </summary>
+        RelativeRoundedRectNv = ((int)0xE9)        ,
+        /// <summary>
+        /// Original was GL_ROUNDED_RECT2_NV = 0xEA
+        /// </summary>
+        RoundedRect2Nv = ((int)0xEA)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_ROUNDED_RECT2_NV = 0xEB
+        /// </summary>
+        RelativeRoundedRect2Nv = ((int)0xEB)        ,
+        /// <summary>
+        /// Original was GL_ROUNDED_RECT4_NV = 0xEC
+        /// </summary>
+        RoundedRect4Nv = ((int)0xEC)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_ROUNDED_RECT4_NV = 0xED
+        /// </summary>
+        RelativeRoundedRect4Nv = ((int)0xED)        ,
+        /// <summary>
+        /// Original was GL_ROUNDED_RECT8_NV = 0xEE
+        /// </summary>
+        RoundedRect8Nv = ((int)0xEE)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_ROUNDED_RECT8_NV = 0xEF
+        /// </summary>
+        RelativeRoundedRect8Nv = ((int)0xEF)        ,
+        /// <summary>
         /// Original was GL_RESTART_PATH_NV = 0xF0
         /// </summary>
         RestartPathNv = ((int)0xF0)        ,
@@ -43755,6 +44945,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_RECT_NV = 0xF6
         /// </summary>
         RectNv = ((int)0xF6)        ,
+        /// <summary>
+        /// Original was GL_RELATIVE_RECT_NV = 0xF7
+        /// </summary>
+        RelativeRectNv = ((int)0xF7)        ,
         /// <summary>
         /// Original was GL_CIRCULAR_CCW_ARC_TO_NV = 0xF8
         /// </summary>
@@ -44126,6 +45320,13 @@ namespace OpenTK.Graphics.OpenGL
     /// Not used directly.
     /// </summary>
     public enum NvShaderAtomicFloat : int
+    {
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum NvShaderAtomicInt64 : int
     {
     }
 
@@ -46113,7 +47314,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.CompressedTexSubImage1D, GL.Arb.CompressedTexSubImage2D and 67 other functions
+    /// Used in GL.Arb.CompressedTexSubImage1D, GL.Arb.CompressedTexSubImage2D and 80 other functions
     /// </summary>
     public enum PixelFormat : int
     {
@@ -46268,7 +47469,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D and 41 other functions
+    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D and 45 other functions
     /// </summary>
     public enum PixelInternalFormat : int
     {
@@ -46889,6 +48090,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         CompressedRgbaBptcUnorm = ((int)0x8E8C)        ,
         /// <summary>
+        /// Original was GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM = 0x8E8D
+        /// </summary>
+        CompressedSrgbAlphaBptcUnorm = ((int)0x8E8D)        ,
+        /// <summary>
         /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT = 0x8E8E
         /// </summary>
         CompressedRgbBptcSignedFloat = ((int)0x8E8E)        ,
@@ -47480,7 +48685,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.ClearTexImage, GL.ClearTexSubImage and 53 other functions
+    /// Used in GL.Arb.ReadnPixels, GL.ClearTexImage and 61 other functions
     /// </summary>
     public enum PixelType : int
     {
@@ -48356,7 +49561,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BeginQuery, GL.BeginQueryIndexed and 4 other functions
+    /// Used in GL.BeginQuery, GL.BeginQueryIndexed and 5 other functions
     /// </summary>
     public enum QueryTarget : int
     {
@@ -48391,7 +49596,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.ReadBuffer, GL.Ext.FramebufferReadBuffer
+    /// Used in GL.NamedFramebufferReadBuffer, GL.ReadBuffer and 1 other function
     /// </summary>
     public enum ReadBufferMode : int
     {
@@ -48518,7 +49723,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetRenderbufferParameter, GL.Ext.GetNamedRenderbufferParameter and 1 other function
+    /// Used in GL.GetNamedRenderbufferParameter, GL.GetRenderbufferParameter and 2 other functions
     /// </summary>
     public enum RenderbufferParameterName : int
     {
@@ -48601,7 +49806,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.RenderbufferStorage, GL.RenderbufferStorageMultisample and 2 other functions
+    /// Used in GL.NamedRenderbufferStorage, GL.NamedRenderbufferStorageMultisample and 6 other functions
     /// </summary>
     public enum RenderbufferStorage : int
     {
@@ -48904,7 +50109,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BindRenderbuffer, GL.FramebufferRenderbuffer and 10 other functions
+    /// Used in GL.BindRenderbuffer, GL.FramebufferRenderbuffer and 11 other functions
     /// </summary>
     public enum RenderbufferTarget : int
     {
@@ -48950,6 +50155,29 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_INVERTED_SCREEN_W_REND = 0x8491
         /// </summary>
         InvertedScreenWRend = ((int)0x8491)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ResetStatus : int
+    {
+        /// <summary>
+        /// Original was GL_NO_ERROR = 0
+        /// </summary>
+        NoError = ((int)0)        ,
+        /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET = 0x8253
+        /// </summary>
+        GuiltyContextReset = ((int)0x8253)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET = 0x8254
+        /// </summary>
+        InnocentContextReset = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET = 0x8255
+        /// </summary>
+        UnknownContextReset = ((int)0x8255)        ,
     }
 
     /// <summary>
@@ -50683,7 +51911,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BindImageTexture, GL.GetInternalformat and 7 other functions
+    /// Used in GL.BindImageTexture, GL.GetInternalformat and 21 other functions
     /// </summary>
     public enum SizedInternalFormat : int
     {
@@ -51853,7 +53081,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.TexParameter, GL.TexParameterI and 5 other functions
+    /// Used in GL.TexParameter, GL.TexParameterI and 6 other functions
     /// </summary>
     public enum TextureParameterName : int
     {
@@ -52060,7 +53288,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D and 123 other functions
+    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D and 124 other functions
     /// </summary>
     public enum TextureTarget : int
     {
@@ -52567,6 +53795,25 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.GetTransformFeedback, GL.GetTransformFeedbacki64_
+    /// </summary>
+    public enum TransformFeedbackIndexedParameter : int
+    {
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_START = 0x8C84
+        /// </summary>
+        TransformFeedbackBufferStart = ((int)0x8C84)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_SIZE = 0x8C85
+        /// </summary>
+        TransformFeedbackBufferSize = ((int)0x8C85)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_BINDING = 0x8C8F
+        /// </summary>
+        TransformFeedbackBufferBinding = ((int)0x8C8F)        ,
+    }
+
+    /// <summary>
     /// Used in GL.TransformFeedbackVaryings
     /// </summary>
     public enum TransformFeedbackMode : int
@@ -52579,6 +53826,21 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_SEPARATE_ATTRIBS = 0x8C8D
         /// </summary>
         SeparateAttribs = ((int)0x8C8D)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetTransformFeedback
+    /// </summary>
+    public enum TransformFeedbackParameter : int
+    {
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_PAUSED = 0x8E23
+        /// </summary>
+        TransformFeedbackPaused = ((int)0x8E23)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_ACTIVE = 0x8E24
+        /// </summary>
+        TransformFeedbackActive = ((int)0x8E24)        ,
     }
 
     /// <summary>
@@ -59894,6 +61156,230 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.GetnColorTable, GL.GetnCompressedTexImage and 7 other functions
+    /// </summary>
+    public enum Version45 : int
+    {
+        /// <summary>
+        /// Original was GL_NO_ERROR = 0
+        /// </summary>
+        NoError = ((int)0)        ,
+        /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT = 0x00000004
+        /// </summary>
+        ContextFlagRobustAccessBit = ((int)0x00000004)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST = 0x0507
+        /// </summary>
+        ContextLost = ((int)0x0507)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_TARGET = 0x1006
+        /// </summary>
+        TextureTarget = ((int)0x1006)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_1D = 0x8068
+        /// </summary>
+        TextureBinding1D = ((int)0x8068)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D = 0x8069
+        /// </summary>
+        TextureBinding2D = ((int)0x8069)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_3D = 0x806A
+        /// </summary>
+        TextureBinding3D = ((int)0x806A)        ,
+        /// <summary>
+        /// Original was GL_LOSE_CONTEXT_ON_RESET = 0x8252
+        /// </summary>
+        LoseContextOnReset = ((int)0x8252)        ,
+        /// <summary>
+        /// Original was GL_GUILTY_CONTEXT_RESET = 0x8253
+        /// </summary>
+        GuiltyContextReset = ((int)0x8253)        ,
+        /// <summary>
+        /// Original was GL_INNOCENT_CONTEXT_RESET = 0x8254
+        /// </summary>
+        InnocentContextReset = ((int)0x8254)        ,
+        /// <summary>
+        /// Original was GL_UNKNOWN_CONTEXT_RESET = 0x8255
+        /// </summary>
+        UnknownContextReset = ((int)0x8255)        ,
+        /// <summary>
+        /// Original was GL_RESET_NOTIFICATION_STRATEGY = 0x8256
+        /// </summary>
+        ResetNotificationStrategy = ((int)0x8256)        ,
+        /// <summary>
+        /// Original was GL_NO_RESET_NOTIFICATION = 0x8261
+        /// </summary>
+        NoResetNotification = ((int)0x8261)        ,
+        /// <summary>
+        /// Original was GL_QUERY_TARGET = 0x82EA
+        /// </summary>
+        QueryTarget = ((int)0x82EA)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING = 0x82EB
+        /// </summary>
+        TextureBinding = ((int)0x82EB)        ,
+        /// <summary>
+        /// Original was GL_MAX_CULL_DISTANCES = 0x82F9
+        /// </summary>
+        MaxCullDistances = ((int)0x82F9)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES = 0x82FA
+        /// </summary>
+        MaxCombinedClipAndCullDistances = ((int)0x82FA)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR = 0x82FB
+        /// </summary>
+        ContextReleaseBehavior = ((int)0x82FB)        ,
+        /// <summary>
+        /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 0x82FC
+        /// </summary>
+        ContextReleaseBehaviorFlush = ((int)0x82FC)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_RECTANGLE = 0x84F6
+        /// </summary>
+        TextureBindingRectangle = ((int)0x84F6)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_CUBE_MAP = 0x8514
+        /// </summary>
+        TextureBindingCubeMap = ((int)0x8514)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_1D_ARRAY = 0x8C1C
+        /// </summary>
+        TextureBinding1DArray = ((int)0x8C1C)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D_ARRAY = 0x8C1D
+        /// </summary>
+        TextureBinding2DArray = ((int)0x8C1D)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_BUFFER = 0x8C2C
+        /// </summary>
+        TextureBindingBuffer = ((int)0x8C2C)        ,
+        /// <summary>
+        /// Original was GL_LOWER_LEFT = 0x8CA1
+        /// </summary>
+        LowerLeft = ((int)0x8CA1)        ,
+        /// <summary>
+        /// Original was GL_UPPER_LEFT = 0x8CA2
+        /// </summary>
+        UpperLeft = ((int)0x8CA2)        ,
+        /// <summary>
+        /// Original was GL_QUERY_WAIT_INVERTED = 0x8E17
+        /// </summary>
+        QueryWaitInverted = ((int)0x8E17)        ,
+        /// <summary>
+        /// Original was GL_QUERY_NO_WAIT_INVERTED = 0x8E18
+        /// </summary>
+        QueryNoWaitInverted = ((int)0x8E18)        ,
+        /// <summary>
+        /// Original was GL_QUERY_BY_REGION_WAIT_INVERTED = 0x8E19
+        /// </summary>
+        QueryByRegionWaitInverted = ((int)0x8E19)        ,
+        /// <summary>
+        /// Original was GL_QUERY_BY_REGION_NO_WAIT_INVERTED = 0x8E1A
+        /// </summary>
+        QueryByRegionNoWaitInverted = ((int)0x8E1A)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_CUBE_MAP_ARRAY = 0x900A
+        /// </summary>
+        TextureBindingCubeMapArray = ((int)0x900A)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE = 0x9104
+        /// </summary>
+        TextureBinding2DMultisample = ((int)0x9104)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY = 0x9105
+        /// </summary>
+        TextureBinding2DMultisampleArray = ((int)0x9105)        ,
+        /// <summary>
+        /// Original was GL_CLIP_ORIGIN = 0x935C
+        /// </summary>
+        ClipOrigin = ((int)0x935C)        ,
+        /// <summary>
+        /// Original was GL_CLIP_DEPTH_MODE = 0x935D
+        /// </summary>
+        ClipDepthMode = ((int)0x935D)        ,
+        /// <summary>
+        /// Original was GL_NEGATIVE_ONE_TO_ONE = 0x935E
+        /// </summary>
+        NegativeOneToOne = ((int)0x935E)        ,
+        /// <summary>
+        /// Original was GL_ZERO_TO_ONE = 0x935F
+        /// </summary>
+        ZeroToOne = ((int)0x935F)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetVertexArrayIndexed64
+    /// </summary>
+    public enum VertexArrayIndexed64Parameter : int
+    {
+        /// <summary>
+        /// Original was GL_VERTEX_BINDING_OFFSET = 0x82D7
+        /// </summary>
+        VertexBindingOffset = ((int)0x82D7)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetVertexArrayIndexed
+    /// </summary>
+    public enum VertexArrayIndexedParameter : int
+    {
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_RELATIVE_OFFSET = 0x82D5
+        /// </summary>
+        VertexAttribRelativeOffset = ((int)0x82D5)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_ENABLED = 0x8622
+        /// </summary>
+        VertexAttribArrayEnabled = ((int)0x8622)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_SIZE = 0x8623
+        /// </summary>
+        VertexAttribArraySize = ((int)0x8623)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_STRIDE = 0x8624
+        /// </summary>
+        VertexAttribArrayStride = ((int)0x8624)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_TYPE = 0x8625
+        /// </summary>
+        VertexAttribArrayType = ((int)0x8625)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_LONG = 0x874E
+        /// </summary>
+        VertexAttribArrayLong = ((int)0x874E)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A
+        /// </summary>
+        VertexAttribArrayNormalized = ((int)0x886A)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_INTEGER = 0x88FD
+        /// </summary>
+        VertexAttribArrayInteger = ((int)0x88FD)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_DIVISOR = 0x88FE
+        /// </summary>
+        VertexAttribArrayDivisor = ((int)0x88FE)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetVertexArray
+    /// </summary>
+    public enum VertexArrayParameter : int
+    {
+        /// <summary>
+        /// Original was GL_ELEMENT_ARRAY_BUFFER_BINDING = 0x8895
+        /// </summary>
+        ElementArrayBufferBinding = ((int)0x8895)        ,
+    }
+
+    /// <summary>
     /// Used in GL.VertexAttribLFormat, GL.VertexAttribLPointer
     /// </summary>
     public enum VertexAttribDoubleType : int
@@ -60168,7 +61654,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.VertexAttribFormat
+    /// Used in GL.VertexArrayAttribFormat, GL.VertexArrayAttribIFormat and 1 other function
     /// </summary>
     public enum VertexAttribType : int
     {
