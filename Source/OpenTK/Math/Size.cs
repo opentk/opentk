@@ -128,7 +128,7 @@ namespace OpenTK
         {
             return !left.Equals(right);
         }
-
+#if !NO_SYSDRAWING
         /// <summary>
         /// Converts an OpenTK.Size instance to a System.Drawing.Size.
         /// </summary>
@@ -170,7 +170,7 @@ namespace OpenTK
         {
             return new System.Drawing.SizeF(size.Width, size.Height);
          }
-
+#endif
         /// <summary>
         /// Indicates whether this instance is equal to the specified object.
         /// </summary>

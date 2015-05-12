@@ -28,7 +28,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+#if !NO_SYSDRAWING
 using System.Drawing;
+#endif
 using System.Text;
 using OpenTK.Platform;
 

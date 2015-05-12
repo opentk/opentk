@@ -28,7 +28,9 @@
 #endregion
 
 using System;
+#if !NO_SYSDRAWING
 using System.Drawing;
+#endif
 
 namespace OpenTK.Input
 {

@@ -28,7 +28,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+#if !NO_SYSDRAWING
 using System.Drawing;
+#endif
 #if ANDROID || IPHONE || MINIMAL
 using OpenTK.Minimal;
 #else

@@ -142,6 +142,7 @@ namespace OpenTK
             return !left.Equals(right);
         }
 
+#if !NO_SYSDRAWING
         /// <summary>
         /// Converts an OpenTK.Point instance to a System.Drawing.Point.
         /// </summary>
@@ -183,7 +184,7 @@ namespace OpenTK
         {
             return new System.Drawing.PointF(point.X, point.Y);
         }
-
+#endif
         /// <summary>
         /// Indicates whether this instance is equal to the specified object.
         /// </summary>

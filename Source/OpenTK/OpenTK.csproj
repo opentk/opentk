@@ -58,6 +58,23 @@
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMinimal|AnyCPU' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE;MINIMAL;NO_SYSDRAWING</DefineConstants>
+    <DocumentationFile>..\..\Binaries\OpenTK\DebugMinimal\OpenTK.xml</DocumentationFile>
+    <FileAlignment>4096</FileAlignment>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Binaries\OpenTK\DebugMinimal\</OutputPath>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
@@ -68,6 +85,23 @@
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMinimal|AnyCPU' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;MINIMAL;NO_SYSDRAWING</DefineConstants>
+    <DocumentationFile>..\..\Binaries\OpenTK\ReleaseMinimal\OpenTK.xml</DocumentationFile>
+    <FileAlignment>4096</FileAlignment>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Binaries\OpenTK\ReleaseMinimal\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
@@ -117,7 +151,7 @@
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
-    <Reference Include="System.Drawing">
+    <Reference Include="System.Drawing" Condition=" '$(Configuration)' != 'DebugMinimal' And '$(Configuration)' != 'ReleaseMinimal' ">
       <Name>System.Drawing</Name>
     </Reference>
     <Reference Include="System.Xml">
@@ -835,9 +869,13 @@
   <ItemGroup />
   <Target Name="AfterBuild">
     <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) != 'Debug'" />
-    <Exec Command="mono $(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec Command="mono $(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) != 'Debug'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'DebugMinimal'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'ReleaseMinimal'" />
+    <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Debug" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/Debug/OpenTK.dll $(SolutionDir)OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Debug" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/DebugMinimal/OpenTK.dll $(SolutionDir)OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'DebugMinimal'" />
+    <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Release" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/Release/OpenTK.dll $(SolutionDir)OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" />
+    <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Release" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/ReleaseMinimal/OpenTK.dll $(SolutionDir)OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'ReleaseMinimal'" />
   </Target>
   <ProjectExtensions>
     <MonoDevelop>

@@ -182,6 +182,20 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Tests whether this instance contains the specified x, y coordinates.
+        /// </summary>
+        /// <param name="x">The x coordinate to test.</param>
+        /// <param name="y">The y coordinate to test.</param>
+        /// <returns>True if this instance contains the x, y coordinates; false otherwise.</returns>
+        /// <remarks>The left and top edges are inclusive. The right and bottom edges
+        /// are exclusive.</remarks>
+        public bool Contains(int x, int y)
+        {
+            return x >= Left && x < Right && 
+                y >= Top && y < Bottom;
+        }
+
+        /// <summary>
         /// Tests whether this instance contains the specified Point.
         /// </summary>
         /// <param name="point">The <see cref="Point"/> to test.</param>
@@ -229,6 +243,22 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Union the specified a and b.
+        /// </summary>
+        /// <param name="a">The alpha component.</param>
+        /// <param name="b">The blue component.</param>
+        public static Rectangle Union (Rectangle a, Rectangle b)
+        {
+            int x1 = Math.Min(a.X, b.X);
+            int x2 = Math.Max(a.X + a.Width, b.X + b.Width); 
+            int y1 = Math.Min(a.Y, b.Y);
+            int y2 = Math.Max(a.Y + a.Height, b.Y + b.Height);
+
+            return new Rectangle(x1, y1, x2 - x1, y2 - y1); 
+        }
+
+#if !NO_SYSDRAWING
+        /// <summary>
         /// Converts an OpenTK.Rectangle instance to a System.Drawing.Rectangle.
         /// </summary>
         /// <param name="rect">
@@ -269,7 +299,7 @@ namespace OpenTK
         {
             return new System.Drawing.RectangleF(rect.Location, rect.Size);
         }
-
+#endif
         /// <summary>
         /// Indicates whether this instance is equal to the specified object.
         /// </summary>
