@@ -46,7 +46,7 @@ namespace OpenTK
     /// Inherit from this class and call one of its specialized constructors
     /// to enable antialiasing or custom <see cref="GraphicsMode"/>s.
     /// </summary>
-    public partial class GLControl : UserControl
+    public partial class GLControl : Form
     {
         IGraphicsContext context;
         IGLControl implementation;
