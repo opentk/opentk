@@ -2,7 +2,7 @@
  //
  // The Open Toolkit Library License
  //
- // Copyright (c) 2006 - 2009 the Open Toolkit library.
+ // Copyright (c) 2006 - 2015 the Open Toolkit library.
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
@@ -342,39 +342,99 @@ namespace OpenTK.Input
         /// <summary>The number 9 key.</summary>
         Number9,
     
+        // Oem
+        /// <summmary>
+        /// Used for miscellaneous characters; it can vary by keyboard.
+        /// For the US standard keyboard, the ';:' key.
+        /// </summmary>
+        Oem1,
+        /// <summmary>
+        /// Used for miscellaneous characters; it can vary by keyboard.
+        /// For the US standard keyboard, the '/?' key.
+        /// </summmary>
+        Oem2,
+        /// <summmary>
+        /// Used for miscellaneous characters; it can vary by keyboard.
+        /// For the US standard keyboard, the '`~' key.
+        /// </summmary>
+        Oem3,
+        /// <summmary>
+        /// Used for miscellaneous characters; it can vary by keyboard.
+        /// For the US standard keyboard, the '[{' key.
+        /// </summmary>
+        Oem4,
+        /// <summmary>
+        /// Used for miscellaneous characters; it can vary by keyboard.
+        /// For the US standard keyboard, the '\|' key.
+        /// </summmary>
+        Oem5,
+        /// <summmary>
+        /// Used for miscellaneous characters; it can vary by keyboard.
+        /// For the US standard keyboard, the ']}' key.
+        /// </summmary>
+        Oem6,
+        /// <summmary>
+        /// Used for miscellaneous characters; it can vary by keyboard.
+        /// For the US standard keyboard, the 'single-quote/double-quote' key.
+        /// </summmary>
+        Oem7,
+        /// <summmary>
+        /// Used for miscellaneous characters; it can vary by keyboard.
+        /// </summmary>
+        Oem8,
+        /// <summmary>
+        /// Either the angle bracket key or the backslash key on the RT 102-key keyboard.
+        /// </summmary>
+        Oem102,
+
         // Symbols
-        /// <summary>The tilde key.</summary>
-        Tilde,
-        /// <summary>The grave key (equivaent to Tilde).</summary>
-        Grave = Tilde,
+
         /// <summary>The minus key.</summary>
         Minus,
-        //Equal,
         /// <summary>The plus key.</summary>
         Plus,
-        /// <summary>The left bracket key.</summary>
-        BracketLeft,
-        /// <summary>The left bracket key (equivalent to BracketLeft).</summary>
-        LBracket = BracketLeft,
-        /// <summary>The right bracket key.</summary>
-        BracketRight,
-        /// <summary>The right bracket key (equivalent to BracketRight).</summary>
-        RBracket = BracketRight,
-        /// <summary>The semicolon key.</summary>
-        Semicolon,
-        /// <summary>The quote key.</summary>
-        Quote,
         /// <summary>The comma key.</summary>
         Comma,
         /// <summary>The period key.</summary>
         Period,
-        /// <summary>The slash key.</summary>
-        Slash,
-        /// <summary>The backslash key.</summary>
-        BackSlash,
-        /// <summary>The secondary backslash key.</summary>
-        NonUSBackSlash,
+
         /// <summary>Indicates the last available keyboard key.</summary>
-        LastKey
+        LastKey,
+
+        #region Deprecated keys
+        /// <summary>The tilde key (equivaent to Oem3).</summary>
+        [System.Obsolete("Use Oem3 instead.")]
+        Tilde = Oem3,
+        /// <summary>The grave key (equivaent to Oem3).</summary>
+        [System.Obsolete("Use Oem3 instead.")]
+        Grave = Oem3,
+        /// <summary>The left bracket key (equivalent to Oem4).</summary>
+        [System.Obsolete("Use Oem4 instead.")]
+        BracketLeft = Oem4,
+        /// <summary>The left bracket key (equivalent to Oem4).</summary>
+        [System.Obsolete("Use Oem4 instead.")]
+        LBracket = Oem4,
+        /// <summary>The right bracket key (equivalent to Oem6).</summary>
+        [System.Obsolete("Use Oem6 instead.")]
+        BracketRight = Oem6,
+        /// <summary>The right bracket key (equivalent to Oem6).</summary>
+        [System.Obsolete("Use Oem6 instead.")]
+        RBracket = Oem6,
+        /// <summary>The semicolon key (equivalent to Oem1).</summary>
+        [System.Obsolete("Use Oem1 instead.")]
+        Semicolon = Oem1,
+        /// <summary>The quote key (equivalent to Oem7).</summary>
+        [System.Obsolete("Use Oem7 instead.")]
+        Quote = Oem7,
+        /// <summary>The slash key (equivalent Oem2).</summary>
+        [System.Obsolete("Use Oem2 instead.")]
+        Slash = Oem2,
+        /// <summary>The backslash key (equivalent to Oem5).</summary>
+        [System.Obsolete("Use Oem5 instead.")]
+        BackSlash = Oem5,
+        /// <summary>The secondary backslash key (equivalent to Oem102).</summary>
+        [System.Obsolete("Use Oem102 instead.")]
+        NonUSBackSlash = Oem102,
+        #endregion
     }
 }

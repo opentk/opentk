@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2010 the Open Toolkit library.
+// Copyright (c) 2006 - 2015 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -169,8 +169,6 @@ namespace OpenTK.Platform.Windows
                 bool extended0 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E0) != 0;
                 bool extended1 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E1) != 0;
 
-                bool is_valid = true;
-
                 ContextHandle handle = new ContextHandle(rin.Header.Device);
                 KeyboardState keyboard;
                 if (!rawids.ContainsKey(handle))
@@ -188,12 +186,10 @@ namespace OpenTK.Platform.Windows
                 int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
                 keyboard = keyboards[keyboard_handle];
 
-                Key key = WinKeyMap.TranslateKey(scancode, vkey, extended0, extended1, out is_valid);
-
-                if (is_valid)
+                Key key = WinKeyMap.TranslateKey(scancode, vkey, extended0, extended1);
+                if (key != Key.Unknown)
                 {
                     keyboard.SetKeyState(key, pressed);
-                    processed = true;
                 }
 
                 lock (UpdateLock)
