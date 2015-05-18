@@ -31,7 +31,7 @@ using System.Text;
 
 namespace OpenTK
 {
-#if NO_SYSDRAWING
+#if MINIMAL
     /// <summary>
     /// Stores the width and height of a rectangle.
     /// </summary>
