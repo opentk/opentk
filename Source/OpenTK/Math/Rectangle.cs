@@ -31,7 +31,7 @@ using System.Text;
 
 namespace OpenTK
 {
-#if MINIMAL
+    #if MINIMAL
     /// <summary>
     /// Represents a rectangular region on a two-dimensional plane.
     /// </summary>
@@ -257,49 +257,6 @@ namespace OpenTK
             return new Rectangle(x1, y1, x2 - x1, y2 - y1); 
         }
 
-#if !NO_SYSDRAWING
-        /// <summary>
-        /// Converts an OpenTK.Rectangle instance to a System.Drawing.Rectangle.
-        /// </summary>
-        /// <param name="rect">
-        /// The <see cref="Rectangle"/> instance to convert.
-        /// </param>
-        /// <returns>
-        /// A <see cref="System.Drawing.Rectangle"/> instance equivalent to rect.
-        /// </returns>
-        public static implicit operator System.Drawing.Rectangle(Rectangle rect)
-        {
-            return new System.Drawing.Rectangle(rect.Location, rect.Size);
-        }
-
-        /// <summary>
-        /// Converts a System.Drawing.Rectangle instance to an OpenTK.Rectangle.
-        /// </summary>
-        /// <param name="rect">
-        /// The <see cref="System.Drawing.Rectangle"/> instance to convert.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Rectangle"/> instance equivalent to point.
-        /// </returns>
-        public static implicit operator Rectangle(System.Drawing.Rectangle rect)
-        {
-            return new Rectangle(rect.Location, rect.Size);
-        }
-
-        /// <summary>
-        /// Converts an OpenTK.Rectangle instance to a System.Drawing.RectangleF.
-        /// </summary>
-        /// <param name="rect">
-        /// The <see cref="Rectangle"/> instance to convert.
-        /// </param>
-        /// <returns>
-        /// A <see cref="System.Drawing.RectangleF"/> instance equivalent to rect.
-        /// </returns>
-        public static implicit operator System.Drawing.RectangleF(Rectangle rect)
-        {
-            return new System.Drawing.RectangleF(rect.Location, rect.Size);
-        }
-#endif
         /// <summary>
         /// Indicates whether this instance is equal to the specified object.
         /// </summary>

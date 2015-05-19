@@ -115,14 +115,12 @@ Global
 		{62C0DB35-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
-		{62C0DB35-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.ActiveCfg = ReleaseMinimal|Any CPU
-		{62C0DB35-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.Build.0 = ReleaseMinimal|Any CPU
 		{650C6F3D-33B5-4216-9536-956AB42C0624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{650C6F3D-33B5-4216-9536-956AB42C0624}.DebugMinimal|Any CPU.ActiveCfg = DebugMinimal|Any CPU
 		{650C6F3D-33B5-4216-9536-956AB42C0624}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
@@ -144,14 +142,12 @@ Global
 		{868E37B3-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{868E37B3-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{868E37B3-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
-		{868E37B3-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{868E37B3-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
 		{868E37B3-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
 		{868E37B3-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
 		{868E37B3-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{868E37B3-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
 		{868E37B3-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.ActiveCfg = ReleaseMinimal|Any CPU
-		{868E37B3-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.Build.0 = ReleaseMinimal|Any CPU
 		{A37A7E14-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A37A7E14-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A37A7E14-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.ActiveCfg = DebugMinimal|Any CPU
@@ -166,14 +162,12 @@ Global
 		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
-		{A625BE88-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.ActiveCfg = ReleaseMinimal|Any CPU
-		{A625BE88-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.Build.0 = ReleaseMinimal|Any CPU
 		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ADC34399-7613-44D2-90B2-19250F06FE7A}.DebugMinimal|Any CPU.ActiveCfg = DebugMinimal|Any CPU
 		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
@@ -209,7 +203,6 @@ Global
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Documentation|Any CPU.ActiveCfg = Debug|Any CPU
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Documentation|Any CPU.Build.0 = Debug|Any CPU
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Nsis|Any CPU.ActiveCfg = Release|Any CPU
@@ -217,12 +210,8 @@ Global
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.ReleaseMinimal|Any CPU.ActiveCfg = ReleaseMinimal|Any CPU
-		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.ReleaseMinimal|Any CPU.Build.0 = ReleaseMinimal|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Source\Examples\OpenTK.Examples.csproj
 	EndGlobalSection
 EndGlobal

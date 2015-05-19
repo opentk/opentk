@@ -30,7 +30,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-#if !NO_SYSDRAWING
+#if !MINIMAL
 using System.Drawing;
 #endif
 using OpenTK.Input;

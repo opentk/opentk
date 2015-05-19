@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using OpenTK;
 using OpenTK.Graphics;
-#if !NO_SYSDRAWING
+#if !MINIMAL
 using System.Drawing;
 #endif
 

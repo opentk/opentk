@@ -28,7 +28,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-#if !NO_SYSDRAWING
+#if !MINIMAL
 using System.Drawing;
 #endif
 #if ANDROID || IPHONE || MINIMAL

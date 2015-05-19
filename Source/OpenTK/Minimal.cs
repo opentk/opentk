@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-#if !NO_SYSDRAWING
+#if !MINIMAL
 using System.Drawing;
 #endif
 using System.Text;
@@ -706,7 +706,7 @@ namespace OpenTK
         public void Dispose()
         { }
 
-        internal static Icon ExtractAssociatedIcon (string location)
+        public static Icon ExtractAssociatedIcon (string location)
         {
             return null;
         }

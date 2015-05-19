@@ -29,7 +29,7 @@
 
 using System.Runtime.InteropServices;
 using System;
-#if !NO_SYSDRAWING
+#if !MINIMAL
 using System.Drawing;
 using System.Drawing.Imaging;
 #endif

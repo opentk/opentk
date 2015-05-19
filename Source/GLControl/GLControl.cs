@@ -500,7 +500,6 @@ namespace OpenTK
             ValidateContext("GrabScreenshot()");
 
             Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
-			/*
             System.Drawing.Imaging.BitmapData data =
                 bmp.LockBits(this.ClientRectangle, System.Drawing.Imaging.ImageLockMode.WriteOnly,
                              System.Drawing.Imaging.PixelFormat.Format24bppRgb);
@@ -508,7 +507,6 @@ namespace OpenTK
                           data.Scan0);
             bmp.UnlockBits(data);
             bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-*/
 			return bmp;
         }
 
