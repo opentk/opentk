@@ -52,9 +52,7 @@ namespace Bind
                 Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
             Console.WriteLine();
-
-            string dirName =  "GL2";
-
+            
             try
             {
                 var split = new Regex(@"-\w+", RegexOptions.Compiled);
@@ -83,7 +81,7 @@ namespace Bind
                             case "mode":
                                 {
                                     string arg = val.ToLower();
-                                    SetGeneratorMode(dirName, arg);
+                                    SetGeneratorMode(arg);
                                     break;
                                 }
                             case "namespace":
@@ -154,45 +152,45 @@ namespace Bind
                     case GeneratorMode.All:
                         Console.WriteLine("Using 'all' generator mode.");
                         Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30/es31' to select a specific mode.");
-                        Generators.Add(new GL2Generator(Settings, dirName));
-                        Generators.Add(new GL4Generator(Settings, dirName));
-                        Generators.Add(new ESGenerator(Settings, dirName));
-                        Generators.Add(new ES2Generator(Settings, dirName));
-                        Generators.Add(new ES3Generator(Settings, dirName));
-                        Generators.Add(new ES31Generator(Settings, dirName));
+                        Generators.Add(new GL2Generator(Settings));
+                        Generators.Add(new GL4Generator(Settings));
+                        Generators.Add(new ESGenerator(Settings));
+                        Generators.Add(new ES2Generator(Settings));
+                        Generators.Add(new ES3Generator(Settings));
+                        Generators.Add(new ES31Generator(Settings));
                         break;
 
                     case GeneratorMode.GL2:
-                        Generators.Add(new GL2Generator(Settings, dirName));
+                        Generators.Add(new GL2Generator(Settings));
                         break;
 
                     case GeneratorMode.GL3:
                     case GeneratorMode.GL4:
-                        Generators.Add(new GL4Generator(Settings, dirName));
+                        Generators.Add(new GL4Generator(Settings));
                         break;
 
                     case GeneratorMode.ES10:
-                        Generators.Add(new ESGenerator(Settings, dirName));
+                        Generators.Add(new ESGenerator(Settings));
                         break;
                     
                     case GeneratorMode.ES11:
-                        Generators.Add(new ESGenerator(Settings, dirName));
+                        Generators.Add(new ESGenerator(Settings));
                         break;
                     
                     case GeneratorMode.ES20:
-                        Generators.Add(new ES2Generator(Settings, dirName));
+                        Generators.Add(new ES2Generator(Settings));
                         break;
 
                     case GeneratorMode.ES30:
-                        Generators.Add(new ES3Generator(Settings, dirName));
+                        Generators.Add(new ES3Generator(Settings));
                         break;
 
                     case GeneratorMode.ES31:
-                        Generators.Add(new ES31Generator(Settings, dirName));
+                        Generators.Add(new ES31Generator(Settings));
                         break;
 
                     case GeneratorMode.CL10:
-                        Generators.Add(new CLGenerator(Settings, dirName));
+                        Generators.Add(new CLGenerator(Settings));
                         break;
                     
                     default:
@@ -234,7 +232,7 @@ namespace Bind
             }
         }
 
-        private static void SetGeneratorMode(string dirName, string arg)
+        private static void SetGeneratorMode(string arg)
         {
             switch (arg)
             {

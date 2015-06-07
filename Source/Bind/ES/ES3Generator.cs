@@ -12,8 +12,8 @@ namespace Bind.ES
     // Generation implementation for OpenGL ES 3.0
     class ES3Generator : Generator
     {
-        public ES3Generator(Settings settings, string dirName)
-            : base(settings, dirName)
+        public ES3Generator(Settings settings)
+            : base(settings)
         {
             Settings.DefaultOutputPath = Path.Combine(
                 Settings.DefaultOutputPath, "../ES30");
