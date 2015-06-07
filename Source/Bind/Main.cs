@@ -239,46 +239,38 @@ namespace Bind
                 case "gl":
                 case "gl2":
                     mode = GeneratorMode.GL2;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
                     break;
 
                 case "gl3":
                 case "gl4":
 					mode = GeneratorMode.GL4;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL4";
                     break;
 
                 case "es10":
                     mode = GeneratorMode.ES10;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES10";
                     break;
 
                 case "es11":
                     mode = GeneratorMode.ES11;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
                     break;
 
                 case "es2":
                 case "es20":
                     mode = GeneratorMode.ES20;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
                     break;
 
                 case "es3":
                 case "es30":
                     mode = GeneratorMode.ES30;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
                     break;
 
                 case "es31":
                     mode = GeneratorMode.ES31;
-                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES31";
                     break;
 
                 case "cl":
                 case "cl10":
                     mode = GeneratorMode.CL10;
-                    Settings.DefaultOutputNamespace = "OpenTK.Compute.OpenCL";
                     break;
 
                 default:
