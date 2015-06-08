@@ -1072,11 +1072,25 @@ namespace OpenTK.Platform.X11
             }
             set
             {
+                bool is_size_changed = client_rectangle.Size != value;
+
+                int width = value.Width;
+                int height = value.Height;
+
+                if (WindowBorder != WindowBorder.Resizable)
+                {
+                    SetWindowMinMax(width, height, width, height);
+                }
+
                 using (new XLock(window.Display))
                 {
-                    Functions.XResizeWindow(window.Display, window.Handle,
-                        value.Width, value.Height);
+                    if (is_size_changed)
+                    {
+                        Functions.XResizeWindow(window.Display, window.Handle,
+                            width, height);
+                    }
                 }
+
                 ProcessEvents();
             }
         }

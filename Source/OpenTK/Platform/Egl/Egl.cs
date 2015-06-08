@@ -34,6 +34,7 @@ using OpenTK.Graphics;
 namespace OpenTK.Platform.Egl
 {
     using EGLNativeDisplayType = IntPtr;
+    using EGLNativeWindowType = IntPtr;
     using EGLNativePixmapType = IntPtr;
     using EGLConfig = IntPtr;
     using EGLContext = IntPtr;
@@ -53,6 +54,7 @@ namespace OpenTK.Platform.Egl
     {
         ES = Egl.OPENGL_ES_BIT,
         ES2 = Egl.OPENGL_ES2_BIT,
+        ES3 = Egl.OPENGL_ES3_BIT,
         GL = Egl.OPENGL_BIT,
         VG = Egl.OPENVG_BIT,
     }
@@ -141,6 +143,7 @@ namespace OpenTK.Platform.Egl
         public const int OPENVG_BIT = 2;
         public const int OPENGL_ES2_BIT = 4;
         public const int OPENGL_BIT = 8;
+        public const int OPENGL_ES3_BIT = 64;
         public const int VENDOR = 12371;
         public const int VERSION = 12372;
         public const int EXTENSIONS = 12373;
@@ -187,6 +190,39 @@ namespace OpenTK.Platform.Egl
         public const int COLORSPACE_LINEAR = VG_COLORSPACE_LINEAR;
         public const int ALPHA_FORMAT_NONPRE = VG_ALPHA_FORMAT_NONPRE;
         public const int ALPHA_FORMAT_PRE = VG_ALPHA_FORMAT_PRE;
+
+        // EGL_ANGLE_d3d_share_handle_client_buffer
+        public const int D3D_TEXTURE_2D_SHARE_HANDLE_ANGLE = 0x3200;
+        // EGL_ANGLE_window_fixed_size
+        public const int FIXED_SIZE_ANGLE = 0x3201;
+        // EGL_ANGLE_query_surface_pointer 
+        [DllImport("libEGL.dll", EntryPoint = "eglQuerySurfacePointerANGLE")]
+        public static extern bool QuerySurfacePointerANGLE(EGLDisplay display, EGLSurface surface, int attribute, out IntPtr value);
+        // EGL_ANGLE_software_display
+        public static readonly EGLNativeDisplayType SOFTWARE_DISPLAY_ANGLE = new EGLNativeDisplayType(-1);
+        // EGL_ANGLE_direct3d_display
+        public static readonly EGLNativeDisplayType D3D11_ELSE_D3D9_DISPLAY_ANGLE = new EGLNativeDisplayType(-2);
+        public static readonly EGLNativeDisplayType D3D11_ONLY_DISPLAY_ANGLE = new EGLNativeDisplayType(-3);
+        // EGL_ANGLE_device_d3d
+        public const int D3D9_DEVICE_ANGLE = 0x33A0;
+        public const int D3D11_DEVICE_ANGLE = 0x33A1;
+        // EGL_ANGLE_platform_angle
+        public const int PLATFORM_ANGLE_ANGLE = 0x3202;
+        public const int PLATFORM_ANGLE_TYPE_ANGLE = 0x3203;
+        public const int PLATFORM_ANGLE_MAX_VERSION_MAJOR_ANGLE = 0x3204;
+        public const int PLATFORM_ANGLE_MAX_VERSION_MINOR_ANGLE = 0x3205;
+        public const int PLATFORM_ANGLE_TYPE_DEFAULT_ANGLE = 0x3206;
+        // EGL_ANGLE_platform_angle_d3d
+        public const int PLATFORM_ANGLE_TYPE_D3D9_ANGLE = 0x3207;
+        public const int PLATFORM_ANGLE_TYPE_D3D11_ANGLE = 0x3208;
+        public const int PLATFORM_ANGLE_DEVICE_TYPE_ANGLE = 0x3209;
+        public const int PLATFORM_ANGLE_DEVICE_TYPE_HARDWARE_ANGLE = 0x320A;
+        public const int PLATFORM_ANGLE_DEVICE_TYPE_WARP_ANGLE = 0x320B;
+        public const int PLATFORM_ANGLE_DEVICE_TYPE_REFERENCE_ANGLE = 0x320C;
+        public const int PLATFORM_ANGLE_ENABLE_AUTOMATIC_TRIM_ANGLE = 0x320F;
+        // EGL_ANGLE_platform_angle_opengl
+        public const int PLATFORM_ANGLE_TYPE_OPENGL_ANGLE = 0x320D;
+        public const int PLATFORM_ANGLE_TYPE_OPENGLES_ANGLE = 0x320E;
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetError")]
         public static extern ErrorCode GetError();
@@ -322,6 +358,16 @@ namespace OpenTK.Platform.Egl
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetProcAddress")]
         public static extern IntPtr GetProcAddress(IntPtr funcname);
 
+        // EGL_EXT_platform_base
+        [DllImport("libEGL.dll", EntryPoint = "eglGetPlatformDisplayEXT")]
+        public static extern EGLDisplay GetPlatformDisplayEXT(int platform, EGLNativeDisplayType native_display, int[] attrib_list);
+        
+        [DllImport("libEGL.dll", EntryPoint = "eglCreatePlatformWindowSurfaceEXT")]
+        public static extern EGLSurface CreatePlatformWindowSurfaceEXT(EGLDisplay dpy, EGLConfig config, EGLNativeWindowType native_window, int[] attrib_list);
+        
+        [DllImport("libEGL.dll", EntryPoint = "eglCreatePlatformPixmapSurfaceEXT")]
+        public static extern EGLSurface CreatePlatformPixmapSurfaceEXT(EGLDisplay dpy, EGLConfig config, EGLNativePixmapType native_pixmap, int[] attrib_list);
+        
         // Returns true if Egl drivers exist on the system.
         public static bool IsSupported
         {

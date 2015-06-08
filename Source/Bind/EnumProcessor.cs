@@ -155,7 +155,7 @@ namespace Bind
             if (String.IsNullOrEmpty(name))
                 return name;
 
-            if (Utilities.Keywords(Settings.Language).Contains(name))
+            if (Utilities.CSharpKeywords.Contains(name))
                 return name;
 
             if (!IsAlreadyProcessed(name))

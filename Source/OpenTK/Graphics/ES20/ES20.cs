@@ -1,7 +1,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit Library
+// Copyright (c) 2006 - 2015 Stefanos Apostolopoulos for the Open Toolkit Library
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -198,13 +198,21 @@ namespace OpenTK.Graphics.ES20
                 103, 108, 71, 101, 116, 70, 105, 114, 115, 116, 80, 101, 114, 102, 81, 117, 101, 114, 121, 73, 100, 73, 78, 84, 69, 76, 0,
                 103, 108, 71, 101, 116, 70, 108, 111, 97, 116, 118, 0,
                 103, 108, 71, 101, 116, 70, 114, 97, 109, 101, 98, 117, 102, 102, 101, 114, 65, 116, 116, 97, 99, 104, 109, 101, 110, 116, 80, 97, 114, 97, 109, 101, 116, 101, 114, 105, 118, 0,
+                103, 108, 71, 101, 116, 71, 114, 97, 112, 104, 105, 99, 115, 82, 101, 115, 101, 116, 83, 116, 97, 116, 117, 115, 0,
                 103, 108, 71, 101, 116, 71, 114, 97, 112, 104, 105, 99, 115, 82, 101, 115, 101, 116, 83, 116, 97, 116, 117, 115, 69, 88, 84, 0,
+                103, 108, 71, 101, 116, 71, 114, 97, 112, 104, 105, 99, 115, 82, 101, 115, 101, 116, 83, 116, 97, 116, 117, 115, 75, 72, 82, 0,
                 103, 108, 71, 101, 116, 73, 110, 116, 101, 103, 101, 114, 54, 52, 118, 65, 80, 80, 76, 69, 0,
                 103, 108, 71, 101, 116, 73, 110, 116, 101, 103, 101, 114, 105, 95, 118, 69, 88, 84, 0,
                 103, 108, 71, 101, 116, 73, 110, 116, 101, 103, 101, 114, 118, 0,
                 103, 108, 71, 101, 116, 78, 101, 120, 116, 80, 101, 114, 102, 81, 117, 101, 114, 121, 73, 100, 73, 78, 84, 69, 76, 0,
+                103, 108, 71, 101, 116, 110, 85, 110, 105, 102, 111, 114, 109, 102, 118, 0,
                 103, 108, 71, 101, 116, 110, 85, 110, 105, 102, 111, 114, 109, 102, 118, 69, 88, 84, 0,
+                103, 108, 71, 101, 116, 110, 85, 110, 105, 102, 111, 114, 109, 102, 118, 75, 72, 82, 0,
+                103, 108, 71, 101, 116, 110, 85, 110, 105, 102, 111, 114, 109, 105, 118, 0,
                 103, 108, 71, 101, 116, 110, 85, 110, 105, 102, 111, 114, 109, 105, 118, 69, 88, 84, 0,
+                103, 108, 71, 101, 116, 110, 85, 110, 105, 102, 111, 114, 109, 105, 118, 75, 72, 82, 0,
+                103, 108, 71, 101, 116, 110, 85, 110, 105, 102, 111, 114, 109, 117, 105, 118, 0,
+                103, 108, 71, 101, 116, 110, 85, 110, 105, 102, 111, 114, 109, 117, 105, 118, 75, 72, 82, 0,
                 103, 108, 71, 101, 116, 79, 98, 106, 101, 99, 116, 76, 97, 98, 101, 108, 0,
                 103, 108, 71, 101, 116, 79, 98, 106, 101, 99, 116, 76, 97, 98, 101, 108, 69, 88, 84, 0,
                 103, 108, 71, 101, 116, 79, 98, 106, 101, 99, 116, 76, 97, 98, 101, 108, 75, 72, 82, 0,
@@ -327,7 +335,9 @@ namespace OpenTK.Graphics.ES20
                 103, 108, 81, 117, 101, 114, 121, 67, 111, 117, 110, 116, 101, 114, 69, 88, 84, 0,
                 103, 108, 82, 101, 97, 100, 66, 117, 102, 102, 101, 114, 73, 110, 100, 101, 120, 101, 100, 69, 88, 84, 0,
                 103, 108, 82, 101, 97, 100, 66, 117, 102, 102, 101, 114, 78, 86, 0,
+                103, 108, 82, 101, 97, 100, 110, 80, 105, 120, 101, 108, 115, 0,
                 103, 108, 82, 101, 97, 100, 110, 80, 105, 120, 101, 108, 115, 69, 88, 84, 0,
+                103, 108, 82, 101, 97, 100, 110, 80, 105, 120, 101, 108, 115, 75, 72, 82, 0,
                 103, 108, 82, 101, 97, 100, 80, 105, 120, 101, 108, 115, 0,
                 103, 108, 82, 101, 108, 101, 97, 115, 101, 83, 104, 97, 100, 101, 114, 67, 111, 109, 112, 105, 108, 101, 114, 0,
                 103, 108, 82, 101, 110, 100, 101, 114, 98, 117, 102, 102, 101, 114, 83, 116, 111, 114, 97, 103, 101, 0,
@@ -580,225 +590,235 @@ namespace OpenTK.Graphics.ES20
                 3177,
                 3189,
                 3227,
-                3255,
-                3276,
-                3295,
-                3309,
-                3335,
-                3354,
-                3373,
-                3390,
-                3410,
-                3430,
-                3450,
-                3473,
-                3499,
-                3530,
-                3561,
-                3589,
-                3622,
-                3648,
-                3679,
-                3703,
-                3731,
-                3755,
-                3769,
-                3786,
+                3252,
+                3280,
+                3308,
+                3329,
+                3348,
+                3362,
+                3388,
+                3404,
+                3423,
+                3442,
+                3458,
+                3477,
+                3496,
+                3513,
+                3533,
+                3550,
+                3570,
+                3590,
+                3610,
+                3633,
+                3659,
+                3690,
+                3721,
+                3749,
+                3782,
                 3808,
-                3828,
-                3843,
-                3874,
-                3900,
-                3916,
-                3940,
-                3962,
-                3987,
-                4010,
-                4039,
-                4067,
-                4096,
-                4115,
-                4129,
-                4156,
-                4174,
-                4186,
-                4203,
-                4223,
-                4247,
-                4272,
-                4292,
-                4325,
-                4340,
-                4355,
-                4376,
-                4396,
-                4416,
-                4442,
-                4449,
-                4472,
-                4483,
-                4495,
-                4511,
-                4523,
-                4539,
-                4551,
-                4574,
-                4587,
-                4604,
-                4615,
-                4629,
-                4641,
-                4660,
-                4677,
-                4689,
-                4703,
-                4718,
-                4738,
-                4760,
-                4781,
-                4804,
-                4818,
-                4835,
-                4852,
-                4872,
-                4893,
-                4907,
-                4923,
-                4939,
-                4958,
+                3839,
+                3863,
+                3891,
+                3915,
+                3929,
+                3946,
+                3968,
+                3988,
+                4003,
+                4034,
+                4060,
+                4076,
+                4100,
+                4122,
+                4147,
+                4170,
+                4199,
+                4227,
+                4256,
+                4275,
+                4289,
+                4316,
+                4334,
+                4346,
+                4363,
+                4383,
+                4407,
+                4432,
+                4452,
+                4485,
+                4500,
+                4515,
+                4536,
+                4556,
+                4576,
+                4602,
+                4609,
+                4632,
+                4643,
+                4655,
+                4671,
+                4683,
+                4699,
+                4711,
+                4734,
+                4747,
+                4764,
+                4775,
+                4789,
+                4801,
+                4820,
+                4837,
+                4849,
+                4863,
+                4878,
+                4898,
+                4920,
+                4941,
+                4964,
                 4978,
-                5004,
-                5023,
-                5046,
-                5068,
-                5091,
-                5113,
-                5136,
-                5159,
+                4995,
+                5012,
+                5032,
+                5053,
+                5067,
+                5083,
+                5099,
+                5118,
+                5138,
+                5164,
                 5183,
-                5205,
+                5206,
                 5228,
-                5250,
+                5251,
                 5273,
                 5296,
-                5320,
-                5342,
+                5319,
+                5343,
                 5365,
-                5387,
+                5388,
                 5410,
                 5433,
-                5457,
-                5479,
+                5456,
+                5480,
                 5502,
-                5524,
+                5525,
                 5547,
                 5570,
-                5594,
-                5623,
-                5654,
-                5685,
-                5714,
-                5745,
-                5776,
-                5805,
-                5836,
-                5867,
-                5884,
-                5904,
-                5925,
-                5943,
-                5966,
-                5981,
-                5998,
-                6011,
-                6035,
-                6057,
-                6095,
-                6133,
-                6169,
-                6205,
-                6240,
-                6277,
-                6294,
-                6319,
-                6345,
-                6355,
-                6386,
-                6399,
-                6414,
-                6429,
-                6447,
-                6461,
-                6483,
-                6497,
-                6519,
-                6531,
-                6551,
-                6565,
-                6580,
-                6600,
-                6613,
-                6629,
-                6645,
-                6662,
-                6678,
-                6699,
-                6721,
-                6738,
+                5593,
+                5617,
+                5639,
+                5662,
+                5684,
+                5707,
+                5730,
+                5754,
+                5783,
+                5814,
+                5845,
+                5874,
+                5905,
+                5936,
+                5965,
+                5996,
+                6027,
+                6044,
+                6064,
+                6085,
+                6103,
+                6126,
+                6141,
+                6155,
+                6172,
+                6189,
+                6202,
+                6226,
+                6248,
+                6286,
+                6324,
+                6360,
+                6396,
+                6431,
+                6468,
+                6485,
+                6510,
+                6536,
+                6546,
+                6577,
+                6590,
+                6605,
+                6620,
+                6638,
+                6652,
+                6674,
+                6688,
+                6710,
+                6722,
+                6742,
                 6756,
-                6774,
-                6792,
-                6821,
-                6837,
-                6856,
-                6878,
-                6900,
-                6922,
-                6939,
-                6951,
-                6964,
-                6976,
-                6989,
-                7001,
-                7014,
-                7026,
-                7039,
-                7051,
-                7064,
-                7076,
-                7089,
-                7101,
-                7114,
-                7126,
-                7139,
-                7158,
-                7181,
-                7204,
-                7223,
-                7246,
-                7269,
-                7288,
-                7311,
-                7334,
-                7351,
-                7364,
-                7386,
-                7408,
-                7426,
-                7455,
-                7472,
-                7490,
-                7507,
+                6771,
+                6791,
+                6804,
+                6820,
+                6836,
+                6853,
+                6869,
+                6890,
+                6912,
+                6929,
+                6947,
+                6965,
+                6983,
+                7012,
+                7028,
+                7047,
+                7069,
+                7091,
+                7113,
+                7130,
+                7142,
+                7155,
+                7167,
+                7180,
+                7192,
+                7205,
+                7217,
+                7230,
+                7242,
+                7255,
+                7267,
+                7280,
+                7292,
+                7305,
+                7317,
+                7330,
+                7349,
+                7372,
+                7395,
+                7414,
+                7437,
+                7460,
+                7479,
+                7502,
                 7525,
                 7542,
-                7560,
+                7555,
                 7577,
-                7595,
-                7622,
-                7647,
-                7671,
-                7693,
-                7704,
+                7599,
+                7617,
+                7646,
+                7663,
+                7681,
+                7698,
+                7716,
+                7733,
+                7751,
+                7768,
+                7786,
+                7813,
+                7838,
+                7862,
+                7884,
+                7895,
             };
             EntryPoints = new IntPtr[EntryPointNameOffsets.Length];
         }
@@ -2693,6 +2713,112 @@ namespace OpenTK.Graphics.ES20
         /// </param>
         [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        public static void BufferData(OpenTK.Graphics.ES20.All target, Int32 size, IntPtr data, OpenTK.Graphics.ES20.All usage) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        [CLSCompliant(false)]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.All target, Int32 size, [InAttribute, OutAttribute] T2[] data, OpenTK.Graphics.ES20.All usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        [CLSCompliant(false)]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.All target, Int32 size, [InAttribute, OutAttribute] T2[,] data, OpenTK.Graphics.ES20.All usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        [CLSCompliant(false)]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.All target, Int32 size, [InAttribute, OutAttribute] T2[,,] data, OpenTK.Graphics.ES20.All usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.All target, Int32 size, [InAttribute, OutAttribute] ref T2 data, OpenTK.Graphics.ES20.All usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
         public static void BufferData(OpenTK.Graphics.ES20.All target, IntPtr size, IntPtr data, OpenTK.Graphics.ES20.All usage) { throw new NotImplementedException(); }
 
         /// <summary>[requires: v2.0 or ES_VERSION_2_0]
@@ -2779,6 +2905,213 @@ namespace OpenTK.Graphics.ES20
         [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
         public static void BufferData<T2>(OpenTK.Graphics.ES20.All target, IntPtr size, [InAttribute, OutAttribute] ref T2 data, OpenTK.Graphics.ES20.All usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [Obsolete("Use BufferUsageHint overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        public static void BufferData(OpenTK.Graphics.ES20.BufferTarget target, Int32 size, IntPtr data, OpenTK.Graphics.ES20.BufferUsage usage) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        public static void BufferData(OpenTK.Graphics.ES20.BufferTarget target, Int32 size, IntPtr data, OpenTK.Graphics.ES20.BufferUsageHint usage) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [Obsolete("Use BufferUsageHint overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        [CLSCompliant(false)]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.BufferTarget target, Int32 size, [InAttribute, OutAttribute] T2[] data, OpenTK.Graphics.ES20.BufferUsage usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        [CLSCompliant(false)]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.BufferTarget target, Int32 size, [InAttribute, OutAttribute] T2[] data, OpenTK.Graphics.ES20.BufferUsageHint usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [Obsolete("Use BufferUsageHint overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        [CLSCompliant(false)]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.BufferTarget target, Int32 size, [InAttribute, OutAttribute] T2[,] data, OpenTK.Graphics.ES20.BufferUsage usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        [CLSCompliant(false)]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.BufferTarget target, Int32 size, [InAttribute, OutAttribute] T2[,] data, OpenTK.Graphics.ES20.BufferUsageHint usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [Obsolete("Use BufferUsageHint overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        [CLSCompliant(false)]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.BufferTarget target, Int32 size, [InAttribute, OutAttribute] T2[,,] data, OpenTK.Graphics.ES20.BufferUsage usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        [CLSCompliant(false)]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.BufferTarget target, Int32 size, [InAttribute, OutAttribute] T2[,,] data, OpenTK.Graphics.ES20.BufferUsageHint usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [Obsolete("Use BufferUsageHint overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.BufferTarget target, Int32 size, [InAttribute, OutAttribute] ref T2 data, OpenTK.Graphics.ES20.BufferUsage usage)
+            where T2 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Create and initialize a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the buffer object's new data store.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to data that will be copied into the data store for initialization, or Null if no data is to be copied.
+        /// </param>
+        /// <param name="usage"> 
+        /// Specifies the expected usage pattern of the data store. The symbolic constant must be StreamDraw, StaticDraw, or DynamicDraw.
+        /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferData")]
+        public static void BufferData<T2>(OpenTK.Graphics.ES20.BufferTarget target, Int32 size, [InAttribute, OutAttribute] ref T2 data, OpenTK.Graphics.ES20.BufferUsageHint usage)
             where T2 : struct
          { throw new NotImplementedException(); }
 
@@ -3006,6 +3339,112 @@ namespace OpenTK.Graphics.ES20
         /// </param>
         [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
+        public static void BufferSubData(OpenTK.Graphics.ES20.All target, IntPtr offset, Int32 size, IntPtr data) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Update a subset of a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="offset"> 
+        /// Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the data store region being replaced.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to the new data that will be copied into the data store.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
+        [CLSCompliant(false)]
+        public static void BufferSubData<T3>(OpenTK.Graphics.ES20.All target, IntPtr offset, Int32 size, [InAttribute, OutAttribute] T3[] data)
+            where T3 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Update a subset of a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="offset"> 
+        /// Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the data store region being replaced.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to the new data that will be copied into the data store.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
+        [CLSCompliant(false)]
+        public static void BufferSubData<T3>(OpenTK.Graphics.ES20.All target, IntPtr offset, Int32 size, [InAttribute, OutAttribute] T3[,] data)
+            where T3 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Update a subset of a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="offset"> 
+        /// Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the data store region being replaced.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to the new data that will be copied into the data store.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
+        [CLSCompliant(false)]
+        public static void BufferSubData<T3>(OpenTK.Graphics.ES20.All target, IntPtr offset, Int32 size, [InAttribute, OutAttribute] T3[,,] data)
+            where T3 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Update a subset of a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="offset"> 
+        /// Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the data store region being replaced.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to the new data that will be copied into the data store.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
+        public static void BufferSubData<T3>(OpenTK.Graphics.ES20.All target, IntPtr offset, Int32 size, [InAttribute, OutAttribute] ref T3 data)
+            where T3 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Update a subset of a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="offset"> 
+        /// Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the data store region being replaced.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to the new data that will be copied into the data store.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
         public static void BufferSubData(OpenTK.Graphics.ES20.All target, IntPtr offset, IntPtr size, IntPtr data) { throw new NotImplementedException(); }
 
         /// <summary>[requires: v2.0 or ES_VERSION_2_0]
@@ -3092,6 +3531,107 @@ namespace OpenTK.Graphics.ES20
         [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
         public static void BufferSubData<T3>(OpenTK.Graphics.ES20.All target, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] ref T3 data)
+            where T3 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Update a subset of a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="offset"> 
+        /// Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the data store region being replaced.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to the new data that will be copied into the data store.
+        /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
+        public static void BufferSubData(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, Int32 size, IntPtr data) { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Update a subset of a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="offset"> 
+        /// Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the data store region being replaced.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to the new data that will be copied into the data store.
+        /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
+        [CLSCompliant(false)]
+        public static void BufferSubData<T3>(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, Int32 size, [InAttribute, OutAttribute] T3[] data)
+            where T3 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Update a subset of a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="offset"> 
+        /// Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the data store region being replaced.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to the new data that will be copied into the data store.
+        /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
+        [CLSCompliant(false)]
+        public static void BufferSubData<T3>(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, Int32 size, [InAttribute, OutAttribute] T3[,] data)
+            where T3 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Update a subset of a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="offset"> 
+        /// Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the data store region being replaced.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to the new data that will be copied into the data store.
+        /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
+        [CLSCompliant(false)]
+        public static void BufferSubData<T3>(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, Int32 size, [InAttribute, OutAttribute] T3[,,] data)
+            where T3 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary>[requires: v2.0 or ES_VERSION_2_0]
+        /// Update a subset of a buffer object's data store
+        /// </summary>
+        /// <param name="target"> 
+        /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer or ElementArrayBuffer.
+        /// </param>
+        /// <param name="offset"> 
+        /// Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+        /// </param>
+        /// <param name="size"> 
+        /// Specifies the size in bytes of the data store region being replaced.
+        /// </param>
+        /// <param name="data">[length: size] 
+        /// Specifies a pointer to the new data that will be copied into the data store.
+        /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glBufferSubData")]
+        public static void BufferSubData<T3>(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, Int32 size, [InAttribute, OutAttribute] ref T3 data)
             where T3 : struct
          { throw new NotImplementedException(); }
 
@@ -8028,6 +8568,10 @@ namespace OpenTK.Graphics.ES20
         [CLSCompliant(false)]
         public static unsafe void GetFramebufferAttachmentParameter(OpenTK.Graphics.ES20.FramebufferTarget target, OpenTK.Graphics.ES20.FramebufferSlot attachment, OpenTK.Graphics.ES20.FramebufferParameterName pname, [OutAttribute] Int32* @params) { throw new NotImplementedException(); }
 
+        /// <summary></summary>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetGraphicsResetStatus")]
+        public static OpenTK.Graphics.ES20.ResetStatus GetGraphicsResetStatus() { throw new NotImplementedException(); }
+
         /// <summary>[requires: v2.0 or ES_VERSION_2_0]</summary>
         /// <param name="pname"></param>
         [Obsolete("Use strongly-typed overload instead")]
@@ -8085,6 +8629,141 @@ namespace OpenTK.Graphics.ES20
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetIntegerv")]
         [CLSCompliant(false)]
         public static unsafe void GetInteger(OpenTK.Graphics.ES20.GetPName pname, [OutAttribute] Int32* data) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfv")]
+        [CLSCompliant(false)]
+        public static void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] Single[] @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfv")]
+        [CLSCompliant(false)]
+        public static void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] out Single @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfv")]
+        [CLSCompliant(false)]
+        public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single[] @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfv")]
+        [CLSCompliant(false)]
+        public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] out Single @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformiv")]
+        [CLSCompliant(false)]
+        public static void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32[] @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformiv")]
+        [CLSCompliant(false)]
+        public static void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] out Int32 @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformiv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformiv")]
+        [CLSCompliant(false)]
+        public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32[] @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformiv")]
+        [CLSCompliant(false)]
+        public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] out Int32 @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformiv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformuiv")]
+        [CLSCompliant(false)]
+        public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] UInt32[] @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformuiv")]
+        [CLSCompliant(false)]
+        public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] out UInt32 @params) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="program"></param>
+        /// <param name="location"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformuiv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] UInt32* @params) { throw new NotImplementedException(); }
 
         /// <summary>
         /// Retrieve the label of a named object identified within a namespace
@@ -8242,7 +8921,6 @@ namespace OpenTK.Graphics.ES20
         /// <param name="label">[length: bufSize] 
         /// The address of a string that will receive the object label.
         /// </param>
-        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static void GetObjectLabel(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, Int32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -8265,7 +8943,6 @@ namespace OpenTK.Graphics.ES20
         /// <param name="label">[length: bufSize] 
         /// The address of a string that will receive the object label.
         /// </param>
-        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static void GetObjectLabel(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, Int32 name, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -8288,7 +8965,6 @@ namespace OpenTK.Graphics.ES20
         /// <param name="label">[length: bufSize] 
         /// The address of a string that will receive the object label.
         /// </param>
-        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static unsafe void GetObjectLabel(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, Int32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -8311,7 +8987,6 @@ namespace OpenTK.Graphics.ES20
         /// <param name="label">[length: bufSize] 
         /// The address of a string that will receive the object label.
         /// </param>
-        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static void GetObjectLabel(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -8334,7 +9009,6 @@ namespace OpenTK.Graphics.ES20
         /// <param name="label">[length: bufSize] 
         /// The address of a string that will receive the object label.
         /// </param>
-        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static void GetObjectLabel(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -8357,7 +9031,6 @@ namespace OpenTK.Graphics.ES20
         /// <param name="label">[length: bufSize] 
         /// The address of a string that will receive the object label.
         /// </param>
-        [Obsolete("Use out overload instead")]
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
         [CLSCompliant(false)]
         public static unsafe void GetObjectLabel(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -10103,7 +10776,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformfv")]
@@ -10119,7 +10792,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformfv")]
@@ -10135,7 +10808,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformfv")]
@@ -10151,7 +10824,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformfv")]
@@ -10167,7 +10840,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformfv")]
@@ -10183,7 +10856,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformfv")]
@@ -10199,7 +10872,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformiv")]
@@ -10215,7 +10888,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformiv")]
@@ -10231,7 +10904,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformiv")]
@@ -10247,7 +10920,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformiv")]
@@ -10263,7 +10936,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformiv")]
@@ -10279,7 +10952,7 @@ namespace OpenTK.Graphics.ES20
         /// <param name="location"> 
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">[length: program, location] 
+        /// <param name="@params">[length: program,location] 
         /// Returns the value of the specified uniform variable.
         /// </param>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformiv")]
@@ -11507,6 +12180,153 @@ namespace OpenTK.Graphics.ES20
         [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPushDebugGroup")]
         [CLSCompliant(false)]
         public static void PushDebugGroup(OpenTK.Graphics.ES20.All source, UInt32 id, Int32 length, String message) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="data"></param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixels")]
+        public static void ReadnPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [OutAttribute] IntPtr data) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="data"></param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixels")]
+        [CLSCompliant(false)]
+        public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] T7[] data)
+            where T7 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="data"></param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixels")]
+        [CLSCompliant(false)]
+        public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] T7[,] data)
+            where T7 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="data"></param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixels")]
+        [CLSCompliant(false)]
+        public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] T7[,,] data)
+            where T7 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="data"></param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixels")]
+        public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] ref T7 data)
+            where T7 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="data"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixels")]
+        public static void ReadnPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [OutAttribute] IntPtr data) { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="data"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixels")]
+        [CLSCompliant(false)]
+        public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] T7[] data)
+            where T7 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="data"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixels")]
+        [CLSCompliant(false)]
+        public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] T7[,] data)
+            where T7 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="data"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixels")]
+        [CLSCompliant(false)]
+        public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] T7[,,] data)
+            where T7 : struct
+         { throw new NotImplementedException(); }
+
+        /// <summary></summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="bufSize"></param>
+        /// <param name="data"></param>
+        [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixels")]
+        public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] ref T7 data)
+            where T7 : struct
+         { throw new NotImplementedException(); }
 
         /// <summary>[requires: v2.0 or ES_VERSION_2_0]
         /// Read a block of pixels from the frame buffer
@@ -17844,7 +18664,38 @@ namespace OpenTK.Graphics.ES20
             /// </param>
             [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glFlushMappedBufferRangeEXT")]
+            public static void FlushMappedBufferRange(OpenTK.Graphics.ES20.All target, IntPtr offset, Int32 length) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_map_buffer_range]
+            /// Indicate modifications to a range of a mapped buffer
+            /// </summary>
+            /// <param name="target"> 
+            /// Specifies the target of the flush operation. target must be ArrayBuffer, CopyReadBuffer, CopyWriteBuffer, DispatchIndirectBuffer, DrawIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
+            /// </param>
+            /// <param name="offset"> 
+            /// Specifies the start of the buffer subrange, in basic machine units.
+            /// </param>
+            /// <param name="length"> 
+            /// Specifies the length of the buffer subrange, in basic machine units.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glFlushMappedBufferRangeEXT")]
             public static void FlushMappedBufferRange(OpenTK.Graphics.ES20.All target, IntPtr offset, IntPtr length) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_map_buffer_range]
+            /// Indicate modifications to a range of a mapped buffer
+            /// </summary>
+            /// <param name="target"> 
+            /// Specifies the target of the flush operation. target must be ArrayBuffer, CopyReadBuffer, CopyWriteBuffer, DispatchIndirectBuffer, DrawIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
+            /// </param>
+            /// <param name="offset"> 
+            /// Specifies the start of the buffer subrange, in basic machine units.
+            /// </param>
+            /// <param name="length"> 
+            /// Specifies the length of the buffer subrange, in basic machine units.
+            /// </param>
+            [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glFlushMappedBufferRangeEXT")]
+            public static void FlushMappedBufferRange(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, Int32 length) { throw new NotImplementedException(); }
 
             /// <summary>[requires: EXT_map_buffer_range]
             /// Indicate modifications to a range of a mapped buffer
@@ -18363,7 +19214,6 @@ namespace OpenTK.Graphics.ES20
             /// <param name="label">[length: bufSize] 
             /// The address of a string that will receive the object label.
             /// </param>
-            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static void GetObjectLabel(OpenTK.Graphics.ES20.All type, Int32 @object, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -18386,7 +19236,6 @@ namespace OpenTK.Graphics.ES20
             /// <param name="label">[length: bufSize] 
             /// The address of a string that will receive the object label.
             /// </param>
-            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static void GetObjectLabel(OpenTK.Graphics.ES20.All type, Int32 @object, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -18409,7 +19258,6 @@ namespace OpenTK.Graphics.ES20
             /// <param name="label">[length: bufSize] 
             /// The address of a string that will receive the object label.
             /// </param>
-            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static unsafe void GetObjectLabel(OpenTK.Graphics.ES20.All type, Int32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -18432,7 +19280,6 @@ namespace OpenTK.Graphics.ES20
             /// <param name="label">[length: bufSize] 
             /// The address of a string that will receive the object label.
             /// </param>
-            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static void GetObjectLabel(OpenTK.Graphics.ES20.All type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -18455,7 +19302,6 @@ namespace OpenTK.Graphics.ES20
             /// <param name="label">[length: bufSize] 
             /// The address of a string that will receive the object label.
             /// </param>
-            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static void GetObjectLabel(OpenTK.Graphics.ES20.All type, UInt32 @object, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -18478,7 +19324,6 @@ namespace OpenTK.Graphics.ES20
             /// <param name="label">[length: bufSize] 
             /// The address of a string that will receive the object label.
             /// </param>
-            [Obsolete("Use out overload instead")]
             [AutoGenerated(Category = "EXT_debug_label", Version = "", EntryPoint = "glGetObjectLabelEXT")]
             [CLSCompliant(false)]
             public static unsafe void GetObjectLabel(OpenTK.Graphics.ES20.All type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label) { throw new NotImplementedException(); }
@@ -19622,6 +20467,46 @@ namespace OpenTK.Graphics.ES20
             [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
             [CLSCompliant(false)]
+            public static IntPtr MapBufferRange(OpenTK.Graphics.ES20.All target, IntPtr offset, Int32 length, Int32 access) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_map_buffer_range]
+            /// Map a section of a buffer object's data store
+            /// </summary>
+            /// <param name="target"> 
+            /// Specifies a binding to which the target buffer is bound.
+            /// </param>
+            /// <param name="offset"> 
+            /// Specifies a the starting offset within the buffer of the range to be mapped.
+            /// </param>
+            /// <param name="length"> 
+            /// Specifies a length of the range to be mapped.
+            /// </param>
+            /// <param name="access"> 
+            /// Specifies a combination of access flags indicating the desired access to the range.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
+            [CLSCompliant(false)]
+            public static IntPtr MapBufferRange(OpenTK.Graphics.ES20.All target, IntPtr offset, Int32 length, UInt32 access) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_map_buffer_range]
+            /// Map a section of a buffer object's data store
+            /// </summary>
+            /// <param name="target"> 
+            /// Specifies a binding to which the target buffer is bound.
+            /// </param>
+            /// <param name="offset"> 
+            /// Specifies a the starting offset within the buffer of the range to be mapped.
+            /// </param>
+            /// <param name="length"> 
+            /// Specifies a length of the range to be mapped.
+            /// </param>
+            /// <param name="access"> 
+            /// Specifies a combination of access flags indicating the desired access to the range.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
+            [CLSCompliant(false)]
             public static IntPtr MapBufferRange(OpenTK.Graphics.ES20.All target, IntPtr offset, IntPtr length, Int32 access) { throw new NotImplementedException(); }
 
             /// <summary>[requires: EXT_map_buffer_range]
@@ -19643,6 +20528,44 @@ namespace OpenTK.Graphics.ES20
             [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
             [CLSCompliant(false)]
             public static IntPtr MapBufferRange(OpenTK.Graphics.ES20.All target, IntPtr offset, IntPtr length, UInt32 access) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_map_buffer_range]
+            /// Map a section of a buffer object's data store
+            /// </summary>
+            /// <param name="target"> 
+            /// Specifies a binding to which the target buffer is bound.
+            /// </param>
+            /// <param name="offset"> 
+            /// Specifies a the starting offset within the buffer of the range to be mapped.
+            /// </param>
+            /// <param name="length"> 
+            /// Specifies a length of the range to be mapped.
+            /// </param>
+            /// <param name="access"> 
+            /// Specifies a combination of access flags indicating the desired access to the range.
+            /// </param>
+            [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
+            [CLSCompliant(false)]
+            public static IntPtr MapBufferRange(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, Int32 length, Int32 access) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_map_buffer_range]
+            /// Map a section of a buffer object's data store
+            /// </summary>
+            /// <param name="target"> 
+            /// Specifies a binding to which the target buffer is bound.
+            /// </param>
+            /// <param name="offset"> 
+            /// Specifies a the starting offset within the buffer of the range to be mapped.
+            /// </param>
+            /// <param name="length"> 
+            /// Specifies a length of the range to be mapped.
+            /// </param>
+            /// <param name="access"> 
+            /// Specifies a combination of access flags indicating the desired access to the range.
+            /// </param>
+            [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
+            [CLSCompliant(false)]
+            public static IntPtr MapBufferRange(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, Int32 length, UInt32 access) { throw new NotImplementedException(); }
 
             /// <summary>[requires: EXT_map_buffer_range]
             /// Map a section of a buffer object's data store
@@ -22715,6 +23638,7 @@ namespace OpenTK.Graphics.ES20
             /// <param name="type"></param>
             /// <param name="bufSize"></param>
             /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
             public static void ReadnPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [OutAttribute] IntPtr data) { throw new NotImplementedException(); }
 
@@ -22727,6 +23651,7 @@ namespace OpenTK.Graphics.ES20
             /// <param name="type"></param>
             /// <param name="bufSize"></param>
             /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
             [CLSCompliant(false)]
             public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] T7[] data)
@@ -22742,6 +23667,7 @@ namespace OpenTK.Graphics.ES20
             /// <param name="type"></param>
             /// <param name="bufSize"></param>
             /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
             [CLSCompliant(false)]
             public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] T7[,] data)
@@ -22757,6 +23683,7 @@ namespace OpenTK.Graphics.ES20
             /// <param name="type"></param>
             /// <param name="bufSize"></param>
             /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
             [CLSCompliant(false)]
             public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] T7[,,] data)
@@ -22772,8 +23699,80 @@ namespace OpenTK.Graphics.ES20
             /// <param name="type"></param>
             /// <param name="bufSize"></param>
             /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
             public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] ref T7 data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
+            public static void ReadnPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [OutAttribute] IntPtr data) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] T7[] data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] T7[,] data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] T7[,,] data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] ref T7 data)
                 where T7 : struct
              { throw new NotImplementedException(); }
 
@@ -22978,7 +23977,51 @@ namespace OpenTK.Graphics.ES20
             /// </param>
             [AutoGenerated(Category = "EXT_texture_buffer", Version = "", EntryPoint = "glTexBufferRangeEXT")]
             [CLSCompliant(false)]
+            public static void TexBufferRange(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All internalformat, Int32 buffer, IntPtr offset, Int32 size) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_texture_buffer]
+            /// Bind a range of a buffer's data store to a buffer texture
+            /// </summary>
+            /// <param name="target"> 
+            /// Specifies the target of the operation and must be TextureBuffer.
+            /// </param>
+            /// <param name="internalformat"> 
+            /// Specifies the internal format of the data in the store belonging to buffer.
+            /// </param>
+            /// <param name="buffer"> 
+            /// Specifies the name of the buffer object whose storage to attach to the active buffer texture.
+            /// </param>
+            /// <param name="offset"> 
+            /// Specifies the offset of the start of the range of the buffer's data store to attach.
+            /// </param>
+            /// <param name="size"> 
+            /// Specifies the size of the range of the buffer's data store to attach.
+            /// </param>
+            [AutoGenerated(Category = "EXT_texture_buffer", Version = "", EntryPoint = "glTexBufferRangeEXT")]
+            [CLSCompliant(false)]
             public static void TexBufferRange(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All internalformat, Int32 buffer, IntPtr offset, IntPtr size) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: EXT_texture_buffer]
+            /// Bind a range of a buffer's data store to a buffer texture
+            /// </summary>
+            /// <param name="target"> 
+            /// Specifies the target of the operation and must be TextureBuffer.
+            /// </param>
+            /// <param name="internalformat"> 
+            /// Specifies the internal format of the data in the store belonging to buffer.
+            /// </param>
+            /// <param name="buffer"> 
+            /// Specifies the name of the buffer object whose storage to attach to the active buffer texture.
+            /// </param>
+            /// <param name="offset"> 
+            /// Specifies the offset of the start of the range of the buffer's data store to attach.
+            /// </param>
+            /// <param name="size"> 
+            /// Specifies the size of the range of the buffer's data store to attach.
+            /// </param>
+            [AutoGenerated(Category = "EXT_texture_buffer", Version = "", EntryPoint = "glTexBufferRangeEXT")]
+            [CLSCompliant(false)]
+            public static void TexBufferRange(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All internalformat, UInt32 buffer, IntPtr offset, Int32 size) { throw new NotImplementedException(); }
 
             /// <summary>[requires: EXT_texture_buffer]
             /// Bind a range of a buffer's data store to a buffer texture
@@ -25109,6 +26152,145 @@ namespace OpenTK.Graphics.ES20
             [CLSCompliant(false)]
             public static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES20.DebugSourceExternal* sources, [OutAttribute] OpenTK.Graphics.ES20.DebugType* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES20.DebugSeverity* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog) { throw new NotImplementedException(); }
 
+            /// <summary>[requires: KHR_robustness]</summary>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetGraphicsResetStatusKHR")]
+            public static OpenTK.Graphics.ES20.All GetGraphicsResetStatus() { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfvKHR")]
+            [CLSCompliant(false)]
+            public static void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] Single[] @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfvKHR")]
+            [CLSCompliant(false)]
+            public static void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] out Single @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfvKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfvKHR")]
+            [CLSCompliant(false)]
+            public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single[] @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfvKHR")]
+            [CLSCompliant(false)]
+            public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] out Single @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformfvKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformivKHR")]
+            [CLSCompliant(false)]
+            public static void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32[] @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformivKHR")]
+            [CLSCompliant(false)]
+            public static void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] out Int32 @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformivKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetnUniform(Int32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformivKHR")]
+            [CLSCompliant(false)]
+            public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32[] @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformivKHR")]
+            [CLSCompliant(false)]
+            public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] out Int32 @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformivKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformuivKHR")]
+            [CLSCompliant(false)]
+            public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] UInt32[] @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformuivKHR")]
+            [CLSCompliant(false)]
+            public static void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] out UInt32 @params) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="program"></param>
+            /// <param name="location"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glGetnUniformuivKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] UInt32* @params) { throw new NotImplementedException(); }
+
             /// <summary>[requires: KHR_debug]
             /// Retrieve the label of a named object identified within a namespace
             /// </summary>
@@ -25952,6 +27134,153 @@ namespace OpenTK.Graphics.ES20
             [CLSCompliant(false)]
             public static void PushDebugGroup(OpenTK.Graphics.ES20.All source, UInt32 id, Int32 length, String message) { throw new NotImplementedException(); }
 
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixelsKHR")]
+            public static void ReadnPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [OutAttribute] IntPtr data) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixelsKHR")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] T7[] data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixelsKHR")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] T7[,] data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixelsKHR")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] T7[,,] data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixelsKHR")]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [InAttribute, OutAttribute] ref T7 data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixelsKHR")]
+            public static void ReadnPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [OutAttribute] IntPtr data) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixelsKHR")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] T7[] data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixelsKHR")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] T7[,] data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixelsKHR")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] T7[,,] data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
+            /// <summary>[requires: KHR_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "KHR_robustness", Version = "", EntryPoint = "glReadnPixelsKHR")]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, Int32 bufSize, [InAttribute, OutAttribute] ref T7 data)
+                where T7 : struct
+             { throw new NotImplementedException(); }
+
         }
 
         public static partial class NV
@@ -26059,7 +27388,50 @@ namespace OpenTK.Graphics.ES20
             /// </param>
             [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "NV_copy_buffer", Version = "", EntryPoint = "glCopyBufferSubDataNV")]
+            public static void CopyBufferSubData(OpenTK.Graphics.ES20.All readTarget, OpenTK.Graphics.ES20.All writeTarget, IntPtr readOffset, IntPtr writeOffset, Int32 size) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: NV_copy_buffer]
+            /// Copy part of the data store of a buffer object to the data store of another buffer object
+            /// </summary>
+            /// <param name="readTarget"> 
+            /// Specifies the target from whose data store data should be read.
+            /// </param>
+            /// <param name="writeTarget"> 
+            /// Specifies the target to whose data store data should be written.
+            /// </param>
+            /// <param name="readOffset"> 
+            /// Specifies the offset, in basic machine units, within the data store of readtarget from which data should be read.
+            /// </param>
+            /// <param name="writeOffset"> 
+            /// Specifies the offset, in basic machine units, within the data store of writetarget to which data should be written.
+            /// </param>
+            /// <param name="size"> 
+            /// Specifies the size, in basic machine units, of the data to be copied from readtarget to writetarget.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "NV_copy_buffer", Version = "", EntryPoint = "glCopyBufferSubDataNV")]
             public static void CopyBufferSubData(OpenTK.Graphics.ES20.All readTarget, OpenTK.Graphics.ES20.All writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size) { throw new NotImplementedException(); }
+
+            /// <summary>[requires: NV_copy_buffer]
+            /// Copy part of the data store of a buffer object to the data store of another buffer object
+            /// </summary>
+            /// <param name="readTarget"> 
+            /// Specifies the target from whose data store data should be read.
+            /// </param>
+            /// <param name="writeTarget"> 
+            /// Specifies the target to whose data store data should be written.
+            /// </param>
+            /// <param name="readOffset"> 
+            /// Specifies the offset, in basic machine units, within the data store of readtarget from which data should be read.
+            /// </param>
+            /// <param name="writeOffset"> 
+            /// Specifies the offset, in basic machine units, within the data store of writetarget to which data should be written.
+            /// </param>
+            /// <param name="size"> 
+            /// Specifies the size, in basic machine units, of the data to be copied from readtarget to writetarget.
+            /// </param>
+            [AutoGenerated(Category = "NV_copy_buffer", Version = "", EntryPoint = "glCopyBufferSubDataNV")]
+            public static void CopyBufferSubData(OpenTK.Graphics.ES20.BufferTarget readTarget, OpenTK.Graphics.ES20.BufferTarget writeTarget, IntPtr readOffset, IntPtr writeOffset, Int32 size) { throw new NotImplementedException(); }
 
             /// <summary>[requires: NV_copy_buffer]
             /// Copy part of the data store of a buffer object to the data store of another buffer object
@@ -31130,25 +32502,25 @@ namespace OpenTK.Graphics.ES20
         [Slot(136)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGenPerfMonitorsAMD(Int32 n, [OutAttribute] UInt32* monitors);
-        [Slot(171)]
+        [Slot(179)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetPerfMonitorCounterDataAMD(UInt32 monitor, System.Int32 pname, Int32 dataSize, [OutAttribute] UInt32* data, [OutAttribute] Int32* bytesWritten);
-        [Slot(172)]
+        [Slot(180)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glGetPerfMonitorCounterInfoAMD(UInt32 group, UInt32 counter, System.Int32 pname, [OutAttribute] IntPtr data);
-        [Slot(173)]
+        [Slot(181)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetPerfMonitorCountersAMD(UInt32 group, [OutAttribute] Int32* numCounters, [OutAttribute] Int32* maxActiveCounters, Int32 counterSize, [OutAttribute] UInt32* counters);
-        [Slot(174)]
+        [Slot(182)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetPerfMonitorCounterStringAMD(UInt32 group, UInt32 counter, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr counterString);
-        [Slot(175)]
+        [Slot(183)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetPerfMonitorGroupsAMD([OutAttribute] Int32* numGroups, Int32 groupsSize, [OutAttribute] UInt32* groups);
-        [Slot(176)]
+        [Slot(184)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetPerfMonitorGroupStringAMD(UInt32 group, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr groupString);
-        [Slot(301)]
+        [Slot(311)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glSelectPerfMonitorCountersAMD(UInt32 monitor, bool enable, UInt32 group, Int32 numCounters, [OutAttribute] UInt32* counterList);
         [Slot(28)]
@@ -31160,13 +32532,13 @@ namespace OpenTK.Graphics.ES20
         [Slot(95)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glDrawElementsInstancedANGLE(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 primcount);
-        [Slot(205)]
+        [Slot(213)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetTranslatedShaderSourceANGLE(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] IntPtr source);
-        [Slot(291)]
+        [Slot(301)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glRenderbufferStorageMultisampleANGLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(372)]
+        [Slot(382)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttribDivisorANGLE(UInt32 index, UInt32 divisor);
         [Slot(37)]
@@ -31181,22 +32553,22 @@ namespace OpenTK.Graphics.ES20
         [Slot(120)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern IntPtr glFenceSyncAPPLE(System.Int32 condition, System.Int32 flags);
-        [Slot(159)]
+        [Slot(161)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetInteger64vAPPLE(System.Int32 pname, [OutAttribute] Int64* @params);
-        [Slot(200)]
+        [Slot(208)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetSyncivAPPLE(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
-        [Slot(224)]
+        [Slot(232)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern byte glIsSyncAPPLE(IntPtr sync);
-        [Slot(292)]
+        [Slot(302)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glRenderbufferStorageMultisampleAPPLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(296)]
+        [Slot(306)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glResolveMultisampleFramebufferAPPLE();
-        [Slot(377)]
+        [Slot(387)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glWaitSyncAPPLE(IntPtr sync, System.Int32 flags, UInt64 timeout);
         [Slot(2)]
@@ -31400,262 +32772,277 @@ namespace OpenTK.Graphics.ES20
         [Slot(157)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetFramebufferAttachmentParameteriv(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(161)]
+        [Slot(158)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern System.Int32 glGetGraphicsResetStatus();
+        [Slot(163)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute] Int32* data);
         [Slot(165)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetObjectLabel(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
+        static extern unsafe void glGetnUniformfv(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
         [Slot(168)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetnUniformiv(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
+        [Slot(171)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetnUniformuiv(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] UInt32* @params);
+        [Slot(173)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetObjectLabel(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
+        [Slot(176)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
-        [Slot(180)]
+        [Slot(188)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
-        [Slot(183)]
+        [Slot(191)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetProgramInfoLog(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr infoLog);
-        [Slot(184)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetProgramiv(UInt32 program, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(192)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetProgramiv(UInt32 program, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(200)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetRenderbufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(195)]
+        [Slot(203)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetShaderInfoLog(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr infoLog);
-        [Slot(196)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetShaderiv(UInt32 shader, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(197)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetShaderPrecisionFormat(System.Int32 shadertype, System.Int32 precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
-        [Slot(198)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetShaderSource(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr source);
-        [Slot(199)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glGetString(System.Int32 name);
-        [Slot(201)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(204)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetShaderiv(UInt32 shader, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(205)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetShaderPrecisionFormat(System.Int32 shadertype, System.Int32 precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
         [Slot(206)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetUniformfv(UInt32 program, Int32 location, [OutAttribute] Single* @params);
+        static extern unsafe void glGetShaderSource(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr source);
         [Slot(207)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetUniformiv(UInt32 program, Int32 location, [OutAttribute] Int32* @params);
-        [Slot(208)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetUniformLocation(UInt32 program, IntPtr name);
+        static extern IntPtr glGetString(System.Int32 name);
         [Slot(209)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetVertexAttribfv(UInt32 index, System.Int32 pname, [OutAttribute] Single* @params);
-        [Slot(210)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetVertexAttribiv(UInt32 index, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(211)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetVertexAttribPointerv(UInt32 index, System.Int32 pname, [OutAttribute] IntPtr pointer);
+        static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(212)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glHint(System.Int32 target, System.Int32 mode);
+        static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(214)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsBuffer(UInt32 buffer);
+        static extern unsafe void glGetUniformfv(UInt32 program, Int32 location, [OutAttribute] Single* @params);
         [Slot(215)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsEnabled(System.Int32 cap);
+        static extern unsafe void glGetUniformiv(UInt32 program, Int32 location, [OutAttribute] Int32* @params);
+        [Slot(216)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern Int32 glGetUniformLocation(UInt32 program, IntPtr name);
+        [Slot(217)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetVertexAttribfv(UInt32 index, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(218)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsFramebuffer(UInt32 framebuffer);
+        static extern unsafe void glGetVertexAttribiv(UInt32 index, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(219)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsProgram(UInt32 program);
+        static extern void glGetVertexAttribPointerv(UInt32 index, System.Int32 pname, [OutAttribute] IntPtr pointer);
+        [Slot(220)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glHint(System.Int32 target, System.Int32 mode);
         [Slot(222)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsRenderbuffer(UInt32 renderbuffer);
+        static extern byte glIsBuffer(UInt32 buffer);
         [Slot(223)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern byte glIsEnabled(System.Int32 cap);
+        [Slot(226)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern byte glIsFramebuffer(UInt32 framebuffer);
+        [Slot(227)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern byte glIsProgram(UInt32 program);
+        [Slot(230)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern byte glIsRenderbuffer(UInt32 renderbuffer);
+        [Slot(231)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern byte glIsShader(UInt32 shader);
-        [Slot(225)]
+        [Slot(233)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern byte glIsTexture(UInt32 texture);
-        [Slot(228)]
+        [Slot(236)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLineWidth(Single width);
-        [Slot(229)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLinkProgram(UInt32 program);
-        [Slot(235)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glObjectLabel(System.Int32 identifier, UInt32 name, Int32 length, IntPtr label);
         [Slot(237)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glLinkProgram(UInt32 program);
+        [Slot(243)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glObjectLabel(System.Int32 identifier, UInt32 name, Int32 length, IntPtr label);
+        [Slot(245)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glObjectPtrLabel(IntPtr ptr, Int32 length, IntPtr label);
-        [Slot(240)]
+        [Slot(248)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPixelStorei(System.Int32 pname, Int32 param);
-        [Slot(241)]
+        [Slot(249)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPolygonOffset(Single factor, Single units);
-        [Slot(242)]
+        [Slot(250)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPopDebugGroup();
-        [Slot(281)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPushDebugGroup(System.Int32 source, UInt32 id, Int32 length, IntPtr message);
-        [Slot(288)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
         [Slot(289)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPushDebugGroup(System.Int32 source, UInt32 id, Int32 length, IntPtr message);
+        [Slot(295)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glReadnPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
+        [Slot(298)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
+        [Slot(299)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glReleaseShaderCompiler();
-        [Slot(290)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorage(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(297)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSampleCoverage(Single value, bool invert);
         [Slot(300)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(303)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glShaderBinary(Int32 count, UInt32* shaders, System.Int32 binaryformat, IntPtr binary, Int32 length);
-        [Slot(304)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glShaderSource(UInt32 shader, Int32 count, IntPtr @string, Int32* length);
-        [Slot(306)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
+        static extern void glRenderbufferStorage(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(307)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilFuncSeparate(System.Int32 face, System.Int32 func, Int32 @ref, UInt32 mask);
-        [Slot(308)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilMask(UInt32 mask);
-        [Slot(309)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilMaskSeparate(System.Int32 face, UInt32 mask);
+        static extern void glSampleCoverage(Single value, bool invert);
         [Slot(310)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
-        [Slot(311)]
+        static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
+        [Slot(313)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilOpSeparate(System.Int32 face, System.Int32 sfail, System.Int32 dpfail, System.Int32 dppass);
-        [Slot(315)]
+        static extern unsafe void glShaderBinary(Int32 count, UInt32* shaders, System.Int32 binaryformat, IntPtr binary, Int32 length);
+        [Slot(314)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
+        static extern unsafe void glShaderSource(UInt32 shader, Int32 count, IntPtr @string, Int32* length);
+        [Slot(316)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
         [Slot(317)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
+        static extern void glStencilFuncSeparate(System.Int32 face, System.Int32 func, Int32 @ref, UInt32 mask);
         [Slot(318)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
+        static extern void glStencilMask(UInt32 mask);
         [Slot(319)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
-        [Slot(322)]
+        static extern void glStencilMaskSeparate(System.Int32 face, UInt32 mask);
+        [Slot(320)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
+        static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
+        [Slot(321)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glStencilOpSeparate(System.Int32 face, System.Int32 sfail, System.Int32 dpfail, System.Int32 dppass);
+        [Slot(325)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(327)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
-        [Slot(333)]
+        static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
+        [Slot(328)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUniform1f(Int32 location, Single v0);
-        [Slot(334)]
+        static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
+        [Slot(329)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniform1fv(Int32 location, Int32 count, Single* value);
-        [Slot(335)]
+        static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(332)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUniform1i(Int32 location, Int32 v0);
-        [Slot(336)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniform1iv(Int32 location, Int32 count, Int32* value);
+        static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(337)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUniform2f(Int32 location, Single v0, Single v1);
-        [Slot(338)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniform2fv(Int32 location, Int32 count, Single* value);
-        [Slot(339)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUniform2i(Int32 location, Int32 v0, Int32 v1);
-        [Slot(340)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniform2iv(Int32 location, Int32 count, Int32* value);
-        [Slot(341)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUniform3f(Int32 location, Single v0, Single v1, Single v2);
-        [Slot(342)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniform3fv(Int32 location, Int32 count, Single* value);
+        static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(343)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUniform3i(Int32 location, Int32 v0, Int32 v1, Int32 v2);
+        static extern void glUniform1f(Int32 location, Single v0);
         [Slot(344)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniform3iv(Int32 location, Int32 count, Int32* value);
+        static extern unsafe void glUniform1fv(Int32 location, Int32 count, Single* value);
         [Slot(345)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUniform4f(Int32 location, Single v0, Single v1, Single v2, Single v3);
+        static extern void glUniform1i(Int32 location, Int32 v0);
         [Slot(346)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniform4fv(Int32 location, Int32 count, Single* value);
+        static extern unsafe void glUniform1iv(Int32 location, Int32 count, Int32* value);
         [Slot(347)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUniform4i(Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
+        static extern void glUniform2f(Int32 location, Single v0, Single v1);
         [Slot(348)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniform4iv(Int32 location, Int32 count, Int32* value);
+        static extern unsafe void glUniform2fv(Int32 location, Int32 count, Single* value);
         [Slot(349)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniformMatrix2fv(Int32 location, Int32 count, bool transpose, Single* value);
+        static extern void glUniform2i(Int32 location, Int32 v0, Int32 v1);
+        [Slot(350)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glUniform2iv(Int32 location, Int32 count, Int32* value);
+        [Slot(351)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glUniform3f(Int32 location, Single v0, Single v1, Single v2);
         [Slot(352)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniformMatrix3fv(Int32 location, Int32 count, bool transpose, Single* value);
+        static extern unsafe void glUniform3fv(Int32 location, Int32 count, Single* value);
+        [Slot(353)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glUniform3i(Int32 location, Int32 v0, Int32 v1, Int32 v2);
+        [Slot(354)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glUniform3iv(Int32 location, Int32 count, Int32* value);
         [Slot(355)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glUniformMatrix4fv(Int32 location, Int32 count, bool transpose, Single* value);
+        static extern void glUniform4f(Int32 location, Single v0, Single v1, Single v2, Single v3);
+        [Slot(356)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glUniform4fv(Int32 location, Int32 count, Single* value);
+        [Slot(357)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glUniform4i(Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
+        [Slot(358)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glUniform4iv(Int32 location, Int32 count, Int32* value);
         [Slot(359)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glUseProgram(UInt32 program);
+        static extern unsafe void glUniformMatrix2fv(Int32 location, Int32 count, bool transpose, Single* value);
         [Slot(362)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glValidateProgram(UInt32 program);
-        [Slot(364)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertexAttrib1f(UInt32 index, Single x);
+        static extern unsafe void glUniformMatrix3fv(Int32 location, Int32 count, bool transpose, Single* value);
         [Slot(365)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertexAttrib1fv(UInt32 index, Single* v);
-        [Slot(366)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertexAttrib2f(UInt32 index, Single x, Single y);
-        [Slot(367)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertexAttrib2fv(UInt32 index, Single* v);
-        [Slot(368)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertexAttrib3f(UInt32 index, Single x, Single y, Single z);
+        static extern unsafe void glUniformMatrix4fv(Int32 location, Int32 count, bool transpose, Single* value);
         [Slot(369)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertexAttrib3fv(UInt32 index, Single* v);
-        [Slot(370)]
+        static extern void glUseProgram(UInt32 program);
+        [Slot(372)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertexAttrib4f(UInt32 index, Single x, Single y, Single z, Single w);
-        [Slot(371)]
+        static extern void glValidateProgram(UInt32 program);
+        [Slot(374)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertexAttrib4fv(UInt32 index, Single* v);
+        static extern void glVertexAttrib1f(UInt32 index, Single x);
         [Slot(375)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertexAttribPointer(UInt32 index, Int32 size, System.Int32 type, bool normalized, Int32 stride, IntPtr pointer);
+        static extern unsafe void glVertexAttrib1fv(UInt32 index, Single* v);
         [Slot(376)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertexAttrib2f(UInt32 index, Single x, Single y);
+        [Slot(377)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glVertexAttrib2fv(UInt32 index, Single* v);
+        [Slot(378)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertexAttrib3f(UInt32 index, Single x, Single y, Single z);
+        [Slot(379)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glVertexAttrib3fv(UInt32 index, Single* v);
+        [Slot(380)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertexAttrib4f(UInt32 index, Single x, Single y, Single z, Single w);
+        [Slot(381)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glVertexAttrib4fv(UInt32 index, Single* v);
+        [Slot(385)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glVertexAttribPointer(UInt32 index, Int32 size, System.Int32 type, bool normalized, Int32 stride, IntPtr pointer);
+        [Slot(386)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glViewport(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(0)]
@@ -31742,259 +33129,259 @@ namespace OpenTK.Graphics.ES20
         [Slot(138)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGenQueriesEXT(Int32 n, [OutAttribute] UInt32* ids);
-        [Slot(158)]
+        [Slot(159)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern System.Int32 glGetGraphicsResetStatusEXT();
-        [Slot(160)]
+        [Slot(162)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetIntegeri_vEXT(System.Int32 target, UInt32 index, [OutAttribute] Int32* data);
-        [Slot(163)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
-        [Slot(164)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
         [Slot(166)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
+        [Slot(169)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
+        [Slot(174)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetObjectLabelEXT(System.Int32 type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
-        [Slot(185)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetProgramPipelineInfoLogEXT(UInt32 pipeline, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr infoLog);
-        [Slot(186)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetProgramPipelineivEXT(UInt32 pipeline, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(187)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetQueryivEXT(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(188)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetQueryObjecti64vEXT(UInt32 id, System.Int32 pname, [OutAttribute] Int64* @params);
-        [Slot(189)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetQueryObjectivEXT(UInt32 id, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(190)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetQueryObjectui64vEXT(UInt32 id, System.Int32 pname, [OutAttribute] UInt64* @params);
-        [Slot(191)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetQueryObjectuivEXT(UInt32 id, System.Int32 pname, [OutAttribute] UInt32* @params);
         [Slot(193)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetSamplerParameterIivEXT(UInt32 sampler, System.Int32 pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetProgramPipelineInfoLogEXT(UInt32 pipeline, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr infoLog);
         [Slot(194)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetSamplerParameterIuivEXT(UInt32 sampler, System.Int32 pname, [OutAttribute] UInt32* @params);
+        static extern unsafe void glGetProgramPipelineivEXT(UInt32 pipeline, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(195)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetQueryivEXT(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(196)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetQueryObjecti64vEXT(UInt32 id, System.Int32 pname, [OutAttribute] Int64* @params);
+        [Slot(197)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetQueryObjectivEXT(UInt32 id, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(198)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetQueryObjectui64vEXT(UInt32 id, System.Int32 pname, [OutAttribute] UInt64* @params);
+        [Slot(199)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetQueryObjectuivEXT(UInt32 id, System.Int32 pname, [OutAttribute] UInt32* @params);
+        [Slot(201)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetSamplerParameterIivEXT(UInt32 sampler, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(202)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetSamplerParameterIuivEXT(UInt32 sampler, System.Int32 pname, [OutAttribute] UInt32* @params);
+        [Slot(210)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetTexParameterIivEXT(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(203)]
+        [Slot(211)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetTexParameterIuivEXT(System.Int32 target, System.Int32 pname, [OutAttribute] UInt32* @params);
-        [Slot(213)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glInsertEventMarkerEXT(Int32 length, IntPtr marker);
-        [Slot(216)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsEnablediEXT(System.Int32 target, UInt32 index);
-        [Slot(220)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsProgramPipelineEXT(UInt32 pipeline);
         [Slot(221)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glInsertEventMarkerEXT(Int32 length, IntPtr marker);
+        [Slot(224)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern byte glIsEnablediEXT(System.Int32 target, UInt32 index);
+        [Slot(228)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern byte glIsProgramPipelineEXT(UInt32 pipeline);
+        [Slot(229)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern byte glIsQueryEXT(UInt32 id);
-        [Slot(227)]
+        [Slot(235)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glLabelObjectEXT(System.Int32 type, UInt32 @object, Int32 length, IntPtr label);
-        [Slot(231)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
-        [Slot(233)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, Int32* first, Int32* count, Int32 primcount);
-        [Slot(234)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 primcount);
         [Slot(239)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPatchParameteriEXT(System.Int32 pname, Int32 value);
-        [Slot(244)]
+        static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
+        [Slot(241)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPopGroupMarkerEXT();
-        [Slot(245)]
+        static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, Int32* first, Int32* count, Int32 primcount);
+        [Slot(242)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPrimitiveBoundingBoxEXT(Single minX, Single minY, Single minZ, Single minW, Single maxX, Single maxY, Single maxZ, Single maxW);
+        static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 primcount);
         [Slot(247)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramParameteriEXT(UInt32 program, System.Int32 pname, Int32 value);
-        [Slot(248)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform1fEXT(UInt32 program, Int32 location, Single v0);
-        [Slot(249)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform1fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
-        [Slot(250)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform1iEXT(UInt32 program, Int32 location, Int32 v0);
-        [Slot(251)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform1ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
+        static extern void glPatchParameteriEXT(System.Int32 pname, Int32 value);
         [Slot(252)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform1uiEXT(UInt32 program, Int32 location, UInt32 v0);
+        static extern void glPopGroupMarkerEXT();
         [Slot(253)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform1uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
-        [Slot(254)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform2fEXT(UInt32 program, Int32 location, Single v0, Single v1);
+        static extern void glPrimitiveBoundingBoxEXT(Single minX, Single minY, Single minZ, Single minW, Single maxX, Single maxY, Single maxZ, Single maxW);
         [Slot(255)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform2fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
+        static extern void glProgramParameteriEXT(UInt32 program, System.Int32 pname, Int32 value);
         [Slot(256)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform2iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1);
+        static extern void glProgramUniform1fEXT(UInt32 program, Int32 location, Single v0);
         [Slot(257)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform2ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
+        static extern unsafe void glProgramUniform1fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
         [Slot(258)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform2uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1);
+        static extern void glProgramUniform1iEXT(UInt32 program, Int32 location, Int32 v0);
         [Slot(259)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform2uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
+        static extern unsafe void glProgramUniform1ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
         [Slot(260)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform3fEXT(UInt32 program, Int32 location, Single v0, Single v1, Single v2);
+        static extern void glProgramUniform1uiEXT(UInt32 program, Int32 location, UInt32 v0);
         [Slot(261)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform3fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
+        static extern unsafe void glProgramUniform1uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
         [Slot(262)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform3iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2);
+        static extern void glProgramUniform2fEXT(UInt32 program, Int32 location, Single v0, Single v1);
         [Slot(263)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform3ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
+        static extern unsafe void glProgramUniform2fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
         [Slot(264)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform3uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2);
+        static extern void glProgramUniform2iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1);
         [Slot(265)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform3uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
+        static extern unsafe void glProgramUniform2ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
         [Slot(266)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform4fEXT(UInt32 program, Int32 location, Single v0, Single v1, Single v2, Single v3);
+        static extern void glProgramUniform2uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1);
         [Slot(267)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform4fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
+        static extern unsafe void glProgramUniform2uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
         [Slot(268)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform4iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
+        static extern void glProgramUniform3fEXT(UInt32 program, Int32 location, Single v0, Single v1, Single v2);
         [Slot(269)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform4ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
+        static extern unsafe void glProgramUniform3fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
         [Slot(270)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glProgramUniform4uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2, UInt32 v3);
+        static extern void glProgramUniform3iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2);
         [Slot(271)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniform4uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
+        static extern unsafe void glProgramUniform3ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
         [Slot(272)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        static extern void glProgramUniform3uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2);
         [Slot(273)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix2x3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        static extern unsafe void glProgramUniform3uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
         [Slot(274)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix2x4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        static extern void glProgramUniform4fEXT(UInt32 program, Int32 location, Single v0, Single v1, Single v2, Single v3);
         [Slot(275)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        static extern unsafe void glProgramUniform4fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
         [Slot(276)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix3x2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        static extern void glProgramUniform4iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
         [Slot(277)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix3x4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        static extern unsafe void glProgramUniform4ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
         [Slot(278)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        static extern void glProgramUniform4uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2, UInt32 v3);
         [Slot(279)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix4x2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        static extern unsafe void glProgramUniform4uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
         [Slot(280)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glProgramUniformMatrix4x3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        static extern unsafe void glProgramUniformMatrix2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(281)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix2x3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(282)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix2x4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
         [Slot(283)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPushGroupMarkerEXT(Int32 length, IntPtr marker);
+        static extern unsafe void glProgramUniformMatrix3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
         [Slot(284)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glQueryCounterEXT(UInt32 id, System.Int32 target);
+        static extern unsafe void glProgramUniformMatrix3x2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
         [Slot(285)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glReadBufferIndexedEXT(System.Int32 src, Int32 index);
+        static extern unsafe void glProgramUniformMatrix3x4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(286)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
         [Slot(287)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
+        static extern unsafe void glProgramUniformMatrix4x2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(288)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glProgramUniformMatrix4x3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+        [Slot(291)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glPushGroupMarkerEXT(Int32 length, IntPtr marker);
+        [Slot(292)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glQueryCounterEXT(UInt32 id, System.Int32 target);
         [Slot(293)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glReadBufferIndexedEXT(System.Int32 src, Int32 index);
+        [Slot(296)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
+        [Slot(303)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glRenderbufferStorageMultisampleEXT(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(298)]
+        [Slot(308)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glSamplerParameterIivEXT(UInt32 sampler, System.Int32 pname, Int32* param);
-        [Slot(299)]
+        [Slot(309)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glSamplerParameterIuivEXT(UInt32 sampler, System.Int32 pname, UInt32* param);
-        [Slot(313)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexBufferEXT(System.Int32 target, System.Int32 internalformat, UInt32 buffer);
-        [Slot(314)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexBufferRangeEXT(System.Int32 target, System.Int32 internalformat, UInt32 buffer, IntPtr offset, IntPtr size);
-        [Slot(320)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameterIivEXT(System.Int32 target, System.Int32 pname, Int32* @params);
-        [Slot(321)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameterIuivEXT(System.Int32 target, System.Int32 pname, UInt32* @params);
         [Slot(323)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
+        static extern void glTexBufferEXT(System.Int32 target, System.Int32 internalformat, UInt32 buffer);
         [Slot(324)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(325)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
-        [Slot(329)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
+        static extern void glTexBufferRangeEXT(System.Int32 target, System.Int32 internalformat, UInt32 buffer, IntPtr offset, IntPtr size);
         [Slot(330)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
+        static extern unsafe void glTexParameterIivEXT(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(331)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glTexParameterIuivEXT(System.Int32 target, System.Int32 pname, UInt32* @params);
+        [Slot(333)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
+        [Slot(334)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(335)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
+        [Slot(339)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
+        [Slot(340)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(341)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTextureStorage3DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
-        [Slot(332)]
+        [Slot(342)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTextureViewEXT(UInt32 texture, System.Int32 target, UInt32 origtexture, System.Int32 internalformat, UInt32 minlevel, UInt32 numlevels, UInt32 minlayer, UInt32 numlayers);
-        [Slot(360)]
+        [Slot(370)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUseProgramStagesEXT(UInt32 pipeline, UInt32 stages, UInt32 program);
-        [Slot(361)]
+        [Slot(371)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUseShaderProgramEXT(System.Int32 type, UInt32 program);
-        [Slot(363)]
+        [Slot(373)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glValidateProgramPipelineEXT(UInt32 pipeline);
-        [Slot(373)]
+        [Slot(383)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttribDivisorEXT(UInt32 index, UInt32 divisor);
         [Slot(128)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
-        [Slot(294)]
+        [Slot(304)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(6)]
@@ -32012,19 +33399,19 @@ namespace OpenTK.Graphics.ES20
         [Slot(155)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetFirstPerfQueryIdINTEL([OutAttribute] UInt32* queryId);
-        [Slot(162)]
+        [Slot(164)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetNextPerfQueryIdINTEL(UInt32 queryId, [OutAttribute] UInt32* nextQueryId);
-        [Slot(170)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetPerfCounterInfoINTEL(UInt32 queryId, UInt32 counterId, UInt32 counterNameLength, [OutAttribute] IntPtr counterName, UInt32 counterDescLength, [OutAttribute] IntPtr counterDesc, [OutAttribute] UInt32* counterOffset, [OutAttribute] UInt32* counterDataSize, [OutAttribute] UInt32* counterTypeEnum, [OutAttribute] UInt32* counterDataTypeEnum, [OutAttribute] UInt64* rawCounterMaxValue);
-        [Slot(177)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetPerfQueryDataINTEL(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [OutAttribute] IntPtr data, [OutAttribute] UInt32* bytesWritten);
         [Slot(178)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetPerfCounterInfoINTEL(UInt32 queryId, UInt32 counterId, UInt32 counterNameLength, [OutAttribute] IntPtr counterName, UInt32 counterDescLength, [OutAttribute] IntPtr counterDesc, [OutAttribute] UInt32* counterOffset, [OutAttribute] UInt32* counterDataSize, [OutAttribute] UInt32* counterTypeEnum, [OutAttribute] UInt32* counterDataTypeEnum, [OutAttribute] UInt64* rawCounterMaxValue);
+        [Slot(185)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetPerfQueryDataINTEL(UInt32 queryHandle, UInt32 flags, Int32 dataSize, [OutAttribute] IntPtr data, [OutAttribute] UInt32* bytesWritten);
+        [Slot(186)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetPerfQueryIdByNameINTEL([OutAttribute] IntPtr queryName, [OutAttribute] UInt32* queryId);
-        [Slot(179)]
+        [Slot(187)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetPerfQueryInfoINTEL(UInt32 queryId, UInt32 queryNameLength, [OutAttribute] IntPtr queryName, [OutAttribute] UInt32* dataSize, [OutAttribute] UInt32* noCounters, [OutAttribute] UInt32* noInstances, [OutAttribute] UInt32* capsMask);
         [Slot(15)]
@@ -32042,27 +33429,42 @@ namespace OpenTK.Graphics.ES20
         [Slot(150)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe Int32 glGetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] System.Int32* sources, [OutAttribute] System.Int32* types, [OutAttribute] UInt32* ids, [OutAttribute] System.Int32* severities, [OutAttribute] Int32* lengths, [OutAttribute] IntPtr messageLog);
+        [Slot(160)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern System.Int32 glGetGraphicsResetStatusKHR();
         [Slot(167)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetnUniformfvKHR(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
+        [Slot(170)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetnUniformivKHR(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
+        [Slot(172)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern unsafe void glGetnUniformuivKHR(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] UInt32* @params);
+        [Slot(175)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
-        [Slot(169)]
+        [Slot(177)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetObjectPtrLabelKHR(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr label);
-        [Slot(181)]
+        [Slot(189)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glGetPointervKHR(System.Int32 pname, [OutAttribute] IntPtr @params);
-        [Slot(236)]
+        [Slot(244)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 length, IntPtr label);
-        [Slot(238)]
+        [Slot(246)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glObjectPtrLabelKHR(IntPtr ptr, Int32 length, IntPtr label);
-        [Slot(243)]
+        [Slot(251)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPopDebugGroupKHR();
-        [Slot(282)]
+        [Slot(290)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPushDebugGroupKHR(System.Int32 source, UInt32 id, Int32 length, IntPtr message);
+        [Slot(297)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glReadnPixelsKHR(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
         [Slot(16)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBlendBarrierNV();
@@ -32102,40 +33504,40 @@ namespace OpenTK.Graphics.ES20
         [Slot(154)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetFenceivNV(UInt32 fence, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(217)]
+        [Slot(225)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern byte glIsFenceNV(UInt32 fence);
-        [Slot(286)]
+        [Slot(294)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glReadBufferNV(System.Int32 mode);
-        [Slot(295)]
+        [Slot(305)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glRenderbufferStorageMultisampleNV(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(302)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSetFenceNV(UInt32 fence, System.Int32 condition);
         [Slot(312)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glSetFenceNV(UInt32 fence, System.Int32 condition);
+        [Slot(322)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern byte glTestFenceNV(UInt32 fence);
-        [Slot(350)]
+        [Slot(360)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix2x3fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(351)]
+        [Slot(361)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix2x4fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(353)]
+        [Slot(363)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix3x2fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(354)]
+        [Slot(364)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix3x4fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(356)]
+        [Slot(366)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix4x2fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(357)]
+        [Slot(367)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glUniformMatrix4x3fvNV(Int32 location, Int32 count, bool transpose, Single* value);
-        [Slot(374)]
+        [Slot(384)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glVertexAttribDivisorNV(UInt32 index, UInt32 divisor);
         [Slot(14)]
@@ -32168,31 +33570,31 @@ namespace OpenTK.Graphics.ES20
         [Slot(148)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
-        [Slot(182)]
+        [Slot(190)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetProgramBinaryOES(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] System.Int32* binaryFormat, [OutAttribute] IntPtr binary);
-        [Slot(226)]
+        [Slot(234)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern byte glIsVertexArrayOES(UInt32 array);
-        [Slot(230)]
+        [Slot(238)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
-        [Slot(232)]
+        [Slot(240)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glMinSampleShadingOES(Single value);
-        [Slot(246)]
+        [Slot(254)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glProgramBinaryOES(UInt32 program, System.Int32 binaryFormat, IntPtr binary, Int32 length);
-        [Slot(316)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexImage3DOES(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(326)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        static extern void glTexImage3DOES(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
+        [Slot(336)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexStorage3DMultisampleOES(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
-        [Slot(328)]
+        [Slot(338)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glTexSubImage3DOES(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, IntPtr pixels);
-        [Slot(358)]
+        [Slot(368)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern byte glUnmapBufferOES(System.Int32 target);
         [Slot(3)]
@@ -32249,7 +33651,7 @@ namespace OpenTK.Graphics.ES20
         [Slot(152)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr driverControlString);
-        [Slot(305)]
+        [Slot(315)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStartTilingQCOM(UInt32 x, UInt32 y, UInt32 width, UInt32 height, UInt32 preserveMask);
     }

@@ -34,8 +34,8 @@ namespace OpenTK.Platform.Egl
 {
     class EglWinContext : EglContext
     {
-        readonly IntPtr ES1 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv1_CM");
-        readonly IntPtr ES2 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv2");
+        IntPtr ES1 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv1_CM");
+        IntPtr ES2 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv2");
 
         public EglWinContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -53,13 +53,13 @@ namespace OpenTK.Platform.Egl
 
         protected override IntPtr GetStaticAddress(IntPtr function, RenderableFlags renderable)
         {
-            if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
-            {
-                return Windows.Functions.GetProcAddress(ES1, function);
-            }
-            else if ((renderable & RenderableFlags.ES2) != 0 && ES2 != IntPtr.Zero)
+            if ((renderable & (RenderableFlags.ES2 | RenderableFlags.ES3)) != 0 && ES2 != IntPtr.Zero)
             {
                 return Windows.Functions.GetProcAddress(ES2, function);
+            }
+            else if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
+            {
+                return Windows.Functions.GetProcAddress(ES1, function);
             }
             return IntPtr.Zero;
         }
@@ -74,6 +74,8 @@ namespace OpenTK.Platform.Egl
             {
                 Windows.Functions.FreeLibrary(ES2);
             }
+
+            ES1 = ES2 = IntPtr.Zero;
 
             base.Dispose(manual);
         }

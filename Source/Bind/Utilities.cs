@@ -167,18 +167,7 @@ namespace Bind
 
         #region Keywords
 
-        public static List<string> Keywords(GeneratorLanguage language)
-        {
-            switch (language)
-            {
-                case GeneratorLanguage.CSharp: return CSharpKeywords;
-                case GeneratorLanguage.Cpp: return CppKeywords;
-                case GeneratorLanguage.Java: return JavaKeywords;
-                default: throw new NotImplementedException();
-            }
-        }
-
-        static readonly List<string> CSharpKeywords = new List<string>(
+        public static readonly List<string> CSharpKeywords = new List<string>(
             new string[]
             {
                 "abstract", "event", "new", "struct",
@@ -203,24 +192,6 @@ namespace Bind
                 "enum", "namespace", "string"
             }
         );
-
-        static readonly List<string> JavaKeywords = new List<string>(
-            new string[]
-            {
-                "abstract", "continue", "for", "new", "switch",
-                "assert", "default", "goto", "package", "synchronized",
-                "boolean", "do", "if", "private", "this",
-                "break", "double", "implements", "protected", "throw",
-                "byte", "else", "import", "public", "throws",
-                "case", "enum", "instanceof", "return", "transient",
-                "catch", "extends", "int", "short", "try",
-                "char", "final", "interface", "static", "void",
-                "class", "finally", "long", "strictfp", "volatile",
-                "const", "float", "native", "super", "while",
-                "callback"
-            });
-
-        static readonly List<string> CppKeywords = new List<string>();
 
         #endregion
 
