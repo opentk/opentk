@@ -30,7 +30,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Mono.Options;
 
-namespace CHeaderToXML
+namespace OpenTK.Convert
 {
     class EnumTokenComparer : IEqualityComparer<XNode>
     {
@@ -59,13 +59,7 @@ namespace CHeaderToXML
             }
         }
     }
-
-    enum HeaderType
-    {
-        Header,
-        Xml
-    }
-
+    
     class EntryPoint
     {
         static void Main(string[] args)
@@ -76,16 +70,13 @@ namespace CHeaderToXML
                 string prefix = "gl";
                 string version = null;
                 string path = null;
-                HeaderType type = HeaderType.Header;
                 OptionSet opts = new OptionSet
                 {
                     { "p=", "The {PREFIX} to remove from parsed functions and constants.  " +
                         "Defaults to \"" + prefix + "\".",
                         v => prefix = v },
-                    { "v:", "The {VERSION} of the headers being parsed.",
+                    { "v:", "The {VERSION} of the specification being parsed.",
                         v => version = v },
-                    { "t:", "The {TYPE} of the headers being parsed.",
-                        v => type = (HeaderType)Enum.Parse(typeof(HeaderType), v, true) },
                     { "o:", "The {PATH} to the output file.",
                         v => path = v },
                     { "?|h|help", "Show this message and exit.",
@@ -95,12 +86,12 @@ namespace CHeaderToXML
                 var app = Path.GetFileName(Environment.GetCommandLineArgs()[0]);
                 if (showHelp)
                 {
-                    Console.WriteLine("usage: {0} -p:PREFIX -v:VERSION -t:TYPE HEADERS", app);
+                    Console.WriteLine("usage: {0} -p:PREFIX -v:VERSION SPECIFICATIONS", app);
                     Console.WriteLine();
                     Console.WriteLine("Options:");
                     opts.WriteOptionDescriptions(Console.Out);
                     Console.WriteLine();
-                    Console.WriteLine("HEADERS are the header files to parse into XML.");
+                    Console.WriteLine("SPECIFICATIONS are the Khronos XML files to parse into OpenTK XML.");
                     return;
                 }
                 if (prefix == null)
@@ -109,10 +100,8 @@ namespace CHeaderToXML
                     Console.WriteLine("Use '{0} --help' for usage.", app);
                     return;
                 }
-                Parser parser =
-                    type == HeaderType.Header ? new ESCLParser { Prefix = prefix, Version = version } :
-                    type == HeaderType.Xml ? new GLXmlParser { Prefix = prefix, Version = version } :
-                    (Parser)null;
+
+                Parser parser = new GLXmlParser { Prefix = prefix, Version = version };
 
                 var sigs = headers.Select(h => parser.Parse(h)).ToList();
 
@@ -138,8 +127,7 @@ namespace CHeaderToXML
 
                 using (var writer = XmlWriter.Create(out_stream, settings))
                 {
-                    var output = new XElement("signatures",
-                        new XAttribute("version", parser is GLXmlParser ? "2" : "1"));
+                    var output = new XElement("signatures", new XAttribute("version", "2"));
                     foreach (var api in sigs.SelectMany(s => s))
                     {
                         output.Add(

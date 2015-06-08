@@ -32,7 +32,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace CHeaderToXML
+namespace OpenTK.Convert
 {
     static class Extension
     {
