@@ -20698,6 +20698,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_ACTIVE_ATOMIC_COUNTER_BUFFERS = 0x92D9
         /// </summary>
         ActiveAtomicCounterBuffers = ((int)0x92D9)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM_BINARY_LENGTH = 0x8741
+        /// </summary>
+        ProgramBinaryLength = ((int)All.ProgramBinaryLength),
     }
 
     /// <summary>
