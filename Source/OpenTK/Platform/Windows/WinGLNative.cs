@@ -1176,6 +1176,10 @@ namespace OpenTK.Platform.Windows
                                     oldCursor = Functions.SetCursor(icon);
                                 }
                             }
+                            // GetIconInfo creates bitmaps for the hbmMask and hbmColor members of ICONINFO. 
+                            // The calling application must manage these bitmaps and delete them when they are no longer necessary.
+                            Functions.DeleteObject(iconInfo.hbmColor);
+                            Functions.DeleteObject(iconInfo.hbmMask);
                         }
                     }
 
