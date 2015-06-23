@@ -83,7 +83,7 @@ namespace OpenTK.Platform.Windows
         const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
 
         const long ExtendedBit = 1 << 24;           // Used to distinguish left and right control, alt and enter keys.
-        
+
         public static readonly uint ShiftLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LSHIFT, 0);
         public static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);
         public static readonly uint ControlLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LCONTROL, 0);
@@ -93,6 +93,7 @@ namespace OpenTK.Platform.Windows
 
         MouseCursor cursor = MouseCursor.Default;
         IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
+        IntPtr old_cursor_handle = IntPtr.Zero;
         int cursor_visible_count = 0;
 
         static readonly object SyncRoot = new object();
@@ -1130,12 +1131,11 @@ namespace OpenTK.Platform.Windows
                 if (value != cursor)
                 {
                     bool destoryOld = cursor != MouseCursor.Default;
-                    IntPtr oldCursor = IntPtr.Zero;
 
                     if (value == MouseCursor.Default)
                     {
                         cursor_handle = Functions.LoadCursor(CursorName.Arrow);
-                        oldCursor = Functions.SetCursor(cursor_handle);
+                        Functions.SetCursor(cursor_handle);
                         cursor = value;
                     }
                     else
@@ -1173,16 +1173,22 @@ namespace OpenTK.Platform.Windows
                                     // once replaced
                                     cursor = value;
                                     cursor_handle = icon;
-                                    oldCursor = Functions.SetCursor(icon);
+                                    Functions.SetCursor(icon);
                                 }
+                                // GetIconInfo creates bitmaps for the hbmMask and hbmColor members of ICONINFO. 
+                                // The calling application must manage these bitmaps and delete them when they are no longer necessary.
+                                Functions.DeleteObject(iconInfo.hbmColor);
+                                Functions.DeleteObject(iconInfo.hbmMask);
                             }
+                            Functions.DestroyIcon(bmpIcon);
                         }
                     }
 
-                    if (destoryOld && oldCursor != IntPtr.Zero)
+                    if (destoryOld && old_cursor_handle != IntPtr.Zero)
                     {
-                        Functions.DestroyIcon(oldCursor);
+                        Functions.DestroyIcon(old_cursor_handle);
                     }
+                    old_cursor_handle = cursor_handle;
                 }
             }
         }

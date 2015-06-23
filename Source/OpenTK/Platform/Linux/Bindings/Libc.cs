@@ -52,7 +52,10 @@ namespace OpenTK.Platform.Linux
         public static extern int ioctl(int d, JoystickIoctlCode request, StringBuilder data);
 
         [DllImport(lib)]
-        public static extern int ioctl(int d, EvdevIoctlCode request, out EvdevInputId data);
+        public static extern int ioctl(int d, EvdevIoctl request, [Out] IntPtr data);
+
+        [DllImport(lib)]
+        public static extern int ioctl(int d, uint request, [Out] IntPtr data);
 
         [DllImport(lib)]
         public static extern int ioctl(int d, KeyboardIoctlCode request, ref IntPtr data);
@@ -107,6 +110,14 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
+    enum DirectionFlags
+    {
+        None = 0,
+        Write = 1,
+        Read = 2
+    }
+
+    [Flags]
     enum OpenFlags
     {
         ReadOnly = 0x0000,
@@ -114,11 +125,6 @@ namespace OpenTK.Platform.Linux
         ReadWrite = 0x0002,
         NonBlock = 0x0800,
         CloseOnExec = 0x0080000
-    }
-
-    enum EvdevIoctlCode : uint
-    {
-        Id = ((byte)'E' << 8) | (0x02 << 0) //EVIOCGID, which is _IOR('E', 0x02, struct input_id)
     }
 
     [Flags]

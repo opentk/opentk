@@ -54,12 +54,12 @@ namespace Bind
             RegexOptions.Compiled);
         static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
-        string Overrides { get; set; }
+        readonly IEnumerable<string> Overrides;
 
         IBind Generator { get; set; }
         Settings Settings { get { return Generator.Settings; } }
 
-        public FuncProcessor(IBind generator, string overrides)
+        public FuncProcessor(IBind generator, IEnumerable<string> overrides)
         {
             if (generator == null)
                 throw new ArgumentNullException("generator");
@@ -73,43 +73,47 @@ namespace Bind
         public FunctionCollection Process(EnumProcessor enum_processor, DocProcessor doc_processor,
             DelegateCollection delegates, EnumCollection enums, string apiname, string apiversion)
         {
-            Console.WriteLine("Processing delegates.");
-            var nav = new XPathDocument(Overrides).CreateNavigator();
-            foreach (var version in apiversion.Split('|'))
+            foreach (var file in Overrides)
             {
-                // Translate each delegate:
-                // 1st using the <replace> elements in overrides.xml
-                // 2nd using the hardcoded rules in FuncProcessor (e.g. char* -> string)
-                foreach (var signatures in delegates.Values)
-                {
-                    foreach (var d in signatures)
-                    {
-                        var replace = GetFuncOverride(nav, d, apiname, apiversion);
-                        TranslateExtension(d);
-                        TranslateReturnType(d, replace, nav, enum_processor, enums, apiname, version);
-                        TranslateParameters(d, replace, nav, enum_processor, enums, apiname, version);
-                        TranslateAttributes(d, replace, nav, apiname, version);
-                    }
-                }
+                Console.WriteLine("Processing funcs in {0}.", file);
 
-                // Create overloads for backwards compatibility,
-                // by resolving <overload> elements
-                var overload_list = new List<Delegate>();
-                foreach (var d in delegates.Values.Select(v => v.First()))
+                var nav = new XPathDocument(file).CreateNavigator();
+                foreach (var version in apiversion.Split('|'))
                 {
-                    var overload_elements = GetFuncOverload(nav, d, apiname, apiversion);
-                    foreach (XPathNavigator overload_element in overload_elements)
+                    // Translate each delegate:
+                    // 1st using the <replace> elements in overrides.xml
+                    // 2nd using the hardcoded rules in FuncProcessor (e.g. char* -> string)
+                    foreach (var signatures in delegates.Values)
                     {
-                        var overload = new Delegate(d);
-                        TranslateReturnType(overload, overload_element, nav, enum_processor, enums, apiname, version);
-                        TranslateParameters(overload, overload_element, nav, enum_processor, enums, apiname, version);
-                        TranslateAttributes(overload, overload_element, nav, apiname, version);
-                        overload_list.Add(overload);
+                        foreach (var d in signatures)
+                        {
+                            var replace = GetFuncOverride(nav, d, apiname, apiversion);
+                            TranslateExtension(d);
+                            TranslateReturnType(d, replace, nav, enum_processor, enums, apiname, version);
+                            TranslateParameters(d, replace, nav, enum_processor, enums, apiname, version);
+                            TranslateAttributes(d, replace, nav, apiname, version);
+                        }
                     }
-                }
-                foreach (var overload in overload_list)
-                {
-                    delegates.Add(overload);
+
+                    // Create overloads for backwards compatibility,
+                    // by resolving <overload> elements
+                    var overload_list = new List<Delegate>();
+                    foreach (var d in delegates.Values.Select(v => v.First()))
+                    {
+                        var overload_elements = GetFuncOverload(nav, d, apiname, apiversion);
+                        foreach (XPathNavigator overload_element in overload_elements)
+                        {
+                            var overload = new Delegate(d);
+                            TranslateReturnType(overload, overload_element, nav, enum_processor, enums, apiname, version);
+                            TranslateParameters(overload, overload_element, nav, enum_processor, enums, apiname, version);
+                            TranslateAttributes(overload, overload_element, nav, apiname, version);
+                            overload_list.Add(overload);
+                        }
+                    }
+                    foreach (var overload in overload_list)
+                    {
+                        delegates.Add(overload);
+                    }
                 }
             }
 
@@ -324,17 +328,16 @@ namespace Bind
                 }
                 else
                 {
-                    // Todo: what is the point of this here? It is overwritten below.
-                    // A few translations for consistency
-                    switch (type.CurrentType.ToLower())
-                    {
-                        case "string":
-                            type.QualifiedType = "String";
-                            break;
-                    }
-
                     type.QualifiedType = s;
                 }
+            }
+
+            if ((type.Array == 0 && type.Pointer == 0 && !type.Reference) &&
+                (type.QualifiedType.ToLower().Contains("buffersize") ||
+                type.QualifiedType.ToLower().Contains("sizeiptr") ||
+                type.QualifiedType.Contains("size_t")))
+            {
+                type.WrapperType |= WrapperTypes.SizeParameter;
             }
 
             type.CurrentType =
@@ -691,7 +694,7 @@ namespace Bind
                 }
             }
 
-            if (Utilities.Keywords(Settings.Language).Contains(p.Name))
+            if (Utilities.CSharpKeywords.Contains(p.Name))
                 p.Name = Settings.KeywordEscapeCharacter + p.Name;
 
             // This causes problems with bool arrays
@@ -957,6 +960,27 @@ namespace Bind
                         // If we have a convenience overload, we should turn its name from plural into singular
                         f.TrimmedName = f.TrimmedName.Replace("Queries", "Query").TrimEnd('s');
 
+                        convenience_wrappers.Add(f);
+                    }
+                }
+
+                // Check for IntPtr parameters that correspond to size_t (e.g. GLsizei)
+                // and add Int32 overloads for convenience.
+                {
+                    Function f = null;
+                    int i = 0;
+                    foreach (var p in d.Parameters)
+                    {
+                        if ((p.WrapperType & WrapperTypes.SizeParameter) != 0)
+                        {
+                            f = f ?? new Function(d);
+                            f.Parameters[i].QualifiedType = "Int32";
+                        }
+                        i++;
+                    }
+
+                    if (f != null)
+                    {
                         convenience_wrappers.Add(f);
                     }
                 }

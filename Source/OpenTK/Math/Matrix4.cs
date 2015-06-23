@@ -117,6 +117,30 @@ namespace OpenTK
             Row3 = new Vector4(m30, m31, m32, m33);
         }
 
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="topLeft">The top left 3x3 of the matrix.</param>
+        public Matrix4(Matrix3 topLeft)
+        {
+            Row0.X = topLeft.Row0.X;
+            Row0.Y = topLeft.Row0.Y;
+            Row0.Z = topLeft.Row0.Z;
+            Row0.W = 0;
+            Row1.X = topLeft.Row1.X;
+            Row1.Y = topLeft.Row1.Y;
+            Row1.Z = topLeft.Row1.Z;
+            Row1.W = 0;
+            Row2.X = topLeft.Row2.X;
+            Row2.Y = topLeft.Row2.Y;
+            Row2.Z = topLeft.Row2.Z;
+            Row2.W = 0;
+            Row3.X = 0;
+            Row3.Y = 0;
+            Row3.Z = 0;
+            Row3.W = 1;
+        }
+
         #endregion
 
         #region Public Members

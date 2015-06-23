@@ -160,7 +160,33 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadButtons"/>.</returns>
         public override string ToString()
         {
-            return Convert.ToString((int)buttons, 2).PadLeft(10, '0');
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            if (A == ButtonState.Pressed)
+                sb.Append("A");
+            if (B == ButtonState.Pressed)
+                sb.Append("B");
+            if (X == ButtonState.Pressed)
+                sb.Append("X");
+            if (Y == ButtonState.Pressed)
+                sb.Append("Y");
+            if (Back == ButtonState.Pressed)
+                sb.Append("Bk");
+            if (Start == ButtonState.Pressed)
+                sb.Append("St");
+            if (BigButton == ButtonState.Pressed)
+                sb.Append("Gd");
+            if (Back == ButtonState.Pressed)
+                sb.Append("Bk");
+            if (LeftShoulder == ButtonState.Pressed)
+                sb.Append("L");
+            if (RightShoulder == ButtonState.Pressed)
+                sb.Append("R");
+            if (LeftStick == ButtonState.Pressed)
+                sb.Append("Ls");
+            if (RightStick == ButtonState.Pressed)
+                sb.Append("Rs");
+
+            return sb.ToString();
         }
 
         /// <summary>

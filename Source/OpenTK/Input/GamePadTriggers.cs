@@ -86,7 +86,7 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{Left: {0:f2}; Right: {1:f2}}}",
+                "({0:f2}; {1:f2})",
                 Left, Right);
         }
 

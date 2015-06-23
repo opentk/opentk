@@ -26,7 +26,11 @@ OpenTK is available for Windows, Linux, Mac OS X, *BSD, SteamOS, Android and iOS
 Instructions
 ============
 
-The simplest way to use OpenTK in your project is to install the [NuGet package](http://www.nuget.org/packages/OpenTK/).
+The simplest way to use OpenTK in your project is to install the [NuGet package](http://www.nuget.org/packages/OpenTK/). 
+
+Note what installing NuGet package will add reference to OpenTK.dll, but OpenTK.dll.config 
+will not be copied to the project output directory automatically, so you need to add it to your project 
+and then enable the "Copy to Output Directory" option (as in step 3 below).
 
 Alternatively, download the [OpenTK binaries](http://www.opentk.com) and:
 
@@ -114,8 +118,8 @@ Requirements
 ============
 
 - Windows (XP/Vista/7/8), Linux, Mac OS X, *BSD, SteamOS, Android or iOS
-- For graphics, OpenGL drivers or a suitable emulator, such as [ANGLE](https://github.com/opentk/opentk/tree/Dependencies/Readme.txt)
-- For audio, OpenAL drivers or [OpenAL Soft](https://github.com/opentk/opentk/tree/Dependencies/Readme.txt)
+- For graphics, OpenGL drivers or a suitable emulator, such as [ANGLE](https://github.com/opentk/opentk/tree/develop/Dependencies/Readme.txt)
+- For audio, OpenAL drivers or [OpenAL Soft](https://github.com/opentk/opentk/tree/develop/Dependencies/Readme.txt)
 - To develop desktop applications: Visual Studio, Xamarin Studio, MonoDevelop or SharpDevelop
 - To develop Android applications: Xamarin Studio or the Xamarin Extensions for Visual Studio
 - To develop iOS applications: Xamarin Studio and XCode

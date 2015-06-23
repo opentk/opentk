@@ -31,6 +31,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using OpenTK.Input;
+using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
 {
@@ -79,14 +80,8 @@ namespace OpenTK.Platform.Windows
                     mice[i] = state;
                 }
 
-                int count = WinRawInput.DeviceCount;
-                RawInputDeviceList[] ridl = new RawInputDeviceList[count];
-                for (int i = 0; i < count; i++)
-                    ridl[i] = new RawInputDeviceList();
-                Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
-
                 // Discover mouse devices
-                foreach (RawInputDeviceList dev in ridl)
+                foreach (RawInputDeviceList dev in WinRawInput.GetDeviceList())
                 {
                     ContextHandle id = new ContextHandle(dev.Device);
                     if (rawids.ContainsKey(id))
@@ -154,100 +149,109 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public bool ProcessMouseEvent(RawInput rin)
+        public bool ProcessMouseEvent(IntPtr raw_buffer)
         {
-            RawMouse raw = rin.Data.Mouse;
-            ContextHandle handle = new ContextHandle(rin.Header.Device);
+            bool processed = false;
 
-            MouseState mouse;
-            if (!rawids.ContainsKey(handle))
+            RawInput rin;
+            if (Functions.GetRawInputData(raw_buffer, out rin) > 0)
             {
-                RefreshDevices();
+                RawMouse raw = rin.Data.Mouse;
+                ContextHandle handle = new ContextHandle(rin.Header.Device);
+
+                MouseState mouse;
+                if (!rawids.ContainsKey(handle))
+                {
+                    RefreshDevices();
+                }
+
+                if (mice.Count == 0)
+                    return false;
+
+                // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
+                // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
+                // That's problematic, because no device has a "0" id.
+                // As a workaround, we'll add those buttons to the first device (if any).
+                int mouse_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
+                mouse = mice[mouse_handle];
+
+                // Set and release capture of the mouse to fix http://www.opentk.com/node/2133, Patch by Artfunkel
+                if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0)
+                {
+                    mouse.EnableBit((int)MouseButton.Left);
+                    Functions.SetCapture(Window);
+                }
+                if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0)
+                {
+                    mouse.DisableBit((int)MouseButton.Left);
+                    Functions.ReleaseCapture();
+                }
+                if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0)
+                {
+                    mouse.EnableBit((int)MouseButton.Right);
+                    Functions.SetCapture(Window);
+                }
+                if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0)
+                {
+                    mouse.DisableBit((int)MouseButton.Right);
+                    Functions.ReleaseCapture();
+                }
+                if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0)
+                {
+                    mouse.EnableBit((int)MouseButton.Middle);
+                    Functions.SetCapture(Window);
+                }
+                if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0)
+                {
+                    mouse.DisableBit((int)MouseButton.Middle);
+                    Functions.ReleaseCapture();
+                }
+                if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0)
+                {
+                    mouse.EnableBit((int)MouseButton.Button1);
+                    Functions.SetCapture(Window);
+                }
+                if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0)
+                {
+                    mouse.DisableBit((int)MouseButton.Button1);
+                    Functions.ReleaseCapture();
+                }
+                if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0)
+                {
+                    mouse.EnableBit((int)MouseButton.Button2);
+                    Functions.SetCapture(Window);
+                }
+                if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0)
+                {
+                    mouse.DisableBit((int)MouseButton.Button2);
+                    Functions.ReleaseCapture();
+                }
+
+                if ((raw.ButtonFlags & RawInputMouseState.WHEEL) != 0)
+                    mouse.SetScrollRelative(0, (short)raw.ButtonData / 120.0f);
+
+                if ((raw.ButtonFlags & RawInputMouseState.HWHEEL) != 0)
+                    mouse.SetScrollRelative((short)raw.ButtonData / 120.0f, 0);
+
+                if ((raw.Flags & RawMouseFlags.MOUSE_MOVE_ABSOLUTE) != 0)
+                {
+                    mouse.X = raw.LastX;
+                    mouse.Y = raw.LastY;
+                }
+                else
+                {   // Seems like MOUSE_MOVE_RELATIVE is the default, unless otherwise noted.
+                    mouse.X += raw.LastX;
+                    mouse.Y += raw.LastY;
+                }
+
+                lock (UpdateLock)
+                {
+                    mice[mouse_handle] = mouse;
+                    processed = true;
+                }
             }
 
-            if (mice.Count == 0)
-                return false;
-
-            // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
-            // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
-            // That's problematic, because no device has a "0" id.
-            // As a workaround, we'll add those buttons to the first device (if any).
-            int mouse_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
-            mouse = mice[mouse_handle];
-
-            // Set and release capture of the mouse to fix http://www.opentk.com/node/2133, Patch by Artfunkel
-            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0){
-                mouse.EnableBit((int)MouseButton.Left);
-                Functions.SetCapture(Window);
-            }
-            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0)
-            {
-                mouse.DisableBit((int)MouseButton.Left);
-                Functions.ReleaseCapture();
-            }
-            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0)
-            {
-                mouse.EnableBit((int)MouseButton.Right);
-                Functions.SetCapture(Window);
-            }
-            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0)
-            {
-                mouse.DisableBit((int)MouseButton.Right);
-                Functions.ReleaseCapture();
-            }
-            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0)
-            {
-                mouse.EnableBit((int)MouseButton.Middle);
-                Functions.SetCapture(Window);
-            }
-            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0)
-            {
-                mouse.DisableBit((int)MouseButton.Middle);
-                Functions.ReleaseCapture();
-            }
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0)
-            {
-                mouse.EnableBit((int)MouseButton.Button1);
-                Functions.SetCapture(Window);
-            }
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0)
-            {
-            	mouse.DisableBit((int)MouseButton.Button1);
-            	Functions.ReleaseCapture();
-            }
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0)
-            {
-                mouse.EnableBit((int)MouseButton.Button2);
-                Functions.SetCapture(Window);
-            }
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0)
-            {
-                mouse.DisableBit((int)MouseButton.Button2);
-                Functions.ReleaseCapture();
-            }
-
-            if ((raw.ButtonFlags & RawInputMouseState.WHEEL) != 0)
-                mouse.SetScrollRelative(0, (short)raw.ButtonData / 120.0f);
-
-            if ((raw.ButtonFlags & RawInputMouseState.HWHEEL) != 0)
-                mouse.SetScrollRelative((short)raw.ButtonData / 120.0f, 0);
-
-            if ((raw.Flags & RawMouseFlags.MOUSE_MOVE_ABSOLUTE) != 0)
-            {
-                mouse.X = raw.LastX;
-                mouse.Y = raw.LastY;
-            }
-            else
-            {   // Seems like MOUSE_MOVE_RELATIVE is the default, unless otherwise noted.
-                mouse.X += raw.LastX;
-                mouse.Y += raw.LastY;
-            }
-
-            lock (UpdateLock)
-            {
-                mice[mouse_handle] = mouse;
-                return true;
-            }
+            return processed;
         }
 
         #endregion
@@ -257,7 +261,7 @@ namespace OpenTK.Platform.Windows
         static string GetDeviceName(RawInputDeviceList dev)
         {
             // get name size
-            uint size = 0;
+            int size = 0;
             Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
 
             // get actual name
@@ -296,13 +300,10 @@ namespace OpenTK.Platform.Windows
 
         static void RegisterRawDevice(IntPtr window, string device)
         {
-            RawInputDevice[] rid = new RawInputDevice[1];
-            // Mouse is 1/2 (page/id). See http://www.microsoft.com/whdc/device/input/HID_HWID.mspx
-            rid[0] = new RawInputDevice();
-            rid[0].UsagePage = 1;
-            rid[0].Usage = 2;
-            rid[0].Flags = RawInputDeviceFlags.INPUTSINK;
-            rid[0].Target = window;
+            RawInputDevice[] rid = new RawInputDevice[]
+            {
+                new RawInputDevice(HIDUsageGD.Mouse, RawInputDeviceFlags.INPUTSINK, window)
+            };
 
             if (!Functions.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
             {

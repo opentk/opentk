@@ -1,7 +1,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit Library
+// Copyright (c) 2006 - 2015 Stefanos Apostolopoulos for the Open Toolkit Library
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -12291,6 +12291,13 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_BYTE = 0x1400
         /// </summary>
         Byte = ((int)0x1400)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum OesCompressedEtc1Rgb8SubTexture : int
+    {
     }
 
     /// <summary>

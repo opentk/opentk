@@ -92,5 +92,18 @@ namespace OpenTK.Input
         {
             return driver.SetVibration(index, left, right);
         }
+
+        /// <summary>
+        /// Gets the name of this <see cref="GamePad"/>
+        /// </summary>
+        /// <returns>
+        /// Returns the name of the gamepad if the gamepad is connected.
+        /// Otherwise returns an empty string.
+        /// </returns>
+        /// <param name="index">A zero-based device index for the <c>GamePad</c> device to affect</param>
+        public static string GetName(int index)
+        {
+            return driver.GetName(index);
+        }
     }
 }

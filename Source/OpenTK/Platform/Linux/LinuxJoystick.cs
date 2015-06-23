@@ -35,24 +35,44 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
 {
-    struct LinuxJoyDetails
+    struct AxisInfo
     {
-        public Guid Guid;
-        public int FileDescriptor;
-        public JoystickState State;
+        public JoystickAxis Axis;
+        public InputAbsInfo Info;
     }
 
-    // Note: despite what the name says, this class is Linux-specific.
+    class LinuxJoystickDetails
+    {
+        public Guid Guid;
+        public string Name;
+        public int FileDescriptor;
+        public int PathIndex; // e.g. "0" for "/dev/input/event0". Used as a hardware id
+        public JoystickState State;
+        public JoystickCapabilities Caps;
+
+        public readonly Dictionary<EvdevAxis, AxisInfo> AxisMap =
+            new Dictionary<EvdevAxis, AxisInfo>();
+        public readonly Dictionary<EvdevButton, JoystickButton> ButtonMap =
+            new Dictionary<EvdevButton, JoystickButton>();
+    }
+
     sealed class LinuxJoystick : IJoystickDriver2
     {
         #region Fields
+
+        static readonly HatPosition[,] HatPositions = new HatPosition[,]
+        {
+            { HatPosition.UpLeft, HatPosition.Up, HatPosition.UpRight },
+            { HatPosition.Left, HatPosition.Centered, HatPosition.Right },
+            { HatPosition.DownLeft, HatPosition.Down, HatPosition.DownRight }
+        };
 
         readonly object sync = new object();
 
         readonly FileSystemWatcher watcher = new FileSystemWatcher();
 
-        readonly Dictionary<int, int> index_to_stick = new Dictionary<int, int>();
-        List<JoystickDevice<LinuxJoyDetails>> sticks = new List<JoystickDevice<LinuxJoyDetails>>();
+        readonly DeviceCollection<LinuxJoystickDetails> Sticks =
+            new DeviceCollection<LinuxJoystickDetails>();
 
         bool disposed;
 
@@ -89,12 +109,10 @@ namespace OpenTK.Platform.Linux
             {
                 foreach (string file in Directory.GetFiles(path))
                 {
-                    JoystickDevice<LinuxJoyDetails> stick = OpenJoystick(file);
+                    LinuxJoystickDetails stick = OpenJoystick(file);
                     if (stick != null)
                     {
-                        //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
-                        //number, stick.Axis.Count, stick.Button.Count, path);
-                        sticks.Add(stick);
+                        Sticks.Add(stick.PathIndex, stick);
                     }
                 }
             }
@@ -102,10 +120,11 @@ namespace OpenTK.Platform.Linux
 
         int GetJoystickNumber(string path)
         {
-            if (path.StartsWith("js"))
+            const string evdev = "event";
+            if (path.StartsWith(evdev))
             {
                 int num;
-                if (Int32.TryParse(path.Substring(2), out num))
+                if (Int32.TryParse(path.Substring(evdev.Length), out num))
                 {
                     return num;
                 }
@@ -129,23 +148,10 @@ namespace OpenTK.Platform.Linux
                 int number = GetJoystickNumber(file);
                 if (number != -1)
                 {
-                    // Find which joystick id matches this number
-                    int i;
-                    for (i = 0; i < sticks.Count; i++)
+                    var stick = Sticks.FromHardwareId(number);
+                    if (stick != null)
                     {
-                        if (sticks[i].Id == number)
-                        {
-                            break;
-                        }
-                    }
-
-                    if (i == sticks.Count)
-                    {
-                        Debug.Print("[Evdev] Joystick id {0} does not exist.", number);
-                    }
-                    else
-                    {
-                        CloseJoystick(sticks[i]);
+                        CloseJoystick(stick);
                     }
                 }
             }
@@ -155,75 +161,111 @@ namespace OpenTK.Platform.Linux
 
         #region Private Members
 
-        Guid CreateGuid(JoystickDevice<LinuxJoyDetails> js, string path, int number)
+        Guid CreateGuid(EvdevInputId id, string name)
         {
+            // Note: the first 8bytes of the Guid are byteswapped
+            // in three parts when using `new Guid(byte[])`:
+            // (int, short, short).
+            // We need to take that into account to match the expected
+            // Guid in the database. Ugh.
+
             byte[] bytes = new byte[16];
-            for (int i = 0; i < Math.Min(bytes.Length, js.Description.Length); i++)
+
+            int i = 0;
+            byte[] bus = BitConverter.GetBytes((int)id.BusType);
+            bytes[i++] = bus[3];
+            bytes[i++] = bus[2];
+            bytes[i++] = bus[1];
+            bytes[i++] = bus[0];
+
+            if (id.Vendor != 0 && id.Product != 0 && id.Version != 0)
             {
-                bytes[i] = (byte)js.Description[i];
+                byte[] vendor = BitConverter.GetBytes(id.Vendor);
+                byte[] product = BitConverter.GetBytes(id.Product);
+                byte[] version = BitConverter.GetBytes(id.Version);
+                bytes[i++] = vendor[1];
+                bytes[i++] = vendor[0];
+                bytes[i++] = 0;
+                bytes[i++] = 0;
+                bytes[i++] = product[0]; // no byteswapping
+                bytes[i++] = product[1];
+                bytes[i++] = 0;
+                bytes[i++] = 0;
+                bytes[i++] = version[0]; // no byteswapping
+                bytes[i++] = version[1];
+                bytes[i++] = 0;
+                bytes[i++] = 0;
             }
-            return new Guid(bytes);
-   
-#if false // Todo: move to /dev/input/event* from /dev/input/js*
-            string evdev_path = Path.Combine(Path.GetDirectoryName(path), "event" + number);
-            if (!File.Exists(evdev_path))
-                return new Guid();
-
-            int event_fd = UnsafeNativeMethods.open(evdev_path, OpenFlags.NonBlock);
-            if (event_fd < 0)
-                return new Guid();
-
-            try
+            else
             {
-                EventInputId id;
-                if (UnsafeNativeMethods.ioctl(event_fd, EvdevInputId.Id, out id) < 0)
-                    return new Guid();
-
-                int i = 0;
-                byte[] bus = BitConverter.GetBytes(id.BusType);
-                bytes[i++] = bus[0];
-                bytes[i++] = bus[1];
-                bytes[i++] = 0;
-                bytes[i++] = 0;
-
-                if (id.Vendor != 0 && id.Product != 0 && id.Version != 0)
+                for (int j = 0; j < bytes.Length - i; j++)
                 {
-                    byte[] vendor = BitConverter.GetBytes(id.Vendor);
-                    byte[] product = BitConverter.GetBytes(id.Product);
-                    byte[] version = BitConverter.GetBytes(id.Version);
-                    bytes[i++] = vendor[0];
-                    bytes[i++] = vendor[1];
-                    bytes[i++] = 0;
-                    bytes[i++] = 0;
-                    bytes[i++] = product[0];
-                    bytes[i++] = product[1];
-                    bytes[i++] = 0;
-                    bytes[i++] = 0;
-                    bytes[i++] = version[0];
-                    bytes[i++] = version[1];
-                    bytes[i++] = 0;
-                    bytes[i++] = 0;
+                    bytes[i + j] = (byte)name[j];
                 }
-                else
+            }
+
+            return new Guid(bytes);
+        }
+
+        unsafe static bool TestBit(byte* ptr, int bit)
+        {
+            int byte_offset = bit / 8;
+            int bit_offset = bit % 8;
+            return (*(ptr + byte_offset) & (1 << bit_offset)) != 0;
+        }
+
+        unsafe static void QueryCapabilities(LinuxJoystickDetails stick,
+            byte* axisbit, int axisbytes,
+            byte* keybit, int keybytes,
+            out int axes, out int buttons, out int hats)
+        {
+            // Note: since we are trying to be compatible with the SDL2 gamepad database,
+            // we have to match SDL2 behavior bug-for-bug. This means:
+            // HAT0-HAT3 are all reported as hats (even if the docs say that HAT1 and HAT2 can be analogue triggers)
+            // DPAD buttons are reported as buttons, not as hats (unlike Windows and Mac OS X)
+
+            axes = buttons = hats = 0;
+            for (EvdevAxis axis = 0; axis < EvdevAxis.CNT && (int)axis < axisbytes * 8; axis++)
+            {
+                InputAbsInfo info;
+                bool is_valid = true;
+                is_valid &= TestBit(axisbit, (int)axis);
+                is_valid &= Evdev.GetAbs(stick.FileDescriptor, axis, out info) >= 0;
+                if (is_valid)
                 {
-                    for (; i < bytes.Length; i++)
+                    if (axis >= EvdevAxis.HAT0X && axis <= EvdevAxis.HAT3Y)
                     {
-                        bytes[i] = (byte)js.Description[i];
+                        // Analogue hat
+                        stick.AxisMap.Add(axis, new AxisInfo
+                        {
+                            Axis = (JoystickAxis)(JoystickHat)hats++,
+                            Info = info
+                        });
+                    }
+                    else
+                    {
+                        // Regular axis
+                        stick.AxisMap.Add(axis, new AxisInfo
+                        {
+                            Axis = (JoystickAxis)axes++,
+                            Info = info
+                        });
                     }
                 }
+            }
 
-                return new Guid(bytes);
-            }
-            finally
+            for (EvdevButton button = 0; button < EvdevButton.Last && (int)button < keybytes * 8; button++)
             {
-                UnsafeNativeMethods.close(event_fd);
+                if (TestBit(keybit, (int)button))
+                {
+                    stick.ButtonMap.Add(button, (JoystickButton)buttons++);
+                }
             }
-#endif
         }
-        
-        JoystickDevice<LinuxJoyDetails> OpenJoystick(string path)
+
+        LinuxJoystickDetails OpenJoystick(string path)
         {
-            JoystickDevice<LinuxJoyDetails> stick = null;
+            LinuxJoystickDetails stick = null;
 
             int number = GetJoystickNumber(Path.GetFileName(path));
             if (number >= 0)
@@ -235,121 +277,184 @@ namespace OpenTK.Platform.Linux
                     if (fd == -1)
                         return null;
 
-                    // Check joystick driver version (must be 1.0+)
-                    int driver_version = 0x00000800;
-                    Libc.ioctl(fd, JoystickIoctlCode.Version, ref driver_version);
-                    if (driver_version < 0x00010000)
-                        return null;
-
-                    // Get number of joystick axes
-                    int axes = 0;
-                    Libc.ioctl(fd, JoystickIoctlCode.Axes, ref axes);
-
-                    // Get number of joystick buttons
-                    int buttons = 0;
-                    Libc.ioctl(fd, JoystickIoctlCode.Buttons, ref buttons);
-
-                    stick = new JoystickDevice<LinuxJoyDetails>(number, axes, buttons);
-
-                    StringBuilder sb = new StringBuilder(128);
-                    Libc.ioctl(fd, JoystickIoctlCode.Name128, sb);
-                    stick.Description = sb.ToString();
-
-                    stick.Details.FileDescriptor = fd;
-                    stick.Details.State.SetIsConnected(true);
-                    stick.Details.Guid = CreateGuid(stick, path, number);
-                    
-                    // Find the first disconnected joystick (if any)
-                    int i;
-                    for (i = 0; i < sticks.Count; i++)
+                    unsafe
                     {
-                        if (!sticks[i].Details.State.IsConnected)
+                        const int evsize = Evdev.EventCount / 8;
+                        const int axissize = Evdev.AxisCount / 8;
+                        const int keysize = Evdev.KeyCount / 8;
+                        byte* evbit = stackalloc byte[evsize];
+                        byte* axisbit = stackalloc byte[axissize];
+                        byte* keybit = stackalloc byte[keysize];
+
+                        string name;
+                        EvdevInputId id;
+
+                        // Ensure this is a joystick device
+                        bool is_valid = true;
+
+                        is_valid &= Evdev.GetBit(fd, 0, evsize, new IntPtr(evbit)) >= 0;
+                        is_valid &= Evdev.GetBit(fd, EvdevType.ABS, axissize, new IntPtr(axisbit)) >= 0;
+                        is_valid &= Evdev.GetBit(fd, EvdevType.KEY, keysize, new IntPtr(keybit)) >= 0;
+
+                        is_valid &= TestBit(evbit, (int)EvdevType.KEY);
+                        is_valid &= TestBit(evbit, (int)EvdevType.ABS);
+                        is_valid &= TestBit(axisbit, (int)EvdevAxis.X);
+                        is_valid &= TestBit(axisbit, (int)EvdevAxis.Y);
+
+                        is_valid &= Evdev.GetName(fd, out name) >= 0;
+                        is_valid &= Evdev.GetId(fd, out id) >= 0;
+
+                        if (is_valid)
                         {
-                            break;
+                            stick = new LinuxJoystickDetails
+                            {
+                                FileDescriptor = fd,
+                                PathIndex = number,
+                                State = new JoystickState(),
+                                Name = name,
+                                Guid = CreateGuid(id, name),
+                            };
+
+                            int axes, buttons, hats;
+                            QueryCapabilities(stick, axisbit, axissize, keybit, keysize,
+                                out axes, out buttons, out hats);
+
+                            stick.Caps = new JoystickCapabilities(axes, buttons, hats, false);
+
+                            // Poll the joystick once, to initialize its state
+                            PollJoystick(stick);
                         }
                     }
 
-                    // If no disconnected joystick exists, append a new slot
-                    if (i == sticks.Count)
-                    {
-                        sticks.Add(stick);
-                    }
-                    else
-                    {
-                        sticks[i] = stick;
-                    }
-
-                    // Map player index to joystick
-                    index_to_stick.Add(index_to_stick.Count, i);
-
                     Debug.Print("Found joystick on path {0}", path);
+                }
+                catch (Exception e)
+                {
+                    Debug.Print("Error opening joystick: {0}", e.ToString());
                 }
                 finally
                 {
                     if (stick == null && fd != -1)
+                    {
+                        // Not a joystick
                         Libc.close(fd);
+                    }
                 }
             }
 
             return stick;
         }
 
-        void CloseJoystick(JoystickDevice<LinuxJoyDetails> js)
+        void CloseJoystick(LinuxJoystickDetails js)
         {
-            Libc.close(js.Details.FileDescriptor);
-            js.Details.State = new JoystickState(); // clear joystick state
-            js.Details.FileDescriptor = -1;
-            
-            // find and remove the joystick index from index_to_stick
-            int key = -1;
-            foreach (int i in index_to_stick.Keys)
-            {
-                if (sticks[index_to_stick[i]] == js)
-                {
-                    key = i;
-                    break;
-                }
-            }
+            Sticks.Remove(js.FileDescriptor);
 
-            if (index_to_stick.ContainsKey(key))
-            {
-                index_to_stick.Remove(key);
-            }
+            Libc.close(js.FileDescriptor);
+            js.FileDescriptor = -1;
+            js.State = new JoystickState(); // clear joystick state
+            js.Caps = new JoystickCapabilities();
         }
 
-        void PollJoystick(JoystickDevice<LinuxJoyDetails> js)
+        JoystickHatState TranslateHat(int x, int y)
         {
-            JoystickEvent e;
+            return new JoystickHatState(HatPositions[x, y]);
+        }
 
+        void PollJoystick(LinuxJoystickDetails js)
+        {
             unsafe
             {
-                while ((long)Libc.read(js.Details.FileDescriptor, (void*)&e, (UIntPtr)sizeof(JoystickEvent)) > 0)
+                const int EventCount = 32;
+                InputEvent* events = stackalloc InputEvent[EventCount];
+
+                long length = 0;
+                while (true)
                 {
-                    e.Type &= ~JoystickEventType.Init;
+                    length = (long)Libc.read(js.FileDescriptor, (void*)events, (UIntPtr)(sizeof(InputEvent) * EventCount));
+                    if (length <= 0)
+                        break;
 
-                    switch (e.Type)
+                    // Only mark the joystick as connected when we actually start receiving events.
+                    // Otherwise, the Xbox wireless receiver will register 4 joysticks even if no
+                    // actual joystick is connected to the receiver.
+                    js.Caps.SetIsConnected(true);
+                    js.State.SetIsConnected(true);
+
+                    length /= sizeof(InputEvent);
+                    for (int i = 0; i < length; i++)
                     {
-                        case JoystickEventType.Axis:
-                            // Flip vertical axes so that +1 point up.
-                            if (e.Number % 2 == 0)
-                                js.Details.State.SetAxis((JoystickAxis)e.Number, e.Value);
-                            else
-                                js.Details.State.SetAxis((JoystickAxis)e.Number, unchecked((short)-e.Value));
-                            break;
+                        InputEvent *e = events + i;
+                        switch (e->Type)
+                        {
+                            case EvdevType.ABS:
+                                {
+                                    AxisInfo axis;
+                                    if (js.AxisMap.TryGetValue((EvdevAxis)e->Code, out axis))
+                                    {
+                                        if (axis.Info.Maximum > axis.Info.Minimum)
+                                        {
+                                            if (e->Code >= (int)EvdevAxis.HAT0X && e->Code <= (int)EvdevAxis.HAT3Y)
+                                            {
+                                                // We currently treat analogue hats as digital hats
+                                                // to maintain compatibility with SDL2. We can do
+                                                // better than this, however.
+                                                JoystickHat hat = JoystickHat.Hat0 + (e->Code - (int)EvdevAxis.HAT0X) / 2;
+                                                JoystickHatState pos = js.State.GetHat(hat);
+                                                int xy_axis = (int)axis.Axis & 0x1;
+                                                switch (xy_axis)
+                                                {
+                                                    case 0:
+                                                        // X-axis
+                                                        pos = TranslateHat(
+                                                            e->Value.CompareTo(0) + 1,
+                                                            pos.IsUp ? 0 : pos.IsDown ? 2 : 1);
+                                                        break;
 
-                        case JoystickEventType.Button:
-                            js.Details.State.SetButton((JoystickButton)e.Number, e.Value != 0);
-                            break;
+                                                    case 1:
+                                                        // Y-axis
+                                                        pos = TranslateHat(
+                                                            pos.IsLeft ? 0 : pos.IsRight ? 2 : 1,
+                                                            e->Value.CompareTo(0) + 1);
+                                                        break;
+                                                }
+
+                                                js.State.SetHat(hat, pos);
+                                            }
+                                            else
+                                            {
+                                                // This axis represents a regular axis or trigger
+                                                js.State.SetAxis(
+                                                    axis.Axis,
+                                                    (short)Common.HidHelper.ScaleValue(e->Value,
+                                                        axis.Info.Minimum, axis.Info.Maximum,
+                                                        short.MinValue, short.MaxValue));
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+
+                            case EvdevType.KEY:
+                                {
+                                    JoystickButton button;
+                                    if (js.ButtonMap.TryGetValue((EvdevButton)e->Code, out button))
+                                    {
+                                        js.State.SetButton(button, e->Value != 0);
+                                    }
+                                    break;
+                                }
+                        }
+
+                        // Create a serial number (total seconds in 24.8 fixed point format)
+                        int sec = (int)((long)e->Time.Seconds & 0xffffffff);
+                        int msec = (int)e->Time.MicroSeconds / 1000;
+                        int packet =
+                            ((sec & 0x00ffffff) << 24) |
+                            Common.HidHelper.ScaleValue(msec, 0, 1000, 0, 255);
+                        js.State.SetPacketNumber(packet);
                     }
-
-                    js.Details.State.SetPacketNumber(unchecked((int)e.Time));
                 }
             }
-        }
-
-        bool IsValid(int index)
-        {
-            return index_to_stick.ContainsKey(index);
         }
 
         static readonly string JoystickPath = "/dev/input";
@@ -374,7 +479,7 @@ namespace OpenTK.Platform.Linux
                 }
 
                 watcher.Dispose();
-                foreach (JoystickDevice<LinuxJoyDetails> js in sticks)
+                foreach (LinuxJoystickDetails js in Sticks)
                 {
                     CloseJoystick(js);
                 }
@@ -394,39 +499,33 @@ namespace OpenTK.Platform.Linux
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
-            if (IsValid(index))
+            LinuxJoystickDetails js = Sticks.FromIndex(index);
+            if (js != null)
             {
-                JoystickDevice<LinuxJoyDetails> js = 
-                    sticks[index_to_stick[index]];
                 PollJoystick(js);
-                return js.Details.State;
+                return js.State;
             }
             return new JoystickState();
         }
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
         {
-            JoystickCapabilities caps = new JoystickCapabilities();
-            if (IsValid(index))
+            LinuxJoystickDetails js = Sticks.FromIndex(index);
+            if (js != null)
             {
-                JoystickDevice<LinuxJoyDetails> js = sticks[index_to_stick[index]];
-                caps = new JoystickCapabilities(
-                    js.Axis.Count,
-                    js.Button.Count,
-                    0, // hats not supported by /dev/js
-                    js.Details.State.IsConnected);
+                return js.Caps;
             }
-            return caps;
+            return new JoystickCapabilities();
         }
 
         Guid IJoystickDriver2.GetGuid(int index)
         {
-            if (IsValid(index))
+            LinuxJoystickDetails js = Sticks.FromIndex(index);
+            if (js != null)
             {
-                JoystickDevice<LinuxJoyDetails> js = sticks[index_to_stick[index]];
-                return js.Details.Guid; 
+                return js.Guid;
             }
-            return new Guid();
+            return Guid.Empty;
         }
 
         #endregion

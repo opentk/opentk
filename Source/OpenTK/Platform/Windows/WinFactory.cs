@@ -40,7 +40,11 @@ namespace OpenTK.Platform.Windows
     class WinFactory : PlatformFactoryBase
     {
         readonly object SyncRoot = new object();
-        IInputDriver2 inputDriver;
+
+        // The input drivers must be constructed lazily, *after* the
+        // WinFactory constructor has finished running. The reason is
+        // that they call WinFactory methods internally.
+        WinRawInput rawinput_driver; // For keyboard and mouse input
 
         internal static IntPtr OpenGLHandle { get; private set; }
         const string OpenGLName = "OPENGL32.DLL";
@@ -112,40 +116,44 @@ namespace OpenTK.Platform.Windows
 
         public override OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
         {
-            return InputDriver.KeyboardDriver;
+            return RawInputDriver.KeyboardDriver;
         }
 
         public override OpenTK.Input.IMouseDriver2 CreateMouseDriver()
         {
-            return InputDriver.MouseDriver;
+            return RawInputDriver.MouseDriver;
         }
 
         public override OpenTK.Input.IGamePadDriver CreateGamePadDriver()
         {
-            return InputDriver.GamePadDriver;
+            return new MappedGamePadDriver();
         }
 
         public override IJoystickDriver2 CreateJoystickDriver()
         {
-            return InputDriver.JoystickDriver;
+            return RawInputDriver.JoystickDriver;
         }
 
         #endregion
 
-        IInputDriver2 InputDriver
+        #region Private Members
+
+        WinRawInput RawInputDriver
         {
             get
             {
                 lock (SyncRoot)
                 {
-                    if (inputDriver == null)
+                    if (rawinput_driver == null)
                     {
-                        inputDriver = new WinRawInput();
+                        rawinput_driver = new WinRawInput();
                     }
-                    return inputDriver;
+                    return rawinput_driver;
                 }
             }
         }
+
+        #endregion
 
         #region IDisposable Members
 
@@ -155,7 +163,12 @@ namespace OpenTK.Platform.Windows
             {
                 if (manual)
                 {
-                    InputDriver.Dispose();
+                    WinRawInput raw = rawinput_driver;
+                    if (raw != null)
+                    {
+                        raw.Dispose();
+                        rawinput_driver = null;
+                    }
                 }
 
                 base.Dispose(manual);

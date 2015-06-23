@@ -252,6 +252,7 @@ namespace OpenTK.Input
             : base(x, y)
         {
             this.button = button;
+            this.IsPressed = pressed;
         }
 
         /// <summary>

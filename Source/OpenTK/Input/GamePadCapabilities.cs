@@ -40,16 +40,18 @@ namespace OpenTK.Input
         GamePadAxes axes;
         byte gamepad_type;
         bool is_connected;
+        bool is_mapped;
 
         #region Constructors
 
-        internal GamePadCapabilities(GamePadType type, GamePadAxes axes, Buttons buttons, bool is_connected)
+        internal GamePadCapabilities(GamePadType type, GamePadAxes axes, Buttons buttons, bool is_connected, bool is_mapped)
             : this()
         {
             gamepad_type = (byte)type;
             this.axes = axes;
             this.buttons = buttons;
             this.is_connected = is_connected;
+            this.is_mapped = is_mapped;
         }
 
         #endregion
@@ -317,6 +319,15 @@ namespace OpenTK.Input
             get { return is_connected; }
         }
 
+        /// <summary>
+        /// Gets a <see cref="System.Boolean"/> value describing whether a valid button configuration
+        /// exists for this <c>GamePad</c> in the GamePad configuration database.
+        /// </summary>
+        public bool IsMapped
+        {
+            get { return is_mapped; }
+        }
+
         /// <param name="left">A <see cref="GamePadCapabilities"/> structure to test for equality.</param>
         /// <param name="right">A <see cref="GamePadCapabilities"/> structure to test for equality.</param>
         public static bool operator ==(GamePadCapabilities left, GamePadCapabilities right)
@@ -338,11 +349,12 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{Type: {0}; Axes: {1}; Buttons: {2}; Connected: {3}}}",
+                "{{Type: {0}; Axes: {1}; Buttons: {2}; {3}; {4}}}",
                 GamePadType,
                 Convert.ToString((int)axes, 2),
                 Convert.ToString((int)buttons, 2),
-                IsConnected);
+                IsMapped ? "Mapped" : "Unmapped",
+                IsConnected ? "Connected" : "Disconnected");
         }
 
         /// <summary>
@@ -355,6 +367,7 @@ namespace OpenTK.Input
             return
                 buttons.GetHashCode() ^
                 is_connected.GetHashCode() ^
+                is_mapped.GetHashCode() ^
                 gamepad_type.GetHashCode();
         }
 
@@ -386,6 +399,7 @@ namespace OpenTK.Input
             return
                 buttons == other.buttons &&
                 is_connected == other.is_connected &&
+                is_mapped == other.is_mapped &&
                 gamepad_type == other.gamepad_type;
         }
 

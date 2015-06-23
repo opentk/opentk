@@ -35,7 +35,8 @@ namespace OpenTK.Input
     {
         Unmapped = 0,
         Axis,
-        Button
+        Button,
+        Hat
     }
 }
 

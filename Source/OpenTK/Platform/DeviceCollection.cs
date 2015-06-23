@@ -41,12 +41,12 @@ namespace OpenTK.Platform
     //        that is added.
     class DeviceCollection<T> : IEnumerable<T>
     {
-        readonly Dictionary<int, int> Map = new Dictionary<int, int>();
+        readonly Dictionary<long, int> Map = new Dictionary<long, int>();
         readonly List<T> Devices = new List<T>();
 
         #region IEnumerable<T> Members
 
-        public IEnumerator<T> GetEnumerator()
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
             return Devices.GetEnumerator();
         }
@@ -64,7 +64,26 @@ namespace OpenTK.Platform
 
         #region Public Members
 
-        public void Add(int id, T device)
+        // This avoids boxing when using foreach loops
+        public List<T>.Enumerator GetEnumerator()
+        {
+            return Devices.GetEnumerator();
+        }
+
+        public T this[int index]
+        {
+            get { return FromIndex(index); }
+        }
+
+        /// \internal
+        /// <summary>
+        /// Adds or replaces a device based on its hardware id.
+        /// A zero-based device index will be generated automatically
+        /// for the first available device slot.
+        /// </summary>
+        /// <param name="id">The hardware id for the device.</param>
+        /// <param name="device">The device instance.</param>
+        public void Add(long id, T device)
         {
             if (!Map.ContainsKey(id))
             {
@@ -75,7 +94,7 @@ namespace OpenTK.Platform
             Devices[Map[id]] = device;
         }
 
-        public void Remove(int id)
+        public void Remove(long id)
         {
             if (!TryRemove(id))
             {
@@ -83,7 +102,7 @@ namespace OpenTK.Platform
             }
         }
 
-        public bool TryRemove(int id)
+        public bool TryRemove(long id)
         {
             if (!Map.ContainsKey(id))
             {
@@ -107,7 +126,21 @@ namespace OpenTK.Platform
             }
         }
 
-        public T FromHardwareId(int id)
+        public bool FromIndex(int index, out T device)
+        {
+            if (index >= 0 && index < Devices.Count)
+            {
+                device = Devices[index];
+                return true;
+            }
+            else
+            {
+                device = default(T);
+                return false;
+            }
+        }
+
+        public T FromHardwareId(long id)
         {
             if (Map.ContainsKey(id))
             {
@@ -116,6 +149,20 @@ namespace OpenTK.Platform
             else
             {
                 return default(T);
+            }
+        }
+
+        public bool FromHardwareId(long id, out T device)
+        {
+            if (Map.ContainsKey(id))
+            {
+                device = FromIndex(Map[id]);
+                return true;
+            }
+            else
+            {
+                device = default(T);
+                return false;
             }
         }
 

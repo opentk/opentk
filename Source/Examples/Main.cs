@@ -100,8 +100,6 @@ namespace Examples
         [STAThread]
         public static void Main(string[] args)
         {
-            Trace.Listeners.Add(new ConsoleTraceListener());
-
             if (args.Length > 0)
             {
                 LaunchExample(args[0]);

@@ -196,6 +196,7 @@ namespace OpenTK.Platform.Windows
             {
                 switch (key)
                 {
+                    case Key.Slash: key = Key.KeypadDivide; break;
                     case Key.Enter: key = Key.KeypadEnter; break;
                     case Key.AltLeft: key = Key.AltRight; break;
                     case Key.AltRight: key = Key.AltLeft; break;

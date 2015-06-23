@@ -63,7 +63,6 @@ namespace CHeaderToXML
     enum HeaderType
     {
         Header,
-        Spec,
         Xml
     }
 
@@ -112,7 +111,6 @@ namespace CHeaderToXML
                 }
                 Parser parser =
                     type == HeaderType.Header ? new ESCLParser { Prefix = prefix, Version = version } :
-                    type == HeaderType.Spec ? new GLParser { Prefix = prefix, Version = version } :
                     type == HeaderType.Xml ? new GLXmlParser { Prefix = prefix, Version = version } :
                     (Parser)null;
 

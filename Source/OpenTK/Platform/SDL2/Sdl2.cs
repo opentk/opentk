@@ -753,8 +753,8 @@ namespace OpenTK.Platform.SDL2
         Centered = 0x00,
         Up = 0x01,
         Right = 0x02,
-        Down = 0x03,
-        Left = 0x04,
+        Down = 0x04,
+        Left = 0x08,
         RightUp = Right | Up,
         RightDown = Right | Down,
         LeftUp = Left | Up,
@@ -1527,21 +1527,32 @@ namespace OpenTK.Platform.SDL2
 
     struct JoystickGuid
     {
-        unsafe fixed byte data[16];
+        long data0;
+        long data1;
 
         public Guid ToGuid()
         {
-            byte[] bytes = new byte[16];
+            byte[] data = new byte[16];
 
             unsafe
             {
-                fixed (byte* pdata = data)
+                fixed (JoystickGuid* pdata = &this)
                 {
-                    Marshal.Copy(new IntPtr(pdata), bytes, 0, bytes.Length); 
+                    Marshal.Copy(new IntPtr(pdata), data, 0, data.Length); 
                 }
             }
 
-            return new Guid(bytes);
+            // The Guid(byte[]) constructor swaps the first 4+2+2 bytes.
+            // Compensate for that, otherwise we will not be able to match
+            // the Guids in the configuration database.
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(data, 0, 4);
+                Array.Reverse(data, 4, 2);
+                Array.Reverse(data, 6, 2);
+            }
+
+            return new Guid(data);
         }
     }
 

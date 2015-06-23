@@ -38,12 +38,10 @@ namespace OpenTK.Platform.Windows
         #region Fields
 
         // Input event data.
-        static RawInput data = new RawInput();
 
         WinRawKeyboard keyboard_driver;
         WinRawMouse mouse_driver;
-        IGamePadDriver gamepad_driver;
-        IJoystickDriver2 joystick_driver;
+        WinRawJoystick joystick_driver;
 
         IntPtr DevNotifyHandle;
         static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
@@ -88,46 +86,53 @@ namespace OpenTK.Platform.Windows
         #region WindowProcedure
 
         // Processes the input Windows Message, routing the buffer to the correct Keyboard, Mouse or HID.
-        protected override IntPtr WindowProcedure(
+        protected unsafe override IntPtr WindowProcedure(
             IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            switch (message)
+            try
             {
-                case WindowMessage.INPUT:
-                    int size = 0;
-                    // Get the size of the input buffer
-                    Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                        IntPtr.Zero, ref size, API.RawInputHeaderSize);
-
-                    // Read the actual raw input structure
-                    if (size == Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                        out data, ref size, API.RawInputHeaderSize))
-                    {
-                        switch (data.Header.Type)
+                switch (message)
+                {
+                    case WindowMessage.INPUT:
                         {
-                            case RawInputDeviceType.KEYBOARD:
-                                if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(data))
-                                    return IntPtr.Zero;
-                                break;
+                            // Retrieve the raw input data buffer
+                            RawInputHeader header;
+                            if (Functions.GetRawInputData(lParam, out header) == RawInputHeader.SizeInBytes)
+                            {
+                                switch (header.Type)
+                                {
+                                    case RawInputDeviceType.KEYBOARD:
+                                        if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(lParam))
+                                            return IntPtr.Zero;
+                                        break;
 
-                            case RawInputDeviceType.MOUSE:
-                                if (((WinRawMouse)MouseDriver).ProcessMouseEvent(data))
-                                    return IntPtr.Zero;
-                                break;
+                                    case RawInputDeviceType.MOUSE:
+                                        if (((WinRawMouse)MouseDriver).ProcessMouseEvent(lParam))
+                                            return IntPtr.Zero;
+                                        break;
 
-                            case RawInputDeviceType.HID:
-                                break;
+                                    case RawInputDeviceType.HID:
+                                        if (((WinRawJoystick)JoystickDriver).ProcessEvent(lParam))
+                                            return IntPtr.Zero;
+                                        break;
+                                }
+                            }
                         }
-                    }
-                    break;
+                        break;
 
-                case WindowMessage.DEVICECHANGE:
-                    ((WinRawKeyboard)KeyboardDriver).RefreshDevices();
-                    ((WinRawMouse)MouseDriver).RefreshDevices();
-                    ((WinMMJoystick)JoystickDriver).RefreshDevices();
-                    break;
+                    case WindowMessage.DEVICECHANGE:
+                        ((WinRawKeyboard)KeyboardDriver).RefreshDevices();
+                        ((WinRawMouse)MouseDriver).RefreshDevices();
+                        ((WinRawJoystick)JoystickDriver).RefreshDevices();
+                        break;
+                }
+                return base.WindowProcedure(handle, message, wParam, lParam);
             }
-            return base.WindowProcedure(handle, message, wParam, lParam);
+            catch (Exception e)
+            {
+                Debug.Print("[WinRawInput] Caught unhandled exception {0}", e);
+                return IntPtr.Zero;
+            }
         }
 
         #endregion
@@ -138,17 +143,7 @@ namespace OpenTK.Platform.Windows
         {
             keyboard_driver = new WinRawKeyboard(Parent.Handle);
             mouse_driver = new WinRawMouse(Parent.Handle);
-            joystick_driver = new WinMMJoystick();
-            try
-            {
-                gamepad_driver = new XInputJoystick();
-            }
-            catch (Exception)
-            {
-                Debug.Print("[Win] XInput driver not supported, falling back to WinMM");
-                gamepad_driver = new MappedGamePadDriver();
-            }
-
+            joystick_driver = new WinRawJoystick(Parent.Handle);
             DevNotifyHandle = RegisterForDeviceNotifications(Parent);
         }
 
@@ -181,9 +176,19 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #endregion
+        #region GetDeviceList
 
-        #region IInputDriver2 Members
+        public static RawInputDeviceList[] GetDeviceList()
+        {
+            int count = WinRawInput.DeviceCount;
+            RawInputDeviceList[] ridl = new RawInputDeviceList[count];
+            for (int i = 0; i < count; i++)
+                ridl[i] = new RawInputDeviceList();
+            Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
+            return ridl;
+        }
+
+        #endregion
 
         public override IKeyboardDriver2 KeyboardDriver
         {
@@ -193,11 +198,6 @@ namespace OpenTK.Platform.Windows
         public override IMouseDriver2 MouseDriver
         {
             get { return mouse_driver; }
-        }
-
-        public override IGamePadDriver GamePadDriver
-        {
-            get { return gamepad_driver; }
         }
 
         public override IJoystickDriver2 JoystickDriver

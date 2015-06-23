@@ -33,7 +33,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    abstract class WinInputBase : IInputDriver2
+    abstract class WinInputBase
     {
         #region Fields
 
@@ -158,11 +158,11 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region IInputDriver2 Members
+        #region Public Members
 
         public abstract IMouseDriver2 MouseDriver { get; }
+
         public abstract IKeyboardDriver2 KeyboardDriver { get; }
-        public abstract IGamePadDriver GamePadDriver { get; }
 
         public abstract IJoystickDriver2 JoystickDriver { get; }
 

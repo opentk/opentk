@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Input;
+using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -44,6 +45,7 @@ namespace OpenTK.Platform.MacOS
     using CFTypeRef = System.IntPtr;
     using IOHIDDeviceRef = System.IntPtr;
     using IOHIDElementRef = System.IntPtr;
+    using IOHIDElementCookie = System.IntPtr;
     using IOHIDManagerRef = System.IntPtr;
     using IOHIDValueRef = System.IntPtr;
     using IOOptionBits = System.IntPtr;
@@ -57,48 +59,128 @@ namespace OpenTK.Platform.MacOS
 
         class MouseData
         {
+            public IntPtr Id;
             public MouseState State;
+
+            public MouseData(IntPtr id)
+            {
+                Id = id;
+            }
         }
 
         class KeyboardData
         {
+            public IntPtr Id;
             public KeyboardState State;
+
+            public KeyboardData(IntPtr id)
+            {
+                Id = id;
+            }
         }
 
         class JoystickData
         {
+            public IntPtr Id;
             public string Name;
             public Guid Guid;
             public JoystickState State;
             public JoystickCapabilities Capabilities;
-            readonly public Dictionary<int, JoystickButton> ElementUsageToButton =
-                new Dictionary<int, JoystickButton>();
-            readonly public Dictionary<IOHIDElementRef, JoystickHat> ElementToHat =
-                new Dictionary<IOHIDElementRef, JoystickHat>(new IntPtrEqualityComparer());
+
+            readonly public Dictionary<IOHIDElementCookie, JoystickElement> Elements =
+                new Dictionary<IOHIDElementCookie, JoystickElement>();
+
+            public JoystickData(IntPtr id)
+            {
+                Id = id;
+            }
+
+            public void AddElement(JoystickElement e)
+            {
+                if (!Elements.ContainsKey(e.Cookie))
+                {
+                    Elements.Add(e.Cookie, e);
+                    Debug.Print("Discovered joystick element {0:x} ({1}/{2})",
+                        e.Cookie, e.Page, e.Usage);
+                }
+                else
+                {
+                    Debug.Print("Duplicate joystick element {0:x} ({1}/{2}) ignored.",
+                        e.Cookie, e.Page, e.Usage);
+                }
+            }
+        }
+
+        class JoystickElement : IComparable<JoystickElement>, IEquatable<JoystickElement>
+        {
+            public IntPtr Element;
+            public IntPtr Cookie;
+            public HIDPage Page;
+            public int Usage;
+            // Hardware axis range
+            public int Min;
+            public int Max;
+            // Reported axis range (can sometimes be larger than hardware range)
+            public int MinReported;
+            public int MaxReported;
+
+            // Order in which this element was reported
+            public int Index;
+
+            public JoystickElement(
+                IntPtr element, IntPtr cookie,
+                HIDPage page, int usage,
+                int min, int max)
+            {
+                Element = element;
+                Cookie = cookie;
+                Page = page;
+                Usage = usage;
+                Min = min;
+                Max = max;
+                MinReported = min;
+                MaxReported = max;
+            }
+
+            #region IComparable implementation
+
+            public int CompareTo(JoystickElement other)
+            {
+                return Usage.CompareTo(other.Usage);
+            }
+
+            #endregion
+
+            #region IEquatable implementation
+
+            public bool Equals(JoystickElement other)
+            {
+                return Cookie.Equals(other.Cookie);
+            }
+
+            #endregion
         }
 
         IOHIDManagerRef hidmanager;
 
-        readonly Dictionary<IntPtr, MouseData> MouseDevices =
-            new Dictionary<IntPtr, MouseData>(new IntPtrEqualityComparer());
-        readonly Dictionary<int, IntPtr> MouseIndexToDevice =
-            new Dictionary<int, IntPtr>();
-
-        readonly Dictionary<IntPtr, KeyboardData> KeyboardDevices =
-            new Dictionary<IntPtr, KeyboardData>(new IntPtrEqualityComparer());
-        readonly Dictionary<int, IntPtr> KeyboardIndexToDevice =
-            new Dictionary<int, IntPtr>();
-
-        readonly Dictionary<IntPtr, JoystickData> JoystickDevices =
-            new Dictionary<IntPtr, JoystickData>(new IntPtrEqualityComparer());
-        readonly Dictionary<int, IntPtr> JoystickIndexToDevice =
-            new Dictionary<int, IntPtr>();
+        readonly DeviceCollection<MouseData> MouseDevices =
+            new DeviceCollection<MouseData>();
+        readonly DeviceCollection<KeyboardData> KeyboardDevices =
+            new DeviceCollection<KeyboardData>();
+        readonly DeviceCollection<JoystickData> JoystickDevices =
+            new DeviceCollection<JoystickData>();
 
         readonly CFRunLoop RunLoop;
         readonly CFString InputLoopMode = CF.RunLoopModeDefault;
         readonly CFDictionary DeviceTypes = new CFDictionary();
 
         readonly MappedGamePadDriver mapped_gamepad = new MappedGamePadDriver();
+
+        // Used for device discovery
+        readonly List<JoystickElement> axis_elements = new List<JoystickElement>();
+        readonly List<JoystickElement> button_elements = new List<JoystickElement>();
+        readonly List<JoystickElement> hat_elements = new List<JoystickElement>();
+        readonly List<JoystickElement> vendor_elements = new List<JoystickElement>();
 
         IntPtr MouseEventTap;
         IntPtr MouseEventTapSource;
@@ -321,22 +403,27 @@ namespace OpenTK.Platform.MacOS
             try
             {
                 bool recognized = false;
+                long id = device.ToInt64();
 
-                if (MouseDevices.ContainsKey(device))
+                MouseData mouse;
+                KeyboardData keyboard;
+                JoystickData joystick;
+
+                if (MouseDevices.FromHardwareId(id, out mouse))
                 {
-                    RemoveMouse(sender, device);
+                    RemoveMouse(sender, id);
                     recognized = true;
                 }
 
-                if (KeyboardDevices.ContainsKey(device))
+                if (KeyboardDevices.FromHardwareId(id, out keyboard))
                 {
-                    RemoveKeyboard(sender, device);
+                    RemoveKeyboard(sender, id);
                     recognized = true;
                 }
 
-                if (JoystickDevices.ContainsKey(device))
+                if (JoystickDevices.FromHardwareId(id, out joystick))
                 {
-                    RemoveJoystick(sender, device);
+                    RemoveJoystick(sender, id);
                     recognized = true;
                 }
 
@@ -367,15 +454,16 @@ namespace OpenTK.Platform.MacOS
                 MouseData mouse;
                 KeyboardData keyboard;
                 JoystickData joystick;
-                if (MouseDevices.TryGetValue(context, out mouse))
+                long id = context.ToInt64();
+                if (MouseDevices.FromHardwareId(id, out mouse))
                 {
                     UpdateMouse(mouse, val);
                 }
-                else if (KeyboardDevices.TryGetValue(context, out keyboard))
+                else if (KeyboardDevices.FromHardwareId(id, out keyboard))
                 {
                     UpdateKeyboard(keyboard, val);
                 }
-                else if (JoystickDevices.TryGetValue(context, out joystick))
+                else if (JoystickDevices.FromHardwareId(id, out joystick))
                 {
                     UpdateJoystick(joystick, val);
                 }
@@ -394,24 +482,16 @@ namespace OpenTK.Platform.MacOS
 
         void AddMouse(CFAllocatorRef sender, CFAllocatorRef device)
         {
-            if (!MouseDevices.ContainsKey(device))
-            {
-                Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
-                MouseIndexToDevice.Add(MouseDevices.Count, device);
-                MouseDevices.Add(device, new MouseData());
-            }
-            else
-            {
-                Debug.Print("Mouse device {0:x} reconnected, sender is {1:x}", device, sender);
-            }
-            MouseDevices[device].State.SetIsConnected(true);
+            Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
+            MouseData mouse = new MouseData(device);
+            mouse.State.SetIsConnected(true);
+            MouseDevices.Add(device.ToInt64(), mouse);
         }
 
-        void RemoveMouse(CFAllocatorRef sender, CFAllocatorRef device)
+        void RemoveMouse(CFAllocatorRef sender, long id)
         {
-            Debug.Print("Mouse device {0:x} disconnected, sender is {1:x}", device, sender);
-            // Keep the device in case it comes back later on
-            MouseDevices[device].State.SetIsConnected(false);
+            Debug.Print("Mouse device {0:x} disconnected, sender is {1:x}", id, sender);
+            MouseDevices.Remove(id);
         }
 
         static void UpdateMouse(MouseData mouse, IOHIDValueRef val)
@@ -468,24 +548,16 @@ namespace OpenTK.Platform.MacOS
 
         void AddKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
         {
-            if (!KeyboardDevices.ContainsKey(device))
-            {
-                Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
-                KeyboardIndexToDevice.Add(KeyboardDevices.Count, device);
-                KeyboardDevices.Add(device, new KeyboardData());
-            }
-            else
-            {
-                Debug.Print("Keyboard device {0:x} reconnected, sender is {1:x}", device, sender);
-            }
-            KeyboardDevices[device].State.SetIsConnected(true);
+            Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
+            KeyboardData keyboard = new KeyboardData(device);
+            keyboard.State.SetIsConnected(true);
+            KeyboardDevices.Add(device.ToInt64(), keyboard);
         }
 
-        void RemoveKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
+        void RemoveKeyboard(CFAllocatorRef sender, long id)
         {
-            Debug.Print("Keyboard device {0:x} disconnected, sender is {1:x}", device, sender);
-            // Keep the device in case it comes back later on
-            KeyboardDevices[device].State.SetIsConnected(false);
+            Debug.Print("Keyboard device {0:x} disconnected, sender is {1:x}", id, sender);
+            KeyboardDevices.Remove(id);
         }
 
         static void UpdateKeyboard(KeyboardData keyboard, IOHIDValueRef val)
@@ -557,7 +629,18 @@ namespace OpenTK.Platform.MacOS
                 guid_bytes.AddRange(name_bytes);
             }
 
-            return new Guid(guid_bytes.ToArray());
+            // The Guid(byte[]) constructor performs byte-swapping on the first 4+2+2 bytes, while
+            // the Guid(string) constructor does not. Since our database is using the string
+            // constructor, we need to compensate for this difference or the database lookups
+            // will fail.
+            byte[] guid_array = guid_bytes.ToArray();
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(guid_array, 0, 4);
+                Array.Reverse(guid_array, 4, 2);
+                Array.Reverse(guid_array, 6, 2);
+            }
+            return new Guid(guid_array);
         }
 
         JoystickData CreateJoystick(IntPtr sender, IntPtr device)
@@ -568,177 +651,219 @@ namespace OpenTK.Platform.MacOS
             CFArrayRef element_array_ref = NativeMethods.IOHIDDeviceCopyMatchingElements(device, IntPtr.Zero, IntPtr.Zero);
             if (element_array_ref != IntPtr.Zero)
             {
-                joy = new JoystickData();
-                int axes = 0;
-                int buttons = 0;
-                int hats = 0;
+                joy = new JoystickData(device);
 
                 CFStringRef name_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductKey);
                 string name = CF.CFStringGetCString(name_ref);
 
                 Guid guid = CreateJoystickGuid(device, name);
 
-                List<int> button_elements = new List<int>();
-                List<IOHIDElementRef> hat_elements = new List<CFAllocatorRef>();
-                CFArray element_array = new CFArray(element_array_ref);
-                for (int i = 0; i < element_array.Count; i++)
+                axis_elements.Clear();
+                button_elements.Clear();
+                hat_elements.Clear();
+                vendor_elements.Clear();
+                AddElements(joy, element_array_ref);
+
+                // Ensure a stable sorting order that matches SDL2.
+                // (This is necessary for the gamepad database).
+                axis_elements.Sort();
+                button_elements.Sort();
+                hat_elements.Sort();
+                vendor_elements.Sort();
+
+                // Store all discovered elements in JoystickData
+                for (int i = 0; i < Math.Min(axis_elements.Count, JoystickState.MaxAxes); i++)
                 {
-                    IOHIDElementRef element_ref = element_array[i];
-                    HIDPage page = NativeMethods.IOHIDElementGetUsagePage(element_ref);
-                    int usage = NativeMethods.IOHIDElementGetUsage(element_ref);
-
-                    switch (page)
-                    {
-                        case HIDPage.GenericDesktop:
-                            switch ((HIDUsageGD)usage)
-                            {
-                                case HIDUsageGD.X:
-                                case HIDUsageGD.Y:
-                                case HIDUsageGD.Z:
-                                case HIDUsageGD.Rx:
-                                case HIDUsageGD.Ry:
-                                case HIDUsageGD.Rz:
-                                case HIDUsageGD.Slider:
-                                case HIDUsageGD.Dial:
-                                case HIDUsageGD.Wheel:
-                                    axes++;
-                                    break;
-
-                                case HIDUsageGD.Hatswitch:
-                                    hats++;
-                                    hat_elements.Add(element_ref);
-                                    break;
-                            }
-                            break;
-
-                        case HIDPage.Simulation:
-                            switch ((HIDUsageSim)usage)
-                            {
-                                case HIDUsageSim.Rudder:
-                                case HIDUsageSim.Throttle:
-                                    axes++;
-                                    break;
-                            }
-                            break;
-
-                        case HIDPage.Button:
-                            button_elements.Add(usage);
-                            break;
-                    }
+                    JoystickElement e = axis_elements[i];
+                    e.Index = i;
+                    joy.AddElement(e);
                 }
 
-                if (axes > JoystickState.MaxAxes)
+                for (int i = 0; i < Math.Min(button_elements.Count, JoystickState.MaxButtons); i++)
+                {
+                    JoystickElement e = button_elements[i];
+                    e.Index = i;
+                    joy.AddElement(e);
+                }
+
+                for (int i = 0; i < Math.Min(hat_elements.Count, JoystickState.MaxHats); i++)
+                {
+                    JoystickElement e = hat_elements[i];
+                    e.Index = i;
+                    joy.AddElement(e);
+                }
+
+                for (int i = 0; i < vendor_elements.Count; i++)
+                {
+                    JoystickElement e = vendor_elements[i];
+                    e.Index = i;
+                    joy.AddElement(e);
+                }
+
+                if (axis_elements.Count >= JoystickState.MaxAxes)
                 {
                     Debug.Print("[Mac] JoystickAxis limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
-                        axes, JoystickState.MaxAxes);
-                    axes = JoystickState.MaxAxes;
+                        axis_elements.Count, JoystickState.MaxAxes);
                 }
-                if (buttons > JoystickState.MaxButtons)
+                if (button_elements.Count > JoystickState.MaxButtons)
                 {
                     Debug.Print("[Mac] JoystickButton limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
-                        buttons, JoystickState.MaxButtons);
-                    buttons = JoystickState.MaxButtons;
+                        button_elements.Count, JoystickState.MaxButtons);
                 }
-                if (hats > JoystickState.MaxHats)
+                if (hat_elements.Count > JoystickState.MaxHats)
                 {
                     Debug.Print("[Mac] JoystickHat limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
-                        hats, JoystickState.MaxHats);
-                    hats = JoystickState.MaxHats;
+                        hat_elements.Count, JoystickState.MaxHats);
                 }
 
                 joy.Name = name;
                 joy.Guid = guid;
                 joy.State.SetIsConnected(true);
-                joy.Capabilities = new JoystickCapabilities(axes, buttons, hats, true);
-
-                // Map button elements to JoystickButtons
-                for (int button = 0; button < button_elements.Count; button++)
-                {
-                    joy.ElementUsageToButton.Add(button_elements[button], JoystickButton.Button0 + button); 
-                }
-
-                for (int hat = 0; hat < hat_elements.Count; hat++)
-                {
-                    joy.ElementToHat.Add(hat_elements[hat], JoystickHat.Hat0 + hat);
-                }
+                joy.Capabilities = new JoystickCapabilities(
+                    axis_elements.Count, button_elements.Count, hat_elements.Count, true);
             }
             CF.CFRelease(element_array_ref);
 
             return joy;
         }
 
-        JoystickData GetJoystick(int index)
+        void AddElements(JoystickData joy, CFArrayRef element_array_ref)
         {
-            IntPtr device;
-            if (JoystickIndexToDevice.TryGetValue(index, out device))
+            CFArray element_array = new CFArray(element_array_ref);
+            for (int i = 0; i < element_array.Count; i++)
             {
-                JoystickData joystick;
-                if (JoystickDevices.TryGetValue(device, out joystick))
+                IOHIDElementRef element_ref = element_array[i];
+
+                if (element_ref != IntPtr.Zero && CF.CFGetTypeID(element_ref) == NativeMethods.IOHIDElementGetTypeID())
                 {
-                    return joystick;
+                    IOHIDElementCookie cookie = NativeMethods.IOHIDElementGetCookie(element_ref);
+                    HIDPage page = NativeMethods.IOHIDElementGetUsagePage(element_ref);
+                    int usage = NativeMethods.IOHIDElementGetUsage(element_ref);
+                    JoystickElement e = null;
+
+                    switch (NativeMethods.IOHIDElementGetType(element_ref))
+                    {
+                        case IOHIDElementType.Input_Axis:
+                        case IOHIDElementType.Input_Button:
+                        case IOHIDElementType.Input_Misc:
+                            switch (page)
+                            {
+                                case HIDPage.GenericDesktop:
+                                    switch ((HIDUsageGD)usage)
+                                    {
+                                        case HIDUsageGD.X:
+                                        case HIDUsageGD.Y:
+                                        case HIDUsageGD.Z:
+                                        case HIDUsageGD.Rx:
+                                        case HIDUsageGD.Ry:
+                                        case HIDUsageGD.Rz:
+                                        case HIDUsageGD.Slider:
+                                        case HIDUsageGD.Dial:
+                                        case HIDUsageGD.Wheel:
+                                            e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
+                                            if (!axis_elements.Contains(e))
+                                            {
+                                                axis_elements.Add(e);
+                                            }
+                                            break;
+
+                                        case HIDUsageGD.Hatswitch:
+                                            e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
+                                            if (!hat_elements.Contains(e))
+                                            {
+                                                hat_elements.Add(e);
+                                            }
+                                            break;
+                                    }
+                                    break;
+
+                                case HIDPage.Simulation:
+                                    switch ((HIDUsageSim)usage)
+                                    {
+                                        case HIDUsageSim.Rudder:
+                                        case HIDUsageSim.Throttle:
+                                            e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
+                                            if (!axis_elements.Contains(e))
+                                            {
+                                                axis_elements.Add(e);
+                                            }
+                                            break;
+                                    }
+                                    break;
+
+                                case HIDPage.Button:
+                                    e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
+                                    if (!button_elements.Contains(e))
+                                    {
+                                        button_elements.Add(e);
+                                    }
+                                    break;
+
+                                case HIDPage.VendorDefinedStart:
+                                    e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
+                                    if (!vendor_elements.Contains(e))
+                                    {
+                                        vendor_elements.Add(e);
+                                    }
+                                    break;
+                            }
+                            break;
+
+                        case IOHIDElementType.Collection:
+                            CFArrayRef children_array_ref = NativeMethods.IOHIDElementGetChildren(element_ref);
+                            if (children_array_ref != IntPtr.Zero)
+                            {
+                                AddElements(joy, children_array_ref);
+                            }
+                            break;
+                    }
                 }
             }
-            return null;
+        }
+
+        JoystickData GetJoystick(int index)
+        {
+            return JoystickDevices.FromIndex(index);
         }
 
         void AddJoystick(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Joystick device {0:x} discovered, sender is {1:x}", device, sender);
-            JoystickData joy = CreateJoystick(sender, device);
-            if (joy != null)
+            Debug.Indent();
+
+            try
             {
-                // Add a device->joy lookup entry for this device.
-                if (!JoystickDevices.ContainsKey(device))
+                JoystickData joy = CreateJoystick(sender, device);
+                if (joy != null)
                 {
-                    // First time we've seen this device.
-                    JoystickDevices.Add(device, joy);
+                    JoystickDevices.Add(device.ToInt64(), joy);
                 }
-                else
-                {
-                    // This is an old device that is replugged.
-                    // This branch does not appear to be executed, ever.
-                    JoystickDevices[device] = joy;
-                }
-
-                // Add an index->device lookup entry for this device.
-                // Use the first free (i.e. disconnected) index.
-                // If all indices are connected, append a new one.
-                int i;
-                for (i = 0; i < JoystickIndexToDevice.Count; i++)
-                {
-                    IntPtr candidate = JoystickIndexToDevice[i];
-                    if (!JoystickDevices[candidate].State.IsConnected)
-                    {
-                        break;
-                    }
-                }
-
-                if (i == JoystickDevices.Count)
-                {
-                    // All indices connected, append a new one.
-                    JoystickIndexToDevice.Add(JoystickDevices.Count, device);
-                }
-                else
-                {
-                    // Replace joystick at that index
-                    JoystickIndexToDevice[i] = device;
-                }
+            }
+            finally
+            {
+                Debug.Unindent();
             }
         }
 
-        void RemoveJoystick(CFAllocatorRef sender, CFAllocatorRef device)
+        void RemoveJoystick(CFAllocatorRef sender, long id)
         {
-            Debug.Print("Joystick device {0:x} disconnected, sender is {1:x}", device, sender);
-            // Keep the device in case it comes back later on
-            JoystickDevices[device].State = new JoystickState();
-            JoystickDevices[device].Capabilities = new JoystickCapabilities();
+            Debug.Print("Joystick device {0:x} disconnected, sender is {1:x}", id, sender);
+            JoystickDevices.Remove(id);
         }
 
         static void UpdateJoystick(JoystickData joy, IOHIDValueRef val)
         {
             IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
+            IOHIDElementCookie cookie = NativeMethods.IOHIDElementGetCookie(elem);
             HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
             int usage = NativeMethods.IOHIDElementGetUsage(elem);
+
+            if (!joy.Elements.ContainsKey(cookie))
+            {
+                Debug.Print("[{0}] Reported joystick element {1:x} ({2}/{3}) is unknown",
+                    typeof(HIDInput).Name, cookie, page, usage);
+                return;
+            }
 
             switch (page)
             {
@@ -755,7 +880,7 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageGD.Dial:
                         case HIDUsageGD.Wheel:
                             short offset = GetJoystickAxis(val, elem);
-                            JoystickAxis axis = TranslateJoystickAxis(usage);
+                            JoystickAxis axis = JoystickAxis.Axis0 + joy.Elements[cookie].Index;
                             if (axis >= JoystickAxis.Axis0 && axis <= JoystickAxis.Last)
                             {
                                 joy.State.SetAxis(axis, offset);
@@ -764,7 +889,7 @@ namespace OpenTK.Platform.MacOS
 
                         case HIDUsageGD.Hatswitch:
                             HatPosition position = GetJoystickHat(val, elem);
-                            JoystickHat hat = TranslateJoystickHat(joy, elem);
+                            JoystickHat hat = JoystickHat.Hat0 + joy.Elements[cookie].Index;
                             if (hat >= JoystickHat.Hat0 && hat <= JoystickHat.Last)
                             {
                                 joy.State.SetHat(hat, new JoystickHatState(position));
@@ -779,7 +904,7 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageSim.Rudder:
                         case HIDUsageSim.Throttle:
                             short offset = GetJoystickAxis(val, elem);
-                            JoystickAxis axis = TranslateJoystickAxis(usage);
+                            JoystickAxis axis = JoystickAxis.Axis0 + joy.Elements[cookie].Index;
                             if (axis >= JoystickAxis.Axis0 && axis <= JoystickAxis.Last)
                             {
                                 joy.State.SetAxis(axis, offset);
@@ -791,7 +916,7 @@ namespace OpenTK.Platform.MacOS
                 case HIDPage.Button:
                     {
                         bool pressed = GetJoystickButton(val, elem);
-                        JoystickButton button = TranslateJoystickButton(joy, usage);
+                        JoystickButton button = JoystickButton.Button0 + joy.Elements[cookie].Index;
                         if (button >= JoystickButton.Button0 && button <= JoystickButton.Last)
                         {
                             joy.State.SetButton(button, pressed);
@@ -806,51 +931,7 @@ namespace OpenTK.Platform.MacOS
             int max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
             int min = NativeMethods.IOHIDElementGetLogicalMin(element).ToInt32();
             int offset = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
-            if (offset < min)
-                offset = min;
-            if (offset > max)
-                offset = max;
-
-            const int range = short.MaxValue - short.MinValue + 1;
-            const int half_range = short.MaxValue + 1;
-            return (short)((offset - min) * range / (max - min) + half_range);
-        }
-
-        static JoystickAxis TranslateJoystickAxis(int usage)
-        {
-            switch (usage)
-            {
-                case (int)HIDUsageGD.X:
-                    return JoystickAxis.Axis0;
-                case (int)HIDUsageGD.Y:
-                    return JoystickAxis.Axis1;
-
-                case (int)HIDUsageGD.Z:
-                    return JoystickAxis.Axis2;
-                case (int)HIDUsageGD.Rz:
-                    return JoystickAxis.Axis3;
-
-                case (int)HIDUsageGD.Rx:
-                    return JoystickAxis.Axis4;
-                case (int)HIDUsageGD.Ry:
-                    return JoystickAxis.Axis5;
-
-                case (int)HIDUsageGD.Slider:
-                    return JoystickAxis.Axis6;
-                case (int)HIDUsageGD.Dial:
-                    return JoystickAxis.Axis7;
-                case (int)HIDUsageGD.Wheel:
-                    return JoystickAxis.Axis8;
-
-                case (int)HIDUsageSim.Rudder:
-                    return JoystickAxis.Axis9;
-                case (int)HIDUsageSim.Throttle:
-                    return JoystickAxis.Axis10;
-
-                default:
-                    Debug.Print("[Mac] Unknown axis with HID usage {0}", usage);
-                    return 0;
-            }
+            return (short)HidHelper.ScaleValue(offset, min, max, short.MinValue, short.MaxValue);
         }
 
         static bool GetJoystickButton(IOHIDValueRef val, IOHIDElementRef element)
@@ -858,16 +939,6 @@ namespace OpenTK.Platform.MacOS
             // Todo: analogue buttons are transformed to digital
             int value = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
             return value >= 1;
-        }
-
-        static JoystickButton TranslateJoystickButton(JoystickData joy, int usage)
-        {
-            JoystickButton button;
-            if (joy.ElementUsageToButton.TryGetValue(usage, out button))
-            {
-                return button;
-            }
-            return JoystickButton.Last + 1;
         }
 
         static HatPosition GetJoystickHat(IOHIDValueRef val, IOHIDElementRef element)
@@ -892,8 +963,33 @@ namespace OpenTK.Platform.MacOS
                 {
                     // 0 = up; 1 = up-right; 2 = right; 3 = right-down;
                     // 4 = down; 5 = down-left; 6 = left; 7 = up-left
-                    // Our HatPosition enum 
-                    position = (HatPosition)value;
+                    switch (value)
+                    {
+                        case 0:
+                            position = HatPosition.Up;
+                            break;
+                        case 1:
+                            position = HatPosition.UpRight;
+                            break;
+                        case 2:
+                            position = HatPosition.Right;
+                            break;
+                        case 3:
+                            position = HatPosition.DownRight;
+                            break;
+                        case 4:
+                            position = HatPosition.Down;
+                            break;
+                        case 5:
+                            position = HatPosition.DownLeft;
+                            break;
+                        case 6:
+                            position = HatPosition.Left;
+                            break;
+                        case 7:
+                            position = HatPosition.UpLeft;
+                            break;
+                    }
                 }
                 else
                 {
@@ -902,16 +998,6 @@ namespace OpenTK.Platform.MacOS
             }
 
             return position;
-        }
-
-        static JoystickHat TranslateJoystickHat(JoystickData joy, IOHIDElementRef elem)
-        {
-            JoystickHat hat;
-            if (joy.ElementToHat.TryGetValue(elem, out hat))
-            {
-                return hat;
-            }
-            return JoystickHat.Last + 1;
         }
 
         #endregion
@@ -932,9 +1018,9 @@ namespace OpenTK.Platform.MacOS
         MouseState IMouseDriver2.GetState()
         {
             MouseState master = new MouseState();
-            foreach (KeyValuePair<IntPtr, MouseData> item in MouseDevices)
+            foreach (MouseData item in MouseDevices)
             {
-                master.MergeBits(item.Value.State);
+                master.MergeBits(item.State);
             }
 
             return master;
@@ -942,10 +1028,10 @@ namespace OpenTK.Platform.MacOS
 
         MouseState IMouseDriver2.GetState(int index)
         {
-            IntPtr device;
-            if (MouseIndexToDevice.TryGetValue(index, out device))
+            MouseData mouse;
+            if (MouseDevices.FromIndex(index, out mouse))
             {
-                return MouseDevices[device].State;
+                return mouse.State;
             }
 
             return new MouseState();
@@ -969,9 +1055,9 @@ namespace OpenTK.Platform.MacOS
         KeyboardState IKeyboardDriver2.GetState()
         {
             KeyboardState master = new KeyboardState();
-            foreach (KeyValuePair<IntPtr, KeyboardData> item in KeyboardDevices)
+            foreach (KeyboardData item in KeyboardDevices)
             {
-                master.MergeBits(item.Value.State);
+                master.MergeBits(item.State);
             }
 
             return master;
@@ -979,10 +1065,10 @@ namespace OpenTK.Platform.MacOS
 
         KeyboardState IKeyboardDriver2.GetState(int index)
         {
-            IntPtr device;
-            if (KeyboardIndexToDevice.TryGetValue(index, out device))
+            KeyboardData keyboard;
+            if (KeyboardDevices.FromIndex(index, out keyboard))
             {
-                return KeyboardDevices[device].State;
+                return keyboard.State;
             }
 
             return new KeyboardState();
@@ -990,11 +1076,11 @@ namespace OpenTK.Platform.MacOS
 
         string IKeyboardDriver2.GetDeviceName(int index)
         {
-            IntPtr device;
-            if (KeyboardIndexToDevice.TryGetValue(index, out device))
+            KeyboardData keyboard;
+            if (KeyboardDevices.FromIndex(index, out keyboard))
             {
-                IntPtr vendor_id = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDVendorIDKey);
-                IntPtr product_id = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductIDKey);
+                IntPtr vendor_id = NativeMethods.IOHIDDeviceGetProperty(keyboard.Id, NativeMethods.IOHIDVendorIDKey);
+                IntPtr product_id = NativeMethods.IOHIDDeviceGetProperty(keyboard.Id, NativeMethods.IOHIDProductIDKey);
                 // Todo: find out the real vendor/product name from the relevant ids.
                 return String.Format("{0}:{1}", vendor_id, product_id);
             }
@@ -1165,6 +1251,12 @@ namespace OpenTK.Platform.MacOS
             public static extern IOHIDElementRef IOHIDValueGetElement(IOHIDValueRef @value);
 
             [DllImport(hid)]
+            public static extern CFArrayRef IOHIDElementGetChildren(IOHIDElementRef element_ref);
+
+            [DllImport(hid)]
+            public static extern IOHIDElementCookie IOHIDElementGetCookie(IOHIDElementRef element);
+
+            [DllImport(hid)]
             public static extern CFIndex IOHIDValueGetIntegerValue(IOHIDValueRef @value);
 
             [DllImport(hid)]
@@ -1175,6 +1267,9 @@ namespace OpenTK.Platform.MacOS
             [DllImport(hid)]
             public static extern IOHIDElementType IOHIDElementGetType(
                 IOHIDElementRef element);
+
+            [DllImport(hid)]
+            public static extern IOHIDElementCookie IOHIDElementGetTypeID();
 
             [DllImport(hid)]
             public static extern int IOHIDElementGetUsage(IOHIDElementRef elem);
@@ -1207,169 +1302,6 @@ namespace OpenTK.Platform.MacOS
         {
             Physical, // [device min, device max]
             Calibrated // [-1, +1]
-        }
-
-        enum HIDPage
-        {
-            Undefined  = 0x00,
-            GenericDesktop = 0x01,
-            Simulation = 0x02,
-            VR = 0x03,
-            Sport  = 0x04,
-            Game   = 0x05,
-            /* Reserved 0x06 */
-            KeyboardOrKeypad   = 0x07, /* USB Device Class Definition for Human Interface Devices (HID). Note: the usage type for all key codes is Selector (Sel). */
-            LEDs   = 0x08,
-            Button = 0x09,
-            Ordinal    = 0x0A,
-            Telephony  = 0x0B,
-            Consumer   = 0x0C,
-            Digitizer  = 0x0D,
-            /* Reserved 0x0E */
-            PID    = 0x0F, /* USB Physical Interface Device definitions for force feedback and related devices. */
-            Unicode    = 0x10,
-            /* Reserved 0x11 - 0x13 */
-            AlphanumericDisplay    = 0x14,
-            /* Reserved 0x15 - 0x7F */
-            /* Monitor 0x80 - 0x83   USB Device Class Definition for Monitor Devices */
-            /* Power 0x84 - 0x87     USB Device Class Definition for Power Devices */
-            PowerDevice = 0x84,                /* Power Device Page */
-            BatterySystem = 0x85,              /* Battery System Page */
-            /* Reserved 0x88 - 0x8B */
-            BarCodeScanner = 0x8C, /* (Point of Sale) USB Device Class Definition for Bar Code Scanner Devices */
-            WeighingDevice = 0x8D, /* (Point of Sale) USB Device Class Definition for Weighing Devices */
-            Scale  = 0x8D, /* (Point of Sale) USB Device Class Definition for Scale Devices */
-            MagneticStripeReader = 0x8E,
-            /* ReservedPointofSalepages 0x8F */
-            CameraControl  = 0x90, /* USB Device Class Definition for Image Class Devices */
-            Arcade = 0x91, /* OAAF Definitions for arcade and coinop related Devices */
-            /* Reserved 0x92 - 0xFEFF */
-            /* VendorDefined 0xFF00 - 0xFFFF */
-            VendorDefinedStart = 0xFF00
-        }
-
-        // Consumer electronic devices
-        enum HIDUsageCD
-        {
-            ACPan = 0x0238
-        }
-
-        // Generic desktop usage
-        enum HIDUsageGD
-        {
-            Pointer    = 0x01, /* Physical Collection */
-            Mouse  = 0x02, /* Application Collection */
-            /* 0x03 Reserved */
-            Joystick   = 0x04, /* Application Collection */
-            GamePad    = 0x05, /* Application Collection */
-            Keyboard   = 0x06, /* Application Collection */
-            Keypad = 0x07, /* Application Collection */
-            MultiAxisController    = 0x08, /* Application Collection */
-            /* 0x09 - 0x2F Reserved */
-            X  = 0x30, /* Dynamic Value */
-            Y  = 0x31, /* Dynamic Value */
-            Z  = 0x32, /* Dynamic Value */
-            Rx = 0x33, /* Dynamic Value */
-            Ry = 0x34, /* Dynamic Value */
-            Rz = 0x35, /* Dynamic Value */
-            Slider = 0x36, /* Dynamic Value */
-            Dial   = 0x37, /* Dynamic Value */
-            Wheel  = 0x38, /* Dynamic Value */
-            Hatswitch  = 0x39, /* Dynamic Value */
-            CountedBuffer  = 0x3A, /* Logical Collection */
-            ByteCount  = 0x3B, /* Dynamic Value */
-            MotionWakeup   = 0x3C, /* One-Shot Control */
-            Start  = 0x3D, /* On/Off Control */
-            Select = 0x3E, /* On/Off Control */
-            /* 0x3F Reserved */
-            Vx = 0x40, /* Dynamic Value */
-            Vy = 0x41, /* Dynamic Value */
-            Vz = 0x42, /* Dynamic Value */
-            Vbrx   = 0x43, /* Dynamic Value */
-            Vbry   = 0x44, /* Dynamic Value */
-            Vbrz   = 0x45, /* Dynamic Value */
-            Vno    = 0x46, /* Dynamic Value */
-            /* 0x47 - 0x7F Reserved */
-            SystemControl  = 0x80, /* Application Collection */
-            SystemPowerDown    = 0x81, /* One-Shot Control */
-            SystemSleep    = 0x82, /* One-Shot Control */
-            SystemWakeUp   = 0x83, /* One-Shot Control */
-            SystemContextMenu  = 0x84, /* One-Shot Control */
-            SystemMainMenu = 0x85, /* One-Shot Control */
-            SystemAppMenu  = 0x86, /* One-Shot Control */
-            SystemMenuHelp = 0x87, /* One-Shot Control */
-            SystemMenuExit = 0x88, /* One-Shot Control */
-            SystemMenu = 0x89, /* Selector */
-            SystemMenuRight    = 0x8A, /* Re-Trigger Control */
-            SystemMenuLeft = 0x8B, /* Re-Trigger Control */
-            SystemMenuUp   = 0x8C, /* Re-Trigger Control */
-            SystemMenuDown = 0x8D, /* Re-Trigger Control */
-            /* 0x8E - 0x8F Reserved */
-            DPadUp = 0x90, /* On/Off Control */
-            DPadDown   = 0x91, /* On/Off Control */
-            DPadRight  = 0x92, /* On/Off Control */
-            DPadLeft   = 0x93, /* On/Off Control */
-            /* 0x94 - 0xFFFF Reserved */
-            Reserved = 0xFFFF
-        }
-
-        enum HIDUsageSim
-        {
-            FlightSimulationDevice    = 0x01, /* Application Collection */
-            AutomobileSimulationDevice    = 0x02, /*             Application Collection */
-            TankSimulationDevice  = 0x03, /*             Application Collection */
-            SpaceshipSimulationDevice = 0x04, /*             Application Collection */
-            SubmarineSimulationDevice = 0x05, /*             Application Collection */
-            SailingSimulationDevice   = 0x06, /*             Application Collection */
-            MotorcycleSimulationDevice    = 0x07, /*             Application Collection */
-            SportsSimulationDevice    = 0x08, /*             Application Collection */
-            AirplaneSimulationDevice  = 0x09, /*             Application Collection */
-            HelicopterSimulationDevice    = 0x0A, /*             Application Collection */
-            MagicCarpetSimulationDevice   = 0x0B, /*             Application Collection */
-            BicycleSimulationDevice   = 0x0C, /*             Application Collection */
-            /* 0x0D - 0x1F Reserved */
-            FlightControlStick    = 0x20, /*             Application Collection */
-            FlightStick   = 0x21, /*             Application Collection */
-            CyclicControl = 0x22, /*             Physical Collection */
-            CyclicTrim    = 0x23, /*             Physical Collection */
-            FlightYoke    = 0x24, /*             Application Collection */
-            TrackControl  = 0x25, /*             Physical Collection */
-            /* 0x26 - 0xAF Reserved */
-            Aileron   = 0xB0, /*             Dynamic Value */
-            AileronTrim   = 0xB1, /*             Dynamic Value */
-            AntiTorqueControl = 0xB2, /*             Dynamic Value */
-            AutopilotEnable   = 0xB3, /*             On/Off Control */
-            ChaffRelease  = 0xB4, /*             One-Shot Control */
-            CollectiveControl = 0xB5, /*             Dynamic Value */
-            DiveBrake = 0xB6, /*             Dynamic Value */
-            ElectronicCountermeasures = 0xB7, /*             On/Off Control */
-            Elevator  = 0xB8, /*             Dynamic Value */
-            ElevatorTrim  = 0xB9, /*             Dynamic Value */
-            Rudder    = 0xBA, /*             Dynamic Value */
-            Throttle  = 0xBB, /*             Dynamic Value */
-            FlightCommunications  = 0xBC, /*             On/Off Control */
-            FlareRelease  = 0xBD, /*             One-Shot Control */
-            LandingGear   = 0xBE, /*             On/Off Control */
-            ToeBrake  = 0xBF, /*             Dynamic Value */
-            Trigger   = 0xC0, /*             Momentary Control */
-            WeaponsArm    = 0xC1, /*             On/Off Control */
-            Weapons   = 0xC2, /*             Selector */
-            WingFlaps = 0xC3, /*             Dynamic Value */
-            Accelerator   = 0xC4, /*             Dynamic Value */
-            Brake = 0xC5, /*             Dynamic Value */
-            Clutch    = 0xC6, /*             Dynamic Value */
-            Shifter   = 0xC7, /*             Dynamic Value */
-            Steering  = 0xC8, /*             Dynamic Value */
-            TurretDirection   = 0xC9, /*             Dynamic Value */
-            BarrelElevation   = 0xCA, /*             Dynamic Value */
-            DivePlane = 0xCB, /*             Dynamic Value */
-            Ballast   = 0xCC, /*             Dynamic Value */
-            BicycleCrank  = 0xCD, /*             Dynamic Value */
-            HandleBars    = 0xCE, /*             Dynamic Value */
-            FrontBrake    = 0xCF, /*             Dynamic Value */
-            RearBrake = 0xD0, /*             Dynamic Value */
-            /* 0xD1 - 0xFFFF Reserved */
-            Reserved = 0xFFFF
         }
 
         enum HIDButton
@@ -1772,19 +1704,28 @@ namespace OpenTK.Platform.MacOS
                     NativeMethods.IOHIDManagerUnscheduleFromRunLoop(
                         hidmanager, RunLoop, InputLoopMode);
 
-                    foreach (var device in MouseDevices.Keys)
+                    for (int i = 0; i < Math.Max(MouseDevices.Count, 4); i++)
                     {
-                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
+                        if (MouseDevices[i] != null)
+                        {
+                            DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, MouseDevices[i].Id);
+                        }
                     }
 
-                    foreach (var device in KeyboardDevices.Keys)
+                    for (int i = 0; i < Math.Max(KeyboardDevices.Count, 4); i++)
                     {
-                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
+                        if (KeyboardDevices[i] != null)
+                        {
+                            DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, KeyboardDevices[i].Id);
+                        }
                     }
 
-                    foreach (var device in JoystickDevices.Keys)
+                    for (int i = 0; i < Math.Max(JoystickDevices.Count, 4); i++)
                     {
-                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
+                        if (JoystickDevices[i] != null)
+                        {
+                            DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, JoystickDevices[i].Id);
+                        }
                     }
 
                     if (hidmanager != IntPtr.Zero)

@@ -39,7 +39,6 @@ namespace OpenTK.Platform.MacOS
     static class NSApplication
     {
         internal static IntPtr Handle;
-        internal static IntPtr AutoreleasePool;
 
         static readonly IntPtr selQuit = Selector.Get("quit");
 
@@ -52,9 +51,6 @@ namespace OpenTK.Platform.MacOS
         {
             Cocoa.Initialize();
 
-            // Create the NSAutoreleasePool
-            AutoreleasePool = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.NSAutoreleasePool, Selector.Alloc), Selector.Init);
-
             // Register a Quit method to be called on cmd-q
             IntPtr nsapp = Class.Get("NSApplication");
             Class.RegisterMethod(nsapp, OnQuitHandler, "quit", "v@:");
@@ -66,24 +62,30 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendBool(Handle, Selector.Get("setActivationPolicy:"), (int)NSApplicationActivationPolicy.Regular);
             Cocoa.SendVoid(Handle, Selector.Get("activateIgnoringOtherApps:"), true);
 
-            // Create the menu bar
-            var menubar = Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc);
-            var menuItem = Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc);
+            if (Cocoa.SendIntPtr(Handle, Selector.Get("mainMenu")) == IntPtr.Zero)
+            {
+                // Create the menu bar
+                var menubar = Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc);
+                var menuItem = Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc);
 
-            // Add menu item to bar, and bar to application
-            Cocoa.SendIntPtr(menubar, Selector.Get("addItem:"), menuItem);
-            Cocoa.SendIntPtr(Handle, Selector.Get("setMainMenu:"), menubar);
+                // Add menu item to bar, and bar to application
+                Cocoa.SendIntPtr(menubar, Selector.Get("addItem:"), menuItem);
+                Cocoa.SendIntPtr(Handle, Selector.Get("setMainMenu:"), menubar);
 
-            // Add a "Quit" menu item and bind the button.
-            var appMenu = Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc);
-            var quitMenuItem = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc),
-                Selector.Get("initWithTitle:action:keyEquivalent:"), Cocoa.ToNSString("Quit"), selQuit, Cocoa.ToNSString("q"));
+                // Add a "Quit" menu item and bind the button.
+                var appMenu = Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc);
+                var quitMenuItem = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc),
+                                   Selector.Get("initWithTitle:action:keyEquivalent:"), Cocoa.ToNSString("Quit"), selQuit, Cocoa.ToNSString("q"));
 
-            Cocoa.SendIntPtr(appMenu, Selector.Get("addItem:"), quitMenuItem);
-            Cocoa.SendIntPtr(menuItem, Selector.Get("setSubmenu:"), appMenu);
+                Cocoa.SendIntPtr(appMenu, Selector.Get("addItem:"), quitMenuItem);
+                Cocoa.SendIntPtr(menuItem, Selector.Get("setSubmenu:"), appMenu);
 
-            // Tell cocoa we're ready to run the application (usually called by [NSApp run]). 
-            Cocoa.SendVoid(Handle, Selector.Get("finishLaunching"));
+                // Tell cocoa we're ready to run the application (usually called by [NSApp run]). 
+                // Note: if a main menu exists, then this method has already been called and
+                // calling it again will result in a crash. For this reason, we only call it
+                // when we create our own main menu.
+                Cocoa.SendVoid(Handle, Selector.Get("finishLaunching"));
+            }
 
             // Disable momentum scrolling and long-press key pop-ups
             IntPtr settings = Cocoa.SendIntPtr(Class.NSDictionary, Selector.Alloc);
