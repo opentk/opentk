@@ -3564,7 +3564,7 @@
       <use enum="VERSION_4_0" token="PATCH_VERTICES" />
       <use enum="VERSION_4_0" token="PATCH_DEFAULT_INNER_LEVEL" />
       <use enum="VERSION_4_0" token="PATCH_DEFAULT_OUTER_LEVEL" />
-      <use enum="VERSION_4_0" token="MAX_PATCH_VERTICES​" />
+      <use enum="VERSION_4_0" token="MAX_PATCH_VERTICES" />
       <use enum="VERSION_4_0" token="MAX_TESS_GEN_LEVEL" />
       <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_UNIFORM_COMPONENTS" />
       <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_UNIFORM_COMPONENTS" />
