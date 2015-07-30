@@ -35,8 +35,8 @@ namespace Bind.GL2
 
     class GL2Generator : Generator
     {
-        public GL2Generator(Settings settings, string dirname)
-            : base(settings, dirname)
+        public GL2Generator(Settings settings)
+            : base(settings)
         {
             if (Settings.Compatibility == Settings.Legacy.Tao)
             {

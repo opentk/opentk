@@ -12,8 +12,8 @@ namespace Bind.ES
     // Generation implementation for OpenGL ES 3.1
     class ES31Generator : Generator
     {
-        public ES31Generator(Settings settings, string dirName)
-            : base(settings, dirName)
+        public ES31Generator(Settings settings)
+            : base(settings)
         {
             Settings.DefaultOutputPath = Path.Combine(
                 Settings.DefaultOutputPath, "../ES31");
