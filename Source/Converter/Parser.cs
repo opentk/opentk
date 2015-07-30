@@ -26,7 +26,7 @@ using System.IO;
 using System.Net;
 using System.Xml.Linq;
 
-namespace CHeaderToXML
+namespace OpenTK.Convert
 {
     // The base class for a parser.
     abstract class Parser

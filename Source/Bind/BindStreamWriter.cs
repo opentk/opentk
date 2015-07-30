@@ -43,10 +43,11 @@ namespace Bind
 
     class BindStreamWriter : IDisposable
     {
-        static readonly char[] SplitCharacters = new char[] { '\r', '\n' };
+        static readonly string[] SplitStrings = new string[] { System.Environment.NewLine };
         readonly StreamWriter sw;
         public readonly string File;
 
+        bool newline = true;
         int indent_level = 0;
 
         public BindStreamWriter(string file)
@@ -65,30 +66,28 @@ namespace Bind
             if (indent_level > 0)
                 --indent_level;
         }
-
+        
         public void Write(WriteOptions options, string value)
         {
-            var lines = value.Split(SplitCharacters,
-                StringSplitOptions.RemoveEmptyEntries);
-            bool is_multiline = lines.Length > 1;
-            if (is_multiline)
+            var lines = value.Split(SplitStrings, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; ++i)
             {
-                // Write all internal lines
-                for (int i = 0; i < lines.Length - 1; i++)
+                if (lines[i].Length != 0)
                 {
-                    var line = lines[i];
-                    WriteIndentations(options);
-                    sw.Write(line);
-                    sw.Write(System.Environment.NewLine);
+                    if (newline)
+                    {
+                        WriteIndentations(options);
+                    }
+                    newline = false;
+                    sw.Write(lines[i]);
                 }
-                // Write the last line without appending a newline
-                WriteIndentations(options);
-                sw.Write(lines[lines.Length - 1]);
-            }
-            else
-            {
-                WriteIndentations(options);
-                sw.Write(value);
+
+                // if we're going to write another line add a line break string
+                if (i + 1 < lines.Length)
+                {
+                    sw.Write(System.Environment.NewLine);
+                    newline = true;
+                }
             }
         }
 
@@ -109,7 +108,7 @@ namespace Bind
 
         public void WriteLine()
         {
-            sw.WriteLine();
+            Write(System.Environment.NewLine);
         }
 
         public void WriteLine(WriteOptions options, string value)

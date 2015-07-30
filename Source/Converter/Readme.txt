@@ -1,12 +1,11 @@
 ﻿[Introduction]
 
-This is a simple tool to convert C headers to XML files. It works using simple pattern matching - it does not actually parse the header files. For this reason, it will work with only a few, specific header files: ES and CL at this point.
-
+This is a simple tool to convert Khronos XML to OpenTK XML files. 
 
 [Examples]
 
 To download and convert the XML API registry from Khronos:
-Convert.exe -p:gl -t:xml -o:../../../Source/Bind/Specifications/GL2/signatures.xml https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml
+Convert.exe -p:gl -o:../../../Source/Bind/Specifications/GL2/signatures.xml https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml
 
 The line above will download the latest .xml files from the public Khronos repository and update signatures.xml for the binding generator.
 
@@ -15,14 +14,11 @@ The line above will download the latest .xml files from the public Khronos repos
 Convert.exe -p:{PREFIX} -v:{VERSION} -t:{TYPE} -o:{OUT} {INPUT1} ... {INPUTn}
     {PREFIX} is a simple string that defines the a common prefix for functions and constants in this header. This prefix will be removed from the generated XML file.
     {VERSION} is a string that defines that version that will be used for functions in the generated XML file. Specific input files may override this setting.
-	{TYPE} can be either 'xml' or 'header' to indicate whether the input files are OpenGL .xml files or C headers.
 	{OUT} is the output filename (optional). If no output file is specified, output will be directed to the console.
-    {INPUT1..n} is a space-separated list of input files (headers).
+    {INPUT1..n} is a space-separated list of input files.
     
-Despite what the help says, prefix, version and type parameters are necessary at the moment.
+Despite what the help says, prefix and version parameters are necessary at the moment.
 
 [Support]
 
 If you encounter a bug, please file an issue report at http://github.com/opentk/opentk/issues
-
-We will only accept bug reports for supported header files. This is not a generic tool and will fail to parse unsupported files.

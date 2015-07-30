@@ -12,8 +12,8 @@ namespace Bind.ES
     // Generator implementation for OpenGL ES 1.0 and 1.1
     class ESGenerator : Generator
     {
-        public ESGenerator(Settings settings, string dirName)
-            : base(settings, dirName)
+        public ESGenerator(Settings settings)
+            : base(settings)
         {
             Settings.DefaultOutputPath = Path.Combine(
                 Settings.DefaultOutputPath, "../ES11");
