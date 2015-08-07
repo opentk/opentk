@@ -477,14 +477,14 @@ namespace OpenTK.Platform.Windows
             {
                 Debug.Indent();
 
-				// Attempt to retrieve the device capabilities
+                // Attempt to retrieve the device capabilities
                 HidProtocolCaps caps;
-				if (!GetPreparsedData(stick.Handle, ref PreparsedData))
-					return false;
-				if (!GetDeviceCaps(stick, PreparsedData, out caps))
-					return false;
+                if (!GetPreparsedData(stick.Handle, ref PreparsedData))
+                    return false;
+                if (!GetDeviceCaps(stick, PreparsedData, out caps))
+                    return false;
 
-				// Filter out touch devices and others with a suspicously high amount of axes and buttons
+                // Filter out touch devices and others with a suspicously high amount of axes and buttons
                 if (stick.AxisCaps.Count >= JoystickState.MaxAxes ||
                     stick.ButtonCaps.Count >= JoystickState.MaxButtons)
                 {
@@ -493,10 +493,10 @@ namespace OpenTK.Platform.Windows
                     return false;
                 }
 
-				// Keep track of whether we find anything useful
-				bool anyAxesOrButtons = false;
+                // Keep track of whether we find anything useful
+                bool anyAxesOrButtons = false;
 
-				// Determine device axes
+                // Determine device axes
                 for (int i = 0; i < stick.AxisCaps.Count; i++)
                 {
                     Debug.Print("Analyzing value collection {0} {1} {2}",
@@ -531,7 +531,7 @@ namespace OpenTK.Platform.Windows
                                         JoystickAxis.Axis0 + stick.GetCapabilities().AxisCount,
                                         page, (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage);
                                     stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
-									anyAxesOrButtons = true;
+                                    anyAxesOrButtons = true;
                                     break;
 
                                 case HIDUsageGD.Hatswitch:
@@ -539,7 +539,7 @@ namespace OpenTK.Platform.Windows
                                         JoystickHat.Hat0 + stick.GetCapabilities().HatCount,
                                         page, (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage);
                                     stick.SetHat(collection, page, stick.AxisCaps[i].NotRange.Usage, HatPosition.Centered);
-									anyAxesOrButtons = true;
+                                    anyAxesOrButtons = true;
                                     break;
 
                                 default:
@@ -558,7 +558,7 @@ namespace OpenTK.Platform.Windows
                                         JoystickAxis.Axis0 + stick.GetCapabilities().AxisCount,
                                         page, (HIDUsageSim)stick.AxisCaps[i].NotRange.Usage);
                                     stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
-									anyAxesOrButtons = true;
+                                    anyAxesOrButtons = true;
                                     break;
                             }
                             break;
@@ -569,7 +569,7 @@ namespace OpenTK.Platform.Windows
                     }
                 }
 
-				// Determine device buttons
+                // Determine device buttons
                 for (int i = 0; i < stick.ButtonCaps.Count; i++)
                 {
                     Debug.Print("Analyzing button collection {0} {1} {2}",
@@ -597,7 +597,7 @@ namespace OpenTK.Platform.Windows
                                         JoystickButton.Button0 + stick.GetCapabilities().ButtonCount,
                                         page, usage);
                                     stick.SetButton(collection, page, usage, false);
-									anyAxesOrButtons = true;
+                                    anyAxesOrButtons = true;
                                 }
                             }
                             else
@@ -606,7 +606,7 @@ namespace OpenTK.Platform.Windows
                                     JoystickButton.Button0 + stick.GetCapabilities().ButtonCount,
                                     page, stick.ButtonCaps[i].NotRange.Usage);
                                 stick.SetButton(collection, page, stick.ButtonCaps[i].NotRange.Usage, false);
-								anyAxesOrButtons = true;
+                                anyAxesOrButtons = true;
                             }
                             break;
 
@@ -616,9 +616,9 @@ namespace OpenTK.Platform.Windows
                     }
                 }
 
-				// If we didn't find any usable axes or buttons, this is probably not a valid game controller
-				if (!anyAxesOrButtons)
-					return false;
+                // If we didn't find any usable axes or buttons, this is probably not a valid game controller
+                if (!anyAxesOrButtons)
+                    return false;
             }
             finally
             {
