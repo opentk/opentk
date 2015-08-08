@@ -34,9 +34,5 @@ namespace OpenTK.Platform.Egl
         public static extern EGLDisplay GetPlatformDisplay(int platform, EGLNativeDisplayType display_id,
             int[] attrib_list);
 
-        [DllImport("libEGL.dll", EntryPoint = "eglQuerySurfacePointerANGLE")]
-        public static extern bool QuerySurfacePointerANGLE(EGLDisplay display, EGLSurface surface,
-            int attribute, out IntPtr value);
-
     }
 }

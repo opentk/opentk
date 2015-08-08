@@ -36,7 +36,7 @@ namespace OpenTK
     // Constructs GLControls.
     class GLControlFactory
     {
-        public IGLControl CreateGLControl(GraphicsMode mode, Control control)
+        public IGLControl CreateGLControl(GraphicsMode mode, Control control, GraphicsContextFlags flags)
         {
             if (mode == null)
                 throw new ArgumentNullException("mode");
@@ -44,7 +44,7 @@ namespace OpenTK
                 throw new ArgumentNullException("control");
 
             if (Configuration.RunningOnSdl2) return new Sdl2GLControl(mode, control);
-            else if (Configuration.RunningOnWindows) return new WinGLControl(mode, control);
+            else if (Configuration.RunningOnWindows) return new WinGLControl(mode, control, flags);
             else if (Configuration.RunningOnMacOS) return new CarbonGLControl(mode, control);
             else if (Configuration.RunningOnX11) return new X11GLControl(mode, control);
             else throw new PlatformNotSupportedException();

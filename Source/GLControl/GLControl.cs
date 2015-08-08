@@ -198,7 +198,7 @@ namespace OpenTK
             if (design_mode)
                 implementation = new DummyGLControl();
             else
-                implementation = new GLControlFactory().CreateGLControl(format, this);
+                implementation = new GLControlFactory().CreateGLControl(format, this, flags);
 
             context = implementation.CreateContext(major, minor, flags);
             MakeCurrent();
