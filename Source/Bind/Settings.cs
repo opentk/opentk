@@ -205,8 +205,6 @@ namespace Bind
         
         public string WindowsGDI = "OpenTK.Platform.Windows.API";
 
-        public GeneratorLanguage Language { get; set; }
-
         public Settings Clone()
         {
             IFormatter formatter = new BinaryFormatter();

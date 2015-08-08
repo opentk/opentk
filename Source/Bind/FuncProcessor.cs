@@ -694,7 +694,7 @@ namespace Bind
                 }
             }
 
-            if (Utilities.Keywords(Settings.Language).Contains(p.Name))
+            if (Utilities.CSharpKeywords.Contains(p.Name))
                 p.Name = Settings.KeywordEscapeCharacter + p.Name;
 
             // This causes problems with bool arrays

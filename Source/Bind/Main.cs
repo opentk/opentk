@@ -33,13 +33,6 @@ namespace Bind
         CL10,
     }
 
-    enum GeneratorLanguage
-    {
-        CSharp,
-        Cpp,
-        Java
-    }
-
     static class MainClass
     {
         static GeneratorMode mode = GeneratorMode.Default;
@@ -57,7 +50,7 @@ namespace Bind
 
             Console.WriteLine("OpenGL binding generator {0} for OpenTK.",
                 Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
+            Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
             Console.WriteLine();
 
             string dirName =  "GL2";
@@ -87,33 +80,6 @@ namespace Bind
                             case "output":
                                 Settings.OutputPath = val;
                                 break;
-                            case "l":
-                            case "lang":
-                            case "language":
-                                {
-                                    string arg = val.ToLower();
-                                    if (arg == "cpp" || arg == "c++" || arg == "c")
-                                    {
-                                        Settings.Language = GeneratorLanguage.Cpp;
-                                        Settings.DefaultOutputPath = "gl";
-                                        Settings.DefaultOutputNamespace = "OpenTK";
-                                        // Settings.DefaultLanguageTypeMapFile = "cpp.tm"; // Todo: create this file!
-                                        Settings.EnumsNamespace = "";
-                                        Settings.NamespaceSeparator = "::";
-                                        Settings.DefaultKeywordEscapeCharacter = "_";
-                                    }
-                                    else if (arg == "java")
-                                    {
-                                        Settings.Language = GeneratorLanguage.Java;
-                                        Settings.DefaultOutputPath = "gl";
-                                        Settings.DefaultOutputNamespace = "com.opentk";
-                                        Settings.DefaultLanguageTypeMapFile = "java.tm";
-                                        Settings.EnumsNamespace = "";
-                                        Settings.NamespaceSeparator = ".";
-                                        Settings.DefaultKeywordEscapeCharacter = "_";
-                                    }
-                                    break;
-                                }
                             case "mode":
                                 {
                                     string arg = val.ToLower();
@@ -240,22 +206,7 @@ namespace Bind
 
                     generator.Process();
 
-                    ISpecWriter writer = null;
-                    switch (generator.Settings.Language)
-                    {
-                        case GeneratorLanguage.Cpp:
-                            writer = new CppSpecWriter();
-                            break;
-
-                        case GeneratorLanguage.Java:
-                            writer = new JavaSpecWriter();
-                            break;
-
-                        case GeneratorLanguage.CSharp:
-                        default:
-                            writer = new CSharpSpecWriter();
-                            break;
-                    }
+                    var writer = new CSharpSpecWriter();
                     writer.WriteBindings(generator);
 
                     ticks = DateTime.Now.Ticks - ticks;
