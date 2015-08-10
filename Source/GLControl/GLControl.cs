@@ -468,6 +468,18 @@ namespace OpenTK
 
         #endregion
 
+        #region public GraphicsMode GraphicsMode
+
+        public GraphicsContextFlags GraphicsContextFlags
+        {
+            get
+            {
+                return flags;
+            }
+        }
+
+        #endregion
+
         #region WindowInfo
 
         /// <summary>
