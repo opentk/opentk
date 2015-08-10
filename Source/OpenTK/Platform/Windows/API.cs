@@ -1732,12 +1732,11 @@ namespace OpenTK.Platform.Windows
 
         #region GDI functions
 
-        #region GetStockObject
-
         [DllImport("gdi32.dll", SetLastError = true)]
         internal static extern IntPtr GetStockObject(int index);
 
-        #endregion
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern BOOL DeleteObject([In] IntPtr hObject);
 
         #endregion
 
