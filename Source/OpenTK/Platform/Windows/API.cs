@@ -1739,6 +1739,13 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region DeleteObject
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern BOOL DeleteObject([In]IntPtr hObject);
+        
+        #endregion
+
         #endregion
 
         #region Timer Functions
