@@ -31,7 +31,7 @@ using System.Text;
 
 namespace OpenTK
 {
-#if NO_SYSDRAWING
+#if MINIMAL
     /// <summary>
     /// Defines a point on a two-dimensional plane.
     /// </summary>
