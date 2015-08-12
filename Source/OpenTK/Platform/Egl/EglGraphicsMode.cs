@@ -81,9 +81,17 @@ namespace OpenTK.Platform.Egl
             };
 
             int num_configs;
-            if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out num_configs) || num_configs == 0)
+            if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out num_configs))
             {
                 throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, error {0}", Egl.GetError()));
+            }
+
+            if (num_configs == 0)
+            {
+                if (depth > 0)
+                    return SelectGraphicsMode(surface_type, display, color, 0, stencil, samples, accum, buffers, stereo, renderable_flags);
+
+                throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, no fitting configurations, error {0}", Egl.GetError()));
             }
 
             // See what we really got
