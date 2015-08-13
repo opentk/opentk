@@ -64,6 +64,8 @@ namespace OpenTK
         // evaluate this in the constructor.
         readonly bool design_mode;
 
+        public bool MustUseAngle;
+
         #region --- Constructors ---
 
         /// <summary>
@@ -131,14 +133,44 @@ namespace OpenTK
 
         IGraphicsContext GetContext()
         {
-            if (this.context != null)
-                this.context.Dispose();
-
-            if (flags == GraphicsContextFlags.Angle)
+            if (context != null)
             {
-                //Pick between D3D11 and D3D9
+                context.Dispose();
+                implementation.WindowInfo.Dispose();
+            }
+
+            if (implementation == null)
+            {
+                if (design_mode)
+                    implementation = new DummyGLControl();
+                else
+                    implementation = new GLControlFactory().CreateGLControl(format, this, GraphicsContextFlags.Default);
+
+                context = implementation.CreateContext(major, minor, GraphicsContextFlags.Default);
+                MakeCurrent();
+                if (!design_mode)
+                    ((IGraphicsContextInternal)Context).LoadAll();
+
+                bool softwareRenderer = GL.GetString(StringName.Renderer) == "GDI Generic" && GL.GetString(StringName.Vendor) == "Microsoft Corporation";
+                MustUseAngle = softwareRenderer || new Version(GL.GetString(StringName.Version).Split(' ')[0]) < new Version(major, minor);
+
+                if (MustUseAngle)
+                {
+                    flags = GraphicsContextFlags.Angle;
+                    return GetContext();
+                }
+                else if (flags == GraphicsContextFlags.Default)
+                {
+                    //We're using the default OpenGL renderer, exit early
+                    return context;
+                }
+            }
+
+            if (flags == Graphics.GraphicsContextFlags.Angle)
+            {
                 try
                 {
+                    //Try D3D11
                     major = 3;
                     minor = 0;
                     flags = GraphicsContextFlags.AngleD3D11;
@@ -146,6 +178,7 @@ namespace OpenTK
                 }
                 catch
                 {
+                    //Default to D3D9 (this should never fail)
                     major = 2;
                     minor = 0;
                     flags = GraphicsContextFlags.AngleD3D9;
@@ -154,24 +187,16 @@ namespace OpenTK
             }
             else
             {
-                if (implementation == null)
-                {
-                    if (design_mode)
-                        implementation = new DummyGLControl();
-                    else
-                        implementation = new GLControlFactory().CreateGLControl(format, this, flags);
-                }
+
+                if (design_mode)
+                    implementation = new DummyGLControl();
+                else
+                    implementation = new GLControlFactory().CreateGLControl(format, this, flags);
 
                 context = implementation.CreateContext(major, minor, flags);
                 MakeCurrent();
                 if (!design_mode)
                     ((IGraphicsContextInternal)Context).LoadAll();
-
-                if (flags == GraphicsContextFlags.Default && GL.GetString(StringName.Renderer) == "GDI Generic" && GL.GetString(StringName.Vendor) == "Microsoft Corporation")
-                {
-                    flags = GraphicsContextFlags.Angle;
-                    return GetContext();
-                }
             }
 
             return context;
@@ -237,6 +262,8 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
+            Debugger.Break();
+
             context = GetContext();
 
             // Deferred setting of vsync mode. See VSync property for more information.

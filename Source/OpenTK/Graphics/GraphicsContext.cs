@@ -168,16 +168,7 @@ namespace OpenTK.Graphics
                                 break;
                         }
 
-                        // Note: this approach does not allow us to mix native and EGL contexts in the same process.
-                        // This should not be a problem, as this use-case is not interesting for regular applications.
-                        // Note 2: some platforms may not support a direct way of getting the current context
-                        // (this happens e.g. with DummyGLContext). In that case, we use a slow fallback which
-                        // iterates through all known contexts and checks if any is current (check GetCurrentContext
-                        // declaration).
-                        if (GetCurrentContext == null)
-                        {
-                            GetCurrentContext = factory.CreateGetCurrentGraphicsContext();
-                        }
+                        GetCurrentContext = factory.CreateGetCurrentGraphicsContext();
 
                         implementation = factory.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
                         handle_cached = ((IGraphicsContextInternal)implementation).Context;
