@@ -129,6 +129,54 @@ namespace OpenTK
 
         #region --- Private  Methods ---
 
+        IGraphicsContext GetContext()
+        {
+            if (this.context != null)
+                this.context.Dispose();
+
+            if (flags == GraphicsContextFlags.Angle)
+            {
+                //Pick between D3D11 and D3D9
+                try
+                {
+                    major = 5;
+                    minor = 0;
+                    flags = GraphicsContextFlags.AngleD3D11;
+                    return GetContext();
+                }
+                catch
+                {
+                    major = 2;
+                    minor = 0;
+                    flags = GraphicsContextFlags.AngleD3D9;
+                    return GetContext();
+                }
+            }
+            else
+            {
+                if (implementation == null)
+                {
+                    if (design_mode)
+                        implementation = new DummyGLControl();
+                    else
+                        implementation = new GLControlFactory().CreateGLControl(format, this, flags);
+                }
+
+                context = implementation.CreateContext(major, minor, flags);
+                MakeCurrent();
+                if (!design_mode)
+                    ((IGraphicsContextInternal)Context).LoadAll();
+
+                if (flags == GraphicsContextFlags.Default && GL.GetString(StringName.Renderer) == "GDI Generic" && GL.GetString(StringName.Vendor) == "Microsoft Corporation")
+                {
+                    flags = GraphicsContextFlags.Angle;
+                    return GetContext();
+                }
+            }
+
+            return context;
+        }
+
         IGLControl Implementation
         {
             get
@@ -189,22 +237,9 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
-            if (context != null)
-                context.Dispose();
+            Debugger.Break();
 
-            if (implementation != null)
-                implementation.WindowInfo.Dispose();
-
-            if (design_mode)
-                implementation = new DummyGLControl();
-            else
-                implementation = new GLControlFactory().CreateGLControl(format, this, flags);
-
-            context = implementation.CreateContext(major, minor, flags);
-            MakeCurrent();
-
-            if (!design_mode)
-                ((IGraphicsContextInternal)Context).LoadAll();
+            context = GetContext();
 
             // Deferred setting of vsync mode. See VSync property for more information.
             if (initial_vsync_value.HasValue)
