@@ -139,7 +139,7 @@ namespace OpenTK
                 //Pick between D3D11 and D3D9
                 try
                 {
-                    major = 5;
+                    major = 3;
                     minor = 0;
                     flags = GraphicsContextFlags.AngleD3D11;
                     return GetContext();
