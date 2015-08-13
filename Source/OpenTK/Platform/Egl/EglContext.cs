@@ -117,10 +117,19 @@ namespace OpenTK.Platform.Egl
 
             int[] attrib_list = new int[] { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
             var share_context = shared != null ? shared.HandleAsEGLContext : IntPtr.Zero;
-            HandleAsEGLContext = Egl.CreateContext(window.Display, config, share_context, attrib_list);
 
-            GraphicsContextFlags = flags;
-            MakeCurrent(window);
+            try
+            {
+                HandleAsEGLContext = Egl.CreateContext(window.Display, config, share_context, attrib_list);
+
+                GraphicsContextFlags = flags;
+                MakeCurrent(window);
+            }
+            catch
+            {
+                window.DestroySurface();
+                throw;
+            }
         }
 
         public EglContext(ContextHandle handle, EglWindowInfo window, IGraphicsContext sharedContext,
