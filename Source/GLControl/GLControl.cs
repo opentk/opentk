@@ -237,8 +237,6 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
-            Debugger.Break();
-
             context = GetContext();
 
             // Deferred setting of vsync mode. See VSync property for more information.
