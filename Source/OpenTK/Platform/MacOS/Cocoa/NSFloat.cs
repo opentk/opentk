@@ -28,7 +28,9 @@
 #endregion
 
 using System;
+#if !MINIMAL
 using System.Drawing;
+#endif
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.MacOS

@@ -30,7 +30,9 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+#if !MINIMAL
 using System.Drawing;
+#endif
 using OpenTK.Input;
 
 namespace OpenTK.Platform

@@ -29,7 +29,9 @@
 
 using System;
 using System.Diagnostics;
+#if !MINIMAL
 using System.Drawing;
+#endif
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
 using OpenTK.Input;

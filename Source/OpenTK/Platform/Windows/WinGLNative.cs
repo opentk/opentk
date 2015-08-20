@@ -35,6 +35,7 @@ using System.Collections.Generic;
 using System.IO;
 #if !MINIMAL
 using System.Drawing;
+using System.Drawing.Imaging;
 #endif
 
 namespace OpenTK.Platform.Windows
@@ -1146,7 +1147,7 @@ namespace OpenTK.Platform.Windows
                     else
                     {
                         var stride = value.Width *
-                            (Bitmap.GetPixelFormatSize(System.Drawing.Imaging.PixelFormat.Format32bppArgb) / 8);
+                            (Bitmap.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
 
                         Bitmap bmp;
                         unsafe
@@ -1154,7 +1155,7 @@ namespace OpenTK.Platform.Windows
                             fixed (byte* pixels = value.Data)
                             {
                                 bmp = new Bitmap(value.Width, value.Height, stride,
-                                    System.Drawing.Imaging.PixelFormat.Format32bppArgb,
+                                    PixelFormat.Format32bppArgb,
                                     new IntPtr(pixels));
                             }
                         }

@@ -507,7 +507,7 @@ namespace OpenTK
                           data.Scan0);
             bmp.UnlockBits(data);
             bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            return bmp;
+			return bmp;
         }
 
         #endregion

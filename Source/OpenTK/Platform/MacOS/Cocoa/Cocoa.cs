@@ -29,7 +29,10 @@
 
 using System.Runtime.InteropServices;
 using System;
+#if !MINIMAL
 using System.Drawing;
+using System.Drawing.Imaging;
+#endif
 
 namespace OpenTK.Platform.MacOS
 {
@@ -204,7 +207,7 @@ namespace OpenTK.Platform.MacOS
         {
             using (System.IO.MemoryStream s = new System.IO.MemoryStream())
             {
-                img.Save(s, System.Drawing.Imaging.ImageFormat.Png);
+                img.Save(s, ImageFormat.Png);
                 byte[] b = s.ToArray();
 
                 fixed (byte* pBytes = b)
