@@ -27,10 +27,10 @@ namespace OpenTK.Platform.Windows
 
         static readonly object sync = new object();
 
-        public Wgl()
-        {
-        }
-
+        // Using a dictionary as a hacky set, values always null.
+        static readonly Dictionary<string, object> CoreFunctions = 
+            new Dictionary<string, object>();
+        
         #region Public Members
 
         public static bool SupportsExtension(string name)
@@ -107,24 +107,95 @@ namespace OpenTK.Platform.Windows
 
         IntPtr GetAddress(string function_string)
         {
-            IntPtr address = Wgl.GetProcAddress(function_string);
-            if (!IsValid(address))
+            if (IsGL11(function_string))
             {
-                address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
+                return Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
-            return address;
+            else
+            {
+                return Wgl.GetProcAddress(function_string);
+            }
         }
 
         #endregion
 
         #region Private Members
 
-        static bool IsValid(IntPtr address)
+        static bool IsGL11(string function_string)
         {
-            // See https://www.opengl.org/wiki/Load_OpenGL_Functions
-            long a = address.ToInt64();
-            bool is_valid = (a < -1) || (a > 3);
-            return is_valid;
+            // This method previously used the code at
+            // https://www.opengl.org/wiki/Load_OpenGL_Functions
+            // But see https://github.com/opentk/opentk/issues/282, users were
+            // having inconsistant results, where some wgl implementations would
+            // return "valid" pointers for 1.1 functions but which wouldn't work.
+            // So instead we now check to see if the method is GL 1.1 based on
+            // name, and use WIN32 GetProcAddress for those that pass the check.
+            if (CoreFunctions.Count == 0)
+            {
+                CoreFunctions.Add("glCullFace", null);
+                CoreFunctions.Add("glFrontFace", null);
+                CoreFunctions.Add("glHint", null);
+                CoreFunctions.Add("glLineWidth", null);
+                CoreFunctions.Add("glPointSize", null);
+                CoreFunctions.Add("glPolygonMode", null);
+                CoreFunctions.Add("glScissor", null);
+                CoreFunctions.Add("glTexParameterf", null);
+                CoreFunctions.Add("glTexParameterfv", null);
+                CoreFunctions.Add("glTexParameteri", null);
+                CoreFunctions.Add("glTexParameteriv", null);
+                CoreFunctions.Add("glTexImage1D", null);
+                CoreFunctions.Add("glTexImage2D", null);
+                CoreFunctions.Add("glDrawBuffer", null);
+                CoreFunctions.Add("glClear", null);
+                CoreFunctions.Add("glClearColor", null);
+                CoreFunctions.Add("glClearStencil", null);
+                CoreFunctions.Add("glClearDepth", null);
+                CoreFunctions.Add("glStencilMask", null);
+                CoreFunctions.Add("glColorMask", null);
+                CoreFunctions.Add("glDepthMask", null);
+                CoreFunctions.Add("glDisable", null);
+                CoreFunctions.Add("glEnable", null);
+                CoreFunctions.Add("glFinish", null);
+                CoreFunctions.Add("glFlush", null);
+                CoreFunctions.Add("glBlendFunc", null);
+                CoreFunctions.Add("glLogicOp", null);
+                CoreFunctions.Add("glStencilFunc", null);
+                CoreFunctions.Add("glStencilOp", null);
+                CoreFunctions.Add("glDepthFunc", null);
+                CoreFunctions.Add("glPixelStoref", null);
+                CoreFunctions.Add("glPixelStorei", null);
+                CoreFunctions.Add("glReadBuffer", null);
+                CoreFunctions.Add("glReadPixels", null);
+                CoreFunctions.Add("glGetBooleanv", null);
+                CoreFunctions.Add("glGetDoublev", null);
+                CoreFunctions.Add("glGetError", null);
+                CoreFunctions.Add("glGetFloatv", null);
+                CoreFunctions.Add("glGetIntegerv", null);
+                CoreFunctions.Add("glGetString", null);
+                CoreFunctions.Add("glGetTexImage", null);
+                CoreFunctions.Add("glGetTexParameterfv", null);
+                CoreFunctions.Add("glGetTexParameteriv", null);
+                CoreFunctions.Add("glGetTexLevelParameterfv", null);
+                CoreFunctions.Add("glGetTexLevelParameteriv", null);
+                CoreFunctions.Add("glIsEnabled", null);
+                CoreFunctions.Add("glDepthRange", null);
+                CoreFunctions.Add("glViewport", null);
+                CoreFunctions.Add("glDrawArrays", null);
+                CoreFunctions.Add("glDrawElements", null);
+                CoreFunctions.Add("glGetPointerv", null);
+                CoreFunctions.Add("glPolygonOffset", null);
+                CoreFunctions.Add("glCopyTexImage1D", null);
+                CoreFunctions.Add("glCopyTexImage2D", null);
+                CoreFunctions.Add("glCopyTexSubImage1D", null);
+                CoreFunctions.Add("glCopyTexSubImage2D", null);
+                CoreFunctions.Add("glTexSubImage1D", null);
+                CoreFunctions.Add("glTexSubImage2D", null);
+                CoreFunctions.Add("glBindTexture", null);
+                CoreFunctions.Add("glDeleteTextures", null);
+                CoreFunctions.Add("glGenTextures", null);
+                CoreFunctions.Add("glIsTexture", null);
+            }
+            return CoreFunctions.ContainsKey(function_string);
         }
 
         #endregion
