@@ -1480,7 +1480,7 @@ namespace OpenTK.Platform.X11
             get { return cursor_visible; }
             set
             {
-                if (value)
+                if (value && !cursor_visible)
                 {
                     using (new XLock(window.Display))
                     {
@@ -1495,7 +1495,7 @@ namespace OpenTK.Platform.X11
                         cursor_visible = true;
                     }
                 }
-                else
+                else if(!value && cursor_visible)
                 {
                     using (new XLock(window.Display))
                     {
