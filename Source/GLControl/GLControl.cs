@@ -146,8 +146,17 @@ namespace OpenTK
                 else
                     implementation = new GLControlFactory().CreateGLControl(format, this, GraphicsContextFlags.Default);
 
-                context = implementation.CreateContext(major, minor, GraphicsContextFlags.Default);
-                MakeCurrent();
+                try
+                {
+                    context = implementation.CreateContext(major, minor, GraphicsContextFlags.Default);
+                    MakeCurrent();
+                }
+                catch
+                {
+                    flags = GraphicsContextFlags.Angle;
+                    return GetContext();
+                }
+
                 if (!design_mode)
                     ((IGraphicsContextInternal)Context).LoadAll();
 
