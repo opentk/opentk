@@ -160,7 +160,7 @@ namespace OpenTK
                 if (!design_mode)
                     ((IGraphicsContextInternal)Context).LoadAll();
 
-                //Check if version < required version
+                // Check if version < required version
                 if (new Version(GL.GetString(StringName.Version).Split(' ')[0]) < new Version(major, minor))
                 {
                     flags = GraphicsContextFlags.Angle;
@@ -168,7 +168,7 @@ namespace OpenTK
                 }
                 else if (flags == GraphicsContextFlags.Default)
                 {
-                    //We're using the default OpenGL renderer, exit early
+                    // We're using the default OpenGL renderer, exit early
                     return context;
                 }
             }
@@ -177,7 +177,7 @@ namespace OpenTK
             {
                 try
                 {
-                    //Try D3D11
+                    // Try D3D11
                     major = 3;
                     minor = 0;
                     flags = GraphicsContextFlags.AngleD3D11;
@@ -185,7 +185,7 @@ namespace OpenTK
                 }
                 catch
                 {
-                    //Default to D3D9 (this should never fail)
+                    // Default to D3D9 (this should never fail)
                     major = 2;
                     minor = 0;
                     flags = GraphicsContextFlags.AngleD3D9;
