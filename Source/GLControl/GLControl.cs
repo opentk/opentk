@@ -160,10 +160,8 @@ namespace OpenTK
                 if (!design_mode)
                     ((IGraphicsContextInternal)Context).LoadAll();
 
-                bool softwareRenderer = GL.GetString(StringName.Renderer) == "GDI Generic" && GL.GetString(StringName.Vendor) == "Microsoft Corporation";
-                MustUseAngle = softwareRenderer || new Version(GL.GetString(StringName.Version).Split(' ')[0]) < new Version(major, minor);
-
-                if (MustUseAngle)
+                //Check if version < required version
+                if (new Version(GL.GetString(StringName.Version).Split(' ')[0]) < new Version(major, minor))
                 {
                     flags = GraphicsContextFlags.Angle;
                     return GetContext();
