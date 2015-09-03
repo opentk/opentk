@@ -161,14 +161,12 @@ namespace OpenTK
                     ((IGraphicsContextInternal)Context).LoadAll();
 
                 // Check if version < required version
-                /*
                 if (new Version(GL.GetString(StringName.Version).Split(' ')[0]) < new Version(major, minor))
                 {
                     flags = GraphicsContextFlags.Angle;
                     return GetContext();
                 }
-                else */
-                if (flags == GraphicsContextFlags.Default)
+                else if (flags == GraphicsContextFlags.Default)
                 {
                     // We're using the default OpenGL renderer, exit early
                     return context;
