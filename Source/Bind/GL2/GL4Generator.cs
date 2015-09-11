@@ -35,8 +35,8 @@ namespace Bind.GL2
 {
     class GL4Generator : Generator
     {
-        public GL4Generator(Settings settings, string dirname)
-            : base(settings, dirname)
+        public GL4Generator(Settings settings)
+            : base(settings)
         {
             Settings.DefaultOutputPath = Path.Combine(
                 Settings.DefaultOutputPath, "../OpenGL4");

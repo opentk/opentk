@@ -428,7 +428,7 @@ namespace OpenTK.Graphics.ES30
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
-#if NO_SYSDRAWING
+#if MINIMAL
         public static void Viewport(OpenTK.Point location, OpenTK.Size size)
         {
             GL.Viewport(location.X, location.Y, size.Width, size.Height);

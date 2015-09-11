@@ -30,7 +30,9 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+#if !MINIMAL
 using System.Drawing;
+#endif
 using OpenTK.Input;
 
 namespace OpenTK.Platform
@@ -417,8 +419,7 @@ namespace OpenTK.Platform
             }
             set
             {
-                Rectangle old = ClientRectangle;
-                ClientRectangle = new Rectangle(old.X, old.Y, value, old.Height);
+                ClientSize = new Size(value, ClientSize.Height);
             }
         }
 
@@ -430,8 +431,7 @@ namespace OpenTK.Platform
             }
             set
             {
-                Rectangle old = ClientRectangle;
-                Bounds = new Rectangle(old.X, old.Y, old.Width, value);
+                ClientSize = new Size(ClientSize.Width, value);
             }
         }
 

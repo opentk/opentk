@@ -182,19 +182,7 @@ namespace Bind.Structures
 
         // Set to true if parameter is an enum.
         public bool IsEnum { get; set; }
-
-        #region IndirectionLevel
-
-        // Gets the the level of indirection for this type. For example,
-        // type 'foo' has indirection level = 0, while 'ref foo*[]' has
-        // an indirection level of 3.
-        public int IndirectionLevel
-        {
-            get { return Pointer + Array + (Reference ? 1 : 0); }
-        }
-
-        #endregion
-
+        
         #region public bool CLSCompliant
 
         public bool CLSCompliant

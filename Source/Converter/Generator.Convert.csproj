@@ -121,9 +121,6 @@
     <Compile Include="Options.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ESCLParser.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Parser.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -132,24 +129,6 @@
     </Compile>
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
-    </None>
-    <None Include="Headers\CL10\cl_gl.h">
-    </None>
-    <None Include="Headers\CL10\cl.h">
-    </None>
-    <None Include="Headers\ES10\gl.h">
-    </None>
-    <None Include="Headers\ES11\glext.h">
-    </None>
-    <None Include="Headers\ES11\gl.h">
-    </None>
-    <None Include="Headers\EGL\eglext.h">
-    </None>
-    <None Include="Headers\EGL\egl.h">
-    </None>
-    <None Include="Headers\ES20\gl2.h">
-    </None>
-    <None Include="Headers\ES20\gl2ext.h">
     </None>
     <None Include="XML schema notes.txt">
     </None>
@@ -163,5 +142,35 @@
     </PreBuildEvent>
     <PostBuildEvent>
     </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMinimal|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Binaries\Tools\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <Commandlineparameters>-p:gl -v:4.5 -t:xml -o:../../../Source/Bind/Specifications/GL2/signatures.xml https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml</Commandlineparameters>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <FileAlignment>4096</FileAlignment>
+    <BaseAddress>285212672</BaseAddress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMinimal|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
+    <DefineConstants>TRACE;</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <FileAlignment>4096</FileAlignment>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
   </PropertyGroup>
 </Project>

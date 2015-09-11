@@ -35,6 +35,7 @@ using System.Collections.Generic;
 using System.IO;
 #if !MINIMAL
 using System.Drawing;
+using System.Drawing.Imaging;
 #endif
 
 namespace OpenTK.Platform.Windows
@@ -1127,21 +1128,26 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+
                 if (value != cursor)
                 {
-                    bool destoryOld = cursor != MouseCursor.Default;
-                    IntPtr oldCursor = IntPtr.Zero;
+                    MouseCursor oldCursor = cursor;
+                    IntPtr oldCursorHandle = cursor_handle;
 
                     if (value == MouseCursor.Default)
                     {
-                        cursor_handle = Functions.LoadCursor(CursorName.Arrow);
-                        oldCursor = Functions.SetCursor(cursor_handle);
                         cursor = value;
+                        cursor_handle = Functions.LoadCursor(CursorName.Arrow);
+                        Functions.SetCursor(cursor_handle);
                     }
                     else
                     {
                         var stride = value.Width *
-                            (Bitmap.GetPixelFormatSize(System.Drawing.Imaging.PixelFormat.Format32bppArgb) / 8);
+                            (Bitmap.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
 
                         Bitmap bmp;
                         unsafe
@@ -1149,7 +1155,7 @@ namespace OpenTK.Platform.Windows
                             fixed (byte* pixels = value.Data)
                             {
                                 bmp = new Bitmap(value.Width, value.Height, stride,
-                                    System.Drawing.Imaging.PixelFormat.Format32bppArgb,
+                                    PixelFormat.Format32bppArgb,
                                     new IntPtr(pixels));
                             }
                         }
@@ -1159,29 +1165,51 @@ namespace OpenTK.Platform.Windows
                             var bmpIcon = bmp.GetHicon();
                             var success = Functions.GetIconInfo(bmpIcon, out iconInfo);
 
-                            if (success)
+                            try
                             {
+                                if (!success)
+                                {
+                                    throw new System.ComponentModel.Win32Exception();
+                                }
+
                                 iconInfo.xHotspot = value.X;
                                 iconInfo.yHotspot = value.Y;
                                 iconInfo.fIcon = false;
 
                                 var icon = Functions.CreateIconIndirect(ref iconInfo);
-
-                                if (icon != IntPtr.Zero)
+                                if (icon == IntPtr.Zero)
                                 {
-                                    // Currently using a custom cursor so destroy it 
-                                    // once replaced
-                                    cursor = value;
-                                    cursor_handle = icon;
-                                    oldCursor = Functions.SetCursor(icon);
+                                    throw new System.ComponentModel.Win32Exception();
                                 }
+
+                                // Need to destroy this icon when/if it's replaced by another cursor.
+                                cursor = value;
+                                cursor_handle = icon;
+                                Functions.SetCursor(icon);
+                            }
+                            finally
+                            {
+                                if (success)
+                                {
+                                    // GetIconInfo creates bitmaps for the hbmMask and hbmColor members of ICONINFO. 
+                                    // The calling application must manage these bitmaps and delete them when they are no longer necessary.
+                                    Functions.DeleteObject(iconInfo.hbmColor);
+                                    Functions.DeleteObject(iconInfo.hbmMask);
+                                }
+
+                                Functions.DestroyIcon(bmpIcon);
                             }
                         }
                     }
+                    
+                    Debug.Assert(oldCursorHandle != IntPtr.Zero);
+                    Debug.Assert(oldCursorHandle != cursor_handle);
+                    Debug.Assert(oldCursor != cursor);
 
-                    if (destoryOld && oldCursor != IntPtr.Zero)
+                    // If we've replaced a custom (non-default) cursor we need to free the handle.
+                    if (oldCursor != MouseCursor.Default)
                     {
-                        Functions.DestroyIcon(oldCursor);
+                        Functions.DestroyIcon(oldCursorHandle);
                     }
                 }
             }

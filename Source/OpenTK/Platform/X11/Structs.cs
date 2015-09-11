@@ -1811,7 +1811,7 @@ namespace OpenTK.Platform.X11
     {
         public int deviceid; // 0 = XIAllDevices, 1 = XIAllMasterDevices
         int mask_len;
-        unsafe XIEventMasks* mask;
+        unsafe byte* mask;
 
         public XIEventMask(int id, XIEventMasks m)
         {
@@ -1819,8 +1819,9 @@ namespace OpenTK.Platform.X11
             mask_len = sizeof(XIEventMasks);
             unsafe
             {
-                mask = (XIEventMasks*)Marshal.AllocHGlobal(mask_len);
-                *mask = m;
+                mask = (byte*)Marshal.AllocHGlobal(mask_len);
+                for (int i = 0; i < mask_len; i++)
+                    mask[i] = (byte)((uint)m >> i*8);
             }
         }
 
