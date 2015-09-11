@@ -481,4 +481,38 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMinimal|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Binaries\OpenTK\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>0219, 0414, 0612, 0618, 1591, 3005, 3006</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMinimal|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+    <DefineConstants>TRACE;</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>0219, 0414, 0612, 0618, 1591, 3005, 3006</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
 </Project>

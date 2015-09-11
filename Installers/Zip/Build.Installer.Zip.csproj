@@ -47,6 +47,18 @@
     <OutputPath>opentk\</OutputPath>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMinimal|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>opentk\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMinimal|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>opentk\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <Target Name="Build">
     <!-- Zip the copy of the source tree -->
     <Exec Command="7z a -tzip opentk.zip ../../* -xr!opentk*.zip -xr!opentk*.exe -xr!.* -xr!obj -xr!bin -xr!lib -xr!Documentation/Source -xr!Automation -xr!*.suo -xr!*.pidb -xr!*.userprefs -xr!*vshost.exe* -xr!*.log -xr!*.nupkg" />

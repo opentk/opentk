@@ -12,8 +12,8 @@ namespace Bind.ES
     // Generation implementation for OpenGL ES 2.0 and 3.0
     class ES2Generator : Generator
     {
-        public ES2Generator(Settings settings, string dirName)
-            : base(settings, dirName)
+        public ES2Generator(Settings settings)
+            : base(settings)
         {
             Settings.DefaultOutputPath = Path.Combine(
                 Settings.DefaultOutputPath, "../ES20");

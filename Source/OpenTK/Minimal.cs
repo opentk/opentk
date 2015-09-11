@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+#if !MINIMAL
 using System.Drawing;
+#endif
 using System.Text;
 
 #if IPHONE || ANDROID || MINIMAL
@@ -71,6 +73,14 @@ namespace OpenTK
                     return TimeSpan.FromTicks(stop.Ticks - start.Ticks);
             }
         }
+#if MINIMAL
+        public static Stopwatch StartNew ()
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            return sw;
+        }
+#endif
     }
 
     // System.Xml.XmlIgnoreAttribute
@@ -695,6 +705,11 @@ namespace OpenTK
 
         public void Dispose()
         { }
+
+        public static Icon ExtractAssociatedIcon (string location)
+        {
+            return null;
+        }
     }
 
     #endregion
@@ -704,6 +719,10 @@ namespace OpenTK
     public abstract class Image : IDisposable
     {
         public void Dispose() { }
+
+        internal void Save(System.IO.Stream s, ImageFormat fomat)
+        {
+        }
     }
 
     #endregion
@@ -718,6 +737,13 @@ namespace OpenTK
         public Bitmap() { }
 
         public Bitmap(int width, int height)
+        {
+            // TODO: Complete member initialization
+            this.width = width;
+            this.height = height;
+        }
+
+        internal Bitmap(int width, int height, int stride, PixelFormat format, IntPtr pixels)
         {
             // TODO: Complete member initialization
             this.width = width;
@@ -739,6 +765,16 @@ namespace OpenTK
         internal BitmapData LockBits(Rectangle rectangle, ImageLockMode imageLockMode, PixelFormat pixelFormat)
         {
             return new BitmapData(Width, Height, 0);
+        }
+            
+        internal static int GetPixelFormatSize (PixelFormat format)
+        {
+            return 0;
+        }
+
+        internal IntPtr GetHicon ()
+        {
+            return IntPtr.Zero;
         }
     }
 
@@ -1639,6 +1675,10 @@ namespace OpenTK
     enum PixelFormat
     {
         Format32bppArgb
+    }
+
+    enum ImageFormat {
+        Png
     }
 
     #endregion

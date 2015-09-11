@@ -60,21 +60,19 @@ namespace Bind.GL2
 
         #region Constructors
 
-        public Generator(Settings settings, string dirName)
+        public Generator(Settings settings)
         {
             if (settings == null)
                 throw new ArgumentNullException("settings");
-            if (dirName == null)
-                dirName = "GL2";
 
             Settings = settings.Clone();
 
             glTypemap = "GL2/gl.tm";
             csTypemap = Settings.LanguageTypeMapFile;
 
-            enumSpec = Path.Combine(dirName, "signatures.xml");
+            enumSpec = Path.Combine("GL2", "signatures.xml");
             enumSpecExt = String.Empty;
-            glSpec = Path.Combine(dirName, "signatures.xml");
+            glSpec = Path.Combine("GL2", "signatures.xml");
             glSpecExt = String.Empty;
 
             Settings.ImportsClass = "Core";

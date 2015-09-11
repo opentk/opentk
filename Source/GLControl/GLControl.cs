@@ -226,6 +226,10 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleDestroyed(EventArgs e)
         {
+            // Ensure that context is still alive when passing to events
+            // => This allows to perform cleanup operations in OnHandleDestroyed handlers
+            base.OnHandleDestroyed(e);
+
             if (context != null)
             {
                 context.Dispose();
@@ -238,7 +242,6 @@ namespace OpenTK
                 implementation = null;
             }
 
-            base.OnHandleDestroyed(e);
         }
 
         /// <summary>
@@ -507,7 +510,7 @@ namespace OpenTK
                           data.Scan0);
             bmp.UnlockBits(data);
             bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            return bmp;
+			return bmp;
         }
 
         #endregion

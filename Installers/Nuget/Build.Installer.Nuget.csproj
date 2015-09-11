@@ -47,6 +47,18 @@
     <OutputPath>obj\</OutputPath>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMinimal|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>obj\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMinimal|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>obj\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <Target Name="Build">
     <!-- Copy built files to the tree format expected by nuget -->
     <CreateItem Include="../../Binaries/OpenTK/Release/OpenTK*">

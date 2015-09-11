@@ -31,7 +31,7 @@ using System.Text;
 
 namespace OpenTK
 {
-#if NO_SYSDRAWING
+    #if MINIMAL
     /// <summary>
     /// Represents a rectangular region on a two-dimensional plane.
     /// </summary>
@@ -182,6 +182,20 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Tests whether this instance contains the specified x, y coordinates.
+        /// </summary>
+        /// <param name="x">The x coordinate to test.</param>
+        /// <param name="y">The y coordinate to test.</param>
+        /// <returns>True if this instance contains the x, y coordinates; false otherwise.</returns>
+        /// <remarks>The left and top edges are inclusive. The right and bottom edges
+        /// are exclusive.</remarks>
+        public bool Contains(int x, int y)
+        {
+            return x >= Left && x < Right && 
+                y >= Top && y < Bottom;
+        }
+
+        /// <summary>
         /// Tests whether this instance contains the specified Point.
         /// </summary>
         /// <param name="point">The <see cref="Point"/> to test.</param>
@@ -229,45 +243,18 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Converts an OpenTK.Rectangle instance to a System.Drawing.Rectangle.
+        /// Union the specified a and b.
         /// </summary>
-        /// <param name="rect">
-        /// The <see cref="Rectangle"/> instance to convert.
-        /// </param>
-        /// <returns>
-        /// A <see cref="System.Drawing.Rectangle"/> instance equivalent to rect.
-        /// </returns>
-        public static implicit operator System.Drawing.Rectangle(Rectangle rect)
+        /// <param name="a">The alpha component.</param>
+        /// <param name="b">The blue component.</param>
+        public static Rectangle Union (Rectangle a, Rectangle b)
         {
-            return new System.Drawing.Rectangle(rect.Location, rect.Size);
-        }
+            int x1 = Math.Min(a.X, b.X);
+            int x2 = Math.Max(a.X + a.Width, b.X + b.Width); 
+            int y1 = Math.Min(a.Y, b.Y);
+            int y2 = Math.Max(a.Y + a.Height, b.Y + b.Height);
 
-        /// <summary>
-        /// Converts a System.Drawing.Rectangle instance to an OpenTK.Rectangle.
-        /// </summary>
-        /// <param name="rect">
-        /// The <see cref="System.Drawing.Rectangle"/> instance to convert.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Rectangle"/> instance equivalent to point.
-        /// </returns>
-        public static implicit operator Rectangle(System.Drawing.Rectangle rect)
-        {
-            return new Rectangle(rect.Location, rect.Size);
-        }
-
-        /// <summary>
-        /// Converts an OpenTK.Rectangle instance to a System.Drawing.RectangleF.
-        /// </summary>
-        /// <param name="rect">
-        /// The <see cref="Rectangle"/> instance to convert.
-        /// </param>
-        /// <returns>
-        /// A <see cref="System.Drawing.RectangleF"/> instance equivalent to rect.
-        /// </returns>
-        public static implicit operator System.Drawing.RectangleF(Rectangle rect)
-        {
-            return new System.Drawing.RectangleF(rect.Location, rect.Size);
+            return new Rectangle(x1, y1, x2 - x1, y2 - y1); 
         }
 
         /// <summary>

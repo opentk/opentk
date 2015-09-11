@@ -11,8 +11,8 @@ namespace Bind.CL
 {
     class CLGenerator : ES.ESGenerator
     {
-        public CLGenerator(Settings settings, string dirname)
-            : base(settings, dirname)
+        public CLGenerator(Settings settings)
+            : base(settings)
         {
             glTypemap = null;
 

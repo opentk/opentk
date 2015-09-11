@@ -32,6 +32,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using OpenTK;
 using OpenTK.Graphics;
+#if !MINIMAL
+using System.Drawing;
+#endif
 
 namespace OpenTK.Platform.Linux
 {
@@ -284,7 +287,7 @@ namespace OpenTK.Platform.Linux
             Debug.Print("Current mode: {0}", current.ToString());
         }
 
-        System.Drawing.Rectangle GetBounds(DisplayResolution current)
+        Rectangle GetBounds(DisplayResolution current)
         {
             // Note: since we are not running a display manager, we are free
             // to choose the display layout for multiple displays ourselves.
@@ -294,7 +297,7 @@ namespace OpenTK.Platform.Linux
                 0 : AvailableDevices[AvailableDevices.Count - 1].Bounds.Right;
             int y = 0;
 
-            return new System.Drawing.Rectangle(
+            return new Rectangle(
                 x, y, current.Width, current.Height);
         }
 
