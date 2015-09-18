@@ -141,10 +141,7 @@ namespace OpenTK
 
             if (implementation == null)
             {
-                if (design_mode)
-                    implementation = new DummyGLControl();
-                else
-                    implementation = new GLControlFactory().CreateGLControl(format, this, GraphicsContextFlags.Default);
+                implementation = design_mode ? new DummyGLControl() : new GLControlFactory().CreateGLControl(format, this, GraphicsContextFlags.Default);
 
                 try
                 {
@@ -166,14 +163,16 @@ namespace OpenTK
                     flags = GraphicsContextFlags.Angle;
                     return GetContext();
                 }
-                else if (flags == GraphicsContextFlags.Default)
+
+                if (flags == GraphicsContextFlags.Default)
                 {
                     // We're using the default OpenGL renderer, exit early
                     return context;
                 }
             }
 
-            if (flags == Graphics.GraphicsContextFlags.Angle)
+            // If we reach this point, we need to use Angle
+            if (flags == GraphicsContextFlags.Angle)
             {
                 try
                 {
@@ -192,19 +191,13 @@ namespace OpenTK
                     return GetContext();
                 }
             }
-            else
-            {
 
-                if (design_mode)
-                    implementation = new DummyGLControl();
-                else
-                    implementation = new GLControlFactory().CreateGLControl(format, this, flags);
+            implementation = design_mode ? new DummyGLControl() : new GLControlFactory().CreateGLControl(format, this, flags);
 
-                context = implementation.CreateContext(major, minor, flags);
-                MakeCurrent();
-                if (!design_mode)
-                    ((IGraphicsContextInternal)Context).LoadAll();
-            }
+            context = implementation.CreateContext(major, minor, flags);
+            MakeCurrent();
+            if (!design_mode)
+                ((IGraphicsContextInternal)Context).LoadAll();
 
             return context;
         }
