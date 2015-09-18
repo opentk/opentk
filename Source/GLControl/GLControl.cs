@@ -201,7 +201,7 @@ namespace OpenTK
                     logWriter.WriteLine("Attempting to create ANGLED3D11 context.");
 
                     // Try D3D11
-                    major = 11;
+                    major = 3;
                     minor = 0;
                     flags = GraphicsContextFlags.AngleD3D11;
                     return GetContext();
@@ -217,7 +217,7 @@ namespace OpenTK
                         logWriter.WriteLine("Attempting to create ANGLED3D9 context.");
 
                         // Default to D3D9 (this should never fail)
-                        major = 11;
+                        major = 2;
                         minor = 0;
                         flags = GraphicsContextFlags.AngleD3D9;
                         return GetContext();
