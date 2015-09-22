@@ -67,7 +67,7 @@ namespace OpenTK
 
         public bool MustUseAngle;
 
-        public StreamWriter Log = new StreamWriter(new MemoryStream());
+        public static StreamWriter Log = new StreamWriter(new MemoryStream());
 
         #region --- Constructors ---
 
