@@ -143,10 +143,7 @@ namespace OpenTK
         IGraphicsContext GetContext()
         {
             if (context != null)
-            {
                 context.Dispose();
-                implementation.WindowInfo.Dispose();
-            }
 
             if (implementation == null)
             {
