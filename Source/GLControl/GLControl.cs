@@ -67,7 +67,7 @@ namespace OpenTK
 
         public bool MustUseAngle;
 
-        private StreamWriter logWriter;
+        public StreamWriter Log = new StreamWriter(new MemoryStream());
 
         #region --- Constructors ---
 
@@ -127,12 +127,6 @@ namespace OpenTK
                 DesignMode ||
                 LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
-            try
-            {
-                logWriter = new StreamWriter("opentk_log.txt") { AutoFlush = true };
-            }
-            catch { }
-
             InitializeComponent();
         }
 
@@ -147,8 +141,7 @@ namespace OpenTK
 
             if (implementation == null)
             {
-                if (logWriter != null)
-                    logWriter.WriteLine("Attempting to create native OpenGL context.");
+                Log.WriteLine("Attempting to create native OpenGL context.");
 
                 implementation = design_mode ? new DummyGLControl() : new GLControlFactory().CreateGLControl(format, this, GraphicsContextFlags.Default);
 
@@ -159,12 +152,9 @@ namespace OpenTK
                 }
                 catch (Exception e)
                 {
-                    if (logWriter != null)
-                    {
-                        logWriter.WriteLine("Failed to create native OpenGL context.");
-                        logWriter.WriteLine(e.ToString());
-                        logWriter.WriteLine("Reverting to ANGLE.");
-                    }
+                    Log.WriteLine("Failed to create native OpenGL context.");
+                    Log.WriteLine(e.ToString());
+                    Log.WriteLine("Reverting to ANGLE.");
 
                     flags = GraphicsContextFlags.Angle;
                     return GetContext();
@@ -174,28 +164,24 @@ namespace OpenTK
                 {
                     ((IGraphicsContextInternal)Context).LoadAll();
 
-                    if (logWriter != null)
-                        logWriter.WriteLine("Loaded all endpoints.");
+                    Log.WriteLine("Loaded all endpoints.");
                 }
 
                 // Check if version < required version
                 if (new Version(GL.GetString(StringName.Version).Split(' ')[0]) < new Version(major, minor))
                 {
-                    if (logWriter != null)
-                        logWriter.WriteLine("Native OpenGL context version is incompatible, reverting to ANGLE.");
+                    Log.WriteLine("Native OpenGL context version is incompatible, reverting to ANGLE.");
 
                     flags = GraphicsContextFlags.Angle;
                     return GetContext();
                 }
 
-                if (logWriter != null)
-                    logWriter.WriteLine("Successfully created native OpenGL context.");
+                Log.WriteLine("Successfully created native OpenGL context.");
 
 
                 if (flags == GraphicsContextFlags.Default)
                 {
-                    if (logWriter != null)
-                        logWriter.WriteLine("Using native OpenGL context.");
+                    Log.WriteLine("Using native OpenGL context.");
 
                     // We're using the default OpenGL renderer, exit early
                     return context;
@@ -207,8 +193,7 @@ namespace OpenTK
             {
                 try
                 {
-                    if (logWriter != null)
-                        logWriter.WriteLine("Attempting to create ANGLED3D11 context.");
+                    Log.WriteLine("Attempting to create ANGLED3D11 context.");
 
                     // Try D3D11
                     major = 3;
@@ -218,17 +203,13 @@ namespace OpenTK
                 }
                 catch (Exception e)
                 {
-                    if (logWriter != null)
-                    {
-                        logWriter.WriteLine("Failed to create ANGLED3D11 context.");
-                        logWriter.WriteLine(e.ToString());
-                        logWriter.WriteLine("Reverting to ANGLED3D9.");
-                    }
+                    Log.WriteLine("Failed to create ANGLED3D11 context.");
+                    Log.WriteLine(e.ToString());
+                    Log.WriteLine("Reverting to ANGLED3D9.");
 
                     try
                     {
-                        if (logWriter != null)
-                            logWriter.WriteLine("Attempting to create ANGLED3D9 context.");
+                        Log.WriteLine("Attempting to create ANGLED3D9 context.");
 
                         // Default to D3D9 (this should never fail)
                         major = 2;
@@ -238,11 +219,8 @@ namespace OpenTK
                     }
                     catch (Exception e2)
                     {
-                        if (logWriter != null)
-                        {
-                            logWriter.WriteLine("Failed to create ANGLED3D9 context. Oops.");
-                            logWriter.WriteLine(e.ToString());
-                        }
+                        Log.WriteLine("Failed to create ANGLED3D9 context. Oops.");
+                        Log.WriteLine(e.ToString());
 
                         return null;
                     }
@@ -257,12 +235,10 @@ namespace OpenTK
             {
                 ((IGraphicsContextInternal)Context).LoadAll();
 
-                if (logWriter != null)
-                    logWriter.WriteLine("Loaded all endpoints.");
+                Log.WriteLine("Loaded all endpoints.");
             }
 
-            if (logWriter != null)
-                logWriter.WriteLine($"Using {(flags == GraphicsContextFlags.AngleD3D11 ? "ANGLED3D11" : "ANGLED3D9")} context.");
+            Log.WriteLine($"Using {(flags == GraphicsContextFlags.AngleD3D11 ? "ANGLED3D11" : "ANGLED3D9")} context.");
 
             return context;
         }
