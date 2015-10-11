@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit Library
+// Copyright (c) 2006 - 2015 Stefanos Apostolopoulos for the Open Toolkit Library
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -679,6 +679,251 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
                     GL.UniformMatrix4(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        #endregion
+
+        #region ProgramUniform
+
+        [CLSCompliant(false)]
+        public static void ProgramUniform2(int program, int location, ref Vector2 vector)
+        {
+            GL.ProgramUniform2(program, location, vector.X, vector.Y);
+        }
+
+        [CLSCompliant(false)]
+        public static void ProgramUniform3(int program, int location, ref Vector3 vector)
+        {
+            GL.ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
+        }
+
+        [CLSCompliant(false)]
+        public static void ProgramUniform4(int program, int location, ref Vector4 vector)
+        {
+            GL.ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
+        }
+
+        public static void ProgramUniform2(int program, int location, Vector2 vector)
+        {
+            GL.ProgramUniform2(program, location, vector.X, vector.Y);
+        }
+
+        public static void ProgramUniform3(int program, int location, Vector3 vector)
+        {
+            GL.ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
+        }
+
+        public static void ProgramUniform4(int program, int location, Vector4 vector)
+        {
+            GL.ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
+        }
+
+        public static void ProgramUniform4(int program, int location, Color4 color)
+        {
+            GL.ProgramUniform4(program, location, color.R, color.G, color.B, color.A);
+        }
+
+        public static void ProgramUniform4(int program, int location, Quaternion quaternion)
+        {
+            GL.ProgramUniform4(program, location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
+        }
+
+        public static void ProgramUniformMatrix2(int program, int location, bool transpose, ref Matrix2 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix2(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix2(int program, int location, bool transpose, ref Matrix2d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix2(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix2x3(int program, int location, bool transpose, ref Matrix2x3 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix2x3(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix2x3(int program, int location, bool transpose, ref Matrix2x3d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix2x3(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix2x4(int program, int location, bool transpose, ref Matrix2x4 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix2x4(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix2x4(int program, int location, bool transpose, ref Matrix2x4d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix2x4(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix3x2(int program, int location, bool transpose, ref Matrix3x2 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix3x2(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix3x2(int program, int location, bool transpose, ref Matrix3x2d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix3x2(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix3(int program, int location, bool transpose, ref Matrix3 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix3(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix3(int program, int location, bool transpose, ref Matrix3d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix3(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix3x4(int program, int location, bool transpose, ref Matrix3x4 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix3x4(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix3x4(int program, int location, bool transpose, ref Matrix3x4d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix3x4(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix4x2(int program, int location, bool transpose, ref Matrix4x2 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix4x2(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix4x2(int program, int location, bool transpose, ref Matrix4x2d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix4x2(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix4x3(int program, int location, bool transpose, ref Matrix4x3 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix4x3(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix4x3(int program, int location, bool transpose, ref Matrix4x3d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix4x3(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix4(int program, int location, bool transpose, ref Matrix4 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix4(program, location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void ProgramUniformMatrix4(int program, int location, bool transpose, ref Matrix4d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.ProgramUniformMatrix4(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
