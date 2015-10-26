@@ -62,6 +62,22 @@
     <Commandlineparameters>../../OpenTK/Release/OpenTK.dll ../../../OpenTK.snk</Commandlineparameters>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nsis|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Commandlineparameters>../../OpenTK/Release/OpenTK.dll ../../../OpenTK.snk</Commandlineparameters>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\OpenTK.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.1\lib\net35\Mono.Cecil.dll</HintPath>
