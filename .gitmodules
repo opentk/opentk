@@ -1,0 +1,3 @@
+[submodule "Source/OpenTK/CoreFX"]
+	path = Source/OpenTK/CoreFX
+	url = git@github.com:manu-silicon/corefxref.git
