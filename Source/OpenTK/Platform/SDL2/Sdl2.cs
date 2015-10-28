@@ -206,7 +206,11 @@ namespace OpenTK.Platform.SDL2
         {
             unsafe
             {
+#if !_NET_CORECLR
                 return new string((sbyte*)GameControllerNameInternal(gamecontroller));
+#else
+                return UTF8String.String(GameControllerNameInternal(gamecontroller));
+#endif
             }
         }
 
@@ -338,7 +342,11 @@ namespace OpenTK.Platform.SDL2
         {
             unsafe
             {
+#if !_NET_CORECLR
                 return new string((sbyte*)JoystickNameInternal(joystick));
+#else
+                return UTF8String.String(JoystickNameInternal(joystick));
+#endif
             }
         }
 

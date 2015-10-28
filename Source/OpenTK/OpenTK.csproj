@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Target Name="OpenTKRewrite" AfterTargets="CoreCompile" DependsOnTargets="ResolveProjectReferences">
+    <WriteLinesToFile File="$(IntermediateOutputPath)OpenTKReferences.cache" Lines="@(ReferencePath)" Overwrite="true" />
+  </Target>
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.30703</ProductVersion>
@@ -199,7 +202,11 @@
     <Compile Include="Math\Matrix4x3.cs" />
     <Compile Include="Math\Matrix4x3d.cs" />
     <Compile Include="Platform\Common\Hid.cs" />
+    <Compile Include="Platform\CoreCLR\ApplicationException.cs" />
+    <Compile Include="Platform\CoreCLR\ISerializable.cs" />
+    <Compile Include="Platform\CoreCLR\Serializable.cs" />
     <Compile Include="Platform\CoreCLR\SuppressUnmanagedCodeSecurity.cs" />
+    <Compile Include="Platform\CoreCLR\UTF8String.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
     <Compile Include="Platform\Egl\EglWinContext.cs" />
@@ -871,11 +878,11 @@
   </PropertyGroup>
   <ItemGroup />
   <Target Name="AfterBuild">
-    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" />
-    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'DebugMinimal'" />
-    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'ReleaseMinimal'" />
-    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Nsis'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug -references-file=$(IntermediateOutputPath)OpenTKReferences.cache" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -references-file=$(IntermediateOutputPath)OpenTKReferences.cache" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug -references-file=$(IntermediateOutputPath)OpenTKReferences.cache" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'DebugMinimal'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -references-file=$(IntermediateOutputPath)OpenTKReferences.cache" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'ReleaseMinimal'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -references-file=$(IntermediateOutputPath)OpenTKReferences.cache" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Nsis'" />
     <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Debug" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/Debug/OpenTK.dll $(SolutionDir)OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
     <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Debug" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/DebugMinimal/OpenTK.dll $(SolutionDir)OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'DebugMinimal'" />
     <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Release" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/Release/OpenTK.dll $(SolutionDir)OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" />

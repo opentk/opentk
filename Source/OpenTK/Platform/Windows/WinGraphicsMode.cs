@@ -282,8 +282,13 @@ namespace OpenTK.Platform.Windows
                 flags |= PixelFormatDescriptorFlags.STEREO;
             }
 
+#if !_NET_CORECLR
             if (System.Environment.OSVersion.Version.Major >= 6 &&
                 requested_acceleration_type != AccelerationType.None)
+#else
+                // On CoreCLR, we assume we are running at least Windows Vista.
+            if (requested_acceleration_type != AccelerationType.None)
+#endif
             {
                 // Request a compositor-capable mode when running on
                 // Vista+ and using hardware acceleration. Without this,

@@ -703,7 +703,7 @@ namespace OpenTK
         #endregion Constants
 
         #region ISerializable
-
+#if !_NET_CORECLR
         /// <summary>Constructor used by ISerializable to deserialize the object.</summary>
         /// <param name="info"></param>
         /// <param name="context"></param>
@@ -725,7 +725,7 @@ namespace OpenTK
             info.AddValue("Z", this.Z);
             info.AddValue("W", this.W);
         }
-
+#endif
         #endregion ISerializable
 
         #region Binary dump

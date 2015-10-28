@@ -412,7 +412,11 @@ namespace OpenTK.Platform.Linux
             {
                 sbyte* pname = stackalloc sbyte[129];
                 int ret = Libc.ioctl(fd, EvdevIoctl.Name128, new IntPtr(pname));
+#if !_NET_CORECLR
                 name = new string(pname);
+#else
+                name = UTF8String.String((IntPtr) pname);
+#endif
                 return ret;
             }
         }

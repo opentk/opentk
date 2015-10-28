@@ -200,7 +200,11 @@ namespace OpenTK.Platform.MacOS
 
         public static string FromNSString(IntPtr handle)
         {
+#if !_NET_CORECLR
             return Marshal.PtrToStringAuto(SendIntPtr(handle, selUTF8String));
+#else
+            return UTF8String.String(SendIntPtr(handle, selUTF8String));
+#endif
         }
 
         public static unsafe IntPtr ToNSImage(Image img)

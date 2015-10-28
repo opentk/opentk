@@ -1,4 +1,4 @@
-﻿#if CORECLR
+﻿#if _NET_CORECLR
 using System;
 
 namespace System.Security
