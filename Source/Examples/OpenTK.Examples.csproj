@@ -146,6 +146,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="OpenGL\1.x\TextRendering.cs" />
+    <Compile Include="OpenGL\4.x\HelloGL4.cs" />
     <Compile Include="OpenTK\GameWindow\MouseCursorSimple.cs" />
     <Compile Include="OpenTK\Test\TestShaderUtf8Support.cs" />
     <Compile Include="SamplesTreeViewSorter.cs">
