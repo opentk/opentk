@@ -196,6 +196,17 @@ void main(void)
             GL.BindVertexArray(0);
         }
 
+        protected override void OnResize(EventArgs e)
+        {
+            GL.Viewport(0, 0, Width, Height);
+
+            float aspectRatio = ClientSize.Width / (float)(ClientSize.Height);
+            Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out projectionMatrix);
+            modelviewMatrix = Matrix4.LookAt(new Vector3(0, 3, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+
+            GL.UniformMatrix4(projectionMatrixLocation, false, ref projectionMatrix);
+        }
+
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             Matrix4 rotation = Matrix4.CreateRotationY((float)e.Time);
@@ -209,8 +220,6 @@ void main(void)
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            GL.Viewport(0, 0, Width, Height);
-            
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.BindVertexArray(vaoHandle);
