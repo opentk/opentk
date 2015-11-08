@@ -89,7 +89,7 @@ void main(){
             GL.BindVertexArray(vertexArrayId);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferId);
             GL.BindBuffer(BufferTarget.DrawIndirectBuffer, drawIndirectBufferId);
-            GL.MultiDrawElementsIndirect(All.Triangles, All.UnsignedInt, IntPtr.Zero, 1, Marshal.SizeOf(indirectDrawCommand[0]));
+            GL.MultiDrawElementsIndirect(PrimitiveType.Triangles, DrawElementsType.UnsignedInt, IntPtr.Zero, 1, Marshal.SizeOf(indirectDrawCommand[0]));
 
             SwapBuffers();
         }
