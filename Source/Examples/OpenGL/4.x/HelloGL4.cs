@@ -170,7 +170,7 @@ void main(){
         {
             // this buffer will store our vertex data
             GL.CreateBuffers(1, out vertexBufferId);
-            GL.NamedBufferData(vertexBufferId, positionVboData.Length * Vector3.SizeInBytes, positionVboData, BufferUsageHint.StaticDraw);
+            GL.NamedBufferStorage(vertexBufferId, positionVboData.Length * Vector3.SizeInBytes, positionVboData, BufferStorageFlags.None);
             CheckErrors();
 
             // this buffer will tell OpenGL what data to put where
@@ -183,12 +183,12 @@ void main(){
 
             // this buffer specifies the indices of the vertex data in the first buffer
             GL.CreateBuffers(1, out elementBufferId);
-            GL.NamedBufferData(elementBufferId, indexBufferData.Length * sizeof(int), indexBufferData, BufferUsageHint.StaticDraw);
+            GL.NamedBufferStorage(elementBufferId, indexBufferData.Length * Vector3.SizeInBytes, indexBufferData, BufferStorageFlags.None);
             CheckErrors();
 
             // this buffer tells OpenGL how many of what to attempt to draw
             GL.CreateBuffers(1, out drawIndirectBufferId);
-            GL.NamedBufferData(drawIndirectBufferId, indirectDrawCommand.Length * Marshal.SizeOf(indirectDrawCommand[0]), indirectDrawCommand, BufferUsageHint.StaticDraw);
+            GL.NamedBufferStorage(drawIndirectBufferId, indirectDrawCommand.Length * Marshal.SizeOf(indirectDrawCommand[0]), indirectDrawCommand, BufferStorageFlags.None);
             CheckErrors();
         }
 
