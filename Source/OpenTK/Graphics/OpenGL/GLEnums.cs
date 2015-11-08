@@ -29586,6 +29586,10 @@ namespace OpenTK.Graphics.OpenGL
     public enum BufferStorageFlags : int
     {
         /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0),
+        /// <summary>
         /// Original was GL_MAP_READ_BIT = 0x0001
         /// </summary>
         MapReadBit = ((int)0x0001),
