@@ -1,7 +1,6 @@
 # Ignores specific to OpenTK.
 Binaries/
 OpenTK.userprefs
-Source/GlobalAssemblyInfo.cs
 Version.txt
 Build.txt
 Timestamp.txt
