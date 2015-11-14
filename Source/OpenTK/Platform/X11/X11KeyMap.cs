@@ -509,7 +509,7 @@ namespace OpenTK.Platform.X11
                 case XKey.Scroll_Lock:
                     return Key.Pause;
                 case XKey.Insert:
-                    return Key.PrintScreen;
+                    return Key.Insert;
                 case XKey.Print:
                     return Key.PrintScreen;
                 case XKey.Sys_Req:
