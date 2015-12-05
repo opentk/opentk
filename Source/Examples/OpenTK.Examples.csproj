@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{868E37B3-0000-0000-0000-000000000000}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -15,7 +15,6 @@
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>
     </AppDesignerFolder>
@@ -81,6 +80,7 @@
     <WarningLevel>4</WarningLevel>
     <Optimize>True</Optimize>
     <DefineConstants>TRACE;</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -122,6 +122,11 @@
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
     </Reference>
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenTK\OpenTK.csproj">
@@ -129,8 +134,12 @@
       <Project>{A37A7E14-0000-0000-0000-000000000000}</Project>
     </ProjectReference>
     <ProjectReference Include="..\GLControl\OpenTK.GLControl.csproj">
-      <Name>OpenTK.GLControl</Name>
       <Project>{A625BE88-0000-0000-0000-000000000000}</Project>
+      <Name>OpenTK.GLControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GLWidget\OpenTK.GLWidget.csproj">
+      <Project>{A625BE87-0000-0000-0000-000000000000}</Project>
+      <Name>OpenTK.GLWidget</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -564,6 +573,7 @@
     </None>
     <Compile Include="OpenTK\Test\ExternalContext.cs" />
     <Compile Include="OpenTK\Test\PointToClient.cs" />
+    <Compile Include="OpenTK\GLWidget\GLWidgetSimple.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -672,4 +682,7 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="OpenTK\GLWidget\" />
+  </ItemGroup>
 </Project>
