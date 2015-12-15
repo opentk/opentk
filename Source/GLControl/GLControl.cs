@@ -37,6 +37,7 @@ using System.Windows.Forms;
 using OpenTK.Platform;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using System.IO;
 
 namespace OpenTK
 {
@@ -46,7 +47,7 @@ namespace OpenTK
     /// Inherit from this class and call one of its specialized constructors
     /// to enable antialiasing or custom <see cref="GraphicsMode"/>s.
     /// </summary>
-    public partial class GLControl : UserControl
+    public partial class GLControl : Form
     {
         IGraphicsContext context;
         IGLControl implementation;
@@ -63,6 +64,10 @@ namespace OpenTK
         // wiith the DesignMode property and nested controls,we need to
         // evaluate this in the constructor.
         readonly bool design_mode;
+
+        public bool MustUseAngle;
+
+        public static StringBuilder Log = new StringBuilder();
 
         #region --- Constructors ---
 
@@ -129,6 +134,115 @@ namespace OpenTK
 
         #region --- Private  Methods ---
 
+        IGraphicsContext GetContext()
+        {
+            if (context != null)
+                context.Dispose();
+
+            if (implementation == null)
+            {
+                Log.AppendLine("Attempting to create native OpenGL context.");
+
+                implementation = design_mode ? new DummyGLControl() : new GLControlFactory().CreateGLControl(format, this, GraphicsContextFlags.Default);
+
+                try
+                {
+                    context = implementation.CreateContext(major, minor, GraphicsContextFlags.Default);
+                    MakeCurrent();
+                }
+                catch (Exception e)
+                {
+                    Log.AppendLine("Failed to create native OpenGL context.");
+                    Log.AppendLine(e.ToString());
+                    Log.AppendLine("Reverting to ANGLE.");
+
+                    flags = GraphicsContextFlags.Angle;
+                    return GetContext();
+                }
+
+                if (!design_mode)
+                {
+                    ((IGraphicsContextInternal)Context).LoadAll();
+
+                    Log.AppendLine("Loaded all endpoints.");
+                }
+
+                // Check if version < required version
+                if (new Version(GL.GetString(StringName.Version).Split(' ')[0]) < new Version(major, minor))
+                {
+                    Log.AppendLine("Native OpenGL context version is incompatible, reverting to ANGLE.");
+
+                    flags = GraphicsContextFlags.Angle;
+                    return GetContext();
+                }
+
+                Log.AppendLine("Successfully created native OpenGL context.");
+
+
+                if (flags == GraphicsContextFlags.Default)
+                {
+                    Log.AppendLine("Using native OpenGL context.");
+
+                    // We're using the default OpenGL renderer, exit early
+                    return context;
+                }
+            }
+
+            // If we reach this point, we need to use Angle
+            if (flags == GraphicsContextFlags.Angle)
+            {
+                try
+                {
+                    Log.AppendLine("Attempting to create ANGLED3D11 context.");
+
+                    // Try D3D11
+                    major = 3;
+                    minor = 0;
+                    flags = GraphicsContextFlags.AngleD3D11;
+                    return GetContext();
+                }
+                catch (Exception e)
+                {
+                    Log.AppendLine("Failed to create ANGLED3D11 context.");
+                    Log.AppendLine(e.ToString());
+                    Log.AppendLine("Reverting to ANGLED3D9.");
+
+                    try
+                    {
+                        Log.AppendLine("Attempting to create ANGLED3D9 context.");
+
+                        // Default to D3D9 (this should never fail)
+                        major = 2;
+                        minor = 0;
+                        flags = GraphicsContextFlags.AngleD3D9;
+                        return GetContext();
+                    }
+                    catch (Exception e2)
+                    {
+                        Log.AppendLine("Failed to create ANGLED3D9 context. Oops.");
+                        Log.AppendLine(e.ToString());
+
+                        return null;
+                    }
+                }
+            }
+
+            implementation = design_mode ? new DummyGLControl() : new GLControlFactory().CreateGLControl(format, this, flags);
+
+            context = implementation.CreateContext(major, minor, flags);
+            MakeCurrent();
+            if (!design_mode)
+            {
+                ((IGraphicsContextInternal)Context).LoadAll();
+
+                Log.AppendLine("Loaded all endpoints.");
+            }
+
+            Log.AppendLine($"Using {(flags == GraphicsContextFlags.AngleD3D11 ? "ANGLED3D11" : "ANGLED3D9")} context.");
+
+            return context;
+        }
+
         IGLControl Implementation
         {
             get
@@ -189,22 +303,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
-            if (context != null)
-                context.Dispose();
-
-            if (implementation != null)
-                implementation.WindowInfo.Dispose();
-
-            if (design_mode)
-                implementation = new DummyGLControl();
-            else
-                implementation = new GLControlFactory().CreateGLControl(format, this);
-
-            context = implementation.CreateContext(major, minor, flags);
-            MakeCurrent();
-
-            if (!design_mode)
-                ((IGraphicsContextInternal)Context).LoadAll();
+            context = GetContext();
 
             // Deferred setting of vsync mode. See VSync property for more information.
             if (initial_vsync_value.HasValue)
@@ -466,6 +565,18 @@ namespace OpenTK
             {
                 ValidateState();
                 return Context.GraphicsMode;
+            }
+        }
+
+        #endregion
+
+        #region public GraphicsMode GraphicsMode
+
+        public GraphicsContextFlags GraphicsContextFlags
+        {
+            get
+            {
+                return flags;
             }
         }
 

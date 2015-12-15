@@ -109,11 +109,19 @@ namespace OpenTK
 
         #region Constructors
 
-        public WinGLControl(GraphicsMode mode, Control control)
+        public WinGLControl(GraphicsMode mode, Control control, GraphicsContextFlags flags)
         {
             this.mode = mode;
 
             window_info = Utilities.CreateWindowsWindowInfo(control.Handle);
+
+            var use_angle_flag = GraphicsContextFlags.Angle
+                | GraphicsContextFlags.AngleD3D9
+                | GraphicsContextFlags.AngleD3D11
+                | GraphicsContextFlags.AngleOpenGL;
+
+            if ((flags & use_angle_flag) > 0)
+                window_info = Utilities.CreateAngleWindowInfo(window_info);
         }
 
         #endregion

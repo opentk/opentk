@@ -77,6 +77,17 @@ namespace OpenTK.Platform.Egl
         BAD_SURFACE = 12301,
     }
 
+    enum SurfaceType
+    {
+        PBUFFER_BIT = 0x0001,
+        PIXMAP_BIT = 0x0002,
+        WINDOW_BIT = 0x0004,
+        VG_COLORSPACE_LINEAR_BIT = 0x0020,
+        VG_ALPHA_FORMAT_PRE_BIT = 0x0040,
+        MULTISAMPLE_RESOLVE_BOX_BIT = 0x0200,
+        SWAP_BEHAVIOR_PRESERVED_BIT = 0x0400,
+    }
+
     static partial class Egl
     {
         public const int VERSION_1_0 = 1;

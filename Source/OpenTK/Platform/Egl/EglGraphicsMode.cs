@@ -48,10 +48,22 @@ namespace OpenTK.Platform.Egl
             int samples, ColorFormat accum, int buffers, bool stereo,
             RenderableFlags renderable_flags)
         {
+            return SelectGraphicsMode(
+                SurfaceType.WINDOW_BIT, 
+                window.Display,
+                color, depth, stencil, samples, accum, buffers, stereo, renderable_flags
+                );
+        }
+
+        public GraphicsMode SelectGraphicsMode(SurfaceType surface_type, 
+            IntPtr display, ColorFormat color, int depth, int stencil,
+            int samples, ColorFormat accum, int buffers, bool stereo,
+            RenderableFlags renderable_flags)
+        {
             IntPtr[] configs = new IntPtr[1];
             int[] attribList = new int[] 
             { 
-                Egl.SURFACE_TYPE, Egl.WINDOW_BIT,
+                Egl.SURFACE_TYPE, (int) surface_type,
                 Egl.RENDERABLE_TYPE, (int)renderable_flags,
 
                 Egl.RED_SIZE, color.Red, 
@@ -68,12 +80,18 @@ namespace OpenTK.Platform.Egl
                 Egl.NONE,
             };
 
-            IntPtr display = window.Display;
-
             int num_configs;
-            if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out num_configs) || num_configs == 0)
+            if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out num_configs))
             {
                 throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, error {0}", Egl.GetError()));
+            }
+
+            if (num_configs == 0)
+            {
+                if (depth > 0)
+                    return SelectGraphicsMode(surface_type, display, color, 0, stencil, samples, accum, buffers, stereo, renderable_flags);
+
+                throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, no fitting configurations, error {0}", Egl.GetError()));
             }
 
             // See what we really got
@@ -92,5 +110,6 @@ namespace OpenTK.Platform.Egl
 
             return new GraphicsMode(active_config, new ColorFormat(r, g, b, a), d, s, sample_buffers > 0 ? samples : 0, 0, 2, false);
         }
+
     }
 }
