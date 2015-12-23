@@ -1063,13 +1063,21 @@ namespace Bind
                         {
                             var p = wrapper.Parameters[i];
 
-                            if (p.ElementCount == 1)
+                            // Functions with a count parameter (that is not this one) should use arrays, not refs.
+                            if (p.Name != "count" && func.Parameters.Any(param => param.Name == "count"))
                             {
-                                p.Reference = true;
+                                p.Array++;
                             }
                             else
                             {
-                                p.Array++;
+                                if (p.ElementCount == 1)
+                                {
+                                    p.Reference = true;
+                                }
+                                else
+                                {
+                                    p.Array++;
+                                }
                             }
                             p.Pointer--;
                         }
