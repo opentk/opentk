@@ -174,6 +174,19 @@ namespace OpenTK.Input
         }
 
         /// <summary>
+        /// Gets a value indicating whether any button is down.
+        /// </summary>
+        /// <value><c>true</c> if any button is down; otherwise, <c>false</c>.</value>
+        public bool IsAnyButtonDown
+        {
+            get
+            {
+                // If any bit is set then a button is down.
+                return buttons != 0;
+            }
+        }
+
+        /// <summary>
         /// Gets the absolute wheel position in integer units. This property is intended for XNA compatibility.
         /// To support high-precision mice, it is recommended to use <see cref="WheelPrecise"/> instead.
         /// </summary>
