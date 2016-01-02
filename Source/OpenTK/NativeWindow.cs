@@ -493,7 +493,7 @@ namespace OpenTK
         #region WindowBorder
 
         /// <summary>
-        /// Gets or states the border of the NativeWindow.
+        /// Gets or sets the border of the NativeWindow.
         /// </summary>
         public WindowBorder WindowBorder
         {
