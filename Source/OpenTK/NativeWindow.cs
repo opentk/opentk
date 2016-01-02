@@ -528,7 +528,7 @@ namespace OpenTK
         #region WindowState
 
         /// <summary>
-        /// Gets or states the state of the NativeWindow.
+        /// Gets or sets the state of the NativeWindow.
         /// </summary>
         public virtual WindowState WindowState
         {
