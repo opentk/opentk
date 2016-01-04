@@ -1118,6 +1118,29 @@ namespace OpenTK
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <returns>The transformed vector</returns>
+        public static Vector3 Transform(Vector3 vec, Matrix3 mat)
+        {
+            Vector3 result;
+            Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Vector3 vec, ref Matrix3 mat, out Vector3 result)
+        {
+            result = new Vector3(
+                vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X,
+                vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y,
+                vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z);
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
         public static Vector3 Transform(Vector3 vec, Matrix4 mat)
         {
             Vector3 result;
@@ -1502,7 +1525,33 @@ namespace OpenTK
             vec.Z *= scale.Z;
             return vec;
         }
-		
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns></returns>
+        public static Vector3 operator *(Matrix3 mat, Vector3 vec)
+        {
+            Vector3 result;
+            Vector3.Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <returns></returns>
+        public static Vector3 operator *(Quaternion quat, Vector3 vec)
+        {
+            Vector3 result;
+            Vector3.Transform(ref vec, ref quat, out result);
+            return result;
+        }
+
         /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>

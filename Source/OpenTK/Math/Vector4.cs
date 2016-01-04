@@ -1505,7 +1505,33 @@ namespace OpenTK
             vec.W *= scale.W;
             return vec;
         }
-		
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns></returns>
+        public static Vector4 operator *(Matrix4 mat, Vector4 vec)
+        {
+            Vector4 result;
+            Vector4.Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <returns></returns>
+        public static Vector4 operator *(Quaternion quat, Vector4 vec)
+        {
+            Vector4 result;
+            Vector4.Transform(ref vec, ref quat, out result);
+            return result;
+        }
+
         /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>
