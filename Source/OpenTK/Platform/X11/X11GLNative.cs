@@ -194,9 +194,7 @@ namespace OpenTK.Platform.X11
             hints.flags = (IntPtr)(XSizeHintsFlags.PSize | XSizeHintsFlags.PPosition);
 
             XClassHint class_hint = new XClassHint();
-#if !_NET_CORECLR
             var entry_assembly = Assembly.GetEntryAssembly();
-
             // May not have an entry assembly, try to find a "matching" assembly in the AppDomain
             if (entry_assembly == null)
             {
@@ -213,11 +211,6 @@ namespace OpenTK.Platform.X11
             }
 
             var name = entry_assembly.GetName().Name;
-#else
-                // In CoreCLR we do not have `Assembly.GetEntryAssembly' so we will a different name.
-            var name = typeof (X11GLNative).GetTypeInfo().Assembly.GetName().Name;
-#endif
-
             class_hint.Class = name;
             class_hint.Name = name.ToLower();
 
