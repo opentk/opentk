@@ -1,14 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
-  <PropertyGroup Condition="'$(Configuration)' != 'DebugCoreCLR' and '$(Configuration)' != 'ReleaseCoreCLR'">
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'DebugCoreCLR' or '$(Configuration)' == 'ReleaseCoreCLR'">
-    <TargetFrameworkRootPath>$(MSBuildThisFileDirectory)\CoreFX</TargetFrameworkRootPath>
-    <FrameworkPathOverride>$(TargetFrameworkRootPath)</FrameworkPathOverride>
-    <OpenTKUseCoreCLR>true</OpenTKUseCoreCLR>
-  </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Target Name="OpenTKRewrite" AfterTargets="CoreCompile" DependsOnTargets="ResolveProjectReferences">
     <WriteLinesToFile File="$(IntermediateOutputPath)OpenTKReferences.cache" Lines="@(ReferencePath)" Overwrite="true" />
   </Target>
@@ -27,6 +18,7 @@
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>
     </AppDesignerFolder>
@@ -160,43 +152,7 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\..\OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugCoreCLR|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <ConfigurationOverrideFile>
-    </ConfigurationOverrideFile>
-    <DefineConstants>DEBUG;TRACE;MINIMAL;NO_SYSDRAWING</DefineConstants>
-    <DocumentationFile>..\..\Binaries\OpenTK\DebugCoreCLR\OpenTK.xml</DocumentationFile>
-    <FileAlignment>4096</FileAlignment>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\OpenTK\DebugCoreCLR\</OutputPath>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <RemoveIntegerChecks>False</RemoveIntegerChecks>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>full</DebugType>
-    <OpenTKRewriteDebug>true</OpenTKRewriteDebug>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseCoreCLR|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <ConfigurationOverrideFile>
-    </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;MINIMAL;NO_SYSDRAWING</DefineConstants>
-    <DocumentationFile>..\..\Binaries\OpenTK\ReleaseMinimal\OpenTK.xml</DocumentationFile>
-    <FileAlignment>4096</FileAlignment>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\OpenTK\ReleaseCoreCLR\</OutputPath>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <RemoveIntegerChecks>False</RemoveIntegerChecks>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
-    <OpenTKRewriteDebug>false</OpenTKRewriteDebug>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)' != 'DebugCoreCLR' and '$(Configuration)' != 'ReleaseCoreCLR'">
+  <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -916,8 +872,7 @@
     <Compile Include="Platform\Linux\DefaultCursor.cs" />
     <Compile Include="Platform\Linux\Bindings\Kms.cs" />
   </ItemGroup>
-  <Import Condition="'$(OpenTKUseCoreCLR)' == ''" Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Condition="'$(OpenTKUseCoreCLR)' == 'true'" Project="$(MSBuildThisFileDirectory)\CoreFX\configs\CoreCLR.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
@@ -946,5 +901,8 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup />
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Platform\Linux\" />
+    <Folder Include="Platform\Linux\Bindings\" />
+  </ItemGroup>
 </Project>
