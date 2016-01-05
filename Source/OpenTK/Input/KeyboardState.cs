@@ -39,7 +39,7 @@ namespace OpenTK.Input
         #region Fields
 
         // Allocate enough ints to store all keyboard keys
-        const int IntSize = sizeof(int);
+        const int IntSize = sizeof(int) * 8;
         const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         unsafe fixed int Keys[NumInts];
@@ -106,6 +106,33 @@ namespace OpenTK.Input
         public bool IsKeyUp(short code)
         {
             return !IsKeyDown(code);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether any key is down.
+        /// </summary>
+        /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
+        public bool IsAnyKeyDown
+        {
+            get
+            {
+                // If any bit is set then a key is down.
+                unsafe
+                {
+                    fixed (int* k = Keys)
+                    {
+                        for(int i = 0; i < NumInts; ++i)
+                        {
+                            if (k[i] != 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+                return false;
+            }
         }
 
         /// <summary>
@@ -226,8 +253,8 @@ namespace OpenTK.Input
         {
             ValidateOffset(offset);
 
-            int int_offset = offset / 32;
-            int bit_offset = offset % 32;
+            int int_offset = offset / IntSize;
+            int bit_offset = offset % IntSize;
             unsafe
             {
                 fixed (int* k = Keys) { return (*(k + int_offset) & (1 << bit_offset)) != 0u; }
@@ -238,8 +265,8 @@ namespace OpenTK.Input
         {
             ValidateOffset(offset);
 
-            int int_offset = offset / 32;
-            int bit_offset = offset % 32;
+            int int_offset = offset / IntSize;
+            int bit_offset = offset % IntSize;
             unsafe
             {
                 fixed (int* k = Keys) { *(k + int_offset) |= 1 << bit_offset; }
@@ -250,8 +277,8 @@ namespace OpenTK.Input
         {
             ValidateOffset(offset);
 
-            int int_offset = offset / 32;
-            int bit_offset = offset % 32;
+            int int_offset = offset / IntSize;
+            int bit_offset = offset % IntSize;
             unsafe
             {
                 fixed (int* k = Keys) { *(k + int_offset) &= ~(1 << bit_offset); }

@@ -124,6 +124,19 @@ namespace OpenTK.Input
         }
 
         /// <summary>
+        /// Gets a value indicating whether any button is down.
+        /// </summary>
+        /// <value><c>true</c> if any button is down; otherwise, <c>false</c>.</value>
+        public bool IsAnyButtonDown
+        {
+            get
+            {
+                // If any bit is set then a button is down.
+                return buttons != 0;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this instance is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
