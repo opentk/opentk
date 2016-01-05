@@ -37,6 +37,7 @@ namespace OpenTK.Platform
         /// String instance corresponding to the null terminated bytes pointed by <paramref name="o"/>.
         /// </summary>
         /// <param name="o">Unmanaged pointer from which data will be read.</param>
+        [CLSCompliant(false)]
         public static string String(byte * o)
         {
             if (o == null)
@@ -77,6 +78,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="o">Unmanaged pointer from which data will be read.</param>
         /// <param name="n">Index from where to copy the data</param>
+        [CLSCompliant(false)]
         public static string String(byte* o, int n)
         {
             if (o == null)
