@@ -120,32 +120,32 @@ namespace OpenTK.Platform.Egl
         {
             // default to D3D9 for ES2, but use D3D11 for ES3 as required by Angle.
             var platform_type = major == 2
-                ? Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D9
-                : Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D11;
+                ? Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D9_ANGLE
+                : Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D11_ANGLE;
             if (FlagEnabled(flags, GraphicsContextFlags.AngleD3D11))
             {
-                platform_type = Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D11;
+                platform_type = Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D11_ANGLE;
             }
             else if (FlagEnabled(flags, GraphicsContextFlags.AngleD3D9))
             {
-                platform_type = Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D9;
+                platform_type = Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D9_ANGLE;
             }
             else if (FlagEnabled(flags, GraphicsContextFlags.AngleOpenGL))
             {
-                platform_type = Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_OPENGL;
+                platform_type = Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_OPENGL_ANGLE;
             }
             else
             {
                 // make sure the correct flag is set.
                 switch (platform_type)
                 {
-                    case Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D9:
+                    case Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D9_ANGLE:
                         flags |= GraphicsContextFlags.AngleD3D9;
                         break;
-                    case Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D11:
+                    case Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D11_ANGLE:
                         flags |= GraphicsContextFlags.AngleD3D11;
                         break;
-                    case Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_OPENGL:
+                    case Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_OPENGL_ANGLE:
                         flags |= GraphicsContextFlags.AngleOpenGL;
                         break;
                 }
@@ -153,15 +153,15 @@ namespace OpenTK.Platform.Egl
 
             var attribs = new[]
             {
-                Platform.Egl.Egl.PLATFORM_ANGLE_TYPE, platform_type,
-                Platform.Egl.Egl.PLATFORM_ANGLE_MAX_VERSION_MAJOR, Platform.Egl.Egl.DONT_CARE,
-                Platform.Egl.Egl.PLATFORM_ANGLE_MAX_VERSION_MINOR, Platform.Egl.Egl.DONT_CARE,
-                Platform.Egl.Egl.PLATFORM_ANGLE_DEVICE_TYPE, Platform.Egl.Egl.PLATFORM_ANGLE_DEVICE_TYPE_HARDWARE,
+                Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_ANGLE, platform_type,
+                Platform.Egl.Egl.PLATFORM_ANGLE_MAX_VERSION_MAJOR_ANGLE, Platform.Egl.Egl.DONT_CARE,
+                Platform.Egl.Egl.PLATFORM_ANGLE_MAX_VERSION_MINOR_ANGLE, Platform.Egl.Egl.DONT_CARE,
+                Platform.Egl.Egl.PLATFORM_ANGLE_DEVICE_TYPE_ANGLE, Platform.Egl.Egl.PLATFORM_ANGLE_DEVICE_TYPE_HARDWARE_ANGLE,
                 Platform.Egl.Egl.NONE
             };
 
             return Platform.Egl.Egl.GetPlatformDisplay(
-                Platform.Egl.Egl.PLATFORM_ANGLE,
+                Platform.Egl.Egl.PLATFORM_ANGLE_ANGLE,
                 dc,
                 attribs
                 );

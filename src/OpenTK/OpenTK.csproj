@@ -135,7 +135,6 @@
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Egl\AngleWindowInfo.cs" />
     <Compile Include="Platform\Egl\EglException.cs" />
-    <Compile Include="Platform\Egl\EglAngle.cs" />
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
     <Compile Include="Platform\Egl\EglWinContext.cs" />
     <Compile Include="Platform\Egl\EglAnglePlatformFactory.cs" />
