@@ -81,8 +81,11 @@ namespace OpenTK.Platform.Windows
 
             public void SetAxis(short collection, HIDPage page, short usage, short value)
             {
-                JoystickAxis axis = GetAxis(collection, page, usage);
-                State.SetAxis(axis, value);
+                if (page == HIDPage.GenericDesktop || page == HIDPage.Simulation) // set axis only when HIDPage is known by HidHelper.TranslateJoystickAxis() to avoid axis0 to be overwritten by unknown HIDPage
+                {
+                    JoystickAxis axis = GetAxis(collection, page, usage);
+                    State.SetAxis(axis, value);
+                }
             }
 
             public void SetButton(short collection, HIDPage page, short usage, bool value)
@@ -351,6 +354,12 @@ namespace OpenTK.Platform.Windows
         {
             if (caps.LogicalMax == 8)
                 return (HatPosition)value;
+            else if (caps.LogicalMax == 7)
+            {
+                value++;
+                value %= 9;
+                return (HatPosition)value;
+            }
             else
                 return HatPosition.Centered;
         }
