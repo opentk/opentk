@@ -261,7 +261,7 @@ namespace OpenTK.Platform.Windows
 
                     // This is a new device, query its capabilities and add it
                     // to the device list
-                    if (!QueryDeviceCaps(device))
+                    if (!QueryDeviceCaps(device) && !is_xinput)
                     {
                         continue;
                     }
@@ -611,6 +611,8 @@ namespace OpenTK.Platform.Windows
                         }
                     }
                 }
+                else
+                    return false;
             }
             finally
             {
