@@ -1,3 +1,12 @@
+Notice
+======
+
+@frassle (current maintainer) is stepping away from this project. The project owner is not around to give direction, and I don't have access to the website, nuget account, travis account or most permissions on the github account. I can't push this project forward.
+
+As I'm the only one whos maintained this repo for the last 6 months with my absence pull requests and issues will probably stay unresolved. I'd suggest developer look to other projects like [MonoGame](http://www.monogame.net/) or [SDL2#](https://github.com/flibitijibibo/SDL2-CS).
+
+As this is a large project used by many people I thought it best to add this notice before signing off.
+
 OpenTK
 ======
 
