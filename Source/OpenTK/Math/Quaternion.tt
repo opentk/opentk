@@ -1,0 +1,902 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+#region --- License ---
+/*
+Copyright (c) 2006 - 2008 The Open Toolkit library.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
+#endregion
+
+using System;
+using System.Runtime.InteropServices;
+using System.ComponentModel;
+using System.Xml.Serialization;
+
+namespace OpenTK
+{
+<#
+	var types = new string[] {"float", "double"};
+	var suffixes =  new string[] {"", "d"};
+
+	for (int i = 0; i < types.Length; ++i) {
+		var type = types[i];
+		var suffix = suffixes[i];
+		var name = "Quaternion" + suffix;
+		var vector3 = "Vector3" + suffix;
+		var vector4 = "Vector4" + suffix;
+		var matrix3 = "Matrix3" + suffix;
+#>
+    /// <summary>
+    /// Represents a <#=name#>.
+    /// </summary>
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
+    public struct <#=name#> : IEquatable<<#=name#>>
+    {
+        #region Fields
+
+        <#=vector3#> xyz;
+        <#=type#> w;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Construct a new <#=name#> from vector and w components
+        /// </summary>
+        /// <param name="v">The vector part</param>
+        /// <param name="w">The w part</param>
+        public <#=name#>(<#=vector3#> v, <#=type#> w)
+        {
+            this.xyz = v;
+            this.w = w;
+        }
+
+        /// <summary>
+        /// Construct a new <#=name#>
+        /// </summary>
+        /// <param name="x">The x component</param>
+        /// <param name="y">The y component</param>
+        /// <param name="z">The z component</param>
+        /// <param name="w">The w component</param>
+        public <#=name#>(<#=type#> x, <#=type#> y, <#=type#> z, <#=type#> w)
+            : this(new <#=vector3#>(x, y, z), w)
+        { }
+
+        /// <summary>
+        /// Construct a new <#=name#> from given Euler angles
+        /// </summary>
+        /// <param name="pitch">The pitch (attitude), rotation around X axis</param>
+        /// <param name="yaw">The yaw (heading), rotation around Y axis</param>
+        /// <param name="roll">The roll (bank), rotation around Z axis</param>
+        public <#=name#>(<#=type#> pitch, <#=type#> yaw, <#=type#> roll)
+        {
+            yaw *= 0.5f;
+            pitch *= 0.5f;
+            roll *= 0.5f;
+
+            float c1 = (float)Math.Cos(yaw);
+            float c2 = (float)Math.Cos(pitch);
+            float c3 = (float)Math.Cos(roll);
+            float s1 = (float)Math.Sin(yaw);
+            float s2 = (float)Math.Sin(pitch);
+            float s3 = (float)Math.Sin(roll);
+
+            this.w = c1 * c2 * c3 - s1 * s2 * s3;
+            this.xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
+            this.xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
+            this.xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+        }
+
+        /// <summary>
+        /// Construct a new <#=name#> from given Euler angles
+        /// </summary>
+        /// <param name="eulerAngles">The euler angles as a <#=vector3#></param>
+        public <#=name#>(<#=vector3#> eulerAngles)
+            :this(eulerAngles.X, eulerAngles.Y, eulerAngles.Z)
+        { }
+
+        #endregion
+
+        #region Public Members
+
+        #region Properties
+
+        #pragma warning disable 3005 // Identifier differing only in case is not CLS-compliant, compiler bug in Mono 3.4.0
+
+        /// <summary>
+        /// Gets or sets an OpenTK.<#=vector3#> with the X, Y and Z components of this instance.
+        /// </summary>
+        [Obsolete("Use Xyz property instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [XmlIgnore]
+        [CLSCompliant(false)]
+        public <#=vector3#> XYZ { get { return Xyz; } set { Xyz = value; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.<#=vector3#> with the X, Y and Z components of this instance.
+        /// </summary>
+        [CLSCompliant(false)]
+        public <#=vector3#> Xyz { get { return xyz; } set { xyz = value; } }
+
+        #pragma warning restore 3005
+
+        /// <summary>
+        /// Gets or sets the X component of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public <#=type#> X { get { return xyz.X; } set { xyz.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the Y component of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public <#=type#> Y { get { return xyz.Y; } set { xyz.Y = value; } }
+
+        /// <summary>
+        /// Gets or sets the Z component of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public <#=type#> Z { get { return xyz.Z; } set { xyz.Z = value; } }
+
+        /// <summary>
+        /// Gets or sets the W component of this instance.
+        /// </summary>
+        public <#=type#> W { get { return w; } set { w = value; } }
+
+        #endregion
+
+        #region Instance
+
+        #region ToAxisAngle
+
+        /// <summary>
+        /// Convert the current quaternion to axis angle representation
+        /// </summary>
+        /// <param name="axis">The resultant axis</param>
+        /// <param name="angle">The resultant angle</param>
+        public void ToAxisAngle(out <#=vector3#> axis, out <#=type#> angle)
+        {
+            <#=vector4#> result = ToAxisAngle();
+            axis = result.Xyz;
+            angle = result.W;
+        }
+
+        /// <summary>
+        /// Convert this instance to an axis-angle representation.
+        /// </summary>
+        /// <returns>A <#=vector4#> that is the axis-angle representation of this quaternion.</returns>
+        public <#=vector4#> ToAxisAngle()
+        {
+            <#=name#> q = this;
+            if (Math.Abs(q.W) > 1.0f)
+                q.Normalize();
+
+            <#=vector4#> result = new <#=vector4#>();
+
+            result.W = 2.0f * (<#=type#>)System.Math.Acos(q.W); // angle
+            <#=type#> den = (<#=type#>)System.Math.Sqrt(1.0 - q.W * q.W);
+            if (den > 0.0001f)
+            {
+                result.Xyz = q.Xyz / den;
+            }
+            else
+            {
+                // This occurs when the angle is zero.
+                // Not a problem: just set an arbitrary normalized axis.
+                result.Xyz = <#=vector3#>.UnitX;
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region public <#=type#> Length
+
+        /// <summary>
+        /// Gets the length (magnitude) of the quaternion.
+        /// </summary>
+        /// <seealso cref="LengthSquared"/>
+        public <#=type#> Length
+        {
+            get
+            {
+                return (<#=type#>)System.Math.Sqrt(W * W + Xyz.LengthSquared);
+            }
+        }
+
+        #endregion
+
+        #region public <#=type#> LengthSquared
+
+        /// <summary>
+        /// Gets the square of the quaternion length (magnitude).
+        /// </summary>
+        public <#=type#> LengthSquared
+        {
+            get
+            {
+                return W * W + Xyz.LengthSquared;
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Returns a copy of the <#=name#> scaled to unit length.
+        /// </summary>
+        public <#=name#> Normalized()
+        {
+            <#=name#> q = this;
+            q.Normalize();
+            return q;
+        }
+
+        /// <summary>
+        /// Reverses the rotation angle of this <#=name#>d.
+        /// </summary>
+        public void Invert()
+        {
+            W = -W;
+        }
+
+        /// <summary>
+        /// Returns a copy of this <#=name#>d with its rotation angle reversed.
+        /// </summary>
+        public <#=name#> Inverted()
+        {
+            var q = this;
+            q.Invert();
+            return q;
+        }
+
+        #region public void Normalize()
+
+        /// <summary>
+        /// Scales the <#=name#> to unit length.
+        /// </summary>
+        public void Normalize()
+        {
+            <#=type#> scale = 1.0f / this.Length;
+            Xyz *= scale;
+            W *= scale;
+        }
+
+        #endregion
+
+        #region public void Conjugate()
+
+        /// <summary>
+        /// Inverts the <#=vector3#> component of this <#=name#>.
+        /// </summary>
+        public void Conjugate()
+        {
+            Xyz = -Xyz;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Static
+
+        #region Fields
+
+        /// <summary>
+        /// Defines the identity quaternion.
+        /// </summary>
+        public static readonly <#=name#> Identity = new <#=name#>(0, 0, 0, 1);
+
+        #endregion
+
+        #region Add
+
+        /// <summary>
+        /// Add two quaternions
+        /// </summary>
+        /// <param name="left">The first operand</param>
+        /// <param name="right">The second operand</param>
+        /// <returns>The result of the addition</returns>
+        public static <#=name#> Add(<#=name#> left, <#=name#> right)
+        {
+            return new <#=name#>(
+                left.Xyz + right.Xyz,
+                left.W + right.W);
+        }
+
+        /// <summary>
+        /// Add two quaternions
+        /// </summary>
+        /// <param name="left">The first operand</param>
+        /// <param name="right">The second operand</param>
+        /// <param name="result">The result of the addition</param>
+        public static void Add(ref <#=name#> left, ref <#=name#> right, out <#=name#> result)
+        {
+            result = new <#=name#>(
+                left.Xyz + right.Xyz,
+                left.W + right.W);
+        }
+
+        #endregion
+
+        #region Sub
+
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>The result of the operation.</returns>
+        public static <#=name#> Sub(<#=name#> left, <#=name#> right)
+        {
+            return  new <#=name#>(
+                left.Xyz - right.Xyz,
+                left.W - right.W);
+        }
+
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <param name="result">The result of the operation.</param>
+        public static void Sub(ref <#=name#> left, ref <#=name#> right, out <#=name#> result)
+        {
+            result = new <#=name#>(
+                left.Xyz - right.Xyz,
+                left.W - right.W);
+        }
+
+        #endregion
+
+        #region Mult
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>A new instance containing the result of the calculation.</returns>
+        [Obsolete("Use Multiply instead.")]
+        public static <#=name#> Mult(<#=name#> left, <#=name#> right)
+        {
+            return new <#=name#>(
+                right.W * left.Xyz + left.W * right.Xyz + <#=vector3#>.Cross(left.Xyz, right.Xyz),
+                left.W * right.W - <#=vector3#>.Dot(left.Xyz, right.Xyz));
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <param name="result">A new instance containing the result of the calculation.</param>
+        [Obsolete("Use Multiply instead.")]
+        public static void Mult(ref <#=name#> left, ref <#=name#> right, out <#=name#> result)
+        {
+            result = new <#=name#>(
+                right.W * left.Xyz + left.W * right.Xyz + <#=vector3#>.Cross(left.Xyz, right.Xyz),
+                left.W * right.W - <#=vector3#>.Dot(left.Xyz, right.Xyz));
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>A new instance containing the result of the calculation.</returns>
+        public static <#=name#> Multiply(<#=name#> left, <#=name#> right)
+        {
+            <#=name#> result;
+            Multiply(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <param name="result">A new instance containing the result of the calculation.</param>
+        public static void Multiply(ref <#=name#> left, ref <#=name#> right, out <#=name#> result)
+        {
+            result = new <#=name#>(
+                right.W * left.Xyz + left.W * right.Xyz + <#=vector3#>.Cross(left.Xyz, right.Xyz),
+                left.W * right.W - <#=vector3#>.Dot(left.Xyz, right.Xyz));
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="quaternion">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <param name="result">A new instance containing the result of the calculation.</param>
+        public static void Multiply(ref <#=name#> quaternion, <#=type#> scale, out <#=name#> result)
+        {
+            result = new <#=name#>(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="quaternion">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>A new instance containing the result of the calculation.</returns>
+        public static <#=name#> Multiply(<#=name#> quaternion, <#=type#> scale)
+        {
+            return new <#=name#>(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
+        }
+
+        #endregion
+
+        #region Conjugate
+
+        /// <summary>
+        /// Get the conjugate of the given quaternion
+        /// </summary>
+        /// <param name="q">The quaternion</param>
+        /// <returns>The conjugate of the given quaternion</returns>
+        public static <#=name#> Conjugate(<#=name#> q)
+        {
+            return new <#=name#>(-q.Xyz, q.W);
+        }
+
+        /// <summary>
+        /// Get the conjugate of the given quaternion
+        /// </summary>
+        /// <param name="q">The quaternion</param>
+        /// <param name="result">The conjugate of the given quaternion</param>
+        public static void Conjugate(ref <#=name#> q, out <#=name#> result)
+        {
+            result = new <#=name#>(-q.Xyz, q.W);
+        }
+
+        #endregion
+
+        #region Invert
+
+        /// <summary>
+        /// Get the inverse of the given quaternion
+        /// </summary>
+        /// <param name="q">The quaternion to invert</param>
+        /// <returns>The inverse of the given quaternion</returns>
+        public static <#=name#> Invert(<#=name#> q)
+        {
+            <#=name#> result;
+            Invert(ref q, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Get the inverse of the given quaternion
+        /// </summary>
+        /// <param name="q">The quaternion to invert</param>
+        /// <param name="result">The inverse of the given quaternion</param>
+        public static void Invert(ref <#=name#> q, out <#=name#> result)
+        {
+            <#=type#> lengthSq = q.LengthSquared;
+            if (lengthSq != 0.0)
+            {
+                <#=type#> i = 1.0f / lengthSq;
+                result = new <#=name#>(q.Xyz * -i, q.W * i);
+            }
+            else
+            {
+                result = q;
+            }
+        }
+
+        #endregion
+
+        #region Normalize
+
+        /// <summary>
+        /// Scale the given quaternion to unit length
+        /// </summary>
+        /// <param name="q">The quaternion to normalize</param>
+        /// <returns>The normalized quaternion</returns>
+        public static <#=name#> Normalize(<#=name#> q)
+        {
+            <#=name#> result;
+            Normalize(ref q, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Scale the given quaternion to unit length
+        /// </summary>
+        /// <param name="q">The quaternion to normalize</param>
+        /// <param name="result">The normalized quaternion</param>
+        public static void Normalize(ref <#=name#> q, out <#=name#> result)
+        {
+            <#=type#> scale = 1.0f / q.Length;
+            result = new <#=name#>(q.Xyz * scale, q.W * scale);
+        }
+
+        #endregion
+
+        #region FromAxisAngle
+
+        /// <summary>
+        /// Build a quaternion from the given axis and angle
+        /// </summary>
+        /// <param name="axis">The axis to rotate about</param>
+        /// <param name="angle">The rotation angle in radians</param>
+        /// <returns>The equivalent quaternion</returns>
+        public static <#=name#> FromAxisAngle(<#=vector3#> axis, <#=type#> angle)
+        {
+            if (axis.LengthSquared == 0.0f)
+                return Identity;
+
+            <#=name#> result = Identity;
+
+            angle *= 0.5f;
+            axis.Normalize();
+            result.Xyz = axis * (<#=type#>)System.Math.Sin(angle);
+            result.W = (<#=type#>)System.Math.Cos(angle);
+
+            return Normalize(result);
+        }
+
+        #endregion
+
+        #region FromEulerAngles
+
+        /// <summary>
+        /// Builds a <#=name#> from the given euler angles
+        /// </summary>
+        /// <param name="pitch">The pitch (attitude), rotation around X axis</param>
+        /// <param name="yaw">The yaw (heading), rotation around Y axis</param>
+        /// <param name="roll">The roll (bank), rotation around Z axis</param>
+        /// <returns></returns>
+        public static <#=name#> FromEulerAngles(<#=type#> pitch, <#=type#> yaw, <#=type#> roll)
+        {
+            return new <#=name#>(pitch, yaw, roll);
+        }
+
+        /// <summary>
+        /// Builds a <#=name#> from the given euler angles
+        /// </summary>
+        /// <param name="eulerAngles">The euler angles as a vector</param>
+        /// <returns>The equivalent <#=name#></returns>
+        public static <#=name#> FromEulerAngles(<#=vector3#> eulerAngles)
+        {
+            return new <#=name#>(eulerAngles);
+        }
+
+        /// <summary>
+        /// Builds a <#=name#> from the given euler angles
+        /// </summary>
+        /// <param name="eulerAngles">The euler angles a vector</param>
+        /// <param name="result">The equivalent <#=name#></param>
+        public static void FromEulerAngles(ref <#=vector3#> eulerAngles, out <#=name#> result)
+        {
+            float c1 = (float)Math.Cos(eulerAngles.Y * 0.5f);
+            float c2 = (float)Math.Cos(eulerAngles.X * 0.5f);
+            float c3 = (float)Math.Cos(eulerAngles.Z * 0.5f);
+            float s1 = (float)Math.Sin(eulerAngles.Y * 0.5f);
+            float s2 = (float)Math.Sin(eulerAngles.X * 0.5f);
+            float s3 = (float)Math.Sin(eulerAngles.Z * 0.5f);
+
+            result.w = c1 * c2 * c3 - s1 * s2 * s3;
+            result.xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
+            result.xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
+            result.xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+        }
+
+        #endregion
+
+        #region FromMatrix
+
+        /// <summary>
+        /// Builds a quaternion from the given rotation matrix
+        /// </summary>
+        /// <param name="matrix">A rotation matrix</param>
+        /// <returns>The equivalent quaternion</returns>
+        public static <#=name#> FromMatrix(<#=matrix3#> matrix)
+        {
+            <#=name#> result;
+            FromMatrix(ref matrix, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a quaternion from the given rotation matrix
+        /// </summary>
+        /// <param name="matrix">A rotation matrix</param>
+        /// <param name="result">The equivalent quaternion</param>
+        public static void FromMatrix(ref <#=matrix3#> matrix, out <#=name#> result)
+        {
+            <#=type#> trace = matrix.Trace;
+
+            if (trace > 0)
+            {
+                <#=type#> s = (<#=type#>)Math.Sqrt(trace + 1) * 2;
+                <#=type#> invS = 1f / s;
+
+                result.w = s * 0.25f;
+                result.xyz.X = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                result.xyz.Y = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                result.xyz.Z = (matrix.Row1.X - matrix.Row0.Y) * invS;
+            }
+            else
+            {
+                <#=type#> m00 = matrix.Row0.X, m11 = matrix.Row1.Y, m22 = matrix.Row2.Z;
+
+                if (m00 > m11 && m00 > m22)
+                {
+                    <#=type#> s = (<#=type#>)Math.Sqrt(1 + m00 - m11 - m22) * 2;
+                    <#=type#> invS = 1f / s;
+
+                    result.w = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                    result.xyz.X = s * 0.25f;
+                    result.xyz.Y = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.xyz.Z = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                }
+                else if (m11 > m22)
+                {
+                    <#=type#> s = (<#=type#>)Math.Sqrt(1 + m11 - m00 - m22) * 2;
+                    <#=type#> invS = 1f / s;
+
+                    result.w = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                    result.xyz.X = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.xyz.Y = s * 0.25f;
+                    result.xyz.Z = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                }
+                else
+                {
+                    <#=type#> s = (<#=type#>)Math.Sqrt(1 + m22 - m00 - m11) * 2;
+                    <#=type#> invS = 1f / s;
+
+                    result.w = (matrix.Row1.X - matrix.Row0.Y) * invS;
+                    result.xyz.X = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                    result.xyz.Y = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                    result.xyz.Z = s * 0.25f;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Slerp
+
+        /// <summary>
+        /// Do Spherical linear interpolation between two quaternions
+        /// </summary>
+        /// <param name="q1">The first quaternion</param>
+        /// <param name="q2">The second quaternion</param>
+        /// <param name="blend">The blend factor</param>
+        /// <returns>A smooth blend between the given quaternions</returns>
+        public static <#=name#> Slerp(<#=name#> q1, <#=name#> q2, <#=type#> blend)
+        {
+            // if either input is zero, return the other.
+            if (q1.LengthSquared == 0.0f)
+            {
+                if (q2.LengthSquared == 0.0f)
+                {
+                    return Identity;
+                }
+                return q2;
+            }
+            else if (q2.LengthSquared == 0.0f)
+            {
+                return q1;
+            }
+
+
+            <#=type#> cosHalfAngle = q1.W * q2.W + <#=vector3#>.Dot(q1.Xyz, q2.Xyz);
+
+            if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
+            {
+                // angle = 0.0f, so just return one input.
+                return q1;
+            }
+            else if (cosHalfAngle < 0.0f)
+            {
+                q2.Xyz = -q2.Xyz;
+                q2.W = -q2.W;
+                cosHalfAngle = -cosHalfAngle;
+            }
+
+            <#=type#> blendA;
+            <#=type#> blendB;
+            if (cosHalfAngle < 0.99f)
+            {
+                // do proper slerp for big angles
+                <#=type#> halfAngle = (<#=type#>)System.Math.Acos(cosHalfAngle);
+                <#=type#> sinHalfAngle = (<#=type#>)System.Math.Sin(halfAngle);
+                <#=type#> oneOverSinHalfAngle = 1.0f / sinHalfAngle;
+                blendA = (<#=type#>)System.Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
+                blendB = (<#=type#>)System.Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
+            }
+            else
+            {
+                // do lerp if angle is really small.
+                blendA = 1.0f - blend;
+                blendB = blend;
+            }
+
+            <#=name#> result = new <#=name#>(blendA * q1.Xyz + blendB * q2.Xyz, blendA * q1.W + blendB * q2.W);
+            if (result.LengthSquared > 0.0f)
+                return Normalize(result);
+            else
+                return Identity;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Operators
+
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static <#=name#> operator +(<#=name#> left, <#=name#> right)
+        {
+            left.Xyz += right.Xyz;
+            left.W += right.W;
+            return left;
+        }
+
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static <#=name#> operator -(<#=name#> left, <#=name#> right)
+        {
+            left.Xyz -= right.Xyz;
+            left.W -= right.W;
+            return left;
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static <#=name#> operator *(<#=name#> left, <#=name#> right)
+        {
+            Multiply(ref left, ref right, out left);
+            return left;
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="quaternion">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>A new instance containing the result of the calculation.</returns>
+        public static <#=name#> operator *(<#=name#> quaternion, <#=type#> scale)
+        {
+            Multiply(ref quaternion, scale, out quaternion);
+            return quaternion;
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="quaternion">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>A new instance containing the result of the calculation.</returns>
+        public static <#=name#> operator *(<#=type#> scale, <#=name#> quaternion)
+        {
+            return new <#=name#>(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
+        }
+
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
+        public static bool operator ==(<#=name#> left, <#=name#> right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equal right; false otherwise.</returns>
+        public static bool operator !=(<#=name#> left, <#=name#> right)
+        {
+            return !left.Equals(right);
+        }
+
+        #endregion
+
+        #region Overrides
+
+        #region public override string ToString()
+
+        /// <summary>
+        /// Returns a System.String that represents the current <#=name#>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return String.Format("V: {0}, W: {1}", Xyz, W);
+        }
+
+        #endregion
+
+        #region public override bool Equals (object o)
+
+        /// <summary>
+        /// Compares this object instance to another object for equality.
+        /// </summary>
+        /// <param name="other">The other object to be used in the comparison.</param>
+        /// <returns>True if both objects are <#=name#>s of equal value. Otherwise it returns false.</returns>
+        public override bool Equals(object other)
+        {
+            if (other is <#=name#> == false) return false;
+               return this == (<#=name#>)other;
+        }
+
+        #endregion
+
+        #region public override int GetHashCode ()
+
+        /// <summary>
+        /// Provides the hash code for this object.
+        /// </summary>
+        /// <returns>A hash code formed from the bitwise XOR of this objects members.</returns>
+        public override int GetHashCode()
+        {
+            return Xyz.GetHashCode() ^ W.GetHashCode();
+        }
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region IEquatable<<#=name#>> Members
+
+        /// <summary>
+        /// Compares this <#=name#> instance to another <#=name#> for equality.
+        /// </summary>
+        /// <param name="other">The other <#=name#> to be used in the comparison.</param>
+        /// <returns>True if both instances are equal; false otherwise.</returns>
+        public bool Equals(<#=name#> other)
+        {
+            return Xyz == other.Xyz && W == other.W;
+        }
+
+        #endregion
+    }
+<# } #>
+}

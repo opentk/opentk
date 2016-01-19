@@ -181,6 +181,11 @@
     <Compile Include="Input\JoystickCapabilities.cs" />
     <Compile Include="Input\JoystickState.cs" />
     <Compile Include="InteropHelper.cs" />
+    <Compile Include="Math\BezierCurve.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BezierCurve.tt</DependentUpon>
+    </Compile>
     <Compile Include="Math\Matrix2.cs" />
     <Compile Include="Math\Matrix2d.cs" />
     <Compile Include="Math\Matrix2x3.cs" />
@@ -196,6 +201,11 @@
     <Compile Include="Math\Matrix4x2d.cs" />
     <Compile Include="Math\Matrix4x3.cs" />
     <Compile Include="Math\Matrix4x3d.cs" />
+    <Compile Include="Math\Quaternion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Quaternion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Platform\Common\Hid.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
@@ -542,16 +552,10 @@
     <Compile Include="Input\IInputDevice.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Math\Quaternion.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Math\Matrix3d.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Math\Vector4.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Math\BezierCurve.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Math\Vector3.cs">
@@ -597,9 +601,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Math\MathHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Math\Quaterniond.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Math\Vector4h.cs">
@@ -791,6 +792,14 @@
     <Compile Include="Input\HatPosition.cs" />
     <Compile Include="Input\JoystickHatState.cs" />
     <Compile Include="MouseCursor.cs" />
+    <None Include="Math\Quaternion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Quaternion.cs</LastGenOutput>
+    </None>
+    <None Include="Math\BezierCurve.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BezierCurve.cs</LastGenOutput>
+    </None>
     <Compile Include="Input\KeyModifiers.cs" />
     <Compile Include="Platform\MacOS\CocoaContext.cs" />
     <Compile Include="Platform\MacOS\CocoaNativeWindow.cs" />
