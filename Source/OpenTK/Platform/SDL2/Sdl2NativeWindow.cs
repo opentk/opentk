@@ -285,6 +285,7 @@ namespace OpenTK.Platform.SDL2
             window.OnMouseMove(
                 (int)Math.Round(ev.X * scale),
                 (int)Math.Round(ev.Y * scale));
+            Sdl2Mouse.Scale = scale;
         }
 
         static void ProcessMouseWheelEvent(Sdl2NativeWindow window, MouseWheelEvent ev)
