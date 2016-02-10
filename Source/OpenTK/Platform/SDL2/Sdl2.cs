@@ -295,6 +295,10 @@ namespace OpenTK.Platform.SDL2
         public static extern void HideWindow(IntPtr window);
 
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DisableScreenSaver", ExactSpelling = true)]
+        public static extern void DisableScreenSaver();
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_Init", ExactSpelling = true)]
         public static extern int Init(SystemFlags flags);
 
