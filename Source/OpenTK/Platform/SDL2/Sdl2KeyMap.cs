@@ -283,6 +283,8 @@ namespace OpenTK.Platform.SDL2
                     return Key.KeypadDivide;
                 case Code.KP_MULTIPLY:
                     return Key.KeypadMultiply;
+                case Code.KP_ENTER:
+                    return Key.KeypadEnter;
 
                 // Navigation
                 case Code.UP:

@@ -79,7 +79,15 @@ namespace OpenTK.Input
             return implementation.GetState(index);
         }
 
-        internal static Guid GetGuid(int index)
+        /// <summary>
+        /// Retrieves the ID of the device connected
+        /// at the specified index.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Guid"/> representing the id of the connected device.
+        /// </returns>
+        /// <param name="index">The zero-based index of the device to poll.</param>
+        public static Guid GetGuid(int index)
         {
             return implementation.GetGuid(index);
         }

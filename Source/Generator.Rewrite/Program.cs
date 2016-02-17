@@ -65,7 +65,7 @@ namespace OpenTK.Rewrite
             var read_params = new ReaderParameters();
             var write_params = new WriterParameters();
             var pdb = Path.ChangeExtension(file, "pdb");
-            var mdb = Path.ChangeExtension(file, "mdb");
+            var mdb = file + ".mdb";
             ISymbolReaderProvider provider = null;
             if (File.Exists(pdb))
             {
