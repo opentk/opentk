@@ -1020,7 +1020,6 @@ namespace OpenTK
 		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
 		/// <param name="vec">The vector to transform</param>
 		/// <param name="mat">The desired transformation</param>
-		/// <param name="result">The transformed vector</param>
 		public static Vector4 RightHandedTransform(Vector4 vec, Matrix4 mat)
 		{
 			Vector4 result;
@@ -1530,20 +1529,22 @@ namespace OpenTK
             return vec;
         }
 
-        /// <summary>
-        /// Transform a Vector by the given Matrix.
-        /// </summary>
-        /// <param name="vec">The vector to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <returns></returns>
-        public static Vector4 operator *(Vector4 vec, Matrix4 mat)
+		/// <summary>
+		/// Transform a Vector by the given Matrix.
+		/// </summary>
+		/// <param name="vec">The vector to transform</param>
+		/// <param name="mat">The desired transformation</param>
+		/// <returns>The transformed vector</returns>
+		public static Vector4 operator *(Vector4 vec, Matrix4 mat)
         {
             Vector4 result;
             Vector4.Transform(ref vec, ref mat, out result);
             return result;
         }
 
-		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+		/// <summary>
+		/// Transform a Vector by the given Matrix using right-handed notation
+		/// </summary>
 		/// <param name="vec">The vector to transform</param>
 		/// <param name="mat">The desired transformation</param>
 		/// <returns>The transformed vector</returns>
@@ -1554,13 +1555,13 @@ namespace OpenTK
             return result;
         }
 
-        /// <summary>
-        /// Transforms a vector by a quaternion rotation.
-        /// </summary>
-        /// <param name="vec">The vector to transform.</param>
-        /// <param name="quat">The quaternion to rotate the vector by.</param>
-        /// <returns></returns>
-        public static Vector4 operator *(Quaternion quat, Vector4 vec)
+		/// <summary>
+		/// Transforms a vector by a quaternion rotation.
+		/// </summary>
+		/// <param name="vec">The vector to transform.</param>
+		/// <param name="quat">The quaternion to rotate the vector by.</param>
+		/// <returns>The transformed vector</returns>
+		public static Vector4 operator *(Quaternion quat, Vector4 vec)
         {
             Vector4 result;
             Vector4.Transform(ref vec, ref quat, out result);

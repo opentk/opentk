@@ -1194,7 +1194,6 @@ namespace OpenTK
 		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
 		/// <param name="vec">The vector to transform</param>
 		/// <param name="mat">The desired transformation</param>
-		/// <param name="result">The transformed vector</param>
 		public static Vector3 RightHandedTransform(Vector3 vec, Matrix3 mat)
 		{
 			Vector3 result;
@@ -1217,7 +1216,6 @@ namespace OpenTK
 		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
 		/// <param name="vec">The vector to transform</param>
 		/// <param name="mat">The desired transformation</param>
-		/// <param name="result">The transformed vector</param>
 		public static Vector3 RightHandedTransform(Vector3 vec, Matrix4 mat)
 		{
 			Vector3 result;
@@ -1231,7 +1229,7 @@ namespace OpenTK
 		/// <param name="result">The transformed vector</param>
 		public static void RightHandedTransform(ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
 		{
-			result = new OpenTK.Vector3(
+			result = new Vector3(
 				mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z + mat.Row0.W,
 				mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z + mat.Row1.W,
 				mat.Row2.X * vec.X + mat.Row2.Y * vec.Y + mat.Row2.Z * vec.Z + mat.Row2.W);
@@ -1572,13 +1570,13 @@ namespace OpenTK
             return vec;
         }
 
-        /// <summary>
-        /// Transform a Vector by the given Matrix.
-        /// </summary>
-        /// <param name="vec">The vector to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <returns></returns>
-        public static Vector3 operator *(Vector3 vec, Matrix3 mat)
+		/// <summary>
+		/// Transform a Vector by the given Matrix.
+		/// </summary>
+		/// <param name="vec">The vector to transform</param>
+		/// <param name="mat">The desired transformation</param>
+		/// <returns>The transformed vector</returns>
+		public static Vector3 operator *(Vector3 vec, Matrix3 mat)
         {
             Vector3 result;
             Vector3.Transform(ref vec, ref mat, out result);
@@ -1590,7 +1588,7 @@ namespace OpenTK
 		/// </summary>
 		/// <param name="vec">The vector to transform</param>
 		/// <param name="mat">The desired transformation</param>
-		/// <returns></returns>
+		/// <returns>The transformed vector</returns>
 		public static Vector3 operator *(Vector3 vec, Matrix4 mat)
 		{
 			Vector3 result;
@@ -1598,7 +1596,9 @@ namespace OpenTK
 			return result;
 		}
 
-		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+		/// <summary>
+		/// Transform a Vector by the given Matrix using right-handed notation
+		/// </summary>
 		/// <param name="vec">The vector to transform</param>
 		/// <param name="mat">The desired transformation</param>
 		/// <returns>The transformed vector</returns>
@@ -1609,7 +1609,9 @@ namespace OpenTK
             return result;
         }
 
-		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+		/// <summary>
+		/// Transform a Vector by the given Matrix using right-handed notation
+		/// </summary>
 		/// <param name="vec">The vector to transform</param>
 		/// <param name="mat">The desired transformation</param>
 		/// <returns>The transformed vector</returns>
