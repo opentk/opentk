@@ -1585,6 +1585,19 @@ namespace OpenTK
             return result;
         }
 
+		/// <summary>
+		/// Transform a Vector by the given Matrix.
+		/// </summary>
+		/// <param name="vec">The vector to transform</param>
+		/// <param name="mat">The desired transformation</param>
+		/// <returns></returns>
+		public static Vector3 operator *(Vector3 vec, Matrix4 mat)
+		{
+			Vector3 result;
+			Vector3.Transform(ref vec, ref mat, out result);
+			return result;
+		}
+
 		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
 		/// <param name="vec">The vector to transform</param>
 		/// <param name="mat">The desired transformation</param>
