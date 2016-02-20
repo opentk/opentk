@@ -1585,6 +1585,28 @@ namespace OpenTK
             return result;
         }
 
+		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+		/// <param name="vec">The vector to transform</param>
+		/// <param name="mat">The desired transformation</param>
+		/// <returns>The transformed vector</returns>
+		public static Vector3 operator *(Matrix3 mat, Vector3 vec)
+        {
+            Vector3 result;
+            Vector3.RightHandedTransform(ref vec, ref mat, out result);
+            return result;
+        }
+
+		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+		/// <param name="vec">The vector to transform</param>
+		/// <param name="mat">The desired transformation</param>
+		/// <returns>The transformed vector</returns>
+		public static Vector3 operator *(Matrix4 mat, Vector3 vec)
+        {
+            Vector3 result;
+            Vector3.RightHandedTransform(ref vec, ref mat, out result);
+            return result;
+        }
+
         /// <summary>
         /// Transforms a vector by a quaternion rotation.
         /// </summary>
