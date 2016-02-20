@@ -116,6 +116,7 @@ namespace OpenTK.Platform.X11
         // back, reset window to these.s
         WindowBorder _previous_window_border;
         Size _previous_window_size;
+        OpenTK.WindowState _previous_window_state = OpenTK.WindowState.Normal;
 
         MouseCursor cursor = MouseCursor.Default;
         IntPtr cursorHandle;
@@ -1281,6 +1282,8 @@ namespace OpenTK.Platform.X11
                 // ProcessEvents.
                 ChangeWindowState(value);
                 ProcessEvents();
+
+                _previous_window_state = (value == OpenTK.WindowState.Fullscreen) ? OpenTK.WindowState.Fullscreen : OpenTK.WindowState.Normal;
             }
         }
 
@@ -1611,6 +1614,8 @@ namespace OpenTK.Platform.X11
                     {
                         Functions.XMapWindow(window.Display, window.Handle);
                     }
+
+                    this.WindowState = _previous_window_state;
                 }
                 else if (!value && visible)
                 {
@@ -1618,6 +1623,8 @@ namespace OpenTK.Platform.X11
                     {
                         Functions.XUnmapWindow(window.Display, window.Handle);
                     }
+
+                    _previous_window_state = (this.WindowState == OpenTK.WindowState.Fullscreen) ? OpenTK.WindowState.Fullscreen : OpenTK.WindowState.Normal;
                 }
             }
         }
