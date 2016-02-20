@@ -1017,6 +1017,19 @@ namespace OpenTK
             result = new Vector4(v.X, v.Y, v.Z, v.W);
         }
 
+		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+		/// <param name="vec">The vector to transform</param>
+		/// <param name="mat">The desired transformation</param>
+		/// <param name="result">The transformed vector</param>
+		public static void RightHandedTransform(ref Vector4 vec, ref Matrix4 mat, out Vector4 result)
+		{
+			result = new OpenTK.Vector4(
+				mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z + mat.Row0.W * vec.W,
+				mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z + mat.Row1.W * vec.W,
+				mat.Row2.X * vec.X + mat.Row2.Y * vec.Y + mat.Row2.Z * vec.Z + mat.Row2.W * vec.W,
+				mat.Row3.X * vec.X + mat.Row3.Y * vec.Y + mat.Row3.Z * vec.Z + mat.Row3.W * vec.W);
+		}
+
         #endregion
 
         #endregion
