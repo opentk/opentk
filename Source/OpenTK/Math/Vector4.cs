@@ -1021,6 +1021,17 @@ namespace OpenTK
 		/// <param name="vec">The vector to transform</param>
 		/// <param name="mat">The desired transformation</param>
 		/// <param name="result">The transformed vector</param>
+		public static Vector4 RightHandedTransform(Vector4 vec, Matrix4 mat)
+		{
+			Vector4 result;
+			RightHandedTransform(ref vec, ref mat, out result);
+			return result;
+		}
+
+		/// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+		/// <param name="vec">The vector to transform</param>
+		/// <param name="mat">The desired transformation</param>
+		/// <param name="result">The transformed vector</param>
 		public static void RightHandedTransform(ref Vector4 vec, ref Matrix4 mat, out Vector4 result)
 		{
 			result = new OpenTK.Vector4(
