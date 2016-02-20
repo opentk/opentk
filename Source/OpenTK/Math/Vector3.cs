@@ -1532,7 +1532,7 @@ namespace OpenTK
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <returns></returns>
-        public static Vector3 operator *(Matrix3 mat, Vector3 vec)
+        public static Vector3 operator *(Vector3 vec, Matrix3 mat)
         {
             Vector3 result;
             Vector3.Transform(ref vec, ref mat, out result);
