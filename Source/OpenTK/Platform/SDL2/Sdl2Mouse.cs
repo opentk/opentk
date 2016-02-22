@@ -124,7 +124,7 @@ namespace OpenTK.Platform.SDL2
         public MouseState GetCursorState()
         {
             int x, y;
-            var buttons = SDL.GetMouseState(out x, out y);
+            var buttons = SDL.GetGlobalMouseState(out x, out y);
 
             var c = new MouseState();
             c.SetIsConnected(true);
@@ -137,7 +137,7 @@ namespace OpenTK.Platform.SDL2
             c[MouseButton.Button1] = (buttons & ButtonFlags.X1) != 0;
             c[MouseButton.Button2] = (buttons & ButtonFlags.X2) != 0;
 
-            return state;
+            return c;
         }
 
         public void SetPosition(double x, double y)
@@ -145,7 +145,7 @@ namespace OpenTK.Platform.SDL2
             SDL.WarpMouseInWindow(IntPtr.Zero, (int)x, (int)y);
         }
 
-        #endregion
+    #endregion
     }
 }
 
