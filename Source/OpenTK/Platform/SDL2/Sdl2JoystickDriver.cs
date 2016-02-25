@@ -42,6 +42,7 @@ namespace OpenTK.Platform.SDL2
         {
             public IntPtr Handle { get; set; }
             public Guid Guid { get; set; }
+            public int InstanceId { get; set; }
             public int PacketNumber { get; set; }
             public int HatCount { get; set; }
             public int BallCount { get; set; }
@@ -51,7 +52,6 @@ namespace OpenTK.Platform.SDL2
         }
 
         // For IJoystickDriver2 implementation
-        int last_joystick_instance = 0;
         readonly List<JoystickDevice> joysticks = new List<JoystickDevice>(4);
         readonly Dictionary<int, int> sdl_instanceid_to_joysticks = new Dictionary<int, int>();
 
@@ -98,6 +98,7 @@ namespace OpenTK.Platform.SDL2
                 joystick = new JoystickDevice<Sdl2JoystickDetails>(id, num_axes, num_buttons);
                 joystick.Description = SDL.JoystickName(handle);
                 joystick.Details.Handle = handle;
+                joystick.Details.InstanceId = SDL.JoystickInstanceID(handle);
                 joystick.Details.Guid = SDL.JoystickGetGUID(handle).ToGuid();
                 joystick.Details.HatCount = num_hats;
                 joystick.Details.BallCount = num_balls;
@@ -315,11 +316,12 @@ namespace OpenTK.Platform.SDL2
                     {
                         IntPtr handle = SDL.JoystickOpen(id);
                         if (handle != IntPtr.Zero)
-                        {
-                            int device_id = id;
-                            int instance_id = last_joystick_instance++;
-
+                        {                                                        
                             JoystickDevice<Sdl2JoystickDetails> joystick = OpenJoystick(id);
+
+                            int instance_id = joystick.Details.InstanceId;
+                            int device_id = id;
+
                             if (joystick != null)
                             {
                                 joystick.Details.IsConnected = true;
