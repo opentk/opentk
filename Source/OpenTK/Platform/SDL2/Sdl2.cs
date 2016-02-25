@@ -336,6 +336,10 @@ namespace OpenTK.Platform.SDL2
         public static extern JoystickGuid JoystickGetGUID(IntPtr joystick);
 
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickInstanceID", ExactSpelling = true)]
+        public static extern int JoystickInstanceID(IntPtr joystick);
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickName", ExactSpelling = true)]
         static extern IntPtr JoystickNameInternal(IntPtr joystick);
         public static string JoystickName(IntPtr joystick)
