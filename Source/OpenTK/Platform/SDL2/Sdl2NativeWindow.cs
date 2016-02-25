@@ -75,6 +75,8 @@ namespace OpenTK.Platform.SDL2
         {
             lock (sync)
             {
+                SDL.DisableScreenSaver();
+
                 var bounds = device.Bounds;
                 var flags = TranslateFlags(options);
                 flags |= WindowFlags.OPENGL;
