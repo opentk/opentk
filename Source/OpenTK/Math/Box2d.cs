@@ -156,11 +156,20 @@ namespace OpenTK
         /// <summary>
         /// Returns a Box2d translated by the given amount.
         /// </summary>
-        /// <param name="point"></param>
-        /// <returns></returns>
-        public Box2d Translate(Vector2d point)
+        public Box2d Translated(Vector2d point)
         {
             return new Box2d(Left + point.X, Top + point.Y, Right + point.X, Bottom + point.Y);
+        }
+
+        /// <summary>
+        /// Translates this Box2d by the given amount.
+        /// </summary>
+        public void Translate(Vector2d point)
+        {
+            Left += point.X;
+            Right += point.X;
+            Top += point.Y;
+            Bottom += point.Y;
         }
 
         /// <summary>
