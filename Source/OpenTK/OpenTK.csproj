@@ -1,11 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Target Name="OpenTKRewrite" AfterTargets="CoreCompile" DependsOnTargets="ResolveProjectReferences">
+    <WriteLinesToFile File="$(IntermediateOutputPath)OpenTKReferences.cache" Lines="@(ReferencePath)" Overwrite="true" />
+  </Target>
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A37A7E14-0000-0000-0000-000000000000}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <OpenTKRewriteConfiguration>$(Configuration)</OpenTKRewriteConfiguration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
@@ -57,6 +61,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
+    <OpenTKRewriteDebug>true</OpenTKRewriteDebug>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMinimal|AnyCPU' ">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -74,6 +79,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
+    <OpenTKRewriteDebug>true</OpenTKRewriteDebug>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -91,6 +97,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>pdbonly</DebugType>
+    <OpenTKRewriteDebug>false</OpenTKRewriteDebug>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMinimal|AnyCPU' ">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -108,6 +115,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>pdbonly</DebugType>
+    <OpenTKRewriteDebug>false</OpenTKRewriteDebug>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
@@ -117,8 +125,6 @@
     <Optimize>True</Optimize>
     <DefineConstants>TRACE;</DefineConstants>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <DebugType>pdbonly</DebugType>
-    <DebugSymbols>true</DebugSymbols>
     <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
@@ -137,6 +143,8 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>pdbonly</DebugType>
+    <OpenTKRewriteDebug>false</OpenTKRewriteDebug>
+    <OpenTKRewriteConfiguration>Release</OpenTKRewriteConfiguration>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>True</SignAssembly>
@@ -197,6 +205,11 @@
     <Compile Include="Math\Matrix4x3.cs" />
     <Compile Include="Math\Matrix4x3d.cs" />
     <Compile Include="Platform\Common\Hid.cs" />
+    <Compile Include="Platform\CoreCLR\ApplicationException.cs" />
+    <Compile Include="Platform\CoreCLR\ISerializable.cs" />
+    <Compile Include="Platform\CoreCLR\Serializable.cs" />
+    <Compile Include="Platform\CoreCLR\SuppressUnmanagedCodeSecurity.cs" />
+    <Compile Include="Platform\CoreCLR\UTF8String.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
     <Compile Include="Platform\Egl\EglWinContext.cs" />
@@ -868,16 +881,10 @@
   </PropertyGroup>
   <ItemGroup />
   <Target Name="AfterBuild">
-    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" />
-    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'DebugMinimal'" />
-    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'ReleaseMinimal'" />
-    <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Nsis'" />
-    <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Debug" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/Debug/OpenTK.dll $(SolutionDir)OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Debug" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/DebugMinimal/OpenTK.dll $(SolutionDir)OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'DebugMinimal'" />
-    <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Release" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/Release/OpenTK.dll $(SolutionDir)OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" />
-    <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Release" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/ReleaseMinimal/OpenTK.dll $(SolutionDir)OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'ReleaseMinimal'" />
-    <Exec WorkingDirectory="$(SolutionDir)Binaries/Tools/Release" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/Release/OpenTK.dll $(SolutionDir)OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Nsis'" />
+    <Exec Condition="'$(OS)' == 'Windows_NT' and '$(OpenTKRewriteDebug)' == 'true'" Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug -references-file=$(IntermediateOutputPath)OpenTKReferences.cache" />
+    <Exec Condition="'$(OS)' == 'Windows_NT' and '$(OpenTKRewriteDebug)' == 'false'" Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -references-file=$(IntermediateOutputPath)OpenTKReferences.cache" />
+    <Exec Condition="'$(OS)' != 'Windows_NT' and '$(OpenTKRewriteDebug)' == 'true'" WorkingDirectory="$(SolutionDir)Binaries/Tools/Debug" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/$(OpenTKRewriteConfiguration)/OpenTK.dll $(SolutionDir)OpenTK.snk -debug -references-file=$(SolutionDir)Source/OpenTK/$(IntermediateOutputPath)OpenTKReferences.cache" />
+    <Exec Condition="'$(OS)' != 'Windows_NT' and '$(OpenTKRewriteDebug)' == 'false'" WorkingDirectory="$(SolutionDir)Binaries/Tools/Release" Command="mono ./Rewrite.exe $(SolutionDir)Binaries/OpenTK/$(OpenTKRewriteConfiguration)/OpenTK.dll $(SolutionDir)OpenTK.snk -debug -references-file=$(SolutionDir)Source/OpenTK/$(IntermediateOutputPath)OpenTKReferences.cache" />
   </Target>
   <ProjectExtensions>
     <MonoDevelop>

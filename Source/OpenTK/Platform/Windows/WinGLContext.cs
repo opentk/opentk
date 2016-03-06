@@ -490,6 +490,7 @@ namespace OpenTK.Platform.Windows
                         Debug.Print("Failed to destroy OpenGL context {0}. Error: {1}",
                             Handle.ToString(), Marshal.GetLastWin32Error());
                 }
+#if !_NET_CORECLR
                 catch (AccessViolationException e)
                 {
                     Debug.WriteLine("An access violation occured while destroying the OpenGL context. Please report at http://www.opentk.com.");
@@ -498,6 +499,15 @@ namespace OpenTK.Platform.Windows
                     Debug.WriteLine(e.ToString());
                     Debug.Unindent();
                 }
+#else
+                    // CoreCLR has no AccessViolation, so we will catch any exception here.
+                catch (Exception e)
+                {
+                    Debug.WriteLine("An access violation occured while destroying the OpenGL context. Please report at http://www.opentk.com.");
+                    Debug.Write(string.Format("Marshal.GetLastWin32Error(): {0}", Marshal.GetLastWin32Error().ToString()));
+                    Debug.WriteLine(e.ToString());
+                }
+#endif
                 Handle = ContextHandle.Zero;
             }
         }

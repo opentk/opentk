@@ -33,6 +33,9 @@ using OpenTK.Graphics;
 using OpenTK.Input;
 using System.Collections.Generic;
 using System.IO;
+#if _NET_CORECLR
+using System.Reflection;
+#endif
 #if !MINIMAL
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -52,8 +55,12 @@ namespace OpenTK.Platform.Windows
         const ExtendedWindowStyle ParentStyleEx = ExtendedWindowStyle.WindowEdge | ExtendedWindowStyle.ApplicationWindow;
         const ExtendedWindowStyle ChildStyleEx = 0;
 
+#if !_NET_CORECLR
         readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
-        readonly IntPtr ClassName = Marshal.StringToHGlobalAuto(Guid.NewGuid().ToString());
+#else
+        readonly IntPtr Instance = Functions.MarshalGetHINSTANCE(typeof(WinGLNative).GetTypeInfo().Module);
+#endif
+        readonly IntPtr ClassName = Marshal.StringToHGlobalUni(Guid.NewGuid().ToString());
         readonly WindowProcedure WindowProcedureDelegate;
 
         readonly uint ModalLoopTimerPeriod = 1;
@@ -934,7 +941,7 @@ namespace OpenTK.Platform.Windows
                 class_registered = true;
             }
 
-            IntPtr window_name = Marshal.StringToHGlobalAuto(title);
+            IntPtr window_name = Marshal.StringToHGlobalUni(title);
             IntPtr handle = Functions.CreateWindowEx(
                 ex_style, ClassName, window_name, style,
                 rect.left, rect.top, rect.Width, rect.Height,

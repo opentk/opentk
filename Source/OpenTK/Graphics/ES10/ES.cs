@@ -30,6 +30,7 @@ namespace OpenTK.Graphics.ES10
     using System;
     using System.Text;
     using System.Runtime.InteropServices;
+    using OpenTK.Platform;
     #pragma warning disable 3019
     #pragma warning disable 1591
     #pragma warning disable 1572
@@ -2619,7 +2620,14 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            unsafe { return new string((sbyte*)Core.GetString((OpenTK.Graphics.ES10.All)name)); }
+                unsafe
+                {
+#if !_NET_CORECLR
+                    return new string((sbyte *) Core.GetString((OpenTK.Graphics.ES10.All)name));
+#else
+                    return UTF8String.String(Core.GetString((OpenTK.Graphics.ES10.All)name));
+#endif
+                }
             #if DEBUG
             }
             #endif

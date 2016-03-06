@@ -726,7 +726,12 @@ namespace OpenTK.Platform.Windows
                 }
 
                 // Convert the buffer to a .Net string, and split it into parts
+#if !_NET_CORECLR
                 string name = new string(pname);
+#else
+                    // Here we get an ASCII string from GetRawInputDeviceInfo.
+                string name = Encoding.ASCII.GetString((byte *)pname, size);
+#endif
                 if (String.IsNullOrEmpty(name))
                 {
                     Debug.Print("[WinRawJoystick] Failed to construct device name");

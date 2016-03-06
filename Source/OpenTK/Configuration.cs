@@ -281,11 +281,15 @@ namespace OpenTK
 
         static bool DetectWindows()
         {
+#if !_NET_CORECLR
             return
                 System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
                 System.Environment.OSVersion.Platform == PlatformID.Win32S ||
                 System.Environment.OSVersion.Platform == PlatformID.Win32Windows ||
                 System.Environment.OSVersion.Platform == PlatformID.WinCE;
+#else
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+#endif
         }
 
         static bool DetectX11()

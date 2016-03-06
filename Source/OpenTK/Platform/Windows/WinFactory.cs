@@ -51,17 +51,25 @@ namespace OpenTK.Platform.Windows
 
         public WinFactory()
         {
+#if !_NET_CORECLR
             if (System.Environment.OSVersion.Version.Major <= 4)
             {
                 throw new PlatformNotSupportedException("OpenTK requires Windows XP or higher");
             }
+#else
+            // For the time being we assume that we are running on anything above Windows Vista.
+#endif
 
             // Dynamically load opengl32.dll in order to use the extension loading capabilities of Wgl.
             // Note: opengl32.dll must be loaded before gdi32.dll, otherwise strange failures may occur
             // (such as "error: 2000" when calling wglSetPixelFormat or slowness/lag on specific GPUs).
             LoadOpenGL();
 
+#if !_NET_CORECLR
             if (System.Environment.OSVersion.Version.Major >= 6)
+#else
+            // For the time being we assume that we are running on anything above Windows Vista.
+#endif
             {
                 if (Toolkit.Options.EnableHighResolution)
                 {

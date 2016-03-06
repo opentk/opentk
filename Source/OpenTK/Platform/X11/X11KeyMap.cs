@@ -76,7 +76,11 @@ namespace OpenTK.Platform.X11
                         // Symbols are handled in GetKey() instead.
                         for (int i = keyboard->min_key_code; i <= keyboard->max_key_code; ++i)
                         {
+#if !_NET_CORECLR
                             string name = new string((sbyte*)keyboard->names->keys[i].name, 0, Xkb.KeyNameLength);
+#else
+                            string name = UTF8String.String(keyboard->names->keys[i].name, Xkb.KeyNameLength);
+#endif
 
                             Key key = Key.Unknown;
                             switch (name)

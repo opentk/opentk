@@ -876,7 +876,11 @@ namespace OpenTK.Platform.X11
                                 int status = 0;
                                 status = Functions.XLookupString(
                                     ref e.KeyEvent, ascii, ascii.Length, null, IntPtr.Zero);
+#if !_NET_CORECLR
                                 Encoding.Default.GetChars(ascii, 0, status, chars, 0);
+#else
+                                Encoding.UTF8.GetChars(ascii, 0, status, chars, 0);
+#endif
     
                                 for (int i = 0; i < status; i++)
                                 {

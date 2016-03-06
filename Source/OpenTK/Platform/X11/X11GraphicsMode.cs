@@ -196,10 +196,18 @@ namespace OpenTK.Platform.X11
                         }
                     }
                 }
+#if !_NET_CORECLR
                 catch (EntryPointNotFoundException)
                 {
                     Debug.Print("Function glXChooseFBConfig not supported.");
                 }
+#else
+                    // CoreCLR has no such exception so we do nothing.
+                finally
+                {
+                    
+                }
+#endif
             }
 
             return result;

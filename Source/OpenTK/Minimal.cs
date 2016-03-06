@@ -25,6 +25,7 @@ namespace OpenTK
         public static void Indent() { }
         public static void Unindent() { }
         public static void Flush() { }
+        public static void Assert (bool expr) { }
     }
 
     // System.Diagnostics.Trace

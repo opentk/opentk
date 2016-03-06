@@ -58,7 +58,9 @@ namespace OpenTK.Platform.Windows
             WndProc = WindowProcedure;
 
             InputThread = new Thread(ProcessEvents);
+#if !_NET_CORECLR
             InputThread.SetApartmentState(ApartmentState.STA);
+#endif
             InputThread.IsBackground = true;
             InputThread.Start();
 

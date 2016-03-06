@@ -33,6 +33,7 @@ using System.Collections;
 using System.Drawing;
 #endif
 using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // Disable unused field warnings. This is interop, we don't use everything
