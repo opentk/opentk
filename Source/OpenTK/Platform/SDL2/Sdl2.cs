@@ -241,6 +241,10 @@ namespace OpenTK.Platform.SDL2
         }
 
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetGlobalMouseState", ExactSpelling = true)]
+        public static extern ButtonFlags GetGlobalMouseState(out int hx, out int hy);
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetModState", ExactSpelling = true)]
         public static extern Keymod GetModState();
 
