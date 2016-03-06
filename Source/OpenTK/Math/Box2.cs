@@ -100,40 +100,6 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Creates a new Box2 from the specified corners.
-        /// </summary>
-        /// <param name="corner1">One of the corners of the box.</param>
-        /// <param name="corner2">The opposite corner of the box.</param>
-        /// <returns></returns>
-        public static Box2 FromCorners(Vector2 corner1, Vector2 corner2)
-        {
-            Box2 box;
-            if (corner1.X < corner2.X)
-            {
-                box.Left = corner1.X;
-                box.Right = corner2.X;
-            }
-            else
-            {
-                box.Left = corner2.X;
-                box.Right = corner1.X;
-            }
-
-            if (corner1.Y < corner2.Y)
-            {
-                box.Top = corner1.Y;
-                box.Bottom = corner2.Y;
-            }
-            else
-            {
-                box.Top = corner2.Y;
-                box.Bottom = corner1.Y;
-            }
-
-            return box;
-        }
-
-        /// <summary>
         /// Gets a float describing the width of the Box2 structure.
         /// </summary>
         public float Width { get { return (float)System.Math.Abs(Right - Left); } }
@@ -144,13 +110,32 @@ namespace OpenTK
         public float Height { get { return (float)System.Math.Abs(Bottom - Top); } }
 
         /// <summary>
-        /// Returns whether the box contains the specified point.
+        /// Returns whether the box contains the specified point on the closed region described by this Box2.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         public bool Contains(Vector2 point)
         {
-            return (point.X >= Left != point.X > Right) && (point.Y >= Top != point.Y > Bottom);
+            return Contains(point, true);
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point.
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <param name="closedRegion">Whether to include the box boundary in the test region.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        public bool Contains(Vector2 point, bool closedRegion)
+        {
+            bool xOK = (closedRegion == Left <= Right) ?
+                (point.X >= Left != point.X > Right) :
+                (point.X > Left != point.X >= Right);
+
+            bool yOK = (closedRegion == Top <= Bottom) ?
+                (point.Y >= Top != point.Y > Bottom) :
+                (point.Y > Top != point.Y >= Bottom);
+
+            return xOK && yOK;
         }
 
         /// <summary>
