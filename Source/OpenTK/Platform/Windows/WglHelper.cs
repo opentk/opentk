@@ -1,12 +1,6 @@
-#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- *
- * Date: 12/8/2007
- * Time: 6:43 ��
- */
-#endregion
-
+﻿// Copyright (c) Open Toolkit library.
+// This file is subject to the terms and conditions defined in
+// file 'License.txt', which is part of this source code package.
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;

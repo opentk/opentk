@@ -1,12 +1,7 @@
-﻿#region --- License ---
-/* Copyright (c) 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
-#endregion
-
-#region --- Using directives ---
-
-using System;
+﻿// Copyright (c) Open Toolkit library.
+// This file is subject to the terms and conditions defined in
+// file 'License.txt', which is part of this source code package.
+ystem;
 
 using OpenTK.Input;
 using System.Diagnostics;

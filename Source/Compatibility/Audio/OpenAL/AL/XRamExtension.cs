@@ -1,12 +1,6 @@
-﻿#region --- OpenTK.OpenAL License ---
-/* XRamExtension.cs
- * C header: \OpenAL 1.1 SDK\include\xram.h
- * Spec: ?
- * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
- * See license.txt for license details (MIT)
- * http://www.OpenTK.net */
-#endregion
-
+﻿// Copyright (c) Open Toolkit library.
+// This file is subject to the terms and conditions defined in
+// file 'License.txt', which is part of this source code package.
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;

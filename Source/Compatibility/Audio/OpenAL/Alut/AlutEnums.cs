@@ -1,12 +1,6 @@
-﻿#region --- OpenTK.OpenAL License ---
-/* AlutTokens.cs
- * C header: \freealut-1.1.0-src\include\AL\Alut.h
- * Spec: http://www.openal.org/openal_webstf/specs/alut.html
- * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
- * See license.txt for license details
- * http://www.OpenTK.net */
-#endregion
-
+﻿// Copyright (c) Open Toolkit library.
+// This file is subject to the terms and conditions defined in
+// file 'License.txt', which is part of this source code package.
 using System;
 
 namespace OpenTK.Audio

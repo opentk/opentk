@@ -1,7 +1,7 @@
-﻿#region --- License ---
-/* Licensed under the MIT/X11 license.
- * Copyright (c) 2006-2008 the OpenTK Team.
- * This notice may not be removed from any source distribution.
+﻿// Copyright (c) Open Toolkit library.
+// This file is subject to the terms and conditions defined in
+// file 'License.txt', which is part of this source code package.
+n.
  * See license.txt for licensing details.
  */
 #endregion

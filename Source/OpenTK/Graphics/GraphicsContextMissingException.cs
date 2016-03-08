@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OpenTK.Graphics
-{
-    /// <summary>
-    /// Thrown when an operation that required GraphicsContext is performed, when no
+﻿// Copyright (c) Open Toolkit library.
+// This file is subject to the terms and conditions defined in
+// file 'License.txt', which is part of this source code package.
+phicsContext is performed, when no
     /// GraphicsContext is current in the calling thread.
     /// </summary>
     public class GraphicsContextMissingException : GraphicsContextException

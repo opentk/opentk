@@ -1,11 +1,7 @@
-#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
-#endregion
-
-using System;
-using System.Collections.Generic;
+// Copyright (c) Open Toolkit library.
+// This file is subject to the terms and conditions defined in
+// file 'License.txt', which is part of this source code package.
+ns.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;

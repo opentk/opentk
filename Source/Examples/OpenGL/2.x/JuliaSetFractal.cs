@@ -1,6 +1,7 @@
-// This code was written for the OpenTK library and has been released
-// to the Public Domain.
-// It is provided "as is" without express or implied warranty of any kind.
+// Copyright (c) Open Toolkit library.
+// This file is subject to the terms and conditions defined in
+// file 'License.txt', which is part of this source code package.
+
 
 using System;
 using System.Windows.Forms;

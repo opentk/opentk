@@ -1,11 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using OpenTK;
-
-namespace Examples.Tests
-{
-    [Example("PointToClient Test", ExampleCategory.OpenTK, "NativeWindow")]
+﻿// Copyright (c) Open Toolkit library.
+// This file is subject to the terms and conditions defined in
+// file 'License.txt', which is part of this source code package.
+NativeWindow")]
     public class PointToClientTest
     {
         public static void Main()

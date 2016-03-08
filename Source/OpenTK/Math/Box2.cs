@@ -1,7 +1,7 @@
-﻿#region --- License ---
-// Copyright (c) Open Toolkit library.
+﻿// Copyright (c) Open Toolkit library.
 // This file is subject to the terms and conditions defined in
 // file 'License.txt', which is part of this source code package.
+is source code package.
 #endregion
 
 using System;
