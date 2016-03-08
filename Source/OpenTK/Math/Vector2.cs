@@ -1052,6 +1052,19 @@ namespace OpenTK
         /// <summary>
         /// Multiplies the specified instance by a scalar.
         /// </summary>
+        /// <param name="vec">Left operand.</param>
+        /// <param name="scale">Right operand.</param>
+        /// <returns>Result of multiplication.</returns>
+        public static Vector2 operator *(Vector2 vec, Vector2 scale)
+        {
+            vec.X *= scale.X;
+            vec.Y *= scale.Y;
+            return vec;
+        }
+
+        /// <summary>
+        /// Multiplies a vector by the components of a vector (scale).
+        /// </summary>
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
         /// <returns>Result of multiplication.</returns>
