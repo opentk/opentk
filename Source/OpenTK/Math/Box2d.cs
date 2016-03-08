@@ -12,34 +12,34 @@ namespace OpenTK
     /// Defines a 2d box (rectangle).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Box2
+    public struct Box2d
     {
         /// <summary>
         /// The left boundary of the structure.
         /// </summary>
-        public float Left;
+        public double Left;
 
         /// <summary>
         /// The right boundary of the structure.
         /// </summary>
-        public float Right;
+        public double Right;
 
         /// <summary>
         /// The top boundary of the structure.
         /// </summary>
-        public float Top;
+        public double Top;
 
         /// <summary>
         /// The bottom boundary of the structure.
         /// </summary>
-        public float Bottom;
+        public double Bottom;
 
         /// <summary>
-        /// Constructs a new Box2 with the specified dimensions.
+        /// Constructs a new Box2d with the specified dimensions.
         /// </summary>
-        /// <param name="topLeft">An OpenTK.Vector2 describing the top-left corner of the Box2.</param>
-        /// <param name="bottomRight">An OpenTK.Vector2 describing the bottom-right corner of the Box2.</param>
-        public Box2(Vector2 topLeft, Vector2 bottomRight)
+        /// <param name="topLeft">An OpenTK.Vector2d describing the top-left corner of the Box2d.</param>
+        /// <param name="bottomRight">An OpenTK.Vector2d describing the bottom-right corner of the Box2d.</param>
+        public Box2d(Vector2d topLeft, Vector2d bottomRight)
         {
             Left = topLeft.X;
             Top = topLeft.Y;
@@ -48,13 +48,13 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new Box2 with the specified dimensions.
+        /// Constructs a new Box2d with the specified dimensions.
         /// </summary>
         /// <param name="left">The position of the left boundary.</param>
         /// <param name="top">The position of the top boundary.</param>
         /// <param name="right">The position of the right boundary.</param>
         /// <param name="bottom">The position of the bottom boundary.</param>
-        public Box2(float left, float top, float right, float bottom)
+        public Box2d(double left, double top, double right, double bottom)
         {
             Left = left;
             Top = top;
@@ -63,58 +63,58 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Creates a new Box2 with the specified dimensions.
+        /// Creates a new Box2d with the specified dimensions.
         /// </summary>
         /// <param name="top">The position of the top boundary.</param>
         /// <param name="left">The position of the left boundary.</param>
         /// <param name="right">The position of the right boundary.</param>
         /// <param name="bottom">The position of the bottom boundary.</param>
-        /// <returns>A new OpenTK.Box2 with the specfied dimensions.</returns>
-        public static Box2 FromTLRB(float top, float left, float right, float bottom)
+        /// <returns>A new OpenTK.Box2d with the specfied dimensions.</returns>
+        public static Box2d FromTLRB(double top, double left, double right, double bottom)
         {
-            return new Box2(left, top, right, bottom);
+            return new Box2d(left, top, right, bottom);
         }
 
         /// <summary>
-        /// Creates a new Box2 with the specified dimensions.
+        /// Creates a new Box2d with the specified dimensions.
         /// </summary>
         /// <param name="top">The position of the top boundary.</param>
         /// <param name="left">The position of the left boundary.</param>
         /// <param name="width">The width of the box.</param>
         /// <param name="height">The height of the box.</param>
-        /// <returns>A new OpenTK.Box2 with the specfied dimensions.</returns>
-        public static Box2 FromDimensions(float left, float top, float width, float height)
+        /// <returns>A new OpenTK.Box2d with the specfied dimensions.</returns>
+        public static Box2d FromDimensions(double left, double top, double width, double height)
         {
-            return new Box2(left, top, left + width, top + height);
+            return new Box2d(left, top, left + width, top + height);
         }
 
         /// <summary>
-        /// Creates a new Box2 with the specified dimensions.
+        /// Creates a new Box2d with the specified dimensions.
         /// </summary>
         /// <param name="position">The position of the top left corner.</param>
         /// <param name="size">The size of the box.</param>
-        /// <returns>A new OpenTK.Box2 with the specfied dimensions.</returns>
-        public static Box2 FromDimensions(Vector2 position, Vector2 size)
+        /// <returns>A new OpenTK.Box2d with the specfied dimensions.</returns>
+        public static Box2d FromDimensions(Vector2d position, Vector2d size)
         {
             return FromDimensions(position.X, position.Y, size.X, size.Y);
         }
 
         /// <summary>
-        /// Gets a float describing the width of the Box2 structure.
+        /// Gets a double describing the width of the Box2d structure.
         /// </summary>
-        public float Width { get { return (float)System.Math.Abs(Right - Left); } }
+        public double Width { get { return (double)System.Math.Abs(Right - Left); } }
 
         /// <summary>
-        /// Gets a float describing the height of the Box2 structure.
+        /// Gets a double describing the height of the Box2d structure.
         /// </summary>
-        public float Height { get { return (float)System.Math.Abs(Bottom - Top); } }
+        public double Height { get { return (double)System.Math.Abs(Bottom - Top); } }
 
         /// <summary>
         /// Returns whether the box contains the specified point on the closed region described by this Box2.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
-        public bool Contains(Vector2 point)
+        public bool Contains(Vector2d point)
         {
             return Contains(point, true);
         }
@@ -125,7 +125,7 @@ namespace OpenTK
         /// <param name="point">The point to query.</param>
         /// <param name="closedRegion">Whether to include the box boundary in the test region.</param>
         /// <returns>Whether this box contains the point.</returns>
-        public bool Contains(Vector2 point, bool closedRegion)
+        public bool Contains(Vector2d point, bool closedRegion)
         {
             bool xOK = (closedRegion == Left <= Right) ?
                 (point.X >= Left != point.X > Right) :
@@ -139,17 +139,17 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns a Box2 translated by the given amount.
+        /// Returns a Box2d translated by the given amount.
         /// </summary>
-        public Box2 Translated(Vector2 point)
+        public Box2d Translated(Vector2d point)
         {
-            return new Box2(Left + point.X, Top + point.Y, Right + point.X, Bottom + point.Y);
+            return new Box2d(Left + point.X, Top + point.Y, Right + point.X, Bottom + point.Y);
         }
 
         /// <summary>
-        /// Translates this Box2 by the given amount.
+        /// Translates this Box2d by the given amount.
         /// </summary>
-        public void Translate(Vector2 point)
+        public void Translate(Vector2d point)
         {
             Left += point.X;
             Right += point.X;
@@ -160,7 +160,7 @@ namespace OpenTK
         /// <summary>
         /// Equality comparator.
         /// </summary>
-        public static bool operator ==(Box2 left, Box2 right)
+        public static bool operator ==(Box2d left, Box2d right)
         {
             return left.Bottom == right.Bottom && left.Top == right.Top &&
                 left.Left == right.Left && left.Right == right.Right;
@@ -169,7 +169,7 @@ namespace OpenTK
         /// <summary>
         /// Inequality comparator.
         /// </summary>
-        public static bool operator !=(Box2 left, Box2 right)
+        public static bool operator !=(Box2d left, Box2d right)
         {
             return !(left == right);
         }
@@ -177,7 +177,7 @@ namespace OpenTK
         /// <summary>
         /// Functional equality comparator.
         /// </summary>
-        public bool Equals(Box2 other)
+        public bool Equals(Box2d other)
         {
             return this == other;
         }
@@ -187,11 +187,11 @@ namespace OpenTK
         /// </summary>
         public override bool Equals(object obj)
         {
-            return obj is Box2 && Equals((Box2) obj);
+            return obj is Box2d && Equals((Box2d) obj);
         }
 
         /// <summary>
-        /// Gets the hash code for this Box2.
+        /// Gets the hash code for this Box2d.
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode()

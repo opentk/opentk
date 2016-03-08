@@ -162,6 +162,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Math\Box2d.cs" />
     <Compile Include="DisplayDevice.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -894,8 +895,5 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Platform\Linux\" />
-    <Folder Include="Platform\Linux\Bindings\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
