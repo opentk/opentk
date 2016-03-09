@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Open Toolkit library.
 // This file is subject to the terms and conditions defined in
 // file 'License.txt', which is part of this source code package.
-on.pdf
- * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
- * See license.txt for license details
- * http://www.OpenTK.net */
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
