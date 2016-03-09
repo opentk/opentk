@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Open Toolkit library.
 // This file is subject to the terms and conditions defined in
 // file 'License.txt', which is part of this source code package.
-ystem;
 
+using System;
 using OpenTK.Input;
 using System.Diagnostics;
-
-#endregion
 
 namespace OpenTK.Input
 {

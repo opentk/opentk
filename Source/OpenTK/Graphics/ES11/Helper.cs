@@ -2,6 +2,14 @@
 // This file is subject to the terms and conditions defined in
 // file 'License.txt', which is part of this source code package.
 
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Reflection;
+using System.Runtime.InteropServices;
+
+namespace OpenTK.Graphics.ES11
+{
     /// <summary>
     /// Provides access to OpenGL ES 1.1 methods.
     /// </summary>
