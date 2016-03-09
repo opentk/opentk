@@ -1,7 +1,17 @@
 ﻿// Copyright (c) Open Toolkit library.
 // This file is subject to the terms and conditions defined in
 // file 'License.txt', which is part of this source code package.
-/ Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace OpenTK.Input
+{
+    interface IKeyboardDriver2
+    {
+        /// <summary>
+        /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
         /// </summary>
         /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
         KeyboardState GetState();

@@ -1,7 +1,17 @@
 ﻿// Copyright (c) Open Toolkit library.
 // This file is subject to the terms and conditions defined in
 // file 'License.txt', which is part of this source code package.
- index);
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace OpenTK.Input
+{
+    interface IGamePadDriver
+    {
+
+        GamePadState GetState(int index);
 
         GamePadCapabilities GetCapabilities(int index);
 
