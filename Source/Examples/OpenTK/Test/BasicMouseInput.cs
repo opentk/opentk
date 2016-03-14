@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Open Toolkit library.
 // This file is subject to the terms and conditions defined in
 // file 'License.txt', which is part of this source code package.
- of any kind.
-
-#region --- Using Directives ---
 
 using System;
 using System.Collections.Generic;
@@ -13,8 +10,6 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-
-#endregion --- Using Directives ---
 
 namespace Examples.Tests
 {
