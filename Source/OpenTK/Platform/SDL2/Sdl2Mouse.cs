@@ -83,6 +83,8 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
+        internal static float Scale = 1.0f;
+
         #endregion
 
         #region Public Members
@@ -110,13 +112,19 @@ namespace OpenTK.Platform.SDL2
 
         public MouseState GetState()
         {
-            return state;
+            MouseState scaledState = state;
+            if (Configuration.RunningOnMacOS)
+            {
+                scaledState.X = (int)Math.Round(scaledState.X * Scale);
+                scaledState.Y = (int)Math.Round(scaledState.Y * Scale);
+            }
+            return scaledState;
         }
 
         public MouseState GetState(int index)
         {
             if (index == 0)
-                return state;
+                return GetState();
             else
                 return new MouseState();
         }
@@ -125,6 +133,12 @@ namespace OpenTK.Platform.SDL2
         {
             int x, y;
             var buttons = SDL.GetGlobalMouseState(out x, out y);
+
+            if (Configuration.RunningOnMacOS)
+            {
+                x = (int)Math.Round(x * Scale);
+                y = (int)Math.Round(y * Scale);
+            }
 
             var c = new MouseState();
             c.SetIsConnected(true);
