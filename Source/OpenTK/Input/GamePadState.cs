@@ -171,7 +171,7 @@ namespace OpenTK.Input
 
             if ((axis & GamePadAxes.LeftY) != 0)
             {
-                left_stick_y = (short)(-value);
+                left_stick_y = (short)~value;
             }
 
             if ((axis & GamePadAxes.RightX) != 0)
@@ -181,7 +181,7 @@ namespace OpenTK.Input
 
             if ((axis & GamePadAxes.RightY) != 0)
             {
-                right_stick_y = (short)(-value);
+                right_stick_y = (short)~value;
             }
 
             if ((axis & GamePadAxes.LeftTrigger) != 0)
