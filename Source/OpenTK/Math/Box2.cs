@@ -12,7 +12,7 @@ namespace OpenTK
     /// Defines a 2d box (rectangle).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Box2
+    public struct Box2 : IEquatable<Box2>
     {
         /// <summary>
         /// The left boundary of the structure.
@@ -190,14 +190,21 @@ namespace OpenTK
             return obj is Box2 && Equals((Box2) obj);
         }
 
-        /// <summary>
-        /// Gets the hash code for this Box2.
-        /// </summary>
-        /// <returns></returns>
+        ///// <summary>
+        ///// Gets the hash code for this Box2.
+        ///// </summary>
         public override int GetHashCode()
         {
-            return Left.GetHashCode() ^ Right.GetHashCode() ^ Top.GetHashCode() ^ Bottom.GetHashCode();
+            unchecked
+            {
+                var hashCode = this.Left.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Right.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Top.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Bottom.GetHashCode();
+                return hashCode;
+            }
         }
+
 
         private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>

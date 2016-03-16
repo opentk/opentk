@@ -954,7 +954,13 @@ namespace OpenTK
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
         {
-            return Row0.GetHashCode() ^ Row1.GetHashCode() ^ Row2.GetHashCode();
+            unchecked
+            {
+                var hashCode = this.Row0.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Row1.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Row2.GetHashCode();
+                return hashCode;
+            }
         }
 
         #endregion

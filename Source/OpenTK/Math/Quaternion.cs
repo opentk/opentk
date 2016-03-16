@@ -857,7 +857,10 @@ namespace OpenTK
         /// <returns>A hash code formed from the bitwise XOR of this objects members.</returns>
         public override int GetHashCode()
         {
-            return Xyz.GetHashCode() ^ W.GetHashCode();
+            unchecked
+            {
+                return (this.xyz.GetHashCode() * 397) ^ this.w.GetHashCode();
+            }
         }
 
         #endregion
