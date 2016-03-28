@@ -101,7 +101,7 @@ Contributing
 For details on coding style and best practices, refer to https://github.com/opentk/opentk/wiki/Contributing
 
 Some areas we could really use your help:
-- Tutorials for OpenGL 3.x and 4.x. [Inspiration here](https://github.com/Groovounet/ogl-samples)
+- Tutorials for OpenGL 3.x and 4.x. [Inspiration here](https://github.com/Groovounet/ogl-samples-deprecated)
 - New platforms:
   - Native Client (NaCL)
   - Blackberry
