@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using OpenTK;
 
-namespace NUnitTests
+namespace OpenTK.Tests
 {
     [TestFixture]
     public class Matrix4Test

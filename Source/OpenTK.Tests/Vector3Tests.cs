@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenTK;
 
-namespace NUnitTests
+namespace OpenTK.Tests
 {
     [TestFixture]
     public class Vector3Tests
