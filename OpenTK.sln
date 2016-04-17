@@ -82,7 +82,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.API.Desktop", "Source\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.GLWidget", "Source\GLWidget\OpenTK.GLWidget.csproj", "{A625BE87-0000-0000-0000-000000000000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests", "Source\NUnitTests\NUnitTests.csproj", "{930A780C-A67C-422F-9EED-DB38DAA47AB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Tests", "Source\OpenTK.Tests\OpenTK.Tests.csproj", "{930A780C-A67C-422F-9EED-DB38DAA47AB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
