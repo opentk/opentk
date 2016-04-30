@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>OpenTK.GLControl</id>
+        <id>OpenTK.Community.GLControl</id>
         <version>$version$</version>
         <authors>The Open Toolkit Team</authors>
         <owners>The Open Toolkit Team</owners>
@@ -13,6 +13,8 @@
             Add OpenGL graphics to your Windows.Forms or WPF application
         </summary>
         <description>
+            This package is community-run and supercedes the old OpenTK.GLControl package.
+
             OpenTK.GLControl is a Windows.Forms Control with OpenGL rendering capabilities. Use it to add
             accelerated 3d graphics to your Windows.Forms or Windows Presentation Foundation (WPF) application.
 

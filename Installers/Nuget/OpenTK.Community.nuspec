@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>OpenTK</id>
+        <id>OpenTK.Community</id>
         <version>$version$</version>
         <authors>The Open Toolkit Team</authors>
         <owners>The Open Toolkit Team</owners>
@@ -13,6 +13,8 @@
             The Open Toolkit library (OpenTK) is an advanced, low-level C# wrapper for OpenGL, OpenGL ES and OpenAL.
         </summary>
         <description>
+            This package is community-run and supercedes the old OpenTK package.
+
             The Open Toolkit library (OpenTK) is an advanced, low-level C# wrapper for OpenGL, OpenGL ES and OpenAL.
             It is suitable for games, scientific visualizations and projects that require 3d graphics, audio or compute functionality.
 
