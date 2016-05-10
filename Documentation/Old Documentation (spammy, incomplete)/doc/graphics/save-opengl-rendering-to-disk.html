@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/save-opengl-rendering-to-disk by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:34 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="extensions.html" />
+
+<link rel="up" href="../graphics.html" />
+
+<link rel="next" href="how-to-render-text-using-opengl.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>How to save an OpenGL rendering to disk | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/424f91e289b328059ea3bb877e9af826.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/424f91e289b328059ea3bb877e9af826.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../graphics.html" title="Description of the OpenTK.Graphics namespace, plus a quick OpenGL and OpenGL|ES primer.">Graphics</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-1314" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="save-opengl-rendering-to-disk.html">How to save an OpenGL rendering to disk</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>You can use the following code to read back an OpenGL rendering to a <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">Bitmap</span></code></span>. You can then use the <span class="geshifilter"><code class="geshifilter-csharp">Save<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> method to save this to disk.</p>
+<p>Hints:</p>
+<ul>
+<li>Don't forget to call <span class="geshifilter"><code class="geshifilter-csharp">Dispose<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> on the returned <span class="geshifilter"><code class="geshifilter-csharp">Bitmap</code></span> once you are done with it. Otherwise, you will run out of memory rapidly. If you wish to save a video, rather than a single screenshot, consider modifying this method to reuse the same <span class="geshifilter"><code class="geshifilter-csharp">Bitmap</code></span>.</li>
+<li>Call <span class="geshifilter"><code class="geshifilter-csharp">GrabScreenshot<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> from your main rendering thread, i.e. the thread which contains your <a href="graphicscontext.html">GraphicsContext</a>.</li>
+<li>Make sure you have bound the correct <a href="frame-buffer-objects.html">framebuffer object</a> before calling <span class="geshifilter"><code class="geshifilter-csharp">GrabScreenshot<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span>.</li>
+<li>You can improve performance significantly by removing the <span class="geshifilter"><code class="geshifilter-csharp">bmp.<span class="me1">RotateFlip</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> call and saving the resulting image as a BMP rather than a PNG file. This is especially important if you wish to record a video - it is the difference between a real-time recording and a slideshow.</li>
+<li>This code can record 720p/30Hz video relatively easily, given suitable hardware and a little optimization (as outlined above). There are many programs that can encode a stream of consecutive BMP files into a high definition video.</li>
+</ul>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">System</span>;
+<span class="kw1">using</span> <span class="kw5">System</span>.<span class="me1">Drawing</span>;
+<span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>;
+<span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>.<span class="me1">OpenGL</span>;
+&nbsp;
+<span class="kw1">static</span> <span class="kw1">class</span> GraphicsHelpers
+<span class="br0">&#123;</span>
+        <span class="co1">// Returns a System.Drawing.Bitmap with the contents of the current framebuffer</span>
+        <span class="kw1">public</span> <span class="kw1">static</span> Bitmap GrabScreenshot<span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="br0">&#123;</span>
+            <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">GraphicsContext</span>.<span class="me1">CurrentContext</span> == <span class="kw1">null</span><span class="br0">&#41;</span>
+                <span class="kw1">throw</span> <span class="kw1">new</span> GraphicsContextMissingException<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+            Bitmap bmp = <span class="kw1">new</span> Bitmap<span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">ClientSize</span>.<span class="me1">Width</span>, <span class="kw1">this</span>.<span class="me1">ClientSize</span>.<span class="me1">Height</span><span class="br0">&#41;</span>;
+            <span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">Imaging</span>.<span class="me1">BitmapData</span> data =
+                bmp.<span class="me1">LockBits</span><span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">ClientRectangle</span>, <span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">Imaging</span>.<span class="me1">ImageLockMode</span>.<span class="me1">WriteOnly</span>, <span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">Imaging</span>.<span class="me1">PixelFormat</span>.<span class="me1">Format24bppRgb</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">ReadPixels</span><span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">0</span>, <span class="kw1">this</span>.<span class="me1">ClientSize</span>.<span class="me1">Width</span>, <span class="kw1">this</span>.<span class="me1">ClientSize</span>.<span class="me1">Height</span>, PixelFormat.<span class="me1">Bgr</span>, PixelType.<span class="me1">UnsignedByte</span>, data.<span class="me1">Scan0</span><span class="br0">&#41;</span>;
+            bmp.<span class="me1">UnlockBits</span><span class="br0">&#40;</span>data<span class="br0">&#41;</span>;
+&nbsp;
+            bmp.<span class="me1">RotateFlip</span><span class="br0">&#40;</span>RotateFlipType.<span class="me1">RotateNoneFlipY</span><span class="br0">&#41;</span>;
+            <span class="kw1">return</span> bmp;
+        <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre></div>
+<div class="book-navigation"><div class="page-links clear-block"><a href="extensions.html" class="page-previous" title="Go to previous page">‹ How to check if an OpenGL extension is supported</a><a href="../graphics.html" class="page-up" title="Go to parent page">up</a><a href="how-to-render-text-using-opengl.html" class="page-next" title="Go to next page">How to render text using OpenGL ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first last book_printer"><a href="http://www.opentk.com/book/export/html/1314" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-1314 -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F1314" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/save-opengl-rendering-to-disk by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:34 GMT -->
+</html>

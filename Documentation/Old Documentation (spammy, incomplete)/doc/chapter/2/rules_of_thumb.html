@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/rules_of_thumb by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="../../intro/cpu-usage.html" />
+
+<link rel="up" href="../2.html" />
+
+<link rel="next" href="../../math.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Avoiding pitfalls in the managed world | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../../index.html">Home</a> » <a href="../../../doc.html" title="What is this all about?">Introduction</a> » <a href="../2.html" title="Chapter 2: Introduces simple concepts (window creation, drawing shapes, respponding to user input)">Using OpenTK</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-294" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="rules_of_thumb.html">Avoiding pitfalls in the managed world</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p><em>This text is intended for someone with a C/OpenGL background.</em></p>
+<p>Even though OpenTK automatically translates GL/AL calls from C# to C, some things work slightly differently in the managed world, when compared to plain C. This page describes a few rules you need to keep in mind:</p>
+<p><strong>Rules of thumb</strong></p>
+<ol>
+<li><b>Use server storage rather than client storage.</b><br />
+A few legacy OpenGL functions use pointers to memory managed by the user. The most popular example is Vertex Arrays, with the GL.***Pointer family of functions.</p>
+<p>This approach cannot be used in a Garbage Collected environment (as .NET), as the garbage collector (GC) may move the contents of the buffer in memory. It is strongly recommended that you replace <a href="http://www.opentk.com/node/296">legacy Vertex Arrays</a> with <a href="../../graphics/geometry/vertex-buffer-objects.html">Vertex Buffer Objects</a>, which do not suffer from this problem.</p>
+<p>Unlike OpenGL 2.1, OpenGL 3.0 will <i>not</i> contain any functions with client storage.</li>
+<li><b>Try to minimize the number of OpenGL calls per frame.</b><br />
+This is true for any programming environment utilizing OpenGL, but a little more important in the OpenTK case; while the OpenGL/OpenAL bindings are quite optimized, the transition from managed into unmanaged code incurs a small, but measurable, overhead.</p>
+<p>To minimize the impact of this overhead, try to minimize the number of OpenGL/OpenAL calls. A good rule of thumb is to make no more than a few thousand OpenGL calls per frame, which can be achieved by avoiding Immediate Mode, in favour of Display Lists and VBO's.</li>
+<li><b>For optimal math routine performance, use the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw1">ref</span></code></span> and <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw1">out</span></code></span> overloads.</b><br />
+This is because Vector3, Matrix4 etc. are structures, not classes. Classes are passed by reference by default in C#.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">Vector3</span> v1 = <span class="kw3">Vector3</span>.<span class="me1">UnitX</span>;
+<span class="kw3">Vector3</span> v2 = <span class="kw3">Vector3</span>.<span class="me1">UnitZ</span>;
+<span class="kw3">Vector3</span> v3 = <span class="kw3">Vector3</span>.<span class="me1">Zero</span>;
+v3 = v1 + v2;                        <span class="co1">// requires three copies; slow.</span>
+<span class="kw3">Vector3</span>.<span class="me1">Add</span><span class="br0">&#40;</span><span class="kw1">ref</span> v1, <span class="kw1">ref</span> v2, <span class="kw1">out</span> v3<span class="br0">&#41;</span>; <span class="co1">// nothing is copied; fast!</span></pre></div>
+<p>The same holds true when calling OpenGL functions:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Vertex3</span><span class="br0">&#40;</span><span class="kw1">ref</span> v1.<span class="me1">X</span><span class="br0">&#41;</span>;  <span class="co1">// pass a pointer to v1; fast!</span>
+<span class="kw3">GL</span>.<span class="me1">Vertex3</span><span class="br0">&#40;</span>v1<span class="br0">&#41;</span>;        <span class="co1">// copy the whole v1 structure; slower!</span></pre></div>
+</li>
+</ol>
+<p><strong>Measuring performance</strong></p>
+<ol>
+<li><em>GameWindow provides built-in frames-per-second counters</em> [Someone with confidence in the details please fill in here] However, <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span> does not.
+<li><em>A simple and convenient way</em> to measure the performance of your code, is via the .NET 2.0 / Mono 1.2.4 <span class="geshifilter"><code class="geshifilter-csharp">Stopwatch</code></span> class. Use it like this:<br />
+<div class="geshifilter">
+<pre class="geshifilter-csharp">Stopwatch sw = <span class="kw1">new</span> Stopwatch<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+sw.<span class="me1">Start</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+<span class="co1">// Your code goes here.</span>
+sw.<span class="me1">Stop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+<span class="kw1">double</span> ms = sw.<span class="me1">Elapsed</span>.<span class="me1">TotalMilliseconds</span>;</pre></div>
+<p><em>Note:</em> Avoid using <span class="geshifilter"><code class="geshifilter-csharp">DateTime.<span class="me1">Now</span></code></span> or other <span class="geshifilter"><code class="geshifilter-csharp">DateTime</code></span>-based method on any periods shorter than a couple of seconds, since its granularity is 10 ms or worse. (rumour has it, it may even go backwards on occasion!) Using <span class="geshifilter"><code class="geshifilter-csharp">DateTime</code></span> to measure very long operations (several seconds) is OK.</p>
+<li><em>If you are on Windows</em>, you can download <a href="http://www.fraps.com/" />Fraps</a> to measure how many frames per second are rendered in your application. For linux (and Windows), you can use the commercial tool <a href="http://www.gremedy.com/">gDEBugger</a> [anyone: any similar tools for Mac? Any free tool for Linux?]
+</ol>
+<p>References:<br />
+<a href="http://www.gamedev.net/community/forums/topic.asp?topic_id=484756&amp;whichpage=1&amp;#3172678" title="http://www.gamedev.net/community/forums/topic.asp?topic_id=484756&amp;whichpage=1&amp;#3172678">http://www.gamedev.net/community/forums/topic.asp?topic_id=484756&amp;whichp...</a></p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="../../intro/cpu-usage.html" class="page-previous" title="Go to previous page">‹ Avoid 100% CPU usage</a><a href="../2.html" class="page-up" title="Go to parent page">up</a><a href="../../math.html" class="page-next" title="Go to next page">Chapter 3: OpenTK.Math ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/294" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/294%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/294%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-294 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<form action="http://www.opentk.com/doc/chapter/2/rules_of_thumb"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-1476"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="rules_of_thumb.html#comment-1476" class="active">Re: Avoiding pitfalls in the managed world</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Sunday, 30 March, 2008 - 20:38             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>No such tools that I'm aware of, *but* GameWindow provides methods to measure frame time (and how much time passed in the UpdateFrame and RenderFrame events). The code's a bit untested, but should work. For the GLControl, you'll have to do this manually.</p>
+<p>In general, I think it's better to provide this functionality in your own code, than rely on external tools (which may incur an additional speed hit).</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-1477"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-102.png" alt="objarni&#039;s picture" title="objarni&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="rules_of_thumb.html#comment-1477" class="active">Re: Avoiding pitfalls in the managed world</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Sunday, 30 March, 2008 - 21:14             by objarni                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>I agree, but to someone new to the OpenTK/C# environment of development, it might be simpler to use such a tool. Also to make sure the timing mechanisms are fairly accurate, such a tool is great.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-1503"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="georgwaechter&#039;s picture" title="georgwaechter&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="rules_of_thumb.html#comment-1503" class="active">Re: Avoiding pitfalls in the managed world</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Monday, 31 March, 2008 - 19:53             by georgwaechter                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>there is another quite cool program that (among other things) displays the FPS: gDEBugger (an opengl profiler) ... but sadly it is a commercial tool</p>
+<p>advantage: it works under linux and windows (i think mac version is planned)</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-7035"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-623.png" alt="AdrianPi&#039;s picture" title="AdrianPi&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="rules_of_thumb.html#comment-7035" class="active">Re: Avoiding pitfalls in the managed world</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 27 October, 2009 - 04:18             by AdrianPi                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>glIntercept is a good non-commercial alternative to gDEBugger and is free as in freedom, although is Windows-only</p>
+<p><a href="http://glintercept.nutty.org/download.html" title="http://glintercept.nutty.org/download.html">http://glintercept.nutty.org/download.html</a></p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-11366"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="fdncred&#039;s picture" title="fdncred&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="rules_of_thumb.html#comment-11366" class="active">Re: Avoiding pitfalls in the managed world</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 9 February, 2011 - 03:54             by fdncred                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>gDEBugger is now free for PC, Mac, and Linux.  <a href="http://www.gremedy.com/" title="http://www.gremedy.com/">http://www.gremedy.com/</a></p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-12305"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="DreaminD&#039;s picture" title="DreaminD&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="rules_of_thumb.html#comment-12305" class="active">Re: Avoiding pitfalls in the managed world</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 8 July, 2011 - 19:38             by DreaminD                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Hmm, the bit about "300-500 OpenGL calls per frame" is quite misleading/confusing. The discussion <a href="http://www.opentk.com/node/1051" title="no more than 300-500 OpenGL calls per frame?!">here</a> explains the actual situation, but I believe it would be better to clarify that in the official documentation :)</p>
+<p>P.S.<br />
+On a side note, could there be any overhead reduction if a bunch of calls to unmanaged code are placed into unsafe {} block? Perhaps that won't help with OpenGL-like API, but still :J</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-12312"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="rules_of_thumb.html#comment-12312" class="active">Re: Avoiding pitfalls in the managed world</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Sunday, 10 July, 2011 - 14:32             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Updated to mention several thousand rather than 300. Unsafe blocks won't help, the bindings are already using them internally wherever possible.</p>
+<p>I'm testing out a new p/invoke system that will hopefully improve both runtime and startup performance. Once it stops crashing, that is :)</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-12321"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="DreaminD&#039;s picture" title="DreaminD&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="rules_of_thumb.html#comment-12321" class="active">Re: Avoiding pitfalls in the managed world</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Sunday, 10 July, 2011 - 18:06             by DreaminD                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>A new p/invoke system... I didn't know there were several of them =3 Would you mind to somewhat explain the outline of your idea?</p>
+<p>I've just tried to do a quick search on that topic, but currently only found a mention that doing wrappers in managed C++ might give less overhead than p/invoke: <a href="http://stackoverflow.com/questions/1433334/performance-differences-between-p-invoke-and-c-wrappers" title="http://stackoverflow.com/questions/1433334/performance-differences-between-p-invoke-and-c-wrappers">http://stackoverflow.com/questions/1433334/performance-differences-betwe...</a> Are you by chance planning to use this?</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F294" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/rules_of_thumb by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:28 GMT -->
+</html>

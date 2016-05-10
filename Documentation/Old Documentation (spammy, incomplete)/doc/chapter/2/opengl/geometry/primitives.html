@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/opengl/geometry/primitives by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="http://www.opentk.com/node/15268" />
+
+<link rel="up" href="../../../../graphics/geometry.html" />
+
+<link rel="next" href="../../../../graphics/geometry/vertex-buffer-objects.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>2. Geometric Primitive Types | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../../../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../../../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../../../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../../../../index.html">Home</a> » <a href="../../../../../doc.html" title="What is this all about?">Introduction</a> » <a href="../../../../graphics.html" title="Description of the OpenTK.Graphics namespace, plus a quick OpenGL and OpenGL|ES primer.">Graphics</a> » <a href="../../../../graphics/geometry.html" title="Describes Geometry in OpenGL">Geometry</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-143" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="primitives.html">2. Geometric Primitive Types</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>OpenGL requires you to specify the Geometric Primitive Type of the Vertices you wish to draw. This is usually expected when you begin drawing in either Immediate Mode (GL.Begin), GL.DrawArrays or GL.DrawElements. </p>
+<p><img src="http://www.opentk.com/files/tmp/persistent/opentk/files/GeometricPrimitiveTypes.gif" alt="Geometric Primitive Types in OpenTK.OpenGL"></p>
+<p>Fig. 1: In the above graphic all valid Geometric Primitive Types are shown, their winding is Clockwise (irrelevant for Points and Lines). </p>
+<p>This is important, because drawing a set of Vertices as Triangles, which are internally set up to be used with Quads, will result only in garbage being displayed.<br />
+Examine Figure 1, you will see that v3 in a Quad is used to finish the shape, while Triangles uses v3 to start the next shape. The next drawn Triangle will be v3, v4, v5 which isn't something that belongs to any surface, if the Vertices were originally intended to be drawn as Quads.</p>
+<p>However Points and Lines are an Exception here. You can draw every other Geometric Primitive Type as Points, in order to visualize the Vertices of the Object. Some more possibilities are:</p>
+<ul>
+<li>QuadStrip, TriangleStrip and LineStrip can be interchanged, if the source data isn't a LineStrip.</li>
+<li>Quads can be drawn as Lines with the restriction that there are no lines between v1, v2 and v3, v0.</li>
+<li>Polygon can be drawn as LineLoop</li>
+<li>TriangleFan can be drawn as Polygon or LineLoop</li>
+</ul>
+<p>The smallest common denominator for all filled surfaces (i.e. no Points or Lines) is the Triangle. This Geometric Primitive Type has the special attribute of always being <a href="http://en.wikipedia.org/wiki/Planar_graph">planar</a> and is currently the best way to describe a 3D Object to GPU hardware.<br />
+While OpenGL allows to draw Quads or Polygons aswell, it is quite easy to run into lighting problems if the surface is not perfectly planar. Internally, OpenGL breaks Quads and Polygons into Triangles, in order to rasterize them.</p>
+<ol>
+<li><strong>Points</strong><br />
+Specifies 1 Point per Vertex v, thus this is usually only used with GL.DrawArrays().<br />
+n Points = Vertex * (1n);</li>
+<li><strong>Lines</strong><br />
+Two Vertices form a Line.<br />
+n Lines = Vertex * (2n);</li>
+<li><strong>LineStrip</strong><br />
+The first Vertex issued begins the LineStrip, every consecutive issued Vertex marks a joint in the Line.<br />
+n Line Segments in the Strip = Vertex * (1+1n)</li>
+<li><strong>LineLoop</strong><br />
+Same as LineStrip, but the very first and last issued Vertex are automatically connected by an extra Line segment.<br />
+n Line Segments in the Loop = Vertex * (1n);</li>
+<li><strong>Polygon</strong><br />
+Note that the first and the last Vertex will be connected automatically, just like LineLoop.<br />
+Polygon with n Edges = Vertex * (1n);<br />
+Note: This primitive type should really be avoided whenever possible, basically the Polygon will be split to Triangles in the end anyways. Like Quads, polygons must be planar or be displayed incorrectly. Another Problem is that there is only 1 single Polygon in a begin-end block, which leads to multiple draw calls when drawing a mesh, or using the Extensions GL.MultiDrawElements or GL.MultiDrawArrays.</li>
+<li><strong>Quads</strong><br />
+Quads are especially useful to work in 2D with bitmap Images, since those are typically rectangular aswell. Care has to be taken that the surface is planar, otherwise the split into Triangles will become visible.<br />
+n Quads = Vertex * (4n);</li>
+<li><strong>QuadStrip</strong><br />
+Like the Triangle-strip, the QuadStrip is a more compact representation of a sequence of connected Quads.<br />
+n Quads in Quadstrip = Vertex * (2+2n);</li>
+<li><strong>Triangles</strong><br />
+This way to represent a mesh offers the most control over how the Triangles are sorted, a Triangle always consists of 3 Vertex.<br />
+n Triangles = Vertex * (3n);<br />
+Note: It might look like an inefficient brute force approach at first, but it has it's advantages over TriangleStrip. Most of all, since you are not required to supply Triangles in sequenced strips, it is possible to arrange Triangles in a way that makes good use of the Vertex Caches. If the Triangle you currently want to draw shares an edge with one of the Triangles that have been recently drawn, you get 2 Vertices, that are stored in the Vertex Cache, almost for free. This is basically the same what stripification does, but you are not restricted to a certain Direction and forced to insert <a href="http://en.wikipedia.org/wiki/Degeneracy_(mathematics)">degenerated</a> Triangles.</li>
+<li><strong>TriangleStrip</strong><br />
+The idea behind this way of drawing is that if you want to represent a solid and closed Object, most neighbour Triangles will share 2 Vertices (an edge). You start by defining the initial Triangle (3 Vertices) and after that every new Triangle will only require a single new Vertex for a new Triangle.<br />
+n Triangles in Strip = Vertex * (2+1n);<br />
+Note: While this primitive type is very useful for storing huge meshes (2+1n Vertices per strip as opposed to 3n for BeginMode.Triangles), the big disadvantage of TriangleStrip is that there is no command to tell OpenGL that you wish to start a new strip while inside the glBegin/glEnd block. Ofcourse you can glEnd(); and start a new strip, but that costs API calls. A workaround to avoid exiting the begin/end block is to create 2 or more degenerate Triangles (you can imagine them as Lines) at the end of a strip and then start the next one, but this also comes at the cost of processing Triangles that will inevitably be culled and aren't visible. Especially when optimizing an Object to be in a Vertex Cache friendly layout, it is essential to start new strips in order to reuse Vertices from previous draws.</li>
+<li><strong>TriangleFan</strong><br />
+A fan is defined by a center Vertex, which will be reused for all Triangles in the Fan, followed by border Vertices. It is very useful to represent convex n-gons consisting of more than 4 vertices and disc shapes, like the caps of a cylinder.</li>
+</ol>
+<p>When looking at the graphic, Triangle- and Quad-strips might look quite appealing due to their low memory usage. They are beneficial for certain tasks, but Triangles are the best primitive type to represent an arbitrary mesh, because it's not restricting locality and allows further optimizations. It's just not realistic that you can have all your 3D Objects in Quads and OpenGL will split them internally into Triangles anyway. 3 <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw1">ushort</span></code></span> per Triangle isn't much memory, and still allows to index 64k unique Vertex in a mesh, the number of Triangles can be much higher. Don't hardwire BeginMode.Triangles into your programs though, for example Quads are very commonly used in orthographic drawing of UI Elements such as Buttons, Text or Sprites.</p>
+<p>Should TriangleStrip get an core/ARB command to start a new strip within the begin/end block (only nVidia driver has such an Extension to restart the primitive) this might change, but currently the smaller data structure of the strip does not make up for the performance gains a Triangle List gets from Vertex Cache optimization. Ofcourse you can experiment with the GL.MultiDraw Extension mentioned above, but using it will break using other Extensions such as DirectX 10 instancing.</p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="http://www.opentk.com/node/15268" class="page-previous" title="Go to previous page">‹ **FoxTel (BOXING) Garcia vs Guerrero Live Fight Online</a><a href="../../../../graphics/geometry.html" class="page-up" title="Go to parent page">up</a><a href="../../../../graphics/geometry/vertex-buffer-objects.html" class="page-next" title="Go to next page">3.a Vertex Buffer Objects ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/143" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/143%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/143%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-143 -->
+
+<div id="comments">
+  
+</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F143" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/opengl/geometry/primitives by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:30 GMT -->
+</html>

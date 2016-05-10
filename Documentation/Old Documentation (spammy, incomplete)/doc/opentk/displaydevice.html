@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/opentk/displaydevice by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="http://www.opentk.com/node/15289" />
+
+<link rel="up" href="../chapter/2.html" />
+
+<link rel="next" href="http://www.opentk.com/node/15308" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>The DisplayDevice class | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../chapter/2.html" title="Chapter 2: Introduces simple concepts (window creation, drawing shapes, respponding to user input)">Using OpenTK</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-1063" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="displaydevice.html">The DisplayDevice class</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>There are three main types of <i>display devices</i>: monitors, projectors and TV screens. OpenTK exposes all of them through the same interface: <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw5">OpenTK</span>.<span class="kw3">DisplayDevice</span></code></span>.</p>
+<p>You can use <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw5">OpenTK</span>.<span class="kw3">DisplayDevice</span></code></span> to query available display devices, discover and modify their properties.</p>
+<p>Example 1: discover available devices</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>;
+&nbsp;
+<span class="kw1">foreach</span><span class="br0">&#40;</span>DisplayIndex index <span class="kw1">in</span> Enum.<span class="me1">GetValues</span><span class="br0">&#40;</span><span class="kw1">typeof</span><span class="br0">&#40;</span>DisplayIndex<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw3">DisplayDevice</span> device = <span class="kw3">DisplayDevice</span>.<span class="me1">GetDisplay</span><span class="br0">&#40;</span>index<span class="br0">&#41;</span>;
+    <span class="kw1">if</span> <span class="br0">&#40;</span>device == <span class="kw1">null</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="kw1">continue</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    Console.<span class="me1">WriteLine</span><span class="br0">&#40;</span>device.<span class="me1">IsPrimary</span><span class="br0">&#41;</span>;
+    Console.<span class="me1">WriteLine</span><span class="br0">&#40;</span>device.<span class="me1">Bounds</span><span class="br0">&#41;</span>;
+    Console.<span class="me1">WriteLine</span><span class="br0">&#40;</span>device.<span class="me1">RefreshRate</span><span class="br0">&#41;</span>;
+    Console.<span class="me1">WriteLine</span><span class="br0">&#40;</span>device.<span class="me1">BitsPerPixel</span><span class="br0">&#41;</span>;
+&nbsp;
+    <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="kw3">DisplayResolution</span> res <span class="kw1">in</span> device.<span class="me1">AvailableResolutions</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        Console.<span class="me1">WriteLine</span><span class="br0">&#40;</span>res<span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre></div>
+<p>Example 2: set the resolution of the first device to 800x600x32@60Hz:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>;
+&nbsp;
+devices<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">ChangeResolution</span><span class="br0">&#40;</span><span class="nu0">800</span>, <span class="nu0">600</span>,  <span class="nu0">32</span>,<span class="nu0">60</span><span class="br0">&#41;</span>;</pre></div>
+<p>Example 3: set the resolution of the second device to 800x600x32 using the preferred refresh rate:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>;
+&nbsp;
+devices<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>.<span class="me1">ChangeResolution</span><span class="br0">&#40;</span><span class="nu0">800</span>, <span class="nu0">600</span>, <span class="nu0">32</span>, <span class="nu0">-1</span><span class="br0">&#41;</span>;</pre></div>
+<p>Example 4: restore all devices to their default settings</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>;
+&nbsp;
+<span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="kw3">DisplayDevice</span> device <span class="kw1">in</span> <span class="kw3">DisplayDevice</span>.<span class="me1">AvailableDevices</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    device.<span class="me1">RestoreResolution</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+<span class="br0">&#125;</span></pre></div>
+<p>OpenTK will try to match your custom resolution to the closest supported resolution. If a specific bit depth or refresh rate is not supported, the current bit depth or refresh rate will be used. If no custom resolution matches the specified parameters, the current <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">DisplayResolution</span></code></span> will be used. You can specify a negative number or zero to indicate that a specific parameter is of no interest: for example, specifying a refresh rate of 0 will result in the default refresh rate being used.</p>
+<p>Note that it is <b>your</b> responsibility to call <span class="geshifilter"><code class="geshifilter-csharp">RestoreResolution<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> prior to exiting your application. Failing to call this method will result in undefined behavior.</p>
+<p><i>[Todo: add information about hotplugging support]</i></p>
+<div class="book-navigation"><ul class="menu"><li class="leaf"><a href="http://www.opentk.com/node/15308">Relocate Very Easily Securely and Economically with Perfect Movers and Packers in Pune</a></li></ul><div class="page-links clear-block"><a href="http://www.opentk.com/node/15289" class="page-previous" title="Go to previous page">‹ SPAM, IGNORE</a><a href="../chapter/2.html" class="page-up" title="Go to parent page">up</a><a href="http://www.opentk.com/node/15308" class="page-next" title="Go to next page">Relocate Very Easily Securely and Economically with Perfect Movers and Packers in Pune ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/1063" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/1063%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/1063%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-1063 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<form action="http://www.opentk.com/doc/opentk/displaydevice"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-6068"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-102.png" alt="objarni&#039;s picture" title="objarni&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="displaydevice.html#comment-6068" class="active">Re: The DisplayDevice class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 12 August, 2009 - 20:38             by objarni                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>I think the greater than should be an equality in Example 1.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-6070"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="displaydevice.html#comment-6070" class="active">Re: The DisplayDevice class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 12 August, 2009 - 20:52             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Good catch, fixed.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-13102"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="shiwenren&#039;s picture" title="shiwenren&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="displaydevice.html#comment-13102" class="active">Re: The DisplayDevice class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 10 February, 2012 - 06:15             by shiwenren                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Help!<br />
+In Example 4 , when I build , emerge a  error. "          the  	'OpenTK.DisplayDevice'   doesn't    contain   the definition of            'AvailableDevices'<br />
+Does the Eample wrong? Or How can  I do for it ?</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-15844"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="derodriguezat&#039;s picture" title="derodriguezat&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="displaydevice.html#comment-15844" class="active">Re: The DisplayDevice class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Thursday, 3 July, 2014 - 06:37             by derodriguezat                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Regarding to the first example, here is a correction to avoid the "obsolete  warning":</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">            <span class="kw1">foreach</span><span class="br0">&#40;</span>DisplayIndex index <span class="kw1">in</span> Enum.<span class="me1">GetValues</span><span class="br0">&#40;</span><span class="kw1">typeof</span><span class="br0">&#40;</span>DisplayIndex<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+            <span class="br0">&#123;</span>
+                <span class="kw3">DisplayDevice</span> device = <span class="kw3">DisplayDevice</span>.<span class="me1">GetDisplay</span><span class="br0">&#40;</span>index<span class="br0">&#41;</span>;
+                <span class="kw1">if</span> <span class="br0">&#40;</span>device == <span class="kw1">null</span><span class="br0">&#41;</span>
+                <span class="br0">&#123;</span>
+                    <span class="kw1">continue</span>;
+                <span class="br0">&#125;</span>
+&nbsp;
+                <span class="kw5">System</span>.<span class="me1">Diagnostics</span>.<span class="me1">Debug</span>.<span class="me1">WriteLine</span><span class="br0">&#40;</span>device.<span class="me1">IsPrimary</span><span class="br0">&#41;</span>;
+                <span class="kw5">System</span>.<span class="me1">Diagnostics</span>.<span class="me1">Debug</span>.<span class="me1">WriteLine</span><span class="br0">&#40;</span>device.<span class="me1">Bounds</span><span class="br0">&#41;</span>;
+                <span class="kw5">System</span>.<span class="me1">Diagnostics</span>.<span class="me1">Debug</span>.<span class="me1">WriteLine</span><span class="br0">&#40;</span>device.<span class="me1">RefreshRate</span><span class="br0">&#41;</span>;
+                <span class="kw5">System</span>.<span class="me1">Diagnostics</span>.<span class="me1">Debug</span>.<span class="me1">WriteLine</span><span class="br0">&#40;</span>device.<span class="me1">BitsPerPixel</span><span class="br0">&#41;</span>;
+&nbsp;
+                <span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="kw3">DisplayResolution</span> res <span class="kw1">in</span> device.<span class="me1">AvailableResolutions</span><span class="br0">&#41;</span>
+                <span class="br0">&#123;</span>
+                    <span class="kw5">System</span>.<span class="me1">Diagnostics</span>.<span class="me1">Debug</span>.<span class="me1">WriteLine</span><span class="br0">&#40;</span>res<span class="br0">&#41;</span>;
+                <span class="br0">&#125;</span>
+            <span class="br0">&#125;</span></pre></div>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-15848"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="displaydevice.html#comment-15848" class="active">Re: The DisplayDevice class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 4 July, 2014 - 14:02             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Thanks, fixed.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-17050"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="armor&#039;s picture" title="armor&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="displaydevice.html#comment-17050" class="active">Re: The DisplayDevice class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 5 January, 2016 - 16:18             by armor                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Hi,<br />
+is that possible to set a custom resolution?<br />
+I can use the nvidia panel to set a custom resolution, e.g. 1920x540, but it seems OpenTK is unable to set such resolution (since it's not listed internally among the available resolutions).<br />
+Thank you</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F1063" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/opentk/displaydevice by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:20 GMT -->
+</html>

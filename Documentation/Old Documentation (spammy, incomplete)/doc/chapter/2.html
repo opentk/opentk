@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="http://www.opentk.com/node/15394" />
+
+<link rel="up" href="../../doc.html" />
+
+<link rel="next" href="http://www.opentk.com/node/15289" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Chapter 2: Introduction to OpenTK | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-105" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="2.html">Chapter 2: Introduction to OpenTK</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>First of all, what <b>is</b> OpenTK?</p>
+<p>Simply put, the Open Toolkit is a free project that allows you to use OpenGL, OpenGL|ES, OpenCL and OpenAL APIs from managed languages.</p>
+<p>OpenTK started life as an experimental fork of the Tao framework before during the summer of 2006. It's original intention was to provide a cleaner wrapper than Tao.OpenGL, but it quickly grew in focus: right now, it provides access to various Khronos and Creative APIs and handles the necessary  initialization logic for each API. As such, the Open Toolkit is most similar to projects like Tao, SlimDX, SDL or GLFW.</p>
+<p>Unlike similar libraries, OpenTK attempts provide a consistent interface that utilizes the superior managed runtime. Instead of untyped pointers, OpenTK provides generics. Instead of plain constants, OpenTK uses strongly-typed enumerations. Instead of plain function lists, OpenTK separates functions per extension category. A common math library is integrated and directly usable by each API.</p>
+<p>Features:</p>
+<ul>
+<li>Written in cross-platform C# and usable by all managed languages (F#, Boo, VB.Net, C++/CLI).</li>
+<li>Consistent, strongly-typed bindings, suitable for RAD development.</li>
+<li>Usable stand-alone or integrated with Windows.Forms, GTK#, WPF.</li>
+<li>Cross-platform binaries that are portable on .Net and Mono without recompilation.</li>
+<li>Wide platform support: Windows, Linux, Mac OS X, with iPhone port in progress.</li>
+</ul>
+<p>The Open Toolkit is suitable for games, scientific visualizations and all kinds of software that requires advanced graphics, audio or compute capabilities. It's license makes it suitable for both free and commercial applications.</p>
+<div class="book-navigation"><ul class="menu"><li class="leaf"><a href="http://www.opentk.com/node/15289">SPAM, IGNORE</a></li><li class="collapsed"><a href="../opentk/displaydevice.html">The DisplayDevice class</a></li><li class="leaf"><a href="../opentk/gamewindow.html">The GameWindow class</a></li><li class="leaf"><a href="../opentk/nativewindow.html">The NativeWindow class</a></li><li class="leaf"><a href="2/glcontrol.html">Building a Windows.Forms + GLControl based application</a></li><li class="leaf"><a href="../intro/cpu-usage.html">Avoid 100% CPU usage</a></li><li class="leaf"><a href="2/rules_of_thumb.html">Avoiding pitfalls in the managed world</a></li></ul><div class="page-links clear-block"><a href="http://www.opentk.com/node/15394" class="page-previous" title="Go to previous page">‹ [S7E14][Wa.t.ch]Modern Family Season 7 Episode 14 Online.[LIVE]..S.t.r.e.a.m.i.n.g</a><a href="../../doc.html" class="page-up" title="Go to parent page">up</a><a href="http://www.opentk.com/node/15289" class="page-next" title="Go to next page">SPAM, IGNORE ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/105" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/105%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/105%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-105 -->
+
+<div id="comments">
+  
+</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F105" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:18 GMT -->
+</html>

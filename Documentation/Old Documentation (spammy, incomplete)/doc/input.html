@@ -1,0 +1,554 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/input by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="compute.html" />
+
+<link rel="up" href="../doc.html" />
+
+<link rel="next" href="input/keyboard.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Chapter 7: OpenTK.Input | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../index.html">Home</a> » <a href="../doc.html" title="What is this all about?">Introduction</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-1197" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="input.html">Chapter 7: OpenTK.Input</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>[Todo: describe keyboard and joystick input]</p>
+<p>OpenTK provides two distinct methods for mouse input.</p>
+<ol>
+<li>OpenTK.Input.Mouse, which provides low-level access to mouse motions. It is independent of windows/displays and provides raw (i.e. non-accelerated) values, if possible. Use this for games that require mouse motions not confined to the display, for instance first-person shooters and 3d games with mouse-controlled cameras.
+<p>OpenTK.Input requires <b>OpenTK 1.1</b> or higher. Its methods are thread-safe and may be used from any thread.</li>
+<li>GameWindow.Mouse* events, which are equivalent to WinForms/WPF/GTK# mouse events. The values are accelerated by the OS and are reported in window coordinates. Use this for menu/UI navigation and games that require absolute coordinates, for instance and 2d games.
+<p>Mouse events require <b>OpenTK 1.0</b> or higher. They are not thread-safe and may only be used on the thread that created the GameWindow.</li>
+</ol>
+<h4>OpenTK.Input.Mouse</h4>
+<p>You can move the mouse cursor using <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw5">OpenTK</span>.<span class="me1">Input</span>.<span class="me1">Mouse</span>.<span class="me1">SetPosition</span><span class="br0">&#40;</span>x, y<span class="br0">&#41;</span></code></span>. This method will not generate GameWindow events. This method may generate GLControl events, depending on the operating system.</p>
+<p>Use <span class="geshifilter"><code class="geshifilter-csharp">Mouse.<span class="me1">GetState</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> to retrieve the aggregate state of all connected mice.</p>
+<p>Use <span class="geshifilter"><code class="geshifilter-csharp">Mouse.<span class="me1">GetState</span><span class="br0">&#40;</span><span class="kw1">int</span><span class="br0">&#41;</span></code></span> to retrieve the state of the specified mouse.</p>
+<p>To check whether a button is pressed:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Input</span>;
+&nbsp;
+<span class="kw1">var</span> mouse = Mouse.<span class="me1">GetState</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+<span class="kw1">if</span> <span class="br0">&#40;</span>mouse<span class="br0">&#91;</span>MouseButton.<span class="me1">Left</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="co1">// Left mouse button is pressed</span>
+<span class="br0">&#125;</span></pre></div>
+<p>To check whether a mouse button is <i>not</i> pressed:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Input</span>;
+&nbsp;
+<span class="kw1">var</span> mouse = Mouse.<span class="me1">GetState</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+<span class="kw1">if</span> <span class="br0">&#40;</span>!mouse<span class="br0">&#91;</span>MouseButton.<span class="me1">Left</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="co1">// Left mouse button is not pressed</span>
+<span class="br0">&#125;</span></pre></div>
+<p>To check whether the mouse state has changed:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Input</span>;
+&nbsp;
+MouseState current, previous;
+&nbsp;
+<span class="kw1">void</span> UpdateMouse<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    current = Mouse.<span class="me1">GetState</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="kw1">if</span> <span class="br0">&#40;</span>current != previous<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="co1">// Mouse state has changed</span>
+        <span class="kw1">int</span> xdelta = current.<span class="me1">X</span> - previous.<span class="me1">X</span>;
+        <span class="kw1">int</span> ydelta = current.<span class="me1">Y</span> - previous.<span class="me1">Y</span>;
+        <span class="kw1">int</span> zdelta = current.<span class="me1">Wheel</span> - previous.<span class="me1">Wheel</span>;
+    <span class="br0">&#125;</span>
+    previous = current;
+<span class="br0">&#125;</span></pre></div>
+<p>To get the mouse coordinates:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Input</span>;
+&nbsp;
+<span class="kw1">var</span> mouse = Mouse.<span class="me1">GetState</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+<span class="kw1">int</span> x = mouse.<span class="me1">X</span>;
+<span class="kw1">int</span> y = mouse.<span class="me1">Y</span>;
+<span class="kw1">int</span> z = mouse.<span class="me1">Wheel</span>;</pre></div>
+<p>Note that these mouse coordinates do not correspond physically to the monitor and should only be used for relative motion. Code that requires physical coordinates should use GameWindow or GLControl mouse events instead.</p>
+<h4>GameWindow Mouse Input</h4>
+<p>Use these methods if you want the exact mouse position on the screen. Some examples include:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">           <span class="kw1">this</span>.<span class="me1">Mouse</span>.<span class="me1">ButtonUp</span> += <span class="br0">&#40;</span><span class="kw1">object</span> sender, MouseButtonEventArgs buttonEvent<span class="br0">&#41;</span> =&gt; <span class="br0">&#123;</span>
+                Console.<span class="me1">WriteLine</span><span class="br0">&#40;</span><span class="st0">&quot;Mouse button up: &quot;</span> + buttonEvent.<span class="me1">Button</span> + <span class="st0">&quot; at: &quot;</span> + buttonEvent.<span class="me1">Position</span><span class="br0">&#41;</span>;
+            <span class="br0">&#125;</span>;</pre></div>
+<p>or</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">            <span class="kw3">Vector2</span> pos = <span class="kw1">new</span> <span class="kw3">Vector2</span><span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">Mouse</span>.<span class="me1">X</span>, <span class="kw1">this</span>.<span class="me1">Mouse</span>.<span class="me1">Y</span><span class="br0">&#41;</span>;</pre></div>
+<p>Where "this" is a GameWindow.</p>
+<div class="book-navigation"><ul class="menu"><li class="leaf"><a href="input/keyboard.html">Keyboard Input</a></li><li class="leaf"><a href="input/gamepad.html">GamePad Input</a></li><li class="leaf"><a href="input/joystick.html">Joystick Input</a></li></ul><div class="page-links clear-block"><a href="compute.html" class="page-previous" title="Go to previous page">‹ Chapter 6: OpenTK.Compute (OpenCL)</a><a href="../doc.html" class="page-up" title="Go to parent page">up</a><a href="input/keyboard.html" class="page-next" title="Go to next page">Keyboard Input ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/1197" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/1197%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/1197%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-1197 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<form action="http://www.opentk.com/doc/input"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-10357"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="Nikke&#039;s picture" title="Nikke&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="input.html#comment-10357" class="active">Re: Chapter 7: OpenTK.Input</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 22 October, 2010 - 14:14             by Nikke                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Where's the info?</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-11300"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="makarone&#039;s picture" title="makarone&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="input.html#comment-11300" class="active">Re: Chapter 7: OpenTK.Input</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Monday, 31 January, 2011 - 22:41             by makarone                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>I'm new to OpenTK so I may have got this all wrong. The article says that you should use the OpenTK.Inputs.Mouse if you're making a game. But to use that you need OpenTK 1.1, which doesn't exists besides an extremely old alpha version. Does this mean that the input function of OpenTK is useless if you're making a game?</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-11302"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="input.html#comment-11302" class="active">Re: Chapter 7: OpenTK.Input</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 1 February, 2011 - 06:32             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>You can get 1.1 from <a href="http://www.opentk.com/project/svn">SVN trunk</a>. It's not ready for a public release yet but the input code is stable and works.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-11303"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="makarone&#039;s picture" title="makarone&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="input.html#comment-11303" class="active">Re: Chapter 7: OpenTK.Input</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 1 February, 2011 - 15:19             by makarone                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Thanks!</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-11507"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="fkj&#039;s picture" title="fkj&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="input.html#comment-11507" class="active">Re: Chapter 7: OpenTK.Input</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Sunday, 6 March, 2011 - 19:43             by fkj                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>I have used AnkhSVN to download OpenTK 1.1, and changed my own projects reference from OpenTK 1.0 to the dll created by the OpenTK solution (OpenTK.dll). It all works fine, but when compiling my own project it tells me OpenTK.Input.Mouse does not have a GetState() method.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-11509"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="Tal&#039;s picture" title="Tal&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="input.html#comment-11509" class="active">Re: Chapter 7: OpenTK.Input</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Monday, 7 March, 2011 - 11:11             by Tal                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <div class="quote-msg">
+<div class="quote-author">Quote:</div>
+<p>Note that these mouse coordinates do not correspond physically to the monitor and should only be used for relative motion. Code that requires physical coordinates should use GameWindow or GLControl mouse events instead.</div>
+<p>I do understand what it does mean "do not correspond physically to the monitor", but didn't understand why, and why I have to use GameWindow or GLControl mouse events...</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-11511"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="input.html#comment-11511" class="active">Re: Chapter 7: OpenTK.Input</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Monday, 7 March, 2011 - 16:10             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <div class="quote-msg">
+<div class="quote-author">Quote:</div>
+<p>I have used AnkhSVN to download OpenTK 1.1, and changed my own projects reference from OpenTK 1.0 to the dll created by the OpenTK solution (OpenTK.dll). It all works fine, but when compiling my own project it tells me OpenTK.Input.Mouse does not have a GetState() method.</div>
+<p>Remove the references, clean your project and add them again. You must add the new OpenTK.dll using the "Browse" tab in "Add References", not the ".NET" tab.</p>
+<div class="quote-msg">
+<div class="quote-author">Quote:</div>
+<p>I do understand what it does mean "do not correspond physically to the monitor", but didn't understand why, and why I have to use GameWindow or GLControl mouse events...</div>
+<p>The GLControl and GameWindow report mouse events that are bounded by the monitor and/or window boundaries (i.e. if your mouse reaches (0, 0) it will no longer be able to move up or left). Mouse.GetState() allows infinite movements (the mouse can move beyond (0, 0)), which means its coordinates no longer correspond to the physical screen.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-11513"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="Tal&#039;s picture" title="Tal&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="input.html#comment-11513" class="active">Re: Chapter 7: OpenTK.Input</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Monday, 7 March, 2011 - 17:13             by Tal                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Thanks fiddler!<br />
+I thought you mean that they wait until some Update() method is called, but it is irrelevant...</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-11516"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="fkj&#039;s picture" title="fkj&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="input.html#comment-11516" class="active">Re: Chapter 7: OpenTK.Input</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Monday, 7 March, 2011 - 22:05             by fkj                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <div class="quote-msg">
+<div class="quote-author">Quote:</div>
+<div class="quote-msg">
+<div class="quote-author">Quote:</div>
+<p>I have used AnkhSVN to download OpenTK 1.1, and changed my own projects reference from OpenTK 1.0 to the dll created by the OpenTK solution (OpenTK.dll). It all works fine, but when compiling my own project it tells me OpenTK.Input.Mouse does not have a GetState() method.
+</div>
+<p>Remove the references, clean your project and add them again. You must add the new OpenTK.dll using the "Browse" tab in "Add References", not the ".NET" tab.
+</div>
+<p>Thank you for your quick reply!</p>
+<p>I have just found the cause of the problem, and it turned out to be something quite different.</p>
+<p>C# has a name collision problem between class names and property names (a weakness of the language). I usually avoid naming my classes/properties with the same names to avoid this problem. If you always use full namespace path this is not a problem, but I don't like the extra text this adds to my source code. True to this, I used the following:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Input</span>;
+&nbsp;
+...
+&nbsp;
+  <span class="kw1">class</span> Game : <span class="kw3">GameWindow</span> <span class="br0">&#123;</span>
+&nbsp;
+    ...
+&nbsp;
+    ... = Mouse.<span class="me1">GetState</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+    ...
+&nbsp;
+  <span class="br0">&#125;</span></pre></div>
+<p>The problem is that GameWindow has a property Mouse, hence I was trying to call GetState() on this property (an instance of MouseDevice), and not calling the static method GetState() on the class OpenTK.Input.Mouse.</p>
+<p>It would be nice if Visual Studio could issue a warning on these name collisions.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F1197" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/input by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:19 GMT -->
+</html>

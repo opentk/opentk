@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/faq by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="hacking/wrapper-design.html" />
+
+<link rel="up" href="../doc.html" />
+
+<link rel="next" href="reference.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Appendix 1: Frequently asked questions | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../index.html">Home</a> » <a href="../doc.html" title="What is this all about?">Introduction</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-739" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="faq.html">Appendix 1: Frequently asked questions</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p><b>[General Questions]</b></p>
+<ol>
+<li><b>What is the Open Toolkit <i>exactly</i>?</b><br />
+The Open Toolkit is a C# library that:
+<ol>
+<li>allows .Net programs to access OpenGL, OpenAL and OpenCL</li>
+<li>abstracts away the platform-specific code for window creation, input devices, and</li>
+<li>provides helper functions (math, fonts, etc)</li>
+</ol>
+<p>In the C++ world, it would be a combination of SDL/GLFW + GLEW.
+ </li>
+<li><b>Is OpenTK limited to games?</b><br />
+No! OpenTK is frequently used for scientific visualizations, VR, modeling/CAD software and other non-game projects.</li>
+<li><b>What is the difference between OpenTK and the Tao framework?</b><br />
+The Tao framework is a low-level collection of bindings to various C libraries. OpenTK is a low-level OpenGL, OpenAL and OpenCL binding. While they both perform similar functions, OpenTK supports newer OpenGL versions and is more comfortable to use due to function overloading, strong-typing and generics. Consider the following code snippet:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// OpenTK.Graphics code:</span>
+<span class="kw3">GL</span>.<span class="me1">Begin</span><span class="br0">&#40;</span>PrimitiveType.<span class="me1">Points</span><span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">Yellow</span><span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">Vertex3</span><span class="br0">&#40;</span><span class="kw3">Vector3</span>.<span class="me1">Up</span><span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">End</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre></div>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// Tao.OpenGl code:</span>
+Gl.<span class="me1">glBegin</span><span class="br0">&#40;</span>Gl.<span class="me1">GL_POINTS</span><span class="br0">&#41;</span>;
+Gl.<span class="me1">glColor3ub</span><span class="br0">&#40;</span><span class="nu0">255</span>, <span class="nu0">255</span>, <span class="nu0">0</span><span class="br0">&#41;</span>;
+Gl.<span class="me1">glVertex3f</span><span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">1</span>, <span class="nu0">0</span><span class="br0">&#41;</span>;
+Gl.<span class="me1">glEnd</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre></div>
+<p>The code is trivial, but it illustrates the difference nicely: OpenTK removes unecessary cruft ('gl', 'ub', 'f'), uses strongly-typed enums ('BeginMode') and integrates better with .Net ('Color').</p>
+<p>There are other differences not so readily apparent: OpenTK will not allow you to pass invalid data to OpenGL (wrong tokens or non-valuetype data); it plays better with intellisense (inline documentation, overloads, strong-types); it checks for OpenGL errors automatically in debug builds.</p>
+<p>All these become more important as a project grows in size.</li>
+<li><b>Will my Tao project run on OpenTK?</b><br />
+Starting with version 0.9.9-2, OpenTK is compatible with Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows.SimpleOpenGlControl. Simply replace your Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows references with OpenTK and OpenTK.Compatibility and your project will function as before, while gaining access to all OpenTK features.</li>
+<li><b>OpenGL is not object-oriented. Does OpenTK change that?</b><br />
+No, the Open Toolkit mirrors the raw OpenGL API. This was a conscious design decision, to avoid introducing artificial limitations. However, users have contributed object-oriented libraries built on top of OpenTK - check out the <a href="http://www.opentk.com/project/all">project database</a>.</li>
+<li><b>I care about speed. Is OpenTK slow?</b><br />
+No. OpenTK uses hand-optimized IL assembly to minimize overhead when calling OpenGL functions. However, keep in mind that the underlying runtimes (.Net/Mono) use garbage collection which introduces some unique performance considerations - refer to our <a href="../doc.html">documentation</a> for more information. Performance is always a concern, so please report an issue if you believe something could run faster.</li>
+<li><b>Which platforms does OpenTK run on?</b><br />
+OpenTK works on Windows, Linux (incl. Steam OS), Mac OS X, Android and iOS. It has also been ported to Solaris, *BSD, Raspberry PI and NaCL.</li>
+<li><b>Is OpenTK safe to use? How mature is it?</b><br />
+OpenTK is a mature project that is safe for general use. It is being used successfully by both free and commercial projects and the library is under active development, with regular bugfix and feature releases.</li>
+</li>
+</ol>
+<p><b>[Windows.Forms &amp; GLControl Questions]</b></p>
+<ol>
+<li><b>How can I make my Form fullscreen?</b><br />
+Use the following code snippet:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">myForm.<span class="me1">TopMost</span> = <span class="kw1">true</span>;
+myForm.<span class="me1">FormBorderStyle</span> = FormBorderStyle.<span class="me1">None</span>;
+myForm.<span class="me1">WindowState</span> = FormWindowState.<span class="me1">Maximized</span>;</pre></div>
+</li>
+<li><b>My GLControl.Load event isn't fired.</b><br />
+Please upgrade to OpenTK 0.9.9-4 or newer.</li>
+<li><b>How do I use stencil, antialiasing or OpenGL 3.x with GLControl?</b><br />
+Create a custom control that inherits from GLControl:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">class</span> CustomGLControl : <span class="kw3">GLControl</span>
+<span class="br0">&#123;</span>
+    <span class="co1">// 32bpp color, 24bpp z-depth, 8bpp stencil and 4x antialiasing</span>
+    <span class="co1">// OpenGL version is major=3, minor=0</span>
+    <span class="kw1">public</span> CustomGLControl<span class="br0">&#40;</span><span class="br0">&#41;</span>
+        : <span class="kw1">base</span><span class="br0">&#40;</span><span class="kw1">new</span> <span class="kw3">GraphicsMode</span><span class="br0">&#40;</span><span class="nu0">32</span>, <span class="nu0">24</span>, <span class="nu0">8</span>, <span class="nu0">4</span><span class="br0">&#41;</span>, <span class="nu0">3</span>, <span class="nu0">0</span>, GraphicsContextFlags.<span class="me1">ForwardCompatible</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span> <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre></div>
+</li>
+</ol>
+<p><b>[Graphics questions]</b></p>
+<ol>
+<li><b>How do I save a screenshot?</b><br />
+Refer to the <a href="graphics/save-opengl-rendering-to-disk.html">"How to save an OpenGL rendering to disk"</a> section in the documentation.</li>
+<li><b>Why is my CPU usage pegged at 100%?</b><br />
+Because you are not releasing any CPU time back to the OS. Please refer to this page for more information: <a href="intro/cpu-usage.html">Avoid 100% CPU usage</a>.
+</li>
+</ol>
+<div class="book-navigation"><div class="page-links clear-block"><a href="hacking/wrapper-design.html" class="page-previous" title="Go to previous page">‹ Wrapper Design</a><a href="../doc.html" class="page-up" title="Go to parent page">up</a><a href="reference.html" class="page-next" title="Go to next page">Appendix 2: Function Reference ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/739" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/739%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/739%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-739 -->
+
+<div id="comments">
+  
+</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F739" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/faq by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:19 GMT -->
+</html>

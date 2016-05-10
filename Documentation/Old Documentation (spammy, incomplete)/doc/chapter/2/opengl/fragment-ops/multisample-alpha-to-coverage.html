@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/opengl/fragment-ops/multisample-alpha-to-coverage by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="scissor-test.html" />
+
+<link rel="up" href="../fragment-ops.html" />
+
+<link rel="next" href="stencil-test.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>03. Multisample Fragment Operations (WIP) | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../../../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../../../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../../../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../../../../index.html">Home</a> » <a href="../../../../../doc.html" title="What is this all about?">Introduction</a> » <a href="../../../../graphics.html" title="Description of the OpenTK.Graphics namespace, plus a quick OpenGL and OpenGL|ES primer.">Graphics</a> » <a href="../fragment-ops.html">Fragment Operations</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-763" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="multisample-alpha-to-coverage.html">03. Multisample Fragment Operations (WIP)</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>Multisampling is designed to counter the effects of <a href="http://en.wikipedia.org/wiki/Anti-aliasing">aliasing</a> at the edges of a primitive, when it is rasterized into fragments. Multisampling can be also applied to transparent textures, like wire fences, blades of grass or the leaves of trees. In this case, it is called 'alpha-to-coverage' and replaces the legacy alpha test.</p>
+<p>A multisample buffer contains multiple samples per pixel, with each sample having it's own color, depth and stencil values. The term 'coverage' refers to a bitmask that is used to determine which of these samples will be updated: a coverage value of 1 indicates that the relevant sample will be updated; a value of 0 indicates it will be left untouched.</p>
+<p>However, when <span class="geshifilter"><code class="geshifilter-csharp">EnableCap.<span class="me1">SampleAlphaToCoverage</span></code></span> is used, the coverage is obtained by interpreting the alpha as a percentage: an alpha of 0.0 means that no samples are covered, while a value of 1.0 indicates that all samples are covered. For example, a multisample buffer with 4 samples per pixel and an Alpha value of 0.5 indicates that half of the samples are covered (their coverage bit is 1) and two are not covered (coverage bit is 0).</p>
+<div class="quote-msg">
+<div class="quote-author"><em>&quot;figure out whether this is true&quot;</em> wrote:</div>
+<p>The coverage bitmask of incoming fragments can be set in a Fragment Shader with the variable gl_Coverage.<br />
+<a href="http://www.humus.name/index.php?page=Comments&amp;ID=230" title="http://www.humus.name/index.php?page=Comments&amp;ID=230">http://www.humus.name/index.php?page=Comments&amp;ID=230</a>
+</div>
+<p>To enable alpha-to-coverage, enable multisampling (<span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Enable</span><span class="br0">&#40;</span>EnableCap.<span class="me1">Multisample</span><span class="br0">&#41;</span></code></span>) and make sure that <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">GetInteger</span><span class="br0">&#40;</span>GetPName.<span class="me1">SampleBuffers</span>, <span class="kw1">out</span> buffers<span class="br0">&#41;</span></code></span> is 1. If <span class="geshifilter"><code class="geshifilter-csharp">EnableCap.<span class="me1">Multisample</span></code></span> is disabled but <span class="geshifilter"><code class="geshifilter-csharp">GetPName.<span class="me1">SampleBuffers</span></code></span> is 1, alpha-to-coverage will be disabled.</p>
+<p>There are three OpenGL states related to alpha-to-coverage, they are controlled by <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Enable</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> and <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Disable</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span></p>
+<ul>
+<li><b>EnableCap.SampleAlphaToCoverage</b><br />
+For each sample at the current pixel, the Alpha value is read and used to generate a temporary coverage bitmask which is then combined through a bitwise AND with the fragment's coverage bitmask. Only samples who's bit is set to 1 after the bitwise AND are updated.
+</li>
+<li><b>EnableCap.SampleCoverage</b><br />
+Using <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">SampleCoverage</span><span class="br0">&#40;</span> value, invert <span class="br0">&#41;</span></code></span> the temporary coverage bitmask is generated by the value parameter - and if the invert parameter is true it is bitwise inverted - before the bitwise AND with the fragment's coverage bitmask.
+</li>
+<li><b>EnableCap.AlphaToOne</b><br />
+Each Alpha value is replaced by 1.0.
+</li>
+</ul>
+<p><b>GL.SampleCoverage</b><br />
+The values set by the command <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">SampleCoverage</span><span class="br0">&#40;</span> value, invert <span class="br0">&#41;</span></code></span> are only used when EnableCap.SampleCoverage is enabled.</p>
+<ul>
+<li><b>value</b> is a single-precision float used to specify the Alpha value used to create the coverage bitmask.</li>
+<li><b>invert</b> is a boolean toggle to control whether the bitmask is bitwise inverted before the AND operation.</li>
+</ul>
+<p><b>State Queries</b></p>
+<p>The states of EnableCap.Multisample, EnableCap.SampleAlphaToCoverage, EnableCap.SampleCoverage and EnableCap.AlphaToOne can be queried with <span class="geshifilter"><code class="geshifilter-csharp">Result = <span class="kw3">GL</span>.<span class="me1">IsEnabled</span><span class="br0">&#40;</span> cap <span class="br0">&#41;</span></code></span></p>
+<p>The value set by GL.SampleCoverage() can be queried with <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">GetFloat</span><span class="br0">&#40;</span> GetPName.<span class="me1">SampleCoverageValue</span>, ... <span class="br0">&#41;</span></code></span></p>
+<p>The boolean set by GL.SampleCoverage() can be queried with <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">GetBoolean</span><span class="br0">&#40;</span> GetPName.<span class="me1">SampleCoverageInvert</span>, ... <span class="br0">&#41;</span></code></span></p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="scissor-test.html" class="page-previous" title="Go to previous page">‹ 02. Scissor Test</a><a href="../fragment-ops.html" class="page-up" title="Go to parent page">up</a><a href="stencil-test.html" class="page-next" title="Go to next page">04. Stencil Test ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/763" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/763%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/763%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-763 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<form action="http://www.opentk.com/doc/chapter/2/opengl/fragment-ops/multisample-alpha-to-coverage"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-4153"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-49.png" alt="Inertia&#039;s picture" title="Inertia&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="multisample-alpha-to-coverage.html#comment-4153" class="active">Re: 03. Multisample Fragment Operations (WIP)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 7 April, 2009 - 21:50             by Inertia                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Let's assume we have 4 samples for the pixel with the Alpha values 0.1, 0.8, 0.5, 0.6. How would the bitmask look like? 0101? Why not 1010, since those are 'least significant'? Is this up to the graphics card to decide which samples are best to replace?<br />
+And how does GL.SampleCoverage's value parameter affect this exactly?</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-4154"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="multisample-alpha-to-coverage.html#comment-4154" class="active">Re: 03. Multisample Fragment Operations (WIP)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 7 April, 2009 - 22:09             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>According to humus' post you linked, the final mask is up to the hardware (which doesn't seem to do a very good job - zoom the images by 10% to make the dithering patterns visible, it's way too regular).</p>
+<p>According to the docs, you can use <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">SampleCoverage</span></code></span> to define a custom bitmask that is and-ed with the hardware-defined coverage bitmask. So if the hardware says 0101 and you specify 1001 the final mask will be 0001.</p>
+<p>I guess this could be useful if you somehow knew how to construct a better mask than the hardware, but I have absolutely no idea how you achieve that. Maybe some kind of edge-detection in the pixel shader and using gl_Coverage to modify the mask? Humus apparently has a DX10.1 demo that implements custom coverage masks.</p>
+<p>Edit: added some missing words.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-4162"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-49.png" alt="Inertia&#039;s picture" title="Inertia&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="multisample-alpha-to-coverage.html#comment-4162" class="active">Re: 03. Multisample Fragment Operations (WIP)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 8 April, 2009 - 14:06             by Inertia                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Thanks for your input, we both had it wrong. I've updated EnableCap.SampleCoverage description and the value description accordingly, it should make sense now. I think the trick is to use the invert flag so the bitmask is inverted and only the least significant samples are replaced. Like that only the most significant samples are preserved which should give the best results.</p>
+<p>Yes, the dithering pattern is very obvious. Unfortunately humus' custom coverage mask implementation is not in his <a href="http://www.humus.name/index.php?page=3D&amp;ID=61">Alpha-To-Coverage demo</a>, but the demo lets you switch between Alpha Test, Alpha Blending and Alpha-To-Coverage to give an idea about the quality differences in a somewhat real-use scenario.</p>
+<p>This page doesn't have to be a tutorial how to defeat anti-aliasing, it should merely state the behaviour of OpenGL correctly when the states are enabled. How to use gl_Coverage appropriately would be a separate page in the 'Advanced Topics' section.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F763" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/opengl/fragment-ops/multisample-alpha-to-coverage by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:33 GMT -->
+</html>

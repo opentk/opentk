@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/1/linux?page=1&%24Version=1&%24Path=/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:49:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="../../install.html" />
+
+<link rel="up" href="../../install.html" />
+
+<link rel="next" href="http://www.opentk.com/node/15617" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Linux | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../../index.html">Home</a> » <a href="../../../doc.html" title="What is this all about?">Introduction</a> » <a href="../../install.html" title="Chapter 1: Describes how to install OpenTK on different platforms.">Installation</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-103" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="linux.html">Linux</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <h4>Installing Mono</h4>
+<p>If you are using a recent Linux distribution, all prerequisites for OpenTK projects should be readily available: the Mono runtime and the Mono compilers. Execute "<span class="geshifilter"><code class="geshifilter-csharp">mono --version</code></span>" and "<span class="geshifilter"><code class="geshifilter-csharp">gmcs --version</code></span>" and check if the output looks like this:</p>
+<div class="geshifilter">
+<pre class="geshifilter-bash">$ mono --version
+Mono JIT compiler version <span class="nu0">1.2</span><span class="nu0">.6</span> <span class="br0">&#40;</span>tarball<span class="br0">&#41;</span>
+Copyright <span class="br0">&#40;</span>C<span class="br0">&#41;</span> <span class="nu0">2002</span><span class="nu0">-2007</span> Novell, Inc and Contributors. <a href="http://www.mono-project.com/" title="www.mono-project.com">www.mono-project.com</a>
+        TLS:           __thread
+        GC:            Included Boehm <span class="br0">&#40;</span>with typed GC<span class="br0">&#41;</span>
+        SIGSEGV:       altstack
+        Notifications: epoll
+        Architecture:  amd64
+        Disabled:      none
+&nbsp;
+$ gmcs --version
+Mono C<span class="re3"># compiler version <span class="nu0">1.2</span><span class="nu0">.6</span><span class="nu0">.0</span></span></pre></div>
+<p>If one or both of these commands fail, you'll have to install Mono. Mono packages should be readily available through your package manager:</p>
+<div class="geshifilter">
+<pre class="geshifilter-bash"><span class="re3"># Ubuntu and other .deb-based distributions</span>
+<span class="kw2">sudo</span> apt-get <span class="kw2">install</span> mono mono-gmcs
+<span class="re3"># or</span>
+<span class="kw2">su</span> -c <span class="st0">&quot;apt-get install mono mono-gmcs&quot;</span>
+&nbsp;
+<span class="re3"># Fedora Core and .rpm-based distributions</span>
+<span class="kw2">su</span> -c <span class="st0">&quot;yum install mono mono-gmcs&quot;</span></pre></div>
+<p>If no Mono packages are available, or they are outdated (<span class="geshifilter"><code class="geshifilter-csharp">mono --version</code></span> returns something less than 1.2.6), you should build Mono from source. There is a message in the support forum describing the process of building mono from source <a href="http://www.opentk.com/node/157#comment-465">here</a>.</p>
+<p>Alternatively, you can find use one of the Mono binary packages on the <a href="http://www.go-mono.com/mono-downloads/download.html">Mono download page</a>.</p>
+<h4>Using a binary release</h4>
+<p>Download the latest <a href="https://sourceforge.net/project/showfiles.php?group_id=177681">opentk-x.y.z.zip</a> release from Sourceforge and unzip it.</p>
+<p>A new opentk-x.y.z will be created with four subfolders: "Binaries", "Documentation", "Source" and "Installers". Try running the examples binary to make sure everything works alright:</p>
+<div class="geshifilter">
+<pre class="geshifilter-bash"><span class="kw2">unzip</span> opentk<span class="nu0">-1.0</span><span class="nu0">-2010</span><span class="nu0">-10</span><span class="nu0">-06</span>.<span class="kw2">zip</span>
+<span class="kw3">cd</span> opentk<span class="nu0">-1.0</span><span class="nu0">-2010</span><span class="nu0">-10</span><span class="nu0">-06</span>/Binaries/OpenTK/Release
+mono Examples.exe</pre></div>
+<p>A new window will hopefully show up, listing all available examples. If not, check the troubleshooting section below.</p>
+<p>The "Binaries/OpenTK/Release" folder contains the main OpenTK assembly (OpenTK.dll) and the OpenTK.dll.config file - these are all you need to run OpenTK projects. If you are using MonoDevelop, check the "QuickStart.sln" solution for a ready-to-use project. Last, don't forget to take a look at the release notes contained in the "Documentation" folder.</p>
+<h4>Troubleshooting</h4>
+<p>The following error has been reported on Fedora Core 8, when running Examples.exe:</p>
+<div class="geshifilter">
+<pre class="geshifilter-bash">Unhandled Exception: System.TypeInitializationException: An exception was thrown by the <span class="kw3">type</span> initializer <span class="kw1">for</span> System.Windows.Forms.Form ---&gt; System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---&gt; System.TypeInitializationException: An exception was thrown by the <span class="kw3">type</span> initializer <span class="kw1">for</span> System.Drawing.GDIPlus ---&gt; System.DllNotFoundException: gdiplus.dll
+  at <span class="br0">&#40;</span>wrapper managed-to-native<span class="br0">&#41;</span> System.Drawing.GDIPlus:GdiplusStartup <span class="br0">&#40;</span>ulong&amp;,System.Drawing.GdiplusStartupInput&amp;,System.Drawing.GdiplusStartupOutput&amp;<span class="br0">&#41;</span>
+  at System.Drawing.GDIPlus..cctor <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#91;</span>0x00000<span class="br0">&#93;</span> --- End of inner exception stack trace ---</pre></div>
+<p>This is caused by a missing entry in <span class="geshifilter"><code class="geshifilter-csharp"><span class="st0">&quot;/etc/mono/config&quot;</span></code></span>. To correct this issue, open the aforementioned file (you must be root!), and add this line: <span class="geshifilter"><code class="geshifilter-csharp">&lt;dllmap dll=<span class="st0">&quot;gdiplus.dll&quot;</span> target=<span class="st0">&quot;/usr/lib/libgdiplus.so.0&quot;</span> /&gt;</code></span>. Now, Examples.exe should work.</p>
+<h4>Building OpenTK from source</h4>
+<p>OpenTK's build system relies on xbuild, so you'll need to install that:</p>
+<div class="geshifilter">
+<pre class="geshifilter-bash"><span class="re3"># Ubuntu</span>
+<span class="kw2">sudo</span> apt-get <span class="kw2">install</span> xbuild
+&nbsp;
+<span class="re3"># Debian</span>
+<span class="kw2">su</span> -c <span class="st0">&quot;apt-get install xbuild&quot;</span>
+&nbsp;
+<span class="re3"># Fedora</span>
+<span class="kw2">su</span> -c <span class="st0">&quot;yum install xbuild&quot;</span></pre></div>
+<p>Note that xbuild versions earlier than 2.6.7 are quite buggy and may fail to build OpenTK.</p>
+<p>Once xbuild is installed, unzip the source release and cd to the Build folder:</p>
+<div class="geshifilter">
+<pre class="geshifilter-bash"><span class="kw2">unzip</span> opentk<span class="nu0">-1.0</span><span class="nu0">-2010</span><span class="nu0">-10</span><span class="nu0">-06</span>.<span class="kw2">zip</span>
+<span class="kw3">cd</span> opentk<span class="nu0">-1.0</span><span class="nu0">-2010</span><span class="nu0">-10</span><span class="nu0">-06</span>/
+xbuild OpenTK.sln /p:<span class="re2">Configuration=</span>Release</pre></div>
+<p>Wait a few seconds for the compilation to end, and check the "Binaries" folder that just appeared in the base OpenTK directory.</p>
+<div class="book-navigation"><ul class="menu"><li class="leaf"><a href="http://www.opentk.com/node/15617">Watch new movies offline using Tubemate</a></li><li class="collapsed"><a href="http://www.opentk.com/node/15304">watch-hdq-Ip Man 3-torrent-online-film-full</a></li></ul><div class="page-links clear-block"><a href="../../install.html" class="page-previous" title="Go to previous page">‹ Chapter 1: Installation</a><a href="../../install.html" class="page-up" title="Go to parent page">up</a><a href="http://www.opentk.com/node/15617" class="page-next" title="Go to next page">Watch new movies offline using Tubemate ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/103" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/103%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/103%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-103 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<div class="pager"><a href="http://www.opentk.com/doc/chapter/1/linux?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to first page">« first</a><a href="http://www.opentk.com/doc/chapter/1/linux?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to previous page">‹ previous</a><span class="pager-list"><a href="http://www.opentk.com/doc/chapter/1/linux?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to page 1">1</a><strong class="pager-current">2</strong></span></div><form action="http://www.opentk.com/doc/chapter/1/linux?page=1&amp;%24Version=1&amp;%24Path=/"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-13413"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="mustrumr97&#039;s picture" title="mustrumr97&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="linux.html#comment-13413" class="active">Re: Linux</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 15 May, 2012 - 15:46             by mustrumr97                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>After I have compiled it, how do I <u>install</u> it?</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-13417"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="linux.html#comment-13417" class="active">Re: Linux</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 16 May, 2012 - 05:13             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>This depends on your distro, but in general you don't. To avoid ABI issues, I would advise distributing along with your application.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<div class="pager"><a href="http://www.opentk.com/doc/chapter/1/linux?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to first page">« first</a><a href="http://www.opentk.com/doc/chapter/1/linux?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to previous page">‹ previous</a><span class="pager-list"><a href="http://www.opentk.com/doc/chapter/1/linux?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to page 1">1</a><strong class="pager-current">2</strong></span></div>
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F103%3Fpage%3D1%26%2524Version%3D1%26%2524Path%3D%2F" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/1/linux?page=1&%24Version=1&%24Path=/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:49:04 GMT -->
+</html>

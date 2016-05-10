@@ -1,0 +1,542 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/0?page=1&%24Version=1&%24Path=/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:49:02 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="http://www.opentk.com/node/15618" />
+
+<link rel="up" href="../../doc.html" />
+
+<link rel="next" href="../install.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Chapter 0: Learn OpenTK in 15&#039; | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-1156" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="0.html">Chapter 0: Learn OpenTK in 15&#039;</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>So, you have downloaded the <a href="http://www.opentk.com/files/download-opentk.html">latest version of OpenTK</a> - what now?</p>
+<p>This is a short tutorial that will help you get started with OpenTK in 3 simple steps.</p>
+<p><b>[Step 1: Installation]</b></p>
+<p>Run the installer you downloaded. It will ask where you want OpenTK to be installed. Any folder will do.</p>
+<p><b>[Step 2: Use OpenTK]</b></p>
+<p>Create a new project in your .NET IDE (don't have a .NET IDE? Check out <a href="http://monodevelop.com/Download">MonoDevelop</a> or <a href="http://www.microsoft.com/express/vcsharp/">Visual Studio Express</a>). Make it of type "Console Application". </p>
+<p>Now, add a reference to OpenTK.dll: In your new project, right click "References" and select "Add Reference". Locate OpenTK.dll and add it.</p>
+<p>Repeat this process for System.Drawing.dll. OpenTK depends on this.</p>
+<p>Now you are ready to add some graphics! Open Program.cs and copy-paste the following code:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">System</span>;
+<span class="kw1">using</span> <span class="kw5">System</span>.<span class="me1">Drawing</span>;
+<span class="kw1">using</span> <span class="kw5">OpenTK</span>;
+<span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>;
+<span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>.<span class="me1">OpenGL</span>;
+<span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Input</span>;
+&nbsp;
+<span class="kw1">namespace</span> Example
+<span class="br0">&#123;</span>
+    <span class="kw1">class</span> MyApplication
+    <span class="br0">&#123;</span>
+        <span class="br0">&#91;</span>STAThread<span class="br0">&#93;</span>
+        <span class="kw1">public</span> <span class="kw1">static</span> <span class="kw1">void</span> Main<span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="br0">&#123;</span>
+            <span class="kw1">using</span> <span class="br0">&#40;</span><span class="kw1">var</span> game = <span class="kw1">new</span> <span class="kw3">GameWindow</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+            <span class="br0">&#123;</span>
+                game.<span class="me1">Load</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt;
+                <span class="br0">&#123;</span>
+                    <span class="co1">// setup settings, load textures, sounds</span>
+                    game.<span class="me1">VSync</span> = VSyncMode.<span class="me1">On</span>;
+                <span class="br0">&#125;</span>;
+&nbsp;
+                game.<span class="me1">Resize</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt;
+                <span class="br0">&#123;</span>
+                    <span class="kw3">GL</span>.<span class="me1">Viewport</span><span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">0</span>, game.<span class="me1">Width</span>, game.<span class="me1">Height</span><span class="br0">&#41;</span>;
+                <span class="br0">&#125;</span>;
+&nbsp;
+                game.<span class="me1">UpdateFrame</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt;
+                <span class="br0">&#123;</span>
+                    <span class="co1">// add game logic, input handling</span>
+                    <span class="kw1">if</span> <span class="br0">&#40;</span>game.<span class="me1">Keyboard</span><span class="br0">&#91;</span><span class="kw3">Key</span>.<span class="me1">Escape</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+                    <span class="br0">&#123;</span>
+                        game.<span class="me1">Exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+                    <span class="br0">&#125;</span>
+                <span class="br0">&#125;</span>;
+&nbsp;
+                game.<span class="me1">RenderFrame</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt;
+                <span class="br0">&#123;</span>
+                    <span class="co1">// render graphics</span>
+                    <span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span>ClearBufferMask.<span class="me1">ColorBufferBit</span> | ClearBufferMask.<span class="me1">DepthBufferBit</span><span class="br0">&#41;</span>;
+&nbsp;
+                    <span class="kw3">GL</span>.<span class="me1">MatrixMode</span><span class="br0">&#40;</span>MatrixMode.<span class="me1">Projection</span><span class="br0">&#41;</span>;
+                    <span class="kw3">GL</span>.<span class="me1">LoadIdentity</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+                    <span class="kw3">GL</span>.<span class="me1">Ortho</span><span class="br0">&#40;</span><span class="nu0">-1.0</span>, <span class="nu0">1.0</span>, <span class="nu0">-1.0</span>, <span class="nu0">1.0</span>, <span class="nu0">0.0</span>, <span class="nu0">4.0</span><span class="br0">&#41;</span>;
+&nbsp;
+                    <span class="kw3">GL</span>.<span class="me1">Begin</span><span class="br0">&#40;</span>PrimitiveType.<span class="me1">Triangles</span><span class="br0">&#41;</span>;
+&nbsp;
+                    <span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">MidnightBlue</span><span class="br0">&#41;</span>;
+                    <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">-1</span>.0f, <span class="nu0">1</span>.0f<span class="br0">&#41;</span>;
+                    <span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">SpringGreen</span><span class="br0">&#41;</span>;
+                    <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">0</span>.0f, <span class="nu0">-1</span>.0f<span class="br0">&#41;</span>;
+                    <span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">Ivory</span><span class="br0">&#41;</span>;
+                    <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">1</span>.0f, <span class="nu0">1</span>.0f<span class="br0">&#41;</span>;
+&nbsp;
+                    <span class="kw3">GL</span>.<span class="me1">End</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+                    game.<span class="me1">SwapBuffers</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+                <span class="br0">&#125;</span>;
+&nbsp;
+                <span class="co1">// Run the game at 60 updates per second</span>
+                game.<span class="me1">Run</span><span class="br0">&#40;</span><span class="nu0">60.0</span><span class="br0">&#41;</span>;
+            <span class="br0">&#125;</span>
+        <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre></div>
+<p>Build and run this application. You should see a window with a triangle inside. Press escape to exit.</p>
+<p><b>[Step 3: Play]</b></p>
+<p>Now it's time to start playing with the code. This is a great way to learn OpenGL and OpenTK at the same time. </p>
+<p>Every OpenTK game will contain 4 basic methods:</p>
+<ol>
+<li><span class="geshifilter"><code class="geshifilter-csharp">Load</code></span>: this is the place to load resources from disk, like images or music.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp">UpdateFrame</code></span>: this is a suitable place to handle input, update object positions, run physics or AI calculations.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp">RenderFrame</code></span>: this contains the code that renders your graphics. It typically begins with a call to <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> and ends with a call to <span class="geshifilter"><code class="geshifilter-csharp">SwapBuffers</code></span>.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp">Resize</code></span>: this method is called automatically whenever your game window changes size. Fullscreen applications will typically call it only once. Windowed applications may call it more often. In most circumstances, you can simply copy &amp; paste the code from Game.cs.</li>
+</ol>
+<p>Why don't you try modifying a few things? Here are a few suggestions:</p>
+<ol>
+<li>Change the colors of the triangle or the window background (OnLoad and OnRenderFrame methods). Hint: use GL.Color4() to control the triangle color and GL.ClearColor() to control the background color. </li>
+<li>Make the triangle change colors when you press a key (OnUpdateFrame and OnRenderFrame methods).</li>
+<li>Make the triangle move across the screen. Use the arrow keys or the mouse to control its position (OnUpdateFrame). Hint: use Matrix4.CreateTranslation() to create a translation matrix and call GL.LoadMatrix() to load it (OnRenderFrame).</li>
+<li>Use a for-loop to render many triangles arranged on a plane (OnRenderFrame method).</li>
+<li>Rotate the camera so that the plane above acts as ground (OnRenderFrame method). Hint: use Matrix4.LookAt() to create a modelview matrix and use GL.LoadMatrix() to load it.</li>
+<li>Use the keyboard and mouse to walk on the ground. Make sure you can't fall through it! (OnUpdateFrame and OnRenderFrame methods).</li>
+</ol>
+<p>Some things you might find useful: <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector2</span></code></span>, <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector3</span></code></span>, <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector4</span></code></span> and <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Matrix4</span></code></span> classes for camera manipulations. <span class="geshifilter"><code class="geshifilter-csharp">Mouse</code></span> and <span class="geshifilter"><code class="geshifilter-csharp">Keyboard</code></span> properties for interaction with the mouse and keyboard, respectively. <span class="geshifilter"><code class="geshifilter-csharp">Joysticks</code></span> property for interaction with joystick devices.</p>
+<p>Don't be afraid to try things and see the results. OpenTK lends itself to explorative programming - even if something breaks, the library will help you pinpoint the cause of the error.</p>
+<p>Check out the examples at: <a href="https://github.com/opentk/opentk/tree/master/Source/Examples" title="https://github.com/opentk/opentk/tree/master/Source/Examples">https://github.com/opentk/opentk/tree/master/Source/Examples</a></p>
+<p><b>[Step: next]</b></p>
+<p>There's a lot of functionality that is not visible at first glance: audio, advanced OpenGL, display devices, support for GUIs through GLControl...  Then there's the subject of proper engine and game design, which could cover a whole book by itself.</p>
+<p>Hopefully, you'll have gained a feel of the library by now and you'll be able to accomplish more complex tasks. You might wish to consult the <a href="../../doc.html">complete documentation</a> for the more advanced aspects of OpenTK and, of course, don't hesitate to post at the <a href="http://www.opentk.com/forum">forums</a> if you hit any roadblocks!</p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="http://www.opentk.com/node/15618" class="page-previous" title="Go to previous page">‹ Packing of Textbooks in 3 Simple And Easy Steps And Measures</a><a href="../../doc.html" class="page-up" title="Go to parent page">up</a><a href="../install.html" class="page-next" title="Go to next page">Chapter 1: Installation ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/1156" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/1156%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/1156%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-1156 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<div class="pager"><a href="099b5.html?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to first page">« first</a><a href="099b5.html?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to previous page">‹ previous</a><span class="pager-list"><a href="099b5.html?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to page 1">1</a><strong class="pager-current">2</strong></span></div><form action="http://www.opentk.com/doc/chapter/0?page=1&amp;%24Version=1&amp;%24Path=/"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-14540"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="ninyo&#039;s picture" title="ninyo&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="0.html#comment-14540" class="active">Re: Chapter 0: Learn OpenTK in 15&#039;</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Thursday, 3 October, 2013 - 02:48             by ninyo                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>This is nice. However I have a question. I am working on Windows 7 but would like to create a graphics program that will run in both windows and Linux Desktop so I would like to try it with c# mono. When i try create a project in vs2008 using the sample here, it works and it runs successfully.  But if i run the sample here in Xamarin Studio 4.0 (still in Windows 7), and when I run it, the compiler throws me an error which looks like its trying to look for x11 (libx11).  What setting is missing when the project is loaded in Xamarin Studio. Is there a way to make it work seamless across desktop environments of windows and linux?  </p>
+<p>thank you</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-14543"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="0.html#comment-14543" class="active">Re: Chapter 0: Learn OpenTK in 15&#039;</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Thursday, 3 October, 2013 - 08:19             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Yes, it is possible and fully supported. Please start a post in the forums :)</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-15852"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="aronas&#039;s picture" title="aronas&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="0.html#comment-15852" class="active">Re: Chapter 0: Learn OpenTK in 15&#039;</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Sunday, 6 July, 2014 - 20:01             by aronas                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>VB Version (VS Express 2013)</p>
+<div class="geshifilter">
+<pre class="geshifilter-vbnet"><span class="kw6">Imports</span> System
+<span class="kw6">Imports</span> System.<span class="me1">Drawing</span>
+<span class="kw6">Imports</span> OpenTK
+<span class="kw6">Imports</span> OpenTK.<span class="me1">Graphics</span>
+<span class="kw6">Imports</span> OpenTK.<span class="me1">Graphics</span>.<span class="me1">OpenGL</span>
+<span class="kw6">Imports</span> OpenTK.<span class="kw2">Input</span>
+&nbsp;
+Module Main
+    <span class="kw2">Private</span> <span class="kw2">WithEvents</span> game <span class="kw2">As</span> <span class="kw2">New</span> <span class="kw4">GameWindow</span>
+&nbsp;
+    <span class="kw2">Public</span> <span class="kw6">Sub</span> Main<span class="br0">&#40;</span><span class="br0">&#41;</span>
+        game.<span class="me1">Run</span><span class="br0">&#40;</span><span class="nu0">60.0</span><span class="br0">&#41;</span>
+    <span class="kw6">End</span> <span class="kw6">Sub</span>
+&nbsp;
+    <span class="kw2">Private</span> <span class="kw6">Sub</span> game_Load<span class="br0">&#40;</span>sender <span class="kw2">As</span> <span class="kw4">Object</span>, e <span class="kw2">As</span> EventArgs<span class="br0">&#41;</span> <span class="kw2">Handles</span> game.<span class="me1">Load</span>
+        game.<span class="me1">VSync</span> = VSyncMode.<span class="kw2">On</span>
+    <span class="kw6">End</span> <span class="kw6">Sub</span>
+&nbsp;
+    <span class="kw2">Private</span> <span class="kw6">Sub</span> game_RenderFrame<span class="br0">&#40;</span>sender <span class="kw2">As</span> <span class="kw4">Object</span>, e <span class="kw2">As</span> FrameEventArgs<span class="br0">&#41;</span> <span class="kw2">Handles</span> game.<span class="me1">RenderFrame</span>
+        <span class="kw4">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span>ClearBufferMask.<span class="me1">ColorBufferBit</span> Or ClearBufferMask.<span class="me1">DepthBufferBit</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="kw4">GL</span>.<span class="me1">MatrixMode</span><span class="br0">&#40;</span>MatrixMode.<span class="me1">Projection</span><span class="br0">&#41;</span>
+        <span class="kw4">GL</span>.<span class="me1">LoadIdentity</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="kw4">GL</span>.<span class="me1">Ortho</span><span class="br0">&#40;</span><span class="nu0">-1.0</span>, <span class="nu0">1.0</span>, <span class="nu0">-1.0</span>, <span class="nu0">1.0</span>, <span class="nu0">0.0</span>, <span class="nu0">4.0</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="kw4">GL</span>.<span class="me1">Begin</span><span class="br0">&#40;</span>PrimitiveType.<span class="me1">Triangles</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="kw4">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">MidnightBlue</span><span class="br0">&#41;</span>
+        <span class="kw4">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">-1</span>.0F, <span class="nu0">1</span>.0F<span class="br0">&#41;</span>
+        <span class="kw4">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">SpringGreen</span><span class="br0">&#41;</span>
+        <span class="kw4">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">0</span>.0F, <span class="nu0">-1</span>.0F<span class="br0">&#41;</span>
+        <span class="kw4">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">Ivory</span><span class="br0">&#41;</span>
+        <span class="kw4">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">1</span>.0F, <span class="nu0">1</span>.0F<span class="br0">&#41;</span>
+&nbsp;
+        <span class="kw4">GL</span>.<span class="kw6">End</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+        game.<span class="me1">SwapBuffers</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw6">End</span> <span class="kw6">Sub</span>
+&nbsp;
+    <span class="kw2">Private</span> <span class="kw6">Sub</span> game_Resize<span class="br0">&#40;</span>sender <span class="kw2">As</span> <span class="kw4">Object</span>, e <span class="kw2">As</span> EventArgs<span class="br0">&#41;</span> <span class="kw2">Handles</span> game.<span class="me1">Resize</span>
+        <span class="kw4">GL</span>.<span class="me1">Viewport</span><span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">0</span>, game.<span class="kw6">Width</span>, game.<span class="me1">Height</span><span class="br0">&#41;</span>
+    <span class="kw6">End</span> <span class="kw6">Sub</span>
+&nbsp;
+    <span class="kw2">Private</span> <span class="kw6">Sub</span> game_UpdateFrame<span class="br0">&#40;</span>sender <span class="kw2">As</span> <span class="kw4">Object</span>, e <span class="kw2">As</span> FrameEventArgs<span class="br0">&#41;</span> <span class="kw2">Handles</span> game.<span class="me1">UpdateFrame</span>
+        <span class="kw6">If</span> game.<span class="me1">Keyboard</span><span class="br0">&#40;</span><span class="kw4">Key</span>.<span class="me1">Escape</span><span class="br0">&#41;</span> <span class="kw2">Then</span> game.<span class="kw6">Exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw6">End</span> <span class="kw6">Sub</span>
+<span class="kw6">End</span> Module</pre></div>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-16077"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="publicENEMY&#039;s picture" title="publicENEMY&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="0.html#comment-16077" class="active">Re: Chapter 0: Learn OpenTK in 15&#039;</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 19 August, 2014 - 17:02             by publicENEMY                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Noob here.</p>
+<p>Isnt this state based API of opengl? Shouldnt we learn the new way of writing in OpenGL?</p>
+<p>Where can I find modern OpenGL tutorial?</p>
+<p>Thanks.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-16078"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="flopoloco&#039;s picture" title="flopoloco&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="0.html#comment-16078" class="active">Re: Chapter 0: Learn OpenTK in 15&#039;</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 20 August, 2014 - 22:39             by flopoloco                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Yep the immediate mode is considered "depricated" though I think it's fine for very simple stuff and it won't hurt. However the proper and recommended way to draw optimized graphics is using Vertex Buffer Objects and perhaps Vertex Array Objects.</p>
+<p>For example this is the most simple example you can get (shader based pipeline).<br />
+<a href="http://www.opentk.com/node/2293" title="http://www.opentk.com/node/2293">http://www.opentk.com/node/2293</a></p>
+<p>I have uploaded some example in the blog section from time to time, also check other peoples' blogs just to be sure.<br />
+<a href="http://www.opentk.com/blog/130" title="http://www.opentk.com/blog/130">http://www.opentk.com/blog/130</a></p>
+<p>Also there is some code in the tutorial section, tutorial section is now considered closed in favor of blog pages.<br />
+<a href="http://www.opentk.com/forum/10" title="http://www.opentk.com/forum/10">http://www.opentk.com/forum/10</a></p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-16457"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="HavocPioneer&#039;s picture" title="HavocPioneer&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="0.html#comment-16457" class="active">Re: Chapter 0: Learn OpenTK in 15&#039;</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 21 January, 2015 - 18:25             by HavocPioneer                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <div class="geshifilter">
+<pre class="geshifilter-csharp">game.<span class="me1">UpdateFrame</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt;
+                <span class="br0">&#123;</span>
+                    <span class="co1">// add game logic, input handling</span>
+                    <span class="kw1">if</span> <span class="br0">&#40;</span>game.<span class="me1">Keyboard</span><span class="br0">&#91;</span><span class="kw3">Key</span>.<span class="me1">Escape</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+                    <span class="br0">&#123;</span>
+                        game.<span class="me1">Exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+                    <span class="br0">&#125;</span>
+                <span class="br0">&#125;</span>;</pre></div>
+<p>GameWindow.Keyboard is deprecated, and it suggests the use of KeyDown, KeyPress or KeyUp. I would use:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">game.<span class="me1">KeyDown</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt;
+                <span class="br0">&#123;</span>
+                    <span class="co1">// add game logic, input handling</span>
+                    <span class="kw1">if</span> <span class="br0">&#40;</span>e.<span class="kw3">Key</span> == <span class="kw3">Key</span>.<span class="me1">Escape</span><span class="br0">&#41;</span>
+                    <span class="br0">&#123;</span>
+                        game.<span class="me1">Exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+                    <span class="br0">&#125;</span>
+                <span class="br0">&#125;</span>;</pre></div>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<div class="pager"><a href="099b5.html?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to first page">« first</a><a href="099b5.html?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to previous page">‹ previous</a><span class="pager-list"><a href="099b5.html?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to page 1">1</a><strong class="pager-current">2</strong></span></div>
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F1156%3Fpage%3D1%26%2524Version%3D1%26%2524Path%3D%2F" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/0?page=1&%24Version=1&%24Path=/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:49:04 GMT -->
+</html>
