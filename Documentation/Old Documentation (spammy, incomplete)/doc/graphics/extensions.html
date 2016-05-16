@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/extensions by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="http://www.opentk.com/node/15299" />
+
+<link rel="up" href="../graphics.html" />
+
+<link rel="next" href="save-opengl-rendering-to-disk.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>How to check if an OpenGL extension is supported | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../graphics.html" title="Description of the OpenTK.Graphics namespace, plus a quick OpenGL and OpenGL|ES primer.">Graphics</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-3531" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="extensions.html">How to check if an OpenGL extension is supported</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>Before using an OpenGL feature, you need to check that it is supported by your GPU drivers. It is an error to call functions that belong to an unsupported feature and doing so will result in undefined behavior.</p>
+<p>For a <b>core feature</b>, i.e. all functions exposed directly by the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span></code></span> class, it is sufficient to check the version string of the driver against the minimum version required by the feature. The minimum version is listed in the documentation tooltip of each OpenGL function.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// Retrieve the OpenGL version string. Do this once on startup.</span>
+<span class="kw1">string</span> version_string = <span class="kw3">GL</span>.<span class="me1">GetString</span><span class="br0">&#40;</span>StringName.<span class="me1">Version</span><span class="br0">&#41;</span>;
+<span class="kw1">int</span> major = <span class="kw1">int</span>.<span class="me1">Parse</span><span class="br0">&#40;</span>version_string.<span class="me1">Split</span><span class="br0">&#40;</span><span class="st0">' '</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>;
+<span class="kw1">int</span> minor = <span class="kw1">int</span>.<span class="me1">Parse</span><span class="br0">&#40;</span>version_string.<span class="me1">Split</span><span class="br0">&#40;</span><span class="st0">' '</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>;
+Version version = <span class="kw1">new</span> Version<span class="br0">&#40;</span>major, minor<span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// Create Version objects for each OpenGL feature you wish to use.</span>
+<span class="co1">// You can find the minimum version for each feature in the</span>
+<span class="co1">// documentation tooltips or in the OpenGL specification.</span>
+<span class="co1">// For example, GL.GenFramebuffer() says in its documentation:</span>
+<span class="co1">// &quot;[requires v3.0]&quot;</span>
+<span class="kw1">static</span> <span class="kw1">class</span> RequiredFeatures
+<span class="br0">&#123;</span>
+    <span class="kw1">public</span> <span class="kw1">static</span> <span class="kw1">readonly</span> Version FramebufferObject = <span class="kw1">new</span> Version<span class="br0">&#40;</span><span class="nu0">3</span>, <span class="nu0">0</span><span class="br0">&#41;</span>;
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="co1">// Before using a feature, check that it supported by the OpenGL driver</span>
+<span class="kw1">if</span> <span class="br0">&#40;</span>version &gt;= RequiredFeatures.<span class="me1">FramebufferObject</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">int</span> fbo = <span class="kw3">GL</span>.<span class="me1">GenFramebuffer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    ...
+<span class="br0">&#125;</span></pre></div>
+<p>For an <b>extension feature</b>, i.e. functions exposed under the nested classes <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="kw3">Arb</span></code></span>, <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="kw3">Ext</span></code></span>, <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="kw3">NV</span></code></span> etc, you must check that the required extension string is advertised by the driver.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// For OpenGL 3.0 and higher</span>
+Dictionary&lt;string, bool&gt; extensions =
+    <span class="kw1">new</span> Dictionary&lt;string, bool&gt;<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+<span class="kw1">int</span> count = <span class="kw3">GL</span>.<span class="me1">GetInteger</span><span class="br0">&#40;</span>GetPName.<span class="me1">NumExtensions</span><span class="br0">&#41;</span>;
+<span class="kw1">for</span> <span class="br0">&#40;</span><span class="kw1">int</span> i = <span class="nu0">0</span>; i &lt; count; i++<span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">string</span> extension = <span class="kw3">GL</span>.<span class="me1">GetString</span><span class="br0">&#40;</span>StringNameIndexed.<span class="me1">Extensions</span>, i<span class="br0">&#41;</span>;
+    extensions.<span class="me1">Add</span><span class="br0">&#40;</span>extension, <span class="kw1">true</span><span class="br0">&#41;</span>;
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="co1">// For OpenGL 2.1 and lower</span>
+Dictionary&lt;string, bool&gt; extensions =
+    <span class="kw1">new</span> Dictionary&lt;string, bool&gt;<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+<span class="kw1">string</span> extension_string = <span class="kw3">GL</span>.<span class="me1">GetString</span><span class="br0">&#40;</span>StringName.<span class="me1">Extensions</span><span class="br0">&#41;</span>;
+<span class="kw1">foreach</span> <span class="br0">&#40;</span><span class="kw1">string</span> extension <span class="kw1">in</span> extension_string.<span class="me1">Split</span><span class="br0">&#40;</span><span class="st0">' '</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    extensions.<span class="me1">Add</span><span class="br0">&#40;</span>extension, <span class="kw1">true</span><span class="br0">&#41;</span>;
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="co1">// Check that an extension is supported before using it.</span>
+<span class="co1">// The required extension string is reported in the</span>
+<span class="co1">// documentation tooltip for each extension function.</span>
+<span class="co1">// For example, GL.Ext.GenFramebuffer says:</span>
+<span class="co1">// [requires: EXT_framebuffer_object]</span>
+<span class="kw1">if</span> <span class="br0">&#40;</span>extensions.<span class="me1">ContainsKey</span><span class="br0">&#40;</span><span class="st0">&quot;GL_EXT_framebuffer_object&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">int</span> fbo = <span class="kw3">GL</span>.<span class="kw3">Ext</span>.<span class="me1">GenFramebuffer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    ...
+<span class="br0">&#125;</span></pre></div>
+<p>More information can be found in the OpenGL wiki: <a href="https://www.opengl.org/wiki/Get_Context_Info" title="https://www.opengl.org/wiki/Get_Context_Info">https://www.opengl.org/wiki/Get_Context_Info</a></p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="http://www.opentk.com/node/15299" class="page-previous" title="Go to previous page">‹ Streaming@tv@AC Milan vs Inter Milan Live Stream</a><a href="../graphics.html" class="page-up" title="Go to parent page">up</a><a href="save-opengl-rendering-to-disk.html" class="page-next" title="Go to next page">How to save an OpenGL rendering to disk ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/3531" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/3531%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/3531%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-3531 -->
+
+<div id="comments">
+  
+</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F3531" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/extensions by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:34 GMT -->
+</html>

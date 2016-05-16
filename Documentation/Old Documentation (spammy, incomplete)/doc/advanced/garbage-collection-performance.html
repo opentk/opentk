@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/advanced/garbage-collection-performance by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:34 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="vertex-cache-optimization.html" />
+
+<link rel="up" href="../advanced.html" />
+
+<link rel="next" href="garbage-collectors-and-opengl.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Garbage Collection Performance | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../advanced.html" title="Chapter 3: Discusses advanced topics on the interaction between .Net, OpenGL and OpenAL.">Advanced Topics</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-126" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="garbage-collection-performance.html">Garbage Collection Performance</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>The .Net Framework features a precise, generational and compacting Garbage Collector (GC): precise because it specifically traces only managed object pointers, generational because it distinguishes long-lived objects objects from temporary ones, and compacting because it moves data in memory to avoid leaving holes behind. The GC is a great tool in the .Net arsenal, not only because it increases productivity but also because it provides extremely fast memory allocations (compared to standard C/C++ malloc/new).</p>
+<p>One of the challenges of working with garbage collection is garbage collection pauses. If these last longer than 5-7ms, it can impact interactive updates. While collector pauses are highly dependent on the the implementation, typically they are managed-pointer-count proportional pauses which occur because of the tracing or marking of the tenured heap. Note that even in the CLR 4.0 "concurrent" collector, there is still a pause for tenured-generation mark. </p>
+<p>There are two main strategies for dealing with garbage collection pauses. First, minimize the duration of the pause, second, minimize the frequency of the pause.</p>
+<p>To minimize the duration of the pause, minimize the total number of long-lived reachable managed pointers. It's important to note this is not the same as keeping the heap small. Large value-type arrays are not scanned by the GC if they contain no pointers. Likewise, raw byte[] data buffers are also not scanned by the GC. Placing large data-chunks, such as vertex-buffers, index-buffers, textures, and other raw-data into value-type arrays which don't contain pointers can substantially minimize the number of GC traced pointers.</p>
+<p>To minimize the frequency of the pause, minimize tenured churn. Tenured churn is when objects are frequently allocated, survive long enough to make it into the tenured generation, and then are released. Reclaiming the space from those objects requires the GC to trace the entire tenured generation, causing the pause. This can be avoided by avoiding heap allocated objects which live too long and then die, and in general by avoiding allocation when possible. Ideally all objects either die very fast, or live a very long time. Aside from minimizing allocation through stack-allocated types, churn can be minimized by using reusable object pools for medium-lifetime objects.</p>
+<p><H4> other memory related topics </h4>
+<p>The managed heap is not the only memory usage in the process. Buffers handed to OpenGL may be copied into the unmanaged resource pool. This creates memory usage outside of the managed heap. </p>
+<p>Another important memory consideration is the OpenGL robustness configuration. Historically, OpenGL preserves all state and buffers in system-ram, even when those assets are sent to the video card, so it can restore those assets in the event that the application loses and regains control of the 3d hardware graphics context. For some applications, this can mean assets like textures and vertex buffers are stored three times, once in the application ram, once in OpenGL ram, and once in video-card ram. </p>
+<p>As of OpenGL 3.2, the GL_ARB_robustness extension can be used to control OpenGL robustness, allowing OpenGL to forgo storing system-ram copies of resources. If resources are lost, the application will need to restore them. In OpenGL ES, only non-robust operation is allowed, mirroring the behavior of Direct3d. </p>
+<p><i>[Describe the unmanaged resource pool, pinning and performance considerations]</i></p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="vertex-cache-optimization.html" class="page-previous" title="Go to previous page">‹ Vertex Cache Optimizations</a><a href="../advanced.html" class="page-up" title="Go to parent page">up</a><a href="garbage-collectors-and-opengl.html" class="page-next" title="Go to next page">GC &amp; OpenGL (work in progress) ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/126" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/126%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/126%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-126 -->
+
+<div id="comments">
+  
+</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F126" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/advanced/garbage-collection-performance by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:34 GMT -->
+</html>

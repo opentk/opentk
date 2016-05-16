@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/install/distribution by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="../chapter/1/troubleshooting.html" />
+
+<link rel="up" href="../install.html" />
+
+<link rel="next" href="http://www.opentk.com/node/15394" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Distributing OpenTK applications | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../install.html" title="Chapter 1: Describes how to install OpenTK on different platforms.">Installation</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-2136" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="distribution.html">Distributing OpenTK applications</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>The most important dependency by far is the Mono/.Net framework. If you need to support users that might not have that installed, the best solution is to  <a href="http://www.mono-project.com/Embedding_Mono">embed the Mono runtime</a> into a small launcher (<a href="https://github.com/mono/mono/blob/master/samples/embed/teste.c">example code</a>).</p>
+<p>Additionally, on Windows, you will typically need to install OpenAL drivers:</p>
+<ul>
+<li>either distribute the official <a href="http://climpxwss01.creativelabs.com/openal/Downloads/Forms/AllItems.aspx">oalinst.exe</a> from Creative (requires admin rights to install)</li>
+<li>or distribute <a href="http://kcat.strangesoft.net/openal.html">OpenAL Soft</a> (plain dll, no admin rights required).</li>
+</ul>
+<p>There is no such redistributable for OpenGL drivers - the user will have to install those on his own.</p>
+<p>On Linux, users will typically have OpenAL and OpenGL pre-installed. If you generate distro-specific packages, then list AL/GL as dependencies and the package manager will take care of the rest. If you provide distro-agnostic packages, then you can either expect the user to have AL/GL preinstalled (which is quite reasonable) or you can bundle your own version of OpenAL (use the OpenAL Soft link, above). Most commercial games follow the distro-agnostic package approach. Many include libopenal.so, too.</p>
+<p>Apart from those, OpenTK uses either core OS components which are always available (e.g. user32.dll or libX) or optional components with transparent fallbacks (e.g. libXi).</p>
+<p>In any case, do try to fail smoothly if AudioContext or GraphicsContext construction fails. It is also a good idea to check the OpenGL version and bail out early if too low.</p>
+<div class="book-navigation"><ul class="menu"><li class="leaf"><a href="http://www.opentk.com/node/15394">[S7E14][Wa.t.ch]Modern Family Season 7 Episode 14 Online.[LIVE]..S.t.r.e.a.m.i.n.g</a></li></ul><div class="page-links clear-block"><a href="../chapter/1/troubleshooting.html" class="page-previous" title="Go to previous page">‹ Troubleshooting</a><a href="../install.html" class="page-up" title="Go to parent page">up</a><a href="http://www.opentk.com/node/15394" class="page-next" title="Go to next page">[S7E14][Wa.t.ch]Modern Family Season 7 Episode 14 Online.[LIVE]..S.t.r.e.a.m.i.n.g ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/2136" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/2136%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/2136%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-2136 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<form action="http://www.opentk.com/doc/install/distribution"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-10552"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1009.png" alt="tksuoran&#039;s picture" title="tksuoran&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="distribution.html#comment-10552" class="active">Re: Distributing OpenTK applications</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Thursday, 11 November, 2010 - 15:00             by tksuoran                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>I found these when I added Linux support to my OpenTK application:<br />
+- Some people will have too old mono that can produce plain wrong and misleading messages, like suggestions to run windows version of mono in wine.<br />
+- Some people will not have sufficient mono packages installed and will get funny exceptions about windowsbase or winforms<br />
+- Showing standard Windows messagebox can fail on Linux (certainly if winforms package is not installed).<br />
+- Too old OpenGL drivers can hang while trying to create context. You can not catch this as an exception..</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-10553"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="distribution.html#comment-10553" class="active">Re: Distributing OpenTK applications</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Thursday, 11 November, 2010 - 15:41             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>The first three issues can be solved via a static <a href="http://linux.die.net/man/1/mkbundle">mkbundle</a> or by embedding the Mono runtime (<a href="https://github.com/mono/mono/blob/master/samples/embed/teste.c">quite easy</a>). The disadvantage is that the compile-once-run-everywhere aspect is lost, so you'll have to decide if this trade-off is worth it (for commercial software, it certainly is).</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F2136" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/install/distribution by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:20 GMT -->
+</html>

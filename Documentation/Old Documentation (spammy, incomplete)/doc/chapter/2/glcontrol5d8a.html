@@ -1,0 +1,907 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/glcontrol?page=4&%24Version=1&%24Path=/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:49:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="../../opentk/nativewindow.html" />
+
+<link rel="up" href="../2.html" />
+
+<link rel="next" href="../../intro/cpu-usage.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Building a Windows.Forms + GLControl based application | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../../index.html">Home</a> » <a href="../../../doc.html" title="What is this all about?">Introduction</a> » <a href="../2.html" title="Chapter 2: Introduces simple concepts (window creation, drawing shapes, respponding to user input)">Using OpenTK</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-196" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="glcontrol.html">Building a Windows.Forms + GLControl based application</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>This tutorial assumes familiarity with <span class="geshifilter"><code class="geshifilter-csharp">Windows.<span class="me1">Forms</span></code></span> application development in Visual Studio 2005/C#, and at least basic knowledge of OpenGL. It also assumes a top-to-bottom readthrough; it is a guide and not a reference.</p>
+<p>To begin with, it is quite a different approach one has to take when designing a game/application using the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span> in a Windows.Form compared to using the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span></code></span>. <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span> is more low-level than <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span></code></span> so you'll have to pull the strings on for example time measurements by yourself. In <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span></code></span>, you get more for free!</p>
+<p>Just as in the GameWindow case, GLControl uses the default OpenGL driver of the system, so with the right drivers installed it will be hardware accelerated. However, with large windows it will be slower than the corresponding fullscreen GameWindow, because of how the underlying windowing system works [someone with more detailed knowledge than me may want to elaborate on this..].</p>
+<p>If you come from a "main-loop-background" (C/SDL/Allegro etc.) when it comes to coding games, you'll have to rethink that fundamentally. You'll have to change into a mindset of "what event should I hook into, and what events should I trigger, and when?" instead.</p>
+<p><b>Why use Windows.Forms+GLControl instead of GameWindow?</b><br />
+The first thing you'll have to decide is:</p>
+<p><em>"Do I really need the added complexity of <span class="geshifilter"><code class="geshifilter-csharp">Windows.<span class="me1">Forms</span> + embedded <span class="kw3">GLControl</span></code></span> compared to a windowed <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span></code></span>?"</em></p>
+<p>Here are some reasons why you would like to add that complexity:</p>
+<ol>
+<li>You want to build a GUI-rich/RAD kind of application using the <span class="geshifilter"><code class="geshifilter-csharp">Windows.<span class="me1">Forms</span></code></span> controls. Eg. level editors or model viewers/editors may be in this category while a windowed game leans more towards a <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span></code></span> kind of application.
+<li>You want to have an embedded OpenGL rendering panel inside an already existing <span class="geshifilter"><code class="geshifilter-csharp">Windows.<span class="me1">Forms</span></code></span> application.
+<li>You want to be able to do drag-and-drop into the rendering panel, for example dropping a model file into a model viewer.
+</ol>
+<p>Assuming you've got at least one of those reasons to build a <span class="geshifilter"><code class="geshifilter-csharp">Windows.<span class="me1">Forms</span>+<span class="kw3">GLControl</span></code></span> based application, here's the steps, gotchas and whys for you.</p>
+<p><b>Adding the GLControl to your Windows.Form</b><br />
+<em>(I am assuming you are using Visual Studio 2005 Express Edition. Your mileage may vary if using VS2008 or Monodevelop -- I don't know the details for them -- but the follow sections should be the same no matter how you add the GLControl)</em><br />
+To begin with, create a Form on which you will place your <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span>. Right click in some empty space of the Toolbox, pick "Choose Items..." and browse for OpenTK.GLControl.dll. Make sure you can find the "GLControl" listed in the ".NET Framework Components", as in the image below.</p>
+<p><a href="http://www.opentk.com/files/VSAddGLControl6.png"><img border="1" width="50%" src="http://www.opentk.com/files/VSAddGLControl6.png" /></a></p>
+<p>Then you can add the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span> to your form as any .NET control. A GLControl named <span class="geshifilter"><code class="geshifilter-csharp">glControl1</code></span> will be added to your <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Form</span></code></span>.</p>
+<p><b>Order of creation</b><br />
+The fact that <span class="geshifilter"><code class="geshifilter-csharp">glControl1</code></span>'s <span class="geshifilter"><code class="geshifilter-csharp">GLContext</code></span> is created in runtime is important to remember however, since you cannot access or change <span class="geshifilter"><code class="geshifilter-csharp">glControl1</code></span>'s properties reliably until the <span class="geshifilter"><code class="geshifilter-csharp">GLContext</code></span> has been created. The same is true for any <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">*</span></code></span> commands (or <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Glu</span></code></span> for that matter!). The conceptual order is this:</p>
+<ol>
+<li>First the Windows.Form constructor runs. <em>Don't touch <span class="geshifilter"><code class="geshifilter-csharp">glControl/<span class="kw3">GL</span></code></span></em>
+<li>Then the <span class="geshifilter"><code class="geshifilter-csharp">Load</code></span> event of the form is triggered. <em>Don't touch <span class="geshifilter"><code class="geshifilter-csharp">glControl/<span class="kw3">GL</span></code></span></em>
+<li>Then the <span class="geshifilter"><code class="geshifilter-csharp">Load</code></span> event of the GLControl is triggered. <em>OK to touch <span class="geshifilter"><code class="geshifilter-csharp">glControl/<span class="kw3">GL</span></code></span></em>
+<li>After the <span class="geshifilter"><code class="geshifilter-csharp">Load</code></span> event handler has run, any event handler may touch <span class="geshifilter"><code class="geshifilter-csharp">glControl/<span class="kw3">GL</span></code></span>.
+</ol>
+<p>So one approach to address this problem is having a <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw1">bool</span> loaded=<span class="kw1">false</span>;</code></span> member variable in your Form, which is set to <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw1">true</span></code></span> in the <span class="geshifilter"><code class="geshifilter-csharp">Load</code></span> event handler of the GLControl:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">   <span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>;
+   <span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>.<span class="me1">OpenGL</span>;
+&nbsp;
+  <span class="kw1">public</span> partial <span class="kw1">class</span> Form1 : <span class="kw4">Form</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">bool</span> loaded = <span class="kw1">false</span>;
+&nbsp;
+    <span class="kw1">public</span> Form1<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      InitializeComponent<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Load<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      loaded = <span class="kw1">true</span>;
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span></pre></div>
+<p><b>Note: the GLControl.Load event is never fired -- please use the Form.Load event instead until <a href="http://www.opentk.com/node/1071">this issue</a> of OpenTK is fixed.</b></p>
+<p>Then in any event handler where you are going to access <span class="geshifilter"><code class="geshifilter-csharp">glControl1/<span class="kw3">GL</span></code></span> you can put a guard first of all:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Resize<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>!loaded<span class="br0">&#41;</span>
+        <span class="kw1">return</span>;
+    <span class="br0">&#125;</span></pre></div>
+<p>A popular way of adding a Load event handler to a Form is via the Properties window of Visual Studio, something like this:</p>
+<ol>
+<li>Click anywhere on the GLControl in the Designer
+<li>Make sure glControl1 is listed in the Properties window
+<li>Click the "Events" button to list all events of glControl1
+<li>Double-click the empty cell right of the Load event to create and hook an event handler for the Load event
+</ol>
+<p><b>Hello World!</b><br />
+The absolutely minimal code you can add at this stage to see something is adding an event handler to the <span class="geshifilter"><code class="geshifilter-csharp">Paint</code></span> event of <span class="geshifilter"><code class="geshifilter-csharp">glControl1</code></span> and filling it with this:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Paint<span class="br0">&#40;</span><span class="kw1">object</span> sender, PaintEventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>!loaded<span class="br0">&#41;</span> <span class="co1">// Play nice</span>
+        <span class="kw1">return</span>;
+&nbsp;
+      <span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span>ClearBufferMask.<span class="me1">ColorBufferBit</span> | ClearBufferMask.<span class="me1">DepthBufferBit</span><span class="br0">&#41;</span>;
+      glControl1.<span class="me1">SwapBuffers</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span></pre></div>
+<p><img src="http://www.opentk.com/files/Form1.png" /></p>
+<p>Yes! A beige viewport. Notice that the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span> provides a color- and a depth buffer, which we have to clear using <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span>. <em>[TODO: how to control which buffers and formats the GLControl has? Possible at all?]</em></p>
+<p>Next thing would be setting the clear color. An appropriate place to do GL initialization is in the form's <span class="geshifilter"><code class="geshifilter-csharp">Load</code></span> event handler:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Load<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      loaded = <span class="kw1">true</span>;
+      <span class="kw3">GL</span>.<span class="me1">ClearColor</span><span class="br0">&#40;</span>Color.<span class="me1">SkyBlue</span><span class="br0">&#41;</span>; <span class="co1">// Yey! .NET Colors can be used directly!</span>
+    <span class="br0">&#125;</span></pre></div>
+<p><img src="http://www.opentk.com/files/Form2.png" /></p>
+<p><b>Viewport initialization</b><br />
+Next thing we want to do is draw a single yellow triangle.</p>
+<p>First we need to be good OpenGL citizen and setup an orthographic projection matrix using <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Ortho</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span>. We need to call <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Viewport</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> also.</p>
+<p>For now we'll add this in the <span class="geshifilter"><code class="geshifilter-csharp">Load</code></span> event handler by the other initialization code -- ignoring the fact that we may want to allow the user to resize the window/<span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span>. We'll look into window resizing later.</p>
+<p>I put the viewport initialization in a separate method to make it a little more readable.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Load<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      loaded = <span class="kw1">true</span>;
+      <span class="kw3">GL</span>.<span class="me1">ClearColor</span><span class="br0">&#40;</span>Color.<span class="me1">SkyBlue</span><span class="br0">&#41;</span>;
+      SetupViewport<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw1">void</span> SetupViewport<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">int</span> w = glControl1.<span class="me1">Width</span>;
+      <span class="kw1">int</span> h = glControl1.<span class="me1">Height</span>;
+      <span class="kw3">GL</span>.<span class="me1">MatrixMode</span><span class="br0">&#40;</span>MatrixMode.<span class="me1">Projection</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">LoadIdentity</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Ortho</span><span class="br0">&#40;</span><span class="nu0">0</span>, w, <span class="nu0">0</span>, h, <span class="nu0">-1</span>, <span class="nu0">1</span><span class="br0">&#41;</span>; <span class="co1">// Bottom-left corner pixel has coordinate (0, 0)</span>
+      <span class="kw3">GL</span>.<span class="me1">Viewport</span><span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">0</span>, w, h<span class="br0">&#41;</span>; <span class="co1">// Use all of the glControl painting area</span>
+    <span class="br0">&#125;</span></pre></div>
+<p>And between <span class="geshifilter"><code class="geshifilter-csharp">Clear<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> and <span class="geshifilter"><code class="geshifilter-csharp">SwapBuffers<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> our yellow triangle:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Paint<span class="br0">&#40;</span><span class="kw1">object</span> sender, PaintEventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>!loaded<span class="br0">&#41;</span>
+        <span class="kw1">return</span>;
+&nbsp;
+      <span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span>ClearBufferMask.<span class="me1">ColorBufferBit</span> | ClearBufferMask.<span class="me1">DepthBufferBit</span><span class="br0">&#41;</span>;
+&nbsp;
+      <span class="kw3">GL</span>.<span class="me1">MatrixMode</span><span class="br0">&#40;</span>MatrixMode.<span class="me1">Modelview</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">LoadIdentity</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">Yellow</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Begin</span><span class="br0">&#40;</span>BeginMode.<span class="me1">Triangles</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">10</span>, <span class="nu0">20</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">100</span>, <span class="nu0">20</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">100</span>, <span class="nu0">50</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">End</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+      glControl1.<span class="me1">SwapBuffers</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span></pre></div>
+<p>Voila!</p>
+<p><img src="http://www.opentk.com/files/Form3.png" /></p>
+<p><b>Keyboard input</b><br />
+Next thing we want to do is animate the triangle via user interaction. Every time <span class="geshifilter"><code class="geshifilter-csharp">Space</code></span> is pressed, we want the triangle to move one pixel right.</p>
+<p>The two general approaches to keyboard input in a <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span> scenario is using <span class="geshifilter"><code class="geshifilter-csharp">Windows.<span class="me1">Forms</span></code></span> key events and using the OpenTK <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">KeyboardDevice</span></code></span>. Since the rest of our program resides in the <span class="geshifilter"><code class="geshifilter-csharp">Windows.<span class="me1">Forms</span></code></span> world (our window might be a very small part of a large GUI) we'll play nice and use <span class="geshifilter"><code class="geshifilter-csharp">Windows.<span class="me1">Forms</span></code></span> key events in this guide.</p>
+<p>We'll have an <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw1">int</span> x=<span class="nu0">0</span>;</code></span> variable that we'll increment in a <span class="geshifilter"><code class="geshifilter-csharp">KeyDown</code></span> event handler. Adding it to the <span class="geshifilter"><code class="geshifilter-csharp">glControl1</code></span> and not the Form, means the <span class="geshifilter"><code class="geshifilter-csharp">glControl</code></span> has to be focused, ie. clicked by the user for key events to be sent to our handler.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">int</span> x = <span class="nu0">0</span>;
+    <span class="kw1">private</span> <span class="kw1">void</span> glControl1_KeyDown<span class="br0">&#40;</span><span class="kw1">object</span> sender, KeyEventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>e.<span class="me1">KeyCode</span> == Keys.<span class="me1">Space</span><span class="br0">&#41;</span>
+        x++;
+    <span class="br0">&#125;</span></pre></div>
+<p>We add <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Translate</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> to our <span class="geshifilter"><code class="geshifilter-csharp">Paint</code></span> event handler:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Paint<span class="br0">&#40;</span><span class="kw1">object</span> sender, PaintEventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>!loaded<span class="br0">&#41;</span>
+        <span class="kw1">return</span>;
+&nbsp;
+      <span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span>ClearBufferMask.<span class="me1">ColorBufferBit</span> | ClearBufferMask.<span class="me1">DepthBufferBit</span><span class="br0">&#41;</span>;
+&nbsp;
+      <span class="kw3">GL</span>.<span class="me1">MatrixMode</span><span class="br0">&#40;</span>MatrixMode.<span class="me1">Modelview</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">LoadIdentity</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+      <span class="kw3">GL</span>.<span class="me1">Translate</span><span class="br0">&#40;</span>x, <span class="nu0">0</span>, <span class="nu0">0</span><span class="br0">&#41;</span>; <span class="co1">// position triangle according to our x variable</span>
+&nbsp;
+      ...
+    <span class="br0">&#125;</span></pre></div>
+<p>.. and we run our program. But wait! Nothing happens when we push Space! The reason is, <span class="geshifilter"><code class="geshifilter-csharp">glControl1</code></span> is not painted all the time; the operating systems window manager (Windows/X/OSX) makes sure as few <span class="geshifilter"><code class="geshifilter-csharp">Paint</code></span> events as possible happens. Only on resize, obscured window and a couple of more situations do <span class="geshifilter"><code class="geshifilter-csharp">Paint</code></span> events actually get triggered.</p>
+<p>What we would like to do is have a way of telling the window manager <em>"This control needs to be repainted since the data it relies on has changed"</em>. We want to notify the window manager that our glControl1 should be repainted. Easy, <span class="geshifilter"><code class="geshifilter-csharp">Invalidate<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> to the resque:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_KeyDown<span class="br0">&#40;</span><span class="kw1">object</span> sender, KeyEventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>!loaded<span class="br0">&#41;</span>
+        <span class="kw1">return</span>;
+      <span class="kw1">if</span> <span class="br0">&#40;</span>e.<span class="me1">KeyCode</span> == Keys.<span class="me1">Space</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        x++;
+        glControl1.<span class="me1">Invalidate</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span></pre></div>
+<p><b>Focus behaviour</b><br />
+If you're anything like me you're wondering a little how this focusing behaves; let's find out!</p>
+<p>A simple way is painting the triangle yellow when <span class="geshifilter"><code class="geshifilter-csharp">glControl1</code></span> is focused and blue when it is not. Right:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Paint<span class="br0">&#40;</span><span class="kw1">object</span> sender, PaintEventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      ...
+&nbsp;
+      <span class="kw1">if</span> <span class="br0">&#40;</span>glControl1.<span class="me1">Focused</span><span class="br0">&#41;</span> <span class="co1">// Simple enough :)</span>
+        <span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">Yellow</span><span class="br0">&#41;</span>;
+      <span class="kw1">else</span>
+        <span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">Blue</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Begin</span><span class="br0">&#40;</span>BeginMode.<span class="me1">Triangles</span><span class="br0">&#41;</span>;
+&nbsp;
+      ...
+    <span class="br0">&#125;</span></pre></div>
+<p>So now anytime the triangle is yellow, Space should work alright, and when it's blue any keyboard input will be ignored.</p>
+<p><b>Freedom at last: resizing the window</b><br />
+We will now turn our attention to a sore teeth: window resizing.</p>
+<p>Anytime a Windows.Forms control is resized, it's Resize event is triggered. That is true for glControl1 too. That's one piece in the puzzle.</p>
+<p>The other piece to find is <em>"What do we need to update when a GLControl is resized?"</em> and the answer is <em>"The viewport and the projection matrix"</em>.</p>
+<p>Well it seems our <span class="geshifilter"><code class="geshifilter-csharp">SetupViewport<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> will come in handy once more! Add an event handler to the Resize event of glControl1 and fill it in:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Resize<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      SetupViewport<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span></pre></div>
+<p><img src="http://www.opentk.com/files/Form6.png" /></p>
+<p>There is still one problem though: if you shrink the window using eg. the bottom-right resize grip of the window, no repaint will trigger automatically. That's because the window manager makes assumptions about where the (0, 0) pixel of a control resides, namely in the top-left corner of the control. (Try resizing using the top-left grip instead - the triangle is repainted continously!). Our general fix to alleviate this problem is instructing the window manager that we really want the repaint to occur upon any resize event:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Resize<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      SetupViewport<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      glControl1.<span class="me1">Invalidate</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span></pre></div>
+<p><b>I want my main loop: driving animation using Application.Idle</b><br />
+So, what if we wanted our triangle to rotate continously? This would be childs play in a main loop scenario: just increment a <span class="geshifilter"><code class="geshifilter-csharp">rotation</code></span> variable in the main loop, before we render the triangle.</p>
+<p>But we don't have any loop. We only have events!</p>
+<p>To mend for this lack of continuity we have to force Windows.Forms to do it our way. We want an event triggered every now and then, fast enough to get that realtime interactive feeling.</p>
+<p>Now there are several ways to achieve this. One is adding a <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Timer</span></code></span> control to our form, changing <span class="geshifilter"><code class="geshifilter-csharp">rotation</code></span> in the timers <span class="geshifilter"><code class="geshifilter-csharp">Tick</code></span> event handler. Another is adding a wild <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Thread</span></code></span> to the soup. The first is a little too high-level and slow while the second is really low-level and a bit harder to get right.</p>
+<p>We will take a third path and use a <span class="geshifilter"><code class="geshifilter-csharp">Windows.<span class="me1">Forms</span></code></span> event designed just for the purpose of being executed "when nothing else is going on": meet the <span class="geshifilter"><code class="geshifilter-csharp">Application.<span class="me1">Idle</span></code></span> event.</p>
+<p>This event is special in a number of ways as you may have guessed already. It is not associated with any Form or other control, but with the program as a whole. You cannot hook into it from the GUI Designer; you'll have to add it manually -- for example in the <span class="geshifilter"><code class="geshifilter-csharp">Load</code></span> event:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Load<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      loaded = <span class="kw1">true</span>;
+      <span class="kw3">GL</span>.<span class="me1">ClearColor</span><span class="br0">&#40;</span>Color.<span class="me1">SkyBlue</span><span class="br0">&#41;</span>;
+      SetupViewport<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      Application.<span class="me1">Idle</span> += Application_Idle; <span class="co1">// press TAB twice after +=</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">void</span> Application_Idle<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+    <span class="br0">&#125;</span></pre></div>
+<p>One good thing about the <span class="geshifilter"><code class="geshifilter-csharp">Idle</code></span> event is that the corresponding event handlers are executed <em>on the Windows.Forms thread</em>. That is good since it means we can access all GUI controls without having to worry about threading issues, a pain we would have to deal with if we cooked our own thread.</p>
+<p>So we simply increment our <span class="geshifilter"><code class="geshifilter-csharp">rotation</code></span> variable in the <span class="geshifilter"><code class="geshifilter-csharp">Idle</code></span> event handler and <span class="geshifilter"><code class="geshifilter-csharp">Invalidate<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> glControl1 -- business as usual.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">    <span class="kw1">float</span> rotation = <span class="nu0">0</span>;
+    <span class="kw1">void</span> Application_Idle<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="co1">// no guard needed -- we hooked into the event in Load handler</span>
+      <span class="kw1">while</span> <span class="br0">&#40;</span>glControl1.<span class="me1">IsIdle</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+          rotation += <span class="nu0">1</span>;
+          Render<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span></pre></div>
+<p>Let's update our rendering code while we're at it:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">    <span class="kw1">private</span> <span class="kw1">void</span> Render<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      ...
+      <span class="kw1">if</span> <span class="br0">&#40;</span>glControl1.<span class="me1">Focused</span><span class="br0">&#41;</span>
+        <span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">Yellow</span><span class="br0">&#41;</span>;
+      <span class="kw1">else</span>
+        <span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">Blue</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Rotate</span><span class="br0">&#40;</span>rotation, <span class="kw3">Vector3</span>.<span class="me1">UnitZ</span><span class="br0">&#41;</span>; <span class="co1">// OpenTK has this nice Vector3 class!</span>
+      <span class="kw3">GL</span>.<span class="me1">Begin</span><span class="br0">&#40;</span>BeginMode.<span class="me1">Triangles</span><span class="br0">&#41;</span>;
+      ...
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Paint<span class="br0">&#40;</span><span class="kw1">object</span> sender, PaintEventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        Render<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span></pre></div>
+<p>Happy wonders! Look:</p>
+<p><img src="http://www.opentk.com/files/Form7.png" /></p>
+<p><b>The triangle rotates slower when the window is big! How come?</b><br />
+<em>(This might not be true if you have a super-fast-computer with a super-fast-graphics-card; but you want your game to run on your neighbours computer too, don't you?)</em></p>
+<p>The reason is that windowed 3d rendering just is a lot slower than full-screen rendering, in general.</p>
+<p>But you can reduce the damage by using a technique called <em>frame-rate independent animation</em>. The idea is simple: increment the <span class="geshifilter"><code class="geshifilter-csharp">rotation</code></span> variable not with <span class="geshifilter"><code class="geshifilter-csharp"><span class="nu0">1</span></code></span> but with an amount that depends on the current rendering speed (if the speed is slow, increment <span class="geshifilter"><code class="geshifilter-csharp">rotation</code></span> with a larger amount than if the speed is high).</p>
+<p>But you need to be able to measure the current rendering speed or, equivalently, how long time it takes to render a frame.</p>
+<p>Since .NET2.0 there is a class available to do high-precision time measurements called <span class="geshifilter"><code class="geshifilter-csharp">Stopwatch</code></span>. Here's how to use it:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">    Stopwatch sw = <span class="kw1">new</span> Stopwatch<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    sw.<span class="me1">Start</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    MyAdvancedAlgorithm<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    sw.<span class="me1">Stop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="kw1">double</span> milliseconds = sw.<span class="me1">Elapsed</span>.<span class="me1">TotalMilliseconds</span>;</pre></div>
+<p>(<em>don't try with <span class="geshifilter"><code class="geshifilter-csharp">DateTime.<span class="me1">Now</span></code></span> -- it has a granularity of 10 or more milliseconds, which is in the same size as typical frame rendering -- worthless..</em>)</p>
+<p>Now, if we could measure the time it takes to perform the glControl painting, we would be close to making some kind of frame-rate-independent animation. But there is an even more elegant way: let's measure all time that is not <span class="geshifilter"><code class="geshifilter-csharp">Application.<span class="me1">Idle</span></code></span> time! Then we'll be sure it is not just the painting that is measured, but everything that has been going on since our last Idle run:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     Stopwatch sw = <span class="kw1">new</span> Stopwatch<span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// available to all event handlers</span>
+    <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Load<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      ...
+      <span class="me1">sw</span>.<span class="me1">Start</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// start at application boot</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">float</span> rotation = <span class="nu0">0</span>;
+    <span class="kw1">void</span> Application_Idle<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="co1">// no guard needed -- we hooked into the event in Load handler</span>
+&nbsp;
+      sw.<span class="me1">Stop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// we've measured everything since last Idle run</span>
+      <span class="kw1">double</span> milliseconds = sw.<span class="me1">Elapsed</span>.<span class="me1">TotalMilliseconds</span>;
+      sw.<span class="me1">Reset</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// reset stopwatch</span>
+      sw.<span class="me1">Start</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// restart stopwatch</span>
+&nbsp;
+      <span class="co1">// increase rotation by an amount proportional to the</span>
+      <span class="co1">// total time since last Idle run</span>
+      <span class="kw1">float</span> deltaRotation = <span class="br0">&#40;</span><span class="kw1">float</span><span class="br0">&#41;</span>milliseconds / <span class="nu0">20</span>.0f;
+      rotation += deltaRotation;
+&nbsp;
+      glControl1.<span class="me1">Invalidate</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span></pre></div>
+<p>Cool! The triangle spins with the same speed regardless of window size.</p>
+<p><b>I want an FPS counter!</b><br />
+Yeah me too. It's quite simple now that we've got a <span class="geshifilter"><code class="geshifilter-csharp">Stopwatch</code></span>.</p>
+<p>The idea is just counting the Idle runs, and every second or so, update a Label control with the counter! But we'll have to know when a second has passed, so we need an accumulator variable adding all time slices together.</p>
+<p>Quite a lot of logic started to add up in the <span class="geshifilter"><code class="geshifilter-csharp">Idle</code></span> event handler, so I split it up a little:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">void</span> Application_Idle<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">double</span> milliseconds = ComputeTimeSlice<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      Accumulate<span class="br0">&#40;</span>milliseconds<span class="br0">&#41;</span>;
+      Animate<span class="br0">&#40;</span>milliseconds<span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw1">double</span> ComputeTimeSlice<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      sw.<span class="me1">Stop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      <span class="kw1">double</span> timeslice = sw.<span class="me1">Elapsed</span>.<span class="me1">TotalMilliseconds</span>;
+      sw.<span class="me1">Reset</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      sw.<span class="me1">Start</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      <span class="kw1">return</span> timeslice;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">float</span> rotation = <span class="nu0">0</span>;
+    <span class="kw1">private</span> <span class="kw1">void</span> Animate<span class="br0">&#40;</span><span class="kw1">double</span> milliseconds<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">float</span> deltaRotation = <span class="br0">&#40;</span><span class="kw1">float</span><span class="br0">&#41;</span>milliseconds / <span class="nu0">20</span>.0f;
+      rotation += deltaRotation;
+      glControl1.<span class="me1">Invalidate</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">double</span> accumulator = <span class="nu0">0</span>;
+    <span class="kw1">int</span> idleCounter = <span class="nu0">0</span>;
+    <span class="kw1">private</span> <span class="kw1">void</span> Accumulate<span class="br0">&#40;</span><span class="kw1">double</span> milliseconds<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      idleCounter++;
+      accumulator += milliseconds;
+      <span class="kw1">if</span> <span class="br0">&#40;</span>accumulator &gt; <span class="nu0">1000</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        label1.<span class="me1">Text</span> = idleCounter.<span class="me1">ToString</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+        accumulator -= <span class="nu0">1000</span>;
+        idleCounter = <span class="nu0">0</span>; <span class="co1">// don't forget to reset the counter!</span>
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span></pre></div>
+<p>Our FPS counter in all its glory:</p>
+<p><img src="http://www.opentk.com/files/Form8.png" /></p>
+<p><b>Can't you put the complete source code somewhere?</b><br />
+Sure, here it is:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"> <span class="kw1">using</span> <span class="kw5">System</span>;
+<span class="kw1">using</span> <span class="kw5">System</span>.<span class="me1">ComponentModel</span>;
+<span class="kw1">using</span> <span class="kw5">System</span>.<span class="me1">Data</span>;
+<span class="kw1">using</span> <span class="kw5">System</span>.<span class="me1">Drawing</span>;
+<span class="kw1">using</span> <span class="kw5">System</span>.<span class="me1">Text</span>;
+<span class="kw1">using</span> <span class="kw5">System</span>.<span class="me1">Windows</span>.<span class="me1">Forms</span>;
+<span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>;
+<span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>.<span class="me1">OpenGL</span>;
+<span class="kw1">using</span> <span class="kw5">System</span>.<span class="me1">Diagnostics</span>;
+&nbsp;
+<span class="kw1">namespace</span> GLControlApp
+<span class="br0">&#123;</span>
+  <span class="kw1">public</span> partial <span class="kw1">class</span> Form1 : <span class="kw4">Form</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">bool</span> loaded = <span class="kw1">false</span>;
+&nbsp;
+    <span class="kw1">public</span> Form1<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      InitializeComponent<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    Stopwatch sw = <span class="kw1">new</span> Stopwatch<span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// available to all event handlers</span>
+    <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Load<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      loaded = <span class="kw1">true</span>;
+      <span class="kw3">GL</span>.<span class="me1">ClearColor</span><span class="br0">&#40;</span>Color.<span class="me1">SkyBlue</span><span class="br0">&#41;</span>; <span class="co1">// Yey! .NET Colors can be used directly!</span>
+      SetupViewport<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      Application.<span class="me1">Idle</span> += Application_Idle; <span class="co1">// press TAB twice after +=</span>
+      sw.<span class="me1">Start</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// start at application boot</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">void</span> Application_Idle<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">double</span> milliseconds = ComputeTimeSlice<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      Accumulate<span class="br0">&#40;</span>milliseconds<span class="br0">&#41;</span>;
+      Animate<span class="br0">&#40;</span>milliseconds<span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">float</span> rotation = <span class="nu0">0</span>;
+    <span class="kw1">private</span> <span class="kw1">void</span> Animate<span class="br0">&#40;</span><span class="kw1">double</span> milliseconds<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">float</span> deltaRotation = <span class="br0">&#40;</span><span class="kw1">float</span><span class="br0">&#41;</span>milliseconds / <span class="nu0">20</span>.0f;
+      rotation += deltaRotation;
+      glControl1.<span class="me1">Invalidate</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">double</span> accumulator = <span class="nu0">0</span>;
+    <span class="kw1">int</span> idleCounter = <span class="nu0">0</span>;
+    <span class="kw1">private</span> <span class="kw1">void</span> Accumulate<span class="br0">&#40;</span><span class="kw1">double</span> milliseconds<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      idleCounter++;
+      accumulator += milliseconds;
+      <span class="kw1">if</span> <span class="br0">&#40;</span>accumulator &gt; <span class="nu0">1000</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        label1.<span class="me1">Text</span> = idleCounter.<span class="me1">ToString</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+        accumulator -= <span class="nu0">1000</span>;
+        idleCounter = <span class="nu0">0</span>; <span class="co1">// don't forget to reset the counter!</span>
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw1">double</span> ComputeTimeSlice<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      sw.<span class="me1">Stop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      <span class="kw1">double</span> timeslice = sw.<span class="me1">Elapsed</span>.<span class="me1">TotalMilliseconds</span>;
+      sw.<span class="me1">Reset</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      sw.<span class="me1">Start</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      <span class="kw1">return</span> timeslice;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw1">void</span> SetupViewport<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">int</span> w = glControl1.<span class="me1">Width</span>;
+      <span class="kw1">int</span> h = glControl1.<span class="me1">Height</span>;
+      <span class="kw3">GL</span>.<span class="me1">MatrixMode</span><span class="br0">&#40;</span>MatrixMode.<span class="me1">Projection</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">LoadIdentity</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Ortho</span><span class="br0">&#40;</span><span class="nu0">0</span>, w, <span class="nu0">0</span>, h, <span class="nu0">-1</span>, <span class="nu0">1</span><span class="br0">&#41;</span>; <span class="co1">// Bottom-left corner pixel has coordinate (0, 0)</span>
+      <span class="kw3">GL</span>.<span class="me1">Viewport</span><span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">0</span>, w, h<span class="br0">&#41;</span>; <span class="co1">// Use all of the glControl painting area</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Paint<span class="br0">&#40;</span><span class="kw1">object</span> sender, PaintEventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>!loaded<span class="br0">&#41;</span>
+        <span class="kw1">return</span>;
+&nbsp;
+      <span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span>ClearBufferMask.<span class="me1">ColorBufferBit</span> | ClearBufferMask.<span class="me1">DepthBufferBit</span><span class="br0">&#41;</span>;
+&nbsp;
+      <span class="kw3">GL</span>.<span class="me1">MatrixMode</span><span class="br0">&#40;</span>MatrixMode.<span class="me1">Modelview</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">LoadIdentity</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+      <span class="kw3">GL</span>.<span class="me1">Translate</span><span class="br0">&#40;</span>x, <span class="nu0">0</span>, <span class="nu0">0</span><span class="br0">&#41;</span>;
+&nbsp;
+      <span class="kw1">if</span> <span class="br0">&#40;</span>glControl1.<span class="me1">Focused</span><span class="br0">&#41;</span>
+        <span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">Yellow</span><span class="br0">&#41;</span>;
+      <span class="kw1">else</span>
+        <span class="kw3">GL</span>.<span class="me1">Color3</span><span class="br0">&#40;</span>Color.<span class="me1">Blue</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Rotate</span><span class="br0">&#40;</span>rotation, <span class="kw3">Vector3</span>.<span class="me1">UnitZ</span><span class="br0">&#41;</span>; <span class="co1">// OpenTK has this nice Vector3 class!</span>
+      <span class="kw3">GL</span>.<span class="me1">Begin</span><span class="br0">&#40;</span>BeginMode.<span class="me1">Triangles</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">10</span>, <span class="nu0">20</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">100</span>, <span class="nu0">20</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">100</span>, <span class="nu0">50</span><span class="br0">&#41;</span>;
+      <span class="kw3">GL</span>.<span class="me1">End</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+      glControl1.<span class="me1">SwapBuffers</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">int</span> x = <span class="nu0">0</span>;
+    <span class="kw1">private</span> <span class="kw1">void</span> glControl1_KeyDown<span class="br0">&#40;</span><span class="kw1">object</span> sender, KeyEventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>e.<span class="me1">KeyCode</span> == Keys.<span class="me1">Space</span><span class="br0">&#41;</span>
+      <span class="br0">&#123;</span>
+        x++;
+        glControl1.<span class="me1">Invalidate</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw1">void</span> glControl1_Resize<span class="br0">&#40;</span><span class="kw1">object</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      SetupViewport<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+      glControl1.<span class="me1">Invalidate</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre></div>
+<p><b>Next step: What about multiple GLControls at once?</b><br />
+Yeah it is possible. It is even simple!</p>
+<p>All you have to do is "make the appropriate GLControl current".</p>
+<p>Let's say you have one GLControl named glCtrl1 and one named glCtrl2. And you have added handlers to the Paint event of both. This is what you do in the event handler of glCtrl1 (of course you do something similar in the event handler of glCtrl2!):</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">     <span class="kw1">private</span> <span class="kw1">void</span> glCtrl1_Paint<span class="br0">&#40;</span><span class="kw1">object</span> sender, PaintEventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      <span class="kw1">if</span> <span class="br0">&#40;</span>!loaded<span class="br0">&#41;</span>
+        <span class="kw1">return</span>;
+&nbsp;
+      glCtrl1.<span class="me1">MakeCurrent</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// Ohh.. It's that simple?</span>
+&nbsp;
+      <span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span>ClearBufferMask.<span class="me1">ColorBufferBit</span> | ClearBufferMask.<span class="me1">DepthBufferBit</span><span class="br0">&#41;</span>;
+      ...
+     <span class="br0">&#125;</span></pre></div>
+<p>The same is true for any code calling a GL.* or Glu.* method!</p>
+<p>Although each GLControl has its own GraphicsContext, OpenTK will share OpenGL resources by default. This means, any context can use textures, display lists, etc. created on any other context. You can disable this behavior via the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span>.<span class="me1">ShareContexts</span></code></span> property.</p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="../../opentk/nativewindow.html" class="page-previous" title="Go to previous page">‹ The NativeWindow class</a><a href="../2.html" class="page-up" title="Go to parent page">up</a><a href="../../intro/cpu-usage.html" class="page-next" title="Go to next page">Avoid 100% CPU usage ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/196" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/196%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/196%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-196 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<div class="pager"><a href="http://www.opentk.com/doc/chapter/2/glcontrol?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to first page">« first</a><a href="glcontrolaf66.html?page=3&amp;%24Version=1&amp;%24Path=/" class="pager-previous active" title="Go to previous page">‹ previous</a><span class="pager-list"><a href="http://www.opentk.com/doc/chapter/2/glcontrol?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to page 1">1</a><a href="glcontrol3258.html?page=1&amp;%24Version=1&amp;%24Path=/" class="pager-previous active" title="Go to page 2">2</a><a href="glcontrol9d6a.html?page=2&amp;%24Version=1&amp;%24Path=/" class="pager-previous active" title="Go to page 3">3</a><a href="glcontrolaf66.html?page=3&amp;%24Version=1&amp;%24Path=/" class="pager-previous active" title="Go to page 4">4</a><strong class="pager-current">5</strong></span></div><form action="http://www.opentk.com/doc/chapter/2/glcontrol?page=4&amp;%24Version=1&amp;%24Path=/"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-14430"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-3575.png" alt="protandeous&#039;s picture" title="protandeous&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="glcontrol.html#comment-14430" class="active">Re: Building a Windows.Forms + GLControl based application</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Saturday, 22 June, 2013 - 07:10             by protandeous                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Success!  See here: <a href="http://www.opentk.com/node/3344" title="http://www.opentk.com/node/3344">http://www.opentk.com/node/3344</a></p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-15062"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="David Bakin&#039;s picture" title="David Bakin&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="glcontrol.html#comment-15062" class="active">Re: Building a Windows.Forms + GLControl based application</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 8 January, 2014 - 06:06             by David Bakin                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Try this as a sample Form1.Designer.cs:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>;
+<span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>.<span class="me1">OpenGL</span>;
+&nbsp;
+<span class="kw1">namespace</span> OpenGLTest1
+<span class="br0">&#123;</span>
+    partial <span class="kw1">class</span> Form1
+    <span class="br0">&#123;</span>
+        <span class="co1">/// &lt;summary&gt;</span>
+        <span class="co1">/// Required designer variable.</span>
+        <span class="co1">/// &lt;/summary&gt;</span>
+        <span class="kw1">private</span> <span class="kw5">System</span>.<span class="me1">ComponentModel</span>.<span class="me1">IContainer</span> components = <span class="kw1">null</span>;
+&nbsp;
+        <span class="co1">/// &lt;summary&gt;</span>
+        <span class="co1">/// Clean up any resources being used.</span>
+        <span class="co1">/// &lt;/summary&gt;</span>
+        <span class="co1">/// &lt;param name=&quot;disposing&quot;&gt;true if managed resources should be disposed; otherwise, false.&lt;/param&gt;</span>
+        <span class="kw1">protected</span> <span class="kw1">override</span> <span class="kw1">void</span> Dispose<span class="br0">&#40;</span><span class="kw1">bool</span> disposing<span class="br0">&#41;</span>
+        <span class="br0">&#123;</span>
+            <span class="kw1">if</span> <span class="br0">&#40;</span>disposing &amp;&amp; <span class="br0">&#40;</span>components != <span class="kw1">null</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+            <span class="br0">&#123;</span>
+                components.<span class="me1">Dispose</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+            <span class="br0">&#125;</span>
+            <span class="kw1">base</span>.<span class="me1">Dispose</span><span class="br0">&#40;</span>disposing<span class="br0">&#41;</span>;
+        <span class="br0">&#125;</span>
+&nbsp;
+        <span class="co2">#region Windows Form Designer generated code</span>
+&nbsp;
+        <span class="co1">/// &lt;summary&gt;</span>
+        <span class="co1">/// Required method for Designer support - do not modify</span>
+        <span class="co1">/// the contents of this method with the code editor.</span>
+        <span class="co1">/// &lt;/summary&gt;</span>
+        <span class="kw1">private</span> <span class="kw1">void</span> InitializeComponent<span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="br0">&#123;</span>
+            <span class="kw1">this</span>.<span class="me1">textBox1</span> = <span class="kw1">new</span> <span class="kw5">System</span>.<span class="me1">Windows</span>.<span class="me1">Forms</span>.<span class="me1">TextBox</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">glControl1</span> = <span class="kw1">new</span> <span class="kw5">OpenTK</span>.<span class="kw3">GLControl</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">SuspendLayout</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+            <span class="co1">// </span>
+            <span class="co1">// textBox1</span>
+            <span class="co1">// </span>
+            <span class="kw1">this</span>.<span class="me1">textBox1</span>.<span class="me1">Location</span> = <span class="kw1">new</span> <span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">Point</span><span class="br0">&#40;</span><span class="nu0">13</span>, <span class="nu0">229</span><span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">textBox1</span>.<span class="me1">Name</span> = <span class="st0">&quot;textBox1&quot;</span>;
+            <span class="kw1">this</span>.<span class="me1">textBox1</span>.<span class="me1">Size</span> = <span class="kw1">new</span> <span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">Size</span><span class="br0">&#40;</span><span class="nu0">259</span>, <span class="nu0">20</span><span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">textBox1</span>.<span class="me1">TabIndex</span> = <span class="nu0">0</span>;
+            <span class="co1">// </span>
+            <span class="co1">// glcontrol1</span>
+            <span class="co1">// </span>
+            <span class="kw1">this</span>.<span class="me1">glControl1</span>.<span class="me1">BackColor</span> = <span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">Color</span>.<span class="me1">Black</span>;
+            <span class="kw1">this</span>.<span class="me1">glControl1</span>.<span class="me1">Location</span> = <span class="kw1">new</span> <span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">Point</span><span class="br0">&#40;</span><span class="nu0">12</span>, <span class="nu0">12</span><span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">glControl1</span>.<span class="me1">Name</span> = <span class="st0">&quot;glcontrol1&quot;</span>;
+            <span class="kw1">this</span>.<span class="me1">glControl1</span>.<span class="me1">Size</span> = <span class="kw1">new</span> <span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">Size</span><span class="br0">&#40;</span><span class="nu0">260</span>, <span class="nu0">202</span><span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">glControl1</span>.<span class="me1">TabIndex</span> = <span class="nu0">1</span>;
+            <span class="kw1">this</span>.<span class="me1">glControl1</span>.<span class="me1">VSync</span> = <span class="kw1">false</span>;
+            <span class="co1">// </span>
+            <span class="co1">// Form1</span>
+            <span class="co1">// </span>
+            <span class="kw1">this</span>.<span class="me1">AutoScaleDimensions</span> = <span class="kw1">new</span> <span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">SizeF</span><span class="br0">&#40;</span>6F, 13F<span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">AutoScaleMode</span> = <span class="kw5">System</span>.<span class="me1">Windows</span>.<span class="me1">Forms</span>.<span class="me1">AutoScaleMode</span>.<span class="kw4">Font</span>;
+            <span class="kw1">this</span>.<span class="me1">ClientSize</span> = <span class="kw1">new</span> <span class="kw5">System</span>.<span class="me1">Drawing</span>.<span class="me1">Size</span><span class="br0">&#40;</span><span class="nu0">284</span>, <span class="nu0">261</span><span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">Controls</span>.<span class="me1">Add</span><span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">textBox1</span><span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">Controls</span>.<span class="me1">Add</span><span class="br0">&#40;</span><span class="kw1">this</span>.<span class="me1">glControl1</span><span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">Name</span> = <span class="st0">&quot;Form1&quot;</span>;
+            <span class="kw1">this</span>.<span class="me1">Text</span> = <span class="st0">&quot;Form1&quot;</span>;
+            <span class="kw1">this</span>.<span class="me1">ResumeLayout</span><span class="br0">&#40;</span><span class="kw1">false</span><span class="br0">&#41;</span>;
+            <span class="kw1">this</span>.<span class="me1">PerformLayout</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+        <span class="br0">&#125;</span>
+&nbsp;
+        <span class="co2">#endregion</span>
+&nbsp;
+        <span class="kw1">private</span> <span class="kw5">System</span>.<span class="me1">Windows</span>.<span class="me1">Forms</span>.<span class="me1">TextBox</span> textBox1;
+        <span class="kw1">private</span> <span class="kw5">OpenTK</span>.<span class="kw3">GLControl</span> glControl1;
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre></div>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-15202"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="Grumly57&#039;s picture" title="Grumly57&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="glcontrol.html#comment-15202" class="active">Re: Building a Windows.Forms + GLControl based application</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Saturday, 1 February, 2014 - 17:42             by Grumly57                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Hi,</p>
+<p>I replaced the</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">if</span> <span class="br0">&#40;</span>!loaded<span class="br0">&#41;</span>
+    <span class="kw1">return</span>;</pre></div>
+<p>by</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">if</span> <span class="br0">&#40;</span>!glControl1.<span class="me1">IsHandleCreated</span><span class="br0">&#41;</span>
+    <span class="kw1">return</span>;<span class="br0">&#41;</span></pre></div>
+<p>It works fine.<br />
+I try to avoid having too much booleans as fuse in my code :)</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-15674"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="Eackz&#039;s picture" title="Eackz&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="glcontrol.html#comment-15674" class="active">Re: Building a Windows.Forms + GLControl based application</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 13 May, 2014 - 00:07             by Eackz                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>How do you detect mouse input inside of a GLControl panel that is dynamically added through code? I've found NO tutorials or examples on how to detect mouse input for things other than GameWindow, and I desperately need the answer. I am building a level editor.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-17047"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="wcdeich4&#039;s picture" title="wcdeich4&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="glcontrol.html#comment-17047" class="active">Re: Building a Windows.Forms + GLControl based application</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Monday, 4 January, 2016 - 01:18             by wcdeich4                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Hi, I'm using OpenTK1.4 with Visual Studio 2013 Pro &amp; no matter what I do, I can't get it to work.  It seems like none of the glcontrol methods are ever called.  Even when I tried adding the Form1.Load event handler delegate like Fidder suggested</p>
+<p>            Form1.Load += (sender, e) =&gt;<br />
+            {<br />
+                glControl1.CreateControl(); // Ensure the GLControl is created prior to using it.<br />
+                loaded = true;<br />
+                GL.ClearColor(Color.SkyBlue);<br />
+            };</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<div class="pager"><a href="http://www.opentk.com/doc/chapter/2/glcontrol?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to first page">« first</a><a href="glcontrolaf66.html?page=3&amp;%24Version=1&amp;%24Path=/" class="pager-previous active" title="Go to previous page">‹ previous</a><span class="pager-list"><a href="http://www.opentk.com/doc/chapter/2/glcontrol?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to page 1">1</a><a href="glcontrol3258.html?page=1&amp;%24Version=1&amp;%24Path=/" class="pager-previous active" title="Go to page 2">2</a><a href="glcontrol9d6a.html?page=2&amp;%24Version=1&amp;%24Path=/" class="pager-previous active" title="Go to page 3">3</a><a href="glcontrolaf66.html?page=3&amp;%24Version=1&amp;%24Path=/" class="pager-previous active" title="Go to page 4">4</a><strong class="pager-current">5</strong></span></div>
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F196%3Fpage%3D4%26%2524Version%3D1%26%2524Path%3D%2F" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/glcontrol?page=4&%24Version=1&%24Path=/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:49:04 GMT -->
+</html>

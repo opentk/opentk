@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/intro/cpu-usage by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="../chapter/2/glcontrol.html" />
+
+<link rel="up" href="../chapter/2.html" />
+
+<link rel="next" href="../chapter/2/rules_of_thumb.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Avoid 100% CPU usage | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/424f91e289b328059ea3bb877e9af826.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/424f91e289b328059ea3bb877e9af826.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../chapter/2.html" title="Chapter 2: Introduces simple concepts (window creation, drawing shapes, respponding to user input)">Using OpenTK</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-2301" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="cpu-usage.html">Avoid 100% CPU usage</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>If you come from a GUI programming background you are probably used to the fact that GUI applications do not take CPU time when idle. You create a window, paint it and then it sits there, consuming negligible CPU time until you interact with it.</p>
+<p>In that case, you may be surprised when you use OpenTK for the first time and see it consume 100% of your CPU even when you just draw a blank window! While surprising, there is a good reason why this is so - and it is simple to fix once you understand why that is.</p>
+<p>Most applications tend to be designed around one of two broad models:</p>
+<ul>
+<li>Event loops, where the application sleeps until it receives some specific event (e.g. a keystroke, mouse movement or paint request).<br />
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">while</span> <span class="br0">&#40;</span>!exit<span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">var</span> msg = WaitForMessage<span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// Blocks until message arrives</span>
+    <span class="kw1">switch</span> <span class="br0">&#40;</span>msg.<span class="me1">Type</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="kw1">case</span> Message.<span class="me1">MouseMove</span>: OnMouseMove<span class="br0">&#40;</span>msg<span class="br0">&#41;</span>; <span class="kw1">break</span>;
+        <span class="kw1">case</span> Message.<span class="me1">Paint</span>: OnPaint<span class="br0">&#40;</span>msg<span class="br0">&#41;</span>; <span class="kw1">break</span>;
+        ...
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre></div>
+</li>
+<li>Game loops, where the application runs a simulation, polls user input and draws to screen continuously:<br />
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">while</span> <span class="br0">&#40;</span>!exit<span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">var</span> time = GetTime<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    Update<span class="br0">&#40;</span>time<span class="br0">&#41;</span>;
+    Render<span class="br0">&#40;</span>time<span class="br0">&#41;</span>;
+<span class="br0">&#125;</span></pre></div>
+</li>
+</ul>
+<p>There is a fundamental difference between event and game loops: the former are stopped until something wakes them; the latter run until something stops them. GUI applications tend to be better suited to the first model: wait for the user and react to his input. Games tend to use the second model: enemies usually continue to move even when the user is not moving his mouse!</p>
+<p>One side-effect of continuous game loops is that the CPU is always utilized 100% unless you, the developer, take care to release it. (OpenTK cannot do that for you, since you can code a game loop in any number of exotic ways - the library simply cannot know which one you happen to be using). </p>
+<p>To release CPU time, do one of those:</p>
+<ul>
+<li>Enable vsync via <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span>.<span class="me1">CurrentContext</span>.<span class="me1">VSync</span> = <span class="kw1">true</span></code></span> in your glControl Load. This is very accurate but may fail to work on some older drivers or when the user disables vsync in his driver configuration.</li>
+<li>Call <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw5">System</span>.<span class="me1">Threading</span>.<span class="kw4">Thread</span>.<span class="me1">Sleep</span><span class="br0">&#40;</span>n<span class="br0">&#41;</span></code></span> where <i>n</i> is the amount of milliseconds you have to spare, considering your target framerate. (For instance, if you target 60fps or 16.6ms per frame, and your frame time is 10ms, you have 6.6ms to spare). This approach will always work but is less accurate may overshoot the amount of milliseconds you specify.</li>
+</ul>
+<p>Don't enable vsync and sleep at the same time, as this may reduce your framerate below your intended target.</p>
+<p>In OpenTK, you will typically use GLControl to build event-based applications and GameWindow for game loop applications. This is not a hard rule: it is certainly possible to install a game loop in GLControl or use GameWindow in a event-based manner (please refer to the relevant documentation for more information).</p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="../chapter/2/glcontrol.html" class="page-previous" title="Go to previous page">‹ Building a Windows.Forms + GLControl based application</a><a href="../chapter/2.html" class="page-up" title="Go to parent page">up</a><a href="../chapter/2/rules_of_thumb.html" class="page-next" title="Go to next page">Avoiding pitfalls in the managed world ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first last book_printer"><a href="http://www.opentk.com/book/export/html/2301" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-2301 -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F2301" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/intro/cpu-usage by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:27 GMT -->
+</html>

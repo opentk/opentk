@@ -1,0 +1,516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/hacking/bindings by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="opentk-structure.html" />
+
+<link rel="up" href="../hacking.html" />
+
+<link rel="next" href="http://www.opentk.com/node/3389" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Generating bindings | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../hacking.html">Chapter 9: Hacking OpenTK</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-3386" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="bindings.html">Generating bindings</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>This is a rough overview of the binding generation process.</p>
+<ol>
+<li>Convert.exe converts .spec files into a custom xml file, called <a href="http://www.opentk.com/node/3387">signatures.xml</a>.</li>
+<li>The generator loads <a href="http://www.opentk.com/node/3387">signatures.xml</a>, <a href="http://www.opentk.com/node/3388">overrides.xml</a> and <a href="http://www.opentk.com/node/3389">gl.tm</a> into a custom in-memory representation.</li>
+<li>The generator then applies a number of hard-coded rules. These include stripping the prefixes and suffixes of functions, escaping for tokens that start with digits, generation of safe/unsafe overloads for functions taking pointers and handling of CLS-compliance.</li>
+<li>Finally, it generates compilable code for C# or C++.</li>
+</ol>
+<p>Several command-line switches can influence the generation process: GL vs ES, namespaces, generated code.</p>
+<p>What is the best way for you to proceed depends on (a) the amount of functions you wish to add, and (b) whether these functions are available in the old .spec files or the new xml format.</p>
+<p>If you only wish to add a handful of functions, the easiest approach might be to define them by hand at the bottom of the <a href="http://www.opentk.com/node/3387">signatures.xml</a> file, which can be found under Source/Bind/Specifications/GL2. The format is relatively simple:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">&lt;function name=<span class="st0">&quot;VertexPointer&quot;</span> extension=<span class="st0">&quot;Core&quot;</span> category=<span class="st0">&quot;VERSION_1_1_DEPRECATED&quot;</span> version=<span class="st0">&quot;1.1&quot;</span> deprecated=<span class="st0">&quot;3.1&quot;</span>&gt;
+      &lt;returns type=<span class="st0">&quot;void&quot;</span> /&gt;
+      &lt;param name=<span class="st0">&quot;size&quot;</span> type=<span class="st0">&quot;Int32&quot;</span> flow=<span class="st0">&quot;in&quot;</span> /&gt;
+      &lt;param name=<span class="st0">&quot;type&quot;</span> type=<span class="st0">&quot;VertexPointerType&quot;</span> flow=<span class="st0">&quot;in&quot;</span> /&gt;
+      &lt;param name=<span class="st0">&quot;stride&quot;</span> type=<span class="st0">&quot;SizeI&quot;</span> flow=<span class="st0">&quot;in&quot;</span> /&gt;
+      &lt;param name=<span class="st0">&quot;pointer&quot;</span> type=<span class="st0">&quot;Void*&quot;</span> flow=<span class="st0">&quot;in&quot;</span> /&gt;
+    &lt;/function&gt;</pre></div>
+<p>In this case, VertexPointerType is an enumeration that must be defined in either <a href="http://www.opentk.com/node/3387">signatures.xml</a> or <a href="http://www.opentk.com/node/3388">overrides.xml</a>. If this enumeration is not found, the generator will fall back to the "All" enumeration, which is equivalent to the non-typesafe GLenum used in the regular C headers.</p>
+<p>If you wish to bind a significant amount of functions, such as a whole new OpenGL version, then your best bet is to execute the Converter utility to generate a new <a href="http://www.opentk.com/node/3387">signatures.xml</a> file from the latest spec:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">cd Binaries/<span class="kw5">OpenTK</span>/Debug
+wget https:<span class="co1">//cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/oldspecs/gl.spec</span>
+Convert.<span class="me1">exe</span> -p=gl -v=<span class="nu0">4.3</span> -o=../../../Source/Bind/Specifications/GL2 gl.<span class="me1">spec</span>
+Bind.<span class="me1">exe</span></pre></div>
+<p>Now you can recompile OpenTK and take a look at the generated specs - the new functions should be there. If they use enums, these will probably appear as "All". You can use overrides.xml to define type-safe enums and improve the generated API.</p>
+<div class="book-navigation"><ul class="menu"><li class="leaf"><a href="http://www.opentk.com/node/3389">gl.tm</a></li><li class="leaf"><a href="http://www.opentk.com/node/3388">overrides.xml</a></li><li class="leaf"><a href="http://www.opentk.com/node/3387">signatures.xml</a></li></ul><div class="page-links clear-block"><a href="opentk-structure.html" class="page-previous" title="Go to previous page">‹ OpenTK Structure</a><a href="../hacking.html" class="page-up" title="Go to parent page">up</a><a href="http://www.opentk.com/node/3389" class="page-next" title="Go to next page">gl.tm ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/3386" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/3386%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/3386%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-3386 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<form action="http://www.opentk.com/doc/hacking/bindings"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-14507"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="iliak&#039;s picture" title="iliak&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="bindings.html#comment-14507" class="active">Re: Generating bindings</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Thursday, 12 September, 2013 - 15:43             by iliak                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>From what I understand, Convert.exe converts gl.spec to xml files (signatures.xml and gloverrides.xml). Then Bind.exe converts thoses xml into .cs files (GL.cs, GLCore.cs, GLDelegates.cs, GLEnums.cs &amp; GLHelpers.cs (more ??)).</p>
+<p>Now that OpenGL provides .xml instead of .spec files, does convert.exe still usefull ? Wouldn't it be a better way to make Bind.exe process directly OpenGL's xml files ?</p>
+<p>Iliak</p>
+<p><a href="http://www.mimicprod.net/" title="www.mimicprod.net">www.mimicprod.net</a><br />
+<a href="http://www.dungeoneye.net/" title="www.dungeoneye.net">www.dungeoneye.net</a> : Open source remake of Eye of the Beholder II</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-14533"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="bindings.html#comment-14533" class="active">Re: Generating bindings</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Saturday, 28 September, 2013 - 00:48             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>A converter for the new xml specs is on the way. The format is different from the one used by the binding generator, so convert.exe will still be required.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-14548"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="iliak&#039;s picture" title="iliak&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="bindings.html#comment-14548" class="active">Re: Generating bindings</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 4 October, 2013 - 08:39             by iliak                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>I made a small program importing OpenGL specification and outping in a format parsable by Bind.exe.<br />
+I can give it to you il needed !</p>
+<p>Iliak</p>
+<p><a href="http://www.mimicprod.net/" title="www.mimicprod.net">www.mimicprod.net</a><br />
+<a href="http://www.dungeoneye.net/" title="www.dungeoneye.net">www.dungeoneye.net</a> : Open source remake of Eye of the Beholder II</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-14549"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="bindings.html#comment-14549" class="active">Re: Generating bindings</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 4 October, 2013 - 13:18             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>That would be much appreciated!</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-14550"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="iliak&#039;s picture" title="iliak&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="bindings.html#comment-14550" class="active">Re: Generating bindings</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 4 October, 2013 - 16:46             by iliak                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Where / how can I send it to you (mail, ftp, ...) ?</p>
+<p>Iliak</p>
+<p><a href="http://www.mimicprod.net/" title="www.mimicprod.net">www.mimicprod.net</a><br />
+<a href="http://www.dungeoneye.net/" title="www.dungeoneye.net">www.dungeoneye.net</a> : Open source remake of Eye of the Beholder II</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-14560"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="bindings.html#comment-14560" class="active">Re: Generating bindings</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Thursday, 10 October, 2013 - 20:40             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Apologies, I somehow missed your post. Best way would be to upload the code to github and post a link. Alternatively, check your PMs for my email address.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-15819"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="kevink&#039;s picture" title="kevink&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="bindings.html#comment-15819" class="active">Re: Generating bindings</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Monday, 23 June, 2014 - 13:19             by kevink                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Hi,</p>
+<p>Is there anywhere new Binding Project with Support for the new XML files?</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-15820"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="bindings.html#comment-15820" class="active">Re: Generating bindings</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Monday, 23 June, 2014 - 14:02             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>It is part of OpenTK.sln. Run <span class="geshifilter"><code class="geshifilter-csharp">Generator.<span class="me1">Convert</span></code></span> to download the latest Khronos specification and <span class="geshifilter"><code class="geshifilter-csharp">Generator.<span class="me1">Bind</span></code></span> to generate the bindings. The default run parameters will re-generate both GL and ES bindings - you can tweak those under the project options for Generator.Bind.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-15821"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="kevink&#039;s picture" title="kevink&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="bindings.html#comment-15821" class="active">Re: Generating bindings</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 24 June, 2014 - 08:00             by kevink                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>I mean can Generator.Bind process the new Khronos xmls?</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-15822"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="bindings.html#comment-15822" class="active">Re: Generating bindings</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 24 June, 2014 - 09:06             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Yes.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F3386" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/hacking/bindings by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:41 GMT -->
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>OpenTK 1.1 Tutorial</title>
+  </head>
+  <body>
+    <h1>OpenTK Tutorial</h1>
+	<p><i>Disclamer: content is mostly taken from <a href="www.opentk.com/doc/chapter/0">here</a></i>
+    <!--Below: copypasta-->
+    <!--TODO: Syntax highlighting?-->
+    <p>So, you have downloaded the <a href="http://www.opentk.com/files/download-opentk.html">latest version of OpenTK</a> - what now?</p>
+<p>This is a short tutorial that will help you get started with OpenTK in 3 simple steps.</p>
+<p><b>[Step 1: Installation]</b></p>
+<p>Run the installer you downloaded. It will ask where you want OpenTK to be installed. Any folder will do.</p>
+<p><b>[Step 2: Use OpenTK]</b></p>
+<p>Create a new project in your .NET IDE (don't have a .NET IDE? Check out <a href="http://monodevelop.com/Download">MonoDevelop</a> or <a href="http://www.microsoft.com/express/vcsharp/">Visual Studio Express</a>). Make it of type "Console Application". </p>
+<p>Now, add a reference to OpenTK.dll: In your new project, right click "References" and select "Add Reference". Locate OpenTK.dll and add it.</p>
+<p>Repeat this process for System.Drawing.dll. OpenTK depends on this.</p>
+<p>Alternitively, use NuGet. In Visual Studio, press Project -> Manage Nuget Packages. Press browse, search for OpenTK and install. This will add the neccesary references, and download the correct files.</p>
+<p>Now you are ready to add some graphics! Open Program.cs and copy-paste the following code:</p>
+<div>
+<pre><span>using</span> <span>System</span>;
+<span>using</span> <span>System</span>.<span>Drawing</span>;
+<span>using</span> <span>OpenTK</span>;
+<span>using</span> <span>OpenTK</span>.<span>Graphics</span>;
+<span>using</span> <span>OpenTK</span>.<span>Graphics</span>.<span>OpenGL</span>;
+<span>using</span> <span>OpenTK</span>.<span>Input</span>;
+&nbsp;
+<span>namespace</span> Example
+<span>&#123;</span>
+<span>class</span> MyApplication
+<span>&#123;</span>
+    <span>&#91;</span>STAThread<span>&#93;</span>
+    <span>public</span> <span>static</span> <span>void</span> Main<span>&#40;</span><span>&#41;</span>
+    <span>&#123;</span>
+        <span>using</span> <span>&#40;</span><span>var</span> game = <span>new</span> <span>GameWindow</span><span>&#40;</span><span>&#41;</span><span>&#41;</span>
+        <span>&#123;</span>
+            game.<span>Load</span> += <span>&#40;</span>sender, e<span>&#41;</span> =&gt;
+            <span>&#123;</span>
+                <span>// setup settings, load textures, sounds</span>
+                game.<span>VSync</span> = VSyncMode.<span>On</span>;
+            <span>&#125;</span>;
+&nbsp;
+            game.<span>Resize</span> += <span>&#40;</span>sender, e<span>&#41;</span> =&gt;
+            <span>&#123;</span>
+                <span>GL</span>.<span>Viewport</span><span>&#40;</span><span>0</span>, <span>0</span>, game.<span>Width</span>, game.<span>Height</span><span>&#41;</span>;
+            <span>&#125;</span>;
+&nbsp;
+            game.<span>UpdateFrame</span> += <span>&#40;</span>sender, e<span>&#41;</span> =&gt;
+            <span>&#123;</span>
+                <span>// add game logic, input handling</span>
+                <span>if</span> <span>&#40;</span>game.<span>Keyboard</span><span>&#91;</span><span>Key</span>.<span>Escape</span><span>&#93;</span><span>&#41;</span>
+                <span>&#123;</span>
+                    game.<span>Exit</span><span>&#40;</span><span>&#41;</span>;
+                <span>&#125;</span>
+            <span>&#125;</span>;
+&nbsp;
+            game.<span>RenderFrame</span> += <span>&#40;</span>sender, e<span>&#41;</span> =&gt;
+            <span>&#123;</span>
+                <span>// render graphics</span>
+                <span>GL</span>.<span>Clear</span><span>&#40;</span>ClearBufferMask.<span>ColorBufferBit</span> | ClearBufferMask.<span>DepthBufferBit</span><span>&#41;</span>;
+&nbsp;
+                <span>GL</span>.<span>MatrixMode</span><span>&#40;</span>MatrixMode.<span>Projection</span><span>&#41;</span>;
+                <span>GL</span>.<span>LoadIdentity</span><span>&#40;</span><span>&#41;</span>;
+                <span>GL</span>.<span>Ortho</span><span>&#40;</span><span>-1.0</span>, <span>1.0</span>, <span>-1.0</span>, <span>1.0</span>, <span>0.0</span>, <span>4.0</span><span>&#41;</span>;
+&nbsp;
+                <span>GL</span>.<span>Begin</span><span>&#40;</span>PrimitiveType.<span>Triangles</span><span>&#41;</span>;
+&nbsp;
+                <span>GL</span>.<span>Color3</span><span>&#40;</span>Color.<span>MidnightBlue</span><span>&#41;</span>;
+                <span>GL</span>.<span>Vertex2</span><span>&#40;</span><span>-1</span>.0f, <span>1</span>.0f<span>&#41;</span>;
+                <span>GL</span>.<span>Color3</span><span>&#40;</span>Color.<span>SpringGreen</span><span>&#41;</span>;
+                <span>GL</span>.<span>Vertex2</span><span>&#40;</span><span>0</span>.0f, <span>-1</span>.0f<span>&#41;</span>;
+                <span>GL</span>.<span>Color3</span><span>&#40;</span>Color.<span>Ivory</span><span>&#41;</span>;
+                <span>GL</span>.<span>Vertex2</span><span>&#40;</span><span>1</span>.0f, <span>1</span>.0f<span>&#41;</span>;
+&nbsp;
+                <span>GL</span>.<span>End</span><span>&#40;</span><span>&#41;</span>;
+&nbsp;
+                game.<span>SwapBuffers</span><span>&#40;</span><span>&#41;</span>;
+            <span>&#125;</span>;
+&nbsp;
+            <span>// Run the game at 60 updates per second</span>
+            game.<span>Run</span><span>&#40;</span><span>60.0</span><span>&#41;</span>;
+        <span>&#125;</span>
+    <span>&#125;</span>
+<span>&#125;</span>
+<span>&#125;</span></pre></div>
+<p>Build and run this application. You should see a window with a triangle inside. Press escape to exit.</p>
+<p><b>[Step 3: Play]</b></p>
+<p>Now it's time to start playing with the code. This is a great way to learn OpenGL and OpenTK at the same time. </p>
+<p>Every OpenTK game will contain 4 basic methods:</p>
+<ol>
+<li><span><code>Load</code></span>: this is the place to load resources from disk, like images or music.</li>
+<li><span><code>UpdateFrame</code></span>: this is a suitable place to handle input, update object positions, run physics or AI calculations.</li>
+<li><span><code>RenderFrame</code></span>: this contains the code that renders your graphics. It typically begins with a call to <span><code><span>GL</span>.<span>Clear</span><span>&#40;</span><span>&#41;</span></code></span> and ends with a call to <span><code>SwapBuffers</code></span>.</li>
+<li><span><code>Resize</code></span>: this method is called automatically whenever your game window changes size. Fullscreen applications will typically call it only once. Windowed applications may call it more often. In most circumstances, you can simply copy &amp; paste the code from Game.cs.</li>
+</ol>
+<p>Why don't you try modifying a few things? Here are a few suggestions:</p>
+<ol>
+<li>Change the colors of the triangle or the window background (OnLoad and OnRenderFrame methods). Hint: use GL.Color4() to control the triangle color and GL.ClearColor() to control the background color. </li>
+<li>Make the triangle change colors when you press a key (OnUpdateFrame and OnRenderFrame methods).</li>
+<li>Make the triangle move across the screen. Use the arrow keys or the mouse to control its position (OnUpdateFrame). Hint: use Matrix4.CreateTranslation() to create a translation matrix and call GL.LoadMatrix() to load it (OnRenderFrame).</li>
+<li>Use a for-loop to render many triangles arranged on a plane (OnRenderFrame method).</li>
+<li>Rotate the camera so that the plane above acts as ground (OnRenderFrame method). Hint: use Matrix4.LookAt() to create a modelview matrix and use GL.LoadMatrix() to load it.</li>
+<li>Use the keyboard and mouse to walk on the ground. Make sure you can't fall through it! (OnUpdateFrame and OnRenderFrame methods).</li>
+</ol>
+<p>Some things you might find useful: <span><code><span>Vector2</span></code></span>, <span><code><span>Vector3</span></code></span>, <span><code><span>Vector4</span></code></span> and <span><code><span>Matrix4</span></code></span> classes for camera manipulations. <span><code>Mouse</code></span> and <span><code>Keyboard</code></span> properties for interaction with the mouse and keyboard, respectively. <span><code>Joysticks</code></span> property for interaction with joystick devices.</p>
+<p>Don't be afraid to try things and see the results. OpenTK lends itself to explorative programming - even if something breaks, the library will help you pinpoint the cause of the error.</p>
+<p>Check out the <a href="https://github.com/opentk/opentk/tree/master/Source/Examples">examples.</a></p>
+<p><b>[Step: next]</b></p>
+<p>There's a lot of functionality that is not visible at first glance: audio, advanced OpenGL, display devices, support for GUIs through GLControl...  Then there's the subject of proper engine and game design, which could cover a whole book by itself.</p>
+<p>Hopefully, you'll have gained a feel of the library by now and you'll be able to accomplish more complex tasks. You might wish to consult the <a href="Table Of Contents.html">complete documentation</a> for the more advanced aspects of OpenTK and, of course, don't hesitate to post at the <a href="http://www.opentk.com/forum">forums</a> if you hit any roadblocks!</p>
+  </body>
+</html>

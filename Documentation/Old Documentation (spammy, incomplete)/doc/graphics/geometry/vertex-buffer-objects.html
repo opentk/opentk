@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/geometry/vertex-buffer-objects by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="../../chapter/2/opengl/geometry/primitives.html" />
+
+<link rel="up" href="../geometry.html" />
+
+<link rel="next" href="../../chapter/2/opengl/geometry/attributes.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>3.a Vertex Buffer Objects | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../../index.html">Home</a> » <a href="../../../doc.html" title="What is this all about?">Introduction</a> » <a href="../../graphics.html" title="Description of the OpenTK.Graphics namespace, plus a quick OpenGL and OpenGL|ES primer.">Graphics</a> » <a href="../geometry.html" title="Describes Geometry in OpenGL">Geometry</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-144" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="vertex-buffer-objects.html">3.a Vertex Buffer Objects</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p><strong>Introduction</strong><br />
+The advantage of VBO (Vertex Buffer Objects) is that we can tell OpenGL to store information used for drawing - like Position, Colors, Texture Coordinates and Normals - directly in the Video-card's Memory, rather than storing it in System Memory and pass it to the graphics Hardware every time we wish to draw it. While this has been already doable with Display Lists before, VBO has the advantage that we're able to retrieve a Pointer to the data in Video Memory and read/write directly to it, if necessary. This can be a huge performance boost for dynamic meshes and is for years the best overall solution for storing - both, static and dynamic - Meshes.</p>
+<p><strong>Creation</strong><br />
+Handling VBOs is very similar to handling Texture objects, we can generate&amp;delete handles, bind them or fill them with data. For this tutorial we will need 2 objects, one VBO containing all Vertex information (Texture, Normal and Position in this example case) and an IBO (Index Buffer Object) referencing Vertices from the VBO to form Triangles. This has the advantage that, when we have uploaded the data to the VBO/IBO later on, we can draw the whole mesh with a single GL.DrawElements call.</p>
+<p>First we acquire two Objects to use:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">uint</span><span class="br0">&#91;</span><span class="br0">&#93;</span> VBOid = <span class="kw1">new</span> <span class="kw1">uint</span><span class="br0">&#91;</span> <span class="nu0">2</span> <span class="br0">&#93;</span>;
+<span class="kw3">GL</span>.<span class="me1">GenBuffers</span><span class="br0">&#40;</span> <span class="nu0">2</span>, <span class="kw1">out</span> VBOid <span class="br0">&#41;</span>;</pre></div>
+<p>Although it is unlikely, OpenGL could complain that it ran out of memory or that the extension is not supported, it should be checked with GL.GetError. If everything went smooth we have 2 objects to work with available now.</p>
+<p><strong>Delete</strong><br />
+The OpenGL driver should clean up all our mess when it deletes the render context, it's always a good idea to clean up on your own where you can. We remove the objects we reserved at the buffer creation by calling:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">DeleteBuffers</span><span class="br0">&#40;</span> <span class="nu0">2</span>, <span class="kw1">ref</span> VBOid <span class="br0">&#41;</span>;</pre></div>
+<p><strong>Binding</strong><br />
+To select which object you currently want to work with, simply bind the handle to either BufferTarget.ArrayBuffer or BufferTarget.ElementArrayBuffer. The first is used to store position, uv, normals, etc. (named VBO) and the later is pointing at those vertices to define geometry (named IBO). </p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">BindBuffer</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ArrayBuffer</span>, VBOid<span class="br0">&#91;</span> <span class="nu0">0</span> <span class="br0">&#93;</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">BindBuffer</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ElementArrayBuffer</span>, VBOid<span class="br0">&#91;</span> <span class="nu0">1</span> <span class="br0">&#93;</span> <span class="br0">&#41;</span>;</pre></div>
+<p>It is not required to bind a buffer to both targets, for example you could store only the vertices in the VBO and keep the indices in system memory. Also, the two objects are not tied together in any way, for example you could build different triangle lists for BufferTarget.ElementArrayBuffer to implement LOD on the same set of vertices, simply by binding the desired element array.</p>
+<p>Theres two important things to keep in mind though:</p>
+<p>1) While working with VBOs, GL.EnableClientState(EnableCap.VertexArray); must be enabled. if using Normals, GL.EnableClientState(EnableCap.NormalArray), just like classic Vertex Arrays.</p>
+<p>2) All Vertex Array related commands will be used on the currently bound objects until you explicitly bind zero '0' to disable hardware VBO.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">BindBuffer</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ArrayBuffer</span>, <span class="nu0">0</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">BindBuffer</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ElementArrayBuffer</span>, <span class="nu0">0</span> <span class="br0">&#41;</span>;</pre></div>
+<p><strong>Passing Data</strong><br />
+There are several ways to fill the object's data, we will focus on using GL.BufferData and directly writing to video memory. The third option would be GL.BufferSubData which is quite straightforward to use once you are familiar with GL.BufferData.</p>
+<ol>
+<li><strong>GL.BufferData</strong><br />
+We will start by preparing the IBO, it would not make a difference if we set up the VBO first, we simply start with the shorter one.</p>
+<p>We make sure the correct object is bound (it is not required to do this, if the buffer is already bound. Just here to clarify on which object we currently work on)</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">BindBuffer</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ElementArrayBuffer</span>, VBOid<span class="br0">&#91;</span> <span class="nu0">1</span> <span class="br0">&#93;</span> <span class="br0">&#41;</span>;</pre></div>
+<p>In the example application ushort has been used for Indices, because 16 Bits [0..65535] are more available Vertices than used by most real-time rendered meshes, however the mesh could index way more Vertices using a type like uint. Using <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw1">ushort</span></code></span>, OpenGL will store this data as 2 Bytes per index, saving memory compared to a 4 Bytes UInt32 per index.</p>
+<p>The function GL.BufferData's first parameter is the target we want to use, the second is the amount of memory (in bytes) we need allocated to hold all our data. The third parameter is pointing at the data we wish to send to the graphics card, this can be IntPtr.Zero and you may send the data at a later stage with GL.MapBuffer (more about this later). The last parameter is an optimization hint for the driver, it will place your data in the best suited place for your purposes.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">BufferData</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ElementArrayBuffer</span>, <span class="br0">&#40;</span><span class="kw4">IntPtr</span><span class="br0">&#41;</span> <span class="br0">&#40;</span> Indices.<span class="me1">Length</span> * <span class="kw1">sizeof</span><span class="br0">&#40;</span> <span class="kw1">ushort</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span>, Indices, BufferUsageHint.<span class="me1">StaticDraw</span> <span class="br0">&#41;</span>;</pre></div>
+<p>That's all, OpenGL now has a copy of Indices available and we could dispose the array, assuming we have the Index Count of the array stored in a variable for the draw call later on.</p>
+<p>Now that we've stored the indices in an IBO, the Vertices are next. Again, we make sure the binding is correct, give a pointer to the Vertex count, and finally the usage hint.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">BindBuffer</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ArrayBuffer</span>, VBOid<span class="br0">&#91;</span> <span class="nu0">0</span> <span class="br0">&#93;</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">BufferData</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ArrayBuffer</span>, <span class="br0">&#40;</span><span class="kw4">IntPtr</span><span class="br0">&#41;</span> <span class="br0">&#40;</span> Vertices.<span class="me1">Length</span> * <span class="nu0">8</span> * <span class="kw1">sizeof</span><span class="br0">&#40;</span> <span class="kw1">float</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span>, Vertices, BufferUsageHint.<span class="me1">StaticDraw</span> <span class="br0">&#41;</span>;</pre></div>
+<p>There's a table at the bottom of this page, explaining the options in the enum BufferUsageHint in more detail.
+</li>
+<li><strong>GL.MapBuffer / GL.UnmapBuffer</strong>
+<p>While the first described technique to pass data into the objects required a copy of the data in system memory, this alternative will give us a pointer to the video memory reserved by the object. This is useful for dynamic models that have no copy in client memory that could be used by GL.BufferData, since you wish to rebuild it every single frame (e.g. fully procedural objects, particle system).</p>
+<p>First we make sure that we got the desired object bound and reserve memory, the pointer towards the Indices is actually IntPtr.Zero, because we only need an empty buffer.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">BindBuffer</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ElementArrayBuffer</span>, VBOid<span class="br0">&#91;</span> <span class="nu0">0</span> <span class="br0">&#93;</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">BufferData</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ElementArrayBuffer</span>, <span class="br0">&#40;</span><span class="kw4">IntPtr</span><span class="br0">&#41;</span> <span class="br0">&#40;</span> Indices.<span class="me1">Length</span> * <span class="kw1">sizeof</span><span class="br0">&#40;</span> <span class="kw1">ushort</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span>, <span class="kw4">IntPtr</span>.<span class="me1">Zero</span>, BufferUsageHint.<span class="me1">StaticDraw</span> <span class="br0">&#41;</span>;</pre></div>
+<p>Note that you should change BufferUsageHint.StaticDraw properly according to what you intend to do with the Data, there's a table at the bottom of this page. Now we're able to request a pointer to the video memory.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw4">IntPtr</span> VideoMemoryIntPtr = <span class="kw3">GL</span>.<span class="me1">MapBuffer</span><span class="br0">&#40;</span>BufferTarget.<span class="me1">ElementArrayBuffer</span>, BufferAccess.<span class="me1">WriteOnly</span><span class="br0">&#41;</span>;</pre></div>
+<p>Valid access flags for the pointer are BufferAccess.ReadOnly, BufferAccess.WriteOnly or BufferAccess.ReadWrite, which help the driver understand what you're going to do with the data. Note that the data's object is locked until we unmap it, so we want to keep the timespan over which we use the pointer as short as possible. We may now write some data into the buffer, once we're done we must release the lock.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">unsafe</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">fixed</span> <span class="br0">&#40;</span> <span class="kw1">ushort</span>* SystemMemory = &amp;Indices<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="kw1">ushort</span>* VideoMemory = <span class="br0">&#40;</span><span class="kw1">ushort</span>*<span class="br0">&#41;</span> VideoMemoryIntPtr.<span class="me1">ToPointer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="kw1">for</span> <span class="br0">&#40;</span> <span class="kw1">int</span> i = <span class="nu0">0</span>; i &lt; Indices.<span class="me1">Length</span>; i++ <span class="br0">&#41;</span> 
+      VideoMemory<span class="br0">&#91;</span> i <span class="br0">&#93;</span> = SystemMemory<span class="br0">&#91;</span> i <span class="br0">&#93;</span>; <span class="co1">// simulate what GL.BufferData would do</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+<span class="kw3">GL</span>.<span class="me1">UnmapBuffer</span><span class="br0">&#40;</span> BufferTarget.<span class="me1">ElementArrayBuffer</span> <span class="br0">&#41;</span>;</pre></div>
+<p>The pointer is now invalid and may not be stored for future use, if we wish to modify the object again, we have to call GL.MapBuffer again.</li>
+</ol>
+<p><b>Further reading</b><br />
+Visit <a href="http://www.opentk.com/node/278">this link</a> in order to tell OpenGL about the composition of your Vertex data, and <a href="../../chapter/2/opengl/geometry/drawing.html">this link</a> for drawing the data.</p>
+<p><b>Optimization:</b></p>
+<p>One hint from the nVidia whitepaper was regarding the situation, if we want to update all data in the buffer object by using GL.MapBuffer and not retrieve any of the old data. Although this is a bad idea, because mapping the buffer is a more expensive operation than just calling GL.BufferData, it might be necessary in cases where you have no copy of the data in system memory, but build it on the fly. The solution to making this somewhat efficient is first calling GL.BufferData with a IntPtr.Zero again, which tells the driver that the old data isn't valid anymore. Calling GL.MapBuffer will return a new pointer to a valid memory location of the requested size to write to, while the old data will be cleaned up once it's not used in any draw operations anymore.</p>
+<p>Also note that either reading from a VBO or wrapping it into a Display List is very slow and should both be avoided.</p>
+<p><b>Table 1:</b><br />
+BufferUsageHint.<b>Static...</b> Assumed to be a 1-to-n update-to-draw. Means the data is specified once (during initialization).<br />
+BufferUsageHint.<b>Dynamic...</b> Assumed to be a n-to-n update-to-draw. Means the data is drawn multiple times before it changes.<br />
+BufferUsageHint.<b>Stream...</b>  Assumed to be a 1-to-1 update-to-draw. Means the data is very volatile and will change every frame.</p>
+<p><b>...Draw</b>   Means the buffer will be used to sending data to GPU. video memory (Static|StreamDraw) or AGP (DynamicDraw)<br />
+<b>...Read</b>   Means the data must be easy to access, will most likely be system or AGP memory.<br />
+<b>...Copy</b>   Means we are about to do some ..Read and ..Draw operations.</p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="../../chapter/2/opengl/geometry/primitives.html" class="page-previous" title="Go to previous page">‹ 2. Geometric Primitive Types</a><a href="../geometry.html" class="page-up" title="Go to parent page">up</a><a href="../../chapter/2/opengl/geometry/attributes.html" class="page-next" title="Go to next page">3.b Attribute Offsets and Strides ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first last book_printer"><a href="http://www.opentk.com/book/export/html/144" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-144 -->
+
+<div id="comments">
+  
+</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F144" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/geometry/vertex-buffer-objects by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:30 GMT -->
+</html>

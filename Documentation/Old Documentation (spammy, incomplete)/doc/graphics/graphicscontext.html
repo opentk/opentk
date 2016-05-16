@@ -1,0 +1,580 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/graphicscontext by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:28 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="../graphics.html" />
+
+<link rel="up" href="../graphics.html" />
+
+<link rel="next" href="graphicscontext/external.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>The GraphicsContext class | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../graphics.html" title="Description of the OpenTK.Graphics namespace, plus a quick OpenGL and OpenGL|ES primer.">Graphics</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-1057" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="graphicscontext.html">The GraphicsContext class</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p><b>[Introduction]</b></p>
+<p>The <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>.<span class="kw3">GraphicsContext</span></code></span> is a cross-platform wrapper around an <i>OpenGL context</i>. The context routes your OpenGL commands to the hardware driver for execution - which means you cannot use any OpenGL commands without a valid <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span></code></span>.</p>
+<p><b>[Constructors]</b></p>
+<p>OpenTK creates a <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span></code></span> automatically as part of the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span></code></span> and <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span> classes:</p>
+<ul>
+<li>You can specify the desired <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsMode</span></code></span> of the context using the <span class="geshifilter"><code class="geshifilter-csharp">mode</code></span> parameter. Use <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsMode</span>.<span class="me1">Default</span></code></span> to set a default, compatible mode or specify the color, depth, stencil and anti-aliasing level manually.</li>
+<li>You can specify the OpenGL version you wish to use through the <span class="geshifilter"><code class="geshifilter-csharp">major</code></span> and <span class="geshifilter"><code class="geshifilter-csharp">minor</code></span> parameters. As per the OpenGL specs, the context will use the highest version that is <i>compatible</i> with the version you specified. The default values are 1 and 0 respectively, resulting in a 2.1 context.</li>
+<li>You can request an embedded (ES) context by specifying <span class="geshifilter"><code class="geshifilter-csharp">GraphicsContextFlags.<span class="me1">Embedded</span></code></span> to the <span class="geshifilter"><code class="geshifilter-csharp">flags</code></span> parameter. The default value will construct a desktop (regular OpenGL) context.</li>
+<li>If you are creating the context manually, you must specify a valid <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">IWindowInfo</span></code></span> instance to the <span class="geshifilter"><code class="geshifilter-csharp">window</code></span> parameter (see below). This is the default window the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span></code></span> will draw on and can be modified later using the <span class="geshifilter"><code class="geshifilter-csharp">MakeCurrent</code></span> method.</li>
+</ul>
+<p>Examples:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// Creates a 1.0-compatible GraphicsContext with GraphicsMode.Default</span>
+<span class="kw3">GameWindow</span> window = <span class="kw1">new</span> <span class="kw3">GameWindow</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// Creates a 3.0-compatible GraphicsContext with 32bpp color, 24bpp depth</span>
+<span class="co1">// 8bpp stencil and 4x anti-aliasing.</span>
+<span class="kw3">GLControl</span> control = <span class="kw1">new</span> <span class="kw3">GLControl</span><span class="br0">&#40;</span><span class="kw1">new</span> <span class="kw3">GraphicsMode</span><span class="br0">&#40;</span><span class="nu0">32</span>, <span class="nu0">24</span>, <span class="nu0">8</span>, <span class="nu0">4</span><span class="br0">&#41;</span>, <span class="nu0">3</span>, <span class="nu0">0</span><span class="br0">&#41;</span>;</pre></div>
+<p>Sometimes, you might wish to create a second context for your application. A typical use case is for background loading of resources. This is very simple to achieve:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// The new context must be created on a new thread</span>
+<span class="co1">// (see remarks section, below)</span>
+<span class="co1">// We need to create a new window for the new context.</span>
+<span class="co1">// Note 1: new windows remain invisible unless you call</span>
+<span class="co1">//         INativeWindow.Visible = true or IGameWindow.Run()</span>
+<span class="co1">// Note 2: invisible windows fail the pixel ownership test.</span>
+<span class="co1">//         This means that the contents of the front buffer are undefined, i.e.</span>
+<span class="co1">//         you cannot use an invisible window for offscreen rendering.</span>
+<span class="co1">//         You will need to use a framebuffer object, instead.</span>
+<span class="co1">// Note 3: context sharing will fail if the main context is in use.</span>
+<span class="co1">// Note 4: this code can be used as-is in a GLControl or GameWindow.</span>
+&nbsp;
+EventWaitHandle context_ready = <span class="kw1">new</span> EventWaitHandle<span class="br0">&#40;</span><span class="kw1">false</span>, EventResetMode.<span class="me1">AutoReset</span><span class="br0">&#41;</span>;
+Context.<span class="me1">MakeCurrent</span><span class="br0">&#40;</span><span class="kw1">null</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="kw4">Thread</span> thread = <span class="kw1">new</span> <span class="kw4">Thread</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="br0">&#41;</span> =&gt;
+<span class="br0">&#123;</span>
+    <span class="kw3">INativeWindow</span> window = <span class="kw1">new</span> <span class="kw3">NativeWindow</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="kw3">IGraphicsContext</span> context = <span class="kw1">new</span> <span class="kw3">GraphicsContext</span><span class="br0">&#40;</span><span class="kw3">GraphicsMode</span>.<span class="me1">Default</span>, window.<span class="me1">WindowInfo</span><span class="br0">&#41;</span>;
+    context.<span class="me1">MakeCurrent</span><span class="br0">&#40;</span>window.<span class="me1">WindowInfo</span><span class="br0">&#41;</span>;
+&nbsp;
+    <span class="kw1">while</span> <span class="br0">&#40;</span>window.<span class="me1">Exists</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+         window.<span class="me1">ProcessEvents</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+         <span class="co1">// Perform your processing here</span>
+&nbsp;
+         <span class="kw4">Thread</span>.<span class="me1">Sleep</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>; <span class="co1">// Limit CPU usage, if necessary</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span>;
+thread.<span class="me1">IsBackground</span> = <span class="kw1">true</span>;
+thread.<span class="me1">Start</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+context_ready.<span class="me1">WaitOne</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+MakeCurrent<span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre></div>
+<p>If necessary, you can also instantiate a <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span></code></span> manually. For this, you will need to provide an amount of platform-specific information, as indicated below:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Graphics</span>;
+<span class="kw1">using</span> <span class="kw5">OpenTK</span>.<span class="me1">Platform</span>;
+<span class="kw1">using</span> Config = <span class="kw5">OpenTK</span>.<span class="me1">Configuration</span>;
+<span class="kw1">using</span> Utilities = <span class="kw5">OpenTK</span>.<span class="me1">Platform</span>.<span class="me1">Utilities</span>;
+&nbsp;
+<span class="co1">// Create an IWindowInfo for the window we wish to render on.</span>
+<span class="co1">// handle - a Win32, X11 or Carbon window handle</span>
+<span class="co1">// display - the X11 display connection</span>
+<span class="co1">// screen - the X11 screen id</span>
+<span class="co1">// root - the X11 root window</span>
+<span class="co1">// visual - the desired X11 visual for the window</span>
+<span class="kw3">IWindowInfo</span> wi = <span class="kw1">null</span>;
+<span class="kw1">if</span> <span class="br0">&#40;</span>Config.<span class="me1">RunningOnWindows</span><span class="br0">&#41;</span>
+    wi = Utilities.<span class="me1">CreateWindowsWindowInfo</span><span class="br0">&#40;</span>handle<span class="br0">&#41;</span>;
+<span class="kw1">else</span> <span class="kw1">if</span> <span class="br0">&#40;</span>Config.<span class="me1">RunningOnX11</span><span class="br0">&#41;</span>
+    wi = Utilities.<span class="me1">CreateX11WindowInfo</span><span class="br0">&#40;</span>display, screen, handle, root, visual<span class="br0">&#41;</span>;
+<span class="kw1">else</span> <span class="kw1">if</span> <span class="br0">&#40;</span>Config.<span class="me1">RunningOnMacOS</span><span class="br0">&#41;</span>
+    wi = Utilities.<span class="me1">CreateMacOSCarbonWindowInfo</span><span class="br0">&#40;</span>handle, <span class="kw1">false</span>, <span class="kw1">false</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// Construct a new IGraphicsContext using the IWindowInfo from above.</span>
+<span class="kw3">IGraphicsContext</span> context = <span class="kw1">new</span> <span class="kw3">GraphicsContext</span><span class="br0">&#40;</span><span class="kw3">GraphicsMode</span>.<span class="me1">Default</span>, wi<span class="br0">&#41;</span>;</pre></div>
+<p>Finally, it is possible to instantiate a 'dummy' GraphicsContext for any OpenGL context created outside of OpenTK. This allows you to use OpenTK.Graphics with windows created through SDL or other libraries:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw4">IntPtr</span> external_context = ...; <span class="co1">// create or retrieve existing third-party context handle</span>
+<span class="kw3">GraphicsContext</span> opentk_context = <span class="kw1">new</span> <span class="kw3">GraphicsContext</span><span class="br0">&#40;</span>
+    <span class="kw1">new</span> ContextHandle<span class="br0">&#40;</span>external_context<span class="br0">&#41;</span>,
+    <span class="kw1">null</span><span class="br0">&#41;</span>;</pre></div>
+<p>You can now use OpenTK GL functions normally.</p>
+<p>If external_context is not a handle to a WGL, GLX or AGL/NSOpenGL/CGL context, you will have to specify a custom GetAddress and GetCurrentContext implementation in terms of the toolkit you are using. For instance, when using SDL2, the context handle returned by SDL_GL_CreateContext points to a SDL-specific structure. In this case:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw4">IntPtr</span> external_context = SDL_GL_CreateContext<span class="br0">&#40;</span>...<span class="br0">&#41;</span>;
+<span class="kw3">GraphicsContext</span> opentk_context = <span class="kw1">new</span> <span class="kw3">GraphicsContext</span><span class="br0">&#40;</span>
+    <span class="kw1">new</span> ContextHandle<span class="br0">&#40;</span>external_context<span class="br0">&#41;</span>,
+    <span class="br0">&#40;</span>name<span class="br0">&#41;</span> =&gt; <span class="br0">&#123;</span> <span class="kw1">return</span> SDL_GL_GetProcAddress<span class="br0">&#40;</span>name<span class="br0">&#41;</span>; <span class="br0">&#125;</span>, <span class="co1">// implement GetAddress via SDL</span>
+    <span class="br0">&#40;</span><span class="br0">&#41;</span> =&gt; <span class="br0">&#123;</span> <span class="kw1">return</span> SDL_GL_GetCurrentContext<span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="br0">&#125;</span><span class="br0">&#41;</span>; <span class="co1">// implement GetCurrentContext via SDL</span></pre></div>
+<p>Note that GraphicsContext functions like context.SwapBuffers() will have no effect on external contexts. You *must* use the third-party toolkit to manage the external context.</p>
+<p>A common use-case is integration of OpenGL 3.x through OpenTK.Graphics into an existing application.</p>
+<p><b>[Remarks]</b></p>
+<p>A single GraphicsContext may be <i>current</i> on a single thread at a time. All OpenGL commands are routed to the context which is current on the calling thread - issuing OpenGL commands from a thread without a current context may result in a <span class="geshifilter"><code class="geshifilter-csharp">GraphicsContextMissingException</code></span>. This is a safeguard placed by OpenTK: under normal circumstances, you'd get an abrupt and unexplained crash.</p>
+<p><b>[Methods]</b></p>
+<ul>
+<li><b>MakeCurrent</b>
+<p>You can use the <span class="geshifilter"><code class="geshifilter-csharp">MakeCurrent<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> instance method <b>to make a context current</b> on the calling thread. If a context is already current on this thread, it will be replaced and made non-current. A single context may be current on a single thread at any moment - trying to make it current on two or more threads will result in an error. You can make a context non-current by calling <span class="geshifilter"><code class="geshifilter-csharp">MakeCurrent<span class="br0">&#40;</span><span class="kw1">null</span><span class="br0">&#41;</span></code></span> on the correct thread.</p>
+<p>To retrieve the current context use the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span>.<span class="me1">CurrentContext</span></code></span> static property.</p>
+<p>If you wish to use OpenGL on multiple threads, you can either:</p>
+<ul>
+<li>create one OpenGL context for each thread, or</li>
+<li>use <span class="geshifilter"><code class="geshifilter-csharp">MakeCurrent<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> to make move a single context between threads.</li>
+</ul>
+<p>Both alternatives can be quite complicated to implement correctly. For this reason, it is usually advisable to restrict all OpenGL commands to a single thread, typically your main application thread, and use asynchronous method calls to invoke OpenGL from different threads. The <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span> provides the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span>.<span class="me1">BeginInvoke</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> method to simplify asynchronous method calls from secondary threads to the main <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw5">System</span>.<span class="me1">Windows</span>.<span class="me1">Forms</span>.<span class="me1">Application</span></code></span> thread. The <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span></code></span> does not provide a similar API.</p>
+<p>To use multiple contexts on a single thread, call MakeCurrent to select the correct context prior to any OpenGL commands. For example, if you have two GLControls on a single form, you must call MakeCurrent() on the correct GLControl for each Load, Resize or Paint event.</p>
+<p><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span>.<span class="me1">MakeCurrent</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> and <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span>.<span class="me1">MakeCurrent</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> are instance methods that simplify the handling of contexts.</li>
+<li><b>SwapBuffers</b>
+<p>OpenTK creates <b>double-buffered contexts</b> by default. Single-buffered contexts are considered deprecated, since they do not work correctly with compositors found on modern operating systems.</p>
+<p>A double-buffered context offers two color buffers: a "back" buffer, where all rendering takes place, and a "front" buffer which is displayed to the user. The <span class="geshifilter"><code class="geshifilter-csharp">SwapBuffers<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> method "swaps" the front and back buffers and displays the result of the rendering commands to the user. The contents of the new back buffer are undefined after the call to <span class="geshifilter"><code class="geshifilter-csharp">SwapBuffers<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span>.</p>
+<p>The typical rendering process looks similar to this:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// Clear the back buffer.</span>
+<span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span>ClearBufferMask.<span class="me1">ColorBufferBit</span> | ClearBufferMask.<span class="me1">DepthBufferBit</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// Issue rendering commands, like GL.DrawElements</span>
+&nbsp;
+<span class="co1">// Display the final rendering to the user</span>
+<span class="kw3">GraphicsContext</span>.<span class="me1">CurrentContext</span>.<span class="me1">SwapBuffers</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre></div>
+<p>Note that caching the current context will be more efficient than retrieving it through <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span>.<span class="me1">CurrentContext</span></code></span>. For this reason, both <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span></code></span> and <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span> use a cached <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span></code></span> for efficiency.
+</li>
+</ul>
+<p><b>[Stereoscopic rendering]</b></p>
+<p>You can create a <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span></code></span> that supports <b>stereoscopic rendering</b> (also known as "quad-buffer stereo"), by setting the <span class="geshifilter"><code class="geshifilter-csharp">stereo</code></span> parameter to <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw1">true</span></code></span> in the context constructor. <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span></code></span> and <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GLControl</span></code></span> also offer this parameter in their constructors.</p>
+<p>Contexts that support quad-buffer stereo distinguish the back and front buffers between "left" and "right" buffer. In other words, the context contains four distinct color buffers (hence the name): back-left, back-right, front-left and front-right. Check out the stereoscopic rendering page for more information (<i>[Todo: add article and link]</i>).</p>
+<p>Please note that quad-buffer stereo is typically not supported on consumer video cards. You will need a workstation-class video card, like Ati's FireGL/FirePro or Nvidia's Quadro series, to enable stereo rendering. Trying to enable stereo rendering on consumer video cards will typically result in a context without stereo capabilities.</p>
+<p><b>[Accessing internal information]</b></p>
+<p><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span></code></span> hides an amount of low-level, implementation-specific information behind the <span class="geshifilter"><code class="geshifilter-csharp">IGraphicsContextInternal</code></span> interface. This information includes the raw context handle, the platform-specific <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">IGraphicsContext</span></code></span> implementation and methods to initialize OpenGL entry points (<span class="geshifilter"><code class="geshifilter-csharp">GetAddress<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> and <span class="geshifilter"><code class="geshifilter-csharp">LoadAll<span class="br0">&#40;</span><span class="br0">&#41;</span></code></span>).</p>
+<p>To access this information, cast your <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GraphicsContext</span></code></span> to <span class="geshifilter"><code class="geshifilter-csharp">IGraphicsContextInternal</code></span>:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw4">IntPtr</span> raw_context_handle = <span class="br0">&#40;</span>my_context <span class="kw1">as</span> IGraphicsContextInternal<span class="br0">&#41;</span>.<span class="me1">Context</span>.<span class="me1">Handle</span>;
+<span class="kw4">IntPtr</span> function_address = <span class="br0">&#40;</span>my_context <span class="kw1">as</span> IGraphicsContextInternal<span class="br0">&#41;</span>.<span class="me1">GetAddress</span><span class="br0">&#40;</span><span class="st0">&quot;glGenFramebufferEXT&quot;</span><span class="br0">&#41;</span>;</pre></div>
+<div class="book-navigation"><ul class="menu"><li class="leaf"><a href="graphicscontext/external.html">Using an external OpenGL context with OpenTK</a></li></ul><div class="page-links clear-block"><a href="../graphics.html" class="page-previous" title="Go to previous page">‹ Chapter 4: OpenTK.Graphics (OpenGL and ES)</a><a href="../graphics.html" class="page-up" title="Go to parent page">up</a><a href="graphicscontext/external.html" class="page-next" title="Go to next page">Using an external OpenGL context with OpenTK ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/1057" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/1057%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/1057%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-1057 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<form action="http://www.opentk.com/doc/graphics/graphicscontext"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-8496"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="stormdrums&#039;s picture" title="stormdrums&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="graphicscontext.html#comment-8496" class="active">Re: The GraphicsContext class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 26 February, 2010 - 10:46             by stormdrums                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>I tried to use this code to add OpenGL to a current application. I have a GLControl Version which works well, but i can't get this to work. i'm using windows.<br />
+this is just  'testcode' to get it running, it doesn't make too much sense.<br />
+Mabye anyone has a small working example of creating the graphicscontext manually instead of using GLControl in a WinForms C# Project.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">            <span class="kw3">IWindowInfo</span> m_wi;
+            <span class="kw3">IGraphicsContext</span> m_context;
+            m_wi = Utilities.<span class="me1">CreateWindowsWindowInfo</span><span class="br0">&#40;</span>pictureBox1.<span class="me1">Handle</span><span class="br0">&#41;</span>;
+            <span class="co1">// Construct a new IGraphicsContext using the IWindowInfo from above.</span>
+            m_context = <span class="kw1">new</span> <span class="kw3">GraphicsContext</span><span class="br0">&#40;</span><span class="kw3">GraphicsMode</span>.<span class="me1">Default</span>, m_wi<span class="br0">&#41;</span>;
+            m_context.<span class="me1">MakeCurrent</span><span class="br0">&#40;</span>m_wi<span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span>ClearBufferMask.<span class="me1">ColorBufferBit</span><span class="br0">&#41;</span>; <span class="co1">//&quot;NullReferenceException was unhandled&quot; is thrown here</span>
+            <span class="kw3">GL</span>.<span class="me1">MatrixMode</span><span class="br0">&#40;</span>MatrixMode.<span class="me1">Projection</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">LoadIdentity</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">Ortho</span><span class="br0">&#40;</span><span class="nu0">0</span>, pictureBox1.<span class="me1">Width</span>, pictureBox1.<span class="me1">Height</span>, <span class="nu0">0</span>, <span class="nu0">-1</span>, <span class="nu0">1</span><span class="br0">&#41;</span>;
+            TexUtil.<span class="me1">InitTexturing</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+            m_textureID = TexUtil.<span class="me1">CreateTextureFromFile</span><span class="br0">&#40;</span><span class="st0">&quot;Untitled.png&quot;</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">BindTexture</span><span class="br0">&#40;</span>TextureTarget.<span class="me1">Texture2D</span>, m_textureID<span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">Begin</span><span class="br0">&#40;</span>BeginMode.<span class="me1">Quads</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">TexCoord2</span><span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">0</span><span class="br0">&#41;</span>; <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">0</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">TexCoord2</span><span class="br0">&#40;</span><span class="nu0">1</span>, <span class="nu0">0</span><span class="br0">&#41;</span>; <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span>pictureBox1.<span class="me1">Width</span>, <span class="nu0">0</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">TexCoord2</span><span class="br0">&#40;</span><span class="nu0">1</span>, <span class="nu0">1</span><span class="br0">&#41;</span>; <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span>pictureBox1.<span class="me1">Width</span>, pictureBox1.<span class="me1">Height</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">TexCoord2</span><span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">1</span><span class="br0">&#41;</span>; <span class="kw3">GL</span>.<span class="me1">Vertex2</span><span class="br0">&#40;</span><span class="nu0">0</span>, pictureBox1.<span class="me1">Height</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">End</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+            m_context.<span class="me1">SwapBuffers</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre></div>
+<p>Thanks in advance!</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-8497"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="stormdrums&#039;s picture" title="stormdrums&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="graphicscontext.html#comment-8497" class="active">Re: The GraphicsContext class -&gt; solved</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 26 February, 2010 - 11:30             by stormdrums                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Problem solved!<br />
+i missed the command before the line where the exception happens.</p>
+<p><span class="geshifilter"><code class="geshifilter-csharp"><span class="br0">&#40;</span>m_context <span class="kw1">as</span> IGraphicsContextInternal<span class="br0">&#41;</span>.<span class="me1">LoadAll</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</code></span></p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-12069"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="thorrablot&#039;s picture" title="thorrablot&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="graphicscontext.html#comment-12069" class="active">Re: The GraphicsContext class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 24 May, 2011 - 20:42             by thorrablot                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>I'm glad you posted this, as I encountered the same problem.  I didn't see any reference to the "LoadAll()" being required anywhere in the documentation - but that certainly made the difference between OpenTK throwing an exception on the first GL.ClearColor command and it succeeding.  I'm at a loss to understand why this was necessary (extensions are required for ancient fixed-pipeline operations like GLClear?)</p>
+<p>For a C#/Windows/WinForm user attempting to adopt OpenTK, the manual seems to be sparse on examples.  I also have been wondering about the state of the sample browser (which appears mostly broken), and various other stale links on this site to partial documentation.  Is there a good source to get material that's up-to-date?  Is there any material that is specifically for the WinForms user?</p>
+<p>That said - when things work, they do work well, and I've been impressed with what I've browsed of the source so far.</p>
+<p>Thanks!</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-12070"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="graphicscontext.html#comment-12070" class="active">Re: The GraphicsContext class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Tuesday, 24 May, 2011 - 21:24             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>LoadAll() is called automatically when you create a GameWindow/GLControl/GraphicsContext. You only ever need to call this when using an 'external' context, i.e. when you call wglCreateContext et al yourself or through a 3rd-party library.</p>
+<p>All OpenGL calls are routed through delegates (even GL1.1 stuff such as GL.Clear()) because each operating system behaves differently in this regard. Treating everything as a (potential) extension is the only way to achieve consistent behavior in the library.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-12078"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="thorrablot&#039;s picture" title="thorrablot&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="graphicscontext.html#comment-12078" class="active">Re: The GraphicsContext class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 25 May, 2011 - 21:03             by thorrablot                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>But, both stormdrums and my code call the OpenTK GraphicsContext ctors, but still required the call to LoadAll() - here's my code from a sample Winform app:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">        <span class="kw1">private</span> <span class="kw1">void</span> panel1_Layout<span class="br0">&#40;</span><span class="kw1">object</span> sender, LayoutEventArgs e<span class="br0">&#41;</span>
+        <span class="br0">&#123;</span>
+            <span class="co1">// Attempt to create our device for a 30-bit RGBA</span>
+            ColorFormat cf = <span class="kw1">new</span> ColorFormat<span class="br0">&#40;</span><span class="nu0">10</span>, <span class="nu0">10</span>, <span class="nu0">10</span>, <span class="nu0">2</span><span class="br0">&#41;</span>;
+            ColorFormat accCf = <span class="kw1">new</span> ColorFormat<span class="br0">&#40;</span><span class="nu0">0</span>, <span class="nu0">0</span>, <span class="nu0">0</span>, <span class="nu0">0</span><span class="br0">&#41;</span>;
+            <span class="kw1">int</span> depthBufferBits = <span class="nu0">0</span>;
+            <span class="kw1">int</span> stencilBufferBits = <span class="nu0">0</span>;
+            <span class="kw1">int</span> fsaaSamples = <span class="nu0">0</span>;
+            <span class="kw1">int</span> buffers = <span class="nu0">2</span>;
+            <span class="kw1">bool</span> isStereo = <span class="kw1">false</span>;
+            Console.<span class="me1">WriteLine</span><span class="br0">&#40;</span><span class="st0">&quot;Requesting GraphicsMode.ColorFormat: [{0}]&quot;</span>, cf.<span class="me1">ToString</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+            <span class="kw3">GraphicsMode</span> gm = <span class="kw1">new</span> <span class="kw3">GraphicsMode</span><span class="br0">&#40;</span>cf, depthBufferBits, stencilBufferBits, fsaaSamples, accCf, buffers, isStereo<span class="br0">&#41;</span>;
+            _iWin1 = Utilities.<span class="me1">CreateWindowsWindowInfo</span><span class="br0">&#40;</span>e.<span class="me1">AffectedControl</span>.<span class="me1">Handle</span><span class="br0">&#41;</span>;
+            _gc1 = <span class="kw1">new</span> <span class="kw3">GraphicsContext</span><span class="br0">&#40;</span>gm, _iWin1 <span class="br0">&#41;</span>;
+            <span class="co1">// Inspect acquired context to see what actual GraphicsMode is</span>
+            Console.<span class="me1">WriteLine</span><span class="br0">&#40;</span><span class="st0">&quot;Actual GraphicsMode.ColorFormat: [{0}]&quot;</span>, _gc1.<span class="kw3">GraphicsMode</span>.<span class="me1">ToString</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+&nbsp;
+            <span class="co1">// Make this our current</span>
+            _gc1.<span class="me1">MakeCurrent</span><span class="br0">&#40;</span>_iWin1<span class="br0">&#41;</span>;
+&nbsp;
+            <span class="co1">// Mystery code from forum</span>
+            <span class="co1">//(_gc1 as IGraphicsContextInternal).LoadAll();  // &lt;-- must uncomment to work</span>
+&nbsp;
+            loaded1 = <span class="kw1">true</span>;
+            Console.<span class="me1">WriteLine</span><span class="br0">&#40;</span><span class="st0">&quot;panel1: GraphicsMode: {0}&quot;</span>, _gc1.<span class="kw3">GraphicsMode</span>.<span class="me1">ToString</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">ClearColor</span><span class="br0">&#40;</span>Color.<span class="me1">PaleGoldenrod</span><span class="br0">&#41;</span>;
+            SetupViewport<span class="br0">&#40;</span>panel1.<span class="me1">Width</span>, panel1.<span class="me1">Height</span><span class="br0">&#41;</span>;
+        <span class="br0">&#125;</span>
+&nbsp;
+&nbsp;
+        <span class="kw1">private</span> <span class="kw3">GraphicsContext</span> _gc1 = <span class="kw1">null</span>;
+        <span class="kw1">private</span> <span class="kw3">GraphicsContext</span> _gc2 = <span class="kw1">null</span>;
+        <span class="kw1">private</span> <span class="kw3">IWindowInfo</span> _iWin1 = <span class="kw1">null</span>;
+        <span class="kw1">private</span> <span class="kw3">IWindowInfo</span> _iWin2 = <span class="kw1">null</span>;
+&nbsp;
+        <span class="kw1">private</span> <span class="kw1">void</span> panel1_Paint<span class="br0">&#40;</span><span class="kw1">object</span> sender, PaintEventArgs e<span class="br0">&#41;</span>
+        <span class="br0">&#123;</span>
+            <span class="kw1">if</span> <span class="br0">&#40;</span>!loaded1<span class="br0">&#41;</span> <span class="co1">// Play nice</span>
+                <span class="kw1">return</span>;
+&nbsp;
+            _gc1.<span class="me1">MakeCurrent</span><span class="br0">&#40;</span>_iWin1<span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">Clear</span><span class="br0">&#40;</span>ClearBufferMask.<span class="me1">ColorBufferBit</span> | ClearBufferMask.<span class="me1">DepthBufferBit</span><span class="br0">&#41;</span>;
+&nbsp;
+            <span class="kw3">GL</span>.<span class="me1">MatrixMode</span><span class="br0">&#40;</span>MatrixMode.<span class="me1">Modelview</span><span class="br0">&#41;</span>;
+            <span class="kw3">GL</span>.<span class="me1">LoadIdentity</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+            Panel p = sender <span class="kw1">as</span> Panel;
+            PaintGradient<span class="br0">&#40;</span>p.<span class="me1">Width</span>, p.<span class="me1">Height</span>, <span class="nu0">8</span><span class="br0">&#41;</span>;
+            _gc1.<span class="me1">SwapBuffers</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+        <span class="br0">&#125;</span></pre></div>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-14281"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="jakesee&#039;s picture" title="jakesee&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="graphicscontext.html#comment-14281" class="active">Re: The GraphicsContext class</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 8 March, 2013 - 14:19             by jakesee                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>How do I create and attach a print device context for OpenGL to draw onto?</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F1057" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/graphicscontext by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:28 GMT -->
+</html>

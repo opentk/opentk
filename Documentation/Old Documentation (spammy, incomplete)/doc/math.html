@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/math by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="chapter/2/rules_of_thumb.html" />
+
+<link rel="up" href="../doc.html" />
+
+<link rel="next" href="math/half-type.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Chapter 3: OpenTK.Math | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../index.html">Home</a> » <a href="../doc.html" title="What is this all about?">Introduction</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-787" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="math.html">Chapter 3: OpenTK.Math</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>To help you write cleaner code, OpenTK defines commonly used vectors, quaternions and matrices to extend the standard scalar types. They are generally nicer to handle than the arrays which the C API expects.</p>
+<p>For example: OpenTK allows you to set the parameters of <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Color</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> in various ways, the color cyan is used in this case.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Color</span><span class="br0">&#40;</span> <span class="nu0">0</span>.0f, <span class="nu0">1</span>.0f, <span class="nu0">1</span>.0f <span class="br0">&#41;</span>;
+&nbsp;
+<span class="kw3">Vector3</span> MyColor = <span class="kw1">new</span> <span class="kw3">Vector3</span><span class="br0">&#40;</span> <span class="nu0">0</span>.0f, <span class="nu0">1</span>.0f, <span class="nu0">1</span>.0f <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">Color</span><span class="br0">&#40;</span> MyColor <span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// requires the System.Drawing library</span>
+<span class="kw3">GL</span>.<span class="me1">Color</span><span class="br0">&#40;</span> Color.<span class="me1">Cyan</span> <span class="br0">&#41;</span>;</pre></div>
+<p>Function overloads like this can be found all over OpenTK.Graphics and OpenTK.Audio, where applicable.</p>
+<p><b>Overview</b><br />
+Everything listed below is type-safe, code using these types will work across all supported platforms.</p>
+<p><b>Vectors</b></p>
+<ul>
+<li>Half-precision Floating-point</li>
+<ul>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Half</span></code></span> - new scalar type with 16 Bits of precision. More information can be found <a href="http://www.opentk.com/node/788">here</a>.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector2h</span></code></span> - 2-component vector of the type <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Half</span></code></span>.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector3h</span></code></span> - 3-component vector of the type <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Half</span></code></span>.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector4h</span></code></span> - 4-component vector of the type <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Half</span></code></span>.</li>
+</ul>
+<li>Single-precision Floating-point</li>
+<ul>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Single</span></code></span> - standard scalar type with 32 Bits of precision.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector2</span></code></span> - 2-component vector of the type <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Single</span></code></span>.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector3</span></code></span> - 3-component vector of the type <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Single</span></code></span>.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector4</span></code></span> - 4-component vector of the type <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Single</span></code></span>.</li>
+</ul>
+<li>Double-precision Floating-point</li>
+<ul>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Double</span></code></span> - standard scalar type with 64 Bits of precision.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector2d</span></code></span> - 2-component vector of the type <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Double</span></code></span>.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector3d</span></code></span> - 3-component vector of the type <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Double</span></code></span>.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Vector4d</span></code></span> - 4-component vector of the type <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw4">Double</span></code></span>.</li>
+</ul>
+</ul>
+<p><b>Quaternion</b></p>
+<ul>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Quaternion</span></code></span> - single-precision floating-point Quaternion using 4 components.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Quaterniond</span></code></span> - double-precision floating-point Quaternion using 4 components.</li>
+</ul>
+<p><b>Row-Major Matrices</b></p>
+<ul>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Matrix3d</span></code></span> - 3x3 double-precision Matrix.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Matrix4</span></code></span> - 4x4 single-precision Matrix.</li>
+<li><span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">Matrix4d</span></code></span> - 4x4 double-precision Matrix.</li>
+</ul>
+<p>These are all value types (struct), not reference types. The implications of this can be <a href="chapter/2/rules_of_thumb.html">read here</a>.</p>
+<p><b>Casts</b></p>
+<p>For symmetry with established types, all OpenTK.Math types can be cast and allow serialization.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">Vector2d</span> TexCoord = <span class="kw1">new</span> <span class="kw3">Vector2d</span><span class="br0">&#40;</span> <span class="nu0">0.2</span>, <span class="nu0">0.5</span> <span class="br0">&#41;</span>;
+<span class="kw3">Vector2h</span> HalfTexCoord = <span class="br0">&#40;</span><span class="kw3">Vector2h</span><span class="br0">&#41;</span>TexCoord;
+&nbsp;
+<span class="kw3">Vector3h</span> Normal = <span class="br0">&#40;</span><span class="kw3">Vector3h</span><span class="br0">&#41;</span><span class="kw3">Vector3</span>.<span class="me1">UnitX</span>;</pre></div>
+<p><b>Instance and Static Methods</b></p>
+<p>The exact methods for each struct would be too numberous to list here, the function reference and inline documentation serve that purpose. It might not be obvious that some functionality is only available for instances of the structs, while others are static.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">Vector3</span> Normal = <span class="kw3">Vector3</span>.<span class="me1">UnitX</span>;
+Normal.<span class="me1">Normalize</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="kw3">Vector4</span> TransformedVector = <span class="kw3">Vector4</span>.<span class="me1">Transform</span><span class="br0">&#40;</span> <span class="kw3">Vector4</span>.<span class="me1">UnitX</span>, <span class="kw3">Matrix4</span>.<span class="me1">Identity</span> <span class="br0">&#41;</span>;</pre></div>
+<div class="book-navigation"><ul class="menu"><li class="collapsed"><a href="math/half-type.html">Half-Type</a></li></ul><div class="page-links clear-block"><a href="chapter/2/rules_of_thumb.html" class="page-previous" title="Go to previous page">‹ Avoiding pitfalls in the managed world</a><a href="../doc.html" class="page-up" title="Go to parent page">up</a><a href="math/half-type.html" class="page-next" title="Go to next page">Half-Type ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/787" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/787%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/787%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-787 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<form action="http://www.opentk.com/doc/math"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-9319"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="Tal&#039;s picture" title="Tal&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="math.html#comment-9319" class="active">Re: Chapter 3: OpenTK.Math</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 2 June, 2010 - 14:14             by Tal                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Hi! Thanks for your math support just as XNA and SlimDX!<br />
+Please add to the math a Plan struct. It very useful for phisics, rays, etc.<br />
+It has suggested many times and had not been implacted yet.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F787" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/math by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:18 GMT -->
+</html>

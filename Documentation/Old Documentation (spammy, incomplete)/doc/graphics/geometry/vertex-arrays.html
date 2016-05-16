@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/geometry/vertex-arrays by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="../../chapter/2/opengl/geometry/attributes.html" />
+
+<link rel="up" href="../geometry.html" />
+
+<link rel="next" href="../vertex-array-objects.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>3.c Vertex Arrays | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../../index.html">Home</a> » <a href="../../../doc.html" title="What is this all about?">Introduction</a> » <a href="../../graphics.html" title="Description of the OpenTK.Graphics namespace, plus a quick OpenGL and OpenGL|ES primer.">Graphics</a> » <a href="../geometry.html" title="Describes Geometry in OpenGL">Geometry</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-296" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="vertex-arrays.html">3.c Vertex Arrays</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>Vertex Arrays were removed from OpenGL in version 3.1. <a href="vertex-buffer-objects.html">Vertex Buffer Objects</a> are the recommended alternative, since they are both faster and safer.</p>
+<p>This is the correct way to use Vertex Arrays in .Net (pseudocode):</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">struct</span> Vertex
+<span class="br0">&#123;</span>
+    <span class="kw1">public</span> <span class="kw3">Vector3</span> Position;
+    <span class="kw1">public</span> <span class="kw3">Vector2</span> TexCoord;
+<span class="br0">&#125;</span>
+&nbsp;
+Vertex<span class="br0">&#91;</span><span class="br0">&#93;</span> vertices = <span class="kw1">new</span> Vertex<span class="br0">&#91;</span><span class="nu0">100</span><span class="br0">&#93;</span>;
+&nbsp;
+<span class="kw1">unsafe</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">fixed</span> <span class="br0">&#40;</span><span class="kw1">float</span>* pvertices = vertices<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="kw3">GL</span>.<span class="me1">VertexPointer</span><span class="br0">&#40;</span><span class="nu0">3</span>, VertexPointerType.<span class="me1">Float</span>, BlittableValueType.<span class="me1">StrideOf</span><span class="br0">&#40;</span>vertices<span class="br0">&#41;</span>, pvertices<span class="br0">&#41;</span>;
+        <span class="kw3">GL</span>.<span class="me1">TexCoordPointer</span><span class="br0">&#40;</span><span class="nu0">2</span>, VertexPointerType.<span class="me1">Float</span>, BlittableValueType.<span class="me1">StrideOf</span><span class="br0">&#40;</span>vertices<span class="br0">&#41;</span>, pvertices + <span class="kw1">sizeof</span><span class="br0">&#40;</span><span class="kw3">Vector3</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+        <span class="kw3">GL</span>.<span class="me1">DrawArrays</span><span class="br0">&#40;</span>BeginMode.<span class="me1">Triangles</span>, <span class="nu0">0</span>, vertices.<span class="me1">Length</span><span class="br0">&#41;</span>;
+        <span class="kw3">GL</span>.<span class="me1">Finish</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;    <span class="co1">// Force OpenGL to finish rendering while the arrays are still pinned.</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre></div>
+<p>Vertex Arrays use <i>client storage</i>, because they are stored in system memory (not video memory). Since .Net is a Garbage Collected environment, the arrays must remain <a href="http://msdn2.microsoft.com/en-us/library/f58wzh21(VS.80).aspx">pinned</a> until the <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">DrawArrays</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> or <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">DrawElements</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> call is complete.</p>
+<p>If the arrays are unpinned prematurely, they may be moved or collected by the Garbage Collector before the draw call finishes. This will lead to random access violation exceptions and corrupted rendering, issues which can be difficult to trace.</p>
+<p>Due to the asynchronous nature of OpenGL, <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Finish</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> must be used to ensure that rendering is complete before the arrays are unpinned. However, this call introduces a sync point between the CPU and GPU, which can significantly degrade performance.</p>
+<p><a href="vertex-buffer-objects.html">Vertex Buffer Objects</a> and Display Lists use <i>server storage</i> (video memory) which does not suffer from this issue. Given the improved performance and safety of server storage, it is recommended to avoid Vertex Arrays completely.</p>
+<p>Please visit <a href="http://www.opentk.com/node/232">this discussion in the forum</a> for more information.</p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="../../chapter/2/opengl/geometry/attributes.html" class="page-previous" title="Go to previous page">‹ 3.b Attribute Offsets and Strides</a><a href="../geometry.html" class="page-up" title="Go to parent page">up</a><a href="../vertex-array-objects.html" class="page-next" title="Go to next page">4. Vertex Array Objects ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/296" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/296%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/296%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-296 -->
+
+<div id="comments">
+  
+</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F296" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/geometry/vertex-arrays by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:32 GMT -->
+</html>

@@ -12,6 +12,7 @@
 - Port to Linux/Wayland.
 - Port to Blackberry (WIP at https://github.com/rcmaniac25/opentk).
 - Port to Tizen.
+- Add css and syntax highlighting to new doc.
 
 [Hard]
 - Merge with mono/opentk.

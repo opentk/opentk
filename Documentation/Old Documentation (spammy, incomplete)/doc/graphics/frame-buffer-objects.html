@@ -1,0 +1,399 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/frame-buffer-objects by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="texture-compression.html" />
+
+<link rel="up" href="../graphics.html" />
+
+<link rel="next" href="geometry.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Frame Buffer Objects (FBO) | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../graphics.html" title="Description of the OpenTK.Graphics namespace, plus a quick OpenGL and OpenGL|ES primer.">Graphics</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-523" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="frame-buffer-objects.html">Frame Buffer Objects (FBO)</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>Every OpenGL application has at least one <a href="http://en.wikipedia.org/wiki/Framebuffer">framebuffer</a>. You can think about it as a digital copy of what you see on your screen. But this also implies a restriction, you can only see 1 framebuffer at a time on-screen, but it might be desireable to have multiple off-screen framebuffers at your disposal. That's where Frame Buffer Object (FBO) comes into play.</p>
+<p>Typical usage for FBO is <a href="http://en.wikipedia.org/wiki/High_dynamic_range_imaging">High Dynamic Range Rendering</a>, <a href="http://en.wikipedia.org/wiki/Shadow_mapping">Shadow Mapping</a> and other Render-To-Texture effects. Assuming the buzzwords tell you nothing, here's a quick example scenario. We have a Texture2D of a sign that has some wooden texture and reads "Blacksmith". However you intend to localize that sign, so the german version of your game reads "Schmiede" or the spanish version "herrería". What are the options? Manually create a new Texture for every sign in the game with a paint program? No. All you need is the wooden texture of the sign, without any letters. The texture can be used as target for Render-To-Texture, and OpenTK.Fonts provides you a way to write any text you like ontop of that texture.</p>
+<p>The traditional approach to achieve that was rendering into the visible framebuffer, read the information back with GL.ReadPixels() or GL.CopyTexSubImage(), then clear the screen and proceed with rendering as usual. With FBO the copy can be avoided, since it allows to render directly into a texture.</p>
+<p><b>Framebuffer Layout</b></p>
+<p>A framebuffer consists of at least one of these buffers:</p>
+<ul>
+<li>A depth buffer, with or without stencil mask. Typical depth buffer formats are 16, 24, 32 Bit integer or 32 Bit floating point. Stencil buffers can only be 8 Bits in size, a good mixed depth and stencil format is depth 24 Bit with stencil 8 Bit.</li>
+<li>Color buffer(s) have 1-4 components, namely Red, Green, Blue and Alpha. Typical color buffer formats are RGBA8 (8 Bit per component, total 32 Bit) or RGBA16f (16 Bit floating point per component, total 64 Bit). This list is far from complete, there exist <a href="http://download.nvidia.com/developer/OpenGL_Texture_Formats/nv_ogl_texture_formats.pdf">dozens of formats</a> with different amount of components and precision per component.</li>
+</ul>
+<p>Please note that there is no requirement to use both. It's perfectly valid to create a FBO which has only a color attachment but no depth attachment. Or the other way around.</p>
+<p>When you use more than one buffer, some restrictions apply: All attachments to the FBO must have the same width and height. All color buffers must use the same format. For example, you cannot attach a RGBA8 and a RGBA16f Texture to the same FBO, even if they have the same width and height. OpenGL 3.0 does relax this restriction, by allowing attachments of different sizes to be attached. But only the smallest area covered by all attachments can be written to. The Extension EXTX_mixed_framebuffer_formats allows attaching different formats to the framebuffer, however this is reported to be very slow so far.</p>
+<p><b>Renderbuffers</b></p>
+<p>FBO allows 2 different types of targets to be attached to it. The already known textures 1D, 2D, Rectangle, 3D or Cube map, and a new type: the renderbuffer. They are not restricted to depth or stencil like the name might suggest, they can be used for color formats aswell.</p>
+<p><u>Renderbuffer</u><br />
+Pro:</p>
+<ul>
+<li>May support formats which are not available as texture.</li>
+<li>Allows multisampling through Extensions.</li>
+</ul>
+<p>Con:</p>
+<ul>
+<li>Does not allow MipMaps, filter or wrapping mode to be specified.</li>
+<li>Cannot be bound as sampler for shaders.</li>
+<li>Restricted to be a 2-dimensional image.</li>
+</ul>
+<p><u>Texture2D</u><br />
+Pro:</p>
+<ul>
+<li>Allows MipMaps, filter and wrapping modes, just like every other texture.</li>
+<li>Can be bound as sampler to a shader.</li>
+</ul>
+<p>Con:</p>
+<ul>
+<li>Might be slower than a renderbuffer, depending on hardware.</li>
+</ul>
+<p>As a rule of thumb, do not use a renderbuffer if you plan to use the FBO attachments as textures at some later stage. The copy from renderbuffer into a texture will perform worse than rendering directly to the texture.</p>
+<p>Let's take the wooden "Blacksmith" sign example from earlier again. The required end result must be a Texture2D, which can be bound when drawing the geometry of the sign.  To give an overview about the options, here are some brief summaries how to accomplish obtaining the desired Texture2D:</p>
+<ol>
+<li>Using a visible framebuffer.<br />
+The wooden texture is drawn into the framebuffer. Text is drawn. The final Texture is copied into a Texture2D. The screen must be cleared when done.</li>
+<li>Using a renderbuffer.<br />
+The renderbuffer must be attached and the FBO bound. The wooden texture is drawn. Text is drawn. The final Texture is copied into a Texture2D. Either the renderbuffer is redundant now, or the screen must be cleared.</li>
+<li>Using a Texture2D.<br />
+The texture must be attached and the FBO bound. Only Text is drawn. Done.</li>
+</ol>
+<p><b>Example Setup</b></p>
+<p>To give a concrete example how all this theory looks in practice: let's create a color texture, a depth renderbuffer and a FBO, then attach the texture and renderbuffer to the FBO. I'm assuming you read the VBO tutorial before this, so I'm not going through the purpose of handles, GL.Gen*, GL.Bind* and GL.Delete* functions again. Note that this is a C API and the same rule of binding 0 to disable or detach something is valid here too. E.g. GL.Ext.BindFramebuffer( FramebufferTarget.FramebufferExt, 0 ); will disable the last bound FBO and return rendering back to the visible window-system provided framebuffer.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw1">const</span> <span class="kw1">int</span> FboWidth = <span class="nu0">512</span>;
+<span class="kw1">const</span> <span class="kw1">int</span> FboHeight = <span class="nu0">512</span>;
+&nbsp;
+<span class="kw1">uint</span> FboHandle;
+<span class="kw1">uint</span> ColorTexture;
+<span class="kw1">uint</span> DepthRenderbuffer;
+&nbsp;
+<span class="co1">// Create Color Texture</span>
+<span class="kw3">GL</span>.<span class="me1">GenTextures</span><span class="br0">&#40;</span> <span class="nu0">1</span>, <span class="kw1">out</span> ColorTexture <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">BindTexture</span><span class="br0">&#40;</span> TextureTarget.<span class="me1">Texture2D</span>, ColorTexture <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">TexParameter</span><span class="br0">&#40;</span> TextureTarget.<span class="me1">Texture2D</span>, TextureParameterName.<span class="me1">TextureMinFilter</span>, <span class="br0">&#40;</span><span class="kw1">int</span><span class="br0">&#41;</span> TextureMinFilter.<span class="me1">Nearest</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">TexParameter</span><span class="br0">&#40;</span> TextureTarget.<span class="me1">Texture2D</span>, TextureParameterName.<span class="me1">TextureMagFilter</span>, <span class="br0">&#40;</span><span class="kw1">int</span><span class="br0">&#41;</span> TextureMagFilter.<span class="me1">Nearest</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">TexParameter</span><span class="br0">&#40;</span> TextureTarget.<span class="me1">Texture2D</span>, TextureParameterName.<span class="me1">TextureWrapS</span>, <span class="br0">&#40;</span><span class="kw1">int</span><span class="br0">&#41;</span> TextureWrapMode.<span class="me1">Clamp</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">TexParameter</span><span class="br0">&#40;</span> TextureTarget.<span class="me1">Texture2D</span>, TextureParameterName.<span class="me1">TextureWrapT</span>, <span class="br0">&#40;</span><span class="kw1">int</span><span class="br0">&#41;</span> TextureWrapMode.<span class="me1">Clamp</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">TexImage2D</span><span class="br0">&#40;</span> TextureTarget.<span class="me1">Texture2D</span>, <span class="nu0">0</span>, PixelInternalFormat.<span class="me1">Rgba8</span>, FboWidth, FboHeight, <span class="nu0">0</span>, PixelFormat.<span class="me1">Rgba</span>, PixelType.<span class="me1">UnsignedByte</span>, <span class="kw4">IntPtr</span>.<span class="me1">Zero</span> <span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// test for GL Error here (might be unsupported format)</span>
+&nbsp;
+<span class="kw3">GL</span>.<span class="me1">BindTexture</span><span class="br0">&#40;</span> TextureTarget.<span class="me1">Texture2D</span>, <span class="nu0">0</span> <span class="br0">&#41;</span>; <span class="co1">// prevent feedback, reading and writing to the same image is a bad idea</span>
+&nbsp;
+<span class="co1">// Create Depth Renderbuffer</span>
+<span class="kw3">GL</span>.<span class="kw3">Ext</span>.<span class="me1">GenRenderbuffers</span><span class="br0">&#40;</span> <span class="nu0">1</span>, <span class="kw1">out</span> DepthRenderbuffer <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="kw3">Ext</span>.<span class="me1">BindRenderbuffer</span><span class="br0">&#40;</span> RenderbufferTarget.<span class="me1">RenderbufferExt</span>, DepthRenderbuffer <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="kw3">Ext</span>.<span class="me1">RenderbufferStorage</span><span class="br0">&#40;</span>RenderbufferTarget.<span class="me1">RenderbufferExt</span>, <span class="br0">&#40;</span>RenderbufferStorage<span class="br0">&#41;</span>All.<span class="me1">DepthComponent32</span>, FboWidth, FboHeight<span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// test for GL Error here (might be unsupported format)</span>
+&nbsp;
+<span class="co1">// Create a FBO and attach the textures</span>
+<span class="kw3">GL</span>.<span class="kw3">Ext</span>.<span class="me1">GenFramebuffers</span><span class="br0">&#40;</span> <span class="nu0">1</span>, <span class="kw1">out</span> FboHandle <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="kw3">Ext</span>.<span class="me1">BindFramebuffer</span><span class="br0">&#40;</span> FramebufferTarget.<span class="me1">FramebufferExt</span>, FboHandle <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="kw3">Ext</span>.<span class="me1">FramebufferTexture2D</span><span class="br0">&#40;</span> FramebufferTarget.<span class="me1">FramebufferExt</span>, FramebufferAttachment.<span class="me1">ColorAttachment0Ext</span>, TextureTarget.<span class="me1">Texture2D</span>, ColorTexture, <span class="nu0">0</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="kw3">Ext</span>.<span class="me1">FramebufferRenderbuffer</span><span class="br0">&#40;</span> FramebufferTarget.<span class="me1">FramebufferExt</span>, FramebufferAttachment.<span class="me1">DepthAttachmentExt</span>, RenderbufferTarget.<span class="me1">RenderbufferExt</span>, DepthRenderbuffer <span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// now GL.Ext.CheckFramebufferStatus( FramebufferTarget.FramebufferExt ) can be called, check the end of this page for a snippet.</span>
+&nbsp;
+<span class="co1">// since there's only 1 Color buffer attached this is not explicitly required</span>
+<span class="kw3">GL</span>.<span class="me1">DrawBuffer</span><span class="br0">&#40;</span> <span class="br0">&#40;</span>DrawBufferMode<span class="br0">&#41;</span>FramebufferAttachment.<span class="me1">ColorAttachment0Ext</span> <span class="br0">&#41;</span>;
+&nbsp;
+<span class="kw3">GL</span>.<span class="me1">PushAttrib</span><span class="br0">&#40;</span> AttribMask.<span class="me1">ViewportBit</span> <span class="br0">&#41;</span>; <span class="co1">// stores GL.Viewport() parameters</span>
+<span class="kw3">GL</span>.<span class="me1">Viewport</span><span class="br0">&#40;</span> <span class="nu0">0</span>, <span class="nu0">0</span>, FboWidth, FboHeight <span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// render whatever your heart desires, when done ...</span>
+&nbsp;
+<span class="kw3">GL</span>.<span class="me1">PopAttrib</span><span class="br0">&#40;</span> <span class="br0">&#41;</span>; <span class="co1">// restores GL.Viewport() parameters</span>
+<span class="kw3">GL</span>.<span class="kw3">Ext</span>.<span class="me1">BindFramebuffer</span><span class="br0">&#40;</span> FramebufferTarget.<span class="me1">FramebufferExt</span>, <span class="nu0">0</span> <span class="br0">&#41;</span>; <span class="co1">// return to visible framebuffer</span>
+<span class="kw3">GL</span>.<span class="me1">DrawBuffer</span><span class="br0">&#40;</span> DrawBufferMode.<span class="me1">Back</span> <span class="br0">&#41;</span>;</pre></div>
+<p>At this point you may bind the ColorTexture as source for drawing into the visible framebuffer, but be aware that it is still attached as target to the created FBO. That is only a problem if the FBO is bound again and the texture is used at the same time for being a FBO attachment target and the source of a texturing operation. This will cause feedback effects and is most likely not what you intended.<br />
+You may detach the ColorTexture from the FBO - the texture contents itself is not affected - by calling GL.Ext.FramebufferTexture2D() and attach a different target than ColorTexture to the ColorAttachment0 slot, for example simply 0. However the FBO would then be incomplete due to the missing color attachment, the best course of action is to detach the DepthRenderbuffer too and delete the renderbuffer and the FBO. Do not repeatedly attach and detach the same Texture if you want to update it every frame - just keep it attached to the FBO and make sure no feedback situation arises.</p>
+<p>It is valid to attach the same texture or renderbuffer to multiple FBO at the same time. Example: you can avoid copies and save memory by attaching the same depth buffer to the FBOs, instead of creating multiple depth buffers and copy between them.</p>
+<p>Special care has to be taken about 2 states that are always affected by FBOs: GL.Viewport() and GL.DrawBuffer(s). When switching from the visible framebuffer to a FBO, you should always set a proper viewport and drawbuffer. Switching framebuffer targets is such an expensive operation that the cost of the 2 extra calls to set up drawbuffers and viewport can be ignored. In the example setup above, the Viewport was stored and restored using GL.PushAttrib() and GL.PopAttrib(), but you may ofcourse specify it manually using GL.Viewport().</p>
+<p><b>GL.DrawBuffer(s)</b></p>
+<p>A FBO supports multiple color buffer attachments, if they have the same dimension and the same format. It is allowed to attach multiple color buffers - but only draw to one of them - by using the GL.DrawBuffer() command. Selecting multiple color buffers to write to is done with the GL.DrawBuffer<b>s</b>() command, which expects an array like this:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">DrawBuffersEnum<span class="br0">&#91;</span><span class="br0">&#93;</span> bufs = <span class="kw1">new</span> DrawBuffersEnum<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span> <span class="br0">&#123;</span> <span class="br0">&#40;</span>DrawBuffersEnum<span class="br0">&#41;</span>FramebufferAttachment.<span class="me1">ColorAttachment0Ext</span>, <span class="br0">&#40;</span>DrawBuffersEnum<span class="br0">&#41;</span>FramebufferAttachment.<span class="me1">ColorAttachment1Ext</span> <span class="br0">&#125;</span>; <span class="co1">// fugly, will be addressed in 0.9.2</span>
+&nbsp;
+<span class="kw3">GL</span>.<span class="me1">DrawBuffers</span><span class="br0">&#40;</span> bufs.<span class="me1">Length</span>, bufs <span class="br0">&#41;</span>;</pre></div>
+<p>This code declares the color attachments 0 and 1 as buffers that can be written to. In practice this makes only sense if you're writing shaders with GLSL. (Look up "gl_FragData" for further info)</p>
+<p>The exact number how many attachments are supported by the hardware must be queried through GL.GetInteger( GetPName.MaxColorAttachmentsExt, ... ) and the number of allowed Drawbuffers at the same time through GL.GetInteger( GetPName.MaxDrawBuffers, ... )</p>
+<p>To select which buffer is affected by GL.ReadPixels() or GL.CopyTex*() calls, use GL.ReadBuffer().</p>
+<p><b>Remarks</b></p>
+<p>For the sake of simplicity, the window-system provided framebuffer was called "visible framebuffer". In reality this is only true if you requested a single-buffer context from OpenGL, but the more likely case is that you requested a double-buffered context. When using double buffers, the 'back' buffer is the one used for drawing and never visible on screen, the 'front' buffer is the one that is visible on screen. The two buffers are swapped with each other when you call <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw1">this</span>.<span class="me1">SwapBuffers</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span>, to avoid that slow computers show unfinished images on screen. FBO are not designed to be double buffered, because they are off-screen at all times.</p>
+<p>The wooden "Blacksmith" sign example has some hidden complexities that are ignored for the sake of simplicity, such as that you may not want to print with standard fonts on the sign, that words in different languages can have different length or that it might be desireable to add an additional mask  when writing the text to simulate the paint peeling off the sign. </p>
+<p>This page does not cover all commands exposed by FBO. For a more detailed description <a href="http://www.opengl.org/registry/specs/ARB/framebuffer_object.txt">you'll have to dig through the official specification</a>.</p>
+<p>These Extensions were merged into ARB_framebuffer_objects with OpenGL 3.0:</p>
+<p><a href="http://www.opengl.org/registry/specs/EXT/framebuffer_multisample.txt">EXT_framebuffer_multisample</a> allows the creation of renderbuffers with n samples per image.</p>
+<p><a href="http://www.opengl.org/registry/specs/EXT/framebuffer_blit.txt">EXT_framebuffer_blit</a> allows to bind 2 FBO at the same time. One for reading and one for writing. Without this Extension the active framebuffer is used for both: reading and writing.</p>
+<p><b>Snippet how to interpret the possible results from GL.CheckFramebufferStatus</b></p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">        <span class="kw1">private</span> <span class="kw1">bool</span> CheckFboStatus<span class="br0">&#40;</span> <span class="br0">&#41;</span>
+        <span class="br0">&#123;</span>
+            <span class="kw1">switch</span> <span class="br0">&#40;</span> <span class="kw3">GL</span>.<span class="kw3">Ext</span>.<span class="me1">CheckFramebufferStatus</span><span class="br0">&#40;</span> FramebufferTarget.<span class="me1">FramebufferExt</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span>
+            <span class="br0">&#123;</span>
+            <span class="kw1">case</span> FramebufferErrorCode.<span class="me1">FramebufferCompleteExt</span>:
+                <span class="br0">&#123;</span>
+                    Trace.<span class="me1">WriteLine</span><span class="br0">&#40;</span> <span class="st0">&quot;FBO: The framebuffer is complete and valid for rendering.&quot;</span> <span class="br0">&#41;</span>;
+                    <span class="kw1">return</span> <span class="kw1">true</span>;
+                <span class="br0">&#125;</span>
+            <span class="kw1">case</span> FramebufferErrorCode.<span class="me1">FramebufferIncompleteAttachmentExt</span>:
+                <span class="br0">&#123;</span>
+                    Trace.<span class="me1">WriteLine</span><span class="br0">&#40;</span> <span class="st0">&quot;FBO: One or more attachment points are not framebuffer attachment complete. This could mean there’s no texture attached or the format isn’t renderable. For color textures this means the base format must be RGB or RGBA and for depth textures it must be a DEPTH_COMPONENT format. Other causes of this error are that the width or height is zero or the z-offset is out of range in case of render to volume.&quot;</span> <span class="br0">&#41;</span>;
+                    <span class="kw1">break</span>;
+                <span class="br0">&#125;</span>
+            <span class="kw1">case</span> FramebufferErrorCode.<span class="me1">FramebufferIncompleteMissingAttachmentExt</span>:
+                <span class="br0">&#123;</span>
+                    Trace.<span class="me1">WriteLine</span><span class="br0">&#40;</span> <span class="st0">&quot;FBO: There are no attachments.&quot;</span> <span class="br0">&#41;</span>;
+                    <span class="kw1">break</span>;
+                <span class="br0">&#125;</span>
+            <span class="coMULTI">/* case  FramebufferErrorCode.GL_FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT: 
+                 {
+                     Trace.WriteLine(&quot;FBO: An object has been attached to more than one attachment point.&quot;);
+                     break;
+                 }*/</span>
+            <span class="kw1">case</span> FramebufferErrorCode.<span class="me1">FramebufferIncompleteDimensionsExt</span>:
+                <span class="br0">&#123;</span>
+                    Trace.<span class="me1">WriteLine</span><span class="br0">&#40;</span> <span class="st0">&quot;FBO: Attachments are of different size. All attachments must have the same width and height.&quot;</span> <span class="br0">&#41;</span>;
+                    <span class="kw1">break</span>;
+                <span class="br0">&#125;</span>
+            <span class="kw1">case</span> FramebufferErrorCode.<span class="me1">FramebufferIncompleteFormatsExt</span>:
+                <span class="br0">&#123;</span>
+                    Trace.<span class="me1">WriteLine</span><span class="br0">&#40;</span> <span class="st0">&quot;FBO: The color attachments have different format. All color attachments must have the same format.&quot;</span> <span class="br0">&#41;</span>;
+                    <span class="kw1">break</span>;
+                <span class="br0">&#125;</span>
+            <span class="kw1">case</span> FramebufferErrorCode.<span class="me1">FramebufferIncompleteDrawBufferExt</span>:
+                <span class="br0">&#123;</span>
+                    Trace.<span class="me1">WriteLine</span><span class="br0">&#40;</span> <span class="st0">&quot;FBO: An attachment point referenced by GL.DrawBuffers() doesn’t have an attachment.&quot;</span> <span class="br0">&#41;</span>;
+                    <span class="kw1">break</span>;
+                <span class="br0">&#125;</span>
+            <span class="kw1">case</span> FramebufferErrorCode.<span class="me1">FramebufferIncompleteReadBufferExt</span>:
+                <span class="br0">&#123;</span>
+                    Trace.<span class="me1">WriteLine</span><span class="br0">&#40;</span> <span class="st0">&quot;FBO: The attachment point referenced by GL.ReadBuffers() doesn’t have an attachment.&quot;</span> <span class="br0">&#41;</span>;
+                    <span class="kw1">break</span>;
+                <span class="br0">&#125;</span>
+            <span class="kw1">case</span> FramebufferErrorCode.<span class="me1">FramebufferUnsupportedExt</span>:
+                <span class="br0">&#123;</span>
+                    Trace.<span class="me1">WriteLine</span><span class="br0">&#40;</span> <span class="st0">&quot;FBO: This particular FBO configuration is not supported by the implementation.&quot;</span> <span class="br0">&#41;</span>;
+                    <span class="kw1">break</span>;
+                <span class="br0">&#125;</span>
+            <span class="kw1">default</span>:
+                <span class="br0">&#123;</span>
+                    Trace.<span class="me1">WriteLine</span><span class="br0">&#40;</span> <span class="st0">&quot;FBO: Status unknown. (yes, this is really bad.)&quot;</span> <span class="br0">&#41;</span>;
+                    <span class="kw1">break</span>;
+                <span class="br0">&#125;</span>
+            <span class="br0">&#125;</span>
+            <span class="kw1">return</span> <span class="kw1">false</span>;
+        <span class="br0">&#125;</span></pre></div>
+<div class="book-navigation"><div class="page-links clear-block"><a href="texture-compression.html" class="page-previous" title="Go to previous page">‹ BCn Texture Compression</a><a href="../graphics.html" class="page-up" title="Go to parent page">up</a><a href="geometry.html" class="page-next" title="Go to next page">Geometry ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/523" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/523%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/523%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-523 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<form action="http://www.opentk.com/doc/graphics/frame-buffer-objects"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-15238"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="Eackz&#039;s picture" title="Eackz&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="frame-buffer-objects.html#comment-15238" class="active">Re: Frame Buffer Objects (FBO)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Sunday, 16 February, 2014 - 04:03             by Eackz                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Thank you for this Information. It has really helped me :3</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F523" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/graphics/frame-buffer-objects by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:29 GMT -->
+</html>

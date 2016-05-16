@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/opengl/fragment-ops/stencil-test by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="multisample-alpha-to-coverage.html" />
+
+<link rel="up" href="../fragment-ops.html" />
+
+<link rel="next" href="depth-test.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>04. Stencil Test | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../../../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../../../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../../../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../../../../index.html">Home</a> » <a href="../../../../../doc.html" title="What is this all about?">Introduction</a> » <a href="../../../../graphics.html" title="Description of the OpenTK.Graphics namespace, plus a quick OpenGL and OpenGL|ES primer.">Graphics</a> » <a href="../fragment-ops.html">Fragment Operations</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-765" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="stencil-test.html">04. Stencil Test</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>The Stencil buffer's primary use is to apply a mask to the framebuffer. Simply put, you can think of it as a cardboard stencil where you cut out holes, so you may use a can of spraypaint to paint shapes. The paint will only pass the holes you had cut out and be blocked otherwise by the cardboard. OpenGL's Stencil testing allows you to layer several of these masks over each other.</p>
+<p>A more OpenGL related example: In any vehicle simulation the interior of the cockpit is usually masked by a stencil buffer, because it does not have to be redrawn every frame. That way alot of fragments of the outside landscape can be skipped, as they would not contribute to the final image anyway.</p>
+<p>In order to use the Stencil buffer, the window-system provided framebuffer - or the Stencil attachment of a FBO - must explicitly contain a logical stencil buffer. If there is no stencil buffer, the fragment is always passed to the next pipeline stage.</p>
+<p>For the purpose of clarity in this article, the Stencil Buffer is assumed to be 8 Bit large and able to represent the values 0..255</p>
+<p>StencilTest functionality is enabled and disabled with EnableCap.StencilTest</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Enable</span><span class="br0">&#40;</span> EnableCap.<span class="me1">StencilTest</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">Disable</span><span class="br0">&#40;</span> EnableCap.<span class="me1">StencilTest</span> <span class="br0">&#41;</span>; <span class="co1">// default</span></pre></div>
+<p>The value used by GL.Clear() commands can be set through:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">ClearStencil</span><span class="br0">&#40;</span> <span class="kw1">int</span> <span class="br0">&#41;</span>; <span class="co1">// 0 is the default, Range [0..255]</span></pre></div>
+<p>If StencilTest is enabled, writing can be limited by a bitfield through a bitwise AND. </p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">StencilMask</span><span class="br0">&#40;</span> bitmask <span class="br0">&#41;</span>; <span class="co1">// By default all bits are set to 1.</span></pre></div>
+<p>Note: The command GL.StencilMaskSeparate() behaves exactly like GL.StencilMask() but allows separate comparison functions for front- and back-facing polygons.</p>
+<p><b>GL.StencilFunc()</b></p>
+<p>The command GL.StencilFunc( func, ref, mask ) is used to specify the conditions under which the StencilTest succeeds or fails. It sets the comparison function, reference value and mask for the Stencil Test.</p>
+<ul>
+<li><b>ref</b> is an integer value to compare against. By default this value is 0, range [0 .. 255]</li>
+<li><b>mask</b> is a bitfield which will be used in a bitwise AND. Only the bits which are set to 1 are considered. By default all bits are set to 1.</li>
+<li>
+<b>func</b> of the test can have the following values, the default is StencilFunction.Always.</p>
+<ul>
+<li>StencilFunction.Always - Test will always succeed.</li>
+<li>StencilFunction.Never - Test will never succeed.</li>
+<li>StencilFunction.Less - Test will succeed if ( ref &amp; mask ) &lt; ( pixel &amp; mask )</li>
+<li>StencilFunction.Lequal - Test will succeed if ( ref &amp; mask ) &lt;= ( pixel &amp; mask )</li>
+<li>StencilFunction.Equal - Test will succeed if ( ref &amp; mask ) == ( pixel &amp; mask )</li>
+<li>StencilFunction.Notequal - Test will succeed if ( ref &amp; mask ) != ( pixel &amp; mask )</li>
+<li>StencilFunction.Gequal - Test will succeed if ( ref &amp; mask ) &gt;= ( pixel &amp; mask )</li>
+<li>StencilFunction.Greater - Test will succeed if ( ref &amp; mask ) &gt; ( pixel &amp; mask )</li>
+</ul>
+</li>
+<p>The word 'pixel' means in this case: The value in the Stencil Buffer at the current pixel.
+</ul>
+<p>Note: The command GL.StencilFuncSeparate() behaves exactly like GL.StencilFunc() but allows separate comparison functions for front- and back-facing polygons.</p>
+<p><b>GL.StencilOp()</b></p>
+<p>Depending on the result determined by <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">StencilFunc</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span>, the command <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">StencilOp</span><span class="br0">&#40;</span> fail, zfail, zpass <span class="br0">&#41;</span></code></span> can be used to decide what action should be taken if the fragment passes the test. </p>
+<ul>
+<li>fail - behavior when StencilTest fails, regardless of DepthTest.</li>
+<li>zfail - behavior when StencilTest succeeds, but DepthTest fails.</li>
+<li>zpass - behavior when both tests succeed, or if StencilTest succeeds and DepthTest is disabled.</li>
+</ul>
+<p>The following values are allowed, the default for all operations is StencilOp.Keep</p>
+<ul>
+<li>StencilOp.Zero - set Stencil Buffer to 0.</li>
+<li>StencilOp.Keep - Do not modify the Stencil Buffer.</li>
+<li>StencilOp.Replace - set Stencil Buffer to ref value as specified by last GL.StencilFunc() call.</li>
+<li>StencilOp.Incr - increment Stencil Buffer by 1. It is clamped at 255.</li>
+<li>StencilOp.IncrWrap - increment Stencil Buffer by 1. If the result is greater than 255, it becomes 0.</li>
+<li>StencilOp.Decr - decrement Stencil Buffer by 1. It is clamped at 0.</li>
+<li>StencilOp.DecrWrap - decrement Stencil Buffer by 1. If the result is less than 0, it becomes 255.</li>
+<li>StencilOp.Invert - Bitwise invert. If the Stencil Buffer currently contains the bits 00111001, it is set to 11000110.</li>
+</ul>
+<p>Note: The command GL.StencilOpSeparate() behaves exactly like GL.StencilOp() but allows separate comparison functions for front- and back-facing polygons.</p>
+<p><b>State Queries</b></p>
+<p>To determine whether StencilTest is enabled or disabled, use <span class="geshifilter"><code class="geshifilter-csharp">Result = <span class="kw3">GL</span>.<span class="me1">IsEnabled</span><span class="br0">&#40;</span> EnableCap.<span class="me1">StencilTest</span> <span class="br0">&#41;</span>;</code></span></p>
+<p>The bits available in the Stencil Buffer can be queried by <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">GetInteger</span><span class="br0">&#40;</span> GetPName.<span class="me1">StencilBits</span>, ... <span class="br0">&#41;</span>;</code></span></p>
+<p>The value set by GL.ClearStencil() can be queried by <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">GetInteger</span><span class="br0">&#40;</span> GetPName.<span class="me1">StencilClearValue</span>, ... <span class="br0">&#41;</span>;</code></span></p>
+<p>The bitfield set by GL.StencilMask() can be queried by <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">GetInteger</span><span class="br0">&#40;</span> GetPName.<span class="me1">StencilWritemask</span>, ... <span class="br0">&#41;</span>;</code></span></p>
+<p>The state of the Stencil comparison function can be queried with <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">GetInteger</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> and the following parameters:</p>
+<p>GetPName.StencilFunc - GL.StencilFunc's parameter 'func'<br />
+GetPName.StencilRef - GL.StencilFunc's parameter 'ref'<br />
+GetPName.StencilValueMask - GL.StencilFunc's parameter 'mask'</p>
+<p>The state of the Stencil operations can be queried with GL.GetInteger and the following parameters:</p>
+<p>GetPName.StencilFail - GL.StencilOp's parameter 'fail'<br />
+GetPName.StencilPassDepthFail - GL.StencilOp's parameter 'zfail'<br />
+GetPName.StencilPassDepthPass - GL.StencilOp's parameter 'zpass'</p>
+<p>If the GL.Stencil***Separate() functions have been used, the tokens GetPName.StencilBack*** become available to query the settings for back-facing polygons. With Intellisense you should not have any problems finding them.</p>
+<p><b>Related Extensions for further reading</b></p>
+<p><a href="http://www.opengl.org/registry/specs/EXT/stencil_clear_tag.txt" title="http://www.opengl.org/registry/specs/EXT/stencil_clear_tag.txt">http://www.opengl.org/registry/specs/EXT/stencil_clear_tag.txt</a><br />
+<a href="http://www.opengl.org/registry/specs/EXT/stencil_wrap.txt" title="http://www.opengl.org/registry/specs/EXT/stencil_wrap.txt">http://www.opengl.org/registry/specs/EXT/stencil_wrap.txt</a> (promoted to core in GL 2.0)<br />
+<a href="http://www.opengl.org/registry/specs/ATI/separate_stencil.txt" title="http://www.opengl.org/registry/specs/ATI/separate_stencil.txt">http://www.opengl.org/registry/specs/ATI/separate_stencil.txt</a> (promoted to core in GL 2.0)<br />
+<a href="http://www.opengl.org/registry/specs/EXT/stencil_two_side.txt" title="http://www.opengl.org/registry/specs/EXT/stencil_two_side.txt">http://www.opengl.org/registry/specs/EXT/stencil_two_side.txt</a> (basically the same functionality as ATI_separate_stencil, not in core though)</p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="multisample-alpha-to-coverage.html" class="page-previous" title="Go to previous page">‹ 03. Multisample Fragment Operations (WIP)</a><a href="../fragment-ops.html" class="page-up" title="Go to parent page">up</a><a href="depth-test.html" class="page-next" title="Go to next page">05. Depth Test ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/765" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/765%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/765%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-765 -->
+
+<div id="comments">
+  
+</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F765" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/opengl/fragment-ops/stencil-test by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:33 GMT -->
+</html>

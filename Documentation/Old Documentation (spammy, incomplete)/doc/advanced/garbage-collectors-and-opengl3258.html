@@ -1,0 +1,651 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/advanced/garbage-collectors-and-opengl?page=1&%24Version=1&%24Path=/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:49:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="garbage-collection-performance.html" />
+
+<link rel="up" href="../advanced.html" />
+
+<link rel="next" href="http://www.opentk.com/node/2926" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>GC &amp; OpenGL (work in progress) | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../advanced.html" title="Chapter 3: Discusses advanced topics on the interaction between .Net, OpenGL and OpenAL.">Advanced Topics</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-128" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="garbage-collectors-and-opengl.html">GC &amp; OpenGL (work in progress)</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>As discussed in the previous chapter, GC finalization occurs on the finalizer thread. This poses some problems on OpenGL resource deallocation, since the context used to create the resources is not available in the finalizer thread!</p>
+<p>Since OpenGL functions cannot be called in finalizers, a different methodology must be followed. By implementing the <a href="http://blogs.labtech.epitech.net/blogs/jaylee/archive/2004/08/16/844.aspx">disposable pattern</a>, we can use the Dispose() method to deterministaclly destroy OpenGL resources in the main thread. By modifying the finalizer logic we can provide a way to flag resources as 'dead', and destroy them from the main thread. Last, by extending the concept of the OpenGL context, we can be notified of context destruction, to release all related resources.</p>
+<p>The following code describes the implementation of the "OpenGL disposable pattern" in OpenTK, but it is easy to adapt this code to any managed OpenGL project:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// This code is out-of-date. Please do not use it!</span>
+&nbsp;
+<span class="co1">// The OpenGL disposable pattern</span>
+<span class="kw1">class</span> GraphicsResource: <span class="kw3">IDisposable</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">int</span> resource_handle;    <span class="co1">// The OpenGL handle to the resource</span>
+    <span class="kw3">GraphicsContext</span> context;      <span class="co1">// The context which owns this resource</span>
+&nbsp;
+    <span class="kw1">public</span> GraphicsResource<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="co1">// Obtain the current OpenGL context, and allocate the resource</span>
+        context = <span class="kw3">GraphicsContext</span>.<span class="me1">CurrentContext</span>;
+        <span class="kw1">if</span> <span class="br0">&#40;</span>context == <span class="kw1">null</span><span class="br0">&#41;</span>
+            <span class="kw1">throw</span> <span class="kw1">new</span> InvalidOperationException<span class="br0">&#40;</span><span class="kw4">String</span>.<span class="me1">Format</span><span class="br0">&#40;</span>
+                <span class="st0">&quot;No OpenGL context available in thread {0}.&quot;</span>,
+                <span class="kw5">System</span>.<span class="me1">Threading</span>.<span class="kw4">Thread</span>.<span class="me1">CurrentThread</span>.<span class="me1">ManagedThreadId</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+&nbsp;
+        resource_handle = <span class="br0">&#91;</span>...<span class="br0">&#93;</span>;
+&nbsp;
+        context.<span class="me1">Destroy</span> += ContextDisposed;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co2">#region --- Disposable Pattern ---</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw1">void</span> ContextDisposed<span class="br0">&#40;</span><span class="kw3">IGraphicsContext</span> sender, EventArgs e<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        context.<span class="me1">Destroy</span> -= ContextDisposed;
+        <span class="co1">// TODO: Shared resources shouldn't be destroyed here.</span>
+        Dispose<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">public</span> <span class="kw1">void</span> Dispose<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        Dispose<span class="br0">&#40;</span><span class="kw1">true</span><span class="br0">&#41;</span>;
+        GC.<span class="me1">SuppressFinalize</span><span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co1">// If the owning context is current then destroy the resource,</span>
+    <span class="co1">// otherwise flag it (so it will be destroyed from the correct thread)..</span>
+    <span class="co1">// TODO: Is the &quot;manual&quot; flag necessary? Simply checking for the</span>
+    <span class="co1">// owning context should be enough.</span>
+    <span class="kw1">private</span> <span class="kw1">void</span> Dispose<span class="br0">&#40;</span><span class="kw1">bool</span> manual<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="kw1">if</span> <span class="br0">&#40;</span>!disposed<span class="br0">&#41;</span>
+        <span class="br0">&#123;</span>
+            <span class="kw1">if</span> <span class="br0">&#40;</span>!context.<span class="me1">IsCurrent</span> || !manual<span class="br0">&#41;</span>
+            <span class="br0">&#123;</span>
+                GC.<span class="me1">KeepAlive</span><span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#41;</span>;
+                context.<span class="me1">RegisterForDisposal</span><span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#41;</span>;
+            <span class="br0">&#125;</span>
+            <span class="kw1">else</span>
+            <span class="br0">&#123;</span>
+                <span class="co1">// Destroy resource_handle through OpenGL</span>
+                disposed = <span class="kw1">true</span>;
+            <span class="br0">&#125;</span>
+        <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    ~GraphicsResource<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        Dispose<span class="br0">&#40;</span><span class="kw1">false</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co2">#endregion</span>
+<span class="br0">&#125;</span></pre></div>
+<p>In OpenTK, each GraphicsContext class maintains a queue of OpenGL resources that need to be destroyed. Resources are added to this queue through the RegisterForDisposal() call, and they are destroyed through the DisposeResources() method. The whole process is deterministic: it is your responsibility to call DisposeResources at appropriate time intervals (or setup up a timer event to do this for you).</p>
+<p>Resource creation takes a small performance hit due to the call to GraphicsContext.CurrentContext, while garbage collect-able OpenGL resources consume slightly more memory (due to the reference to the GraphicsContext). Prefer calling the Dispose() method to destroy resources instead of relying on the GC, as finalizable resources are only collected on a generation 1 or 2 GC sweep.</p>
+<p>The current implementation in OpenTK does not take shared contexts into account - this will be taken care of in the near future.</p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="garbage-collection-performance.html" class="page-previous" title="Go to previous page">‹ Garbage Collection Performance</a><a href="../advanced.html" class="page-up" title="Go to parent page">up</a><a href="http://www.opentk.com/node/2926" class="page-next" title="Go to next page">Uniform Buffer Objects (UBO) using the std140 layout specification ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/128" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/128%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/128%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-128 -->
+
+<div id="comments" class="clear-block">
+  <h2 class="comments">Comments</h2>
+<div class="pager"><a href="http://www.opentk.com/doc/advanced/garbage-collectors-and-opengl?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to first page">« first</a><a href="http://www.opentk.com/doc/advanced/garbage-collectors-and-opengl?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to previous page">‹ previous</a><span class="pager-list"><a href="http://www.opentk.com/doc/advanced/garbage-collectors-and-opengl?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to page 1">1</a><strong class="pager-current">2</strong></span></div><form action="http://www.opentk.com/doc/advanced/garbage-collectors-and-opengl?page=1&amp;%24Version=1&amp;%24Path=/"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div>
+<div class="box">
+            <h2>Comment viewing options</h2>
+        <div class="content">
+        <div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2" selected="selected">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10" selected="selected">10 comments per page</option><option value="30">30 comments per page</option><option value="50">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>    </div>
+</div>
+
+
+</div></form>
+<a id="comment-3008"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="Hangar&#039;s picture" title="Hangar&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="garbage-collectors-and-opengl.html#comment-3008" class="active">Re: GC &amp; OpenGL (work in progress)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 26 November, 2008 - 20:29             by Hangar                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>I see three glaring errors, and I dislike this implementation in general.</p>
+<p>The three glaring errors:</p>
+<p>1. An unsealed class should have a protected virtual Dispose(bool) method so that subclasses can be disposed as well.</p>
+<p>2. GC.KeepAlive doesn't do what you probably think it does. It makes sure that the object is stays referenced until GC.KeepAlive is called. It does nothing if the object has already been marked for finalization. It also has no effect if the object is used later on, as it is in the next line when you get its member, context. Maybe you were thinking GC.ReRegisterForFinalize? But event that would not work as GC.SuppressFinalize is called later, and won't be called in case of exception.</p>
+<p>3. The finalizer will not run when you expect it to. When you register for an event, the event holds a strong reference to the object. Since GC.SuppressFinalize is called whenever the event is fired, the only time that the finalizer will be called is if both the context and resource are collected at the same time, and the resource finalizer runs first. You can fix this with weak delegates, but I'm not sure you want to.</p>
+<p>Here's how I might do it:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// The OpenGL disposable pattern</span>
+<span class="kw1">class</span> GraphicsResource: <span class="kw3">IDisposable</span>
+<span class="br0">&#123;</span>
+    <span class="kw1">private</span> <span class="kw1">int</span> resource_handle;    <span class="co1">// The OpenGL handle to the resource</span>
+    <span class="kw1">private</span> <span class="kw3">GraphicsContext</span> context;      <span class="co1">// The context which owns this resource</span>
+    <span class="kw1">private</span> <span class="kw1">bool</span> disposed;        <span class="co1">// Whether the resource has been disposed yet</span>
+&nbsp;
+    <span class="kw1">public</span> GraphicsResource<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="co1">// Obtain the current OpenGL context, and allocate the resource</span>
+        context = <span class="kw3">GraphicsContext</span>.<span class="me1">CurrentContext</span>;
+        <span class="kw1">if</span> <span class="br0">&#40;</span>context == <span class="kw1">null</span><span class="br0">&#41;</span>
+            <span class="kw1">throw</span> <span class="kw1">new</span> InvalidOperationException<span class="br0">&#40;</span><span class="kw4">String</span>.<span class="me1">Format</span><span class="br0">&#40;</span>
+                <span class="st0">&quot;No OpenGL context available in thread {0}.&quot;</span>,
+                <span class="kw5">System</span>.<span class="me1">Threading</span>.<span class="kw4">Thread</span>.<span class="me1">CurrentThread</span>.<span class="me1">ManagedThreadId</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+&nbsp;
+        resource_handle = <span class="br0">&#91;</span>...<span class="br0">&#93;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co1">// Access to the resource handle</span>
+    <span class="kw1">public</span> <span class="kw1">int</span> ResourceHandle
+    <span class="br0">&#123;</span>
+        get
+        <span class="br0">&#123;</span>
+              <span class="kw1">if</span> <span class="br0">&#40;</span>disposed<span class="br0">&#41;</span>
+                   <span class="kw1">throw</span> <span class="kw1">new</span> ObjectDisposedException<span class="br0">&#40;</span><span class="st0">&quot;GraphicsResource&quot;</span><span class="br0">&#41;</span>;
+              <span class="kw1">return</span> resource_handle;
+        <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co2">#region --- Disposable Pattern ---</span>
+&nbsp;
+    <span class="kw1">public</span> <span class="kw1">void</span> Dispose<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        Dispose<span class="br0">&#40;</span><span class="kw1">true</span><span class="br0">&#41;</span>;
+        GC.<span class="me1">SuppressFinalize</span><span class="br0">&#40;</span><span class="kw1">this</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co1">// If the owning context is current then destroy the resource,</span>
+    <span class="co1">// otherwise flag it (so it will be destroyed from the correct thread)..</span>
+    <span class="kw1">protected</span> <span class="kw1">virtual</span> <span class="kw1">void</span> Dispose<span class="br0">&#40;</span><span class="kw1">bool</span> manual<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="kw1">if</span> <span class="br0">&#40;</span>!disposed<span class="br0">&#41;</span>
+        <span class="br0">&#123;</span>
+            <span class="kw1">if</span> <span class="br0">&#40;</span>!context.<span class="me1">IsDestroyed</span><span class="br0">&#41;</span>
+            <span class="br0">&#123;</span>
+                <span class="kw1">if</span> <span class="br0">&#40;</span>context.<span class="me1">IsCurrent</span><span class="br0">&#41;</span>
+                <span class="br0">&#123;</span>
+                    ReleaseResource<span class="br0">&#40;</span>context,  resource_handle<span class="br0">&#41;</span>;
+                <span class="br0">&#125;</span>
+                <span class="kw1">else</span>
+                <span class="br0">&#123;</span>
+                    <span class="kw3">GraphicsContext</span> savedContext = context;
+                    <span class="kw1">int</span> savedResource = resource_handle;
+                    context.<span class="me1">RegisterForExecution</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="br0">&#41;</span> =&gt; ReleaseResource<span class="br0">&#40;</span>savedContext, savedResource<span class="br0">&#41;</span><span class="br0">&#41;</span>;
+                <span class="br0">&#125;</span>
+            <span class="br0">&#125;</span>
+            disposed = <span class="kw1">true</span>;
+        <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">private</span> <span class="kw1">static</span> <span class="kw1">void</span> ReleaseResource<span class="br0">&#40;</span><span class="kw3">GraphicsContext</span> context, <span class="kw1">int</span>  resource_handle<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="co1">// dispose of  resource_handle...</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    ~GraphicsResource<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        Dispose<span class="br0">&#40;</span><span class="kw1">false</span><span class="br0">&#41;</span>;
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="co2">#endregion</span>
+<span class="br0">&#125;</span></pre></div>
+<p>All access to the resource handle should throw an ObjectDisposedException if Dispose has been called. Consider it like an ArgumentException.</p>
+<p>There's no need for the context to keep track of resources since you shouldn't be using a resource when the context is destroyed anyway. A context just needs a flag to mark itself as dead, IsDestroyed. The resource checks first whether the context is destroyed, and if so, releases or delegates the release of the unmanaged resource.</p>
+<p>The lambda expression could instead just be a member function, or you could implement an interface and avoid the delegate, but Dispose should never silently fail to dispose the object. It can throw an exception to fail if you don't want to be able to dispose when the context is not current, but directly throwing an exception from a Dispose method is never a good idea, especially when the resource can be finalized.</p>
+<p>The manual parameter to Dispose(bool) is never used since the only resource is unmanaged. However, it exists so that derived classes know why the resource is being destroyed.</p>
+<p>Note that a concurrency issue is left over. Using and disposing a resource on different threads can cause a race condition, and for efficiency you may not want to fix that. However, GraphicsContext.RegisterForExecution must use locks if you expect it to run from multiple threads, and may have to be synchronized against IsDestroyed or IsCurrent, depending on how you handle it.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-3011"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="garbage-collectors-and-opengl.html#comment-3011" class="active">Re: GC &amp; OpenGL (work in progress)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 26 November, 2008 - 21:10             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>Thanks for the detailed explanation - good thing this code stayed hidden in the library after all.</p>
+<p>3. Contexts aren't supposed to be finalized (the event is raised only when the context is explicitly disposed). If a context finalizer runs, it's too late - you will leak memory. This is because the context will (almost surely) be current on a different thread, causing MakeCurrent on the finalizer thread to fail. In that sense, it makes sense to keep the context alive until all its resources are destroyed.</p>
+<p><cite>There's no need for the context to keep track of resources since you shouldn't be using a resource when the context is destroyed anyway. A context just needs a flag to mark itself as dead, IsDestroyed. The resource checks first whether the context is destroyed, and if so, releases or delegates the release of the unmanaged resource.</cite></p>
+<p>Although the resource knows which context it was created on, it doesn't know whether it is shared in multiple contexts. Only the context itself can know whether it is safe to release a resource.</p>
+<p>This means you'd probably have to mark shared resources with a reference count, but solving this problem is beyond my ken at the moment (*which* resources can be shared? who is going to hold the reference count, the resource or the context?)</p>
+<p>Apart from this, your solution looks solid - I'll have to play with this when I find the time.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-3014"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="Hangar&#039;s picture" title="Hangar&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="garbage-collectors-and-opengl.html#comment-3014" class="active">Re: GC &amp; OpenGL (work in progress)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 26 November, 2008 - 22:37             by Hangar                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>Note that I based that solution on the assumption that resources do not need to be destroyed before the context is--that memory leaks won't occur when you drop a context without telling it to delete a texture first. If I'm wrong about that, you have four options:</p>
+<p>1. Disallow destructors on resources, and use something like what you had before.</p>
+<p>2. Use weak delegates, a fairly complicated pattern, to implement the pattern you had before. The weak delegate pattern uses WeakReferences, so it could be inefficient.</p>
+<p>3. Keep a weak collection of resources and dispose of them when the context is destroyed. This is similar to using weak delegates, but avoids use of delegates. (It still uses weak pointers.)</p>
+<p>4. (The most complicated.) Separate out the concepts ResourceProxy, access to the resource; and ResourceHandle, the lifetime management. The context keeps track of all ResourceHandles, and destroys them upon context destruction if they aren't already destroyed. The proxy is what the user sees and works like the normal resource does now. The proxy's destructor and Dispose method clean up the ResourceHandle. Because the handle is separate from the proxy, the context can avoid weak references and still be collected. However, I'm not sure whether it's any faster because there are twice as many allocations and twice as many classes to write.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-3015"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="garbage-collectors-and-opengl.html#comment-3015" class="active">Re: GC &amp; OpenGL (work in progress)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Wednesday, 26 November, 2008 - 23:37             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p><cite>Note that I based that solution on the assumption that resources do not need to be destroyed before the context is--that memory leaks won't occur when you drop a context without telling it to delete a texture first.</cite></p>
+<p>In my experience, dropping a context without releasing its resources can be dangerous. Specifically, I've seen crashes when a VBO or shader is bound and the context is deleted.</p>
+<p>#1 is not really desirable, as it effectively removes GL resources form the GC safety net (which is what this topic is all about).</p>
+<p>#2 on its own is definitely not desirable, due to the above (collecting the context is dangerous without releasing its resources).</p>
+<p>#3 is probably the most reasonable solution. It reverses the problem (now the context keeps track of resources, not vice versa), which makes it possible to drop the context cleanly (it simply destroys all registered resources). Weak references make resources GC-eligible, which is what we want. The only difficulty is that we need a way to signal the context about dead resources - that could be done with method #2, or by simply marking the resources as dead and having the context periodically scrub its table.</p>
+<p>#4 I'm not sure if this is more complicated than #2 + #3, but I also don't think it's the place of OpenTK to dictate a specific usage pattern.</p>
+<p>I like the idea of having an API applications can hook into, which allows to keep track of GL resources. Ideally this would be something as simple as implementing an <span class="geshifilter"><code class="geshifilter-csharp">IGraphicsResource</code></span> interface and calling <span class="geshifilter"><code class="geshifilter-csharp">context.<span class="me1">RegisterResources</span><span class="br0">&#40;</span>resource<span class="br0">&#41;</span></code></span>.</p>
+<p>However, if it isn't possible to implement this in an efficient or simple way, maybe it belongs to the user, not the library.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-3016"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="Hangar&#039;s picture" title="Hangar&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="garbage-collectors-and-opengl.html#comment-3016" class="active">Re: GC &amp; OpenGL (work in progress)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Thursday, 27 November, 2008 - 01:05             by Hangar                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>If it doesn't belong in the library, then you're effectively using #1.</p>
+<p>#2 and #3 have similar results. The weak event pattern is a bit difficult to implement, but from the outside it's a little prettier: <a href="http://www.codeproject.com/KB/cs/WeakEvents.aspx">this link</a> gives an overview of a bunch of different options. Interfaces will definitely be faster than delegates though.</p>
+<p>And for #4: Both #2 and #3 dictate a usage pattern, the difference I see here is ease of understanding and implementation (complexity).</p>
+<p>Looking at it from the complexity angle, stick with #3 or #1. I'm not sure on the exact figures, but I think WeakReference costs should be pretty low in this scenario. It doesn't cause an object to skip a generation like a finalizer, so I think it's worth the extra reliability.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-3017"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/picture-1.png" alt="the Fiddler&#039;s picture" title="the Fiddler&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="garbage-collectors-and-opengl.html#comment-3017" class="active">Re: GC &amp; OpenGL (work in progress)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Thursday, 27 November, 2008 - 01:16             by the Fiddler                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p><cite>Interfaces will definitely be faster than delegates though.</cite><br />
+Since .Net 2.0, delegate calls cost the same as interface calls (on .Net 1.1 the first were significantly slower). The same should hold for recent mono versions, at least for non-generic delegates. The downside is that delegates consume memory, but they also are more flexible.</p>
+<p>Unless weak references have hidden costs, they shouldn't affect performance in any significant way. According to #3, they will only be accessed twice - during resource creation and destruction.</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-12324"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="DreaminD&#039;s picture" title="DreaminD&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="garbage-collectors-and-opengl.html#comment-12324" class="active">Re: GC &amp; OpenGL (work in progress)</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Monday, 11 July, 2011 - 20:55             by DreaminD                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>I've recently attempted to make my own implementation of resource-managing context on top of OpenTK, but currently this is impossible without modifying the source (DummyGLContext, IPlatformFactory and maybe some other names are not public).</p>
+<p>I was trying to implement control over resource lifetime roughly this way:</p>
+<ul>
+<li>Each Context keeps reference to reference-counted ResourceManager. When a shared context is created, it uses the same ResourceManager and increments its reference count; when context is disposed/finalized, reference count is decremented. When refcount is about to become zero, the last remaining context is used to delete all resources registered in ResourceManager (if it's not safe to make context current in the finalizer thread, resource disposal would be delegated to a suitable thread).</li>
+<li>When resource is created, it registers itself in the ResourceManager of current context (ResourceManager keeps weak reference to the resource). While ResourceManager has not been destroyed, resource can be disposed
+<ul>
+<li>manually by user;</li>
+<li>through becoming unreferenced (when finalized or when refcount reached zero).
+</ul>
+</li>
+<li>Reference counting is supposed to be used the following way (e.g. for resource of type Texture):<br />
+<div class="geshifilter">
+<pre class="geshifilter-csharp">Reference&lt;Texture&gt; reference = <span class="kw1">new</span> Reference&lt;Texture&gt;<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+reference.<span class="me1">Target</span> = some_texture; <span class="co1">// increments refcount of some_texture</span>
+...
+<span class="co1">// Now we will be using other_texture. We don't need to care whether some_texture is used by other objects or should be disposed.</span>
+reference.<span class="me1">Target</span> = other_texture; <span class="co1">// increments refcount of other_texture, decrements refcount of some_texture</span></pre></div>
+</li>
+<li>Unreferenced (but not yet disposed) resources are added to ResourceManager's "disposal queue". To actually delete these queued resources, user would have to call context's Cleanup() (or similarly named) method whenever convenient.</li>
+</ul>
+<p>Delaying resource disposal from finalizer would lead to object resurrection, but I suppose this is not inherently bad. There are also a lot of thread-safety (and maybe performance) issues to consider, but I'd prefer to discuss them when I have some working code to show :)</p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-16910"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="torresparker&#039;s picture" title="torresparker&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="garbage-collectors-and-opengl.html#comment-16910" class="active">There is no such thing as an infallible doctor.</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 28 August, 2015 - 14:59             by torresparker                        </span>
+        </div>
+        </div>
+
+        <div class="comment-even">
+        <p>This is very good site.Thank you for the information.<br />
+A new beginning in women’s health care has dawned in Montgomery County. Welcome to New Beginning’s OBGYN superior-quality, women’s comprehensive healthcare services provided by obstetrician gynecologist specialists Dr. Rania Ibrahim and Dr. Farly Sejour. Both physicians are board certified obstetrician gynecologists by the American Board of Obstetrics and Gynecology.</p>
+<p>For further details <a href="http://newbeginningsob-gyn.com/services/special-procedures/colposcopy">ob gyn Huntsville</a></p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<a id="comment-16911"></a>
+
+<div class="comment-wrapper">
+    <div class="comment">
+
+        <div class="clear-block">
+        <div class="header">
+                        <div class="user-picture">
+                <div class="picture"><img src="http://www.opentk.com/files/user_pictures/unknown.png" alt="torresparker&#039;s picture" title="torresparker&#039;s picture"  /></div>            </div>
+                        <div class="comment-title">
+            <h3><a href="garbage-collectors-and-opengl.html#comment-16911" class="active">When you treat a disease, first treat the mind.</a></h3>
+            </div>
+            <span class="submitted">
+            Posted Friday, 28 August, 2015 - 16:38             by torresparker                        </span>
+        </div>
+        </div>
+
+        <div class="comment-odd">
+        <p>You put really very helpful information. Keep it up. Keep blogging.<br />
+Our mission at Innovations in Women’s Health Corpus is to provide our patients with the highest possible quality  obstetrics and personalized gynecological care in the Corpus Christi TX area. </p>
+<p><a href="http://shoemakermd.com/services/gynecology">gynecologist Corpus Christie Texas</a></p>
+        </div>
+
+        <div class="comment-footer">
+                </div>
+    </div>
+</div>
+
+
+
+<div class="pager"><a href="http://www.opentk.com/doc/advanced/garbage-collectors-and-opengl?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to first page">« first</a><a href="http://www.opentk.com/doc/advanced/garbage-collectors-and-opengl?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to previous page">‹ previous</a><span class="pager-list"><a href="http://www.opentk.com/doc/advanced/garbage-collectors-and-opengl?%24Version=1&amp;%24Path=/" class="pager-first active" title="Go to page 1">1</a><strong class="pager-current">2</strong></span></div>
+</div> <!-- /#comments -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F128%3Fpage%3D1%26%2524Version%3D1%26%2524Path%3D%2F" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/advanced/garbage-collectors-and-opengl?page=1&%24Version=1&%24Path=/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:49:05 GMT -->
+</html>

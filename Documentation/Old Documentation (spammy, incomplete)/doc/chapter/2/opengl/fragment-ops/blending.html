@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/opengl/fragment-ops/blending by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="conditional-render.html" />
+
+<link rel="up" href="../fragment-ops.html" />
+
+<link rel="next" href="srgb-conversion.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>07. Blending | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../../../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../../../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../../../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../../../../index.html">Home</a> » <a href="../../../../../doc.html" title="What is this all about?">Introduction</a> » <a href="../../../../graphics.html" title="Description of the OpenTK.Graphics namespace, plus a quick OpenGL and OpenGL|ES primer.">Graphics</a> » <a href="../fragment-ops.html">Fragment Operations</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-768" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="blending.html">07. Blending</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>Without blending, every fragment is either rejected or written to the framebuffer. That behaviour is desireable for opaque objects, but it does not allow rendering of translucent objects. The correct order of operation to draw a simple scene containing a solid table with a transparent glass ontop of it: draw the opaque table first, then enable blending (also set the desired blend equation and factors) and finally the glass is drawn.</p>
+<p>Blending is an operation to mix the incoming fragment color (SourceColor) with the color that is currently in the color buffer (DestinationColor). This happens in two stages for each channel of the color buffer:</p>
+<ol>
+<li><b>The factors used in this stage can be controlled with GL.BlendFunc()</b><br />
+The SourceColor is multiplied by the SourceFactor.<br />
+The DestinationColor is multiplied by the DestinationFactor.</li>
+<li><b>The equation used in this stage can be controlled with GL.BlendEquation()</b><br />
+The results of the above multiplications are then combined together to obtain the final result.</li>
+</ol>
+<p>In order to use blending, the logical color buffer must have an Alpha channel. If there is no Alpha channel, or the color buffer uses color-index mode (8 Bit), no blending can occur and behaviour is the same as if blending was disabled.</p>
+<p>Blending functionality for all draw buffers is enabled and disabled with EnableCap.Blend</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Enable</span><span class="br0">&#40;</span> EnableCap.<span class="me1">Blend</span> <span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">Disable</span><span class="br0">&#40;</span> EnableCap.<span class="me1">Blend</span> <span class="br0">&#41;</span>; <span class="co1">// default</span></pre></div>
+<p>To enable or disable only a specific buffer if multiple color buffers are attached to the FBO, use</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">Enable</span><span class="br0">&#40;</span> IndexedEnableCap.<span class="me1">Blend</span>, index<span class="br0">&#41;</span>;
+<span class="kw3">GL</span>.<span class="me1">Disable</span><span class="br0">&#40;</span> IndexedEnableCap.<span class="me1">Blend</span>, index<span class="br0">&#41;</span>;</pre></div>
+<p>Where index is used to specify the draw buffer associated with the symbolic constant GL_DRAW_BUFFER(index).</p>
+<p><b>GL.BlendEquation</b><br />
+The command GL.BlendEquation( mode ) specifies how the results from stage 1 are combined with each other. If you wanted to implement this with OpenTK.Math, it would look like this:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">Color4 SourceColor, <span class="co1">// incoming fragment</span>
+       DestinationColor,  <span class="co1">// framebuffer contents</span>
+       SourceFactor, DestinationFactor, <span class="co1">// specified by GL.BlendFunc()</span>
+       FinalColor; <span class="co1">// the resulting color</span></pre></div>
+<p>Please note that for fixed-point color buffers both Colors are clamped to [0.0 .. 1.0] prior to computing the result. Floating-point color buffers are not clamped. Clamping into this range is left out in this code to improve legibility.</p>
+<p><b>BlendEquationMode.Min:</b> When using this parameter, SourceFactor and DestinationFactor are ignored.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">FinalColor.<span class="me1">Red</span> = min<span class="br0">&#40;</span> SourceColor.<span class="me1">Red</span>, DestinationColor.<span class="me1">Red</span> <span class="br0">&#41;</span>;
+FinalColor.<span class="me1">Green</span> = min<span class="br0">&#40;</span> SourceColor.<span class="me1">Green</span>, DestinationColor.<span class="me1">Green</span> <span class="br0">&#41;</span>;
+FinalColor.<span class="me1">Blue</span> = min<span class="br0">&#40;</span> SourceColor.<span class="me1">Blue</span>, DestinationColor.<span class="me1">Blue</span> <span class="br0">&#41;</span>;
+FinalColor.<span class="me1">Alpha</span> = min<span class="br0">&#40;</span> SourceColor.<span class="me1">Alpha</span>, DestinationColor.<span class="me1">Alpha</span> <span class="br0">&#41;</span>;</pre></div>
+<p><b>BlendEquationMode.Max:</b> When using this parameter, SourceFactor and DestinationFactor are ignored.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">FinalColor.<span class="me1">Red</span> = max<span class="br0">&#40;</span> SourceColor.<span class="me1">Red</span>, DestinationColor.<span class="me1">Red</span> <span class="br0">&#41;</span>;
+FinalColor.<span class="me1">Green</span> = max<span class="br0">&#40;</span> SourceColor.<span class="me1">Green</span>, DestinationColor.<span class="me1">Green</span> <span class="br0">&#41;</span>;
+FinalColor.<span class="me1">Blue</span> = max<span class="br0">&#40;</span> SourceColor.<span class="me1">Blue</span>, DestinationColor.<span class="me1">Blue</span> <span class="br0">&#41;</span>;
+FinalColor.<span class="me1">Alpha</span> = max<span class="br0">&#40;</span> SourceColor.<span class="me1">Alpha</span>, DestinationColor.<span class="me1">Alpha</span> <span class="br0">&#41;</span>;</pre></div>
+<p><b>BlendEquationMode.FuncAdd:</b> This is the default.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">FinalColor.<span class="me1">Red</span> = SourceColor.<span class="me1">Red*SourceFactor</span>.<span class="me1">Red</span> + DestinationColor.<span class="me1">Red*DestinationFactor</span>.<span class="me1">Red</span>;
+FinalColor.<span class="me1">Green</span> = SourceColor.<span class="me1">Green*SourceFactor</span>.<span class="me1">Green</span> + DestinationColor.<span class="me1">Green*DestinationFactor</span>.<span class="me1">Green</span>;
+FinalColor.<span class="me1">Blue</span> = SourceColor.<span class="me1">Blue*SourceFactor</span>.<span class="me1">Blue</span> + DestinationColor.<span class="me1">Blue*DestinationFactor</span>.<span class="me1">Blue</span>;
+FinalColor.<span class="me1">Alpha</span> = SourceColor.<span class="me1">Alpha*SourceFactor</span>.<span class="me1">Alpha</span> + DestinationColor.<span class="me1">Alpha*DestinationFactor</span>.<span class="me1">Alpha</span>;</pre></div>
+<p><b>BlendEquationMode.FuncSubtract:</b></p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">FinalColor.<span class="me1">Red</span> = SourceColor.<span class="me1">Red*SourceFactor</span>.<span class="me1">Red</span> - DestinationColor.<span class="me1">Red*DestinationFactor</span>.<span class="me1">Red</span>;
+FinalColor.<span class="me1">Green</span> = SourceColor.<span class="me1">Green*SourceFactor</span>.<span class="me1">Green</span> - DestinationColor.<span class="me1">Green*DestinationFactor</span>.<span class="me1">Green</span>;
+FinalColor.<span class="me1">Blue</span> = SourceColor.<span class="me1">Blue*SourceFactor</span>.<span class="me1">Blue</span> - DestinationColor.<span class="me1">Blue*DestinationFactor</span>.<span class="me1">Blue</span>;
+FinalColor.<span class="me1">Alpha</span> = SourceColor.<span class="me1">Alpha*SourceFactor</span>.<span class="me1">Alpha</span> - DestinationColor.<span class="me1">Alpha*DestinationFactor</span>.<span class="me1">Alpha</span>;</pre></div>
+<p><b>BlendEquationMode.FuncReverseSubtract:</b></p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">FinalColor.<span class="me1">Red</span> = DestinationColor.<span class="me1">Red*DestinationFactor</span>.<span class="me1">Red</span> - SourceColor.<span class="me1">Red*SourceFactor</span>.<span class="me1">Red</span>;
+FinalColor.<span class="me1">Green</span> = DestinationColor.<span class="me1">Green*DestinationFactor</span>.<span class="me1">Green</span> - SourceColor.<span class="me1">Green*SourceFactor</span>.<span class="me1">Green</span>;
+FinalColor.<span class="me1">Blue</span> = DestinationColor.<span class="me1">Blue*DestinationFactor</span>.<span class="me1">Blue</span> - SourceColor.<span class="me1">Blue*SourceFactor</span>.<span class="me1">Blue</span>;
+FinalColor.<span class="me1">Alpha</span> = DestinationColor.<span class="me1">Alpha*DestinationFactor</span>.<span class="me1">Alpha</span> - SourceColor.<span class="me1">Alpha*SourceFactor</span>.<span class="me1">Alpha</span>;</pre></div>
+<p>If the color buffer is using fixed-point precision, the result in FinalColor is clamped to [0.0 .. 1.0] before it is passed to the next pipeline stage, no clamping occurs for floating-point color buffers.</p>
+<p>OpenGL 2.0 and later supports separate equations for the RGB components and the Alpha component respectively. The command GL.BlendEquationSeparate( modeRGB, modeAlpha ) accepts the same parameters as GL.BlendEquation( mode ).</p>
+<p><b>GL.BlendColor</b><br />
+The command GL.BlendColor( R, G, B, A ) is used to specify a constant color that can be used by GL.BlendFunc(). For the scope of this page it is used to define the variable <span class="geshifilter"><code class="geshifilter-csharp">Color4 ConstantColor;</code></span>.</p>
+<p><b>GL.BlendFunc</b><br />
+The command GL.BlendFunc( src, dest ) is used to select the SourceFactor (src) and DestinationFactor (dest) in the above equation. By default, SourceFactor is set to BlendingFactorSrc.One and DestinationFactor is BlendingFactorDest.Zero, which gives the same result as if blending were disabled.</p>
+<ul>
+<li>.Zero: Color4 (0.0, 0.0, 0.0, 0.0)</li>
+<li>.One: Color4 (1.0, 1.0, 1.0, 1.0)</li>
+<li>.DstColor: Color4 (DestinationColor.Red, DestinationColor.Green, DestinationColor.Blue, DestinationColor.Alpha)</li>
+<li>.SrcColor: Color4 (SourceColor.Red, SourceColor.Green, SourceColor.Blue, SourceColor.Alpha)</li>
+<li>.OneMinusDstColor: Color4 (1.0-DestinationColor.Red, 1.0-DestinationColor.Green, 1.0-DestinationColor.Blue, 1.0-DestinationColor.Alpha)</li>
+<li>.OneMinusSrcColor: Color4 (1.0-SourceColor.Red, 1.0-SourceColor.Green, 1.0-SourceColor.Blue, 1.0-SourceColor.Alpha)</li>
+<li>.SrcAlpha: Color4 (SourceColor.Alpha, SourceColor.Alpha, SourceColor.Alpha, SourceColor.Alpha)</li>
+<li>.OneMinusSrcAlpha: Color4 (1.0-SourceColor.Alpha, 1.0-SourceColor.Alpha, 1.0-SourceColor.Alpha, 1.0-SourceColor.Alpha)</li>
+<li>.DstAlpha: Color4 (DestinationColor.Alpha, DestinationColor.Alpha, DestinationColor.Alpha, DestinationColor.Alpha)</li>
+<li>.OneMinusDstAlpha: Color4 (1.0-DestinationColor.Alpha, 1.0-DestinationColor.Alpha, 1.0-DestinationColor.Alpha, 1.0-DestinationColor.Alpha)</li>
+<li>.SrcAlphaSaturate: f = min( SourceColor.Alpha, 1.0-DestinationColor.Alpha );<br />
+                    Color4 ( f, f, f, 1.0 )</li>
+<li>.ConstantColor: Color4 ( ConstantColor.Red, ConstantColor.Green, ConstantColor.Blue, ConstantColor.Alpha )</li>
+<li>.OneMinusConstantColor: Color4 ( 1.0-ConstantColor.Red, 1.0-ConstantColor.Green, 1.0-ConstantColor.Blue, 1.0-ConstantColor.Alpha )</li>
+<li>.ConstantAlpha: Color4 (ConstantColor.Alpha, ConstantColor.Alpha, ConstantColor.Alpha, ConstantColor.Alpha)</li>
+<li>.OneMinusConstantAlpha:  Color4 (1.0-ConstantColor.Alpha, 1.0-ConstantColor.Alpha, 1.0-ConstantColor.Alpha, 1.0-ConstantColor.Alpha)</li>
+</ul>
+<p>OpenTK uses the enums BlendingFactorSrc and BlendingFactorDest to narrow down your options what is a valid parameter for src and dest. Not all parameters are valid factors for both, SourceFactor and DestinationFactor. Please refer to the inline documentation for details.</p>
+<p>OpenGL 2.0 and later supports separate factors for RGB and Alpha, for source and destination respectively. The command GL.BlendFuncSeparate( srcRGB, dstRGB, srcAlpha, dstAlpha ) accepts the same factors as GL.BlendFunc( src, dest ).</p>
+<p><b>State Queries</b></p>
+<p>To determine whether blending for all draw buffers is enabled or disabled, use <span class="geshifilter"><code class="geshifilter-csharp">Result = <span class="kw3">GL</span>.<span class="me1">IsEnabled</span><span class="br0">&#40;</span> EnableCap.<span class="me1">Blend</span> <span class="br0">&#41;</span>;</code></span><br />
+To query blending state of a specific draw buffer: <span class="geshifilter"><code class="geshifilter-csharp">Result = <span class="kw3">GL</span>.<span class="me1">IsEnabled</span><span class="br0">&#40;</span>IndexedEnableCap.<span class="me1">Blend</span>, index<span class="br0">&#41;</span>;</code></span></p>
+<p>The selected blend factors can be queried separately for source and destination by using <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">GetInteger</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> with</p>
+<ul>
+<li>GetPName.BlendSrc - set by GL.BlendFunc()</li>
+<li>GetPName.BlendDst - set by GL.BlendFunc()</li>
+<li>GetPName.BlendSrcRgb - set by GL.BlendFuncSeparate()</li>
+<li>GetPName.BlendSrcAlpha - set by GL.BlendFuncSeparate()</li>
+<li>GetPName.BlendDstRgb - set by GL.BlendFuncSeparate()</li>
+<li>GetPName.BlendDstAlpha - set by GL.BlendFuncSeparate()</li>
+</ul>
+<p>The selected blend equation can be queried by using <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GL</span>.<span class="me1">GetInteger</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> with</p>
+<ul>
+<li>GetPName.BlendEquation - set by GL.BlendEquation()</li>
+<li>GetPName.BlendEquationRgb - set by GL.BlendEquationSeparate()</li>
+<li>GetPName.BlendEquationAlpha - set by GL.BlendEquationSeparate()</li>
+</ul>
+<div class="book-navigation"><div class="page-links clear-block"><a href="conditional-render.html" class="page-previous" title="Go to previous page">‹ Conditional Render</a><a href="../fragment-ops.html" class="page-up" title="Go to parent page">up</a><a href="srgb-conversion.html" class="page-next" title="Go to next page">08. sRGB Conversion ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/768" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/768%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/768%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-768 -->
+
+<div id="comments">
+  
+</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F768" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/chapter/2/opengl/fragment-ops/blending by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:33 GMT -->
+</html>

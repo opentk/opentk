@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Mirrored from www.opentk.com/doc/input/keyboard by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:34 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="prev" href="../input.html" />
+
+<link rel="up" href="../input.html" />
+
+<link rel="next" href="gamepad.html" />
+
+<link rel="shortcut icon" href="http://www.opentk.com/sites/all/favicon.ico" type="image/x-icon" />
+    <title>Keyboard Input | OpenTK</title>
+    <!--[if !lt IE 7]> <style type="text/css" media="all">@import "/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <![endif]-->
+    <!--[if !IE]>--> <style type="text/css" media="all">@import "http://www.opentk.com/files/css/0d190fbd13bda50135e2c474ba9cb190.css";</style>
+ <!--<![endif]-->
+    <!--[if IE 7]><style type="text/css" media="all">@import "/sites/all/themes/community4/IE67.css";</style><![endif]-->
+    </head>
+
+<body class="not-front not-logged-in ntype-book main-sidebar">
+
+    <div id="layer1">
+    
+        <div id="header-bg">
+
+            <div id="header">
+           
+                                    <a href="../../index.html"><img src="http://www.opentk.com/sites/all/themes/community3/images/community2_logo.jpg" alt="Home" id="logo" /></a>
+                                
+                <div id="bg-image"><img src="http://www.opentk.com/sites/all/themes/community2/images/bg-header2.png" width="100%" height="100%" /></div>
+
+                
+                                    <h2 class='siteSlogan'>Home of the Open Toolkit library</h2>
+                
+                
+                                  <div class="primary-links-wrapper">
+                    <ul class="primary-links" id="navtabs"><li  class="first menu-1-1-2"><a href="../../index.html" title="Return to the OpenTK homepage." class="menu-1-1-2">Home</a></li>
+<li  class="menu-1-2-2"><a href="http://www.opentk.com/project/opentk" title="Learn more or download OpenTK." class="menu-1-2-2">Project</a></li>
+<li  class="menu-1-3-2"><a href="../../doc.html" title="Read the OpenTK programming guide." class="menu-1-3-2">Documentation</a></li>
+<li  class="menu-1-4-2"><a href="http://www.opentk.com/forum/2" title="Discuss OpenTK or ask for help." class="menu-1-4-2">Forum</a></li>
+<li  class="menu-1-5-2"><a href="http://www.opentk.com/files/opentk-issues.html" title="View issue reports for OpenTK." class="menu-1-5-2">Issues</a></li>
+<li  class="menu-1-6-2"><a href="http://www.opentk.com/blog" title="Read the blogs of OpenTK users." class="menu-1-6-2">Blogs</a></li>
+<li  class="menu-1-7-2"><a href="http://www.opentk.com/project/all" title="Search the database of OpenTK projects." class="menu-1-7-2">Gallery</a></li>
+<li  class="last menu-1-8-2"><a href="http://www.opentk.com/search" title="Quickly locate content on the site." class="menu-1-8-2">Search</a></li>
+</ul>                  </div>
+                
+            </div>
+            
+        </div>
+
+        <div id="page" class="clear-block">
+            <div id="wrapper" class="clear-block">
+                <div id="subwrapper">
+                    <div id="container">
+                        <div id="content">
+
+                            
+                            <div class="content-area">
+
+                                                                    
+                                <div class="tabs clear-block">
+                                    <div class="breadcrumb"><a href="../../index.html">Home</a> » <a href="../../doc.html" title="What is this all about?">Introduction</a> » <a href="../input.html">Chapter 7: OpenTK.Input</a></div>                                </div>
+                                
+                                
+                                
+                                <div class="node-content-wrapper">
+
+                                    				<div id="node-3501" class="node ntype-book clear-block">
+
+	
+			<h1 class="title"><a href="keyboard.html">Keyboard Input</a></h1>    
+	
+	
+
+    <div class="content">
+	    
+        <p>OpenTK offers two keyboard input mechanisms:</p>
+<ol>
+<li>A stateless polling mechanism in <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw5">OpenTK</span>.<span class="me1">Input</span>.<span class="me1">Keyboard</span></code></span></li>
+<li>An event-based mechanism in <span class="geshifilter"><code class="geshifilter-csharp"><span class="kw3">GameWindow</span></code></span></li>
+</ol>
+<p>The first mechanism is independent of any GameWindow (you can use it with GLControl) and supports multiple keyboard devices.</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// get the combined state of all keyboard devices:</span>
+<span class="kw1">var</span> state = <span class="kw5">OpenTK</span>.<span class="me1">Input</span>.<span class="me1">Keyboard</span>.<span class="me1">GetState</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// get the state of the second keyboard device:</span>
+<span class="kw1">var</span> state = <span class="kw5">OpenTK</span>.<span class="me1">Input</span>.<span class="me1">Keyboard</span>.<span class="me1">GetState</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="kw1">if</span> <span class="br0">&#40;</span>state<span class="br0">&#91;</span><span class="kw3">Key</span>.<span class="me1">Up</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+    ; <span class="co1">// move up</span>
+<span class="kw1">if</span> <span class="br0">&#40;</span>state<span class="br0">&#91;</span><span class="kw3">Key</span>.<span class="me1">Down</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+    ; <span class="co1">// move down</span></pre></div>
+<p>The second mechanism is bound to a specific GameWindow and does not distinguish between different keyboard devices:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="kw3">GameWindow</span> win = <span class="kw1">new</span> <span class="kw3">GameWindow</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">// Use for game input</span>
+<span class="co1">// Independent of keyboard layout</span>
+win.<span class="me1">KeyDown</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt;
+<span class="br0">&#123;</span>
+    <span class="kw1">switch</span> <span class="br0">&#40;</span>e.<span class="kw3">Key</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="kw1">case</span> <span class="kw3">Key</span>.<span class="me1">Left</span>:
+            <span class="co1">// move left</span>
+            <span class="kw1">break</span>;
+        ...
+        <span class="kw1">case</span> <span class="kw3">Key</span>.<span class="me1">Space</span>:
+            <span class="co1">// start charging weapon</span>
+            <span class="kw1">break</span>;
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>;
+win.<span class="me1">KeyUp</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt;
+<span class="br0">&#123;</span>
+    <span class="kw1">switch</span> <span class="br0">&#40;</span>e.<span class="kw3">Key</span><span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="kw1">case</span> <span class="kw3">Key</span>.<span class="me1">Space</span>:
+            <span class="co1">// fire charged weapon</span>
+            <span class="kw1">break</span>;
+        ...
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>;
+&nbsp;
+<span class="co1">// Use for text input</span>
+<span class="co1">// Depends on keyboard layout</span>
+win.<span class="me1">KeyPress</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt;
+<span class="br0">&#123;</span>
+    Console.<span class="me1">WriteLine</span><span class="br0">&#40;</span>e.<span class="me1">KeyChar</span><span class="br0">&#41;</span>;
+<span class="br0">&#125;</span>;</pre></div>
+<p>A KeyDown event is fired as soon as any keyboard key is pressed. Conversely, a KeyUp event is fired as soon as any keyboard key is released. <i>Both are independent of the current keyboard layout!</i></p>
+<p>A KeyPress event is fired whenever a completed character is formed. It is meant for text input and <i>depends on the current keyboard layout</i>.</p>
+<p>The distinction between KeyDown and KeyPress is important, because not all keys generate text input. For instance, the accent key on a greek keyboard layout latches the accent character "΄" but does not generate a KeyPress event until a vowel is typed (e.g. "ά"). If a consonant is typed, then two KeyPress events are generated (e.g. "΄β").</p>
+<p>On a typical 101-key PC keyboard, the sequence of events would be as follows:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp"><span class="co1">// press ΄</span>
+KeyDown:  <span class="kw3">Key</span>.<span class="me1">Quote</span>
+KeyUp:    <span class="kw3">Key</span>.<span class="me1">Quote</span>
+<span class="co1">// press α</span>
+KeyDown:  <span class="kw3">Key</span>.<span class="me1">A</span>
+KeyPress: ά
+KeyUp:    <span class="kw3">Key</span>.<span class="me1">A</span>
+&nbsp;
+<span class="co1">// press ΄</span>
+KeyDown:  <span class="kw3">Key</span>.<span class="me1">Quote</span>
+KeyUp:    <span class="kw3">Key</span>.<span class="me1">Quote</span>
+<span class="co1">// press β</span>
+KeyDown:  <span class="kw3">Key</span>.<span class="me1">B</span>
+KeyPress: ΄
+KeyPress: β
+KeyUp:    <span class="kw3">Key</span>.<span class="me1">B</span></pre></div>
+<p>Control keys (i.e. keys where <span class="geshifilter"><code class="geshifilter-csharp">Char.<span class="me1">IsControl</span><span class="br0">&#40;</span><span class="br0">&#41;</span></code></span> returns true) do not generate KeyPress events at all. Escape is one of those.</p>
+<p>Note that you need OpenTK 1.1 beta4 or newer to use GameWindow keyboard events successfully.</p>
+<p>In previous versions, replace with:</p>
+<div class="geshifilter">
+<pre class="geshifilter-csharp">win.<span class="me1">Keyboard</span>.<span class="me1">KeyDown</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt; ...
+<span class="me1">win</span>.<span class="me1">Keyboard</span>.<span class="me1">KeyUp</span> += <span class="br0">&#40;</span>sender, e<span class="br0">&#41;</span> =&gt; ...</pre></div>
+<p>In this case, KeyPress events may not work correctly.</p>
+<div class="book-navigation"><div class="page-links clear-block"><a href="../input.html" class="page-previous" title="Go to previous page">‹ Chapter 7: OpenTK.Input</a><a href="../input.html" class="page-up" title="Go to parent page">up</a><a href="gamepad.html" class="page-next" title="Go to next page">GamePad Input ›</a></div></div>
+        <div class="clear-block"></div>
+        
+                    <div class="links">
+                <ul class="links inline"><li  class="first book_printer"><a href="http://www.opentk.com/book/export/html/3501" title="Show a printer-friendly version of this book page and its sub-pages." class="book_printer">Printer-friendly version</a></li>
+<li  class="last comment_forbidden"><span class="comment_forbidden"><a href="http://www.opentk.com/user/login?destination=node/3501%2523comment-form">Login</a> or <a href="http://www.opentk.com/user/register?destination=node/3501%2523comment-form">register</a> to post comments</span></li>
+</ul>            </div>
+            <br />
+        
+		
+    </div> <!-- content -->
+
+</div> <!-- /#node-3501 -->
+
+<div id="comments">
+  
+</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                            <div id="main_supplements">
+                        
+                            <div class="block-wrapper">
+
+	<div id="block-block-1" class="block block-block">
+				<div class="content">
+					<div>
+		<form action="http://www.opentk.com/user?destination=node%2F3501" method="post" id="user-login-form">
+			<div class="form-item">
+				<input type="text" value="Username" style="color: #777;" maxlength="60" name="name" id="edit-name" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+			<div class="form-item">
+				<input type="password" value="Password" style="color: #777;" name="pass" id="edit-pass" size="15" class="form-text required" onfocus="this.select()" />
+			</div>
+                        <div class="form-item"><input type="submit" name="op" id="edit-submit" value="Log in" /></div>
+			<div class="item-list">
+				<ul>
+					<li><a href="http://www.opentk.com/user/register" title="Create account">Create account</a></li>
+					<li><a href="http://www.opentk.com/user/password" title="Reset password">Reset password</a></li>
+				</ul>
+				<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+			</div>
+		</form>
+	</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="block-wrapper">
+
+	<div id="block-blockcache-26" class="block block-blockcache">
+					<h4 class="block-title">Commit log</h4>				<div class="content">
+			<div class="item-list"><ul><li><a href="https://github.com/opentk/opentk/commit/2e51fe019771f4c70b15bb25b3a560f712a45fbf">Notice of leave</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/6ac1c63ff3a35367f78b500e06b2d3ca5bff3a69">Merge pull request #328 from WardBenjamin/develop</a>
+</li><li><a href="https://github.com/opentk/opentk/commit/55bd3424179168eb886a853ba16633f65808320a">Fix documentation for NativeWindow.WindowBorder</a>
+</li></ul></div><div class="more-link"><a href="http://www.opentk.com/aggregator/sources/1" title="View this feed&#039;s recent news.">more</a></div>		</div>
+	</div>
+
+</div>
+
+                            
+                        </div>
+                                    </div>
+		
+            </div>
+	    
+	    
+	</div>
+	
+    </div> <!-- #layer1 -->
+
+
+    
+        <div id="footer">
+
+            
+                            <div id="footer-layer">
+
+<p><small>Site design by Stefanos A. Icons courtesy of <a href="http://www.gnome-look.org/content/show.php/GNOME-colors?content=82562">gnome-colors</a>.</small></p>
+
+</div>
+                    </div>
+
+        
+    
+</body>
+
+
+<!-- Mirrored from www.opentk.com/doc/input/keyboard by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 May 2016 13:48:34 GMT -->
+</html>
