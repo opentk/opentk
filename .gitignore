@@ -10,8 +10,8 @@ Source/GLControl/OpenTK.GLControl.xml
 Documentation/Source
 opentk*.exe
 opentk*.zip
-opentk*.nupkg
 Installers/Nuget/lib
+*.nupkg
 
 # OpenTK Resource files that seem like they should be ignored:
 Source/Compatibility/Properties/Resources.resources
