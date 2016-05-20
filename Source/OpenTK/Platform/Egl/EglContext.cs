@@ -98,8 +98,6 @@ namespace OpenTK.Platform.Egl
 
             int[] attrib_list = new int[] { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
             HandleAsEGLContext = Egl.CreateContext(window.Display, config, shared != null ? shared.HandleAsEGLContext : IntPtr.Zero, attrib_list);
-
-            MakeCurrent(window);
         }
 
         public EglContext(ContextHandle handle, EglWindowInfo window, IGraphicsContext sharedContext,
@@ -199,7 +197,8 @@ namespace OpenTK.Platform.Egl
             {
                 if (manual)
                 {
-                    Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
+                    if (IsCurrent)
+                        Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
                     Egl.DestroyContext(WindowInfo.Display, HandleAsEGLContext);
                 }
                 IsDisposed = true;
