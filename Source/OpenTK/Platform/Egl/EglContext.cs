@@ -53,8 +53,6 @@ namespace OpenTK.Platform.Egl
             if (window == null)
                 throw new ArgumentNullException("window");
 
-            EglContext shared = (EglContext)sharedContext;
-
             WindowInfo = window;
 
             // Select an EGLConfig that matches the desired mode. We cannot use the 'mode'
@@ -97,7 +95,7 @@ namespace OpenTK.Platform.Egl
                 window.CreateWindowSurface(config);
 
             int[] attrib_list = new int[] { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
-            HandleAsEGLContext = Egl.CreateContext(window.Display, config, shared != null ? shared.HandleAsEGLContext : IntPtr.Zero, attrib_list);
+            HandleAsEGLContext = Egl.CreateContext(window.Display, config, sharedContext != null ? (sharedContext as IGraphicsContextInternal).Context.Handle : IntPtr.Zero, attrib_list);
         }
 
         public EglContext(ContextHandle handle, EglWindowInfo window, IGraphicsContext sharedContext,
