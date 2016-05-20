@@ -126,9 +126,16 @@ namespace OpenTK.Platform.Egl
             // trying to make the EglContext current on a non-EGL window will do,
             // nothing (the EglContext will remain current on the previous EGL window
             // or the window it was constructed on (which may not be EGL)).
-            if (window is EglWindowInfo)
-                WindowInfo = (EglWindowInfo)window;
-            Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext);
+            if (window != null)
+            {
+                if (window is EglWindowInfo)
+                    WindowInfo = (EglWindowInfo) window;
+                Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext);
+            }
+            else
+            {
+                Egl.MakeCurrent(WindowInfo.Display, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+            }
         }
 
         public override bool IsCurrent
