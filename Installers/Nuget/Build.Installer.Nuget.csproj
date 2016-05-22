@@ -59,6 +59,21 @@
     <OutputPath>obj\</OutputPath>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <Stable>false</Stable>
+  </PropertyGroup>
+  <Choose>
+    <When Condition=" '$(Stable)'=='True' ">
+      <PropertyGroup>
+        <Name>Desktop</Name>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <Name>Desktop.Devel</Name>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
   <Target Name="Build">
     <!-- Copy built files to the tree format expected by nuget -->
     <CreateItem Include="../../Binaries/OpenTK/Release/OpenTK*">
@@ -70,10 +85,10 @@
       <Output TaskParameter="Lines" ItemName="Version" />
     </ReadLinesFromFile>
     <!-- Execute nuget script -->
-    <Exec Command="nuget.exe	 pack OpenTK.nuspec -Version @(Version)" Condition="$(OS) == 'Windows_NT'" />
-    <Exec Command="nuget.exe   pack OpenTK.GLControl.nuspec -Version @(Version)" Condition="$(OS) == 'Windows_NT'" />
-    <Exec Command="mono nuget.exe pack OpenTK.nuspec  -Version @(Version)" Condition="$(OS) != 'Windows_NT'" />
-    <Exec Command="mono nuget.exe pack OpenTK.GLControl.nuspec  -Version @(Version)" Condition="$(OS) != 'Windows_NT'" />
+    <Exec Command="nuget.exe pack OpenTK.$(Name).nuspec -Version @(Version)" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="nuget.exe pack OpenTK.GLControl.nuspec -Version @(Version)" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="mono nuget.exe pack OpenTK.$(Name).nuspec -Version @(Version)" Condition="$(OS) != 'Windows_NT'" />
+    <Exec Command="mono nuget.exe pack OpenTK.GLControl.nuspec -Version @(Version)" Condition="$(OS) != 'Windows_NT'" />
     <!-- Copy the nuget archive to the root directory and add a date stamp -->
     <CreateItem Include="OpenTK*.nupkg">
       <Output TaskParameter="Include" ItemName="NugetPackage" />
