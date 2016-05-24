@@ -143,7 +143,6 @@ namespace OpenTK
             Mode = GetGraphicsMode(context);
 
             Update(cocoaWindow);
-            MakeCurrent(cocoaWindow);
         }
 
         private IntPtr SelectPixelFormat(GraphicsMode mode, int majorVersion, int minorVersion)
@@ -336,7 +335,8 @@ namespace OpenTK
             if (!NSApplication.IsUIThread)
                 return;
 
-            Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
+            if (IsCurrent)
+                Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
             Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
             Cocoa.SendVoid(Handle.Handle, Selector.Get("release"));
 
