@@ -1,32 +1,26 @@
-* text eol=auto
-*.fs text
-*.cs text
-*.fsproj text
-*.csproj text
-*.sln text
-*.config text
-*.txt text
-*.xml text
-*.nsi text
-*.doxyfile text
-*.spec text
-*.tm text
-*.glsl text
-*.resx text
-*.yml text
+# Auto detect text files
+* text=auto
 
-*.dll binary
-*.exe binary
-*.so binary
-*.dylib binary
-*.snk binary
-*.bmp binary
-*.dds binary
-*.ico binary
-*.png binary
-*.jpg binary
-*.wav binary
-*.ogg binary
-*.zip binary
-*.pdf binary
+# Custom for Visual Studio
+*.cs diff=csharp text=auto eol=lf
+*.vb diff=csharp text=auto eol=lf
+*.fs diff=csharp text=auto eol=lf
+*.fsi diff=csharp text=auto eol=lf
+*.fsx diff=csharp text=auto eol=lf
+*.sln text eol=crlf merge=union
+*.csproj merge=union
+*.vbproj merge=union
+*.fsproj merge=union
+*.dbproj merge=union
 
+# Standard to msysgit
+*.doc diff=astextplain
+*.DOC diff=astextplain
+*.docx diff=astextplain
+*.DOCX diff=astextplain
+*.dot diff=astextplain
+*.DOT diff=astextplain
+*.pdf diff=astextplain
+*.PDF diff=astextplain
+*.rtf diff=astextplain
+*.RTF diff=astextplain
