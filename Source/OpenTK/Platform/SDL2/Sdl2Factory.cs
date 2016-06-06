@@ -34,7 +34,8 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2Factory : PlatformFactoryBase
     {
-        readonly Sdl2InputDriver InputDriver = new Sdl2InputDriver();
+        private readonly object inputDriverLock = new object();
+        private Sdl2InputDriver inputDriver;
 
         /// <summary>
         /// Gets or sets a value indicating whether to use SDL2 fullscreen-desktop mode
@@ -85,17 +86,17 @@ namespace OpenTK.Platform.SDL2
 
         public override IKeyboardDriver2 CreateKeyboardDriver()
         {
-            return InputDriver.KeyboardDriver;
+            return GetInputDriver().KeyboardDriver;
         }
 
         public override IMouseDriver2 CreateMouseDriver()
         {
-            return InputDriver.MouseDriver;
+            return GetInputDriver().MouseDriver;
         }
 
         public override IJoystickDriver2 CreateJoystickDriver()
         {
-            return InputDriver.JoystickDriver;
+            return GetInputDriver().JoystickDriver;
         }
 
         #endregion
@@ -108,7 +109,11 @@ namespace OpenTK.Platform.SDL2
             {
                 if (manual)
                 {
-                    InputDriver.Dispose();
+                    if (inputDriver != null)
+                    {
+                        inputDriver.Dispose();
+                        inputDriver = null;
+                    }
                 }
 
                 base.Dispose(manual);
@@ -116,6 +121,21 @@ namespace OpenTK.Platform.SDL2
         }
 
         #endregion
+
+        private Sdl2InputDriver GetInputDriver()
+        {
+            if (inputDriver == null)
+            {
+                lock (inputDriverLock)
+                {
+                    // Check again inside the lock
+                    if (inputDriver == null)
+                        inputDriver = new Sdl2InputDriver();
+                }
+            }
+
+            return inputDriver;
+        }
     }
 }
 
