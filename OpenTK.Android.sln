@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 12.0.31101.0
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Android", "Source\OpenTK\OpenTK.Android.csproj", "{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB} = {C426C9D1-8857-4E52-BAC7-4C05EE6070AB}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.UpdateVersion", "Source\Build.UpdateVersion\Build.UpdateVersion.csproj", "{75DC22B1-113F-4A66-96B9-2FF8208C10E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Rewrite", "Source\Generator.Rewrite\Generator.Rewrite.csproj", "{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{02D273EB-BABD-4D9D-9EB4-73E9AF1934A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES11", "Source\Samples\Android\ES11\ES11.csproj", "{61E47728-8B64-442E-89EA-1FE6D2ADE654}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Documentation|Any CPU = Documentation|Any CPU
+		Nsis|Any CPU = Nsis|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Documentation|Any CPU.ActiveCfg = Debug|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Documentation|Any CPU.Build.0 = Debug|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Nsis|Any CPU.ActiveCfg = Debug|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Nsis|Any CPU.Build.0 = Debug|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Documentation|Any CPU.Build.0 = Documentation|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Documentation|Any CPU.ActiveCfg = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Documentation|Any CPU.Build.0 = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Nsis|Any CPU.ActiveCfg = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Nsis|Any CPU.Build.0 = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Documentation|Any CPU.ActiveCfg = Debug|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Documentation|Any CPU.Build.0 = Debug|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Documentation|Any CPU.Deploy.0 = Debug|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Nsis|Any CPU.ActiveCfg = Debug|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Nsis|Any CPU.Build.0 = Debug|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Nsis|Any CPU.Deploy.0 = Debug|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{61E47728-8B64-442E-89EA-1FE6D2ADE654} = {02D273EB-BABD-4D9D-9EB4-73E9AF1934A5}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Samples\ES11\ES11.csproj
+	EndGlobalSection
+EndGlobal

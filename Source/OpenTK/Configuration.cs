@@ -134,7 +134,27 @@ namespace OpenTK
             }
         }
 
-        #endregion 
+        #endregion
+
+        #region public static bool RunningOnIOS
+
+        /// <summary>
+        /// Gets a <c>System.Boolean</c> indicating whether
+        /// OpenTK is running on an Android device.
+        /// </summary>
+        public static bool RunningOnIOS
+        {
+            get
+            {
+#if IPHONE
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
+        #endregion
 
         #region --- Private Methods ---
 
@@ -196,6 +216,7 @@ namespace OpenTK
             return t != null;
         }
 
+        #if SDL2
         static bool DetectSdl2()
         {
             bool supported = false;
@@ -252,6 +273,7 @@ namespace OpenTK
 
             return supported;
         }
+        #endif
 
         static void DetectUnix(out bool unix, out bool linux, out bool macos)
         {
@@ -290,9 +312,13 @@ namespace OpenTK
 
         static bool DetectX11()
         {
+            #if X11
             // Detect whether X is present.
             try { return OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
             catch { return false; }
+            #else
+            return false;
+            #endif
         }
 
         #endregion
@@ -310,12 +336,8 @@ namespace OpenTK
             {
                 if (!initialized)
                 {
-#if ANDROID
+#if ANDROID || IPHONE
                     runningOnMono = true;
-                    runningOnAnroid = true;
-#elif IPHONE
-                    runningOnMono = true;
-                    runningOnIOS = true;
 #else
                     runningOnMono = DetectMono();
                     runningOnWindows = DetectWindows();

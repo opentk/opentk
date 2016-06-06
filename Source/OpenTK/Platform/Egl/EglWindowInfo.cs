@@ -96,16 +96,32 @@ namespace OpenTK.Platform.Egl
         //    Surface = Egl.CreatePixmapSurface(Display, config, Handle, null);
         //}
 
-        //public void CreatePbufferSurface(EGLConfig config)
-        //{
-        //    Surface = Egl.CreatePbufferSurface(Display, config, null);
-        //}
+        public void CreatePbufferSurface(IntPtr config)
+        {
+            Surface = Egl.CreatePbufferSurface(Display, config, null);
+        }
 
         public void DestroySurface()
         {
             if (Surface != IntPtr.Zero)
+            {
+                if (Egl.GetCurrentSurface(Egl.DRAW) == Surface)
+                    Egl.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+
                 if (!Egl.DestroySurface(Display, Surface))
                     Debug.Print("[Warning] Failed to destroy {0}:{1}.", Surface.GetType().Name, Surface);
+                Surface = IntPtr.Zero;
+            }
+        }
+
+        public void TerminateDisplay()
+        {
+            if (Display != IntPtr.Zero)
+            {
+                if (!Egl.Terminate(Display))
+                    Debug.Print("[Warning] Failed to terminate display {0}.", Display);
+                Display = IntPtr.Zero;
+            }
         }
 
         #endregion

@@ -59,7 +59,7 @@ namespace OpenTK.Platform.Egl
         VG = Egl.OPENVG_BIT,
     }
 
-    enum ErrorCode
+    public enum ErrorCode
     {
         SUCCESS = 12288,
         NOT_INITIALIZED = 12289,
@@ -75,6 +75,7 @@ namespace OpenTK.Platform.Egl
         BAD_NATIVE_WINDOW = 12299,
         BAD_PARAMETER = 12300,
         BAD_SURFACE = 12301,
+        CONTEXT_LOST = 12302,
     }
 
     static partial class Egl

@@ -12,7 +12,11 @@ namespace OpenTK.Graphics.ES11
 
     public sealed partial class GL : GraphicsBindingsBase
     {
+#if IPHONE
+        const string Library = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES";
+#else
         const string Library = "GLESv1_CM";
+#endif
         static readonly object sync_root = new object();
 
         static IntPtr[] EntryPoints;
