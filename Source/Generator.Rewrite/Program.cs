@@ -37,6 +37,7 @@ namespace OpenTK.Rewrite
                 Console.WriteLine("Usage: rewrite [file.dll] [file.snk] [options]");
                 Console.WriteLine("[options] is:");
                 Console.WriteLine("    -debug (enable calls to GL.GetError())");
+                Console.WriteLine("    -dllimport (force calls to use DllImport instead of GetProcAddress)");
                 return;
             }
 
@@ -58,8 +59,12 @@ namespace OpenTK.Rewrite
         // OpenTK.BindingsBase
         static TypeDefinition TypeBindingsBase;
 
+        static bool dllimport;
+
         void Rewrite(string file, string keyfile, IEnumerable<string> options)
         {
+            dllimport = options.Contains("-dllimport");
+
             // Specify assembly read and write parameters
             // We want to keep a valid symbols file (pdb or mdb)
             var read_params = new ReaderParameters();
@@ -101,10 +106,17 @@ namespace OpenTK.Rewrite
                 {
                     foreach (var reference in module.AssemblyReferences)
                     {
-                        var resolved = module.AssemblyResolver.Resolve(reference);
-                        if (reference.Name == "mscorlib")
+                        try
                         {
-                            mscorlib = resolved;
+                            var resolved = module.AssemblyResolver.Resolve(reference);
+                            if (reference.Name == "mscorlib")
+                            {
+                                mscorlib = resolved;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Error.WriteLine(e.ToString());
                         }
                     }
                 }
@@ -166,6 +178,10 @@ namespace OpenTK.Rewrite
 
         int GetSlot(MethodDefinition signature)
         {
+            // Pretend there is no slots if we want to force everything to work through DllImport (Android & iOS)
+            if (dllimport)
+                return -1;
+
             var slot_attribute = signature.CustomAttributes
                         .FirstOrDefault(a => a.AttributeType.Name == "SlotAttribute");
             int slot =

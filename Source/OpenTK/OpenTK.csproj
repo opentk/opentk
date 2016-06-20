@@ -46,7 +46,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <DocumentationFile>..\..\Binaries\OpenTK\Debug\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>False</Optimize>
@@ -80,7 +80,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;</DefineConstants>
+    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
@@ -115,7 +115,7 @@
     <DebugType>pdbonly</DebugType>
     <WarningLevel>4</WarningLevel>
     <Optimize>True</Optimize>
-    <DefineConstants>TRACE;</DefineConstants>
+    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
@@ -126,7 +126,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;</DefineConstants>
+    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
     <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
@@ -199,6 +199,7 @@
     <Compile Include="Math\Matrix4x3d.cs" />
     <Compile Include="Platform\Common\Hid.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
+    <Compile Include="Platform\Egl\EglException.cs" />
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
     <Compile Include="Platform\Egl\EglWinContext.cs" />
     <Compile Include="Platform\MappedGamePadDriver.cs" />

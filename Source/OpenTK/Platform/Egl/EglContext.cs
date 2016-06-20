@@ -115,7 +115,10 @@ namespace OpenTK.Platform.Egl
 
         public override void SwapBuffers()
         {
-            Egl.SwapBuffers(WindowInfo.Display, WindowInfo.Surface);
+            if (!Egl.SwapBuffers(WindowInfo.Display, WindowInfo.Surface))
+            {
+                throw new GraphicsContextException(string.Format("Failed to swap buffers for context {0} current. Error: {1}", this, Egl.GetError()));
+            }
         }
 
         public override void MakeCurrent(IWindowInfo window)
@@ -128,7 +131,10 @@ namespace OpenTK.Platform.Egl
             {
                 if (window is EglWindowInfo)
                     WindowInfo = (EglWindowInfo) window;
-                Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext);
+                if (!Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext))
+                {
+                    throw new GraphicsContextException(string.Format("Failed to make context {0} current. Error: {1}", this, Egl.GetError()));
+                }
             }
             else
             {

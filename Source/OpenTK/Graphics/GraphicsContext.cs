@@ -387,6 +387,14 @@ namespace OpenTK.Graphics
         internal static GetCurrentContextDelegate GetCurrentContext;
 
         /// <summary>
+        /// Gets the handle of the current GraphicsContext in the calling thread.
+        /// </summary>
+        public static ContextHandle CurrentContextHandle
+        {
+            get { return GetCurrentContext(); }
+        }
+
+        /// <summary>
         /// Gets the GraphicsContext that is current in the calling thread.
         /// </summary>
         /// <remarks>
@@ -401,7 +409,7 @@ namespace OpenTK.Graphics
                 {
                     if (available_contexts.Count > 0)
                     {
-                        ContextHandle handle = GetCurrentContext();
+                        ContextHandle handle = CurrentContextHandle;
                         if (handle.Handle != IntPtr.Zero)
                             return (IGraphicsContext)available_contexts[handle];
                     }
