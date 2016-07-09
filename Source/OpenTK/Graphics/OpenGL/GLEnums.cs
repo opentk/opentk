@@ -740,7 +740,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 14 other functions
+    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 13 other functions
     /// </summary>
     public enum All : int
     {
@@ -29586,6 +29586,10 @@ namespace OpenTK.Graphics.OpenGL
     public enum BufferStorageFlags : int
     {
         /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0),
+        /// <summary>
         /// Original was GL_MAP_READ_BIT = 0x0001
         /// </summary>
         MapReadBit = ((int)0x0001),
@@ -30973,7 +30977,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.DrawElementsInstanced, GL.DrawElements and 13 other functions
+    /// Used in GL.Arb.DrawElementsInstanced, GL.DrawElements and 14 other functions
     /// </summary>
     public enum DrawElementsType : int
     {
@@ -48946,7 +48950,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray and 38 other functions
+    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray and 39 other functions
     /// </summary>
     public enum PrimitiveType : int
     {

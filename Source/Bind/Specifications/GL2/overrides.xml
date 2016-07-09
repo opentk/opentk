@@ -185,6 +185,15 @@
         <type>DrawBuffersEnum</type>
       </param>
     </function>
+    
+    <function name="DrawElements" extension="Core">
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+      <param name="type">
+        <type>DrawElementsType</type>
+      </param>
+    </function>
 
     <function name="StencilFuncSeparate" extension="Core">
       <param name="face">
@@ -490,6 +499,9 @@
       <param name="mode">
         <type>PrimitiveType</type>
       </param>
+      <param name="type">
+        <type>DrawElementsType</type>
+      </param>
     </function>
 
     <function name="DrawElementsInstancedBaseVertex" extension="Core">
@@ -497,12 +509,18 @@
       <param name="mode">
         <type>PrimitiveType</type>
       </param>
+      <param name="type">
+        <type>DrawElementsType</type>
+      </param>
     </function>
     
     <function name="DrawRangeElementsBaseVertex" extension="Core">
       <version>3.2</version>
       <param name="mode">
         <type>PrimitiveType</type>
+      </param>
+      <param name="type">
+        <type>DrawElementsType</type>
       </param>
     </function>
 
@@ -517,6 +535,9 @@
       <version>3.2</version>
       <param name="mode">
         <type>PrimitiveType</type>
+      </param>
+      <param name="type">
+        <type>DrawElementsType</type>
       </param>
     </function>
 
@@ -1148,6 +1169,15 @@
     <function name="MultiDrawArraysIndirect" extension="Core">
       <param name="mode">
         <type>PrimitiveType</type>
+      </param>
+    </function>
+
+    <function name="MultiDrawElementsIndirect" extension="Core">
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+      <param name="type">
+        <type>DrawElementsType</type>
       </param>
     </function>
     
@@ -2881,6 +2911,7 @@
       <token name="BUFFER_MAP_POINTER" value="0x88BD" />
     </enum>
     <enum name="BufferStorageFlags">
+	  <use enum="VERSION_1_1" token="NONE" />
       <use enum="VERSION_3_0" token="MAP_READ_BIT" />
       <use enum="VERSION_3_0" token="MAP_WRITE_BIT" />
       <use enum="VERSION_4_4" token="CLIENT_STORAGE_BIT" />
