@@ -4,6 +4,7 @@
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
+//       Axis limit increased to 32 by Christopher Lees
 //
 // Copyright (c) 2006-2014 Stefanos Apostolopoulos
 //
@@ -60,7 +61,49 @@ namespace OpenTK.Input
         Axis9,
         /// <summary>The eleventh axis of the JoystickDevice.</summary>
         Axis10,
+        /// <summary>The twelfth axis of the JoystickDevice.</summary>
+        Axis11,
+        /// <summary>The thirteenth axis of the JoystickDevice.</summary>
+        Axis12,
+        /// <summary>The fourteenth axis of the JoystickDevice.</summary>
+        Axis13,
+        /// <summary>The fifteenth axis of the JoystickDevice.</summary>
+        Axis14,
+        /// <summary>The sixteenth axis of the JoystickDevice.</summary>
+        Axis15,
+        /// <summary>The seventeenth axis of the JoystickDevice.</summary>
+        Axis16,
+        /// <summary>The eighteenth axis of the JoystickDevice.</summary>
+        Axis17,
+        /// <summary>The ninteenth axis of the JoystickDevice.</summary>
+        Axis18,
+        /// <summary>The twentyth axis of the JoystickDevice.</summary>
+        Axis19,
+        /// <summary>The twentyfirst axis of the JoystickDevice.</summary>
+        Axis20,
+        /// <summary>The twentysecond axis of the JoystickDevice.</summary>
+        Axis21,
+        /// <summary>The twentythird axis of the JoystickDevice.</summary>
+        Axis22,
+        /// <summary>The twentyfourth axis of the JoystickDevice.</summary>
+        Axis23,
+        /// <summary>The twentyfifth axis of the JoystickDevice.</summary>
+        Axis24,
+        /// <summary>The twentysixth axis of the JoystickDevice.</summary>
+        Axis25,
+        /// <summary>The twentyseventh axis of the JoystickDevice.</summary>
+        Axis26,
+        /// <summary>The twentyeighth axis of the JoystickDevice.</summary>
+        Axis27,
+        /// <summary>The twentyninth axis of the JoystickDevice.</summary>
+        Axis28,
+        /// <summary>The thirtyth axis of the JoystickDevice.</summary>
+        Axis29,
+        /// <summary>The thirtyfirst axis of the JoystickDevice.</summary>
+        Axis30,
+        /// <summary>The thritysecond axis of the JoystickDevice.</summary>
+        Axis31,
         /// <summary>The highest supported axis of the JoystickDevice.</summary>
-        Last = Axis10,
+        Last = Axis31,
     }
 }
