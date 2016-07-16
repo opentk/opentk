@@ -720,7 +720,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquationSeparate, GL.Arb.BlendFunc and 48 other functions
+    /// Used in GL.Arb.BlendEquationSeparate, GL.Arb.BlendFunc and 47 other functions
     /// </summary>
     public enum All : int
     {
@@ -15633,6 +15633,10 @@ namespace OpenTK.Graphics.OpenGL4
     public enum BufferStorageFlags : int
     {
         /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0),
+        /// <summary>
         /// Original was GL_MAP_READ_BIT = 0x0001
         /// </summary>
         MapReadBit = ((int)0x0001),
@@ -16948,7 +16952,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.DrawElements, GL.DrawElementsBaseVertex and 8 other functions
+    /// Used in GL.DrawElements, GL.DrawElementsBaseVertex and 9 other functions
     /// </summary>
     public enum DrawElementsType : int
     {
@@ -25281,7 +25285,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.DrawArrays, GL.DrawArraysIndirect and 19 other functions
+    /// Used in GL.DrawArrays, GL.DrawArraysIndirect and 20 other functions
     /// </summary>
     public enum PrimitiveType : int
     {
