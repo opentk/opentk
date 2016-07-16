@@ -230,7 +230,7 @@ namespace OpenTK.Platform.SDL2
 
             if (mode.Stencil > 0)
             {
-                SDL.GL.SetAttribute(ContextAttribute.STENCIL_SIZE, mode.Stereo ? 1 : 0);
+                SDL.GL.SetAttribute(ContextAttribute.STENCIL_SIZE, 1);
             }
 
             if (mode.Stereo)
