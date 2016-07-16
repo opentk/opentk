@@ -1672,7 +1672,6 @@
     </function>
 
     <function name="WaitSync" extension="Core">
-      <returns>WaitSyncStatus</returns>
       <param name="flags">
         <type>WaitSyncFlags</type>
       </param>
