@@ -63,7 +63,7 @@
     <DefineConstants>TRACE;</DefineConstants>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
-    <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>

@@ -27,14 +27,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\iOS\Release</OutputPath>
+    <OutputPath>bin\Release\iOS\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>IPHONE;OPENGLES;OPENTK_1;OPENTK_1_1</DefineConstants>
-    <DocumentationFile>..\..\Binaries\iOS\Release\OpenTK.1.1.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\iOS\OpenTK.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

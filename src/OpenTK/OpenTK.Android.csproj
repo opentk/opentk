@@ -31,7 +31,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\Android\Release</OutputPath>
+    <OutputPath>bin\Release\Android\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
@@ -39,7 +39,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>ANDROID;OPENGLES;OPENTK_1_1</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>..\..\Binaries\Android\Release\OpenTK-1.1.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Android\OpenTK.xml</DocumentationFile>
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>

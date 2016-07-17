@@ -64,10 +64,10 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.GLControl.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\OpenTK.GLControl.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
-    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>

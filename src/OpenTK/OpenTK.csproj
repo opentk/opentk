@@ -81,10 +81,10 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
-    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\OpenTK.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
-    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
