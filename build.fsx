@@ -135,6 +135,7 @@ Target "Build" (fun _ ->
             -- "**/OpenTK.iOS.csproj"
 
     !! "src/**/*.??proj"
+    -- "**/OpenTK.GLWidget.csproj"
     |> xamarinFilter
     |> MSBuildRelease "" "Rebuild"
     |> ignore
@@ -156,7 +157,7 @@ Target "RunTests" (fun _ ->
 // Build a NuGet package
 
 Target "NuGet" (fun _ ->
-    let excludes =
+    let xamExcludes =
         if isXamarinPlatform then
             []
         else
@@ -167,7 +168,7 @@ Target "NuGet" (fun _ ->
     Paket.Pack(fun p -> 
         { p with
             OutputPath = "bin"
-            ExcludedTemplates = excludes
+            ExcludedTemplates = "OpenTK.GLWidget" :: xamExcludes
             Version = release.NugetVersion
             ReleaseNotes = toLines release.Notes})
 )
