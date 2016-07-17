@@ -66,7 +66,7 @@ let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/opentk"
 // Read additional information from the release notes document
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
 
-let isXamarinPlatform = EnvironmentHelper.isMacOS || Environment.OSVersion.Platform = PlatformID.Win32NT
+let isXamarinPlatform = false //EnvironmentHelper.isMacOS || Environment.OSVersion.Platform = PlatformID.Win32NT
 
 
 // Helper active pattern for project types
