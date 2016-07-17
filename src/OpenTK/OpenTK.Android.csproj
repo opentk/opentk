@@ -241,7 +241,7 @@
     <Compile Include="Platform\X11\Bindings\DL.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="OpenTK.Android.paket.template" />
+    <None Include="OpenTK.Android.csproj.paket.template" />
     <None Include="OpenTK.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

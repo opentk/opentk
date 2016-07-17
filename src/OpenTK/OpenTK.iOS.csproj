@@ -232,7 +232,7 @@
     <None Include="OpenTK.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="OpenTK.iOS.paket.template" />
+    <None Include="OpenTK.iOS.csproj.paket.template" />
     <None Include="paket.references" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
