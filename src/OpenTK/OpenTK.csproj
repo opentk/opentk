@@ -58,23 +58,6 @@
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMinimal|AnyCPU' ">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <ConfigurationOverrideFile>
-    </ConfigurationOverrideFile>
-    <DefineConstants>DEBUG;TRACE;MINIMAL;NO_SYSDRAWING</DefineConstants>
-    <DocumentationFile>..\..\Binaries\OpenTK\DebugMinimal\OpenTK.xml</DocumentationFile>
-    <FileAlignment>4096</FileAlignment>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\OpenTK\DebugMinimal\</OutputPath>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <RemoveIntegerChecks>False</RemoveIntegerChecks>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>full</DebugType>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
@@ -85,52 +68,6 @@
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <RemoveIntegerChecks>False</RemoveIntegerChecks>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMinimal|AnyCPU' ">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <ConfigurationOverrideFile>
-    </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;MINIMAL;NO_SYSDRAWING</DefineConstants>
-    <DocumentationFile>..\..\Binaries\OpenTK\ReleaseMinimal\OpenTK.xml</DocumentationFile>
-    <FileAlignment>4096</FileAlignment>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\OpenTK\ReleaseMinimal\</OutputPath>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <RemoveIntegerChecks>False</RemoveIntegerChecks>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
-    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>True</Optimize>
-    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <DebugType>pdbonly</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <ConfigurationOverrideFile>
-    </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES</DefineConstants>
-    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.xml</DocumentationFile>
-    <FileAlignment>4096</FileAlignment>
-    <Optimize>True</Optimize>
-    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>

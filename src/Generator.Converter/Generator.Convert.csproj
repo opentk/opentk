@@ -70,27 +70,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>none</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
-    <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
-    <DebugType>none</DebugType>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>True</Optimize>
-    <DefineConstants>TRACE;</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
-    <BaseAddress>285212672</BaseAddress>
-    <ConfigurationOverrideFile>
-    </ConfigurationOverrideFile>
-    <DefineConstants>TRACE;</DefineConstants>
-    <FileAlignment>4096</FileAlignment>
-    <Optimize>True</Optimize>
-    <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <RemoveIntegerChecks>False</RemoveIntegerChecks>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugType>none</DebugType>
-  </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>True</SignAssembly>
   </PropertyGroup>
@@ -139,35 +118,5 @@
     </PreBuildEvent>
     <PostBuildEvent>
     </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMinimal|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\Tools\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;</DefineConstants>
-    <WarningLevel>4</WarningLevel>
-    <Commandlineparameters>-p:gl -v:4.5 -t:xml -o:../../../Source/Bind/Specifications/GL2/signatures.xml https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml</Commandlineparameters>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <RemoveIntegerChecks>False</RemoveIntegerChecks>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <ConfigurationOverrideFile>
-    </ConfigurationOverrideFile>
-    <FileAlignment>4096</FileAlignment>
-    <BaseAddress>285212672</BaseAddress>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMinimal|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
-    <DefineConstants>TRACE;</DefineConstants>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <RemoveIntegerChecks>False</RemoveIntegerChecks>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <FileAlignment>4096</FileAlignment>
-    <BaseAddress>285212672</BaseAddress>
-    <ConfigurationOverrideFile>
-    </ConfigurationOverrideFile>
   </PropertyGroup>
 </Project>
