@@ -1,6 +1,5 @@
 NUGET
   remote: https://www.nuget.org/api/v2
-  specs:
     FAKE (4.28)
     FsCheck (2.4)
       FSharp.Core (>= 3.1.2.5)
