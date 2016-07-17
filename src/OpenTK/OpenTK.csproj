@@ -159,9 +159,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="Math\Box2d.cs" />
     <Compile Include="DisplayDevice.cs">
       <SubType>Code</SubType>
