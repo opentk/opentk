@@ -19,47 +19,107 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.GLControl", "src\Ope
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.GLWidget", "src\OpenTK.GLWidget\OpenTK.GLWidget.csproj", "{A625BE87-0000-0000-0000-000000000000}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1857BB8E-1A35-4EBF-9F6D-685F11DC025B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Tests", "tests\OpenTK.Tests\OpenTK.Tests.csproj", "{930A780C-A67C-422F-9EED-DB38DAA47AB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.API.Desktop", "tests\Test.API.Desktop\Test.API.Desktop.csproj", "{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		DebugMinimal|Any CPU = DebugMinimal|Any CPU
 		Release|Any CPU = Release|Any CPU
+		ReleaseMinimal|Any CPU = ReleaseMinimal|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{31D19132-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31D19132-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.ActiveCfg = Release|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.Build.0 = Release|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.ActiveCfg = Release|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.Build.0 = Release|Any CPU
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.ReleaseMinimal|Any CPU.ActiveCfg = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.ReleaseMinimal|Any CPU.Build.0 = Release|Any CPU
 		{A37A7E14-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A37A7E14-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{A37A7E14-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A37A7E14-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.ActiveCfg = Release|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.Build.0 = Release|Any CPU
 		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.ReleaseMinimal|Any CPU.ActiveCfg = Release|Any CPU
+		{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}.ReleaseMinimal|Any CPU.Build.0 = Release|Any CPU
 		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
+		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.ReleaseMinimal|Any CPU.ActiveCfg = Release|Any CPU
+		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.ReleaseMinimal|Any CPU.Build.0 = Release|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.ActiveCfg = Release|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.Build.0 = Release|Any CPU
 		{A625BE87-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A625BE87-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A625BE87-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
+		{A625BE87-0000-0000-0000-000000000000}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
 		{A625BE87-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A625BE87-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A625BE87-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.ActiveCfg = Release|Any CPU
+		{A625BE87-0000-0000-0000-000000000000}.ReleaseMinimal|Any CPU.Build.0 = Release|Any CPU
+		{930A780C-A67C-422F-9EED-DB38DAA47AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{930A780C-A67C-422F-9EED-DB38DAA47AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{930A780C-A67C-422F-9EED-DB38DAA47AB0}.DebugMinimal|Any CPU.ActiveCfg = Debug|Any CPU
+		{930A780C-A67C-422F-9EED-DB38DAA47AB0}.DebugMinimal|Any CPU.Build.0 = Debug|Any CPU
+		{930A780C-A67C-422F-9EED-DB38DAA47AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{930A780C-A67C-422F-9EED-DB38DAA47AB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{930A780C-A67C-422F-9EED-DB38DAA47AB0}.ReleaseMinimal|Any CPU.ActiveCfg = Release|Any CPU
+		{930A780C-A67C-422F-9EED-DB38DAA47AB0}.ReleaseMinimal|Any CPU.Build.0 = Release|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.DebugMinimal|Any CPU.ActiveCfg = DebugMinimal|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.DebugMinimal|Any CPU.Build.0 = DebugMinimal|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.ReleaseMinimal|Any CPU.ActiveCfg = ReleaseMinimal|Any CPU
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.ReleaseMinimal|Any CPU.Build.0 = ReleaseMinimal|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{930A780C-A67C-422F-9EED-DB38DAA47AB0} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
+		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Source\Examples\OpenTK.Examples.csproj
