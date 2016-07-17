@@ -8,3 +8,4 @@ nuget xunit.runner.console
 nuget xunit.assert
 nuget FAKE
 nuget Mono.Cecil
+nuget GtkSharp
