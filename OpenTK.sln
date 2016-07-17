@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{F1A570
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEEC96B-BD2F-45B0-935D-19E9E6D7D969}"
 	ProjectSection(SolutionItems) = preProject
+		build.fsx = build.fsx
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
