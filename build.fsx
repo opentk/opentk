@@ -66,6 +66,8 @@ let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/opentk"
 // Read additional information from the release notes document
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
 
+let isXamarinPlatform = EnvironmentHelper.isMacOS || Environment.OSVersion.Platform = PlatformID.Win32NT
+
 
 // Helper active pattern for project types
 let (|Fsproj|Csproj|Vbproj|) (projFileName:string) = 
@@ -124,7 +126,16 @@ Target "Clean" (fun _ ->
 // Build library & test project
 
 Target "Build" (fun _ ->
-    !! solutionFile
+    let xamarinFilter f = 
+        if isXamarinPlatform then
+            f
+        else
+            f
+            -- "**/OpenTK.Android.csproj"
+            -- "**/OpenTK.iOS.csproj"
+
+    !! "src/**/*.??proj"
+    |> xamarinFilter
     |> MSBuildRelease "" "Rebuild"
     |> ignore
 )
@@ -145,9 +156,18 @@ Target "RunTests" (fun _ ->
 // Build a NuGet package
 
 Target "NuGet" (fun _ ->
+    let excludes =
+        if isXamarinPlatform then
+            []
+        else
+            [ "OpenTK.Android"
+              "OpenTK.iOS" ]
+
+
     Paket.Pack(fun p -> 
         { p with
             OutputPath = "bin"
+            ExcludedTemplates = excludes
             Version = release.NugetVersion
             ReleaseNotes = toLines release.Notes})
 )
