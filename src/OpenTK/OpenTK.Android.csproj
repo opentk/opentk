@@ -241,9 +241,11 @@
     <Compile Include="Platform\X11\Bindings\DL.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="OpenTK.Android.paket.template" />
     <None Include="OpenTK.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="paket.references" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
