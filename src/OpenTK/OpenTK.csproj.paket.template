@@ -1,4 +1,4 @@
-type project
+type file
 id OpenTK
 owners
     opentk thefiddler

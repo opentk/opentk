@@ -77,6 +77,24 @@ let (|Fsproj|Csproj|Vbproj|) (projFileName:string) =
     | f when f.EndsWith "vbproj" -> Vbproj
     | _                           -> failwith (sprintf "Project file %s not supported. Unknown project type." projFileName)
 
+
+let activeProjects = 
+    let xamarinFilter f = 
+        if isXamarinPlatform then
+            f
+        else
+            f
+            -- "**/OpenTK.Android.csproj"
+            -- "**/OpenTK.iOS.csproj"
+
+    !! "src/**/*.??proj"
+    -- "**/OpenTK.GLWidget.csproj"
+    |> xamarinFilter
+
+do 
+    activeProjects
+    |> Seq.iter (tracefn "item: %s")
+
 // Generate assembly info files with the right version & up-to-date information
 Target "AssemblyInfo" (fun _ ->
     let getAssemblyInfoAttributes projectName =
@@ -110,7 +128,7 @@ Target "AssemblyInfo" (fun _ ->
 // But keeps a subdirectory structure for each project in the 
 // src folder to support multiple project outputs
 Target "CopyBinaries" (fun _ ->
-    !! "src/**/*.??proj"
+    activeProjects
     |>  Seq.map (fun f -> ((System.IO.Path.GetDirectoryName f) @@ "bin/Release", "bin" @@ (System.IO.Path.GetFileNameWithoutExtension f)))
     |>  Seq.iter (fun (fromDir, toDir) -> CopyDir toDir fromDir (fun _ -> true))
 )
@@ -126,17 +144,7 @@ Target "Clean" (fun _ ->
 // Build library & test project
 
 Target "Build" (fun _ ->
-    let xamarinFilter f = 
-        if isXamarinPlatform then
-            f
-        else
-            f
-            -- "**/OpenTK.Android.csproj"
-            -- "**/OpenTK.iOS.csproj"
-
-    !! "src/**/*.??proj"
-    -- "**/OpenTK.GLWidget.csproj"
-    |> xamarinFilter
+    activeProjects
     |> MSBuildRelease "" "Rebuild"
     |> ignore
 )

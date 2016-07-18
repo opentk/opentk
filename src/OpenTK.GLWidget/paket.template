@@ -1,4 +1,4 @@
-type project
+type file
 id OpenTK.GLWidget
 owners
     opentk thefiddler
