@@ -91,10 +91,6 @@ let activeProjects =
     -- "**/OpenTK.GLWidget.csproj"
     |> xamarinFilter
 
-do 
-    activeProjects
-    |> Seq.iter (tracefn "item: %s")
-
 // Generate assembly info files with the right version & up-to-date information
 Target "AssemblyInfo" (fun _ ->
     let getAssemblyInfoAttributes projectName =
