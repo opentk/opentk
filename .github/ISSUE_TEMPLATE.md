@@ -16,15 +16,13 @@ Please provide a description of the behavior you expect.
 
 ### Actual behavior
 
-Please provide a description of the actual behavior you observe. 
-
-### Known workarounds
-
-Please provide a description of any known workarounds.
+Please provide a description of the actual behavior you observe.
 
 ### Related information 
 
-* Operating system 
-* Branch
-* .NET Runtime, CoreCLR or Mono Version
-* Performance information, links to performance testing scripts
+* Operating system
+* SDL or Native backend
+* What version of OpenTK (Installer, NuGet, Source Code)
+* What runtime (.NET Framework, CoreCLR, Mono)
+* Workarounds (if any)
+
