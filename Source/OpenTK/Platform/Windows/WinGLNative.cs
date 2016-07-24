@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright (c) 2006 - 2015 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -83,15 +83,6 @@ namespace OpenTK.Platform.Windows
         Icon icon;
 
         const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
-
-        const long ExtendedBit = 1 << 24;           // Used to distinguish left and right control, alt and enter keys.
-
-        public static readonly uint ShiftLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LSHIFT, 0);
-        public static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);
-        public static readonly uint ControlLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LCONTROL, 0);
-        public static readonly uint ControlRightScanCode = Functions.MapVirtualKey(VirtualKeys.RCONTROL, 0);
-        public static readonly uint AltLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LMENU, 0);
-        public static readonly uint AltRightScanCode = Functions.MapVirtualKey(VirtualKeys.RMENU, 0);
 
         MouseCursor cursor = MouseCursor.Default;
         IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
@@ -611,14 +602,15 @@ namespace OpenTK.Platform.Windows
             // Win95 does not distinguish left/right key constants (GetAsyncKeyState returns 0).
             // In this case, both keys will be reported as pressed.
 
-            bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
-            short scancode = (short)((lParam.ToInt64() >> 16) & 0xff);
-            //ushort repeat_count = unchecked((ushort)((ulong)lParam.ToInt64() & 0xffffu));
-            VirtualKeys vkey = (VirtualKeys)wParam;
-            bool is_valid;
-            Key key = WinKeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
+            // Used to distinguish left and right control, alt and enter keys.
+            bool extended = (lParam.ToInt64() & (1 << 24)) != 0;
 
-            if (is_valid)
+            int scancode = (int)((lParam.ToInt64() >> 16) & 0xFF);
+            VirtualKeys vkey = (VirtualKeys)(wParam.ToInt32());
+
+            Key key = WinKeyMap.TranslateKey(scancode, vkey, extended, false);
+
+            if (key != Key.Unknown)
             {
                 if (pressed)
                 {
