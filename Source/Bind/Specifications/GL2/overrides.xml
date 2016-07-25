@@ -1694,6 +1694,92 @@
 
   </replace>
 
+  <overload name="gl|glcore|gles2">
+    <function name="Uniform2fv">
+      <param name="value"><type>Vector2</type></param>
+    </function>
+    <function name="Uniform3fv">
+      <param name="value"><type>Vector3</type></param>
+    </function>
+    <function name="Uniform4fv">
+      <param name="value"><type>Vector4</type></param>
+    </function>
+    <function name="Uniform2dv">
+      <param name="value"><type>Vector2d</type></param>
+    </function>
+    <function name="Uniform3dv">
+      <param name="value"><type>Vector3d</type></param>
+    </function>
+    <function name="Uniform4dv">
+      <param name="value"><type>Vector4d</type></param>
+    </function>
+    <function name="UniformMatrix2fv">
+      <param name="value"><type>Matrix2</type></param>
+    </function>
+    <function name="UniformMatrix2x3fv">
+      <param name="value"><type>Matrix2x3</type></param>
+    </function>
+    <function name="UniformMatrix2x4fv">
+      <param name="value"><type>Matrix2x4</type></param>
+    </function>
+    <function name="UniformMatrix3fv">
+      <param name="value"><type>Matrix3</type></param>
+    </function>
+    <function name="UniformMatrix3x2fv">
+      <param name="value"><type>Matrix3x2</type></param>
+    </function>
+    <function name="UniformMatrix3x4fv">
+      <param name="value"><type>Matrix3x4</type></param>
+    </function>
+    <function name="UniformMatrix4fv">
+      <param name="value"><type>Matrix4</type></param>
+    </function>
+    <function name="UniformMatrix4x2fv">
+      <param name="value"><type>Matrix4x2</type></param>
+    </function>
+    <function name="UniformMatrix4x3fv">
+      <param name="value"><type>Matrix4x3</type></param>
+    </function>
+
+    <function name="ProgramUniform2fv">
+      <param name="value"><type>Vector2</type></param>
+    </function>
+    <function name="ProgramUniform3fv">
+      <param name="value"><type>Vector3</type></param>
+    </function>
+    <function name="ProgramUniform4fv">
+      <param name="value"><type>Vector4</type></param>
+    </function>
+    <function name="ProgramUniformMatrix2fv">
+      <param name="value"><type>Matrix2</type></param>
+    </function>
+    <function name="ProgramUniformMatrix2x3fv">
+      <param name="value"><type>Matrix2x3</type></param>
+    </function>
+    <function name="ProgramUniformMatrix2x4fv">
+      <param name="value"><type>Matrix2x4</type></param>
+    </function>
+    <function name="ProgramUniformMatrix3fv">
+      <param name="value"><type>Matrix3</type></param>
+    </function>
+    <function name="ProgramUniformMatrix3x2fv">
+      <param name="value"><type>Matrix3x2</type></param>
+    </function>
+    <function name="ProgramUniformMatrix3x4fv">
+      <param name="value"><type>Matrix3x4</type></param>
+    </function>
+    <function name="ProgramUniformMatrix4fv">
+      <param name="value"><type>Matrix4</type></param>
+    </function>
+    <function name="ProgramUniformMatrix4x2fv">
+      <param name="value"><type>Matrix4x2</type></param>
+    </function>
+    <function name="ProgramUniformMatrix4x3fv">
+      <param name="value"><type>Matrix4x3</type></param>
+    </function>
+
+  </overload>
+
   <overload name="glcore">
     <!-- For symmetry with gl namespace (issue #171) -->
     <function name="DrawElements" extension="Core">
