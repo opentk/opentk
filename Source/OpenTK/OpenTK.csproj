@@ -200,8 +200,10 @@
     <Compile Include="Platform\Common\Hid.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Egl\EglException.cs" />
+    <Compile Include="Platform\Egl\AngleWindowInfo.cs" />
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
     <Compile Include="Platform\Egl\EglWinContext.cs" />
+    <Compile Include="Platform\Egl\EglAnglePlatformFactory.cs" />
     <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\Windows\Bindings\HidProtocol.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
