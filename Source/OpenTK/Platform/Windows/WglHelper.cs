@@ -121,10 +121,9 @@ namespace OpenTK.Platform.Windows
 
         static bool IsValid(IntPtr address)
         {
-            // See https://www.opengl.org/wiki/Load_OpenGL_Functions
-            long a = address.ToInt64();
-            bool is_valid = (a < -1) || (a > 3);
-            return is_valid;
+            // See https://www.opengl.org/wiki/Load_OpenGL_Functions,
+            // This tests for a not NULL and not -1, 1, 2, and 3.
+            return (address.ToInt64() > 3);
         }
 
         #endregion
