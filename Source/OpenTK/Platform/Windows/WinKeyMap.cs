@@ -163,7 +163,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static Key TranslateKey(VirtualKeys vkey, int scancode, bool extended)
+        public static Key TranslateKey(VirtualKeys vkey, uint scancode, bool extended)
         {
             vkey = MapLeftRightKeys(vkey, scancode, extended);
             return GetKey(vkey);
@@ -171,7 +171,7 @@ namespace OpenTK.Platform.Windows
 
 
         // http://stackoverflow.com/a/5681468/1873041
-        static VirtualKeys MapLeftRightKeys(VirtualKeys vk, int scancode, bool extended)
+        static VirtualKeys MapLeftRightKeys(VirtualKeys vk, uint scancode, bool extended)
         {
             VirtualKeys new_vkey = vk;
 

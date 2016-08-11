@@ -186,7 +186,7 @@ namespace OpenTK.Platform.Windows
                 int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
                 keyboard = keyboards[keyboard_handle];
 
-                Key key = WinKeyMap.TranslateKey(vkey, scancode, extended0);
+                Key key = WinKeyMap.TranslateKey(vkey, (uint)scancode, extended0);
 
                 if (key != Key.Unknown)
                 {

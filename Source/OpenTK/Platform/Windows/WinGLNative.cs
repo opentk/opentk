@@ -595,8 +595,8 @@ namespace OpenTK.Platform.Windows
                 message == WindowMessage.KEYDOWN ||
                 message == WindowMessage.SYSKEYDOWN;
 
-            int scancode = ((int)lParam & 0x00ff0000) >> 16;
-            bool extended = ((int)lParam & 0x01000000) != 0;
+            uint scancode = (uint)(((ulong)lParam & 0x00ff0000) >> 16);
+            bool extended = ((ulong)lParam & 0x01000000) != 0;
 
             Key key = WinKeyMap.TranslateKey((VirtualKeys)wParam, scancode, extended);
 
