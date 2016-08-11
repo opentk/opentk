@@ -84,15 +84,6 @@ namespace OpenTK.Platform.Windows
 
         const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
 
-        const long ExtendedBit = 1 << 24;           // Used to distinguish left and right control, alt and enter keys.
-
-        public static readonly uint ShiftLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LSHIFT, 0);
-        public static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);
-        public static readonly uint ControlLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LCONTROL, 0);
-        public static readonly uint ControlRightScanCode = Functions.MapVirtualKey(VirtualKeys.RCONTROL, 0);
-        public static readonly uint AltLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LMENU, 0);
-        public static readonly uint AltRightScanCode = Functions.MapVirtualKey(VirtualKeys.RMENU, 0);
-
         MouseCursor cursor = MouseCursor.Default;
         IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
         int cursor_visible_count = 0;
@@ -604,25 +595,15 @@ namespace OpenTK.Platform.Windows
                 message == WindowMessage.KEYDOWN ||
                 message == WindowMessage.SYSKEYDOWN;
 
-            // Shift/Control/Alt behave strangely when e.g. ShiftRight is held down and ShiftLeft is pressed
-            // and released. It looks like neither key is released in this case, or that the wrong key is
-            // released in the case of Control and Alt.
-            // To combat this, we are going to release both keys when either is released. Hacky, but should work.
-            // Win95 does not distinguish left/right key constants (GetAsyncKeyState returns 0).
-            // In this case, both keys will be reported as pressed.
+            uint scancode = (uint)(((ulong)lParam & 0x00ff0000) >> 16);
+            bool extended = ((ulong)lParam & 0x01000000) != 0;
 
-            bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
-            short scancode = (short)((lParam.ToInt64() >> 16) & 0xff);
-            //ushort repeat_count = unchecked((ushort)((ulong)lParam.ToInt64() & 0xffffu));
-            VirtualKeys vkey = (VirtualKeys)wParam;
-            bool is_valid;
-            Key key = WinKeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
+            Key key = WinKeyMap.TranslateKey((VirtualKeys)wParam, scancode, extended);
 
-            if (is_valid)
+            if (key != Key.Unknown)
             {
                 if (pressed)
                 {
-                    //OnKeyDown(key, repeat_count > 0);
                     OnKeyDown(key, KeyboardState[key]);
                 }
                 else
@@ -631,6 +612,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
+
 
         void HandleKillFocus(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
