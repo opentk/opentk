@@ -1,0 +1,23 @@
+type project
+id OpenTK.iOS
+owners
+    opentk thefiddler
+authors 
+    The Open Toolkit Team
+projectUrl
+    http://www.opentk.com
+iconUrl
+    https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png
+licenseUrl
+    http://github.com/opentk/opentk/blob/master/License.txt
+requireLicenseAcceptance
+    false
+copyright
+    Copyright (c) 2006 - 2016 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library.
+tags
+    OpenTK OpenGL OpenAL OpenCL C# F# VB .Net Mono Graphics Game Scientific Science 3D 2D Math Input Gamepad Joystick
+summary
+    A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL.
+description
+    The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research. 
+    OpenTK provides several utility libraries, including a math/linear algebra package, a windowing system, and input handling.

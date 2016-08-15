@@ -1,10 +1,9 @@
 language: csharp
-solution: OpenTK.sln
 
-mono:
- - latest
- - 3.10.0
- - 3.8.0
+sudo: false  # use the new container-based Travis infrastructure 
 
-script:
-  - xbuild /p:Configuration=Release OpenTK.sln
+before_install:
+  - chmod +x build.sh
+ 
+script: 
+  - ./build.sh NuGet

@@ -1,0 +1,11 @@
+source https://nuget.org/api/v2
+
+#Open packages
+
+nuget FSharp.Formatting
+nuget FsCheck.Xunit
+nuget xunit.runner.console
+nuget xunit.assert
+nuget FAKE
+nuget Mono.Cecil
+nuget GtkSharp

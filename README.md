@@ -28,17 +28,11 @@ OpenTK is available for Windows, Linux, Mac OS X, *BSD, SteamOS, Android and iOS
 Instructions
 ============
 
-The simplest way to use OpenTK in your project is to install the [NuGet package](http://www.nuget.org/packages/OpenTK/). 
+The simplest way to use OpenTK in your project is to install the [NuGet package](http://www.nuget.org/packages/OpenTK/).
 
 Note what installing NuGet package will add reference to OpenTK.dll, but OpenTK.dll.config 
 will not be copied to the project output directory automatically, so you need to add it to your project 
 and then enable the "Copy to Output Directory" option (as in step 3 below).
-
-Alternatively, download the [OpenTK binaries](http://www.opentk.com) and:
-
-1. Copy OpenTK.dll and OpenTK.dll.config to your project directory
-2. Use "Add reference" to add OpenTK.dll as a project reference
-3. Use "Add files" to add OpenTK.dll.config to your project, and enable the "Copy to Output Directory" option.
 
 To build OpenTK from source, simply double-click OpenTK.sln and build through your IDE.
 
@@ -46,8 +40,8 @@ Alternatively, open a command prompt and type:
 ```
 git clone https://github.com/opentk/opentk   # Download source code from git
 cd opentk                                    # Enter the source directory
-msbuild /p:Configuration=Release OpenTK.sln  # Build on .Net (Windows)
-xbuild  /p:Configuration=Release OpenTK.sln  # Build on Mono (Linux / Mac OS X)
+./build.cmd                                  # Build on .Net (Windows)
+./build.sh                                   # Build on Mono (Linux / Mac OS X)
 ```
 
 

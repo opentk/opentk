@@ -155,6 +155,8 @@
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
+    <None Include="paket.references" />
+    <None Include="paket.template" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

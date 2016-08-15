@@ -106,6 +106,7 @@
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
+    <None Include="paket.references" />
     <None Include="XML schema notes.txt">
     </None>
     <None Include="Readme.txt">
