@@ -93,7 +93,12 @@ let activeProjects =
 
 // Generate assembly info files with the right version & up-to-date information
 Target "AssemblyInfo" (fun _ ->
-    let getAssemblyInfoAttributes projectName =
+    let getAssemblyInfoAttributes (projectName:string) =
+        let projectName = 
+            if projectName.Contains(".iOS") || projectName.Contains(".Android") then
+                projectName.Split('.').[0]
+            else
+                projectName
         [ Attribute.Title (projectName)
           Attribute.Product project
           Attribute.Description summary
