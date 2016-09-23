@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-[assembly: AssemblyTitleAttribute("OpenTK.iOS")]
+[assembly: AssemblyTitleAttribute("OpenTK")]
 [assembly: AssemblyProductAttribute("OpenTK")]
 [assembly: AssemblyDescriptionAttribute("A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL.")]
 [assembly: AssemblyVersionAttribute("2.0.0")]
