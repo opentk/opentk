@@ -77,9 +77,13 @@ https://www.nuget.org/packages/OpenTK.Next.GLControl/1.2.2336.6514-pre
 *The OpenTK.Next package id will no longer be used for future releases.
 
 
+### 2014-07-24
+
 OpenTK 1.1.4c was released on 24 July 2014.
 
 This is a hotfix release that improves stability on Mac OS X. Moreover, it synchronizes the GamePad configuration database with SDL 2.0.4 and fixes an invalid GUID introduced in 1.1.4b.
+
+### 214-07-21
 
 OpenTK 1.1.4 was released on 21 July 2014.
 
