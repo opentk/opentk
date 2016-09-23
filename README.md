@@ -48,6 +48,19 @@ cd opentk                                    # Enter the source directory
 News
 ====
 
+### 2016-09-23
+
+OpenTK 2.0.0 is now available for download from (Nuget)[https://www.nuget.org/packages/OpenTK/2.0.0].
+
+Aside from being a maintenance release to bring the current package closer in-line with develop, this the project's first release since adopting a new build system.
+
+Release notes:
+ - Moved to new FAKE/Paket based build system
+ - Removed superfluous release configurations
+ - Numerous other fixes and enhancements
+
+We would welcome any feedback on the package, so please open a GitHub issue if you require assistance or experience difficulties.
+
 ### 2016-07-19
 
 The new OpenTK website is live. You can view it at [opentk.github.io](https://opentk.github.io/)
