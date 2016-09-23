@@ -48,6 +48,19 @@ cd opentk                                    # Enter the source directory
 News
 ====
 
+### 2016-09-23
+
+OpenTK 2.0.0 is now available for download from [Nuget](https://www.nuget.org/packages/OpenTK/2.0.0).
+
+Aside from being a maintenance release to bring the current package closer in-line with develop, this the project's first release since adopting a new build system.
+
+Release notes:
+ - Moved to new FAKE/Paket based build system
+ - Removed superfluous release configurations
+ - Numerous other fixes and enhancements
+
+We would welcome any feedback on the package, so please open a GitHub issue if you require assistance or experience difficulties.
+
 ### 2016-07-19
 
 The new OpenTK website is live. You can view it at [opentk.github.io](https://opentk.github.io/)
@@ -61,11 +74,16 @@ A pre-release package is available.
 https://www.nuget.org/packages/OpenTK.Next/1.2.2336.6514-pre
 https://www.nuget.org/packages/OpenTK.Next.GLControl/1.2.2336.6514-pre
 
+*The OpenTK.Next package id will no longer be used for future releases.
 
+
+### 2014-07-24
 
 OpenTK 1.1.4c was released on 24 July 2014.
 
 This is a hotfix release that improves stability on Mac OS X. Moreover, it synchronizes the GamePad configuration database with SDL 2.0.4 and fixes an invalid GUID introduced in 1.1.4b.
+
+### 214-07-21
 
 OpenTK 1.1.4 was released on 21 July 2014.
 
