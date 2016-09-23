@@ -50,7 +50,7 @@ News
 
 ### 2016-09-23
 
-OpenTK 2.0.0 is now available for download from (Nuget)[https://www.nuget.org/packages/OpenTK/2.0.0].
+OpenTK 2.0.0 is now available for download from [Nuget](https://www.nuget.org/packages/OpenTK/2.0.0).
 
 Aside from being a maintenance release to bring the current package closer in-line with develop, this the project's first release since adopting a new build system.
 
@@ -74,6 +74,7 @@ A pre-release package is available.
 https://www.nuget.org/packages/OpenTK.Next/1.2.2336.6514-pre
 https://www.nuget.org/packages/OpenTK.Next.GLControl/1.2.2336.6514-pre
 
+*The OpenTK.Next package id will no longer be used for future releases.
 
 
 OpenTK 1.1.4c was released on 24 July 2014.
