@@ -489,15 +489,16 @@ namespace OpenTK.Platform.SDL2
                             // the rgba values supplied by the user
                             unsafe
                             {
-                                fixed (byte* pixels = value.Data)
+                                var frame = value.DefaultFrame;
+                                fixed (byte* pixels = frame.Data)
                                 {
                                     IntPtr cursor_surface =
                                         SDL.CreateRGBSurfaceFrom(
                                             new IntPtr(pixels),
-                                            value.Width,
-                                            value.Height,
+                                            frame.Width,
+                                            frame.Height,
                                             32,
-                                            value.Width * 4,
+                                            frame.Width * 4,
                                             0x00ff0000,
                                             0x0000ff00,
                                             0x000000ff,
@@ -510,7 +511,7 @@ namespace OpenTK.Platform.SDL2
                                         return;
                                     }
 
-                                    sdl_cursor = SDL.CreateColorCursor(cursor_surface, value.X, value.Y);
+                                    sdl_cursor = SDL.CreateColorCursor(cursor_surface, frame.X, frame.Y);
                                     if (sdl_cursor == IntPtr.Zero)
                                     {
                                         Debug.Print("[SDL2] Failed to create cursor. Error: {0}",

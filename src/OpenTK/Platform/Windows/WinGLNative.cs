@@ -1201,15 +1201,16 @@ namespace OpenTK.Platform.Windows
                     }
                     else
                     {
-                        var stride = value.Width *
+                        var frame = value.DefaultFrame;
+                        var stride = frame.Width *
                             (Bitmap.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
 
                         Bitmap bmp;
                         unsafe
                         {
-                            fixed (byte* pixels = value.Data)
+                            fixed (byte* pixels = frame.Data)
                             {
-                                bmp = new Bitmap(value.Width, value.Height, stride,
+                                bmp = new Bitmap(frame.Width, frame.Height, stride,
                                     PixelFormat.Format32bppArgb,
                                     new IntPtr(pixels));
                             }
@@ -1227,8 +1228,8 @@ namespace OpenTK.Platform.Windows
                                     throw new System.ComponentModel.Win32Exception();
                                 }
 
-                                iconInfo.xHotspot = value.X;
-                                iconInfo.yHotspot = value.Y;
+                                iconInfo.xHotspot = frame.X;
+                                iconInfo.yHotspot = frame.Y;
                                 iconInfo.fIcon = false;
 
                                 var icon = Functions.CreateIconIndirect(ref iconInfo);

@@ -1041,7 +1041,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        static IntPtr ToNSCursor(MouseCursor cursor)
+        static IntPtr ToNSCursor(MouseCursorFrame cursor)
         {
             // We need to allocate a NSBitmapImageRep, fill it with pixels
             // and then convert it to a NSImage.
@@ -1131,7 +1131,7 @@ namespace OpenTK.Platform.MacOS
             }
             else
             {
-                cursor = ToNSCursor(selectedCursor);
+                cursor = ToNSCursor(selectedCursor.DefaultFrame);
             }
 
             // Setup the cursor rectangle

@@ -131,6 +131,7 @@
     <Compile Include="Math\Matrix4x2d.cs" />
     <Compile Include="Math\Matrix4x3.cs" />
     <Compile Include="Math\Matrix4x3d.cs" />
+    <Compile Include="MouseCursorFrame.cs" />
     <Compile Include="Platform\Common\Hid.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Egl\EglException.cs" />
