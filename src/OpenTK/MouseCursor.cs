@@ -35,6 +35,7 @@ namespace OpenTK
 {
     /// <summary>
     /// Represents a predefined or custom mouse cursor.
+    /// new MouseCursor() represents an empty animation. Use MouseCursor.Default instead.
     /// </summary>
     public sealed class MouseCursor : IEnumerable<MouseCursorFrame>
     {
@@ -48,10 +49,33 @@ namespace OpenTK
 
         private List<MouseCursorFrame> _frames = new List<MouseCursorFrame>();
 
-
+        /// <summary>
+        /// Creates a Cursor with no frames
+        /// </summary>
         public MouseCursor()
         {
         }
+
+        /// <summary>
+        /// Initializes a new <see cref="MouseCursor"/> instance
+        /// containing a single frame from a contiguous array of BGRA pixels.
+        /// Each pixel is composed of 4 bytes, representing B, G, R and A values,
+        /// respectively. For correct antialiasing of translucent cursors,
+        /// the B, G and R components should be premultiplied with the A component:
+        /// <code>
+        /// B = (byte)((B * A) / 255)
+        /// G = (byte)((G * A) / 255)
+        /// R = (byte)((R * A) / 255)
+        /// </code>
+        /// </summary>
+        /// <param name="hotx">The x-coordinate of the cursor hotspot, in the range [0, width]</param>
+        /// <param name="hoty">The y-coordinate of the cursor hotspot, in the range [0, height]</param>
+        /// <param name="width">The width of the cursor data, in pixels.</param>
+        /// <param name="height">The height of the cursor data, in pixels.</param>
+        /// <param name="data">
+        /// A byte array representing the cursor image,
+        /// laid out as a contiguous array of BGRA pixels.
+        /// </param>
 
         public MouseCursor(int hotx, int hoty, int width, int height, byte[] data)
         {
@@ -59,22 +83,41 @@ namespace OpenTK
             _frames.Add(frame);
         }
 
+
+        /// <summary>
+        /// Adds a frame to this cursor
+        /// </summary>
+        /// <param name="frame"></param>
         public void AddFrame(MouseCursorFrame frame)
         {
             _frames.Add(frame);
         }
 
+        #region IEnumerator<MouseCursorFrame>
 
+        /// <summary>
+        /// Returns an enumerator for the frames
+        /// </summary>
         public IEnumerator<MouseCursorFrame> GetEnumerator()
         {
             return _frames.GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator for the frames
+        /// </summary>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _frames.GetEnumerator();
         }
 
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets an empty (invisible) mouse cursor.
+        /// </summary>
         public static MouseCursor Empty
         {
             get
@@ -83,6 +126,9 @@ namespace OpenTK
             }
         }
 
+        /// <summary>
+        /// Gets the default mouse cursor for this platform.
+        /// </summary>
         public static MouseCursor Default
         {
             get
@@ -91,6 +137,9 @@ namespace OpenTK
             }
         }
 
+        /// <summary>
+        /// Gets the default frame (first frame) from this cursor
+        /// </summary>
         public MouseCursorFrame DefaultFrame
         {
             get
@@ -108,6 +157,8 @@ namespace OpenTK
         {
             get { return _frames.Count; }
         }
+
+        #endregion
     }
 
 }
