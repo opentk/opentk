@@ -100,6 +100,14 @@ namespace OpenTK
                 return Default.DefaultFrame;
             }
         }
+
+        /// <summary>
+        /// Returns the number of frames in this Cursor
+        /// </summary>
+        public int NumFrames
+        {
+            get { return _frames.Count; }
+        }
     }
 
 }
