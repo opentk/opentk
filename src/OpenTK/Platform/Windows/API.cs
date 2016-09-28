@@ -1193,6 +1193,48 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll")]
         public static extern HCURSOR SetCursor(HCURSOR hCursor);
 
+        public static IntPtr SetClassLong(HWND hWnd, int nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size > 4)
+                return SetClassLongPtr64(hWnd, nIndex, dwNewLong);
+            else
+                return new IntPtr(SetClassLongPtr32(hWnd, nIndex, unchecked((uint)dwNewLong.ToInt32())));
+        }
+
+        [DllImport("user32.dll", EntryPoint = "SetClassLong")]
+        public static extern uint SetClassLongPtr32(HWND hWnd, int nIndex, uint dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
+        public static extern IntPtr SetClassLongPtr64(HWND hWnd, int nIndex, IntPtr dwNewLong);
+
+
+        /// <summary>
+        /// Creates an icon or cursor from resource bits describing the icon.
+        /// </summary>
+        /// <param name="presbits">
+        /// The buffer containing the icon or cursor resource bits. These bits are typically loaded by calls to the
+        /// LookupIconIdFromDirectory, LookupIconIdFromDirectoryEx, and LoadResource functions.
+        /// </param>
+        /// <param name="dwResSize">
+        /// The size, in bytes, of the set of bits pointed to by the presbits parameter.
+        /// </param>
+        /// <param name="fIcon">
+        /// Indicates whether an icon or a cursor is to be created. If this parameter is true, an icon is to be created. If it is false, a 
+        /// cursor is to be created.
+        /// </param>
+        /// <param name="dwVer">
+        /// The version number of the icon or cursor format for the resource bits pointed to by the presbits parameter. The value 
+        /// must be greater than or equal to 0x00020000 and less than or equal to 0x00030000. This parameter is generally set to 
+        /// 0x00030000.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, the return value is a handle to the icon or cursor.
+        /// If the function fails, the return value is NULL. To get extended error information, call GetLastError.
+        /// </returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr CreateIconFromResource(byte[] presbits, int dwResSize, bool fIcon, uint dwVer);
+
+
         /// <summary>
         /// Retrieves a handle to the current cursor.
         /// </summary>
@@ -1906,7 +1948,13 @@ namespace OpenTK.Platform.Windows
             /// tablets.
             /// </summary>
             internal const int GMMP_USE_HIGH_RESOLUTION_POINTS = 2;
-        }
+
+
+            /// <summary>
+            /// Replaces a handle to the cursor associated with the class.
+            /// </summary>
+            internal const int GCL_HCURSOR = -12;
+    }
 
         #endregion
 

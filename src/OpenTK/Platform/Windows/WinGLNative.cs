@@ -1010,6 +1010,96 @@ namespace OpenTK.Platform.Windows
                     Marshal.GetLastWin32Error()));
         }
 
+        /// <summary>
+        /// Creates an in memory .ani file for the given cursor
+        /// </summary>
+        /// <param name="cursor"></param>
+        /// <returns></returns>
+        byte[] CreateAniFromCursor(MouseCursor cursor)
+        {
+            var frame = cursor.DefaultFrame;
+            var width = frame.Width;
+            var height = frame.Height;
+            var data = frame.Data;
+            var hotX = frame.X;
+            var hotY = frame.Y;
+
+            // Create .ani from given cur
+            using (var ms = new MemoryStream())
+            {
+                var bw = new BinaryWriter(ms);
+
+                const int BMP_HEADERSIZE = 40;
+                const int ICO_HEADERSIZE = 22;
+                int maskScanlineSize = ((width + 31) >> 3) & ~3;
+                int maskSize = height * maskScanlineSize;
+                int bmpSize = data.Length + BMP_HEADERSIZE + maskSize;
+                int icoSize = bmpSize + ICO_HEADERSIZE;
+
+                bw.Write(new char[] { 'R', 'I', 'F', 'F' });
+                bw.Write((uint)0); // size of the RIFF
+                bw.Write(new char[] { 'A', 'C', 'O', 'N' });
+                bw.Write(new char[] { 'a', 'n', 'i', 'h' });
+                bw.Write((uint)36); // size of chunk
+                bw.Write((uint)36); // size of header
+                bw.Write((uint)1);  // # frames
+                bw.Write((uint)5);  // # steps
+                bw.Write((uint)0); // cx (mbz)
+                bw.Write((uint)0); // cy (mbz)
+                bw.Write((uint)0); // bit count (mbz)
+                bw.Write((uint)0);  // # planes (mbz)
+                bw.Write((uint)15);  // rate
+                bw.Write((uint)1);  // flags (1 = ico/cur data, 2 = contains seq)
+
+                bw.Write(new char[] { 'L', 'I', 'S', 'T' });
+                bw.Write((uint)icoSize + 8); // sizeof list
+                bw.Write(new char[] { 'f', 'r', 'a', 'm' });
+
+                bw.Write(new char[] { 'i', 'c', 'o', 'n' });
+                bw.Write((uint)icoSize);
+                // icon data here
+
+                // create ICO
+                bw.Write((ushort)0);
+                bw.Write((ushort)2); // type = cur (ico for testing)
+                bw.Write((ushort)1); // #images
+                bw.Write((byte)width); // width
+                bw.Write((byte)height); // height
+                bw.Write((byte)0); // #colors (for paletted image)
+                bw.Write((byte)0); // reserved
+                bw.Write((ushort)hotX); // hot X
+                bw.Write((ushort)hotY); // hot y
+                bw.Write((uint)bmpSize); // size of image
+                bw.Write((uint)22); // offset to data
+
+                bw.Write((uint)BMP_HEADERSIZE); // sizeof(BITMAPINFOHEADER)
+                bw.Write((uint)width);
+                bw.Write((uint)(height * 2));
+                bw.Write((ushort)1); // # planes
+                bw.Write((ushort)32); // bitcount
+                bw.Write((uint)0); // compression
+                bw.Write((uint)0); // size (may be 0)
+                bw.Write((uint)0); // xPels
+                bw.Write((uint)0); // yPels
+                bw.Write((uint)0); // colors used
+                bw.Write((uint)0); // colors important
+                                   // image data follows
+
+                for (int y = height - 1; y >= 0; y--)
+                    bw.Write(data, width * y * 4, width * 4);
+
+                for (int y = height - 1; y >= 0; y--)
+                    for (int x = 0; x < maskScanlineSize; x++)
+                        bw.Write((byte)0);
+
+                ms.Position = 4;
+                bw.Write((uint)(ms.Length - 8));
+                bw.Flush();
+
+                return ms.ToArray();
+            }
+        }
+
         #endregion
 
         #region INativeWindow Members
@@ -1201,61 +1291,9 @@ namespace OpenTK.Platform.Windows
                     }
                     else
                     {
-                        var frame = value.DefaultFrame;
-                        var stride = frame.Width *
-                            (Bitmap.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
-
-                        Bitmap bmp;
-                        unsafe
-                        {
-                            fixed (byte* pixels = frame.Data)
-                            {
-                                bmp = new Bitmap(frame.Width, frame.Height, stride,
-                                    PixelFormat.Format32bppArgb,
-                                    new IntPtr(pixels));
-                            }
-                        }
-                        using (bmp)
-                        {
-                            var iconInfo = new IconInfo();
-                            var bmpIcon = bmp.GetHicon();
-                            var success = Functions.GetIconInfo(bmpIcon, out iconInfo);
-
-                            try
-                            {
-                                if (!success)
-                                {
-                                    throw new System.ComponentModel.Win32Exception();
-                                }
-
-                                iconInfo.xHotspot = frame.X;
-                                iconInfo.yHotspot = frame.Y;
-                                iconInfo.fIcon = false;
-
-                                var icon = Functions.CreateIconIndirect(ref iconInfo);
-                                if (icon == IntPtr.Zero)
-                                {
-                                    throw new System.ComponentModel.Win32Exception();
-                                }
-
-                                // Need to destroy this icon when/if it's replaced by another cursor.
-                                cursor = value;
-                                cursor_handle = icon;
-                                Functions.SetCursor(icon);
-                            }
-                            finally
-                            {
-                                if (success)
-                                {
-                                    // GetIconInfo creates bitmaps for the hbmMask and hbmColor members of ICONINFO. 
-                                    // The calling application must manage these bitmaps and delete them when they are no longer necessary.
-                                    Functions.DeleteObject(iconInfo.hbmColor);
-                                    Functions.DeleteObject(iconInfo.hbmMask);
-                                }
-
-                                Functions.DestroyIcon(bmpIcon);
-                            }
-                        }
+                        var data = CreateAniFromCursor(value);
+                        var ani = Functions.CreateIconFromResource(data, data.Length, false, 0x00030000);
+                        Functions.SetClassLong(window.Handle, Constants.GCL_HCURSOR, ani);
                     }
                     
                     Debug.Assert(oldCursorHandle != IntPtr.Zero);
