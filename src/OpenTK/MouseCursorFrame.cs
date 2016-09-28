@@ -48,7 +48,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Initializes a new <see cref="MouseCursor"/> instance from a
+        /// Initializes a new <see cref="MouseCursorFrame"/> instance from a
         /// contiguous array of BGRA pixels.
         /// Each pixel is composed of 4 bytes, representing B, G, R and A values,
         /// respectively. For correct antialiasing of translucent cursors,
@@ -78,7 +78,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Initializes a new <see cref="MouseCursor"/> instance from a
+        /// Initializes a new <see cref="MouseCursorFrame"/> instance from a
         /// contiguous array of BGRA pixels.
         /// Each pixel is composed of 4 bytes, representing B, G, R and A values,
         /// respectively. For correct antialiasing of translucent cursors,
