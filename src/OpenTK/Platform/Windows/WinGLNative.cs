@@ -1017,85 +1017,103 @@ namespace OpenTK.Platform.Windows
         /// <returns></returns>
         byte[] CreateAniFromCursor(MouseCursor cursor)
         {
-            var frame = cursor.DefaultFrame;
-            var width = frame.Width;
-            var height = frame.Height;
-            var data = frame.Data;
-            var hotX = frame.X;
-            var hotY = frame.Y;
-
-            // Create .ani from given cur
             using (var ms = new MemoryStream())
             {
                 var bw = new BinaryWriter(ms);
-
-                const int BMP_HEADERSIZE = 40;
-                const int ICO_HEADERSIZE = 22;
-                int maskScanlineSize = ((width + 31) >> 3) & ~3;
-                int maskSize = height * maskScanlineSize;
-                int bmpSize = data.Length + BMP_HEADERSIZE + maskSize;
-                int icoSize = bmpSize + ICO_HEADERSIZE;
+                var numFrames = cursor.NumFrames;
+                var numUniqueFrames = numFrames;
 
                 bw.Write(new char[] { 'R', 'I', 'F', 'F' });
-                bw.Write((uint)0); // size of the RIFF
+                bw.Write((uint)0); // size of the RIFF (patched after writing out data)
                 bw.Write(new char[] { 'A', 'C', 'O', 'N' });
                 bw.Write(new char[] { 'a', 'n', 'i', 'h' });
                 bw.Write((uint)36); // size of chunk
                 bw.Write((uint)36); // size of header
-                bw.Write((uint)1);  // # frames
-                bw.Write((uint)5);  // # steps
+                bw.Write((uint)numUniqueFrames); // # frames
+                bw.Write((uint)numFrames);       // # steps
                 bw.Write((uint)0); // cx (mbz)
                 bw.Write((uint)0); // cy (mbz)
                 bw.Write((uint)0); // bit count (mbz)
                 bw.Write((uint)0);  // # planes (mbz)
                 bw.Write((uint)15);  // rate
-                bw.Write((uint)1);  // flags (1 = ico/cur data, 2 = contains seq)
+                bw.Write((uint)3);  // flags (1 = ico/cur data, 2 = contains seq)
 
                 bw.Write(new char[] { 'L', 'I', 'S', 'T' });
-                bw.Write((uint)icoSize + 8); // sizeof list
+                bw.Write((uint)0); // sizeof this list (all icons; patched after writing)
                 bw.Write(new char[] { 'f', 'r', 'a', 'm' });
 
-                bw.Write(new char[] { 'i', 'c', 'o', 'n' });
-                bw.Write((uint)icoSize);
-                // icon data here
+                int sizeOfFrames = 4;
+                foreach (var frame in cursor)
+                {
+                    // reflect into internals
+                    var width = frame.Width;
+                    var height = frame.Height;
+                    var data = frame.Data;
+                    var hotX = frame.X;
+                    var hotY = frame.Y;
 
-                // create ICO
-                bw.Write((ushort)0);
-                bw.Write((ushort)2); // type = cur (ico for testing)
-                bw.Write((ushort)1); // #images
-                bw.Write((byte)width); // width
-                bw.Write((byte)height); // height
-                bw.Write((byte)0); // #colors (for paletted image)
-                bw.Write((byte)0); // reserved
-                bw.Write((ushort)hotX); // hot X
-                bw.Write((ushort)hotY); // hot y
-                bw.Write((uint)bmpSize); // size of image
-                bw.Write((uint)22); // offset to data
+                    const int BMP_HEADERSIZE = 40;
+                    const int ICO_HEADERSIZE = 22;
+                    int maskScanlineSize = ((width + 31) >> 3) & ~3;
+                    int maskSize = height * maskScanlineSize;
+                    int bmpSize = data.Length + BMP_HEADERSIZE + maskSize;
+                    int icoSize = bmpSize + ICO_HEADERSIZE;
+                    sizeOfFrames += icoSize + 8;
 
-                bw.Write((uint)BMP_HEADERSIZE); // sizeof(BITMAPINFOHEADER)
-                bw.Write((uint)width);
-                bw.Write((uint)(height * 2));
-                bw.Write((ushort)1); // # planes
-                bw.Write((ushort)32); // bitcount
-                bw.Write((uint)0); // compression
-                bw.Write((uint)0); // size (may be 0)
-                bw.Write((uint)0); // xPels
-                bw.Write((uint)0); // yPels
-                bw.Write((uint)0); // colors used
-                bw.Write((uint)0); // colors important
-                                   // image data follows
+                    bw.Write(new char[] { 'i', 'c', 'o', 'n' });
+                    bw.Write((uint)icoSize);
+                    // icon data here
 
-                for (int y = height - 1; y >= 0; y--)
-                    bw.Write(data, width * y * 4, width * 4);
+                    var _dbg = ms.Position;
+                    // create ICO
+                    bw.Write((ushort)0);
+                    bw.Write((ushort)2); // type = cur (ico for testing)
+                    bw.Write((ushort)1); // #images
+                    bw.Write((byte)width); // width
+                    bw.Write((byte)height); // height
+                    bw.Write((byte)0); // #colors (for paletted image)
+                    bw.Write((byte)0); // reserved
+                    bw.Write((ushort)hotX); // hot X
+                    bw.Write((ushort)hotY); // hot y
+                    bw.Write((uint)bmpSize); // size of image
+                    bw.Write((uint)22); // offset to data
 
-                for (int y = height - 1; y >= 0; y--)
-                    for (int x = 0; x < maskScanlineSize; x++)
-                        bw.Write((byte)0);
+                    bw.Write((uint)BMP_HEADERSIZE); // sizeof(BITMAPINFOHEADER)
+                    bw.Write((uint)width);
+                    bw.Write((uint)(height * 2));
+                    bw.Write((ushort)1); // # planes
+                    bw.Write((ushort)32); // bitcount
+                    bw.Write((uint)0); // compression
+                    bw.Write((uint)0); // size (may be 0)
+                    bw.Write((uint)0); // xPels
+                    bw.Write((uint)0); // yPels
+                    bw.Write((uint)0); // colors used
+                    bw.Write((uint)0); // colors important
+                                       // image data follows
 
+                    for (int y = height - 1; y >= 0; y--)
+                        bw.Write(data, width * y * 4, width * 4);
+
+                    for (int y = height - 1; y >= 0; y--)
+                        for (int x = 0; x < maskScanlineSize; x++)
+                            bw.Write((byte)0);
+                }
+
+                // write seq list
+                bw.Write(new char[] { 's', 'e', 'q', ' ' });
+                bw.Write((uint)(numFrames * 4));
+                for (int i = 0; i < numFrames; i++)
+                    bw.Write((uint)i);
+
+                // patch RIFF length
                 ms.Position = 4;
                 bw.Write((uint)(ms.Length - 8));
-                bw.Flush();
 
+                // patch frame list length
+                ms.Position = 60;
+                bw.Write((uint)sizeOfFrames);
+
+                bw.Flush();
                 return ms.ToArray();
             }
         }
