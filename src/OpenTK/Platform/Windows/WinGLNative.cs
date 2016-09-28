@@ -1046,11 +1046,11 @@ namespace OpenTK.Platform.Windows
                 foreach (var frame in cursor)
                 {
                     // reflect into internals
-                    var width = frame.Width;
-                    var height = frame.Height;
-                    var data = frame.Data;
-                    var hotX = frame.X;
-                    var hotY = frame.Y;
+                    var width = frame.frame.Width;
+                    var height = frame.frame.Height;
+                    var data = frame.frame.Data;
+                    var hotX = frame.frame.X;
+                    var hotY = frame.frame.Y;
 
                     const int BMP_HEADERSIZE = 40;
                     const int ICO_HEADERSIZE = 22;
