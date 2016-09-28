@@ -1035,7 +1035,7 @@ namespace OpenTK.Platform.Windows
                 bw.Write((uint)0); // cy (mbz)
                 bw.Write((uint)0); // bit count (mbz)
                 bw.Write((uint)0);  // # planes (mbz)
-                bw.Write((uint)15);  // rate
+                bw.Write((uint)0);  // rate
                 bw.Write((uint)3);  // flags (1 = ico/cur data, 2 = contains seq)
 
                 bw.Write(new char[] { 'L', 'I', 'S', 'T' });
@@ -1104,6 +1104,12 @@ namespace OpenTK.Platform.Windows
                 bw.Write((uint)(numFrames * 4));
                 for (int i = 0; i < numFrames; i++)
                     bw.Write((uint)i);
+
+                // write rate chunk
+                bw.Write(new char[] { 'r', 'a', 't', 'e' });
+                bw.Write((uint)(numFrames * 4));
+                foreach (var frame in cursor)
+                    bw.Write((uint)Math.Round(frame.duration * 60.0));
 
                 // patch RIFF length
                 ms.Position = 4;
@@ -1303,20 +1309,21 @@ namespace OpenTK.Platform.Windows
 
                     if (value == MouseCursor.Default)
                     {
-                        cursor = value;
                         cursor_handle = Functions.LoadCursor(CursorName.Arrow);
-                        Functions.SetCursor(cursor_handle);
                     }
                     else
                     {
                         var data = CreateAniFromCursor(value);
-                        var ani = Functions.CreateIconFromResource(data, data.Length, false, 0x00030000);
-                        Functions.SetClassLong(window.Handle, Constants.GCL_HCURSOR, ani);
+                        cursor_handle = Functions.CreateIconFromResource(data, data.Length, false, 0x00030000);
                     }
-                    
+                    Functions.SetClassLong(window.Handle, Constants.GCL_HCURSOR, cursor_handle);
+                    Functions.SetCursor(cursor_handle);
+
                     Debug.Assert(oldCursorHandle != IntPtr.Zero);
                     Debug.Assert(oldCursorHandle != cursor_handle);
                     Debug.Assert(oldCursor != cursor);
+
+                    cursor = value;
 
                     // If we've replaced a custom (non-default) cursor we need to free the handle.
                     if (oldCursor != MouseCursor.Default)
