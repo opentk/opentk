@@ -1198,11 +1198,11 @@ namespace OpenTK.Platform.Windows
             if (IntPtr.Size > 4)
                 return SetClassLongPtr64(hWnd, nIndex, dwNewLong);
             else
-                return new IntPtr(SetClassLongPtr32(hWnd, nIndex, unchecked((uint)dwNewLong.ToInt32())));
+                return (IntPtr)unchecked((int)SetClassLongPtr32(hWnd, nIndex, dwNewLong.ToInt32()));
         }
 
         [DllImport("user32.dll", EntryPoint = "SetClassLong")]
-        public static extern uint SetClassLongPtr32(HWND hWnd, int nIndex, uint dwNewLong);
+        public static extern uint SetClassLongPtr32(HWND hWnd, int nIndex, int dwNewLong);
 
         [DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
         public static extern IntPtr SetClassLongPtr64(HWND hWnd, int nIndex, IntPtr dwNewLong);
