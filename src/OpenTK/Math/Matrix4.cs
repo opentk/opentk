@@ -1157,7 +1157,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="q">the quaternion</param>
         /// <returns>A rotation matrix</returns>
-        [Obsolete("Use CreateRotation instead.")]
+        [Obsolete("Use CreateFromQuaternion instead.")]
         public static Matrix4 Rotate(Quaternion q)
         {
             return CreateFromQuaternion(q);
