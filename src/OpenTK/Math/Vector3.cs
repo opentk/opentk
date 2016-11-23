@@ -1317,7 +1317,7 @@ namespace OpenTK
         /// <param name="height">The height of the viewport.</param>
         /// <param name="minZ">The minimum depth of the viewport.</param>
         /// <param name="maxZ">The maximum depth of the viewport.</param>
-        /// <param name="worldViewProjection">The inverse of the world-view-projection matrix.</param>
+        /// <param name="inverseWorldViewProjection">The inverse of the world-view-projection matrix.</param>
         /// <returns>The vector in object space.</returns>
         /// <remarks>
         /// To project from normalized device coordinates (NDC) use the following parameters:
