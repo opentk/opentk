@@ -13,7 +13,7 @@ The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES a
 
 Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your C# application. Integrate it into your existing user interface or use it standalone without any external dependencies.
 
-Project website: http://www.opentk.com/
+Project website: https://opentk.github.io/
 
 Official git repository: https://github.com/opentk/opentk
 
