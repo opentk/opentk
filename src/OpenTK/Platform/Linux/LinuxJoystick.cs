@@ -52,8 +52,8 @@ namespace OpenTK.Platform.Linux
 
         public readonly Dictionary<EvdevAxis, AxisInfo> AxisMap =
             new Dictionary<EvdevAxis, AxisInfo>();
-        public readonly Dictionary<EvdevButton, JoystickButton> ButtonMap =
-            new Dictionary<EvdevButton, JoystickButton>();
+        public readonly Dictionary<EvdevButton, int> ButtonMap =
+            new Dictionary<EvdevButton, int>();
     }
 
     sealed class LinuxJoystick : IJoystickDriver2
@@ -258,7 +258,7 @@ namespace OpenTK.Platform.Linux
             {
                 if (TestBit(keybit, (int)button))
                 {
-                    stick.ButtonMap.Add(button, (JoystickButton)buttons++);
+                    stick.ButtonMap.Add(button, buttons++);
                 }
             }
         }
@@ -436,7 +436,7 @@ namespace OpenTK.Platform.Linux
 
                             case EvdevType.KEY:
                                 {
-                                    JoystickButton button;
+                                    int button;
                                     if (js.ButtonMap.TryGetValue((EvdevButton)e->Code, out button))
                                     {
                                         js.State.SetButton(button, e->Value != 0);

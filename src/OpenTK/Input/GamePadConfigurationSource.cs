@@ -34,7 +34,7 @@ namespace OpenTK.Input
     struct GamePadConfigurationSource
     {
         ConfigurationType map_type;
-        JoystickButton? map_button;
+        int? map_button;
         JoystickAxis? map_axis;
         JoystickHat? map_hat;
         HatPosition? map_hat_position;
@@ -46,7 +46,7 @@ namespace OpenTK.Input
             Axis = axis;
         }
 
-        public GamePadConfigurationSource(JoystickButton button)
+        public GamePadConfigurationSource(int button)
             : this()
         {
             Type = ConfigurationType.Button;
@@ -73,7 +73,7 @@ namespace OpenTK.Input
             private set { map_axis = value; }
         }
 
-        public JoystickButton Button
+        public int Button
         {
             get { return map_button.Value; }
             private set { map_button = value; }

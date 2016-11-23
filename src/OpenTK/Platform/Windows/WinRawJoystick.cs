@@ -55,8 +55,8 @@ namespace OpenTK.Platform.Windows
 
             readonly Dictionary<int, JoystickAxis> axes =
                 new Dictionary<int,JoystickAxis>();
-            readonly Dictionary<int, JoystickButton> buttons =
-                new Dictionary<int, JoystickButton>();
+            readonly Dictionary<int, int> buttons =
+                new Dictionary<int, int>();
             readonly Dictionary<int, JoystickHat> hats =
                 new Dictionary<int, JoystickHat>();
 
@@ -90,7 +90,7 @@ namespace OpenTK.Platform.Windows
 
             public void SetButton(short collection, HIDPage page, short usage, bool value)
             {
-                JoystickButton button = GetButton(collection, page, usage);
+                int button = GetButton(collection, page, usage);
                 State.SetButton(button, value);
             }
 
@@ -151,12 +151,12 @@ namespace OpenTK.Platform.Windows
                 return axes[key];
             }
 
-            JoystickButton GetButton(short collection, HIDPage page, short usage)
+            int GetButton(short collection, HIDPage page, short usage)
             {
                 int key = MakeKey(collection, page, usage);
                 if (!buttons.ContainsKey(key))
                 {
-                    buttons.Add(key, JoystickButton.Button0 + buttons.Count);
+                    buttons.Add(key, buttons.Count);
                 }
                 return buttons[key];
             }
@@ -415,8 +415,8 @@ namespace OpenTK.Platform.Windows
 
             for (int i = 0; i < stick.ButtonCaps.Count; i++)
             {
-                short* usage_list = stackalloc short[(int)JoystickButton.Last + 1];
-                int usage_length = (int)JoystickButton.Last;
+                short* usage_list = stackalloc short[64];
+                int usage_length = 64;
                 HIDPage page = stick.ButtonCaps[i].UsagePage;
                 short collection = stick.ButtonCaps[i].LinkCollection;
 
@@ -591,7 +591,7 @@ namespace OpenTK.Platform.Windows
                                     for (short usage = stick.ButtonCaps[i].Range.UsageMin; usage <= stick.ButtonCaps[i].Range.UsageMax; usage++)
                                     {
                                         Debug.Print("Found button {0} ({1} / {2})",
-                                            JoystickButton.Button0 + stick.GetCapabilities().ButtonCount,
+                                            stick.GetCapabilities().ButtonCount,
                                             page, usage);
                                         stick.SetButton(collection, page, usage, false);
                                     }
@@ -599,7 +599,7 @@ namespace OpenTK.Platform.Windows
                                 else
                                 {
                                     Debug.Print("Found button {0} ({1} / {2})",
-                                        JoystickButton.Button0 + stick.GetCapabilities().ButtonCount,
+                                        stick.GetCapabilities().ButtonCount,
                                         page, stick.ButtonCaps[i].NotRange.Usage);
                                     stick.SetButton(collection, page, stick.ButtonCaps[i].NotRange.Usage, false);
                                 }
