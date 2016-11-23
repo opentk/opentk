@@ -177,7 +177,6 @@
     <Compile Include="Input\IMouseDriver2.cs" />
     <Compile Include="Input\Joystick.cs" />
     <Compile Include="Input\JoystickAxis.cs" />
-    <Compile Include="Input\JoystickButton.cs" />
     <Compile Include="Input\JoystickCapabilities.cs" />
     <Compile Include="Input\JoystickState.cs" />
     <Compile Include="InteropHelper.cs" />
@@ -894,8 +893,5 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Platform\Linux\" />
-    <Folder Include="Platform\Linux\Bindings\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

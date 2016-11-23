@@ -41,13 +41,13 @@ namespace OpenTK.Input
         // If we ever add more values to JoystickAxis or JoystickButton
         // then we'll need to increase these limits.
         internal const int MaxAxes = (int)JoystickAxis.Last + 1;
-        internal const int MaxButtons = (int)JoystickButton.Last + 1;
+        internal const int MaxButtons = 64;
         internal const int MaxHats = (int)JoystickHat.Last + 1;
 
         const float ConversionFactor = 1.0f / (short.MaxValue + 0.5f);
 
         int packet_number;
-        int buttons;
+        long buttons;
         unsafe fixed short axes[MaxAxes];
         JoystickHatState hat0;
         JoystickHatState hat1;
@@ -72,13 +72,13 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets the current <see cref="ButtonState"/> of the specified <see cref="JoystickButton"/>.
+        /// Gets the current <see cref="ButtonState"/> of the specified button.
         /// </summary>
         /// <returns><see cref="ButtonState.Pressed"/> if the specified button is pressed; otherwise, <see cref="ButtonState.Released"/>.</returns>
-        /// <param name="button">The <see cref="JoystickButton"/> to query.</param>
-        public ButtonState GetButton(JoystickButton button)
+        /// <param name="button">The button to query.</param>
+        public ButtonState GetButton(int button)
         {
-            return (buttons & (1 << (int)button)) != 0 ? ButtonState.Pressed : ButtonState.Released;
+            return (buttons & ((long)1 << button)) != 0 ? ButtonState.Pressed : ButtonState.Released;
         }
 
         /// <summary>
@@ -104,23 +104,23 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a value indicating whether the specified <see cref="JoystickButton"/> is currently pressed.
+        /// Gets a value indicating whether the specified button is currently pressed.
         /// </summary>
         /// <returns>true if the specified button is pressed; otherwise, false.</returns>
-        /// <param name="button">The <see cref="JoystickButton"/> to query.</param>
-        public bool IsButtonDown(JoystickButton button)
+        /// <param name="button">The button to query.</param>
+        public bool IsButtonDown(int button)
         {
-            return (buttons & (1 << (int)button)) != 0;
+            return (buttons & ((long)1 << button)) != 0;
         }
 
         /// <summary>
-        /// Gets a value indicating whether the specified <see cref="JoystickButton"/> is currently released.
+        /// Gets a value indicating whether the specified button is currently released.
         /// </summary>
         /// <returns>true if the specified button is released; otherwise, false.</returns>
-        /// <param name="button">The <see cref="JoystickButton"/> to query.</param>
-        public bool IsButtonUp(JoystickButton button)
+        /// <param name="button">The button to query.</param>
+        public bool IsButtonUp(int button)
         {
-            return (buttons & (1 << (int)button)) == 0;
+            return (buttons & ((long)1 << button)) == 0;
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace OpenTK.Input
             return String.Format(
                 "{{Axes:{0}; Buttons: {1}; Hat: {2}; IsConnected: {3}}}",
                 sb.ToString(),
-                Convert.ToString((int)buttons, 2).PadLeft(16, '0'),
+                Convert.ToString(buttons, 2).PadLeft(16, '0'),
                 hat0,
                 IsConnected);
         }
@@ -241,19 +241,18 @@ namespace OpenTK.Input
             buttons = 0;
         }
 
-        internal void SetButton(JoystickButton button, bool value)
+        internal void SetButton(int button, bool value)
         {
-            int index = (int)button;
-            if (index < 0 || index >= MaxButtons)
+            if (button < 0 || button >= MaxButtons)
                 throw new ArgumentOutOfRangeException("button");
 
             if (value)
             {
-                buttons |= 1 << index;
+                buttons |= (long)1 << button;
             }
             else
             {
-                buttons &= ~(1 << index);
+                buttons &= ~((long)1 << button);
             }
         }
 

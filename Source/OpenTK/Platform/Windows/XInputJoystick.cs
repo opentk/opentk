@@ -65,17 +65,17 @@ namespace OpenTK.Platform.Windows
                 state.SetAxis(JoystickAxis.Axis4, (short)Math.Min(short.MaxValue, -xstate.GamePad.ThumbRY));
                 state.SetAxis(JoystickAxis.Axis5, (short)Common.HidHelper.ScaleValue(xstate.GamePad.RightTrigger, 0, byte.MaxValue, short.MinValue, short.MaxValue));
 
-                state.SetButton(JoystickButton.Button0, (xstate.GamePad.Buttons & XInputButtons.A) != 0);
-                state.SetButton(JoystickButton.Button1, (xstate.GamePad.Buttons & XInputButtons.B) != 0);
-                state.SetButton(JoystickButton.Button2, (xstate.GamePad.Buttons & XInputButtons.X) != 0);
-                state.SetButton(JoystickButton.Button3, (xstate.GamePad.Buttons & XInputButtons.Y) != 0);
-                state.SetButton(JoystickButton.Button4, (xstate.GamePad.Buttons & XInputButtons.LeftShoulder) != 0);
-                state.SetButton(JoystickButton.Button5, (xstate.GamePad.Buttons & XInputButtons.RightShoulder) != 0);
-                state.SetButton(JoystickButton.Button6, (xstate.GamePad.Buttons & XInputButtons.Back) != 0);
-                state.SetButton(JoystickButton.Button7, (xstate.GamePad.Buttons & XInputButtons.Start) != 0);
-                state.SetButton(JoystickButton.Button8, (xstate.GamePad.Buttons & XInputButtons.LeftThumb) != 0);
-                state.SetButton(JoystickButton.Button9, (xstate.GamePad.Buttons & XInputButtons.RightThumb) != 0);
-                state.SetButton(JoystickButton.Button10, (xstate.GamePad.Buttons & XInputButtons.Guide) != 0);
+                state.SetButton(0, (xstate.GamePad.Buttons & XInputButtons.A) != 0);
+                state.SetButton(1, (xstate.GamePad.Buttons & XInputButtons.B) != 0);
+                state.SetButton(2, (xstate.GamePad.Buttons & XInputButtons.X) != 0);
+                state.SetButton(3, (xstate.GamePad.Buttons & XInputButtons.Y) != 0);
+                state.SetButton(4, (xstate.GamePad.Buttons & XInputButtons.LeftShoulder) != 0);
+                state.SetButton(5, (xstate.GamePad.Buttons & XInputButtons.RightShoulder) != 0);
+                state.SetButton(6, (xstate.GamePad.Buttons & XInputButtons.Back) != 0);
+                state.SetButton(7, (xstate.GamePad.Buttons & XInputButtons.Start) != 0);
+                state.SetButton(8, (xstate.GamePad.Buttons & XInputButtons.LeftThumb) != 0);
+                state.SetButton(9, (xstate.GamePad.Buttons & XInputButtons.RightThumb) != 0);
+                state.SetButton(10, (xstate.GamePad.Buttons & XInputButtons.Guide) != 0);
 
                 state.SetHat(JoystickHat.Hat0, new JoystickHatState(TranslateHat(xstate.GamePad.Buttons)));
             }

@@ -99,7 +99,7 @@ namespace OpenTK.Platform
                         case ConfigurationType.Button:
                             {
                                 // JoystickButton -> Buttons/GamePadAxes mapping
-                                JoystickButton source_button = map.Source.Button;
+                                int source_button = map.Source.Button;
                                 bool pressed = joy.GetButton(source_button) == ButtonState.Pressed;
 
                                 switch (map.Target.Type)
