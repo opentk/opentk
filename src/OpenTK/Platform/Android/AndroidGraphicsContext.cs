@@ -57,7 +57,7 @@ namespace OpenTK.Platform.Android {
 
         public bool HasSurface
         {
-            get { return eglWindowInfo.Surface != IntPtr.Zero; }
+            get { return eglWindowInfo != null && eglWindowInfo.Surface != IntPtr.Zero; }
         }
 
         public ISurfaceHolder Holder {
