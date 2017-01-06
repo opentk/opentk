@@ -45,9 +45,12 @@ namespace OpenTK.Platform.Linux
     {
         internal const string lib = "libinput";
 
-        [DllImport(lib, EntryPoint = "libinput_udev_create_for_seat", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(lib, EntryPoint = "libinput_udev_create_context", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CreateContext(InputInterface @interface,
-            IntPtr user_data, IntPtr udev, string seat_id);
+            IntPtr user_data, IntPtr udev);
+
+        [DllImport(lib, EntryPoint = "libinput_udev_assign_seat", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int AssignSeat(IntPtr @libinput, string seat_id);
 
         [DllImport(lib, EntryPoint = "libinput_destroy", CallingConvention = CallingConvention.Cdecl)]
         public static extern void DestroyContext(IntPtr libinput);
