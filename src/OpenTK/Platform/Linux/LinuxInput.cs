@@ -314,7 +314,7 @@ namespace OpenTK.Platform.Linux
             }
             Debug.Print("[Input] Udev.New() = {0:x}", udev);
 
-            input_context = LibInput.CreateContext(input_interface, IntPtr.Zero, udev, "seat0");
+            input_context = LibInput.CreateContext(input_interface, IntPtr.Zero, udev);
             if (input_context == IntPtr.Zero)
             {
                 Debug.Print("[Input] LibInput.CreateContext({0:x}) failed.", udev);
@@ -322,6 +322,16 @@ namespace OpenTK.Platform.Linux
                 return;
             }
             Debug.Print("[Input] LibInput.CreateContext({0:x}) = {1:x}", udev, input_context);
+
+            string seat_id = "seat0";
+            int seat_assignment = LibInput.AssignSeat(input_context, seat_id);
+            if (seat_assignment == -1)
+            {
+                Debug.Print("[Input] LibInput.AssignSeat({0:x}) = {1} failed.", input_context, seat_id);
+                Interlocked.Increment(ref exit);
+                return;
+            }
+            Debug.Print("[Input] LibInput.AssignSeat({0:x}) = {1}", input_context, seat_id);
 
             fd = LibInput.GetFD(input_context);
             if (fd < 0)
