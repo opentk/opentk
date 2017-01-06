@@ -280,12 +280,12 @@ namespace OpenTK.Platform.Linux
         public ButtonState ButtonState { get { return GetButtonState(@event); } }
         public bool HasAxis(PointerAxis axis) { return HasAxis(@event, axis) != 0; }
         public double AxisValue(PointerAxis axis) { return GetAxisValue(@event, axis); }
-        public Fixed24 DeltaX { get { return GetDX(@event); } }
-        public Fixed24 DeltaY { get { return GetDY(@event); } }
-        public Fixed24 X { get { return GetAbsX(@event); } }
-        public Fixed24 Y { get { return GetAbsY(@event); } }
-        public Fixed24 TransformedX(int width) { return GetAbsXTransformed(@event, width); }
-        public Fixed24 TransformedY(int height) { return GetAbsYTransformed(@event, height); }
+        public double DeltaX { get { return GetDX(@event); } }
+        public double DeltaY { get { return GetDY(@event); } }
+        public double X { get { return GetAbsX(@event); } }
+        public double Y { get { return GetAbsY(@event); } }
+        public double TransformedX(int width) { return GetAbsXTransformed(@event, width); }
+        public double TransformedY(int height) { return GetAbsYTransformed(@event, height); }
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_time", CallingConvention = CallingConvention.Cdecl)]
         static extern uint GetTime(IntPtr @event);
@@ -312,22 +312,22 @@ namespace OpenTK.Platform.Linux
         static extern double GetAxisValue(IntPtr @event, PointerAxis axis);
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_dx", CallingConvention = CallingConvention.Cdecl)]
-        static extern Fixed24 GetDX(IntPtr @event);
+        static extern double GetDX(IntPtr @event);
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_dy", CallingConvention = CallingConvention.Cdecl)]
-        static extern Fixed24 GetDY(IntPtr @event);
+        static extern double GetDY(IntPtr @event);
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_x", CallingConvention = CallingConvention.Cdecl)]
-        static extern Fixed24 GetAbsX(IntPtr @event);
+        static extern double GetAbsX(IntPtr @event);
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_y", CallingConvention = CallingConvention.Cdecl)]
-        static extern Fixed24 GetAbsY(IntPtr @event);
+        static extern double GetAbsY(IntPtr @event);
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_x_transformed", CallingConvention = CallingConvention.Cdecl)]
-        static extern Fixed24 GetAbsXTransformed(IntPtr @event, int width);
+        static extern double GetAbsXTransformed(IntPtr @event, int width);
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_y_transformed", CallingConvention = CallingConvention.Cdecl)]
-        static extern Fixed24 GetAbsYTransformed(IntPtr @event, int height);
+        static extern double GetAbsYTransformed(IntPtr @event, int height);
     }
 }
 
