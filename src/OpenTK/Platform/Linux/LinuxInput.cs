@@ -528,12 +528,12 @@ namespace OpenTK.Platform.Linux
             if (mouse != null)
             {
                 mouse.State.SetIsConnected(true);
-                mouse.State.Position = new Vector2(e.X, e.Y);
+                mouse.State.Position = new Vector2((float)e.X, (float)e.Y);
             }
 
             CursorPosition = new Vector2(
-                e.TransformedX(bounds.Width),
-                e.TransformedY(bounds.Height));
+                (float)e.TransformedX(bounds.Width),
+                (float)e.TransformedY(bounds.Height));
             UpdateCursor();
         }
 
