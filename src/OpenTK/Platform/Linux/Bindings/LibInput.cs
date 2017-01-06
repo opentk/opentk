@@ -278,8 +278,8 @@ namespace OpenTK.Platform.Linux
         public EvdevButton Button { get { return (EvdevButton)GetButton(@event); } }
         public uint ButtonCount { get { return GetButtonCount(@event); } }
         public ButtonState ButtonState { get { return GetButtonState(@event); } }
-        public PointerAxis Axis { get { return GetAxis(@event); } }
-        public Fixed24 AxisValue { get { return GetAxisValue(@event); } }
+        public bool HasAxis(PointerAxis axis) { return HasAxis(@event, axis) != 0; }
+        public double AxisValue(PointerAxis axis) { return GetAxisValue(@event, axis); }
         public Fixed24 DeltaX { get { return GetDX(@event); } }
         public Fixed24 DeltaY { get { return GetDY(@event); } }
         public Fixed24 X { get { return GetAbsX(@event); } }
@@ -305,11 +305,11 @@ namespace OpenTK.Platform.Linux
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_button_state", CallingConvention = CallingConvention.Cdecl)]
         static extern ButtonState GetButtonState(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_axis", CallingConvention = CallingConvention.Cdecl)]
-        static extern PointerAxis GetAxis(IntPtr @event);
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_has_axis", CallingConvention = CallingConvention.Cdecl)]
+        static extern int HasAxis(IntPtr @event, PointerAxis axis);
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_axis_value", CallingConvention = CallingConvention.Cdecl)]
-        static extern Fixed24 GetAxisValue(IntPtr @event);
+        static extern double GetAxisValue(IntPtr @event, PointerAxis axis);
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_dx", CallingConvention = CallingConvention.Cdecl)]
         static extern Fixed24 GetDX(IntPtr @event);
