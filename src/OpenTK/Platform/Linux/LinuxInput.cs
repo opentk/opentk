@@ -485,21 +485,15 @@ namespace OpenTK.Platform.Linux
             {
                 mouse.State.SetIsConnected(true);
 
-                double value = e.AxisValue;
-                PointerAxis axis = e.Axis;
-                switch (axis)
+                if (e.HasAxis(PointerAxis.HorizontalScroll))
                 {
-                    case PointerAxis.HorizontalScroll:
-                        mouse.State.SetScrollRelative((float)value, 0);
-                        break;
 
-                    case PointerAxis.VerticalScroll:
-                        mouse.State.SetScrollRelative(0, (float)value);
-                        break;
-
-                    default:
-                        Debug.Print("[Input] Unknown scroll axis {0}.", axis);
-                        break;
+                    mouse.State.SetScrollRelative((float)e.AxisValue(PointerAxis.HorizontalScroll), 0);
+                }
+                if (e.HasAxis(PointerAxis.VerticalScroll))
+                {
+                    Debug.Print(e.AxisValue(PointerAxis.VerticalScroll));
+                    mouse.State.SetScrollRelative(0, (float)e.AxisValue(PointerAxis.VerticalScroll));
                 }
             }
         }
