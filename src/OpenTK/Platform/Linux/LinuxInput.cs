@@ -512,7 +512,7 @@ namespace OpenTK.Platform.Linux
 
         void HandlePointerMotion(MouseDevice mouse, PointerEvent e)
         {
-            Vector2 delta = new Vector2((float)e.X, (float)e.Y);
+            Vector2 delta = new Vector2((float)e.DeltaX, (float)e.DeltaY);
             if (mouse != null)
             {
                 mouse.State.SetIsConnected(true);
