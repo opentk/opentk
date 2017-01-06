@@ -50,7 +50,7 @@ namespace OpenTK.Platform.Linux
             IntPtr user_data, IntPtr udev);
 
         [DllImport(lib, EntryPoint = "libinput_udev_assign_seat", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int AssignSeat(IntPtr @libinput, string seat_id);
+        public static extern int AssignSeat(IntPtr libinput, string seat_id);
 
         [DllImport(lib, EntryPoint = "libinput_destroy", CallingConvention = CallingConvention.Cdecl)]
         public static extern void DestroyContext(IntPtr libinput);
