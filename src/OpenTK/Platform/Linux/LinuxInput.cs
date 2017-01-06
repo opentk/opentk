@@ -487,12 +487,10 @@ namespace OpenTK.Platform.Linux
 
                 if (e.HasAxis(PointerAxis.HorizontalScroll))
                 {
-
                     mouse.State.SetScrollRelative((float)e.AxisValue(PointerAxis.HorizontalScroll), 0);
                 }
                 if (e.HasAxis(PointerAxis.VerticalScroll))
                 {
-                    Debug.Print(e.AxisValue(PointerAxis.VerticalScroll));
                     mouse.State.SetScrollRelative(0, (float)e.AxisValue(PointerAxis.VerticalScroll));
                 }
             }
