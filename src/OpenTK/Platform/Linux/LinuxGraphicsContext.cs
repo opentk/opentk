@@ -67,9 +67,6 @@ namespace OpenTK.Platform.Linux
         {
             base.SwapBuffers();
 
-            bo_next = LockSurface();
-            int fb = GetFramebuffer(bo_next);
-
             if (is_flip_queued)
             {
                 // Todo: if we don't wait for the page flip,
@@ -84,6 +81,8 @@ namespace OpenTK.Platform.Linux
                 }
             }
 
+            bo_next = LockSurface();
+            int fb = GetFramebuffer(bo_next);
             QueueFlip(fb);
         }
 
