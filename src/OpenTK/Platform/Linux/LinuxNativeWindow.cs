@@ -366,6 +366,7 @@ namespace OpenTK.Platform.Linux
             if (disposing)
             {
                 Debug.Print("[KMS] Destroying window {0}.", window.Handle);
+                Drm.SetCursor(window.FD, window.DisplayDevice.Id, 0, 0, 0, 0, 0);
                 window.Dispose();
                 Gbm.DestroySurface(window.Handle);
             }
