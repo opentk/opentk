@@ -458,9 +458,12 @@ namespace OpenTK
             double timestamp = watch.Elapsed.TotalSeconds;
             double elapsed = 0;
 
+            bool updatedEver = false;
+
             elapsed = ClampElapsed(timestamp - update_timestamp);
             while (elapsed > 0 && elapsed + update_epsilon >= TargetUpdatePeriod)
             {
+                updatedEver = true;
                 RaiseUpdateFrame(elapsed, ref timestamp);
                 
                 // Calculate difference (positive or negative) between
@@ -492,7 +495,13 @@ namespace OpenTK
             elapsed = ClampElapsed(timestamp - render_timestamp);
             if (elapsed > 0 && elapsed >= TargetRenderPeriod)
             {
+                updatedEver = true;
                 RaiseRenderFrame(elapsed, ref timestamp);
+            }
+
+            if (!updatedEver)
+            {
+                Thread.Sleep(1);
             }
         }
 
