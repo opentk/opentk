@@ -83,8 +83,13 @@ namespace OpenTK.Platform.Windows
             {
                 if (page == HIDPage.GenericDesktop || page == HIDPage.Simulation) // set axis only when HIDPage is known by HidHelper.TranslateJoystickAxis() to avoid axis0 to be overwritten by unknown HIDPage
                 {
-                    JoystickAxis axis = GetAxis(collection, page, usage);
-                    State.SetAxis(axis, value);
+					//Certain joysticks (Speedlink Black Widow, PS3 pad connected via USB)
+					//return an invalid HID page of 1, so 
+                    if ((int)usage != 1)
+                    {
+                        JoystickAxis axis = GetAxis(collection, page, usage);
+                        State.SetAxis(axis, value);
+                    }
                 }
             }
 
