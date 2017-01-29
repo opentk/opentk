@@ -457,7 +457,7 @@ namespace OpenTK.Platform.Android
 
             // if the render thread is paused, let it run so it exits
             pauseSignal.Set ();
-            stopWatch.Stop ();
+            if (stopWatch != null) stopWatch.Stop ();
         }
 
         void PauseThread ()
