@@ -83,8 +83,8 @@ namespace OpenTK.Platform.Windows
             {
                 if (page == HIDPage.GenericDesktop || page == HIDPage.Simulation) // set axis only when HIDPage is known by HidHelper.TranslateJoystickAxis() to avoid axis0 to be overwritten by unknown HIDPage
                 {
-					//Certain joysticks (Speedlink Black Widow, PS3 pad connected via USB)
-					//return an invalid HID page of 1, so 
+                    //Certain joysticks (Speedlink Black Widow, PS3 pad connected via USB)
+                    //return an invalid HID page of 1, so 
                     if ((int)usage != 1)
                     {
                         JoystickAxis axis = GetAxis(collection, page, usage);
@@ -405,11 +405,24 @@ namespace OpenTK.Platform.Windows
                 }
                 else
                 {
-                    short scaled_value = (short)HidHelper.ScaleValue(
-                        (int)((long)value + stick.AxisCaps[i].LogicalMin),
-                        stick.AxisCaps[i].LogicalMin, stick.AxisCaps[i].LogicalMax,
-                        Int16.MinValue, Int16.MaxValue);
-                    stick.SetAxis(collection, page, usage, scaled_value);
+                    if (stick.AxisCaps[i].LogicalMin > 0)
+                    {
+                        short scaled_value = (short) HidHelper.ScaleValue(
+                            (int) ((long) value + stick.AxisCaps[i].LogicalMin),
+                            stick.AxisCaps[i].LogicalMin, stick.AxisCaps[i].LogicalMax,
+                            Int16.MinValue, Int16.MaxValue);
+                        stick.SetAxis(collection, page, usage, scaled_value);
+                    }
+                    else
+                    {
+                        //If our stick returns a minimum value below zero, we should not add this to our value
+                        //before attempting to scale it, as this then inverts the value
+                        short scaled_value = (short)HidHelper.ScaleValue(
+                            (int)(long)value,
+                            stick.AxisCaps[i].LogicalMin, stick.AxisCaps[i].LogicalMax,
+                            Int16.MinValue, Int16.MaxValue);
+                        stick.SetAxis(collection, page, usage, scaled_value);
+                    }
                 }
             }
         }
