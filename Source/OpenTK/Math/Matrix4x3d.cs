@@ -224,25 +224,90 @@ namespace OpenTK
         #region Indexers
 
         /// <summary>
+        /// Gets or sets the row at a specified index.
+        /// </summary>
+        public Vector3d this[int rowIndex]
+        {
+            get
+            {
+                switch (rowIndex)
+                {
+                    case 0:
+                        return Row0;
+                    case 1:
+                        return Row1;
+                    case 2:
+                        return Row2;
+                    case 3:
+                        return Row3;
+                    default:
+                        throw new ArgumentOutOfRangeException("Row index " + rowIndex + " is outside the valid range.");
+                }
+            }
+
+            set
+            {
+                switch (rowIndex)
+                {
+                    case 0:
+                        Row0 = value;
+                        return;
+                    case 1:
+                        Row1 = value;
+                        return;
+                    case 2:
+                        Row2 = value;
+                        return;
+                    case 3:
+                        Row3 = value;
+                        return;
+                    default:
+                        throw new ArgumentOutOfRangeException("Row index " + rowIndex + " is outside the valid range.");
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
         public double this[int rowIndex, int columnIndex]
         {
             get
             {
-                if (rowIndex == 0) return Row0[columnIndex];
-                else if (rowIndex == 1) return Row1[columnIndex];
-                else if (rowIndex == 2) return Row2[columnIndex];
-                else if (rowIndex == 3) return Row3[columnIndex];
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                switch (rowIndex)
+                {
+                    case 0:
+                        return Row0[columnIndex];
+                    case 1:
+                        return Row1[columnIndex];
+                    case 2:
+                        return Row2[columnIndex];
+                    case 3:
+                        return Row3[columnIndex];
+                    default:
+                        throw new ArgumentOutOfRangeException("Row index " + rowIndex + " is outside the valid range.");
+                }
             }
+
             set
             {
-                if (rowIndex == 0) Row0[columnIndex] = value;
-                else if (rowIndex == 1) Row1[columnIndex] = value;
-                else if (rowIndex == 2) Row2[columnIndex] = value;
-                else if (rowIndex == 3) Row3[columnIndex] = value;
-                else throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                switch (rowIndex)
+                {
+                    case 0:
+                        Row0[columnIndex] = value;
+                        return;
+                    case 1:
+                        Row1[columnIndex] = value;
+                        return;
+                    case 2:
+                        Row2[columnIndex] = value;
+                        return;
+                    case 3:
+                        Row3[columnIndex] = value;
+                        return;
+                    default:
+                        throw new ArgumentOutOfRangeException("Row index " + rowIndex + " is outside the valid range.");
+                }
             }
         }
 
