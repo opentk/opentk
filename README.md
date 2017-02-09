@@ -89,7 +89,7 @@ OpenTK 1.1.4c was released on 24 July 2014.
 
 This is a hotfix release that improves stability on Mac OS X. Moreover, it synchronizes the GamePad configuration database with SDL 2.0.4 and fixes an invalid GUID introduced in 1.1.4b.
 
-### 214-07-21
+### 2014-07-21
 
 OpenTK 1.1.4 was released on 21 July 2014.
 
