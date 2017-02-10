@@ -130,7 +130,7 @@ namespace OpenTK.Platform.Windows
                 int buttons = TranslateButtons(xcaps.GamePad.Buttons);
                 int axes = TranslateAxes(ref xcaps.GamePad);
 
-                return new JoystickCapabilities(axes, buttons, 0, true);
+                return new JoystickCapabilities(axes, buttons, 1, true);
             }
             return new JoystickCapabilities();
         }
