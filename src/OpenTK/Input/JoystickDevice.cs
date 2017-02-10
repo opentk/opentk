@@ -139,9 +139,9 @@ namespace OpenTK.Input
             }
         }
 
-        internal void SetButton(JoystickButton button, bool @value)
+        internal void SetButton(int button, bool @value)
         {
-            if ((int)button < button_collection.Count)
+            if (button < button_collection.Count)
             {
                 if (button_collection[button] != @value)
                 {
@@ -190,7 +190,7 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        JoystickButton button;
+        int button;
         bool pressed;
 
         #endregion
@@ -202,7 +202,7 @@ namespace OpenTK.Input
         /// </summary>
         /// <param name="button">The index of the joystick button for the event.</param>
         /// <param name="pressed">The current state of the button.</param>
-        internal JoystickButtonEventArgs(JoystickButton button, bool pressed)
+        internal JoystickButtonEventArgs(int button, bool pressed)
         {
             this.button = button;
             this.pressed = pressed;
@@ -215,7 +215,7 @@ namespace OpenTK.Input
         /// <summary>
         /// The index of the joystick button for the event.
         /// </summary>
-        public JoystickButton Button { get { return this.button; } internal set { this.button = value; } }
+        public int Button { get { return this.button; } internal set { this.button = value; } }
 
         /// <summary>
         /// Gets a System.Boolean representing the state of the button for the event.
@@ -314,17 +314,6 @@ namespace OpenTK.Input
         {
             get { return button_state[index]; }
             internal set { button_state[index] = value; }
-        }
-
-        /// <summary>
-        /// Gets a System.Boolean indicating whether the specified JoystickButton is pressed.
-        /// </summary>
-        /// <param name="button">The JoystickButton to check.</param>
-        /// <returns>True if the JoystickButton is pressed; false otherwise.</returns>
-        public bool this[JoystickButton button]
-        {
-            get { return button_state[(int)button]; }
-            internal set { button_state[(int)button] = value; }
         }
 
         /// <summary>

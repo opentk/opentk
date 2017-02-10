@@ -89,8 +89,7 @@ namespace OpenTK.Platform
                 }
                 for (int button_index = 0; button_index < caps.ButtonCount; button_index++)
                 {
-                    JoystickButton button = JoystickButton.Button0 + button_index;
-                    joysticks[i].SetButton(button, state.GetButton(button) == ButtonState.Pressed);
+                    joysticks[i].SetButton(button_index, state.GetButton(button_index) == ButtonState.Pressed);
                 }
                 for (int hat_index = 0; hat_index < caps.HatCount; hat_index++)
                 {

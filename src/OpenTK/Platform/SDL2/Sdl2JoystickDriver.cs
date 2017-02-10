@@ -399,7 +399,7 @@ namespace OpenTK.Platform.SDL2
             {
                 int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
-                joystick.SetButton((JoystickButton)ev.Button, ev.State == State.Pressed);
+                joystick.SetButton(ev.Button, ev.State == State.Pressed);
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
@@ -612,7 +612,7 @@ namespace OpenTK.Platform.SDL2
 
                 for (int i = 0; i < joystick.Button.Count; i++)
                 {
-                    state.SetButton(JoystickButton.Button0 + i, joystick.Button[i]);
+                    state.SetButton(i, joystick.Button[i]);
                 }
 
                 for (int i = 0; i < joystick.Details.HatCount; i++)

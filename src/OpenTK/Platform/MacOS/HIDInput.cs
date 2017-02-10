@@ -916,8 +916,8 @@ namespace OpenTK.Platform.MacOS
                 case HIDPage.Button:
                     {
                         bool pressed = GetJoystickButton(val, elem);
-                        JoystickButton button = JoystickButton.Button0 + joy.Elements[cookie].Index;
-                        if (button >= JoystickButton.Button0 && button <= JoystickButton.Last)
+                        int button = joy.Elements[cookie].Index;
+                        if (button >= 0 && button <= 64)
                         {
                             joy.State.SetButton(button, pressed);
                         }

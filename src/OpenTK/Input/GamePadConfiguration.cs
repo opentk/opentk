@@ -194,12 +194,10 @@ namespace OpenTK.Input
             return axis + id;
         }
 
-        static JoystickButton ParseButton(string item)
+        static int ParseButton(string item)
         {
             // item is in the format "b#" where # a zero-based integer number
-            JoystickButton button = JoystickButton.Button0;
-            int id = Int32.Parse(item.Substring(1));
-            return button + id;
+            return Int32.Parse(item.Substring(1));
         }
 
         static JoystickHat ParseHat(string item, out HatPosition position)
