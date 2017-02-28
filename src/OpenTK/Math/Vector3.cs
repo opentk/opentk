@@ -1603,6 +1603,62 @@ namespace OpenTK
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if all left values are less then the right values; false otherwise.</returns>
+        public static bool operator <(Vector3 left, Vector3 right)
+        {
+            return
+                left.X < right.X &&
+                left.Y < right.Y &&
+                left.Z < right.Z;
+        }
+
+        /// <summary>
+        /// Compares two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if all left values are greater then the right values; false otherwise.</returns>
+        public static bool operator >(Vector3 left, Vector3 right)
+        {
+            return
+                left.X > right.X &&
+                left.Y > right.Y &&
+                left.Z > right.Z;
+        }
+
+        /// <summary>
+        /// Compares two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if all left values are equal or less then the right values; false otherwise.</returns>
+        public static bool operator <=(Vector3 left, Vector3 right)
+        {
+            return
+                left.X <= right.X &&
+                left.Y <= right.Y &&
+                left.Z <= right.Z;
+        }
+
+        /// <summary>
+        /// Compares two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if all left values are equal or more then the right values; false otherwise.</returns>
+        public static bool operator >=(Vector3 left, Vector3 right)
+        {
+            return
+                left.X >= right.X &&
+                left.Y >= right.Y &&
+                left.Z >= right.Z;
+        }
+
         #endregion
 
         #region Overrides
