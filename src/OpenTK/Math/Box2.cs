@@ -190,9 +190,9 @@ namespace OpenTK
             return obj is Box2 && Equals((Box2) obj);
         }
 
-        ///// <summary>
-        ///// Gets the hash code for this Box2.
-        ///// </summary>
+        /// <summary>
+        /// Gets the hash code for this Box2.
+        /// </summary>
         public override int GetHashCode()
         {
             unchecked
