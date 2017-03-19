@@ -9,7 +9,7 @@ open OpenTK
 [<AutoOpen>]
 module private AssertHelpers = 
     [<Literal>]
-    let private BitAccuracy = 4
+    let private BitAccuracy = 5
     
     let approxEq a b = MathHelper.ApproximatelyEqual(a,b,BitAccuracy)
 
