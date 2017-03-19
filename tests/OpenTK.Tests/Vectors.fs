@@ -110,6 +110,7 @@ module Vector2 =
         //
         [<Property>]
         let ``Vector-float division is the same as component-float division`` (a : Vector2,f : float32) = 
-            let r = a / f
-            Assert.ApproximatelyEqual(a.X / f,r.X)
-            Assert.ApproximatelyEqual(a.Y / f,r.Y)
+            if not (approxEq f 0.0f) then // we don't support diving by zero.
+                let r = a / f
+                Assert.ApproximatelyEqual(a.X / f,r.X)
+                Assert.ApproximatelyEqual(a.Y / f,r.Y)
