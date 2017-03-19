@@ -8,6 +8,39 @@ open OpenTK
 
 module Vector2 = 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Constructors = 
+        //
+        [<Property>]
+        let ``Single value constructor sets all components to the same value`` (f : float32) = 
+            let v = Vector2(f)
+            Assert.Equal(f,v.X)
+            Assert.Equal(f,v.Y)
+        
+        [<Property>]
+        let ``Two value constructor sets all components correctly`` (x,y) = 
+            let v = Vector2(x,y)
+            Assert.Equal(x,v.X)
+            Assert.Equal(y,v.Y)
+        
+        [<Property>]
+        let ``Index operators work for the correct components`` (x,y) = 
+            let v = Vector2(x,y)
+            Assert.Equal(v.[0],v.X)
+            Assert.Equal(v.[1],v.Y)
+        
+        [<Property>]
+        let ``Clamping works for each component`` (a : Vector2,b : Vector2,c : Vector2) = 
+            let inline clamp (value : float32) minV maxV = MathHelper.Clamp(value,minV,maxV)
+            let r = Vector2.Clamp(a,b,c)
+            Assert.Equal(clamp a.X b.X c.X,r.X)
+            Assert.Equal(clamp a.X b.X c.X,r.Y)
+        
+        [<Property>]
+        let ``Length is always >= 0`` (a : Vector2) = 
+            //
+            Assert.True(a.Length >= 0.0f)
+    
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Simple Properties`` = 
         //
         [<Property>]
