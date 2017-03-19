@@ -173,6 +173,7 @@ namespace OpenTK.Platform.Egl
 
         public override void Update(IWindowInfo window)
         {
+            MakeCurrent(window);
             // ANGLE updates the width and height of the back buffer surfaces in the WaitClient function.
             // So without this calling this function, the surface won't match the size of the window after it 
             // was resized.
