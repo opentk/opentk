@@ -326,8 +326,35 @@ namespace OpenTK
             return Math.Max(Math.Min(n, max), min);
         }
 
-        #endregion
+		private static unsafe int FloatToInt32Bits(float f) {
+			return *((int*) &f);
+		}
 
-        #endregion
-    }
+		/// <summary>
+		/// Approximates floating point equality with a maximum number of different bits.
+		/// This is typically used in place of an epsilon comparison.
+		/// see: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+		/// see: https://stackoverflow.com/questions/3874627/floating-point-comparison-functions-for-c-sharp
+		/// </summary>
+		/// <param name="a">the first value to compare</param>
+		/// <param name="b">>the second value to compare</param>
+		/// <param name="maxDeltaBits">the number of floating point bits to check</param>
+		/// <returns></returns>
+		public static bool ApproximatelyEqual(float a, float b, int maxDeltaBits) {
+			int aInt = FloatToInt32Bits(a);
+			if (aInt < 0)
+				aInt = Int32.MinValue - aInt;
+
+			int bInt = FloatToInt32Bits(b);
+			if (bInt < 0)
+				bInt = Int32.MinValue - bInt;
+
+			int intDiff = Math.Abs(aInt - bInt);
+			return intDiff <= (1 << maxDeltaBits);
+		}
+
+		#endregion
+
+		#endregion
+	}
 }
