@@ -54,6 +54,14 @@ namespace OpenTK.Platform.Linux
             new Dictionary<EvdevAxis, AxisInfo>();
         public readonly Dictionary<EvdevButton, int> ButtonMap =
             new Dictionary<EvdevButton, int>();
+
+        internal int[,] hatStates =
+        {
+            {0, 0},
+            {0, 0},
+            {0, 0},
+            {0, 0}
+        };
     }
 
     sealed class LinuxJoystick : IJoystickDriver2
@@ -398,27 +406,22 @@ namespace OpenTK.Platform.Linux
                                                 // We currently treat analogue hats as digital hats
                                                 // to maintain compatibility with SDL2. We can do
                                                 // better than this, however.
-                                                JoystickHat hat = JoystickHat.Hat0 + (e->Code - (int)EvdevAxis.HAT0X) / 2;
-                                                JoystickHatState pos = js.State.GetHat(hat);
+                                                int hat = (e->Code - (int)EvdevAxis.HAT0X) / 2;
                                                 int xy_axis = (int)axis.Axis & 0x1;
+                                                int value = e->Value.CompareTo(0) + 1;
                                                 switch (xy_axis)
                                                 {
                                                     case 0:
                                                         // X-axis
-                                                        pos = TranslateHat(
-                                                            e->Value.CompareTo(0) + 1,
-                                                            pos.IsUp ? 0 : pos.IsDown ? 2 : 1);
+                                                        js.hatStates[hat, 1] = value;
                                                         break;
 
                                                     case 1:
                                                         // Y-axis
-                                                        pos = TranslateHat(
-                                                            pos.IsLeft ? 0 : pos.IsRight ? 2 : 1,
-                                                            e->Value.CompareTo(0) + 1);
+                                                        js.hatStates[hat, 0] = value;
                                                         break;
                                                 }
-
-                                                js.State.SetHat(hat, pos);
+                                                js.State.SetHat((JoystickHat)hat, TranslateHat(js.hatStates[hat, 0], js.hatStates[hat, 1]));
                                             }
                                             else
                                             {
