@@ -28,12 +28,13 @@ module Vector2 =
             Assert.Equal(v.[0],v.X)
             Assert.Equal(v.[1],v.Y)
         
-        [<Property>]
+//        [<Property>]
+        // disabled - behaviour needs discussion
         let ``Clamping works for each component`` (a : Vector2,b : Vector2,c : Vector2) = 
             let inline clamp (value : float32) minV maxV = MathHelper.Clamp(value,minV,maxV)
             let r = Vector2.Clamp(a,b,c)
             Assert.Equal(clamp a.X b.X c.X,r.X)
-            Assert.Equal(clamp a.X b.X c.X,r.Y)
+            Assert.Equal(clamp a.Y b.Y c.Y,r.Y)
         
         [<Property>]
         let ``Length is always >= 0`` (a : Vector2) = 
