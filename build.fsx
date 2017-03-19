@@ -88,7 +88,7 @@ let activeProjects =
             -- "**/OpenTK.iOS.csproj"
             
     !! "src/**/*.??proj"
-    ++ "tests/OpenTK.Tests.fsproj"
+    ++ "tests/**/OpenTK.Tests.fsproj"
     -- "**/OpenTK.GLWidget.csproj"
     |> xamarinFilter
 
