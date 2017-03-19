@@ -1483,6 +1483,9 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <None Include="paket.references" />
+    <Compile Include="Assertions.fs" />
+    <Compile Include="Generators.fs" />
+    <Compile Include="MathHelper.fs" />
     <Compile Include="Vectors.fs" />
     <Content Include="App.config" />
   </ItemGroup>
