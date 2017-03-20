@@ -861,20 +861,20 @@ namespace OpenTK.Platform.iPhoneOS
         internal void RunIteration (NSTimer timer)
         {
             var curUpdateTime = stopwatch.Elapsed;
-            if (prevUpdateTime == TimeSpan.Zero)
-                prevUpdateTime = curUpdateTime;
-            var t = (curUpdateTime - prevUpdateTime).TotalSeconds;
-            updateEventArgs.Time = t;
+            if (prevUpdateTime.Ticks != 0) {
+                var t = (curUpdateTime - prevUpdateTime).TotalSeconds;
+                updateEventArgs.Time = t;
+            }
             OnUpdateFrame(updateEventArgs);
             prevUpdateTime = curUpdateTime;
 
             gl.BindFramebuffer(All.FramebufferOes, framebuffer);
 
             var curRenderTime = stopwatch.Elapsed;
-            if (prevRenderTime == TimeSpan.Zero)
-                prevRenderTime = curRenderTime;
-            t = (curRenderTime - prevRenderTime).TotalSeconds;
-            renderEventArgs.Time = t;
+            if (prevRenderTime.Ticks == 0) {
+                var t = (curRenderTime - prevRenderTime).TotalSeconds;
+                renderEventArgs.Time = t;
+            }
             OnRenderFrame(renderEventArgs);
             prevRenderTime = curRenderTime;
         }
