@@ -493,8 +493,8 @@ namespace OpenTK.Platform.Android
         DateTime prevRenderTime;
         DateTime curUpdateTime;
         DateTime curRenderTime;
-        FrameEventArgs updateEventArgs;
-        FrameEventArgs renderEventArgs;
+        FrameEventArgs updateEventArgs = new FrameEventArgs();
+        FrameEventArgs renderEventArgs = new FrameEventArgs();
 
         // this method is called on the main thread if RenderOnUIThread is true
         void RunIteration (CancellationToken token)
@@ -505,21 +505,19 @@ namespace OpenTK.Platform.Android
             if (!ReadyToRender)
                 return;
 
-            updateEventArgs = new FrameEventArgs ();
             curUpdateTime = DateTime.Now;
             if (prevUpdateTime.Ticks != 0) {
                 var t = (curUpdateTime - prevUpdateTime).TotalSeconds;
-                updateEventArgs.Time = t < 0 ? 0 : t;
+                updateEventArgs.Time = t;
             }
 
             UpdateFrameInternal (updateEventArgs);
             prevUpdateTime = curUpdateTime;
 
-            renderEventArgs = new FrameEventArgs ();
             curRenderTime = DateTime.Now;
             if (prevRenderTime.Ticks == 0) {
                 var t = (curRenderTime - prevRenderTime).TotalSeconds;
-                renderEventArgs.Time = t < 0 ? 0 : t;
+                renderEventArgs.Time = t;
             }
 
             RenderFrameInternal (renderEventArgs);
