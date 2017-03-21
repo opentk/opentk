@@ -26,9 +26,8 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform
 {
@@ -39,8 +38,10 @@ namespace OpenTK.Platform
     {
         #region Fields
 
-        bool disposed;
-        static IPlatformFactory default_implementation, embedded_implementation;
+        private bool disposed;
+        private static IPlatformFactory defaultImplementation;
+        private static IPlatformFactory embeddedImplementation;
+        private static IPlatformFactory angleImplementation;
 
         #endregion
 
@@ -102,11 +103,13 @@ namespace OpenTK.Platform
                 else if (Configuration.RunningOnAndroid) Embedded = new Android.AndroidFactory();
                 #endif
                 else Embedded = new UnsupportedPlatform();
+                Angle = new EglAnglePlatformFactory(Embedded);
             }
             #endif
             else
             {
                 Embedded = new UnsupportedPlatform();
+                Angle = Embedded;
             }
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
@@ -119,14 +122,20 @@ namespace OpenTK.Platform
 
         public static IPlatformFactory Default
         {
-            get { return default_implementation; }
-            private set { default_implementation = value; }
+            get { return defaultImplementation; }
+            private set { defaultImplementation = value; }
         }
 
         public static IPlatformFactory Embedded
         {
-            get { return embedded_implementation; }
-            private set { embedded_implementation = value; }
+            get { return embeddedImplementation; }
+            private set { embeddedImplementation = value; }
+        }
+
+        public static IPlatformFactory Angle
+        {
+            get { return angleImplementation; }
+            private set { angleImplementation = value; }
         }
 
         #endregion
@@ -136,60 +145,60 @@ namespace OpenTK.Platform
         public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
             GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            return default_implementation.CreateNativeWindow(x, y, width, height, title, mode, options, device);
+            return defaultImplementation.CreateNativeWindow(x, y, width, height, title, mode, options, device);
         }
 
         public IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
-            return default_implementation.CreateDisplayDeviceDriver();
+            return defaultImplementation.CreateDisplayDeviceDriver();
         }
 
         public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return default_implementation.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
+            return defaultImplementation.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
         }
 
         public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return default_implementation.CreateGLContext(handle, window, shareContext, directRendering, major, minor, flags);
+            return defaultImplementation.CreateGLContext(handle, window, shareContext, directRendering, major, minor, flags);
         }
 
         public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return default_implementation.CreateGetCurrentGraphicsContext();
+            return defaultImplementation.CreateGetCurrentGraphicsContext();
         }
 
         public IKeyboardDriver2 CreateKeyboardDriver()
         {
-            return default_implementation.CreateKeyboardDriver();
+            return defaultImplementation.CreateKeyboardDriver();
         }
 
         public IMouseDriver2 CreateMouseDriver()
         {
-            return default_implementation.CreateMouseDriver();
+            return defaultImplementation.CreateMouseDriver();
         }
 
         public IGamePadDriver CreateGamePadDriver()
         {
-            return default_implementation.CreateGamePadDriver();
+            return defaultImplementation.CreateGamePadDriver();
         }
 
         public IJoystickDriver2 CreateJoystickDriver()
         {
-            return default_implementation.CreateJoystickDriver();
+            return defaultImplementation.CreateJoystickDriver();
         }
 
         [Obsolete]
         public IJoystickDriver CreateLegacyJoystickDriver()
         {
             #pragma warning disable 612,618
-            return default_implementation.CreateLegacyJoystickDriver();
+            return defaultImplementation.CreateLegacyJoystickDriver();
             #pragma warning restore 612,618
         }
 
         public void RegisterResource(IDisposable resource)
         {
-            default_implementation.RegisterResource(resource);
+            defaultImplementation.RegisterResource(resource);
         }
 
         class UnsupportedPlatform : PlatformFactoryBase
