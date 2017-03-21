@@ -401,11 +401,11 @@ namespace OpenTK.Platform
         /// supplied platform window (e.g. a window created with 
         /// CreateWindowsWindowInfo, or CreateDummyWindowInfo).
         /// </summary>
-        /// <param name="platform_window"></param>
+        /// <param name="platformWindow"></param>
         /// <returns></returns>
-        public static IAngleWindowInfo CreateAngleWindowInfo(IWindowInfo platform_window)
+        public static IAngleWindowInfo CreateAngleWindowInfo(IWindowInfo platformWindow)
         {
-            return new AngleWindowInfo(platform_window);
+            return new AngleWindowInfo(platformWindow);
         }
         
         #endregion

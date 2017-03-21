@@ -130,15 +130,15 @@ namespace OpenTK.Graphics
                     minor = 0;
 
                 // Angle needs an embedded context
-                var use_angle_flag = GraphicsContextFlags.Angle
-                                | GraphicsContextFlags.AngleD3D9
-                                | GraphicsContextFlags.AngleD3D11
-                                | GraphicsContextFlags.AngleOpenGL;
-                var use_angle = false;
-                if ((flags & use_angle_flag) != 0)
+                const GraphicsContextFlags useAngleFlag = GraphicsContextFlags.Angle
+                                                          | GraphicsContextFlags.AngleD3D9
+                                                          | GraphicsContextFlags.AngleD3D11
+                                                          | GraphicsContextFlags.AngleOpenGL;
+                var useAngle = false;
+                if ((flags & useAngleFlag) != 0)
                 {
                     flags |= GraphicsContextFlags.Embedded;
-                    use_angle = true;
+                    useAngle = true;
                 }
 
                 Debug.Print("Creating GraphicsContext.");
@@ -164,7 +164,7 @@ namespace OpenTK.Graphics
                                 factory = Factory.Default;
                                 break;
                             case true:
-                                factory = use_angle ? Factory.Angle : Factory.Embedded;
+                                factory = useAngle ? Factory.Angle : Factory.Embedded;
                                 break;
                         }
 

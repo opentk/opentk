@@ -90,11 +90,11 @@ namespace OpenTK.Platform.Egl
 
             bool offscreen = (flags & GraphicsContextFlags.Offscreen) != 0;
 
-            SurfaceType surface_type = offscreen 
+            SurfaceType surfaceType = offscreen 
                 ? SurfaceType.PBUFFER_BIT 
                 : SurfaceType.WINDOW_BIT;
 
-            Mode = new EglGraphicsMode().SelectGraphicsMode(surface_type,
+            Mode = new EglGraphicsMode().SelectGraphicsMode(surfaceType,
                     window.Display, mode.ColorFormat, mode.Depth, mode.Stencil,
                     mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
                     Renderable);
@@ -115,9 +115,9 @@ namespace OpenTK.Platform.Egl
                 }
             }
 
-            int[] attrib_list = new int[] { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
-            var share_context = shared != null ? shared.HandleAsEGLContext : IntPtr.Zero;
-            HandleAsEGLContext = Egl.CreateContext(window.Display, config, share_context, attrib_list);
+            int[] attribList = { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
+            var shareContext = shared?.HandleAsEGLContext ?? IntPtr.Zero;
+            HandleAsEGLContext = Egl.CreateContext(window.Display, config, shareContext, attribList);
 
             GraphicsContextFlags = flags;
         }

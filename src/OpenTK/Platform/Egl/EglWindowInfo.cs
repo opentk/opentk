@@ -64,8 +64,8 @@ namespace OpenTK.Platform.Egl
 
             Display = display;
 
-            int dummy_major, dummy_minor;
-            if (!Egl.Initialize(Display, out dummy_major, out dummy_minor))
+            int dummyMajor, dummyMinor;
+            if (!Egl.Initialize(Display, out dummyMajor, out dummyMinor))
             {
                 throw new GraphicsContextException(String.Format("Failed to initialize EGL, error {0}.", Egl.GetError()));
             }
@@ -116,7 +116,7 @@ namespace OpenTK.Platform.Egl
             CreatePbufferSurface(config, width, height, out surface); 
         }
 
-        public void CreatePbufferSurface(IntPtr config, int width, int height, out IntPtr surface_)
+        public void CreatePbufferSurface(IntPtr config, int width, int height, out IntPtr bufferSurface)
         {
             int[] attribs = new int[]
             {
@@ -126,13 +126,12 @@ namespace OpenTK.Platform.Egl
                 Egl.TEXTURE_FORMAT, Egl.TEXTURE_RGBA,
                 Egl.NONE
             };
-            surface_ = Egl.CreatePbufferSurface(Display, config, attribs);
-            if (surface_ == IntPtr.Zero)
+            bufferSurface = Egl.CreatePbufferSurface(Display, config, attribs);
+            if (bufferSurface == IntPtr.Zero)
             {
                 throw new GraphicsContextException(String.Format(
                     "[EGL] Failed to create pbuffer surface, error {0}.", Egl.GetError()));
             }
-
         }
 
         public void DestroySurface()
@@ -140,19 +139,20 @@ namespace OpenTK.Platform.Egl
             DestroySurface(ref surface);
         }
 
-        public void DestroySurface(ref IntPtr surface_)
+        public void DestroySurface(ref IntPtr bufferSurface)
         {
-            if (surface_ == IntPtr.Zero)
+            if (bufferSurface == IntPtr.Zero)
             {
                 return;
             }
 
             if (Egl.GetCurrentSurface(Egl.DRAW) == Surface)
-                Egl.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
-                    
-            if (Egl.DestroySurface(Display, surface_))
             {
-                surface_ = IntPtr.Zero;
+                Egl.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+            }
+            if (Egl.DestroySurface(Display, bufferSurface))
+            {
+                bufferSurface = IntPtr.Zero;
                 return;
             }
             
