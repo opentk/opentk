@@ -635,7 +635,7 @@ namespace OpenTK
         public event EventHandler<EventArgs> IconChanged = delegate { };
 
         /// <summary>
-        /// Occurs whenever a keybord key is pressed.
+        /// Occurs whenever a keyboard key is pressed.
         /// </summary>
         public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown = delegate { };
 
@@ -859,7 +859,7 @@ namespace OpenTK
         #region OnKeyDown
 
         /// <summary>
-        /// Occurs whenever a keybord key is pressed.
+        /// Occurs whenever a keyboard key is pressed.
         /// </summary>
         protected virtual void OnKeyDown(KeyboardKeyEventArgs e)
         {
@@ -884,7 +884,7 @@ namespace OpenTK
         #region OnKeyUp
 
         /// <summary>
-        /// Called when a keybord key is released.
+        /// Called when a keyboard key is released.
         /// </summary>
         /// <param name="e">The <see cref="OpenTK.Input.KeyboardKeyEventArgs"/> for this event.</param>
         protected virtual void OnKeyUp(KeyboardKeyEventArgs e)

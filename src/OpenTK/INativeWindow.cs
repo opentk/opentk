@@ -238,7 +238,7 @@ namespace OpenTK
         event EventHandler<EventArgs> WindowStateChanged;
 
         /// <summary>
-        /// Occurs whenever a keybord key is pressed.
+        /// Occurs whenever a keyboard key is pressed.
         /// </summary>
         event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown;
 
