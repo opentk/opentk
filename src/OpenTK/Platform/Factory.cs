@@ -27,7 +27,6 @@
 
 using System;
 using System.Diagnostics;
-using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform
 {
@@ -103,7 +102,12 @@ namespace OpenTK.Platform
                 else if (Configuration.RunningOnAndroid) Embedded = new Android.AndroidFactory();
                 #endif
                 else Embedded = new UnsupportedPlatform();
-                Angle = new EglAnglePlatformFactory(Embedded);
+
+                #if ANDROID
+                Angle = new UnsupportedPlatform();
+                #else
+                Angle = new Egl.EglAnglePlatformFactory(Embedded);
+                #endif
             }
             #endif
             else

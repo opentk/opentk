@@ -27,6 +27,7 @@ using Android.Views;
 using Android.Runtime;
 using Android.Graphics;
 using OpenTK.Platform.Egl;
+using SurfaceType = Android.Views.SurfaceType;
 
 namespace OpenTK.Platform.Android
 {
