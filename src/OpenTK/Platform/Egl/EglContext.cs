@@ -155,8 +155,10 @@ namespace OpenTK.Platform.Egl
             {
                 if (window is EglWindowInfo)
                     WindowInfo = (EglWindowInfo) window;
+                #if !ANDROID
                 else if (window is IAngleWindowInfoInternal)
                     WindowInfo = ((IAngleWindowInfoInternal) window).EglWindowInfo;
+                #endif
 
                 if (!Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext))
                 {

@@ -13,7 +13,6 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
 using OpenTK.Graphics;
-using OpenTK.Platform.Egl;
 
 #endregion
 
@@ -396,6 +395,7 @@ namespace OpenTK.Platform
 
         #region
 
+        #if !__MOBILE__
         /// <summary>
         /// Creates an IWindowInfo instance for Angle rendering, based on 
         /// supplied platform window (e.g. a window created with 
@@ -403,11 +403,12 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="platformWindow"></param>
         /// <returns></returns>
-        public static IAngleWindowInfo CreateAngleWindowInfo(IWindowInfo platformWindow)
+        public static Egl.IAngleWindowInfo CreateAngleWindowInfo(IWindowInfo platformWindow)
         {
-            return new AngleWindowInfo(platformWindow);
+            return new Egl.AngleWindowInfo(platformWindow);
         }
-        
+        #endif
+
         #endregion
 
         #endregion
