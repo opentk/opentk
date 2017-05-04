@@ -285,6 +285,7 @@ namespace OpenTK
         //event EventHandler<MouseEventArgs> MouseClick;
         //event EventHandler<MouseEventArgs> MouseDoubleClick;
 
+        event EventHandler<OpenTK.Input.DropEventArgs> Drop;
         //event EventHandler<DragEventArgs> DragDrop;
         //event EventHandler<DragEventArgs> DragEnter;
         //event EventHandler<DragEventArgs> DragOver;

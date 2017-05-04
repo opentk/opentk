@@ -709,6 +709,11 @@ namespace OpenTK
         /// </summary>
         public event EventHandler<MouseWheelEventArgs> MouseWheel = delegate { };
 
+		/// <summary>
+		/// Occurs whenever a file dropped in window;
+		/// </summary>
+        public event EventHandler<DropEventArgs> Drop = delegate { };
+
         #endregion
 
         #endregion
@@ -981,6 +986,11 @@ namespace OpenTK
             MouseWheel(this, e);
         }
 
+        protected virtual void OnDrop(DropEventArgs e)
+        {
+            Drop(this, e);
+        }
+
         #region OnResize
 
         /// <summary>
@@ -1142,6 +1152,8 @@ namespace OpenTK
         private void OnMouseMoveInternal(object sender, MouseMoveEventArgs e) { OnMouseMove(e); }
         private void OnMouseWheelInternal(object sender, MouseWheelEventArgs e) { OnMouseWheel(e); }
 
+        private void OnDropInternal(object sender, DropEventArgs e) { OnDrop(e); }
+
         #region OnMoveInternal
 
         private void OnMoveInternal(object sender, EventArgs e) { OnMove(e); }
@@ -1214,6 +1226,7 @@ namespace OpenTK
                     implementation.VisibleChanged += OnVisibleChangedInternal;
                     implementation.WindowBorderChanged += OnWindowBorderChangedInternal;
                     implementation.WindowStateChanged += OnWindowStateChangedInternal;
+                    implementation.Drop += OnDropInternal;
                     events = true;
                 }
                 else if (events)
@@ -1238,6 +1251,7 @@ namespace OpenTK
                     implementation.VisibleChanged -= OnVisibleChangedInternal;
                     implementation.WindowBorderChanged -= OnWindowBorderChangedInternal;
                     implementation.WindowStateChanged -= OnWindowStateChangedInternal;
+                    implementation.Drop -= OnDropInternal;
                     events = false;
                 }
                 else

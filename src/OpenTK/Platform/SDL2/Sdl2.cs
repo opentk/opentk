@@ -1442,6 +1442,8 @@ namespace OpenTK.Platform.SDL2
         public ControllerButtonEvent ControllerButton;
         [FieldOffset(0)]
         public ControllerDeviceEvent ControllerDevice;
+        [FieldOffset(0)]
+        public DropEvent Drop;
 #if false
         [FieldOffset(0)]
         public QuitEvent quit;
@@ -1753,6 +1755,14 @@ namespace OpenTK.Platform.SDL2
         byte padding3;
         public Int32 Data1;
         public Int32 Data2;
+    }
+
+    struct DropEvent
+    {
+        public UInt32 Type;
+        public UInt32 Timestamp;
+        public IntPtr File;
+        public UInt32 WindowID;
     }
 
     #endregion

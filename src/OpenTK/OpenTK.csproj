@@ -795,6 +795,7 @@
     <Compile Include="Platform\Linux\Bindings\Evdev.cs" />
     <Compile Include="Platform\Linux\DefaultCursor.cs" />
     <Compile Include="Platform\Linux\Bindings\Kms.cs" />
+    <Compile Include="Input\DropEventArgs.cs" />
     <None Include="OpenTK.csproj.paket.template" />
     <None Include="paket.references" />
   </ItemGroup>
