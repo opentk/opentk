@@ -26,8 +26,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
@@ -46,13 +44,24 @@ namespace OpenTK.Platform.Egl
         public GraphicsMode SelectGraphicsMode(EglWindowInfo window,
             ColorFormat color, int depth, int stencil,
             int samples, ColorFormat accum, int buffers, bool stereo,
-            RenderableFlags renderable_flags)
+            RenderableFlags renderableFlags)
+        {
+            return SelectGraphicsMode(
+                SurfaceType.WINDOW_BIT, 
+                window.Display,
+                color, depth, stencil, samples, accum, buffers, stereo, renderableFlags);
+        }
+
+        public GraphicsMode SelectGraphicsMode(SurfaceType surfaceType, 
+            IntPtr display, ColorFormat color, int depth, int stencil,
+            int samples, ColorFormat accum, int buffers, bool stereo,
+            RenderableFlags renderableFlags)
         {
             IntPtr[] configs = new IntPtr[1];
             int[] attribList = new int[] 
             { 
-                Egl.SURFACE_TYPE, Egl.WINDOW_BIT,
-                Egl.RENDERABLE_TYPE, (int)renderable_flags,
+                Egl.SURFACE_TYPE, (int) surfaceType,
+                Egl.RENDERABLE_TYPE, (int)renderableFlags,
 
                 Egl.RED_SIZE, color.Red, 
                 Egl.GREEN_SIZE, color.Green, 
@@ -68,29 +77,27 @@ namespace OpenTK.Platform.Egl
                 Egl.NONE,
             };
 
-            IntPtr display = window.Display;
-
-            int num_configs;
-            if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out num_configs) || num_configs == 0)
+            int numConfigs;
+            if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out numConfigs) || numConfigs == 0)
             {
                 throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, error {0}", Egl.GetError()));
             }
 
             // See what we really got
-            IntPtr active_config = configs[0];
+            IntPtr activeConfig = configs[0];
             int r, g, b, a;
-            Egl.GetConfigAttrib(display, active_config, Egl.RED_SIZE, out r);
-            Egl.GetConfigAttrib(display, active_config, Egl.GREEN_SIZE, out g);
-            Egl.GetConfigAttrib(display, active_config, Egl.BLUE_SIZE, out b);
-            Egl.GetConfigAttrib(display, active_config, Egl.ALPHA_SIZE, out a);
+            Egl.GetConfigAttrib(display, activeConfig, Egl.RED_SIZE, out r);
+            Egl.GetConfigAttrib(display, activeConfig, Egl.GREEN_SIZE, out g);
+            Egl.GetConfigAttrib(display, activeConfig, Egl.BLUE_SIZE, out b);
+            Egl.GetConfigAttrib(display, activeConfig, Egl.ALPHA_SIZE, out a);
             int d, s;
-            Egl.GetConfigAttrib(display, active_config, Egl.DEPTH_SIZE, out d);
-            Egl.GetConfigAttrib(display, active_config, Egl.STENCIL_SIZE, out s);
-            int sample_buffers;
-            Egl.GetConfigAttrib(display, active_config, Egl.SAMPLES, out sample_buffers);
-            Egl.GetConfigAttrib(display, active_config, Egl.SAMPLES, out samples);
+            Egl.GetConfigAttrib(display, activeConfig, Egl.DEPTH_SIZE, out d);
+            Egl.GetConfigAttrib(display, activeConfig, Egl.STENCIL_SIZE, out s);
+            int sampleBuffers;
+            Egl.GetConfigAttrib(display, activeConfig, Egl.SAMPLES, out sampleBuffers);
+            Egl.GetConfigAttrib(display, activeConfig, Egl.SAMPLES, out samples);
 
-            return new GraphicsMode(active_config, new ColorFormat(r, g, b, a), d, s, sample_buffers > 0 ? samples : 0, 0, 2, false);
+            return new GraphicsMode(activeConfig, new ColorFormat(r, g, b, a), d, s, sampleBuffers > 0 ? samples : 0, 0, 2, false);
         }
     }
 }
