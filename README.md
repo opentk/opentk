@@ -59,6 +59,7 @@ News
 A pre-release package is available.
 
 https://www.nuget.org/packages/OpenTK/3.0.0-pre
+
 https://www.nuget.org/packages/OpenTK.GLControl/3.0.0-pre
 
 ### 2016-09-23
