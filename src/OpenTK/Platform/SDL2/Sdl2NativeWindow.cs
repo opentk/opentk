@@ -201,6 +201,7 @@ namespace OpenTK.Platform.SDL2
                         if (windows.TryGetValue(ev.Drop.WindowID, out window))
                         {
                             ProcessDropEvent(window, ev.Drop);
+                            SDL.Free(ev.Drop.File);
                             processed = true;
                         }
                         break;
@@ -311,7 +312,7 @@ namespace OpenTK.Platform.SDL2
 
             byte [] byteArray = new byte[length];
             Marshal.Copy(ev.File, byteArray, 0, length);
-            string dropString = System.Text.Encoding.UTF8.GetString (byteArray);
+            string dropString = System.Text.Encoding.UTF8.GetString(byteArray);
             window.OnDrop(dropString);
         }
 

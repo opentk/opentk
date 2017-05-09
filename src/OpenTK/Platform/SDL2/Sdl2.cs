@@ -139,6 +139,10 @@ namespace OpenTK.Platform.SDL2
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_FreeSurface", ExactSpelling = true)]
         public static extern void FreeSurface(IntPtr surface);
 
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport (lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_free", ExactSpelling = true)]
+        public static extern void Free (IntPtr memblock);
+
         #region GameContoller
 
         [SuppressUnmanagedCodeSecurity]
