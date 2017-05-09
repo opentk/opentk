@@ -150,6 +150,7 @@ namespace OpenTK.Platform.Windows
                         0, 0, ClientSize.Width, ClientSize.Height,
                         title, options, device, window.Handle),
                     window);
+                Functions.DragAcceptFiles(window.Handle, true);
 
                 exists = true;
             }
@@ -680,6 +681,29 @@ namespace OpenTK.Platform.Windows
             OnClosed(EventArgs.Empty);
         }
 
+        void HandleDropFiles(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            IntPtr hDrop = wParam;
+            uint filesCounter = Functions.DragQueryFile(hDrop, 0xFFFFFFFF, IntPtr.Zero, 0);
+            for (uint i = 0; i < filesCounter; ++i)
+            {
+                // Don't forget about \0 at the end
+                uint fileNameSize = Functions.DragQueryFile(hDrop, i, IntPtr.Zero, 0) + 1;
+                byte [] byteArray = new byte [fileNameSize];
+                IntPtr str = Marshal.AllocHGlobal((int)fileNameSize);
+
+                Functions.DragQueryFile(hDrop, i, str, fileNameSize);
+                
+                Marshal.Copy(str, byteArray, 0, (int)(fileNameSize - 1));
+                string dropString = System.Text.Encoding.UTF8.GetString(byteArray);
+                OnDrop(dropString);
+
+                Marshal.FreeHGlobal(str);
+            }
+
+            Functions.DragFinish(hDrop);
+        }
+
         #endregion
 
         #region WindowProcedure
@@ -754,6 +778,7 @@ namespace OpenTK.Platform.Windows
                     return IntPtr.Zero;
 
                 case WindowMessage.LBUTTONDOWN:
+                    Console.WriteLine("ola");
                     HandleLButtonDown(handle, message, wParam, lParam);
                     return IntPtr.Zero;
 
@@ -798,6 +823,10 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.KILLFOCUS:
                     HandleKillFocus(handle, message, wParam, lParam);
+                    break;
+
+                case WindowMessage.DROPFILES:
+                    HandleDropFiles(handle, message, wParam, lParam);
                     break;
 
                 #endregion
