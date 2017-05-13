@@ -553,31 +553,11 @@ namespace OpenTK.Platform.iPhoneOS
             GraphicsContext.MakeCurrent(WindowInfo);
             gl = GLCalls.GetGLCalls(ContextRenderingApi);
 
-            int oldFramebuffer = 0, oldRenderbuffer = 1;
+            int oldFramebuffer = 0;
             gl.GetInteger(All.FramebufferBindingOes, out oldFramebuffer);
-            gl.GetInteger(All.RenderbufferBindingOes, out oldRenderbuffer);
+            gl.GenFramebuffers(1, out framebuffer);
 
-            gl.GenRenderbuffers(1, out renderbuffer);
-            gl.BindRenderbuffer(All.RenderbufferOes, renderbuffer);
-
-            if (!EAGLContext.RenderBufferStorage((uint) All.RenderbufferOes, eaglLayer)) {
-                gl.DeleteRenderbuffers(1, ref renderbuffer);
-                renderbuffer = 0;
-                gl.BindRenderbuffer(All.RenderbufferBindingOes, oldRenderbuffer);
-                throw new InvalidOperationException("Error with EAGLContext.RenderBufferStorage!");
-            }
-
-            gl.GenFramebuffers (1, out framebuffer);
-            gl.BindFramebuffer (All.FramebufferOes, framebuffer);
-            gl.FramebufferRenderbuffer (All.FramebufferOes, All.ColorAttachment0Oes, All.RenderbufferOes, renderbuffer);
-
-            Size newSize = new Size(
-                    (int) Math.Round(eaglLayer.Bounds.Size.Width), 
-                    (int) Math.Round(eaglLayer.Bounds.Size.Height));
-            Size = newSize;
-
-            gl.Viewport(0, 0, newSize.Width, newSize.Height);
-            gl.Scissor(0, 0, newSize.Width, newSize.Height);
+            CreateFrameBuffer(eaglLayer);
 
             frameBufferWindow = new WeakReference(Window);
             frameBufferLayer = new WeakReference(Layer);
@@ -607,6 +587,53 @@ namespace OpenTK.Platform.iPhoneOS
             GraphicsContext.Dispose();
             GraphicsContext = null;
             gl = null;
+        }
+
+        /// <summary>
+        /// Resizes the frame buffer.
+        /// On IOS, when the device is rotated from portrait to landscape, if the framebuffer is not recreated
+        /// then the EAGLContext will stretch the render buffer to fit the screen.
+        /// If you care at all about aspect ratio, then this behavior is not desired, and in that case this method
+        /// should be called when rotating the device.
+        /// See here: http://stackoverflow.com/questions/20326947/opengl-what-need-to-reconfig-when-rotate-screen
+        /// And also here: https://gamedev.stackexchange.com/questions/75965/how-do-i-reconfigure-my-gles-frame-buffer-after-a-rotation
+        /// </summary>
+        public void ResizeFrameBuffer()
+        {
+            MakeCurrent();
+
+            gl.DeleteRenderbuffers(1, ref renderbuffer);
+
+            CAEAGLLayer eaglLayer = (CAEAGLLayer)Layer;
+            CreateFrameBuffer(eaglLayer);
+        }
+
+        void CreateFrameBuffer(CAEAGLLayer eaglLayer)
+        {
+            int oldRenderbuffer = 1;
+            gl.GetInteger(All.RenderbufferBindingOes, out oldRenderbuffer);
+
+            gl.GenRenderbuffers(1, out renderbuffer);
+            gl.BindRenderbuffer(All.RenderbufferOes, renderbuffer);
+
+            if (!EAGLContext.RenderBufferStorage((uint)All.RenderbufferOes, eaglLayer))
+            {
+                gl.DeleteRenderbuffers(1, ref renderbuffer);
+                renderbuffer = 0;
+                gl.BindRenderbuffer(All.RenderbufferBindingOes, oldRenderbuffer);
+                throw new InvalidOperationException("Error with EAGLContext.RenderBufferStorage!");
+            }
+
+            gl.BindFramebuffer(All.FramebufferOes, framebuffer);
+            gl.FramebufferRenderbuffer(All.FramebufferOes, All.ColorAttachment0Oes, All.RenderbufferOes, renderbuffer);
+
+            Size newSize = new Size(
+                    (int)Math.Round(eaglLayer.Bounds.Size.Width),
+                    (int)Math.Round(eaglLayer.Bounds.Size.Height));
+            Size = newSize;
+
+            gl.Viewport(0, 0, newSize.Width, newSize.Height);
+            gl.Scissor(0, 0, newSize.Width, newSize.Height);
         }
 
         public virtual void Close()
