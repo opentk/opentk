@@ -68,13 +68,23 @@ namespace OpenTK.Platform.X11
         const string ICON_NET_ATOM = "_NET_WM_ICON";
 
         // The Atom class from Mono might be useful to avoid calling XInternAtom by hand (somewhat error prone). 
-        IntPtr _atom_wm_destroy;        
+        IntPtr _atom_wm_destroy;
         
         IntPtr _atom_net_wm_state;
         IntPtr _atom_net_wm_state_minimized;
         IntPtr _atom_net_wm_state_fullscreen;
         IntPtr _atom_net_wm_state_maximized_horizontal;
         IntPtr _atom_net_wm_state_maximized_vertical;
+
+        // Xdnd atoms
+        IntPtr _atom_xdnd_enter;
+        IntPtr _atom_xdnd_position;
+        IntPtr _atom_xdnd_status;
+        IntPtr _atom_xdnd_type_list;
+        IntPtr _atom_xdnd_action_copy;
+        IntPtr _atom_xdnd_drop;
+        IntPtr _atom_xdnd_finished;
+        IntPtr _atom_xdnd_selection;
 
         #pragma warning disable 414 // assigned but never used
         IntPtr _atom_net_wm_allowed_actions;
@@ -264,6 +274,13 @@ namespace OpenTK.Platform.X11
                 xi2_version = XI2MouseKeyboard.XIVersion;
             }
 
+            // Alow window recive Xdnd Events
+            IntPtr xdndAware = Functions.XInternAtom(window.Display, "XdndAware", false);
+            IntPtr xdndProtocol = new IntPtr(5);
+            using (new XLock (window.Display)) {
+                Functions.XChangeProperty(this.window.Display, this.Handle, xdndAware, (IntPtr)AtomName.XA_ATOM, 32, PropertyMode.Replace, ref xdndProtocol, 1);
+            }
+
             exists = true;
         }
 
@@ -306,6 +323,22 @@ namespace OpenTK.Platform.X11
 
         #region Private Members
 
+        #region Utils
+
+        private void ReadProperty(IntPtr property, IntPtr type, ref IntPtr data, ref IntPtr itemsCount)
+        {
+            int format;
+            IntPtr length = new IntPtr(int.MaxValue);
+            IntPtr actualType;
+            IntPtr bytesLeft;
+
+            Functions.XGetWindowProperty(this.window.Display, this.window.Handle, property, IntPtr.Zero,
+                                         length, false, type,
+                                         out actualType, out format, out itemsCount, out bytesLeft, ref data);
+        }
+
+        #endregion
+
         #region private void RegisterAtoms()
 
         /// <summary>
@@ -341,6 +374,16 @@ namespace OpenTK.Platform.X11
 
                 _atom_net_frame_extents =
                     Functions.XInternAtom(window.Display, "_NET_FRAME_EXTENTS", false);
+
+                // Some Xdnd atoms
+                _atom_xdnd_enter = Functions.XInternAtom(window.Display, "XdndEnter", false);
+                _atom_xdnd_position = Functions.XInternAtom(window.Display, "XdndPosition", false);
+                _atom_xdnd_status = Functions.XInternAtom(window.Display, "XdndStatus", false);
+                _atom_xdnd_type_list = Functions.XInternAtom(window.Display, "XdndTypeList", false);
+                _atom_xdnd_action_copy = Functions.XInternAtom(window.Display, "XdndActionCopy", false);
+                _atom_xdnd_drop = Functions.XInternAtom(window.Display, "XdndDrop", false);
+                _atom_xdnd_finished = Functions.XInternAtom(window.Display, "Xdndfinished", false);
+                _atom_xdnd_selection = Functions.XInternAtom(window.Display, "XdndSelection", false);
 
 //            string[] atom_names = new string[]
 //            {
@@ -798,7 +841,7 @@ namespace OpenTK.Platform.X11
                         !Functions.XCheckTypedWindowEvent(window.Display, window.Handle, XEventName.ClientMessage, ref e))
                         break;
                 }
-                
+
                 // Respond to the event e
                 switch (e.type)
                 {
@@ -838,8 +881,46 @@ namespace OpenTK.Platform.X11
                                 OnClosed(EventArgs.Empty);
                                 break;
                             }
+                        } else if (e.ClientMessageEvent.message_type == _atom_xdnd_enter) {
+                            // Xdnd started
+                            bool useList = ((e.ClientMessageEvent.ptr2.ToInt64() & 1) == 1);
+                            //long source = e.ClientMessageEvent.ptr1.ToInt64();
+                            //long version = e.ClientMessageEvent.ptr2.ToInt64() >> 24;
+
+                            IntPtr formats = IntPtr.Zero;
+                            int formatCount;
+                            if (useList) {
+                                IntPtr count = IntPtr.Zero;
+                                ReadProperty(_atom_xdnd_type_list, (IntPtr)AtomName.XA_ATOM, ref formats, ref count);
+                                formatCount = count.ToInt32();
+                            } else {
+                                Marshal.WriteIntPtr(formats, e.ClientMessageEvent.ptr3);
+                                Marshal.WriteIntPtr(formats, e.ClientMessageEvent.ptr4);
+                                Marshal.WriteIntPtr(formats, e.ClientMessageEvent.ptr5);
+                                formatCount = 3;
+                            }
+
+                            IntPtr atom = IntPtr.Zero;
+                            for (int i = 0; i < formatCount && atom == IntPtr.Zero; i++) {
+                                IntPtr tempAtom = Marshal.ReadIntPtr(formats, IntPtr.Size * i);
+                                IntPtr atomName = Functions.XGetAtomName(this.window.Display, tempAtom);
+
+                                string str = Marshal.PtrToStringUni(atomName);
+                                if (str == "text/uri-list") {
+                                    atom = tempAtom;
+                                }
+
+                                Functions.XFree(atomName);
+                            }
+
+                            if (useList && formats != IntPtr.Zero) {
+                                Functions.XFree(formats);
+                            }
+                        } else if (e.ClientMessageEvent.message_type == _atom_xdnd_position) {
+                            // Ignore for now it handle position of mouse when d&d happens
+                        } else if (e.ClientMessageEvent.message_type == _atom_xdnd_drop) {
+                            // Ignore for now it handle actual d&d
                         }
-                        
                         break;
 
                     case XEventName.DestroyNotify:
@@ -1004,6 +1085,9 @@ namespace OpenTK.Platform.X11
                         //{
                         //    RefreshWindowBorders();
                         //}
+                        break;
+
+                    case XEventName.SelectionNotify:
                         break;
 
                     default:
