@@ -41,7 +41,7 @@ using Gtk;
 namespace OpenTK
 {
     [ToolboxItem(true)]
-    public class GLWidget: DrawingArea, IDisposable
+    public class GLWidget: DrawingArea
     {
 
         #region Static attrs.
