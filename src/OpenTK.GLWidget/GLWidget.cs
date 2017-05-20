@@ -357,10 +357,16 @@ namespace OpenTK
             return Utilities.CreateMacOSWindowInfo(windowHandle, viewHandle);
         }
 
-        [SuppressUnmanagedCodeSecurity, DllImport("libgdk-quartz-2.0.0.dylib")]
+#if GTK3
+        const string MacLibGdkName = "libgtk-3.dylib";
+#else
+        const string MacLibGdkName = "libgdk-quartz-2.0.0.dylib";
+#endif
+        
+        [SuppressUnmanagedCodeSecurity, DllImport(MacLibGdkName)]
         static extern IntPtr gdk_quartz_window_get_nswindow(IntPtr handle);
 
-        [SuppressUnmanagedCodeSecurity, DllImport("libgdk-quartz-2.0.0.dylib")]
+        [SuppressUnmanagedCodeSecurity, DllImport(MacLibGdkName)]
         static extern IntPtr gdk_quartz_window_get_nsview(IntPtr handle);
 
         #endregion
