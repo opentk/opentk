@@ -341,10 +341,10 @@ namespace OpenTK
 
 #if GTK3
         [SuppressUnmanagedCodeSecurity, DllImport("libgdk-3-0.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr gdk_win32_window_get_handle(IntPtr w);
+        static extern IntPtr gdk_win32_window_get_handle(IntPtr w);
 #else
         [SuppressUnmanagedCodeSecurity, DllImport("libgdk-win32-2.0-0.dll")]
-        public static extern IntPtr gdk_win32_drawable_get_handle(IntPtr d);
+        static extern IntPtr gdk_win32_drawable_get_handle(IntPtr d);
 #endif
         #endregion
 
