@@ -330,11 +330,11 @@ namespace OpenTK
 
         IWindowInfo InitializeWindows()
         {
-            #if GTK3
+#if GTK3
             IntPtr windowHandle = gdk_win32_window_get_handle(this.Window.Handle);
-            #else
+#else
             IntPtr windowHandle = gdk_win32_drawable_get_handle(GdkWindow.Handle);
-            #endif
+#endif
             return Utilities.CreateWindowsWindowInfo(windowHandle);
         }
 
