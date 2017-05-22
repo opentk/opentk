@@ -331,7 +331,7 @@ namespace OpenTK
         IWindowInfo InitializeWindows()
         {
 #if GTK3
-            IntPtr windowHandle = gdk_win32_window_get_handle(this.Window.Handle);
+            IntPtr windowHandle = gdk_win32_window_get_handle(Window.Handle);
 #else
             IntPtr windowHandle = gdk_win32_drawable_get_handle(GdkWindow.Handle);
 #endif
@@ -357,7 +357,7 @@ namespace OpenTK
         }
 
 #if GTK3
-        const string MacLibGdkName = "libgtk-3.dylib";
+        const string MacLibGdkName = "libgdk-3.dylib";
 #else
         const string MacLibGdkName = "libgdk-quartz-2.0.0.dylib";
 #endif
@@ -451,7 +451,7 @@ namespace OpenTK
             IntPtr display = gdk_x11_display_get_xdisplay(Display.Handle);
             int screen = Screen.Number;
 #if GTK3
-            IntPtr windowHandle = gdk_x11_window_get_xid(GdkWindow.Handle);
+            IntPtr windowHandle = gdk_x11_window_get_xid(Window.Handle);
             IntPtr rootWindow = gdk_x11_window_get_xid(RootWindow.Handle);
 #else
             IntPtr windowHandle = gdk_x11_drawable_get_xid(GdkWindow.Handle);
