@@ -52,6 +52,13 @@ namespace OpenTK.Platform.X11
 
     #endregion
 
+    // X11 has some defined values
+    internal static class Consts
+    {
+        public static readonly IntPtr None = IntPtr.Zero;
+        public static readonly IntPtr CurrentTime = IntPtr.Zero;
+    }
+
     #region internal static class API
 
     internal static class API
