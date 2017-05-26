@@ -82,6 +82,7 @@ namespace OpenTK.Rewrite
             }
             read_params.SymbolReaderProvider = provider;
             read_params.ReadSymbols = true;
+            read_params.ReadWrite = true;
             write_params.WriteSymbols = true;
 
             if (!String.IsNullOrEmpty(keyfile) && File.Exists(keyfile))
@@ -98,57 +99,59 @@ namespace OpenTK.Rewrite
             }
 
             // Load assembly and process all modules
-            var assembly = AssemblyDefinition.ReadAssembly(file, read_params);
-            var rewritten = assembly.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "RewrittenAttribute");
-            if (rewritten == null)
+            using (AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(file, read_params))
             {
-                foreach (var module in assembly.Modules)
+                var rewritten = assembly.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "RewrittenAttribute");
+                if (rewritten == null)
                 {
-                    foreach (var reference in module.AssemblyReferences)
+                    foreach (var module in assembly.Modules)
                     {
-                        try
+                        foreach (var reference in module.AssemblyReferences)
                         {
-                            var resolved = module.AssemblyResolver.Resolve(reference);
-                            if (reference.Name == "mscorlib")
+                            try
                             {
-                                mscorlib = resolved;
+                                var resolved = module.AssemblyResolver.Resolve(reference);
+                                if (reference.Name == "mscorlib")
+                                {
+                                    mscorlib = resolved;
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Console.Error.WriteLine(e.ToString());
                             }
                         }
-                        catch (Exception e)
+                    }
+
+                    if (mscorlib == null)
+                    {
+                        Console.Error.WriteLine("Failed to locate mscorlib");
+                        return;
+                    }
+                    TypeMarshal = mscorlib.MainModule.GetType("System.Runtime.InteropServices.Marshal");
+                    TypeStringBuilder = mscorlib.MainModule.GetType("System.Text.StringBuilder");
+                    TypeVoid = mscorlib.MainModule.GetType("System.Void");
+                    TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
+                    TypeInt32 = mscorlib.MainModule.GetType("System.Int32");
+
+                    TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenTK.BindingsBase")).First();
+
+                    foreach (var module in assembly.Modules)
+                    {
+                        foreach (var type in module.Types)
                         {
-                            Console.Error.WriteLine(e.ToString());
+                            Rewrite(type, options);
                         }
                     }
                 }
-
-                if (mscorlib == null)
+                else
                 {
-                    Console.Error.WriteLine("Failed to locate mscorlib");
-                    return;
+                    Console.Error.WriteLine("Error: assembly has already been rewritten");
                 }
-                TypeMarshal = mscorlib.MainModule.GetType("System.Runtime.InteropServices.Marshal");
-                TypeStringBuilder = mscorlib.MainModule.GetType("System.Text.StringBuilder");
-                TypeVoid = mscorlib.MainModule.GetType("System.Void");
-                TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
-                TypeInt32 = mscorlib.MainModule.GetType("System.Int32");
 
-                TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenTK.BindingsBase")).First();
-
-                foreach (var module in assembly.Modules)
-                {
-                    foreach (var type in module.Types)
-                    {
-                        Rewrite(type, options);
-                    }
-                }
+                // Save rewritten assembly
+                assembly.Write(write_params);   
             }
-            else
-            {
-                Console.Error.WriteLine("Error: assembly has already been rewritten");
-            }
-
-            // Save rewritten assembly
-            assembly.Write(file, write_params);
         }
 
         void Rewrite(TypeDefinition type, IEnumerable<string> options)
@@ -171,7 +174,7 @@ namespace OpenTK.Rewrite
                 var rewritten_constructor = type.GetConstructors().First();
                 var rewritten = new CustomAttribute(rewritten_constructor);
                 rewritten.ConstructorArguments.Add(new CustomAttributeArgument(
-                    type.Module.Import(mscorlib.MainModule.GetType("System.Boolean")), true));
+                    type.Module.ImportReference(mscorlib.MainModule.GetType("System.Boolean")), true));
                 type.Module.Assembly.CustomAttributes.Add(rewritten);
             }
         }
@@ -272,9 +275,12 @@ namespace OpenTK.Rewrite
             }
 
             // Patch convenience wrappers
+            int stringBuilderPointerVarIndex = -1;
+            int stringPointerVarIndex = -1;
+            int stringArrayPointerVarIndex = -1;
             if (wrapper.Parameters.Count == native.Parameters.Count)
             {
-                EmitParameters(wrapper, native, body, il);
+                EmitParameters(wrapper, native, body, il, out stringBuilderPointerVarIndex, out stringPointerVarIndex, out stringArrayPointerVarIndex);
             }
             else
             {
@@ -301,7 +307,7 @@ namespace OpenTK.Rewrite
                 EmitReturnTypeWrapper(wrapper, native, body, il);
             }
 
-            EmitParameterEpilogues(wrapper, native, body, il);
+            EmitParameterEpilogues(wrapper, native, body, il, stringBuilderPointerVarIndex, stringPointerVarIndex, stringArrayPointerVarIndex);
 
             if (options.Contains("-debug"))
             {
@@ -479,7 +485,7 @@ namespace OpenTK.Rewrite
                     // String return-type wrapper
                     // return new string((sbyte*)((void*)GetString()));
 
-                    var intptr_to_voidpointer = wrapper.Module.Import(mscorlib.MainModule.GetType("System.IntPtr").GetMethods()
+                    var intptr_to_voidpointer = wrapper.Module.ImportReference(mscorlib.MainModule.GetType("System.IntPtr").GetMethods()
                         .First(m =>
                     {
                         return
@@ -487,7 +493,7 @@ namespace OpenTK.Rewrite
                         m.ReturnType.Name == "Void*";
                     }));
 
-                    var string_constructor = wrapper.Module.Import(mscorlib.MainModule.GetType("System.String").GetConstructors()
+                    var string_constructor = wrapper.Module.ImportReference(mscorlib.MainModule.GetType("System.String").GetConstructors()
                         .First(m =>
                     {
                         var p = m.Parameters;
@@ -521,28 +527,30 @@ namespace OpenTK.Rewrite
             }
         }
 
-        static void EmitParameterEpilogues(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il)
+        static void EmitParameterEpilogues(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il, 
+            int stringBuilderPointerVarIndex, int stringPointerVarIndex, int stringArrayPointerVarIndex)
         {
-            foreach (var p in wrapper.Parameters)
+            foreach (var p in wrapper.Parameters) // TODO: Should not need to check for >= 0 here, but StringBuilder 
+                                                  // TODO: requires it for some reason. Find out why
             {
-                if (p.ParameterType.Name == "StringBuilder")
+                if (p.ParameterType.Name == "StringBuilder" && stringBuilderPointerVarIndex >= 0)
                 {
-                    EmitStringBuilderEpilogue(wrapper, native, p, body, il);
+                    EmitStringBuilderEpilogue(wrapper, native, p, body, il, stringBuilderPointerVarIndex);
                 }
 
-                if (!p.ParameterType.IsArray && p.ParameterType.Name == "String")
+                if (!p.ParameterType.IsArray && p.ParameterType.Name == "String" && stringPointerVarIndex >= 0)
                 {
-                    EmitStringEpilogue(wrapper, p, body, il);
+                    EmitStringEpilogue(wrapper, p, body, il, stringPointerVarIndex);
                 }
 
-                if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String")
+                if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String" && stringArrayPointerVarIndex >= 0)
                 {
-                    EmitStringArrayEpilogue(wrapper, p, body, il);
+                    EmitStringArrayEpilogue(wrapper, p, body, il, stringArrayPointerVarIndex);
                 }
             }
         }
 
-        static void EmitStringBuilderParameter(MethodDefinition method, ParameterDefinition parameter, MethodBody body, ILProcessor il)
+        static void EmitStringBuilderParameter(MethodDefinition method, ParameterDefinition parameter, MethodBody body, ILProcessor il, out int stringBuilderPointerIndex)
         {
             var p = parameter.ParameterType;
 
@@ -557,25 +565,24 @@ namespace OpenTK.Rewrite
             //  Marshal.FreeHGlobal(sb_ptr);
             // }
             // Make sure we have imported StringBuilder::Capacity and Marshal::AllocHGlobal
-            var sb_get_capacity = method.Module.Import(TypeStringBuilder.Methods.First(m => m.Name == "get_Capacity"));
-            var alloc_hglobal = method.Module.Import(TypeMarshal.Methods.First(m => m.Name == "AllocHGlobal"));
+            var sb_get_capacity = method.Module.ImportReference(TypeStringBuilder.Methods.First(m => m.Name == "get_Capacity"));
+            var alloc_hglobal = method.Module.ImportReference(TypeMarshal.Methods.First(m => m.Name == "AllocHGlobal"));
 
             // IntPtr ptr;
-            var variable_name = parameter.Name + " _sb_ptr";
-            body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
-            int index = body.Variables.Count - 1;
+            body.Variables.Add(new VariableDefinition(TypeIntPtr));
+            stringBuilderPointerIndex = body.Variables.Count - 1;
 
             // ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
             il.Emit(OpCodes.Callvirt, sb_get_capacity);
             il.Emit(OpCodes.Call, alloc_hglobal);
-            il.Emit(OpCodes.Stloc, index);
-            il.Emit(OpCodes.Ldloc, index);
+            il.Emit(OpCodes.Stloc, stringBuilderPointerIndex);
+            il.Emit(OpCodes.Ldloc, stringBuilderPointerIndex);
 
             // We'll emit the try-finally block in the epilogue implementation,
             // because we haven't yet emitted all necessary instructions here.
         }
 
-        static void EmitStringBuilderEpilogue(MethodDefinition wrapper, MethodDefinition native, ParameterDefinition parameter, MethodBody body, ILProcessor il)
+        static void EmitStringBuilderEpilogue(MethodDefinition wrapper, MethodDefinition native, ParameterDefinition parameter, MethodBody body, ILProcessor il, int stringBuilderPointerIndex)
         {
             var p = parameter.ParameterType;
             if (p.Name == "StringBuilder")
@@ -591,29 +598,27 @@ namespace OpenTK.Rewrite
                 // }
 
                 // Make sure we have imported BindingsBase::MasrhalPtrToStringBuilder and Marshal::FreeHGlobal
-                var ptr_to_sb = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalPtrToStringBuilder"));
-                var free_hglobal = wrapper.Module.Import(TypeMarshal.Methods.First(m => m.Name == "FreeHGlobal"));
+                var ptr_to_sb = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "MarshalPtrToStringBuilder"));
+                var free_hglobal = wrapper.Module.ImportReference(TypeMarshal.Methods.First(m => m.Name == "FreeHGlobal"));
 
                 var block = new ExceptionHandler(ExceptionHandlerType.Finally);
                 block.TryStart = body.Instructions[0];
 
-                var variable_name = parameter.Name + " _sb_ptr";
-                var v = body.Variables.First(m => m.Name == variable_name);
-                il.Emit(OpCodes.Ldloc, v.Index);
+                il.Emit(OpCodes.Ldloc, stringBuilderPointerIndex);
                 il.Emit(OpCodes.Ldarg, parameter.Index);
                 il.Emit(OpCodes.Call, ptr_to_sb);
 
                 block.TryEnd = body.Instructions.Last();
                 block.HandlerStart = body.Instructions.Last();
 
-                il.Emit(OpCodes.Ldloc, v.Index);
+                il.Emit(OpCodes.Ldloc, stringBuilderPointerIndex);
                 il.Emit(OpCodes.Call, free_hglobal);
 
                 block.HandlerEnd = body.Instructions.Last();
             }
         }
 
-        static void EmitStringParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il)
+        static void EmitStringParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il, out int stringPointerIndex)
         {
             var p = parameter.ParameterType;
 
@@ -621,34 +626,31 @@ namespace OpenTK.Rewrite
             // IntPtr ptr = MarshalStringToPtr(str);
             // try { calli }
             // finally { Marshal.FreeHGlobal(ptr); }
-            var marshal_str_to_ptr = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringToPtr"));
+            var marshal_str_to_ptr = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringToPtr"));
 
             // IntPtr ptr;
-            var variable_name = parameter.Name + "_string_ptr";
-            body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
-            int index = body.Variables.Count - 1;
+            body.Variables.Add(new VariableDefinition(TypeIntPtr));
+            stringPointerIndex = body.Variables.Count - 1;
 
             // ptr = Marshal.StringToHGlobalAnsi(str);
             il.Emit(OpCodes.Call, marshal_str_to_ptr);
-            il.Emit(OpCodes.Stloc, index);
-            il.Emit(OpCodes.Ldloc, index);
+            il.Emit(OpCodes.Stloc, stringPointerIndex);
+            il.Emit(OpCodes.Ldloc, stringPointerIndex);
 
             // The finally block will be emitted in the function epilogue
         }
 
-        static void EmitStringEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il)
+        static void EmitStringEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il, int stringPointerIndex)
         {
             var p = parameter.ParameterType;
-            var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringPtr"));
+            var free = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringPtr"));
 
             // FreeStringPtr(ptr)
-            var variable_name = parameter.Name + "_string_ptr";
-            var v = body.Variables.First(m => m.Name == variable_name);
-            il.Emit(OpCodes.Ldloc, v.Index);
+            il.Emit(OpCodes.Ldloc, stringPointerIndex);
             il.Emit(OpCodes.Call, free);
         }
 
-        static void EmitStringArrayParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il)
+        static void EmitStringArrayParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il, out int stringArrayPointerIndex)
         {
             var p = parameter.ParameterType;
 
@@ -656,34 +658,31 @@ namespace OpenTK.Rewrite
             // IntPtr ptr = MarshalStringArrayToPtr(strings);
             // try { calli }
             // finally { FreeStringArrayPtr(ptr); }
-            var marshal_str_array_to_ptr = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringArrayToPtr"));
+            var marshal_str_array_to_ptr = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringArrayToPtr"));
 
             // IntPtr ptr;
-            var variable_name = parameter.Name + "_string_array_ptr";
-            body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
-            int index = body.Variables.Count - 1;
+            body.Variables.Add(new VariableDefinition(TypeIntPtr));
+            stringArrayPointerIndex = body.Variables.Count - 1;
 
             // ptr = MarshalStringArrayToPtr(strings);
             il.Emit(OpCodes.Call, marshal_str_array_to_ptr);
-            il.Emit(OpCodes.Stloc, index);
-            il.Emit(OpCodes.Ldloc, index);
+            il.Emit(OpCodes.Stloc, stringArrayPointerIndex);
+            il.Emit(OpCodes.Ldloc, stringArrayPointerIndex);
 
             // The finally block will be emitted in the function epilogue
         }
 
-        static void EmitStringArrayEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il)
+        static void EmitStringArrayEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il, int stringArrayPointerIndex)
         {
             // Note: only works for string vectors (1d arrays).
             // We do not (and will probably never) support 2d or higher string arrays
             var p = parameter.ParameterType;
-            var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringArrayPtr"));
+            var free = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringArrayPtr"));
 
             // FreeStringArrayPtr(string_array_ptr, string_array.Length)
-            var variable_name = parameter.Name + "_string_array_ptr";
-            var v = body.Variables.First(m => m.Name == variable_name);
 
             // load string_array_ptr
-            il.Emit(OpCodes.Ldloc, v.Index);
+            il.Emit(OpCodes.Ldloc, stringArrayPointerIndex);
 
             // load string_array.Length
             il.Emit(OpCodes.Ldarg, parameter.Index);
@@ -729,7 +728,12 @@ namespace OpenTK.Rewrite
                     //   return result;
                     // }
                     body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
-                    EmitParameters(wrapper, native, body, il);
+
+                    int dummy1;
+                    int dummy2;
+                    int dummy3;
+                    
+                    EmitParameters(wrapper, native, body, il, out dummy1, out dummy2, out dummy3);
                     il.Emit(OpCodes.Ldloca, body.Variables.Count - 1);
                 }
                 else
@@ -757,13 +761,19 @@ namespace OpenTK.Rewrite
             }
         }
 
-        static int EmitParameters(MethodDefinition method, MethodDefinition native, MethodBody body, ILProcessor il)
+        static int EmitParameters(MethodDefinition method, MethodDefinition native, MethodBody body, ILProcessor il,
+            out int stringBuilderPointerVarIndex, out int stringPointerVarIndex, out int stringArrayPointerVarIndex)
         {
+            // Default outs
+            stringBuilderPointerVarIndex = -1;
+            stringPointerVarIndex = -1;
+            stringArrayPointerVarIndex = -1;
+            
             int i;
             for (i = 0; i < method.Parameters.Count; i++)
             {
                 var parameter = method.Parameters[i];
-                var p = method.Module.Import(method.Parameters[i].ParameterType);
+                var p = method.Module.ImportReference(method.Parameters[i].ParameterType);
                 il.Emit(OpCodes.Ldarg, i);
 
                 if (p.Name.Contains("Int32") && native.Parameters[i].ParameterType.Name.Contains("IntPtr"))
@@ -774,11 +784,11 @@ namespace OpenTK.Rewrite
                 }
                 else if (p.Name == "StringBuilder")
                 {
-                    EmitStringBuilderParameter(method, parameter, body, il);
+                    EmitStringBuilderParameter(method, parameter, body, il, out stringBuilderPointerVarIndex);
                 }
                 else if (p.Name == "String" && !p.IsArray)
                 {
-                    EmitStringParameter(method, parameter, body, il);
+                    EmitStringParameter(method, parameter, body, il, out stringPointerVarIndex);
                 }
                 else if (p.IsByReference)
                 {
@@ -790,7 +800,7 @@ namespace OpenTK.Rewrite
                 }
                 else if (p.IsArray)
                 {
-                    if (p.Name != method.Module.Import(typeof(string[])).Name)
+                    if (p.Name != method.Module.ImportReference(typeof(string[])).Name)
                     {
                         // .Net treats 1d arrays differently than higher rank arrays.
                         // 1d arrays are directly supported by instructions such as ldlen and ldelema.
@@ -834,7 +844,7 @@ namespace OpenTK.Rewrite
                         }
                         else
                         {
-                            var get_length = method.Module.Import(
+                            var get_length = method.Module.ImportReference(
                                 mscorlib.MainModule.GetType("System.Array").Methods.First(m => m.Name == "get_Length"));
                             il.Emit(OpCodes.Callvirt, get_length);
                         }
@@ -880,7 +890,7 @@ namespace OpenTK.Rewrite
                     }
                     else
                     {
-                        EmitStringArrayParameter(method, parameter, body, il);
+                        EmitStringArrayParameter(method, parameter, body, il, out stringArrayPointerVarIndex);
                     }
                 }
             }
