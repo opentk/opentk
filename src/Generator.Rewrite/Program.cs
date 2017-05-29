@@ -522,17 +522,17 @@ namespace OpenTK.Rewrite
             {
                 if (p.ParameterType.Name == "StringBuilder")
                 {
-                    EmitStringBuilderEpilogue(wrapper, native, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_sb_ptr" && v.Body == body));
+                    EmitStringBuilderEpilogue(wrapper, native, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_sb_ptr" && v.Body == body && body.Variables.Contains(v.Definition)));
                 }
 
                 if (!p.ParameterType.IsArray && p.ParameterType.Name == "String")
                 {
-                    EmitStringEpilogue(wrapper, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_string_ptr" && v.Body == body));
+                    EmitStringEpilogue(wrapper, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_string_ptr" && v.Body == body && body.Variables.Contains(v.Definition)));
                 }
 
                 if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String")
                 {
-                    EmitStringArrayEpilogue(wrapper, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_string_array_ptr" && v.Body == body));
+                    EmitStringArrayEpilogue(wrapper, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_string_array_ptr" && v.Body == body && body.Variables.Contains(v.Definition)));
                 }
             }
         }
