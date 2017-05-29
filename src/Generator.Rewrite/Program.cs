@@ -140,7 +140,7 @@ namespace OpenTK.Rewrite
                 }
 
                 // Save rewritten assembly
-                assembly.Write(write_params);   
+                assembly.Write(write_params);
             }
         }
 
@@ -516,25 +516,38 @@ namespace OpenTK.Rewrite
         }
 
         static void EmitParameterEpilogues(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il, 
-            List<GeneratedVariableIdentifier> generatedVariables)
+            IReadOnlyCollection<GeneratedVariableIdentifier> generatedVariables)
         {
             foreach (var p in wrapper.Parameters) 
             {
                 if (p.ParameterType.Name == "StringBuilder")
                 {
-                    EmitStringBuilderEpilogue(wrapper, native, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_sb_ptr" && v.Body == body && body.Variables.Contains(v.Definition)));
+                    EmitStringBuilderEpilogue(wrapper, native, p, body, il, GetGeneratedVariable(generatedVariables, p.Name + "_sb_ptr", body));
                 }
 
                 if (!p.ParameterType.IsArray && p.ParameterType.Name == "String")
                 {
-                    EmitStringEpilogue(wrapper, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_string_ptr" && v.Body == body && body.Variables.Contains(v.Definition)));
+                    EmitStringEpilogue(wrapper, p, body, il,GetGeneratedVariable(generatedVariables, p.Name + "_string_ptr", body));
                 }
 
                 if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String")
                 {
-                    EmitStringArrayEpilogue(wrapper, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_string_array_ptr" && v.Body == body && body.Variables.Contains(v.Definition)));
+                    EmitStringArrayEpilogue(wrapper, p, body, il, GetGeneratedVariable(generatedVariables, p.Name + "_string_array_ptr", body));
                 }
             }
+        }
+
+        /// <summary>
+        /// Retrieves a generated variable by searching the given list by the variable's name and associated method body. 
+        /// </summary>
+        /// <param name="variableIdentifiers"></param>
+        /// <param name="name"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        static GeneratedVariableIdentifier GetGeneratedVariable(IEnumerable<GeneratedVariableIdentifier> variableIdentifiers, string name, MethodBody body)
+        {
+            return variableIdentifiers.FirstOrDefault(v => v.Name == name && v.Body == body &&
+                                                           body.Variables.Contains(v.Definition));
         }
 
         static GeneratedVariableIdentifier EmitStringBuilderParameter(MethodDefinition method, ParameterDefinition parameter, MethodBody body, ILProcessor il)
