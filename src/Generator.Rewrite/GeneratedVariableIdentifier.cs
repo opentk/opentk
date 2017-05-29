@@ -7,7 +7,7 @@ namespace OpenTK.Rewrite
     /// Acts as a unique identifier for a generated named variable that can be passed between methods. Replaces uses of 
     /// variable names from Mono.Cecil.
     /// </summary>
-    public class GeneratedVariableIdentifier
+    internal sealed class GeneratedVariableIdentifier
     {
         /// <summary>
         /// The <see cref="MethodBody"/> which the variable is in.
