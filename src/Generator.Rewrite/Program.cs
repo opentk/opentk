@@ -169,7 +169,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        int GetSlot(MethodDefinition signature)
+        static int GetSlot(MethodDefinition signature)
         {
             // Pretend there is no slots if we want to force everything to work through DllImport (Android & iOS)
             if (dllimport)
@@ -219,7 +219,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        void RemoveNativeSignatures(TypeDefinition type, List<MethodDefinition> methods)
+        static void RemoveNativeSignatures(TypeDefinition type, List<MethodDefinition> methods)
         {
             // Remove all DllImports for functions called through calli, since
             // their signatures are embedded directly into the calli callsite.
@@ -230,7 +230,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        void RemoveSupportingAttributes(TypeDefinition type)
+        static void RemoveSupportingAttributes(TypeDefinition type)
         {
             foreach (var method in type.Methods)
             {
