@@ -573,7 +573,8 @@ namespace OpenTK.Rewrite
             // because we haven't yet emitted all necessary instructions here.
         }
 
-        static void EmitStringBuilderEpilogue(MethodDefinition wrapper, MethodDefinition native, ParameterDefinition parameter, MethodBody body, ILProcessor il, int stringBuilderPointerIndex)
+        static void EmitStringBuilderEpilogue(MethodDefinition wrapper, MethodDefinition native, 
+            ParameterDefinition parameter, MethodBody body, ILProcessor il, int generatedPointerVarIndex)
         {
             var p = parameter.ParameterType;
             if (p.Name == "StringBuilder")
@@ -595,21 +596,22 @@ namespace OpenTK.Rewrite
                 var block = new ExceptionHandler(ExceptionHandlerType.Finally);
                 block.TryStart = body.Instructions[0];
 
-                il.Emit(OpCodes.Ldloc, stringBuilderPointerIndex);
+                il.Emit(OpCodes.Ldloc, generatedPointerVarIndex);
                 il.Emit(OpCodes.Ldarg, parameter.Index);
                 il.Emit(OpCodes.Call, ptr_to_sb);
 
                 block.TryEnd = body.Instructions.Last();
                 block.HandlerStart = body.Instructions.Last();
 
-                il.Emit(OpCodes.Ldloc, stringBuilderPointerIndex);
+                il.Emit(OpCodes.Ldloc, generatedPointerVarIndex);
                 il.Emit(OpCodes.Call, free_hglobal);
 
                 block.HandlerEnd = body.Instructions.Last();
             }
         }
 
-        static void EmitStringParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il, out int stringPointerIndex)
+        static void EmitStringParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, 
+            ILProcessor il, out int generatedPointerVarIndex)
         {
             var p = parameter.ParameterType;
 
@@ -621,27 +623,29 @@ namespace OpenTK.Rewrite
 
             // IntPtr ptr;
             body.Variables.Add(new VariableDefinition(TypeIntPtr));
-            stringPointerIndex = body.Variables.Count - 1;
+            generatedPointerVarIndex = body.Variables.Count - 1;
 
             // ptr = Marshal.StringToHGlobalAnsi(str);
             il.Emit(OpCodes.Call, marshal_str_to_ptr);
-            il.Emit(OpCodes.Stloc, stringPointerIndex);
-            il.Emit(OpCodes.Ldloc, stringPointerIndex);
+            il.Emit(OpCodes.Stloc, generatedPointerVarIndex);
+            il.Emit(OpCodes.Ldloc, generatedPointerVarIndex);
 
             // The finally block will be emitted in the function epilogue
         }
 
-        static void EmitStringEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il, int stringPointerIndex)
+        static void EmitStringEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, 
+            ILProcessor il, int generatedPointerVarIndex)
         {
             var p = parameter.ParameterType;
             var free = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringPtr"));
 
             // FreeStringPtr(ptr)
-            il.Emit(OpCodes.Ldloc, stringPointerIndex);
+            il.Emit(OpCodes.Ldloc, generatedPointerVarIndex);
             il.Emit(OpCodes.Call, free);
         }
 
-        static void EmitStringArrayParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il, out int stringArrayPointerIndex)
+        static void EmitStringArrayParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
+            ILProcessor il, out int generatedPointerVarIndex)
         {
             var p = parameter.ParameterType;
 
@@ -653,17 +657,18 @@ namespace OpenTK.Rewrite
 
             // IntPtr ptr;
             body.Variables.Add(new VariableDefinition(TypeIntPtr));
-            stringArrayPointerIndex = body.Variables.Count - 1;
+            generatedPointerVarIndex = body.Variables.Count - 1;
 
             // ptr = MarshalStringArrayToPtr(strings);
             il.Emit(OpCodes.Call, marshal_str_array_to_ptr);
-            il.Emit(OpCodes.Stloc, stringArrayPointerIndex);
-            il.Emit(OpCodes.Ldloc, stringArrayPointerIndex);
+            il.Emit(OpCodes.Stloc, generatedPointerVarIndex);
+            il.Emit(OpCodes.Ldloc, generatedPointerVarIndex);
 
             // The finally block will be emitted in the function epilogue
         }
 
-        static void EmitStringArrayEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, ILProcessor il, int stringArrayPointerIndex)
+        static void EmitStringArrayEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body, 
+            ILProcessor il, int generatedPointerVarIndex)
         {
             // Note: only works for string vectors (1d arrays).
             // We do not (and will probably never) support 2d or higher string arrays
@@ -673,7 +678,7 @@ namespace OpenTK.Rewrite
             // FreeStringArrayPtr(string_array_ptr, string_array.Length)
 
             // load string_array_ptr
-            il.Emit(OpCodes.Ldloc, stringArrayPointerIndex);
+            il.Emit(OpCodes.Ldloc, generatedPointerVarIndex);
 
             // load string_array.Length
             il.Emit(OpCodes.Ldarg, parameter.Index);
