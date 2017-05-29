@@ -69,19 +69,7 @@ namespace OpenTK.Rewrite
             // We want to keep a valid symbols file (pdb or mdb)
             var read_params = new ReaderParameters();
             var write_params = new WriterParameters();
-            var pdb = Path.ChangeExtension(file, "pdb");
-            var mdb = file + ".mdb";
-            ISymbolReaderProvider provider = null;
-            if (File.Exists(pdb))
-            {
-                provider = new Mono.Cecil.Pdb.PdbReaderProvider();
-            }
-            else if (File.Exists(mdb))
-            {
-                provider = new Mono.Cecil.Mdb.MdbReaderProvider();
-            }
-            
-            read_params.SymbolReaderProvider = provider;
+           
             read_params.ReadSymbols = true;
             read_params.ReadWrite = true;
             write_params.WriteSymbols = true;
