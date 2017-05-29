@@ -266,7 +266,7 @@ namespace OpenTK.Rewrite
 
             // Patch convenience wrappers
             List<GeneratedVariableIdentifier> generatedVariables = new List<GeneratedVariableIdentifier>();
-                if (wrapper.Parameters.Count == native.Parameters.Count)
+            if (wrapper.Parameters.Count == native.Parameters.Count)
             {
                 generatedVariables = EmitParameters(wrapper, native, body, il);
             }
@@ -522,17 +522,17 @@ namespace OpenTK.Rewrite
             {
                 if (p.ParameterType.Name == "StringBuilder")
                 {
-                    EmitStringBuilderEpilogue(wrapper, native, p, body, il, generatedVariables.FirstOrDefault(g => g.Name == p.Name + "_sb_ptr"));
+                    EmitStringBuilderEpilogue(wrapper, native, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_sb_ptr" && v.Body == body));
                 }
 
                 if (!p.ParameterType.IsArray && p.ParameterType.Name == "String")
                 {
-                    EmitStringEpilogue(wrapper, p, body, il, generatedVariables.FirstOrDefault(g => g.Name == p.Name + "_string_ptr"));
+                    EmitStringEpilogue(wrapper, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_string_ptr" && v.Body == body));
                 }
 
                 if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String")
                 {
-                    EmitStringArrayEpilogue(wrapper, p, body, il, generatedVariables.FirstOrDefault(g => g.Name == p.Name + "_string_array_ptr"));
+                    EmitStringArrayEpilogue(wrapper, p, body, il, generatedVariables.FirstOrDefault(v => v.Name == p.Name + "_string_array_ptr" && v.Body == body));
                 }
             }
         }
@@ -556,16 +556,17 @@ namespace OpenTK.Rewrite
             var alloc_hglobal = method.Module.ImportReference(TypeMarshal.Methods.First(m => m.Name == "AllocHGlobal"));
 
             // IntPtr ptr;
-            body.Variables.Add(new VariableDefinition(TypeIntPtr));
+            var variableDefinition = new VariableDefinition(TypeIntPtr);
+            body.Variables.Add(variableDefinition);
             int stringBuilderPtrIndex = body.Variables.Count - 1;
 
-            GeneratedVariableIdentifier stringBuilderPtrVar = new GeneratedVariableIdentifier(parameter.Name + "_sb_ptr", stringBuilderPtrIndex);
+            GeneratedVariableIdentifier stringBuilderPtrVar = new GeneratedVariableIdentifier(body, variableDefinition, parameter.Name + "_sb_ptr");
 
             // ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
             il.Emit(OpCodes.Callvirt, sb_get_capacity);
             il.Emit(OpCodes.Call, alloc_hglobal);
-            il.Emit(OpCodes.Stloc, stringBuilderPtrVar.Index);
-            il.Emit(OpCodes.Ldloc, stringBuilderPtrVar.Index);
+            il.Emit(OpCodes.Stloc, stringBuilderPtrIndex);
+            il.Emit(OpCodes.Ldloc, stringBuilderPtrIndex);
 
             // We'll emit the try-finally block in the epilogue implementation,
             // because we haven't yet emitted all necessary instructions here.
@@ -601,14 +602,14 @@ namespace OpenTK.Rewrite
                 var block = new ExceptionHandler(ExceptionHandlerType.Finally);
                 block.TryStart = body.Instructions[0];
 
-                il.Emit(OpCodes.Ldloc, generatedPtrVar.Index);
+                il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
                 il.Emit(OpCodes.Ldarg, parameter.Index);
                 il.Emit(OpCodes.Call, ptr_to_sb);
 
                 block.TryEnd = body.Instructions.Last();
                 block.HandlerStart = body.Instructions.Last();
 
-                il.Emit(OpCodes.Ldloc, generatedPtrVar.Index);
+                il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
                 il.Emit(OpCodes.Call, free_hglobal);
 
                 block.HandlerEnd = body.Instructions.Last();
@@ -627,15 +628,16 @@ namespace OpenTK.Rewrite
             var marshal_str_to_ptr = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringToPtr"));
 
             // IntPtr ptr;
-            body.Variables.Add(new VariableDefinition(TypeIntPtr));
+            var variableDefinition = new VariableDefinition(TypeIntPtr);
+            body.Variables.Add(variableDefinition);
             int generatedPointerVarIndex = body.Variables.Count - 1;
             
-            GeneratedVariableIdentifier stringPtrVar = new GeneratedVariableIdentifier(parameter.Name + "_string_ptr", generatedPointerVarIndex);
+            GeneratedVariableIdentifier stringPtrVar = new GeneratedVariableIdentifier(body, variableDefinition, parameter.Name + "_string_ptr");
 
             // ptr = Marshal.StringToHGlobalAnsi(str);
             il.Emit(OpCodes.Call, marshal_str_to_ptr);
-            il.Emit(OpCodes.Stloc, stringPtrVar.Index);
-            il.Emit(OpCodes.Ldloc, stringPtrVar.Index);
+            il.Emit(OpCodes.Stloc, generatedPointerVarIndex);
+            il.Emit(OpCodes.Ldloc, generatedPointerVarIndex);
 
             // The finally block will be emitted in the function epilogue
             return stringPtrVar;
@@ -648,7 +650,7 @@ namespace OpenTK.Rewrite
             var free = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringPtr"));
 
             // FreeStringPtr(ptr)
-            il.Emit(OpCodes.Ldloc, generatedPtrVar.Index);
+            il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
             il.Emit(OpCodes.Call, free);
         }
 
@@ -664,15 +666,16 @@ namespace OpenTK.Rewrite
             var marshal_str_array_to_ptr = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringArrayToPtr"));
 
             // IntPtr ptr;
-            body.Variables.Add(new VariableDefinition(TypeIntPtr));
+            var variableDefinition = new VariableDefinition(TypeIntPtr);
+            body.Variables.Add(variableDefinition);
             int generatedPointerVarIndex = body.Variables.Count - 1;
             
-            GeneratedVariableIdentifier stringArrayPtrVar = new GeneratedVariableIdentifier(parameter.Name + "_string_array_ptr", generatedPointerVarIndex);
+            GeneratedVariableIdentifier stringArrayPtrVar = new GeneratedVariableIdentifier(body, variableDefinition, parameter.Name + "_string_array_ptr");
 
             // ptr = MarshalStringArrayToPtr(strings);
             il.Emit(OpCodes.Call, marshal_str_array_to_ptr);
-            il.Emit(OpCodes.Stloc, stringArrayPtrVar.Index);
-            il.Emit(OpCodes.Ldloc, stringArrayPtrVar.Index);
+            il.Emit(OpCodes.Stloc, generatedPointerVarIndex);
+            il.Emit(OpCodes.Ldloc, generatedPointerVarIndex);
 
             // The finally block will be emitted in the function epilogue
 
@@ -695,7 +698,7 @@ namespace OpenTK.Rewrite
             // FreeStringArrayPtr(string_array_ptr, string_array.Length)
 
             // load string_array_ptr
-            il.Emit(OpCodes.Ldloc, generatedPtrVar.Index);
+            il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
 
             // load string_array.Length
             il.Emit(OpCodes.Ldarg, parameter.Index);
