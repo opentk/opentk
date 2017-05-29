@@ -68,7 +68,7 @@ namespace OpenTK.Rewrite
             // We want to keep a valid symbols file (pdb or mdb)
             var read_params = new ReaderParameters();
             var write_params = new WriterParameters();
-           
+
             read_params.ReadSymbols = true;
             read_params.ReadWrite = true;
             write_params.WriteSymbols = true;
@@ -219,7 +219,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        static void RemoveNativeSignatures(TypeDefinition type, List<MethodDefinition> methods)
+        static void RemoveNativeSignatures(TypeDefinition type, IEnumerable<MethodDefinition> methods)
         {
             // Remove all DllImports for functions called through calli, since
             // their signatures are embedded directly into the calli callsite.
@@ -516,7 +516,7 @@ namespace OpenTK.Rewrite
         }
 
         static void EmitParameterEpilogues(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il, 
-            IReadOnlyCollection<GeneratedVariableIdentifier> generatedVariables)
+            List<GeneratedVariableIdentifier> generatedVariables)
         {
             foreach (var p in wrapper.Parameters) 
             {
