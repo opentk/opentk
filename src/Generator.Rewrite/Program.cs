@@ -334,7 +334,7 @@ namespace OpenTK.Rewrite
                 // something like "type namespace.class::method(type arg)"
                 var module = il.Body.Method.FullName;
                 module = module.Substring(module.IndexOf(' ') + 1);
-                module = module.Substring(0, module.IndexOf("::"));
+                module = module.Substring(0, module.IndexOf("::", StringComparison.Ordinal));
                 module = module.Substring(0, module.LastIndexOf('.'));
 
                 // Only works for Graphics modules due to hardcoded use of
