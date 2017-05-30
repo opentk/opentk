@@ -1,6 +1,6 @@
 NUGET
   remote: https://www.nuget.org/api/v2
-    FAKE (4.61.2)
+    FAKE (4.61.3)
     FsCheck (2.9)
       FSharp.Core (>= 4.1) - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
       FSharp.Core (>= 4.1.17) - framework: >= netstandard16
@@ -103,6 +103,29 @@ NUGET
       System.Threading.Timer (>= 4.3) - framework: >= net451, >= netstandard12
       System.Xml.ReaderWriter (>= 4.3) - framework: >= netstandard10
       System.Xml.XDocument (>= 4.3) - framework: >= netstandard10
+    NUnit (3.7)
+      NETStandard.Library (>= 1.6) - framework: netstandard13, >= netstandard16
+      System.Runtime.Loader (>= 4.3) - framework: >= netstandard16
+      System.Threading.Thread (>= 4.3) - framework: netstandard13, >= netstandard16
+    NUnit.Console (3.6.1)
+      NUnit.ConsoleRunner (>= 3.6.1)
+      NUnit.Extension.NUnitProjectLoader (>= 3.5)
+      NUnit.Extension.NUnitV2Driver (>= 3.6)
+      NUnit.Extension.NUnitV2ResultWriter (>= 3.5)
+      NUnit.Extension.TeamCityEventListener (>= 1.0.2)
+      NUnit.Extension.VSProjectLoader (>= 3.5)
+    NUnit.ConsoleRunner (3.6.1)
+    NUnit.Extension.NUnitProjectLoader (3.5)
+    NUnit.Extension.NUnitV2Driver (3.6)
+    NUnit.Extension.NUnitV2ResultWriter (3.5)
+    NUnit.Extension.TeamCityEventListener (1.0.2)
+    NUnit.Extension.VSProjectLoader (3.5)
+    NUnit3TestAdapter (3.7)
+    NUnitLite (3.7)
+      NETStandard.Library (>= 1.6) - framework: netstandard13, >= netstandard16
+      NUnit (3.7) - framework: net10, net11, netstandard10, netstandard11, netstandard12
+      System.Runtime.Loader (>= 4.3) - framework: >= netstandard16
+      System.Threading.Thread (>= 4.3) - framework: netstandard13, >= netstandard16
     runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - framework: >= net10, >= netstandard13, netstandard14, netstandard15
     runtime.fedora.23-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - framework: >= net10, >= netstandard13, netstandard14, netstandard15
     runtime.fedora.24-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - framework: >= net10, >= netstandard13, netstandard14, netstandard15
@@ -406,6 +429,10 @@ NUGET
       System.Runtime (>= 4.3) - framework: dnxcore50, >= netstandard11
       System.Runtime.InteropServices (>= 4.3) - framework: >= netstandard11
       System.Threading (>= 4.3) - framework: dnxcore50, >= netstandard11
+    System.Runtime.Loader (4.3) - framework: >= netstandard16
+      System.IO (>= 4.3) - framework: >= netstandard15
+      System.Reflection (>= 4.3) - framework: >= netstandard15
+      System.Runtime (>= 4.3) - framework: >= netstandard15
     System.Runtime.Numerics (4.3) - framework: >= net10, >= netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
       System.Globalization (>= 4.3) - framework: dnxcore50, >= netstandard13
       System.Resources.ResourceManager (>= 4.3) - framework: dnxcore50, >= netstandard13
@@ -549,7 +576,7 @@ NUGET
       System.Runtime.Extensions (>= 4.3) - framework: dnxcore50, >= netstandard13
       System.Threading (>= 4.3) - framework: dnxcore50, >= netstandard13
       System.Threading.Tasks (>= 4.3) - framework: dnxcore50, netstandard11, >= netstandard13
-    System.Threading.Thread (4.3) - framework: >= net10, >= netstandard16
+    System.Threading.Thread (4.3) - framework: >= net10, netstandard13, >= netstandard16
       System.Runtime (>= 4.3) - framework: >= netstandard13
     System.Threading.ThreadPool (4.3) - framework: >= net10, >= netstandard16
       System.Runtime (>= 4.3) - framework: >= netstandard13

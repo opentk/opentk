@@ -7,3 +7,8 @@ before_install:
  
 script: 
   - ./build.sh NuGet
+  
+after_success:
+  - mono --debug --profile=log:coverage,covfilter=+OpenTK,covfilter=-OpenTK.Tests tests/OpenTK.Tests/bin/Release/OpenTK.Tests.exe --noresult
+  - mprof-report --reports=coverage --coverage-out=coverage.xml output.mlpd
+  - bash <(curl -s https://codecov.io/bash)
