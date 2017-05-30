@@ -5,7 +5,7 @@ source https://nuget.org/api/v2
 nuget FSharp.Formatting
 nuget FsCheck.Xunit
 nuget NUnit
-nuget NUnit.ConsoleRunner
+nuget NUnit.Console
 nuget NUnitLite
 nuget NUnit3TestAdapter
 nuget xunit.runner.console
