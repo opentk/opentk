@@ -90,6 +90,7 @@ let activeProjects =
     !! "src/**/*.??proj"
     ++ "tests/**/OpenTK.Tests.csproj"
     -- "**/Test.API.Desktop.csproj"
+    -- "**/OpenTK.GLWidget.csproj"
     |> xamarinFilter
 
 // Generate assembly info files with the right version & up-to-date information
