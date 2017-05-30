@@ -31,6 +31,18 @@ fi
 
 run .paket/paket.exe restore
 
+# FAKE workaround - msbuild is the new primary build tool on Mono >= 5.0
+MONO_VER=$(mono --version | awk 'NR == 1 { print $5; }')
+if [[ ( $MONO_VER > "5.0.0.0" )  || ( $MONO_VER == "5.0.0.0" ) ]]
+then
+	MSBUILD_PRESENT=$(which msbuild)
+	if [[ -z $MSBUILD_PRESENT ]]; then
+		MSBuild=$(which msbuild)
+	else
+		MSBuild=$(which xbuild)
+	fi
+fi
+
 [ ! -e build.fsx ] && run .paket/paket.exe update
 [ ! -e build.fsx ] && run packages/FAKE/tools/FAKE.exe init.fsx
 run packages/FAKE/tools/FAKE.exe "$@" $FSIARGS build.fsx
