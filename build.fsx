@@ -87,8 +87,9 @@ let activeProjects =
             -- "**/OpenTK.Android.csproj"
             -- "**/OpenTK.iOS.csproj"
 
-    !! "src/**/*.??proj"
+    !! "**/*.??proj"
     -- "**/OpenTK.GLWidget.csproj"
+    -- "**/Test.API.Desktop.csproj"
     |> xamarinFilter
 
 // Generate assembly info files with the right version & up-to-date information
