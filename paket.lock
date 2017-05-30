@@ -107,6 +107,7 @@ NUGET
       NETStandard.Library (>= 1.6) - framework: netstandard13, >= netstandard16
       System.Runtime.Loader (>= 4.3) - framework: >= netstandard16
       System.Threading.Thread (>= 4.3) - framework: netstandard13, >= netstandard16
+    NUnit.ConsoleRunner (3.6.1)
     NUnit3TestAdapter (3.7)
     NUnitLite (3.7)
       NETStandard.Library (>= 1.6) - framework: netstandard13, >= netstandard16

@@ -46,7 +46,7 @@ let copyright = "Copyright (c) 2006 - 2016 Stefanos Apostolopoulos <stapostol@gm
 let solutionFile  = "OpenTK.sln"
 
 // Pattern specifying assemblies to be tested using NUnit
-let testAssemblies = "tests/**/bin/Release/*Tests*.dll"
+let testAssemblies = "tests/**/bin/Release/*Tests*.exe"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted
@@ -87,8 +87,8 @@ let activeProjects =
             -- "**/OpenTK.Android.csproj"
             -- "**/OpenTK.iOS.csproj"
 
-    !! "**/*.??proj"
-    -- "**/OpenTK.GLWidget.csproj"
+    !! "src/**/*.??proj"
+    ++ "tests/**/OpenTK.Tests.csproj"
     -- "**/Test.API.Desktop.csproj"
     |> xamarinFilter
 
@@ -156,11 +156,9 @@ Target "Build" (fun _ ->
 
 Target "RunTests" (fun _ ->
     !! testAssemblies
-    |> xUnit2 (fun p ->
+    |> NUnit3 (fun p ->
         { p with
-            ShadowCopy = true
-            TimeOut = TimeSpan.FromMinutes 2.
-            XmlOutputPath = Some "TestResults.xml" })
+            ToolPath = "packages/NUnit.ConsoleRunner/tools/nunit3-console.exe" })
 )
 
 // --------------------------------------------------------------------------------------
@@ -195,7 +193,7 @@ Target "All" DoNothing
   ==> "AssemblyInfo"
   ==> "Build"
   ==> "CopyBinaries"
-//  ==> "RunTests"
+  ==> "RunTests"
   ==> "All"
 
 "All" 
