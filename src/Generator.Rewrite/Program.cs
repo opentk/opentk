@@ -90,58 +90,65 @@ namespace OpenTK.Rewrite
             }
 
             // Load assembly and process all modules
-            using (AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(file, read_params))
+            try
             {
-                var rewritten = assembly.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "RewrittenAttribute");
-                if (rewritten == null)
+                using (AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(file, read_params))
                 {
-                    foreach (var module in assembly.Modules)
+                    var rewritten = assembly.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "RewrittenAttribute");
+                    if (rewritten == null)
                     {
-                        foreach (var reference in module.AssemblyReferences)
+                        foreach (var module in assembly.Modules)
                         {
-                            try
+                            foreach (var reference in module.AssemblyReferences)
                             {
-                                var resolved = module.AssemblyResolver.Resolve(reference);
-                                if (reference.Name == "mscorlib")
+                                try
                                 {
-                                    mscorlib = resolved;
+                                    var resolved = module.AssemblyResolver.Resolve(reference);
+                                    if (reference.Name == "mscorlib")
+                                    {
+                                        mscorlib = resolved;
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.Error.WriteLine(e.ToString());
                                 }
                             }
-                            catch (Exception e)
+                        }
+
+                        if (mscorlib == null)
+                        {
+                            Console.Error.WriteLine("Failed to locate mscorlib");
+                            return;
+                        }
+                        TypeMarshal = mscorlib.MainModule.GetType("System.Runtime.InteropServices.Marshal");
+                        TypeStringBuilder = mscorlib.MainModule.GetType("System.Text.StringBuilder");
+                        TypeVoid = mscorlib.MainModule.GetType("System.Void");
+                        TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
+                        TypeInt32 = mscorlib.MainModule.GetType("System.Int32");
+
+                        TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenTK.BindingsBase")).First();
+
+                        foreach (var module in assembly.Modules)
+                        {
+                            foreach (var type in module.Types)
                             {
-                                Console.Error.WriteLine(e.ToString());
+                                Rewrite(type, optionsEnumerated);
                             }
                         }
                     }
-
-                    if (mscorlib == null)
+                    else
                     {
-                        Console.Error.WriteLine("Failed to locate mscorlib");
-                        return;
+                        Console.Error.WriteLine("Error: assembly has already been rewritten");
                     }
-                    TypeMarshal = mscorlib.MainModule.GetType("System.Runtime.InteropServices.Marshal");
-                    TypeStringBuilder = mscorlib.MainModule.GetType("System.Text.StringBuilder");
-                    TypeVoid = mscorlib.MainModule.GetType("System.Void");
-                    TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
-                    TypeInt32 = mscorlib.MainModule.GetType("System.Int32");
 
-                    TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenTK.BindingsBase")).First();
-
-                    foreach (var module in assembly.Modules)
-                    {
-                        foreach (var type in module.Types)
-                        {
-                            Rewrite(type, optionsEnumerated);
-                        }
-                    }
+                    // Save rewritten assembly
+                    assembly.Write(write_params);
                 }
-                else
-                {
-                    Console.Error.WriteLine("Error: assembly has already been rewritten");
-                }
-
-                // Save rewritten assembly
-                assembly.Write(write_params);
+            }
+            catch (InvalidOperationException inex)
+            {
+                Console.WriteLine("Failed to load the assembly. It may already have been rewritten, and the debug symbols no longer match.");
             }
         }
 
