@@ -4,6 +4,7 @@ source https://nuget.org/api/v2
 
 nuget FSharp.Formatting
 nuget FsCheck.Xunit
+nuget NUnitLite
 nuget xunit.runner.console
 nuget xunit.assert
 nuget FAKE
