@@ -282,15 +282,24 @@ module Vector3 =
             Assert.Equal(r1, r2)
         
         [<Property>]
-        let ``Vector3-float multiplication is the same as component-float multiplication`` (a : Vector3, f : float32) = 
+        let ``Left-handed Vector3-scalar multiplication is the same as component-scalar multiplication`` (a : Vector3, f : float32) = 
             let r = a * f
             
             Assert.Equal(a.X * f,r.X)
             Assert.Equal(a.Y * f,r.Y)
             Assert.Equal(a.Z * f,r.Z)
             
-            // Inverse direction
+        [<Property>]
+        let ``Right-handed Vector3-scalar multiplication is the same as component-scalar multiplication`` (a : Vector3, f : float32) = 
             let r = f * a
+            Assert.Equal(a.X * f,r.X)
+            Assert.Equal(a.Y * f,r.Y)
+            Assert.Equal(a.Z * f,r.Z)
+            
+        [<Property>]
+        let ``Static method Vector3-scalar multiplication is the same as component-scalar multiplication`` (a : Vector3, f : float32) = 
+            let r = Vector3.Multiply(a, f)
+            
             Assert.Equal(a.X * f,r.X)
             Assert.Equal(a.Y * f,r.Y)
             Assert.Equal(a.Z * f,r.Z)
