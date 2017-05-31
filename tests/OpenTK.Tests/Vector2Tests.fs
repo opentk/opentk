@@ -165,7 +165,7 @@ module Vector2 =
         [<Property>]
         let ``Vector inequality operator works`` (x, y) =
             let v1 = Vector2(x, y)
-            let v2 = Vector2(y, x)
+            let v2 = Vector2(x + (float32)1 , y + (float32)1)
             let inequality = v1 <> v2
             
             Assert.True(inequality)
