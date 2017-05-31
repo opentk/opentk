@@ -36,6 +36,47 @@ module Vector2 =
             Assert.True(a.Length >= 0.0f)
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Length = 
+        //
+        [<Property>]
+        let ``Length method works`` (a, b) = 
+            let v = Vector2(a, b)
+            let l = System.Math.Sqrt((float)(a * a + b * b))
+            
+            Assert.Equal((float32)l, v.Length)
+            
+        [<Property>]
+        let ``Fast length method works`` (a, b) = 
+            let v = Vector2(a, b)
+            let l = 1.0f / MathHelper.InverseSqrtFast(a * a + b * b)
+            
+            Assert.Equal(l, v.LengthFast)
+            
+        [<Property>]
+        let ``Length squared method works`` (a, b) = 
+            let v = Vector2(a, b)
+            let lsq = a * a + b * b
+            
+            Assert.Equal(lsq, v.LengthSquared)
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module ``Unit vectors and perpendicularity`` = 
+        //
+        [<Property>]
+        let ``Perpendicular vector to the right is correct`` (a, b) = 
+            let v = Vector2(a, b)
+            let perp = Vector2(a, -b)
+            
+            Assert.Equal(perp, v.PerpendicularRight)
+            
+        [<Property>]
+        let ``Perpendicular vector to the left is correct`` (a, b) = 
+            let v = Vector2(a, b)
+            let perp = Vector2(-a, b)
+            
+            Assert.Equal(perp, v.PerpendicularLeft)
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Indexing = 
         //
         [<Property>]
@@ -242,21 +283,73 @@ module Vector2 =
             Assert.Equal(dot, vRes)
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
-    module Normalization =
+    module Normalization = 
         //
         [<Property>]
-        let ``Normalization works`` (a : Vector2) =
-            let scale = 1.0f / a.Length
-            let norm = Vector2(a.X * scale, a.Y * scale)
-            let vRes = Vector2.Normalize(ref a)
-            Assert.Equal(norm, Vector2.Normalize(a));
-            Assert.Equal(norm, vRes)
+        let ``Normalization of instance, creating a new vector, works`` (a, b) = 
+            let v = Vector2(a, b)
+            let l = v.Length
+            
+            // Dividing by zero is not supported
+            if not (approxEq l 0.0f) then
+                let norm = v.Normalized()
+    
+                Assert.ApproximatelyEqual(v.X / l, norm.X)
+                Assert.ApproximatelyEqual(v.Y / l, norm.Y)
+
+        [<Property>]
+        let ``Normalization of instance works`` (a, b) = 
+            let v = Vector2(a, b)
+            let l = v.Length
+            
+            if not (approxEq l 0.0f) then
+                let norm = Vector2(a, b)
+                norm.Normalize()
+    
+                Assert.ApproximatelyEqual(v.X / l, norm.X)
+                Assert.ApproximatelyEqual(v.Y / l, norm.Y)
+
+        [<Property>]
+        let ``Fast approximate normalization of instance works`` (a, b) = 
+            let v = Vector2(a, b)
+            let norm = Vector2(a, b)
+            norm.NormalizeFast()
+
+            let scale = MathHelper.InverseSqrtFast(a * a + b * b)
+
+            Assert.ApproximatelyEqual(v.X * scale, norm.X)
+            Assert.ApproximatelyEqual(v.Y * scale, norm.Y)
             
         [<Property>]
-        let ``Fast approximate normalization works`` (a : Vector2, b : Vector2) =
+        let ``Normalization by reference works`` (a : Vector2) =
+            if not (approxEq a.Length 0.0f) then
+                let scale = 1.0f / a.Length
+                let norm = Vector2(a.X * scale, a.Y * scale)
+                let vRes = Vector2.Normalize(ref a)
+                
+                Assert.ApproximatelyEqual(norm, vRes)
+            
+        [<Property>]
+        let ``Normalization works`` (a : Vector2) =
+            if not (approxEq a.Length 0.0f) then
+                let scale = 1.0f / a.Length
+                let norm = Vector2(a.X * scale, a.Y * scale)
+                
+                Assert.ApproximatelyEqual(norm, Vector3.Normalize(a));
+            
+        [<Property>]
+        let ``Fast approximate normalization by reference works`` (a : Vector2) =
             let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y)
+            
             let norm = Vector2(a.X * scale, a.Y * scale)
             let vRes = Vector2.NormalizeFast(ref a)
             
-            Assert.Equal(norm, Vector2.NormalizeFast(a));
-            Assert.Equal(norm, vRes)
+            Assert.ApproximatelyEqual(norm, vRes)
+            
+        [<Property>]
+        let ``Fast approximate normalization works`` (a : Vector2) =
+            let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y)
+            
+            let norm = Vector2(a.X * scale, a.Y * scale)
+            
+            Assert.ApproximatelyEqual(norm, Vector2.NormalizeFast(a));

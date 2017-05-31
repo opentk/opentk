@@ -181,7 +181,7 @@ module Vector3 =
             
         [<Property>]
         let ``Fast approximate normalization by reference works`` (a : Vector3) =
-            let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y)
+            let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y + a.Z * a.Z)
             
             let norm = Vector3(a.X * scale, a.Y * scale, a.Z * scale)
             let vRes = Vector3.NormalizeFast(ref a)
@@ -190,7 +190,7 @@ module Vector3 =
             
         [<Property>]
         let ``Fast approximate normalization works`` (a : Vector3) =
-            let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y)
+            let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y + a.Z * a.Z)
             
             let norm = Vector3(a.X * scale, a.Y * scale, a.Z * scale)
             
