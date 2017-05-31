@@ -62,6 +62,7 @@
     <Compile Include="Assertions.fs" />
     <Compile Include="Generators.fs" />
     <Compile Include="MathHelper.fs" />
+    <Compile Include="Matrix4Tests.fs" />
     <Compile Include="Vector2Tests.fs" />
     <Content Include="App.config" />
   </ItemGroup>
