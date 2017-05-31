@@ -265,9 +265,17 @@ module Matrix4 =
             let invalidIndexingAssignmentC = fun() -> A.[1, -2] <- a
             let invalidIndexingAssignmentRC = fun() -> A.[-1, -2] <- a
 
+            let invalidIndexingAccessR = fun() -> A.[-1, 2] |> ignore
+            let invalidIndexingAccessC = fun() -> A.[1, -2] |> ignore
+            let invalidIndexingAccessRC = fun() -> A.[-1, -2] |> ignore
+
             Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentR) |> ignore
             Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentC) |> ignore
             Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentRC) |> ignore
+            
+            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessR) |> ignore
+            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessC) |> ignore
+            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessRC) |> ignore
             
         [<Property>]
         let ``Matrix indexing throws on large indices`` (a) =
@@ -277,6 +285,14 @@ module Matrix4 =
             let invalidIndexingAssignmentC = fun() -> A.[1, 6] <- a
             let invalidIndexingAssignmentRC = fun() -> A.[7, 12] <- a
 
+            let invalidIndexingAccessR = fun() -> A.[5, 2] |> ignore
+            let invalidIndexingAccessC = fun() -> A.[1, 6] |> ignore
+            let invalidIndexingAccessRC = fun() -> A.[7, 12] |> ignore
+
             Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentR) |> ignore
             Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentC) |> ignore
             Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentRC) |> ignore
+            
+            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessR) |> ignore
+            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessC) |> ignore
+            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessRC) |> ignore

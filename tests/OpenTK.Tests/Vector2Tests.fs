@@ -100,19 +100,19 @@ module Vector2 =
     module Multiplication = 
         //
         [<Property>]
-        let ``Vector multiplication is the same as component multiplication`` (a : Vector2,b : Vector2) = 
+        let ``Vector2 multiplication is the same as component multiplication`` (a : Vector2, b : Vector2) = 
             let c = a * b
             Assert.Equal(a.X * b.X,c.X)
             Assert.Equal(a.Y * b.Y,c.Y)
         
         [<Property>]
-        let ``Vector multiplication is commutative`` (a : Vector2,b : Vector2) = 
+        let ``Vector2 multiplication is commutative`` (a : Vector2, b : Vector2) = 
             let r1 = a * b
             let r2 = b * a
             Assert.Equal(r1,r2)
         
         [<Property>]
-        let ``Vector-float multiplication is the same as component-float multiplication`` (a : Vector2,f : float32) = 
+        let ``Vector2-float multiplication is the same as component-float multiplication`` (a : Vector2, f : float32) = 
             let r = a * f
             Assert.Equal(a.X * f,r.X)
             Assert.Equal(a.Y * f,r.Y)
@@ -126,7 +126,7 @@ module Vector2 =
     module Subtraction = 
         //
         [<Property>]
-        let ``Vector subtraction is the same as component subtraction`` (a : Vector2,b : Vector2) = 
+        let ``Vector2 subtraction is the same as component subtraction`` (a : Vector2, b : Vector2) = 
             let c = a - b
             Assert.Equal(a.X - b.X,c.X)
             Assert.Equal(a.Y - b.Y,c.Y)
@@ -135,7 +135,7 @@ module Vector2 =
     module Division = 
         //
         [<Property>]
-        let ``Vector-float division is the same as component-float division`` (a : Vector2,f : float32) = 
+        let ``Vector2-float division is the same as component-float division`` (a : Vector2, f : float32) = 
             if not (approxEq f 0.0f) then // we don't support diving by zero.
                 let r = a / f
                 Assert.ApproximatelyEqual(a.X / f,r.X)
