@@ -114,23 +114,28 @@ module Vector3 =
             let v = Vector3(a, b, c)
             let l = v.Length
             
-            let norm = v.Normalized()
-
-            Assert.ApproximatelyEqual(v.X / l, norm.X)
-            Assert.ApproximatelyEqual(v.Y / l, norm.Y)
-            Assert.ApproximatelyEqual(v.Z / l, norm.Z)
+            // Dividing by zero is not supported
+            if not (approxEq l 0.0f) then
+                let norm = v.Normalized()
+    
+                Assert.ApproximatelyEqual(v.X / l, norm.X)
+                Assert.ApproximatelyEqual(v.Y / l, norm.Y)
+                Assert.ApproximatelyEqual(v.Z / l, norm.Z)
 
         [<Property>]
         let ``Normalization of instance works`` (a, b, c) = 
             let v = Vector3(a, b, c)
-            let norm = Vector3(a, b, c)
-            norm.Normalize()
-
             let l = v.Length
-
-            Assert.ApproximatelyEqual(v.X / l, norm.X)
-            Assert.ApproximatelyEqual(v.Y / l, norm.Y)
-            Assert.ApproximatelyEqual(v.Z / l, norm.Z)
+            
+            if not (approxEq l 0.0f) then
+                let norm = Vector3(a, b, c)
+                norm.Normalize()
+    
+                
+    
+                Assert.ApproximatelyEqual(v.X / l, norm.X)
+                Assert.ApproximatelyEqual(v.Y / l, norm.Y)
+                Assert.ApproximatelyEqual(v.Z / l, norm.Z)
 
         [<Property>]
         let ``Fast approximate normalization of instance works`` (a, b, c) = 
@@ -146,18 +151,20 @@ module Vector3 =
             
         [<Property>]
         let ``Normalization by reference works`` (a : Vector3) =
-            let scale = 1.0f / a.Length
-            let norm = Vector3(a.X * scale, a.Y * scale, a.Z * scale)
-            let vRes = Vector3.Normalize(ref a)
-            
-            Assert.ApproximatelyEqual(norm, vRes)
+            if not (approxEq a.Length 0.0f) then
+                let scale = 1.0f / a.Length
+                let norm = Vector3(a.X * scale, a.Y * scale, a.Z * scale)
+                let vRes = Vector3.Normalize(ref a)
+                
+                Assert.ApproximatelyEqual(norm, vRes)
             
         [<Property>]
         let ``Normalization works`` (a : Vector3) =
-            let scale = 1.0f / a.Length
-            let norm = Vector3(a.X * scale, a.Y * scale, a.Z * scale)
-            
-            Assert.ApproximatelyEqual(norm, Vector3.Normalize(a));
+            if not (approxEq a.Length 0.0f) then
+                let scale = 1.0f / a.Length
+                let norm = Vector3(a.X * scale, a.Y * scale, a.Z * scale)
+                
+                Assert.ApproximatelyEqual(norm, Vector3.Normalize(a));
             
         [<Property>]
         let ``Fast approximate normalization by reference works`` (a : Vector3) =
