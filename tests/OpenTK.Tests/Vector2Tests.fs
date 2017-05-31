@@ -335,7 +335,7 @@ module Vector2 =
                 let scale = 1.0f / a.Length
                 let norm = Vector2(a.X * scale, a.Y * scale)
                 
-                Assert.ApproximatelyEqual(norm, Vector3.Normalize(a));
+                Assert.ApproximatelyEqual(norm, Vector2.Normalize(a));
             
         [<Property>]
         let ``Fast approximate normalization by reference works`` (a : Vector2) =
