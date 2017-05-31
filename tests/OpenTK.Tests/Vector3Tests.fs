@@ -220,6 +220,22 @@ module Vector3 =
             
             Assert.ApproximatelyEqual(r1, r2)
             
+        [<Property>]
+        let ``Static Vector3 addition method works`` (a : Vector3, b : Vector3) = 
+        
+            let v1 = Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z)
+            let sum = Vector3.Add(a, b)
+            
+            Assert.ApproximatelyEqual(v1, sum)
+            
+        [<Property>]
+        let ``Static Vector3 addition method works by reference`` (a : Vector3, b : Vector3) = 
+        
+            let v1 = Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z)
+            let sum = Vector3.Add(ref a, ref b)
+            
+            Assert.ApproximatelyEqual(v1, sum)
+            
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Subtraction = 
         //
@@ -230,6 +246,22 @@ module Vector3 =
             Assert.Equal(a.X - b.X,c.X)
             Assert.Equal(a.Y - b.Y,c.Y)
             Assert.Equal(a.Z - b.Z,c.Z)
+            
+        [<Property>]
+        let ``Static Vector3 subtraction method works`` (a : Vector3, b : Vector3) = 
+        
+            let v1 = Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z)
+            let sum = Vector3.Subtract(a, b)
+            
+            Assert.ApproximatelyEqual(v1, sum)
+            
+        [<Property>]
+        let ``Static Vector3 subtraction method works by reference`` (a : Vector3, b : Vector3) = 
+        
+            let v1 = Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z)
+            let sum = Vector3.Subtract(ref a, ref b)
+            
+            Assert.ApproximatelyEqual(v1, sum)
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Multiplication = 
@@ -264,7 +296,7 @@ module Vector3 =
             Assert.Equal(a.Z * f,r.Z)
         
         [<Property>]
-        let ``Vector3-Matrix3 multiplication works`` (a : Matrix3, b : Vector3) = 
+        let ``Vector3-Matrix3 multiplication works for right-handed notation`` (a : Matrix3, b : Vector3) = 
             let res = a*b
             
             let c1 = b.X * a.M11 + b.Y * a.M12 + b.Z * a.M13
@@ -274,6 +306,34 @@ module Vector3 =
             let exp = Vector3(c1, c2, c3)
             
             Assert.Equal(exp, res)
+            
+        [<Property>]
+        let ``Vector3-Matrix3 multiplication works for left-handed notation`` (a : Matrix3, b : Vector3) = 
+            let res = b*a
+            
+            let c1 = b.X * a.M11 + b.Y * a.M21 + b.Z * a.M31
+            let c2 = b.X * a.M12 + b.Y * a.M22 + b.Z * a.M32
+            let c3 = b.X * a.M13 + b.Y * a.M23 + b.Z * a.M33
+            
+            let exp = Vector3(c1, c2, c3)
+            
+            Assert.Equal(exp, res)
+            
+        [<Property>]
+        let ``Static Vector3 multiplication method works`` (a : Vector3, b : Vector3) = 
+        
+            let v1 = Vector3(a.X * b.X, a.Y * b.Y, a.Z * b.Z)
+            let sum = Vector3.Multiply(a, b)
+            
+            Assert.ApproximatelyEqual(v1, sum)
+            
+        [<Property>]
+        let ``Static Vector3 multiplication method works by reference`` (a : Vector3, b : Vector3) = 
+        
+            let v1 = Vector3(a.X * b.X, a.Y * b.Y, a.Z * b.Z)
+            let sum = Vector3.Multiply(ref a, ref b)
+            
+            Assert.ApproximatelyEqual(v1, sum)
                     
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Division = 
@@ -286,6 +346,38 @@ module Vector3 =
                 Assert.ApproximatelyEqual(a.X / f,r.X)
                 Assert.ApproximatelyEqual(a.Y / f,r.Y)
                 Assert.ApproximatelyEqual(a.Z / f,r.Z)
+                
+        [<Property>]
+        let ``Static Vector3-Vector3 division method works`` (a : Vector3, b : Vector3) = 
+        
+            let v1 = Vector3(a.X / b.X, a.Y / b.Y, a.Z / b.Z)
+            let sum = Vector3.Divide(a, b)
+            
+            Assert.ApproximatelyEqual(v1, sum)
+            
+        [<Property>]
+        let ``Static Vector3-Vector3 divison method works by reference`` (a : Vector3, b : Vector3) = 
+        
+            let v1 = Vector3(a.X / b.X, a.Y / b.Y, a.Z / b.Z)
+            let sum = Vector3.Divide(ref a, ref b)
+            
+            Assert.ApproximatelyEqual(v1, sum)
+            
+        [<Property>]
+        let ``Static Vector3-scalar division method works`` (a : Vector3, b : float32) = 
+        
+            let v1 = Vector3(a.X / b, a.Y / b, a.Z / b)
+            let sum = Vector3.Divide(a, b)
+            
+            Assert.ApproximatelyEqual(v1, sum)
+            
+        [<Property>]
+        let ``Static Vector3-scalar divison method works by reference`` (a : Vector3, b : float32) = 
+        
+            let v1 = Vector3(a.X / b, a.Y / b, a.Z / b)
+            let sum = Vector3.Divide(ref a, b)
+            
+            Assert.ApproximatelyEqual(v1, sum)
                 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Negation =
@@ -545,3 +637,36 @@ module Vector3 =
             Assert.Equal(expX, res.X)
             Assert.Equal(expY, res.Y)
             Assert.Equal(expZ, res.Z)
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module ``Unit vectors``= 
+        //
+        [<Property>]
+        let ``Unit X is correct``  = 
+            let unitX = Vector3((float32)1, (float32)0, (float32)0)
+            
+            Assert.Equal(Vector3.UnitX, unitX)
+            
+        [<Property>]
+        let ``Unit Y is correct``  = 
+            let unitY = Vector3((float32)0, (float32)1, (float32)0)
+            
+            Assert.Equal(Vector3.UnitY, unitY)
+            
+        [<Property>]
+        let ``Unit Z is correct``  = 
+            let unitZ = Vector3((float32)0, (float32)0, (float32)1)
+            
+            Assert.Equal(Vector3.UnitZ, unitZ)
+            
+        [<Property>]
+        let ``Unit zero is correct``  = 
+            let unitZero = Vector3((float32)0, (float32)0, (float32)0)
+            
+            Assert.Equal(Vector3.Zero, unitZero)
+            
+        [<Property>]
+        let ``Unit one is correct``  = 
+            let unitOne = Vector3((float32)1, (float32)1, (float32)1)
+            
+            Assert.Equal(Vector3.One, unitOne)
