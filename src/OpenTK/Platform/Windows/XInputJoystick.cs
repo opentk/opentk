@@ -371,14 +371,22 @@ namespace OpenTK.Platform.Windows
                 // Load the entry points we are interested in from that dll
                 GetCapabilities = (XInputGetCapabilities)Load("XInputGetCapabilities", typeof(XInputGetCapabilities));
                 GetState =
-                    // undocumented XInputGetStateEx with support for the "Guide" button (requires XINPUT_1_3+)
-                    (XInputGetState)Load("XInputGetStateEx", typeof(XInputGetState)) ??
+                    // undocumented XInputGetStateEx (Ordinal 100) with support for the "Guide" button (requires XINPUT_1_3+)
+                    (XInputGetState)Load(100, typeof(XInputGetState)) ??
                     // documented XInputGetState (no support for the "Guide" button)
                     (XInputGetState)Load("XInputGetState", typeof(XInputGetState));
                 SetState = (XInputSetState)Load("XInputSetState", typeof(XInputSetState));
             }
 
             #region Private Members
+
+            Delegate Load(ushort ordinal, Type type)
+            {
+                IntPtr pfunc = Functions.GetProcAddress(dll, (IntPtr)ordinal);
+                if (pfunc != IntPtr.Zero)
+                    return Marshal.GetDelegateForFunctionPointer(pfunc, type);
+                return null;
+            }
 
             Delegate Load(string name, Type type)
             {

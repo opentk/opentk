@@ -78,6 +78,17 @@ namespace OpenTK.Platform.Egl
         CONTEXT_LOST = 12302,
     }
 
+    enum SurfaceType
+    {
+        PBUFFER_BIT = 0x0001,
+        PIXMAP_BIT = 0x0002,
+        WINDOW_BIT = 0x0004,
+        VG_COLORSPACE_LINEAR_BIT = 0x0020,
+        VG_ALPHA_FORMAT_PRE_BIT = 0x0040,
+        MULTISAMPLE_RESOLVE_BOX_BIT = 0x0200,
+        SWAP_BEHAVIOR_PRESERVED_BIT = 0x0400,
+    }
+
     static partial class Egl
     {
         public const int VERSION_1_0 = 1;
@@ -199,6 +210,10 @@ namespace OpenTK.Platform.Egl
         // EGL_ANGLE_query_surface_pointer 
         [DllImport("libEGL.dll", EntryPoint = "eglQuerySurfacePointerANGLE")]
         public static extern bool QuerySurfacePointerANGLE(EGLDisplay display, EGLSurface surface, int attribute, out IntPtr value);
+
+        [DllImport("libEGL.dll", EntryPoint = "eglGetPlatformDisplayEXT")]
+        public static extern EGLDisplay GetPlatformDisplay(int platform, EGLNativeDisplayType displayId, int[] attribList);
+
         // EGL_ANGLE_software_display
         public static readonly EGLNativeDisplayType SOFTWARE_DISPLAY_ANGLE = new EGLNativeDisplayType(-1);
         // EGL_ANGLE_direct3d_display
@@ -224,6 +239,8 @@ namespace OpenTK.Platform.Egl
         // EGL_ANGLE_platform_angle_opengl
         public const int PLATFORM_ANGLE_TYPE_OPENGL_ANGLE = 0x320D;
         public const int PLATFORM_ANGLE_TYPE_OPENGLES_ANGLE = 0x320E;
+        // See EGL_ANGLE_surface_d3d_texture_2d_share_handle
+        public const int EGL_D3D_TEXTURE_2D_SHARE_HANDLE_ANGLE = 0x3200;
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetError")]
         public static extern ErrorCode GetError();
