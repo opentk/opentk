@@ -159,6 +159,7 @@ module Vector2 =
             let v1 = Vector2(x, y)
             let v2 = Vector2(x, y)
             let equality = v1 = v2
+            
             Assert.True(equality)
             
         [<Property>]
@@ -166,6 +167,7 @@ module Vector2 =
             let v1 = Vector2(x, y)
             let v2 = Vector2(y, x)
             let inequality = v1 <> v2
+            
             Assert.True(inequality)
             
         [<Property>]
@@ -205,8 +207,7 @@ module Vector2 =
             
             Assert.Equal(vExp, Vector2.Lerp(a, b, q))
             
-            let mutable vRes = Vector2()
-            Vector2.Lerp(ref a, ref b, q, &vRes)
+            let vRes = Vector2.Lerp(ref a, ref b, q)
             Assert.Equal(vExp, vRes)
             
         [<Property>]
@@ -216,8 +217,7 @@ module Vector2 =
             
             Assert.Equal(r, Vector2.BaryCentric(a, b, c, u, v))
             
-            let mutable vRes = Vector2()
-            Vector2.BaryCentric(ref a, ref b, ref c, u, v, &vRes)
+            let vRes = Vector2.BaryCentric(ref a, ref b, ref c, u, v)
             Assert.Equal(r, vRes)
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
@@ -229,18 +229,16 @@ module Vector2 =
             
             Assert.Equal(dot, Vector2.Dot(a, b));
             
-            let mutable vRes = (float32)0
-            Vector2.Dot(ref a, ref b, &vRes)
+            let vRes = Vector2.Dot(ref a, ref b)
             Assert.Equal(dot, vRes)
             
         [<Property>]
         let ``Perpendicular dot product works`` (a : Vector2, b : Vector2) =
-            let dot = a.X * b.Y + a.Y * b.X
+            let dot = a.X * b.Y - a.Y * b.X
             
             Assert.Equal(dot, Vector2.PerpDot(a, b));
             
-            let mutable vRes = (float32)0
-            Vector2.PerpDot(ref a, ref b, &vRes)
+            let vRes = Vector2.PerpDot(ref a, ref b)
             Assert.Equal(dot, vRes)
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
@@ -250,20 +248,15 @@ module Vector2 =
         let ``Normalization works`` (a : Vector2) =
             let scale = 1.0f / a.Length
             let norm = Vector2(a.X * scale, a.Y * scale)
-            
+            let vRes = Vector2.Normalize(ref a)
             Assert.Equal(norm, Vector2.Normalize(a));
-            
-            let mutable vRes = Vector2()
-            Vector2.Normalize(ref a, &vRes)
             Assert.Equal(norm, vRes)
             
         [<Property>]
         let ``Fast approximate normalization works`` (a : Vector2, b : Vector2) =
             let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y)
             let norm = Vector2(a.X * scale, a.Y * scale)
+            let vRes = Vector2.NormalizeFast(ref a)
             
-            Assert.Equal(norm, Vector2.Normalize(a));
-            
-            let mutable vRes = Vector2()
-            Vector2.Normalize(ref a, &vRes)
+            Assert.Equal(norm, Vector2.NormalizeFast(a));
             Assert.Equal(norm, vRes)
