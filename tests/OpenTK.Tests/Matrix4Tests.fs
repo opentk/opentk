@@ -92,13 +92,17 @@ module Matrix4 =
     module Equality = 
         //
         [<Property>]
-        let ``Sixteen value constructor sets all components to the correct values`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =
+        let ``Two matrices with identical values are equal`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =
             let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
             let B = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
             let equality = A = B
             
             Assert.True(equality)
             
+        [<Property>]
+        let ``A matrix is not equal to an object which is not a matrix`` (a : Matrix4, b : Vector3) =
+            Assert.False(a.Equals(b))
+
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Multiplication = 
         //

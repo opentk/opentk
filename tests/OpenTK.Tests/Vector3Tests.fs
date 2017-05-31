@@ -113,13 +113,13 @@ module Vector3 =
         let ``Normalization of instance, creating a new vector, works`` (a, b, c) = 
             let v = Vector3(a, b, c)
             let l = v.Length
-
+            
             let norm = v.Normalized()
 
             Assert.ApproximatelyEqual(v.X / l, norm.X)
             Assert.ApproximatelyEqual(v.Y / l, norm.Y)
             Assert.ApproximatelyEqual(v.Z / l, norm.Z)
-            
+
         [<Property>]
         let ``Normalization of instance works`` (a, b, c) = 
             let v = Vector3(a, b, c)
