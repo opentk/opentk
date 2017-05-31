@@ -22,13 +22,7 @@ module Vector2 =
             Assert.Equal(x,v.X)
             Assert.Equal(y,v.Y)
         
-        [<Property>]
-        let ``Index operators work for the correct components`` (x,y) = 
-            let v = Vector2(x,y)
-            Assert.Equal(v.[0],v.X)
-            Assert.Equal(v.[1],v.Y)
-        
-//        [<Property>]
+        //[<Property>]
         // disabled - behaviour needs discussion
         let ``Clamping works for each component`` (a : Vector2,b : Vector2,c : Vector2) = 
             let inline clamp (value : float32) minV maxV = MathHelper.Clamp(value,minV,maxV)
@@ -40,7 +34,34 @@ module Vector2 =
         let ``Length is always >= 0`` (a : Vector2) = 
             //
             Assert.True(a.Length >= 0.0f)
-    
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Indexing = 
+        //
+        [<Property>]
+        let ``Index operators work for the correct components`` (x,y) = 
+            let v = Vector2(x,y)
+            Assert.Equal(v.[0],v.X)
+            Assert.Equal(v.[1],v.Y)
+            
+        [<Property>]
+        let ``Vector indexing throws index out of range exception correctly`` (x, y) =
+            let mutable v = Vector2(x, y)
+            let invalidIndexingAccess = fun() -> v.[2] |> ignore
+            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccess) |> ignore
+            
+            let invalidIndexingAssignment = (fun() -> v.[2] <- x) 
+            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignment) |> ignore
+        
+        [<Property>]
+        let ``Component assignment by indexing works`` (x, y) =
+            let mutable v = Vector2()
+            v.[0] <- x
+            v.[1] <- y
+            Assert.Equal(x, v.X)
+            Assert.Equal(y, v.Y)
+ 
+ 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Simple Properties`` = 
         //
@@ -95,6 +116,11 @@ module Vector2 =
             let r = a * f
             Assert.Equal(a.X * f,r.X)
             Assert.Equal(a.Y * f,r.Y)
+            
+            // Inverse direction
+            let r = f * a
+            Assert.Equal(a.X * f,r.X)
+            Assert.Equal(a.Y * f,r.Y)
     
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Subtraction = 
@@ -114,3 +140,130 @@ module Vector2 =
                 let r = a / f
                 Assert.ApproximatelyEqual(a.X / f,r.X)
                 Assert.ApproximatelyEqual(a.Y / f,r.Y)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Negation =
+        //
+        [<Property>]
+        let ``Vector negation operator works`` (x, y) =
+            let v = Vector2(x, y)
+            let vNeg = -v
+            Assert.Equal(-x, vNeg.X)
+            Assert.Equal(-y, vNeg.Y)
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Equality =
+        //
+        [<Property>]
+        let ``Vector equality operator works`` (x, y) =
+            let v1 = Vector2(x, y)
+            let v2 = Vector2(x, y)
+            let equality = v1 = v2
+            Assert.True(equality)
+            
+        [<Property>]
+        let ``Vector inequality operator works`` (x, y) =
+            let v1 = Vector2(x, y)
+            let v2 = Vector2(y, x)
+            let inequality = v1 <> v2
+            Assert.True(inequality)
+            
+        [<Property>]
+        let ``Vector equality method works`` (x, y) =
+            let v1 = Vector2(x, y)
+            let v2 = Vector2(x, y)
+            let notVector = Matrix2()
+            
+            let equality = v1.Equals(v2)
+            let inequalityByOtherType = v1.Equals(notVector)
+            
+            Assert.True(equality)
+            Assert.False(inequalityByOtherType)
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Swizzling =
+        //
+        [<Property>]
+        let ``Vector swizzling works`` (x, y) =
+            let v1 = Vector2(x, y)
+            let v2 = Vector2(y, x)
+            
+            let v1yx = v1.Yx;
+            Assert.Equal(v2, v1yx);
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Interpolation =
+        //
+        [<Property>]
+        let ``Linear interpolation works`` (a : Vector2, b : Vector2, q) =
+
+            let blend = q
+            
+            let rX = blend * (b.X - a.X) + a.X 
+            let rY = blend * (b.Y - a.Y) + a.Y
+            let vExp = Vector2(rX, rY)
+            
+            Assert.Equal(vExp, Vector2.Lerp(a, b, q))
+            
+            let mutable vRes = Vector2()
+            Vector2.Lerp(ref a, ref b, q, &vRes)
+            Assert.Equal(vExp, vRes)
+            
+        [<Property>]
+        let ``Barycentric interpolation works`` (a : Vector2, b : Vector2, c : Vector2, u, v) =
+
+            let r = a + u * (b - a) + v * (c - a)
+            
+            Assert.Equal(r, Vector2.BaryCentric(a, b, c, u, v))
+            
+            let mutable vRes = Vector2()
+            Vector2.BaryCentric(ref a, ref b, ref c, u, v, &vRes)
+            Assert.Equal(r, vRes)
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module ``Vector products`` =
+        //
+        [<Property>]
+        let ``Dot product works`` (a : Vector2, b : Vector2) =
+            let dot = a.X * b.X + a.Y * b.Y
+            
+            Assert.Equal(dot, Vector2.Dot(a, b));
+            
+            let mutable vRes = (float32)0
+            Vector2.Dot(ref a, ref b, &vRes)
+            Assert.Equal(dot, vRes)
+            
+        [<Property>]
+        let ``Perpendicular dot product works`` (a : Vector2, b : Vector2) =
+            let dot = a.X * b.Y + a.Y * b.X
+            
+            Assert.Equal(dot, Vector2.PerpDot(a, b));
+            
+            let mutable vRes = (float32)0
+            Vector2.PerpDot(ref a, ref b, &vRes)
+            Assert.Equal(dot, vRes)
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Normalization =
+        //
+        [<Property>]
+        let ``Normalization works`` (a : Vector2) =
+            let scale = 1.0f / a.Length
+            let norm = Vector2(a.X * scale, a.Y * scale)
+            
+            Assert.Equal(norm, Vector2.Normalize(a));
+            
+            let mutable vRes = Vector2()
+            Vector2.Normalize(ref a, &vRes)
+            Assert.Equal(norm, vRes)
+            
+        [<Property>]
+        let ``Fast approximate normalization works`` (a : Vector2, b : Vector2) =
+            let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y)
+            let norm = Vector2(a.X * scale, a.Y * scale)
+            
+            Assert.Equal(norm, Vector2.Normalize(a));
+            
+            let mutable vRes = Vector2()
+            Vector2.Normalize(ref a, &vRes)
+            Assert.Equal(norm, vRes)
