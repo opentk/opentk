@@ -51,6 +51,19 @@ module Vector3 =
             Assert.Equal(b, v2.Y)
             Assert.Equal(c, v2.Z)
             
+        [<Property>]
+        let ``Vector4 value constructor sets all components to the correct values`` (a, b, c, d) = 
+            let v1 = Vector4(a, b, c, d)
+            let v2 = Vector3(v1)
+
+            Assert.Equal(v1.X, v2.X)
+            Assert.Equal(v1.Y, v2.Y)
+            Assert.Equal(v1.Z, v2.Z)
+
+            Assert.Equal(a, v2.X)
+            Assert.Equal(b, v2.Y)
+            Assert.Equal(c, v2.Z)
+            
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Indexing = 
         //
