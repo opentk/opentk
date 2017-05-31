@@ -221,7 +221,7 @@ module Vector3 =
             Assert.ApproximatelyEqual(r1, r2)
             
         [<Property>]
-        let ``Static Vector3 addition method works`` (a : Vector3, b : Vector3) = 
+        let ``Static Vector3 addition method is the same as component addition`` (a : Vector3, b : Vector3) = 
         
             let v1 = Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z)
             let sum = Vector3.Add(a, b)
@@ -229,7 +229,7 @@ module Vector3 =
             Assert.ApproximatelyEqual(v1, sum)
             
         [<Property>]
-        let ``Static Vector3 addition method works by reference`` (a : Vector3, b : Vector3) = 
+        let ``Static Vector3 addition method by reference is the same as component addition`` (a : Vector3, b : Vector3) = 
         
             let v1 = Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z)
             let sum = Vector3.Add(ref a, ref b)
@@ -248,7 +248,7 @@ module Vector3 =
             Assert.Equal(a.Z - b.Z,c.Z)
             
         [<Property>]
-        let ``Static Vector3 subtraction method works`` (a : Vector3, b : Vector3) = 
+        let ``Static Vector3 subtraction method is the same as component addition`` (a : Vector3, b : Vector3) = 
         
             let v1 = Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z)
             let sum = Vector3.Subtract(a, b)
@@ -256,7 +256,7 @@ module Vector3 =
             Assert.ApproximatelyEqual(v1, sum)
             
         [<Property>]
-        let ``Static Vector3 subtraction method works by reference`` (a : Vector3, b : Vector3) = 
+        let ``Static Vector3 subtraction method by reference is the same as component addition`` (a : Vector3, b : Vector3) = 
         
             let v1 = Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z)
             let sum = Vector3.Subtract(ref a, ref b)
@@ -329,7 +329,7 @@ module Vector3 =
             Assert.Equal(exp, res)
             
         [<Property>]
-        let ``Static Vector3 multiplication method works`` (a : Vector3, b : Vector3) = 
+        let ``Static Vector3 multiplication method is the same as component multiplication`` (a : Vector3, b : Vector3) = 
         
             let v1 = Vector3(a.X * b.X, a.Y * b.Y, a.Z * b.Z)
             let sum = Vector3.Multiply(a, b)
@@ -337,7 +337,7 @@ module Vector3 =
             Assert.ApproximatelyEqual(v1, sum)
             
         [<Property>]
-        let ``Static Vector3 multiplication method works by reference`` (a : Vector3, b : Vector3) = 
+        let ``Static Vector3 multiplication method by reference is the same as component multiplication`` (a : Vector3, b : Vector3) = 
         
             let v1 = Vector3(a.X * b.X, a.Y * b.Y, a.Z * b.Z)
             let sum = Vector3.Multiply(ref a, ref b)
