@@ -807,3 +807,26 @@ module Vector4 =
 
             Assert.Equal(expectedSize, Vector4.SizeInBytes)
             Assert.Equal(expectedSize, Marshal.SizeOf(Vector4()))
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Transformation =
+        //
+        [<Property>]
+        let ``Transformation by quaternion is the same as multiplication by quaternion and its conjugate`` (v : Vector4, q : Quaternion) =
+            let vectorQuat = Quaternion(v.X, v.Y, v.Z, v.W)
+            let inverse = Quaternion.Invert(q)
+
+            let transformedQuat = q * vectorQuat * inverse
+            let transformedVector = Vector4(transformedQuat.X, transformedQuat.Y, transformedQuat.Z, transformedQuat.W)
+
+            Assert.Equal(transformedVector, Vector4.Transform(v, q))
+
+        [<Property>]
+        let ``Transformation by quaternion by reference is the same as multiplication by quaternion and its conjugate`` (v : Vector4, q : Quaternion) =
+            let vectorQuat = Quaternion(v.X, v.Y, v.Z, v.W)
+            let inverse = Quaternion.Invert(q)
+
+            let transformedQuat = q * vectorQuat * inverse
+            let transformedVector = Vector4(transformedQuat.X, transformedQuat.Y,transformedQuat.Z, transformedQuat.W)
+
+            Assert.Equal(transformedVector, Vector4.Transform(ref v, ref q))

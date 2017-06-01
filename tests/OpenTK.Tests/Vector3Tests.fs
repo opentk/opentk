@@ -684,7 +684,7 @@ module Vector3 =
 
         [<Property>]
         let ``Unit one is correct``  =
-            let unitOne = Vector3((float32)1, (float32)1, (float32)1)
+            let unitOne = Vector3(1.0f, 1.0f, 1.0f)
 
             Assert.Equal(Vector3.One, unitOne)
 
@@ -697,3 +697,26 @@ module Vector3 =
 
             Assert.Equal(expectedSize, Vector3.SizeInBytes)
             Assert.Equal(expectedSize, Marshal.SizeOf(Vector3()))
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Transformation =
+        //
+        [<Property>]
+        let ``Transformation by quaternion is the same as multiplication by quaternion and its conjugate`` (v : Vector3, q : Quaternion) =
+            let vectorQuat = Quaternion(v.X, v.Y, v.Z, 0.0f)
+            let inverse = Quaternion.Invert(q)
+
+            let transformedQuat = q * vectorQuat * inverse
+            let transformedVector = Vector3(transformedQuat.X, transformedQuat.Y, transformedQuat.Z)
+
+            Assert.Equal(transformedVector, Vector3.Transform(v, q))
+
+        [<Property>]
+        let ``Transformation by quaternion by reference is the same as multiplication by quaternion and its conjugate`` (v : Vector3, q : Quaternion) =
+            let vectorQuat = Quaternion(v.X, v.Y, v.Z, 0.0f)
+            let inverse = Quaternion.Invert(q)
+
+            let transformedQuat = q * vectorQuat * inverse
+            let transformedVector = Vector3(transformedQuat.X, transformedQuat.Y,transformedQuat.Z)
+
+            Assert.Equal(transformedVector, Vector3.Transform(ref v, ref q))
