@@ -165,9 +165,9 @@ module Matrix4 =
             let AScaled = A * scalar
             
             Assert.Equal(R1, AScaled.Row0)
-            Assert.Equal(R1, AScaled.Row1)
-            Assert.Equal(R1, AScaled.Row2)
-            Assert.Equal(R1, AScaled.Row3)
+            Assert.Equal(R2, AScaled.Row1)
+            Assert.Equal(R3, AScaled.Row2)
+            Assert.Equal(R4, AScaled.Row3)
             
         [<Property>]
         let ``Static method matrix multiplication by scalar is the same as row multiplication by scalar`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, scalar : float32) =
@@ -181,9 +181,9 @@ module Matrix4 =
             let AScaled = Matrix4.Mult(A, scalar)
             
             Assert.Equal(R1, AScaled.Row0)
-            Assert.Equal(R1, AScaled.Row1)
-            Assert.Equal(R1, AScaled.Row2)
-            Assert.Equal(R1, AScaled.Row3)
+            Assert.Equal(R2, AScaled.Row1)
+            Assert.Equal(R3, AScaled.Row2)
+            Assert.Equal(R4, AScaled.Row3)
             
         [<Property>]
         let ``Static method matrix multiplication by reference by scalar is the same as row multiplication by scalar`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, scalar : float32) =
@@ -197,9 +197,9 @@ module Matrix4 =
             let AScaled = Matrix4.Mult(ref A, scalar)
             
             Assert.Equal(R1, AScaled.Row0)
-            Assert.Equal(R1, AScaled.Row1)
-            Assert.Equal(R1, AScaled.Row2)
-            Assert.Equal(R1, AScaled.Row3)
+            Assert.Equal(R2, AScaled.Row1)
+            Assert.Equal(R3, AScaled.Row2)
+            Assert.Equal(R4, AScaled.Row3)
              
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
