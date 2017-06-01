@@ -4,6 +4,7 @@ open Xunit
 open FsCheck
 open FsCheck.Xunit
 open System
+open System.Runtime.InteropServices
 open OpenTK
 
 module Vector2 = 
@@ -29,17 +30,17 @@ module Vector2 =
             let r = Vector2.Clamp(a,b,c)
             Assert.Equal(clamp a.X b.X c.X,r.X)
             Assert.Equal(clamp a.Y b.Y c.Y,r.Y)
-        
-        [<Property>]
-        let ``Length is always >= 0`` (a : Vector2) = 
-            //
-            Assert.True(a.Length >= 0.0f)
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Length = 
         //
         [<Property>]
-        let ``Length method works`` (a, b) = 
+        let ``Length is always >= 0`` (a : Vector2) = 
+            //
+            Assert.True(a.Length >= 0.0f)
+        
+        [<Property>]
+        let ``Length follows the pythagorean theorem`` (a, b) = 
             let v = Vector2(a, b)
             let l = System.Math.Sqrt((float)(a * a + b * b))
             
@@ -555,3 +556,36 @@ module Vector2 =
             
             Assert.Equal(expX, res.X)
             Assert.Equal(expY, res.Y)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Transformation = 
+        //
+        [<Property>]
+        let ``Transformation by quaternion is the same as multiplication by quaternion and its conjugate`` (v : Vector2, q : Quaternion) = 
+            let vectorQuat = Quaternion(v.X, v.Y, (float32)0, (float32)0)
+            let inverse = Quaternion.Invert(q)
+            
+            let transformedQuat = q * vectorQuat * inverse
+            let transformedVector = Vector2(transformedQuat.X, transformedQuat.Y)
+            
+            Assert.Equal(transformedVector, Vector2.Transform(v, q))
+            
+        [<Property>]
+        let ``Transformation by quaternion by reference is the same as multiplication by quaternion and its conjugate`` (v : Vector2, q : Quaternion) = 
+            let vectorQuat = Quaternion(v.X, v.Y, (float32)0, (float32)0)
+            let inverse = Quaternion.Invert(q)
+            
+            let transformedQuat = q * vectorQuat * inverse
+            let transformedVector = Vector2(transformedQuat.X, transformedQuat.Y)
+            
+            Assert.Equal(transformedVector, Vector2.Transform(ref v, ref q))
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Serialization = 
+        //
+        [<Property>]
+        let ``The absolute size of a Vector2 is always the size of its components`` (v : Vector2) = 
+            let expectedSize = sizeof<float32> * 2
+            
+            Assert.Equal(expectedSize, Vector2.SizeInBytes)
+            Assert.Equal(expectedSize, Marshal.SizeOf(Vector2()))
