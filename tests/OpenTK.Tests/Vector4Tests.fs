@@ -57,6 +57,20 @@ module Vector4 =
             Assert.Equal((float32)0, v2.W)
             
         [<Property>]
+        let ``Vector3 value and scalar constructor sets all components to the correct values`` (x, y, z, w) = 
+            let v1 = Vector3(x, y, z)
+            let v2 = Vector4(v1, w)
+
+            Assert.Equal(v1.X, v2.X)
+            Assert.Equal(v1.Y, v2.Y)
+            Assert.Equal(v1.Z, v2.Z)
+
+            Assert.Equal(x, v2.X)
+            Assert.Equal(y, v2.Y)
+            Assert.Equal(z, v2.Z)
+            Assert.Equal(w, v2.W)
+            
+        [<Property>]
         let ``Vector4 value constructor sets all components to the correct values`` (x, y, z, w) = 
             let v1 = Vector4(x, y, z, w)
             let v2 = Vector4(v1)
@@ -84,44 +98,48 @@ module Vector4 =
             Assert.Equal(w, v.[3])
             
         [<Property>]
-        let ``Index operator throws exception for negative indices`` (x, y, z, w) = 
+        let ``Indexed set operator throws exception for negative indices`` (x, y, z, w) = 
+            let mutable v = Vector4(x, y, z, w)
+
+            (fun() -> v.[-1] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+
+        [<Property>]
+        let ``Indexed get operator throws exception for negative indices`` (x, y, z, w) = 
+            let mutable v = Vector4(x, y, z, w)
+
+            (fun() -> v.[-1] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+
+        [<Property>]
+        let ``Indexed set operator throws exception for large indices`` (x, y, z, w) = 
             let mutable v = Vector4(x, y, z, w)
             
-            let invalidIndexingAccess = fun() -> v.[-1] |> ignore
-            let invalidIndexingAssignment = fun() -> v.[-1] <- x
-
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccess) |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignment) |> ignore
+            (fun() -> v.[4] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
             
         [<Property>]
-        let ``Index operator throws exception for large indices`` (x, y, z, w) = 
+        let ``Indexed get operator throws exception for large indices`` (x, y, z, w) = 
             let mutable v = Vector4(x, y, z, w)
             
-            let invalidIndexingAccess = fun() -> v.[4] |> ignore
-            let invalidIndexingAssignment = fun() -> v.[4] <- x
-
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccess) |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignment) |> ignore
+            (fun() -> v.[4] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Length = 
         //
         [<Property>]
-        let ``Length method works`` (x, y, z, w) = 
+        let ``Length method follows the pythagorean theorem`` (x, y, z, w) = 
             let v = Vector4(x, y, z, w)
             let l = System.Math.Sqrt((float)(x * x + y * y + z * z + w * w))
             
             Assert.Equal((float32)l, v.Length)
             
         [<Property>]
-        let ``Fast length method works`` (x, y, z, w) = 
+        let ``Fast length method is the same as one divided by the fast inverse square`` (x, y, z, w) = 
             let v = Vector4(x, y, z, w)
             let l = 1.0f / MathHelper.InverseSqrtFast(x * x + y * y + z * z + w * w)
             
             Assert.Equal(l, v.LengthFast)
             
         [<Property>]
-        let ``Length squared method works`` (x, y, z, w) = 
+        let ``Length squared method returns each component squared and summed`` (x, y, z, w) = 
             let v = Vector4(x, y, z, w)
             let lsq = x * x + y * y + z * z + w * w
             
@@ -131,35 +149,32 @@ module Vector4 =
     module Normalization = 
         //
         [<Property>]
-        let ``Normalization of instance, creating a new vector, works`` (x, y, z, w) = 
+        let ``Normalization creates a new unit length vector with the correct components`` (x, y, z, w) = 
             let v = Vector4(x, y, z, w)
             let l = v.Length
-            
-            // Dividing by zero is not supported
-            if not (approxEq l 0.0f) then
-                let norm = v.Normalized()
-    
-                Assert.ApproximatelyEqual(v.X / l, norm.X)
-                Assert.ApproximatelyEqual(v.Y / l, norm.Y)
-                Assert.ApproximatelyEqual(v.Z / l, norm.Z)
-                Assert.ApproximatelyEqual(v.W / l, norm.W)
+
+            let norm = v.Normalized()
+
+            Assert.ApproximatelyEqual(v.X / l, norm.X)
+            Assert.ApproximatelyEqual(v.Y / l, norm.Y)
+            Assert.ApproximatelyEqual(v.Z / l, norm.Z)
+            Assert.ApproximatelyEqual(v.W / l, norm.W)
 
         [<Property>]
-        let ``Normalization of instance works`` (x, y, z, w) = 
+        let ``Normalization of instance transforms the instance into a unit length vector with the correct components`` (x, y, z, w) = 
             let v = Vector4(x, y, z, w)
             let l = v.Length
-            
-            if not (approxEq l 0.0f) then
-                let norm = Vector4(x, y, z, w)
-                norm.Normalize()
-    
-                Assert.ApproximatelyEqual(v.X / l, norm.X)
-                Assert.ApproximatelyEqual(v.Y / l, norm.Y)
-                Assert.ApproximatelyEqual(v.Z / l, norm.Z)
-                Assert.ApproximatelyEqual(v.W / l, norm.W)
+
+            let norm = Vector4(x, y, z, w)
+            norm.Normalize()
+
+            Assert.ApproximatelyEqual(v.X / l, norm.X)
+            Assert.ApproximatelyEqual(v.Y / l, norm.Y)
+            Assert.ApproximatelyEqual(v.Z / l, norm.Z)
+            Assert.ApproximatelyEqual(v.W / l, norm.W)
 
         [<Property>]
-        let ``Fast approximate normalization of instance works`` (x, y, z, w) = 
+        let ``Fast approximate normalization of instance transforms the instance into a unit length vector with the correct components`` (x, y, z, w) = 
             let v = Vector4(x, y, z, w)
             let norm = Vector4(x, y, z, w)
             norm.NormalizeFast()
@@ -171,37 +186,33 @@ module Vector4 =
             Assert.ApproximatelyEqual(v.Z * scale, norm.Z)
             Assert.ApproximatelyEqual(v.W * scale, norm.W)
             
-        [<Property>] // TODO: Eliminate coefficient calculation, rounding error
-        let ``Normalization by reference works`` (a : Vector4) =
-            if not (approxEq a.Length 0.0f) then
-                let scale = 1.0f / a.Length
-                let norm = Vector4(a.X * scale, a.Y * scale, a.Z * scale, a.W * scale)
-                let vRes = Vector4.Normalize(ref a)
-                
-                Assert.ApproximatelyEqual(norm, vRes)
+        [<Property>]
+        let ``Normalization by reference is the same as division by magnitude`` (a : Vector4) =
+            let norm = a / a.Length
+            let vRes = Vector4.Normalize(ref a)
             
-        [<Property>] // TODO: Eliminate coefficient calculation, rounding error
-        let ``Normalization works`` (a : Vector4) =
-            if not (approxEq a.Length 0.0f) then
-                let scale = 1.0f / a.Length
-                let norm = Vector4(a.X * scale, a.Y * scale, a.Z * scale, a.W * scale)
-                
-                Assert.ApproximatelyEqual(norm, Vector4.Normalize(a));
+            Assert.ApproximatelyEqual(norm, vRes)
             
         [<Property>]
-        let ``Fast approximate normalization by reference works`` (a : Vector4) =
+        let ``Normalization is the same as division by magnitude`` (a : Vector4) =
+            let norm = a / a.Length
+            
+            Assert.ApproximatelyEqual(norm, Vector4.Normalize(a));
+            
+        [<Property>]
+        let ``Fast approximate normalization by reference is the same as multiplication by the fast inverse square`` (a : Vector4) =
             let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y + a.Z * a.Z + a.W * a.W)
             
-            let norm = Vector4(a.X * scale, a.Y * scale, a.Z * scale, a.W * scale)
+            let norm = a * scale
             let vRes = Vector4.NormalizeFast(ref a)
             
             Assert.ApproximatelyEqual(norm, vRes)
             
         [<Property>]
-        let ``Fast approximate normalization works`` (a : Vector4) =
+        let ``Fast approximate normalization is the same as multiplication by the fast inverse square`` (a : Vector4) =
             let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y + a.Z * a.Z + a.W * a.W)
             
-            let norm = Vector4(a.X * scale, a.Y * scale, a.Z * scale, a.W * scale)
+            let norm = a * scale
             
             Assert.ApproximatelyEqual(norm, Vector4.NormalizeFast(a));
 
@@ -322,7 +333,7 @@ module Vector4 =
             Assert.Equal(a.W * f,r.W)
         
         [<Property>]
-        let ``Vector4-Matrix4 multiplication works for right-handed notation`` (a : Matrix4, b : Vector4) = 
+        let ``Vector4-Matrix4 multiplication using right-handed notation is the same as vector/row multiplication and summation`` (a : Matrix4, b : Vector4) = 
             let res = a*b
             
             let c1 = b.X * a.M11 + b.Y * a.M12 + b.Z * a.M13 + b.W * a.M14
@@ -335,7 +346,7 @@ module Vector4 =
             Assert.Equal(exp, res)
             
         [<Property>]
-        let ``Vector4-Matrix4 multiplication works for left-handed notation`` (a : Matrix4, b : Vector4) = 
+        let ``Vector4-Matrix4 multiplication using left-handed notation is the same as vector/column multiplication and summation`` (a : Matrix4, b : Vector4) = 
             let res = b*a
             
             let c1 = b.X * a.M11 + b.Y * a.M21 + b.Z * a.M31 + b.W * a.M41
@@ -377,7 +388,7 @@ module Vector4 =
                 Assert.ApproximatelyEqual(a.W / f, r.W)
                 
         [<Property>]
-        let ``Static Vector4-Vector4 division method works`` (a : Vector4, b : Vector4) = 
+        let ``Static Vector4-Vector4 division method is the same as component division`` (a : Vector4, b : Vector4) = 
         
             let v1 = Vector4(a.X / b.X, a.Y / b.Y, a.Z / b.Z, a.W / b.W)
             let sum = Vector4.Divide(a, b)
@@ -385,7 +396,7 @@ module Vector4 =
             Assert.ApproximatelyEqual(v1, sum)
             
         [<Property>]
-        let ``Static Vector4-Vector4 divison method works by reference`` (a : Vector4, b : Vector4) = 
+        let ``Static Vector4-Vector4 divison method by reference is the same as component division`` (a : Vector4, b : Vector4) = 
         
             let v1 = Vector4(a.X / b.X, a.Y / b.Y, a.Z / b.Z, a.W / b.W)
             let sum = Vector4.Divide(ref a, ref b)
@@ -393,7 +404,7 @@ module Vector4 =
             Assert.ApproximatelyEqual(v1, sum)
             
         [<Property>]
-        let ``Static Vector4-scalar division method works`` (a : Vector4, b : float32) = 
+        let ``Static Vector4-scalar division method is the same as component division`` (a : Vector4, b : float32) = 
         
             let v1 = Vector4(a.X / b, a.Y / b, a.Z / b, a.W / b)
             let sum = Vector4.Divide(a, b)
@@ -401,7 +412,7 @@ module Vector4 =
             Assert.ApproximatelyEqual(v1, sum)
             
         [<Property>]
-        let ``Static Vector4-scalar divison method works by reference`` (a : Vector4, b : float32) = 
+        let ``Static Vector4-scalar divison method by reference is the same as component division`` (a : Vector4, b : float32) = 
         
             let v1 = Vector4(a.X / b, a.Y / b, a.Z / b, a.W / b)
             let sum = Vector4.Divide(ref a, b)
@@ -412,7 +423,7 @@ module Vector4 =
     module Negation =
         //
         [<Property>]
-        let ``Vector negation operator works`` (x, y, z, w) =
+        let ``Vector negation operator negates all components`` (x, y, z, w) =
             let v = Vector4(x, y, z, w)
             let vNeg = -v
             Assert.Equal(-x, vNeg.X)
@@ -424,7 +435,7 @@ module Vector4 =
     module Equality =
         //
         [<Property>]
-        let ``Vector equality operator works`` (x, y, z, w) =
+        let ``Vector equality operator is by component`` (x, y, z, w) =
             let v1 = Vector4(x, y, z, w)
             let v2 = Vector4(x, y, z, w)
             let equality = v1 = v2
@@ -432,7 +443,7 @@ module Vector4 =
             Assert.True(equality)
             
         [<Property>]
-        let ``Vector inequality operator works`` (x, y, z, w) =
+        let ``Vector inequality operator is by component`` (x, y, z, w) =
             let v1 = Vector4(x, y, z, w)
             let v2 = Vector4(x + (float32)1 , y + (float32)1, z + (float32)1, w + (float32)1)
             let inequality = v1 <> v2
@@ -440,7 +451,7 @@ module Vector4 =
             Assert.True(inequality)
             
         [<Property>]
-        let ``Vector equality method works`` (x, y, z, w) =
+        let ``Vector equality method is by component`` (x, y, z, w) =
             let v1 = Vector4(x, y, z, w)
             let v2 = Vector4(x, y, z, w)
             let notVector = Matrix2()
@@ -451,11 +462,20 @@ module Vector4 =
             Assert.True(equality)
             Assert.False(inequalityByOtherType)
             
+        [<Property>]
+        let ``Vector equality method returns false for other classes`` (x, y, z, w) =
+            let v1 = Vector4(x, y, z, w)
+            let notVector = Matrix2()
+            
+            let inequalityByOtherType = v1.Equals(notVector)
+            
+            Assert.False(inequalityByOtherType)
+            
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Swizzling =
         //
         [<Property>]
-        let ``Vector swizzling works for X-primary components`` (x, y, z, w) =
+        let ``Vector swizzling returns the correct composite for X-primary components`` (x, y, z, w) =
         
             let v = Vector4(x, y, z, w)
             
@@ -497,7 +517,7 @@ module Vector4 =
             Assert.Equal(xw, v.Xw)
             
         [<Property>]
-        let ``Vector swizzling works for Y-primary components`` (x, y, z, w) =
+        let ``Vector swizzling returns the correct composite for Y-primary components`` (x, y, z, w) =
         
             let v = Vector4(x, y, z, w)
             
@@ -543,7 +563,7 @@ module Vector4 =
             Assert.Equal(yw, v.Yw)
             
         [<Property>]
-        let ``Vector swizzling works for Z-primary components`` (x, y, z, w) =
+        let ``Vector swizzling returns the correct composite for Z-primary components`` (x, y, z, w) =
         
             let v = Vector4(x, y, z, w)
             
@@ -587,7 +607,7 @@ module Vector4 =
             Assert.Equal(zw, v.Zw)
         
         [<Property>]
-        let ``Vector swizzling works for W-primary components`` (x, y, z, w) =
+        let ``Vector swizzling returns the correct composite for W-primary components`` (x, y, z, w) =
         
             let v = Vector4(x, y, z, w)
 
@@ -634,7 +654,7 @@ module Vector4 =
     module Interpolation =
         //
         [<Property>]
-        let ``Linear interpolation works`` (a : Vector4, b : Vector4, q) =
+        let ``Linear interpolation is by component`` (a : Vector4, b : Vector4, q) =
 
             let blend = q
             
@@ -650,7 +670,7 @@ module Vector4 =
             Assert.Equal(vExp, vRes)
             
         [<Property>]
-        let ``Barycentric interpolation works`` (a : Vector4, b : Vector4, c : Vector4, u, v) =
+        let ``Barycentric interpolation follows the barycentric formula`` (a : Vector4, b : Vector4, c : Vector4, u, v) =
 
             let r = a + u * (b - a) + v * (c - a)
             
@@ -663,7 +683,7 @@ module Vector4 =
     module ``Vector products`` =
         //
         [<Property>]
-        let ``Dot product works`` (a : Vector4, b : Vector4) =
+        let ``Dot product method follows the dot product formula`` (a : Vector4, b : Vector4) =
             let dot = a.X * b.X + a.Y * b.Y + a.Z * b.Z + a.W * b.W
             
             Assert.Equal(dot, Vector4.Dot(a, b));
@@ -675,7 +695,7 @@ module Vector4 =
     module ``Component min and max`` =
         //
         [<Property>]
-        let ``Selecting the lesser of two vectors works`` (x, y, z, w, a, b, c, d) =
+        let ``Min selects the vector with lesser magnitude given two vectors`` (x, y, z, w, a, b, c, d) =
             let v1 = Vector4(x, y, z, w)
             let v2 = Vector4(a, b, c, d)
             
@@ -692,7 +712,7 @@ module Vector4 =
                 Assert.True(v2ShorterThanv1) 
             
         [<Property>]
-        let ``Selecting the greater of two vectors works`` (x, y, z, w, a, b, c, d) =
+        let ``Max selects the vector with greater magnitude given two vectors`` (x, y, z, w, a, b, c, d) =
             let v1 = Vector4(x, y, z, w)
             let v2 = Vector4(a, b, c, d)
             
@@ -712,7 +732,7 @@ module Vector4 =
     module Clamping =
         //
         [<Property>]
-        let ``Clamping one vector between two other vectors works`` (a : Vector4, b : Vector4, w : Vector4) =
+        let ``Clamping one vector between two other vectors clamps all components between corresponding components`` (a : Vector4, b : Vector4, w : Vector4) =
             let res = Vector4.Clamp(w, a, b)
             
             let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X
@@ -726,7 +746,7 @@ module Vector4 =
             Assert.Equal(expW, res.W)
             
         [<Property>]
-        let ``Clamping one vector between two other vectors works by reference`` (a : Vector4, b : Vector4, w : Vector4) =
+        let ``Clamping one vector between two other vectors by reference clamps all components`` (a : Vector4, b : Vector4, w : Vector4) =
             let res = Vector4.Clamp(ref w, ref a, ref b)
             
             let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X

@@ -266,7 +266,7 @@ module Matrix4 =
     module Indexing = 
         //
         [<Property>]
-        let ``Matrix indexing sets correct components`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =
+        let ``Matrix set indexing sets correct components`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =
             let mutable A = Matrix4()
             
             A.[0, 0] <- a
@@ -308,46 +308,56 @@ module Matrix4 =
             Assert.Equal(n, A.M42)
             Assert.Equal(o, A.M43)
             Assert.Equal(p, A.M44)
-
-        [<Property>]
-        let ``Matrix indexing throws on negative indices`` (a) =
-            let mutable A = Matrix4()
-
-            let invalidIndexingAssignmentR = fun() -> A.[-1, 2] <- a
-            let invalidIndexingAssignmentC = fun() -> A.[1, -2] <- a
-            let invalidIndexingAssignmentRC = fun() -> A.[-1, -2] <- a
-
-            let invalidIndexingAccessR = fun() -> A.[-1, 2] |> ignore
-            let invalidIndexingAccessC = fun() -> A.[1, -2] |> ignore
-            let invalidIndexingAccessRC = fun() -> A.[-1, -2] |> ignore
-
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentR) |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentC) |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentRC) |> ignore
-            
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessR) |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessC) |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessRC) |> ignore
             
         [<Property>]
-        let ``Matrix indexing throws on large indices`` (a) =
-            let mutable A = Matrix4()
-
-            let invalidIndexingAssignmentR = fun() -> A.[5, 2] <- a
-            let invalidIndexingAssignmentC = fun() -> A.[1, 6] <- a
-            let invalidIndexingAssignmentRC = fun() -> A.[7, 12] <- a
-
-            let invalidIndexingAccessR = fun() -> A.[5, 2] |> ignore
-            let invalidIndexingAccessC = fun() -> A.[1, 6] |> ignore
-            let invalidIndexingAccessRC = fun() -> A.[7, 12] |> ignore
-
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentR) |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentC) |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignmentRC) |> ignore
+        let ``Matrix get indexing accesses the correct components`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =
+            let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
             
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessR) |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessC) |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessRC) |> ignore
+            Assert.Equal(a, A.[0, 0])
+            Assert.Equal(b, A.[0, 1])
+            Assert.Equal(c, A.[0, 2])
+            Assert.Equal(d, A.[0, 3])
+
+            Assert.Equal(e, A.[1, 0])
+            Assert.Equal(f, A.[1, 1])
+            Assert.Equal(g, A.[1, 2])
+            Assert.Equal(h, A.[1, 3])
+
+            Assert.Equal(i, A.[2, 0])
+            Assert.Equal(j, A.[2, 1])
+            Assert.Equal(k, A.[2, 2])
+            Assert.Equal(l, A.[2, 3])
+
+            Assert.Equal(m, A.[3, 0])
+            Assert.Equal(n, A.[3, 1])
+            Assert.Equal(o, A.[3, 2])
+            Assert.Equal(p, A.[3, 3])
+
+        [<Property>]
+        let ``Indexed set operator throws exception for negative indices`` (b : Matrix4, x : float32) =
+            let mutable a = b
+            (fun() -> a.[-1, 2] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> a.[1, -2] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> a.[-1, -2] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+
+        [<Property>]
+        let ``Indexed get operator throws exception for negative indices`` (a : Matrix4) = 
+            (fun() -> a.[-1, 2] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> a.[1, -2] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> a.[-1, -2] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+
+        [<Property>]
+        let ``Indexed set operator throws exception for large indices`` (a : Matrix4, x : float32) =
+            let mutable b = a
+            (fun() -> b.[5, 2] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> b.[1, 6] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> b.[7, 12] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            
+        [<Property>]
+        let ``Indexed get operator throws exception for large indices`` (a : Matrix4) =             
+            (fun() -> a.[5, 2] |> ignore) |> Assert.Throws<IndexOutOfRangeException>  |> ignore
+            (fun() -> a.[1, 6] |> ignore) |> Assert.Throws<IndexOutOfRangeException>  |> ignore
+            (fun() -> a.[7, 12] |> ignore) |> Assert.Throws<IndexOutOfRangeException>  |> ignore
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Row and column properties`` = 

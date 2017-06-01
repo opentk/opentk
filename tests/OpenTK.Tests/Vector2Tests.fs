@@ -22,14 +22,29 @@ module Vector2 =
             let v = Vector2(x,y)
             Assert.Equal(x,v.X)
             Assert.Equal(y,v.Y)
-        
-        //[<Property>]
-        // disabled - behaviour needs discussion
-        let ``Clamping works for each component`` (a : Vector2,b : Vector2,c : Vector2) = 
-            let inline clamp (value : float32) minV maxV = MathHelper.Clamp(value,minV,maxV)
-            let r = Vector2.Clamp(a,b,c)
-            Assert.Equal(clamp a.X b.X c.X,r.X)
-            Assert.Equal(clamp a.Y b.Y c.Y,r.Y)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Clamping =
+        //
+        [<Property>]
+        let ``Clamping one vector between two other vectors clamps all components between corresponding components`` (a : Vector2, b : Vector2, w : Vector2) =
+            let res = Vector2.Clamp(w, a, b)
+            
+            let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X
+            let expY = if w.Y < a.Y then a.Y else if w.Y > b.Y then b.Y else w.Y
+            
+            Assert.Equal(expX, res.X)
+            Assert.Equal(expY, res.Y)
+            
+        [<Property>]
+        let ``Clamping one vector between two other vectors by reference clamps all components`` (a : Vector2, b : Vector2, w : Vector2) =
+            let res = Vector2.Clamp(ref w, ref a, ref b)
+            
+            let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X
+            let expY = if w.Y < a.Y then a.Y else if w.Y > b.Y then b.Y else w.Y
+            
+            Assert.Equal(expX, res.X)
+            Assert.Equal(expY, res.Y)
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Length = 
@@ -81,28 +96,35 @@ module Vector2 =
     module Indexing = 
         //
         [<Property>]
-        let ``Index operators work for the correct components`` (x,y) = 
-            let v = Vector2(x,y)
-            Assert.Equal(v.[0],v.X)
-            Assert.Equal(v.[1],v.Y)
+        let ``Index operator accesses the correct components`` (x, y) = 
+            let v = Vector2(x, y)
+            
+            Assert.Equal(x, v.[0])
+            Assert.Equal(y, v.[1])
             
         [<Property>]
-        let ``Vector indexing throws index out of range exception correctly`` (x, y) =
+        let ``Indexed set operator throws exception for negative indices`` (x, y) = 
             let mutable v = Vector2(x, y)
-            let invalidIndexingAccess = fun() -> v.[2] |> ignore
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccess) |> ignore
-            
-            let invalidIndexingAssignment = (fun() -> v.[2] <- x) 
-            Assert.Throws<IndexOutOfRangeException>(invalidIndexingAssignment) |> ignore
-        
+
+            (fun() -> v.[-1] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+
         [<Property>]
-        let ``Component assignment by indexing works`` (x, y) =
-            let mutable v = Vector2()
-            v.[0] <- x
-            v.[1] <- y
-            Assert.Equal(x, v.X)
-            Assert.Equal(y, v.Y)
- 
+        let ``Indexed get operator throws exception for negative indices`` (x, y) = 
+            let mutable v = Vector2(x, y)
+
+            (fun() -> v.[-1] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+
+        [<Property>]
+        let ``Indexed set operator throws exception for large indices`` (x, y) = 
+            let mutable v = Vector2(x, y)
+            
+            (fun() -> v.[2] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            
+        [<Property>]
+        let ``Indexed get operator throws exception for large indices`` (x, y) = 
+            let mutable v = Vector2(x, y)
+            
+            (fun() -> v.[2] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
  
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Simple Properties`` = 
@@ -235,14 +257,13 @@ module Vector2 =
         //
         [<Property>]
         let ``Vector2-float division is the same as component-float division`` (a : Vector2, f : float32) = 
-            if not (approxEq f 0.0f) then // we don't support diving by zero.
-                let r = a / f
-                
-                Assert.ApproximatelyEqual(a.X / f,r.X)
-                Assert.ApproximatelyEqual(a.Y / f,r.Y)
+            let r = a / f
+            
+            Assert.ApproximatelyEqual(a.X / f,r.X)
+            Assert.ApproximatelyEqual(a.Y / f,r.Y)
                 
         [<Property>]
-        let ``Static Vector2-Vector2 division method works`` (a : Vector2, b : Vector2) = 
+        let ``Static Vector2-Vector2 division method is the same as component division`` (a : Vector2, b : Vector2) = 
         
             let v1 = Vector2(a.X / b.X, a.Y / b.Y)
             let sum = Vector2.Divide(a, b)
@@ -250,7 +271,7 @@ module Vector2 =
             Assert.ApproximatelyEqual(v1, sum)
             
         [<Property>]
-        let ``Static Vector2-Vector2 divison method works by reference`` (a : Vector2, b : Vector2) = 
+        let ``Static Vector2-Vector2 divison method by reference `` (a : Vector2, b : Vector2) = 
         
             let v1 = Vector2(a.X / b.X, a.Y / b.Y)
             let sum = Vector2.Divide(ref a, ref b)
@@ -258,7 +279,7 @@ module Vector2 =
             Assert.ApproximatelyEqual(v1, sum)
             
         [<Property>]
-        let ``Static Vector2-scalar division method works`` (a : Vector2, b : float32) = 
+        let ``Static Vector2-scalar division method is the same as component division`` (a : Vector2, b : float32) = 
         
             let v1 = Vector2(a.X / b, a.Y / b)
             let sum = Vector2.Divide(a, b)
@@ -266,7 +287,7 @@ module Vector2 =
             Assert.ApproximatelyEqual(v1, sum)
             
         [<Property>]
-        let ``Static Vector2-scalar divison method works by reference`` (a : Vector2, b : float32) = 
+        let ``Static Vector2-scalar divison method by reference is the same as component division`` (a : Vector2, b : float32) = 
         
             let v1 = Vector2(a.X / b, a.Y / b)
             let sum = Vector2.Divide(ref a, b)
@@ -277,7 +298,7 @@ module Vector2 =
     module Negation =
         //
         [<Property>]
-        let ``Vector negation operator works`` (x, y) =
+        let ``Vector negation operator negates all components`` (x, y) =
             let v = Vector2(x, y)
             let vNeg = -v
             Assert.Equal(-x, vNeg.X)
@@ -287,7 +308,7 @@ module Vector2 =
     module Equality =
         //
         [<Property>]
-        let ``Vector equality operator works`` (x, y) =
+        let ``Vector equality operator is by component`` (x, y) =
             let v1 = Vector2(x, y)
             let v2 = Vector2(x, y)
             let equality = v1 = v2
@@ -295,7 +316,7 @@ module Vector2 =
             Assert.True(equality)
             
         [<Property>]
-        let ``Vector inequality operator works`` (x, y) =
+        let ``Vector inequality operator is by component`` (x, y) =
             let v1 = Vector2(x, y)
             let v2 = Vector2(x + (float32)1 , y + (float32)1)
             let inequality = v1 <> v2
@@ -303,7 +324,7 @@ module Vector2 =
             Assert.True(inequality)
             
         [<Property>]
-        let ``Vector equality method works`` (x, y) =
+        let ``Vector equality method is by component`` (x, y) =
             let v1 = Vector2(x, y)
             let v2 = Vector2(x, y)
             let notVector = Matrix2()
@@ -318,7 +339,7 @@ module Vector2 =
     module Swizzling =
         //
         [<Property>]
-        let ``Vector swizzling works`` (x, y) =
+        let ``Vector swizzling returns the correct composites`` (x, y) =
             let v1 = Vector2(x, y)
             let v2 = Vector2(y, x)
             
@@ -329,7 +350,7 @@ module Vector2 =
     module Interpolation =
         //
         [<Property>]
-        let ``Linear interpolation works`` (a : Vector2, b : Vector2, q) =
+        let ``Linear interpolation is by component`` (a : Vector2, b : Vector2, q) =
 
             let blend = q
             
@@ -343,7 +364,7 @@ module Vector2 =
             Assert.Equal(vExp, vRes)
             
         [<Property>]
-        let ``Barycentric interpolation works`` (a : Vector2, b : Vector2, c : Vector2, u, v) =
+        let ``Barycentric interpolation follows the barycentric formula`` (a : Vector2, b : Vector2, c : Vector2, u, v) =
 
             let r = a + u * (b - a) + v * (c - a)
             
@@ -356,7 +377,7 @@ module Vector2 =
     module ``Vector products`` =
         //
         [<Property>]
-        let ``Dot product works`` (a : Vector2, b : Vector2) =
+        let ``Dot product follows the dot product formula`` (a : Vector2, b : Vector2) =
             let dot = a.X * b.X + a.Y * b.Y
             
             Assert.Equal(dot, Vector2.Dot(a, b));
@@ -365,19 +386,19 @@ module Vector2 =
             Assert.Equal(dot, vRes)
             
         [<Property>]
-        let ``Perpendicular dot product works`` (a : Vector2, b : Vector2) =
-            let dot = a.X * b.Y - a.Y * b.X
+        let ``Perpendicular dot product follows the perpendicular dot product formula`` (a : Vector2, b : Vector2) =
+            let perpDot = a.X * b.Y - a.Y * b.X
             
-            Assert.Equal(dot, Vector2.PerpDot(a, b));
+            Assert.Equal(perpDot, Vector2.PerpDot(a, b));
             
             let vRes = Vector2.PerpDot(ref a, ref b)
-            Assert.Equal(dot, vRes)
+            Assert.Equal(perpDot, vRes)
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Normalization = 
         //
         [<Property>]
-        let ``Normalization of instance, creating a new vector, works`` (a, b) = 
+        let ``Normalization creates a new unit length vector with the correct components`` (a, b) = 
             let v = Vector2(a, b)
             let l = v.Length
             
@@ -389,7 +410,7 @@ module Vector2 =
                 Assert.ApproximatelyEqual(v.Y / l, norm.Y)
 
         [<Property>]
-        let ``Normalization of instance works`` (a, b) = 
+        let ``Normalization of instance transforms the instance into a unit length vector with the correct components`` (a, b) = 
             let v = Vector2(a, b)
             let l = v.Length
             
@@ -401,7 +422,7 @@ module Vector2 =
                 Assert.ApproximatelyEqual(v.Y / l, norm.Y)
 
         [<Property>]
-        let ``Fast approximate normalization of instance works`` (a, b) = 
+        let ``Fast approximate normalization of instance transforms the instance into a unit length vector with the correct components`` (a, b) = 
             let v = Vector2(a, b)
             let norm = Vector2(a, b)
             norm.NormalizeFast()
@@ -412,36 +433,32 @@ module Vector2 =
             Assert.ApproximatelyEqual(v.Y * scale, norm.Y)
             
         [<Property>]
-        let ``Normalization by reference works`` (a : Vector2) =
-            if not (approxEq a.Length 0.0f) then
-                let scale = 1.0f / a.Length
-                let norm = Vector2(a.X * scale, a.Y * scale)
-                let vRes = Vector2.Normalize(ref a)
-                
-                Assert.ApproximatelyEqual(norm, vRes)
+        let ``Normalization by reference is the same as division by magnitude`` (a : Vector2) =
+            let norm = a / a.Length
+            let vRes = Vector2.Normalize(ref a)
+            
+            Assert.ApproximatelyEqual(norm, vRes)
             
         [<Property>]
-        let ``Normalization works`` (a : Vector2) =
-            if not (approxEq a.Length 0.0f) then
-                let scale = 1.0f / a.Length
-                let norm = Vector2(a.X * scale, a.Y * scale)
-                
-                Assert.ApproximatelyEqual(norm, Vector2.Normalize(a));
+        let ``Normalization is the same as division by magnitude`` (a : Vector2) =
+            let norm = a / a.Length
+            
+            Assert.ApproximatelyEqual(norm, Vector2.Normalize(a));
             
         [<Property>]
-        let ``Fast approximate normalization by reference works`` (a : Vector2) =
+        let ``Fast approximate normalization by reference is the same as multiplication by the fast inverse square`` (a : Vector2) =
             let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y)
             
-            let norm = Vector2(a.X * scale, a.Y * scale)
+            let norm = a * scale
             let vRes = Vector2.NormalizeFast(ref a)
             
             Assert.ApproximatelyEqual(norm, vRes)
             
         [<Property>]
-        let ``Fast approximate normalization works`` (a : Vector2) =
+        let ``Fast approximate normalization is the same as multiplication by the fast inverse square`` (a : Vector2) =
             let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y)
             
-            let norm = Vector2(a.X * scale, a.Y * scale)
+            let norm = a * scale
             
             Assert.ApproximatelyEqual(norm, Vector2.NormalizeFast(a));
             
@@ -449,7 +466,7 @@ module Vector2 =
     module ``Component min and max`` =
         //
         [<Property>]
-        let ``Producing a new vector from the smallest components of given vectors works`` (x, y, u, w) =
+        let ``ComponentMin produces a new vector from the smallest components of the given vectors`` (x, y, u, w) =
             let v1 = Vector2(x, y)
             let v2 = Vector2(u, w)
             
@@ -462,7 +479,7 @@ module Vector2 =
             Assert.True(vMin.Y <= v2.Y)
             
         [<Property>]
-        let ``Producing a new vector from the largest components of given vectors works`` (x, y, u, w) =
+        let ``ComponentMax produces a new vector from the largest components of the given vectors`` (x, y, u, w) =
             let v1 = Vector2(x, y)
             let v2 = Vector2(u, w)
             
@@ -475,7 +492,7 @@ module Vector2 =
             Assert.True(vMax.Y >= v2.Y)
             
         [<Property>]
-        let ``Producing a new vector from the smallest components of given vectors by reference works`` (x, y, u, w) =
+        let ``ComponentMin by reference produces a new vector from the smallest components of the given vectors`` (x, y, u, w) =
             let v1 = Vector2(x, y)
             let v2 = Vector2(u, w)
             
@@ -488,7 +505,7 @@ module Vector2 =
             Assert.True(vMin.Y <= v2.Y)
             
         [<Property>]
-        let ``Producing a new vector from the largest components of given vectors by reference works`` (x, y, u, w) =
+        let ``ComponentMax by reference produces a new vector from the largest components of the given vectors`` (x, y, u, w) =
             let v1 = Vector2(x, y)
             let v2 = Vector2(u, w)
             
@@ -501,7 +518,7 @@ module Vector2 =
             Assert.True(vMax.Y >= v2.Y)
             
         [<Property>]
-        let ``Selecting the lesser of two vectors works`` (x, y, u, w) =
+        let ``Min selects the vector with lesser magnitude given two vectors`` (x, y, u, w) =
             let v1 = Vector2(x, y)
             let v2 = Vector2(u, w)
             
@@ -518,7 +535,7 @@ module Vector2 =
                 Assert.True(equalsLast) 
             
         [<Property>]
-        let ``Selecting the greater of two vectors works`` (x, y, u, w) =
+        let ``Max selects the vector with greater magnitude given two vectors`` (x, y, u, w) =
             let v1 = Vector2(x, y)
             let v2 = Vector2(u, w)
             
@@ -533,29 +550,6 @@ module Vector2 =
             else 
                 let equalsLast = vMin = v2 
                 Assert.True(equalsLast) 
-                
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
-    module Clamping =
-        //
-        [<Property>]
-        let ``Clamping one vector between two other vectors works`` (a : Vector2, b : Vector2, w : Vector2) =
-            let res = Vector2.Clamp(w, a, b)
-            
-            let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X
-            let expY = if w.Y < a.Y then a.Y else if w.Y > b.Y then b.Y else w.Y
-            
-            Assert.Equal(expX, res.X)
-            Assert.Equal(expY, res.Y)
-            
-        [<Property>]
-        let ``Clamping one vector between two other vectors works by reference`` (a : Vector2, b : Vector2, w : Vector2) =
-            let res = Vector2.Clamp(ref w, ref a, ref b)
-            
-            let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X
-            let expY = if w.Y < a.Y then a.Y else if w.Y > b.Y then b.Y else w.Y
-            
-            Assert.Equal(expX, res.X)
-            Assert.Equal(expY, res.Y)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Transformation = 
