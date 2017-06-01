@@ -152,6 +152,54 @@ module Matrix4 =
             Assert.Equal(R42, AB.M42)
             Assert.Equal(R43, AB.M43)
             Assert.Equal(R44, AB.M44)
+            
+        [<Property>]
+        let ``Matrix multiplication by scalar is the same as row multiplication by scalar`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, scalar : float32) =
+            let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
+                        
+            let R1 = Vector4(a, b, c, d) * scalar
+            let R2 = Vector4(e, f, g, h) * scalar
+            let R3 = Vector4(i, j, k, l) * scalar
+            let R4 = Vector4(m, n, o, p) * scalar
+            
+            let AScaled = A * scalar
+            
+            Assert.Equal(R1, AScaled.Row0)
+            Assert.Equal(R1, AScaled.Row1)
+            Assert.Equal(R1, AScaled.Row2)
+            Assert.Equal(R1, AScaled.Row3)
+            
+        [<Property>]
+        let ``Static method matrix multiplication by scalar is the same as row multiplication by scalar`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, scalar : float32) =
+            let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
+                        
+            let R1 = Vector4(a, b, c, d) * scalar
+            let R2 = Vector4(e, f, g, h) * scalar
+            let R3 = Vector4(i, j, k, l) * scalar
+            let R4 = Vector4(m, n, o, p) * scalar
+            
+            let AScaled = Matrix4.Mult(A, scalar)
+            
+            Assert.Equal(R1, AScaled.Row0)
+            Assert.Equal(R1, AScaled.Row1)
+            Assert.Equal(R1, AScaled.Row2)
+            Assert.Equal(R1, AScaled.Row3)
+            
+        [<Property>]
+        let ``Static method matrix multiplication by reference by scalar is the same as row multiplication by scalar`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, scalar : float32) =
+            let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
+                        
+            let R1 = Vector4(a, b, c, d) * scalar
+            let R2 = Vector4(e, f, g, h) * scalar
+            let R3 = Vector4(i, j, k, l) * scalar
+            let R4 = Vector4(m, n, o, p) * scalar
+            
+            let AScaled = Matrix4.Mult(ref A, scalar)
+            
+            Assert.Equal(R1, AScaled.Row0)
+            Assert.Equal(R1, AScaled.Row1)
+            Assert.Equal(R1, AScaled.Row2)
+            Assert.Equal(R1, AScaled.Row3)
              
             
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
@@ -300,3 +348,35 @@ module Matrix4 =
             Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessR) |> ignore
             Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessC) |> ignore
             Assert.Throws<IndexOutOfRangeException>(invalidIndexingAccessRC) |> ignore
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module ``Row and column properties`` = 
+        //
+        [<Property>]
+        let ``Matrix row properties return the correct components`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =
+            let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
+            
+            let R0 = A.Row0
+            let R1 = A.Row1
+            let R2 = A.Row2
+            let R3 = A.Row3
+            
+            Assert.Equal(a, R0.X)
+            Assert.Equal(b, R0.Y)
+            Assert.Equal(c, R0.Z)
+            Assert.Equal(d, R0.W)
+
+            Assert.Equal(e, R1.X)
+            Assert.Equal(f, R1.Y)
+            Assert.Equal(g, R1.Z)
+            Assert.Equal(h, R1.W)
+
+            Assert.Equal(i, R2.X)
+            Assert.Equal(j, R2.Y)
+            Assert.Equal(k, R2.Z)
+            Assert.Equal(l, R2.W)
+
+            Assert.Equal(m, R3.X)
+            Assert.Equal(n, R3.Y)
+            Assert.Equal(o, R3.Z)
+            Assert.Equal(p, R3.W)
