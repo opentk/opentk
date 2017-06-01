@@ -206,6 +206,7 @@ module Vector3 =
             
             Assert.ApproximatelyEqual(a.X + b.X,c.X)
             Assert.ApproximatelyEqual(a.Y + b.Y,c.Y)
+            Assert.ApproximatelyEqual(a.Z + b.Z,c.Z)
         
         [<Property>]
         let ``Vector3 addition is commutative`` (a : Vector3, b : Vector3) = 

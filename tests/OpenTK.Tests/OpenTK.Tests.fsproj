@@ -64,6 +64,7 @@
     <Compile Include="Matrix4Tests.fs" />
     <Compile Include="Vector2Tests.fs" />
     <Compile Include="Vector3Tests.fs" />
+    <Compile Include="Vector4Tests.fs" />
     <Content Include="App.config" />
     <None Include="paket.references" />
   </ItemGroup>
