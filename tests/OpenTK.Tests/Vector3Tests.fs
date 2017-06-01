@@ -4,6 +4,7 @@ open Xunit
 open FsCheck
 open FsCheck.Xunit
 open System
+open System.Runtime.InteropServices
 open OpenTK
 
 module Vector3 = 
@@ -679,3 +680,13 @@ module Vector3 =
             let unitOne = Vector3((float32)1, (float32)1, (float32)1)
             
             Assert.Equal(Vector3.One, unitOne)
+            
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Serialization = 
+        //
+        [<Property>]
+        let ``The absolute size of a Vector3 is always the size of its components`` (v : Vector3) = 
+            let expectedSize = sizeof<float32> * 3
+            
+            Assert.Equal(expectedSize, Vector3.SizeInBytes)
+            Assert.Equal(expectedSize, Marshal.SizeOf(Vector3()))
