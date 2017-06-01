@@ -709,7 +709,7 @@ module Vector3 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = transformedQuat.Xyz
 
-            Assert.Equal(transformedVector, Vector3.Transform(v, q))
+            Assert.ApproximatelyEqual(transformedVector, Vector3.Transform(v, q))
 
         [<Property>]
         let ``Transformation by quaternion by reference is the same as multiplication by quaternion and its conjugate`` (v : Vector3, q : Quaternion) =
@@ -719,4 +719,17 @@ module Vector3 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = transformedQuat.Xyz
 
-            Assert.Equal(transformedVector, Vector3.Transform(ref v, ref q))
+            Assert.ApproximatelyEqual(transformedVector, Vector3.Transform(ref v, ref q))
+
+        [<Property>]
+        let ``Transformation by identity quaternion does not alter vector`` (v : Vector3) =
+            let q = Quaternion.Identity
+            let vectorQuat = Quaternion(v.X, v.Y, v.Z, 0.0f)
+            let inverse = Quaternion.Invert(q)
+
+            let transformedQuat = q * vectorQuat * inverse
+            let transformedVector = transformedQuat.Xyz
+
+            Assert.ApproximatelyEqual(v, transformedVector)
+            Assert.ApproximatelyEqual(v, Vector3.Transform(v, q))
+            Assert.ApproximatelyEqual(transformedVector, Vector3.Transform(v, q))

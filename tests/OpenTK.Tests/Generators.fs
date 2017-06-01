@@ -38,8 +38,8 @@ module private Generators =
 
     let quat =
         singleArb
-        |> Gen.four
-        |> Gen.map Quaternion
+        |> Gen.three
+        |> Gen.map (fun (x,y,z) -> Quaternion(x,y,z,0.0f) |> Quaternion.Normalize)
         |> Arb.fromGen
 
     let mat2 =
