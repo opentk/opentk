@@ -318,7 +318,7 @@ module Vector2 =
         [<Property>]
         let ``Vector inequality operator is by component`` (x, y) =
             let v1 = Vector2(x, y)
-            let v2 = Vector2(x + (float32)1 , y + (float32)1)
+            let v2 = Vector2(x + 1.0f , y + 1.0f)
             let inequality = v1 <> v2
 
             Assert.True(inequality)
@@ -556,7 +556,7 @@ module Vector2 =
         //
         [<Property>]
         let ``Transformation by quaternion is the same as multiplication by quaternion and its conjugate`` (v : Vector2, q : Quaternion) =
-            let vectorQuat = Quaternion(v.X, v.Y, (float32)0, (float32)0)
+            let vectorQuat = Quaternion(v.X, v.Y, 0.0f, 0.0f)
             let inverse = Quaternion.Invert(q)
 
             let transformedQuat = q * vectorQuat * inverse
@@ -566,7 +566,7 @@ module Vector2 =
 
         [<Property>]
         let ``Transformation by quaternion by reference is the same as multiplication by quaternion and its conjugate`` (v : Vector2, q : Quaternion) =
-            let vectorQuat = Quaternion(v.X, v.Y, (float32)0, (float32)0)
+            let vectorQuat = Quaternion(v.X, v.Y, 0.0f, 0.0f)
             let inverse = Quaternion.Invert(q)
 
             let transformedQuat = q * vectorQuat * inverse

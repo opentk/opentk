@@ -42,22 +42,22 @@ module Matrix4 =
             Assert.Equal(a, A.M11)
             Assert.Equal(b, A.M12)
             Assert.Equal(c, A.M13)
-            Assert.Equal((float32)0, A.M14)
+            Assert.Equal(0.0f, A.M14)
 
             Assert.Equal(d, A.M21)
             Assert.Equal(e, A.M22)
             Assert.Equal(f, A.M23)
-            Assert.Equal((float32)0, A.M24)
+            Assert.Equal(0.0f, A.M24)
 
             Assert.Equal(g, A.M31)
             Assert.Equal(h, A.M32)
             Assert.Equal(i, A.M33)
-            Assert.Equal((float32)0, A.M34)
+            Assert.Equal(0.0f, A.M34)
 
-            Assert.Equal((float32)0, A.M41)
-            Assert.Equal((float32)0, A.M42)
-            Assert.Equal((float32)0, A.M43)
-            Assert.Equal((float32)1, A.M44)
+            Assert.Equal(0.0f, A.M41)
+            Assert.Equal(0.0f, A.M42)
+            Assert.Equal(0.0f, A.M43)
+            Assert.Equal(1.0f, A.M44)
 
         [<Property>]
         let ``Four-vector4 constructor sets all components to the correct values`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =

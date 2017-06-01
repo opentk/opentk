@@ -39,8 +39,8 @@ module Vector4 =
 
             Assert.Equal(x, v2.X)
             Assert.Equal(y, v2.Y)
-            Assert.Equal((float32)0, v2.Z)
-            Assert.Equal((float32)0, v2.W)
+            Assert.Equal(0.0f, v2.Z)
+            Assert.Equal(0.0f, v2.W)
 
         [<Property>]
         let ``Vector3 value constructor sets all components to the correct values`` (x, y, z) =
@@ -54,7 +54,7 @@ module Vector4 =
             Assert.Equal(x, v2.X)
             Assert.Equal(y, v2.Y)
             Assert.Equal(z, v2.Z)
-            Assert.Equal((float32)0, v2.W)
+            Assert.Equal(0.0f, v2.W)
 
         [<Property>]
         let ``Vector3 value and scalar constructor sets all components to the correct values`` (x, y, z, w) =
@@ -445,7 +445,7 @@ module Vector4 =
         [<Property>]
         let ``Vector inequality operator is by component`` (x, y, z, w) =
             let v1 = Vector4(x, y, z, w)
-            let v2 = Vector4(x + (float32)1 , y + (float32)1, z + (float32)1, w + (float32)1)
+            let v2 = Vector4(x + 1.0f , y + 1.0f, z + 1.0f, w + 1.0f)
             let inequality = v1 <> v2
 
             Assert.True(inequality)
@@ -764,37 +764,37 @@ module Vector4 =
         //
         [<Property>]
         let ``Unit X is correct``  =
-            let unitX = Vector4((float32)1, (float32)0, (float32)0, (float32)0)
+            let unitX = Vector4(1.0f, 0.0f, 0.0f, 0.0f)
 
             Assert.Equal(Vector4.UnitX, unitX)
 
         [<Property>]
         let ``Unit Y is correct``  =
-            let unitY = Vector4((float32)0, (float32)1, (float32)0, (float32)0)
+            let unitY = Vector4(0.0f, 1.0f, 0.0f, 0.0f)
 
             Assert.Equal(Vector4.UnitY, unitY)
 
         [<Property>]
         let ``Unit Z is correct``  =
-            let unitZ = Vector4((float32)0, (float32)0, (float32)1, (float32)0)
+            let unitZ = Vector4(0.0f, 0.0f, 1.0f, 0.0f)
 
             Assert.Equal(Vector4.UnitZ, unitZ)
 
         [<Property>]
         let ``Unit W is correct``  =
-            let unitW = Vector4((float32)0, (float32)0, (float32)0, (float32)1)
+            let unitW = Vector4(0.0f, 0.0f, 0.0f, 1.0f)
 
             Assert.Equal(Vector4.UnitW, unitW)
 
         [<Property>]
         let ``Unit zero is correct``  =
-            let unitZero = Vector4((float32)0, (float32)0, (float32)0, (float32)0)
+            let unitZero = Vector4(0.0f, 0.0f, 0.0f, 0.0f)
 
             Assert.Equal(Vector4.Zero, unitZero)
 
         [<Property>]
         let ``Unit one is correct``  =
-            let unitOne = Vector4((float32)1, (float32)1, (float32)1, (float32)1)
+            let unitOne = Vector4(1.0f, 1.0f, 1.0f, 1.0f)
 
             Assert.Equal(Vector4.One, unitOne)
 

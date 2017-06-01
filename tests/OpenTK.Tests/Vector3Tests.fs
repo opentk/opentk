@@ -37,7 +37,7 @@ module Vector3 =
 
             Assert.Equal(a, v2.X)
             Assert.Equal(b, v2.Y)
-            Assert.Equal((float32)0, v2.Z)
+            Assert.Equal(0.0f, v2.Z)
 
         [<Property>]
         let ``Vector3 value constructor sets all components to the correct values`` (a, b, c) =
@@ -413,7 +413,7 @@ module Vector3 =
         [<Property>]
         let ``Vector inequality operator is by component`` (x, y, z) =
             let v1 = Vector3(x, y, z)
-            let v2 = Vector3(x + (float32)1 , y + (float32)1, z + (float32)1)
+            let v2 = Vector3(x + 1.0f , y + 1.0f, z + 1.0f)
             let inequality = v1 <> v2
 
             Assert.True(inequality)
@@ -660,25 +660,25 @@ module Vector3 =
         //
         [<Property>]
         let ``Unit X is correct``  =
-            let unitX = Vector3((float32)1, (float32)0, (float32)0)
+            let unitX = Vector3(1.0f, 0.0f, 0.0f)
 
             Assert.Equal(Vector3.UnitX, unitX)
 
         [<Property>]
         let ``Unit Y is correct``  =
-            let unitY = Vector3((float32)0, (float32)1, (float32)0)
+            let unitY = Vector3(0.0f, 1.0f, 0.0f)
 
             Assert.Equal(Vector3.UnitY, unitY)
 
         [<Property>]
         let ``Unit Z is correct``  =
-            let unitZ = Vector3((float32)0, (float32)0, (float32)1)
+            let unitZ = Vector3(0.0f, 0.0f, 1.0f)
 
             Assert.Equal(Vector3.UnitZ, unitZ)
 
         [<Property>]
         let ``Unit zero is correct``  =
-            let unitZero = Vector3((float32)0, (float32)0, (float32)0)
+            let unitZero = Vector3(0.0f, 0.0f, 0.0f)
 
             Assert.Equal(Vector3.Zero, unitZero)
 
@@ -707,7 +707,7 @@ module Vector3 =
             let inverse = Quaternion.Invert(q)
 
             let transformedQuat = q * vectorQuat * inverse
-            let transformedVector = Vector3(transformedQuat.X, transformedQuat.Y, transformedQuat.Z)
+            let transformedVector = transformedQuat.Xyz
 
             Assert.Equal(transformedVector, Vector3.Transform(v, q))
 
@@ -717,6 +717,6 @@ module Vector3 =
             let inverse = Quaternion.Invert(q)
 
             let transformedQuat = q * vectorQuat * inverse
-            let transformedVector = Vector3(transformedQuat.X, transformedQuat.Y,transformedQuat.Z)
+            let transformedVector = transformedQuat.Xyz
 
             Assert.Equal(transformedVector, Vector3.Transform(ref v, ref q))
