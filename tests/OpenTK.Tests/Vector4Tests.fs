@@ -101,25 +101,25 @@ module Vector4 =
         let ``Indexed set operator throws exception for negative indices`` (x, y, z, w) =
             let mutable v = Vector4(x, y, z, w)
 
-            (fun() -> v.[-1] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> v.[-1] <- x) |> Assert.ThrowsIndexExn
 
         [<Property>]
         let ``Indexed get operator throws exception for negative indices`` (x, y, z, w) =
             let mutable v = Vector4(x, y, z, w)
 
-            (fun() -> v.[-1] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> v.[-1] |> ignore) |> Assert.ThrowsIndexExn
 
         [<Property>]
         let ``Indexed set operator throws exception for large indices`` (x, y, z, w) =
             let mutable v = Vector4(x, y, z, w)
 
-            (fun() -> v.[4] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> v.[4] <- x) |> Assert.ThrowsIndexExn
 
         [<Property>]
         let ``Indexed get operator throws exception for large indices`` (x, y, z, w) =
             let mutable v = Vector4(x, y, z, w)
 
-            (fun() -> v.[4] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> v.[4] |> ignore) |> Assert.ThrowsIndexExn
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Length =
