@@ -40,6 +40,7 @@ module private Generators =
         singleArb
         |> Gen.three
         |> Gen.map (fun (x,y,z) -> Quaternion(x,y,z,0.0f) |> Quaternion.Normalize)
+        |> Gen.filter (fun q -> not <| (Single.IsNaN q.Length || Single.IsInfinity q.Length ))
         |> Arb.fromGen
 
     let mat2 =
