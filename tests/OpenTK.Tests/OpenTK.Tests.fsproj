@@ -58,12 +58,15 @@
   -->
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <None Include="paket.references" />
     <Compile Include="Assertions.fs" />
     <Compile Include="Generators.fs" />
-    <Compile Include="MathHelper.fs" />
-    <Compile Include="Vectors.fs" />
+    <Compile Include="MathHelperTests.fs" />
+    <Compile Include="Matrix4Tests.fs" />
+    <Compile Include="Vector2Tests.fs" />
+    <Compile Include="Vector3Tests.fs" />
+    <Compile Include="Vector4Tests.fs" />
     <Content Include="App.config" />
+    <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
