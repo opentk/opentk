@@ -627,7 +627,7 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector3d vector, double scale, out Vector3d result)
         {
-            Multiply(ref vector, 1 / scale, out result);
+            result = vector / scale;
         }
 
         /// <summary>
@@ -1372,7 +1372,7 @@ namespace OpenTK
             vec.Z *= scale;
             return vec;
         }
-		
+
         /// <summary>
         /// Component-wise multiplication between the specified instance by a scale vector.
         /// </summary>
@@ -1386,7 +1386,7 @@ namespace OpenTK
             vec.Z *= scale.Z;
             return vec;
         }
-		
+
         /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>
@@ -1395,10 +1395,9 @@ namespace OpenTK
         /// <returns>The result of the calculation.</returns>
         public static Vector3d operator /(Vector3d vec, double scale)
         {
-            double mult = 1 / scale;
-            vec.X *= mult;
-            vec.Y *= mult;
-            vec.Z *= mult;
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
             return vec;
         }
 

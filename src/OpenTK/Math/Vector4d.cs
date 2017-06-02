@@ -175,7 +175,7 @@ namespace OpenTK
         #endregion
 
         #region Public Members
-        
+
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
@@ -669,7 +669,7 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector4d vector, double scale, out Vector4d result)
         {
-            Multiply(ref vector, 1 / scale, out result);
+            result = vector / scale;
         }
 
         /// <summary>
@@ -1493,7 +1493,7 @@ namespace OpenTK
             vec.W *= scale;
             return vec;
         }
-		
+
         /// <summary>
         /// Component-wise multiplication between the specified instance by a scale vector.
         /// </summary>
@@ -1517,11 +1517,10 @@ namespace OpenTK
         /// <returns>The result of the calculation.</returns>
         public static Vector4d operator /(Vector4d vec, double scale)
         {
-            double mult = 1 / scale;
-            vec.X *= mult;
-            vec.Y *= mult;
-            vec.Z *= mult;
-            vec.W *= mult;
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
+            vec.W /= scale;
             return vec;
         }
 
