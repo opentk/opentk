@@ -22,18 +22,21 @@ module private Generators =
         singleArb
         |> Gen.two
         |> Gen.map Vector2
+        |> Gen.filter (fun v -> not <| (Single.IsNaN v.Length || Single.IsInfinity v.Length ))
         |> Arb.fromGen
 
     let vec3 =
         singleArb
         |> Gen.three
         |> Gen.map Vector3
+        |> Gen.filter (fun v -> not <| (Single.IsNaN v.Length || Single.IsInfinity v.Length ))
         |> Arb.fromGen
 
     let vec4 =
         singleArb
         |> Gen.four
         |> Gen.map Vector4
+        |> Gen.filter (fun v -> not <| (Single.IsNaN v.Length || Single.IsInfinity v.Length ))
         |> Arb.fromGen
 
     let quat =
