@@ -7,3 +7,8 @@ before_install:
  
 script: 
   - ./build.sh NuGet
+  
+after_script:
+  - mono --debug --profile=log:coverage,covfilter=+OpenTK,covfilter=-OpenTK.Tests,covfilter=-FSharp.Core,covfilter=-FsCheck,covfilter=-xunit.assert "packages/xunit.runner.console/tools/xunit.console.exe"  "tests/OpenTK.Tests/bin/Release/OpenTK.Tests.dll" -parallel none
+  - mprof-report --reports=coverage --coverage-out=coverage.xml output.mlpd
+  - bash <(curl -s https://codecov.io/bash)
