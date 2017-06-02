@@ -774,8 +774,8 @@ namespace OpenTK
         {
             vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
             vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            vec.Z = vec.X < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-            vec.W = vec.Y < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+            vec.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+            vec.W = vec.W < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
             return vec;
         }
 
@@ -790,8 +790,8 @@ namespace OpenTK
         {
             result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
             result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            result.Z = vec.X < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-            result.W = vec.Y < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+            result.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+            result.W = vec.W < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
         }
 
         #endregion
