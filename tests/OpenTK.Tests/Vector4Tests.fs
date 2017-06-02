@@ -705,8 +705,8 @@ module Vector4 =
                 let v1ShorterThanv2 = l1 < l2
                 Assert.True(v1ShorterThanv2)
             else
-                let v2ShorterThanv1 = l2 < l1
-                Assert.True(v2ShorterThanv1)
+                let v2ShorterThanOrEqualTov1 = l2 <= l1
+                Assert.True(v2ShorterThanOrEqualTov1)
 
         [<Property>]
         let ``MagnitudeMax selects the vector with equal or greater magnitude given two vectors`` (v1 : Vector4, v2: Vector4) =
