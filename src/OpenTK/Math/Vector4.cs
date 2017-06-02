@@ -703,6 +703,7 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <returns>The component-wise minimum</returns>
+        [Obsolete("Use ComponentMin() instead.")]
         public static Vector4 Min(Vector4 a, Vector4 b)
         {
             a.X = a.X < b.X ? a.X : b.X;
@@ -718,6 +719,7 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <param name="result">The component-wise minimum</param>
+        [Obsolete("Use ComponentMin() instead.")]
         public static void Min(ref Vector4 a, ref Vector4 b, out Vector4 result)
         {
             result.X = a.X < b.X ? a.X : b.X;
@@ -736,6 +738,7 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <returns>The component-wise maximum</returns>
+        [Obsolete("Use ComponentMax() instead.")]
         public static Vector4 Max(Vector4 a, Vector4 b)
         {
             a.X = a.X > b.X ? a.X : b.X;
@@ -751,6 +754,7 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <param name="result">The component-wise maximum</param>
+        [Obsolete("Use ComponentMax() instead.")]
         public static void Max(ref Vector4 a, ref Vector4 b, out Vector4 result)
         {
             result.X = a.X > b.X ? a.X : b.X;
@@ -1514,7 +1518,7 @@ namespace OpenTK
             vec.W *= scale;
             return vec;
         }
-        
+
         /// <summary>
         /// Component-wise multiplication between the specified instance by a scale vector.
         /// </summary>

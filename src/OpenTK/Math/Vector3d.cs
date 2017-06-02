@@ -725,6 +725,7 @@ namespace OpenTK
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <returns>The minimum Vector3</returns>
+        [Obsolete("Use MagnitudeMin() instead.")]
         public static Vector3d Min(Vector3d left, Vector3d right)
         {
             return left.LengthSquared < right.LengthSquared ? left : right;
@@ -740,6 +741,7 @@ namespace OpenTK
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <returns>The minimum Vector3</returns>
+        [Obsolete("Use MagnitudeMax() instead.")]
         public static Vector3d Max(Vector3d left, Vector3d right)
         {
             return left.LengthSquared >= right.LengthSquared ? left : right;
@@ -1372,7 +1374,7 @@ namespace OpenTK
             vec.Z *= scale;
             return vec;
         }
-		
+
         /// <summary>
         /// Component-wise multiplication between the specified instance by a scale vector.
         /// </summary>
@@ -1386,7 +1388,7 @@ namespace OpenTK
             vec.Z *= scale.Z;
             return vec;
         }
-		
+
         /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>

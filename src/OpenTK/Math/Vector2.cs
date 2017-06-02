@@ -717,6 +717,7 @@ namespace OpenTK
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <returns>The minimum Vector3</returns>
+        [Obsolete("Use MagnitudeMin() instead.")]
         public static Vector2 Min(Vector2 left, Vector2 right)
         {
             return left.LengthSquared < right.LengthSquared ? left : right;
@@ -732,6 +733,7 @@ namespace OpenTK
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <returns>The minimum Vector3</returns>
+        [Obsolete("Use MagnitudeMax() instead.")]
         public static Vector2 Max(Vector2 left, Vector2 right)
         {
             return left.LengthSquared >= right.LengthSquared ? left : right;
@@ -1074,7 +1076,7 @@ namespace OpenTK
             vec.Y *= scale.Y;
             return vec;
         }
-		
+
         /// <summary>
         /// Divides the specified instance by a scalar.
         /// </summary>
