@@ -717,6 +717,60 @@ namespace OpenTK
 
         #endregion
 
+        #region MagnitudeMin
+
+        /// <summary>
+        /// Returns the Vector3d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector3d</returns>
+        public static Vector3d MagnitudeMin(Vector3d left, Vector3d right)
+        {
+            return left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector3d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise minimum</param>
+        /// <returns>The minimum Vector3d</returns>
+        public static void MagnitudeMin(ref Vector3d left, ref Vector3d right, out Vector3d result)
+        {
+            result = left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
+        #region MagnitudeMax
+
+        /// <summary>
+        /// Returns the Vector3d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector3d</returns>
+        public static Vector3d MagnitudeMax(Vector3d left, Vector3d right)
+        {
+            return left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector3d with the maximum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise maximum</param>
+        /// <returns>The maximum Vector3d</returns>
+        public static void MagnitudeMax(ref Vector3d left, ref Vector3d right, out Vector3d result)
+        {
+            result = left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
         #region Min
 
         /// <summary>

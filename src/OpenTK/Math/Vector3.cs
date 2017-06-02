@@ -719,6 +719,64 @@ namespace OpenTK
 
         #endregion
 
+        #region MagnitudeMin
+
+        /// <summary>
+        /// Returns the Vector3 with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector3</returns>
+        public static Vector3 MagnitudeMin(Vector3 left, Vector3 right)
+        {
+            return left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector3 with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise minimum</param>
+        /// <returns>The minimum Vector3</returns>
+        public static void MagnitudeMin(ref Vector3 left, ref Vector3 right, out Vector3 result)
+        {
+            result = left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
+        #region MagnitudeMax
+
+        /// <summary>
+        /// Returns the Vector3 with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The maximum Vector3</returns>
+        public static Vector3 MagnitudeMax(Vector3 left, Vector3 right)
+        {
+            return left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector3 with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise maximum</param>
+        /// <returns>The maximum Vector3</returns>
+        public static void MagnitudeMax(ref Vector3 left, ref Vector3 right, out Vector3 result)
+        {
+            result = left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
         #region Min
 
         /// <summary>

@@ -631,6 +631,118 @@ namespace OpenTK
 
         #endregion
 
+        #region ComponentMin
+
+        /// <summary>
+        /// Calculate the component-wise minimum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <returns>The component-wise minimum</returns>
+        public static Vector2d ComponentMin(Vector2d a, Vector2d b)
+        {
+            a.X = a.X < b.X ? a.X : b.X;
+            a.Y = a.Y < b.Y ? a.Y : b.Y;
+            return a;
+        }
+
+        /// <summary>
+        /// Calculate the component-wise minimum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <param name="result">The component-wise minimum</param>
+        public static void ComponentMin(ref Vector2d a, ref Vector2d b, out Vector2d result)
+        {
+            result.X = a.X < b.X ? a.X : b.X;
+            result.Y = a.Y < b.Y ? a.Y : b.Y;
+        }
+
+        #endregion
+
+        #region ComponentMax
+
+        /// <summary>
+        /// Calculate the component-wise maximum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <returns>The component-wise maximum</returns>
+        public static Vector2d ComponentMax(Vector2d a, Vector2d b)
+        {
+            a.X = a.X > b.X ? a.X : b.X;
+            a.Y = a.Y > b.Y ? a.Y : b.Y;
+            return a;
+        }
+
+        /// <summary>
+        /// Calculate the component-wise maximum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <param name="result">The component-wise maximum</param>
+        public static void ComponentMax(ref Vector2d a, ref Vector2d b, out Vector2d result)
+        {
+            result.X = a.X > b.X ? a.X : b.X;
+            result.Y = a.Y > b.Y ? a.Y : b.Y;
+        }
+
+        #endregion
+
+        #region MagnitudeMin
+
+        /// <summary>
+        /// Returns the Vector2d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector2d</returns>
+        public static Vector2d MagnitudeMin(Vector2d left, Vector2d right)
+        {
+            return left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector2d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise minimum</param>
+        /// <returns>The minimum Vector2d</returns>
+        public static void MagnitudeMin(ref Vector2d left, ref Vector2d right, out Vector2d result)
+        {
+            result = left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
+        #region MagnitudeMax
+
+        /// <summary>
+        /// Returns the Vector2d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector2d</returns>
+        public static Vector2d MagnitudeMax(Vector2d left, Vector2d right)
+        {
+            return left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector2d with the maximum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise maximum</param>
+        /// <returns>The maximum Vector2d</returns>
+        public static void MagnitudeMax(ref Vector2d left, ref Vector2d right, out Vector2d result)
+        {
+            result = left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
         #region Clamp
 
         /// <summary>

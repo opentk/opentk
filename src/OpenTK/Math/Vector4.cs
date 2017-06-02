@@ -765,6 +765,130 @@ namespace OpenTK
 
         #endregion
 
+        #region ComponentMin
+
+        /// <summary>
+        /// Calculate the component-wise minimum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <returns>The component-wise minimum</returns>
+        public static Vector4 ComponentMin(Vector4 a, Vector4 b)
+        {
+            a.X = a.X < b.X ? a.X : b.X;
+            a.Y = a.Y < b.Y ? a.Y : b.Y;
+            a.Z = a.Z < b.Z ? a.Z : b.Z;
+            a.W = a.W < b.W ? a.W : b.W;
+            return a;
+        }
+
+        /// <summary>
+        /// Calculate the component-wise minimum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <param name="result">The component-wise minimum</param>
+        public static void ComponentMin(ref Vector4 a, ref Vector4 b, out Vector4 result)
+        {
+            result.X = a.X < b.X ? a.X : b.X;
+            result.Y = a.Y < b.Y ? a.Y : b.Y;
+            result.Z = a.Z < b.Z ? a.Z : b.Z;
+            result.W = a.W < b.W ? a.W : b.W;
+        }
+
+        #endregion
+
+        #region ComponentMax
+
+        /// <summary>
+        /// Calculate the component-wise maximum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <returns>The component-wise maximum</returns>
+        public static Vector4 ComponentMax(Vector4 a, Vector4 b)
+        {
+            a.X = a.X > b.X ? a.X : b.X;
+            a.Y = a.Y > b.Y ? a.Y : b.Y;
+            a.Z = a.Z > b.Z ? a.Z : b.Z;
+            a.W = a.W > b.W ? a.W : b.W;
+            return a;
+        }
+
+        /// <summary>
+        /// Calculate the component-wise maximum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <param name="result">The component-wise maximum</param>
+        public static void ComponentMax(ref Vector4 a, ref Vector4 b, out Vector4 result)
+        {
+            result.X = a.X > b.X ? a.X : b.X;
+            result.Y = a.Y > b.Y ? a.Y : b.Y;
+            result.Z = a.Z > b.Z ? a.Z : b.Z;
+            result.W = a.W > b.W ? a.W : b.W;
+        }
+
+        #endregion
+
+        #region MagnitudeMin
+
+        /// <summary>
+        /// Returns the Vector4 with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector4</returns>
+        public static Vector4 MagnitudeMin(Vector4 left, Vector4 right)
+        {
+            return left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector4 with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise minimum</param>
+        /// <returns>The minimum Vector4</returns>
+        public static void MagnitudeMin(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        {
+            result = left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
+        #region MagnitudeMax
+
+        /// <summary>
+        /// Returns the Vector4 with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The maximum Vector4</returns>
+        public static Vector4 MagnitudeMax(Vector4 left, Vector4 right)
+        {
+            return left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector4 with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise maximum</param>
+        /// <returns>The maximum Vector4</returns>
+        public static void MagnitudeMax(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        {
+            result = left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
         #region Clamp
 
         /// <summary>
