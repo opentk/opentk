@@ -623,7 +623,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector2 vector, float scale, out Vector2 result)
         {
-            result = vector / scale;
+            result.X = vector.X / scale;
+            result.Y = vector.Y / scale;
         }
 
         /// <summary>
