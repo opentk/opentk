@@ -463,93 +463,98 @@ module Vector2 =
             Assert.ApproximatelyEqual(norm, Vector2.NormalizeFast(a));
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module ``Magnitude min and max`` =
+        //
+        [<Property>]
+        let ``MagnitudeMin selects the vector with equal or lesser magnitude given two vectors`` (v1 : Vector2, v2: Vector2) =
+            let l1 = v1.LengthSquared
+            let l2 = v2.LengthSquared
+
+            let vMin = Vector2.MagnitudeMin(v1, v2)
+
+            if vMin = v1 then
+                let v1ShorterThanv2 = l1 < l2
+                Assert.True(v1ShorterThanv2)
+            else
+                let v2ShorterThanOrEqualTov1 = l2 <= l1
+                Assert.True(v2ShorterThanOrEqualTov1)
+
+        [<Property>]
+        let ``MagnitudeMax selects the vector with equal or greater magnitude given two vectors`` (v1 : Vector2, v2: Vector2) =
+            let l1 = v1.LengthSquared
+            let l2 = v2.LengthSquared
+
+            let vMin = Vector2.MagnitudeMax(v1, v2)
+
+            if vMin = v1 then
+                let v1LongerThanOrEqualTov2 = l1 >= l2
+                Assert.True(v1LongerThanOrEqualTov2)
+            else
+                let v2LongerThanv1 = l2 > l1
+                Assert.True(v2LongerThanv1)
+
+        [<Property>]
+        let ``MagnitudeMin by reference selects the vector with equal or lesser magnitude given two vectors`` (v1 : Vector2, v2: Vector2) =
+            let l1 = v1.LengthSquared
+            let l2 = v2.LengthSquared
+
+            let vMin = Vector2.MagnitudeMin(ref v1, ref v2)
+
+            if vMin = v1 then
+                let v1ShorterThanv2 = l1 < l2
+                Assert.True(v1ShorterThanv2)
+            else
+                let v2ShorterThanOrEqualTov1 = l2 <= l1
+                Assert.True(v2ShorterThanOrEqualTov1)
+
+        [<Property>]
+        let ``MagnitudeMax by reference selects the vector with equal greater magnitude given two vectors`` (v1 : Vector2, v2: Vector2) =
+            let l1 = v1.LengthSquared
+            let l2 = v2.LengthSquared
+
+            let vMin = Vector2.MagnitudeMax(ref v1, ref v2)
+
+            if vMin = v1 then
+                let v1LongerThanOrEqualTov2 = l1 >= l2
+                Assert.True(v1LongerThanOrEqualTov2)
+            else
+                let v2LongerThanv1 = l2 > l1
+                Assert.True(v2LongerThanv1)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Component min and max`` =
         //
         [<Property>]
-        let ``ComponentMin produces a new vector from the smallest components of the given vectors`` (x, y, u, w) =
-            let v1 = Vector2(x, y)
-            let v2 = Vector2(u, w)
-
+        let ``ComponentMin creates a new vector from the smallest components of given vectors`` (v1 : Vector2, v2: Vector2) =
             let vMin = Vector2.ComponentMin(v1, v2)
+            let isComponentSmallest smallComp comp1 comp2 = smallComp <= comp1 && smallComp <= comp2
 
-            Assert.True(vMin.X <= v1.X)
-            Assert.True(vMin.X <= v2.X)
-
-            Assert.True(vMin.Y <= v1.Y)
-            Assert.True(vMin.Y <= v2.Y)
+            Assert.True(isComponentSmallest vMin.X v1.X v2.X)
+            Assert.True(isComponentSmallest vMin.Y v1.Y v2.Y)
 
         [<Property>]
-        let ``ComponentMax produces a new vector from the largest components of the given vectors`` (x, y, u, w) =
-            let v1 = Vector2(x, y)
-            let v2 = Vector2(u, w)
-
+        let ``ComponentMax creates a new vector from the greatest components of given vectors`` (v1 : Vector2, v2: Vector2) =
             let vMax = Vector2.ComponentMax(v1, v2)
+            let isComponentLargest largeComp comp1 comp2 = largeComp >= comp1 && largeComp >= comp2
 
-            Assert.True(vMax.X >= v1.X)
-            Assert.True(vMax.X >= v2.X)
-
-            Assert.True(vMax.Y >= v1.Y)
-            Assert.True(vMax.Y >= v2.Y)
+            Assert.True(isComponentLargest vMax.X v1.X v2.X)
+            Assert.True(isComponentLargest vMax.Y v1.Y v2.Y)
 
         [<Property>]
-        let ``ComponentMin by reference produces a new vector from the smallest components of the given vectors`` (x, y, u, w) =
-            let v1 = Vector2(x, y)
-            let v2 = Vector2(u, w)
-
+        let ``ComponentMin by reference creates a new vector from the smallest components of given vectors`` (v1 : Vector2, v2: Vector2) =
             let vMin = Vector2.ComponentMin(ref v1, ref v2)
+            let isComponentSmallest smallComp comp1 comp2 = smallComp <= comp1 && smallComp <= comp2
 
-            Assert.True(vMin.X <= v1.X)
-            Assert.True(vMin.X <= v2.X)
-
-            Assert.True(vMin.Y <= v1.Y)
-            Assert.True(vMin.Y <= v2.Y)
+            Assert.True(isComponentSmallest vMin.X v1.X v2.X)
+            Assert.True(isComponentSmallest vMin.Y v1.Y v2.Y)
 
         [<Property>]
-        let ``ComponentMax by reference produces a new vector from the largest components of the given vectors`` (x, y, u, w) =
-            let v1 = Vector2(x, y)
-            let v2 = Vector2(u, w)
-
+        let ``ComponentMax by reference creates a new vector from the greatest components of given vectors`` (v1 : Vector2, v2: Vector2) =
             let vMax = Vector2.ComponentMax(ref v1, ref v2)
+            let isComponentLargest largeComp comp1 comp2 = largeComp >= comp1 && largeComp >= comp2
 
-            Assert.True(vMax.X >= v1.X)
-            Assert.True(vMax.X >= v2.X)
-
-            Assert.True(vMax.Y >= v1.Y)
-            Assert.True(vMax.Y >= v2.Y)
-
-        [<Property>]
-        let ``Min selects the vector with lesser magnitude given two vectors`` (x, y, u, w) =
-            let v1 = Vector2(x, y)
-            let v2 = Vector2(u, w)
-
-            let l1 = v1.LengthSquared
-            let l2 = v2.LengthSquared
-
-            let vMin = Vector2.Min(v1, v2)
-
-            if l1 < l2 then
-                let equalsFirst = vMin = v1
-                Assert.True(equalsFirst)
-            else
-                let equalsLast = vMin = v2
-                Assert.True(equalsLast)
-
-        [<Property>]
-        let ``Max selects the vector with greater magnitude given two vectors`` (x, y, u, w) =
-            let v1 = Vector2(x, y)
-            let v2 = Vector2(u, w)
-
-            let l1 = v1.LengthSquared
-            let l2 = v2.LengthSquared
-
-            let vMin = Vector2.Max(v1, v2)
-
-            if l1 >= l2 then
-                let equalsFirst = vMin = v1
-                Assert.True(equalsFirst)
-            else
-                let equalsLast = vMin = v2
-                Assert.True(equalsLast)
+            Assert.True(isComponentLargest vMax.X v1.X v2.X)
+            Assert.True(isComponentLargest vMax.Y v1.Y v2.Y)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Transformation =
