@@ -106,25 +106,25 @@ module Vector2 =
         let ``Indexed set operator throws exception for negative indices`` (x, y) =
             let mutable v = Vector2(x, y)
 
-            (fun() -> v.[-1] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> v.[-1] <- x) |> Assert.ThrowsIndexExn
 
         [<Property>]
         let ``Indexed get operator throws exception for negative indices`` (x, y) =
             let mutable v = Vector2(x, y)
 
-            (fun() -> v.[-1] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> v.[-1] |> ignore) |> Assert.ThrowsIndexExn
 
         [<Property>]
         let ``Indexed set operator throws exception for large indices`` (x, y) =
             let mutable v = Vector2(x, y)
 
-            (fun() -> v.[2] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> v.[2] <- x) |> Assert.ThrowsIndexExn
 
         [<Property>]
         let ``Indexed get operator throws exception for large indices`` (x, y) =
             let mutable v = Vector2(x, y)
 
-            (fun() -> v.[2] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> v.[2] |> ignore) |> Assert.ThrowsIndexExn
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Simple Properties`` =
@@ -573,17 +573,6 @@ module Vector2 =
             let transformedVector = Vector2(transformedQuat.X, transformedQuat.Y)
 
             Assert.Equal(transformedVector, Vector2.Transform(ref v, ref q))
-
-// TODO: Implement multiplication operator for Vector2 and Quaternion
-//        [<Property>]
-//        let ``Transformation by quaternion by multiplication using right-handed notation is the same as multiplication by quaternion and its conjugate`` (v : Vector2, q : Quaternion) =
-//            let vectorQuat = Quaternion(v.X, v.Y, 0.0f, 0.0f)
-//            let inverse = Quaternion.Invert(q)
-//
-//            let transformedQuat = q * vectorQuat * inverse
-//            let transformedVector = Vector2(transformedQuat.X, transformedQuat.Y)
-//
-//            Assert.Equal(transformedVector, q * v)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Serialization =

@@ -29,3 +29,6 @@ type internal Assert =
 
     static member ApproximatelyEqual(a : float32,b : float32) =
         if not <| approxEq a b then raise <| new Xunit.Sdk.EqualException(a,b)
+
+
+    static member ThrowsIndexExn(f:unit -> unit) = Assert.Throws<IndexOutOfRangeException>(f) |> ignore

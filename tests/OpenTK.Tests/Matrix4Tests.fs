@@ -333,31 +333,35 @@ module Matrix4 =
             Assert.Equal(o, A.[3, 2])
             Assert.Equal(p, A.[3, 3])
 
+
         [<Property>]
         let ``Indexed set operator throws exception for negative indices`` (b : Matrix4, x : float32) =
             let mutable a = b
-            (fun() -> a.[-1, 2] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
-            (fun() -> a.[1, -2] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
-            (fun() -> a.[-1, -2] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+
+            
+
+            (fun() -> a.[-1, 2] <- x) |> Assert.ThrowsIndexExn
+            (fun() -> a.[1, -2] <- x) |> Assert.ThrowsIndexExn
+            (fun() -> a.[-1, -2] <- x) |> Assert.ThrowsIndexExn
 
         [<Property>]
         let ``Indexed get operator throws exception for negative indices`` (a : Matrix4) =
-            (fun() -> a.[-1, 2] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
-            (fun() -> a.[1, -2] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
-            (fun() -> a.[-1, -2] |> ignore) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> a.[-1, 2] |> ignore) |> Assert.ThrowsIndexExn
+            (fun() -> a.[1, -2] |> ignore) |> Assert.ThrowsIndexExn
+            (fun() -> a.[-1, -2] |> ignore) |> Assert.ThrowsIndexExn
 
         [<Property>]
         let ``Indexed set operator throws exception for large indices`` (a : Matrix4, x : float32) =
             let mutable b = a
-            (fun() -> b.[5, 2] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
-            (fun() -> b.[1, 6] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
-            (fun() -> b.[7, 12] <- x) |> Assert.Throws<IndexOutOfRangeException> |> ignore
+            (fun() -> b.[5, 2] <- x) |> Assert.ThrowsIndexExn
+            (fun() -> b.[1, 6] <- x) |> Assert.ThrowsIndexExn
+            (fun() -> b.[7, 12] <- x) |> Assert.ThrowsIndexExn
 
         [<Property>]
         let ``Indexed get operator throws exception for large indices`` (a : Matrix4) =
-            (fun() -> a.[5, 2] |> ignore) |> Assert.Throws<IndexOutOfRangeException>  |> ignore
-            (fun() -> a.[1, 6] |> ignore) |> Assert.Throws<IndexOutOfRangeException>  |> ignore
-            (fun() -> a.[7, 12] |> ignore) |> Assert.Throws<IndexOutOfRangeException>  |> ignore
+            (fun() -> a.[5, 2] |> ignore) |> Assert.ThrowsIndexExn
+            (fun() -> a.[1, 6] |> ignore) |> Assert.ThrowsIndexExn
+            (fun() -> a.[7, 12] |> ignore) |> Assert.ThrowsIndexExn
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Row and column properties`` =
