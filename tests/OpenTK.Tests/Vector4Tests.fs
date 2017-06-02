@@ -799,12 +799,12 @@ module Vector4 =
         //
         [<Property>]
         let ``Clamping one vector between two other vectors clamps all components between corresponding components`` (a : Vector4, b : Vector4, w : Vector4) =
-            let res = Vector4.Clamp(w, a, b)
-
             let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X
             let expY = if w.Y < a.Y then a.Y else if w.Y > b.Y then b.Y else w.Y
             let expZ = if w.Z < a.Z then a.Z else if w.Z > b.Z then b.Z else w.Z
             let expW = if w.W < a.W then a.W else if w.W > b.W then b.W else w.W
+
+            let res = Vector4.Clamp(w, a, b)
 
             Assert.Equal(expX, res.X)
             Assert.Equal(expY, res.Y)
@@ -812,13 +812,13 @@ module Vector4 =
             Assert.Equal(expW, res.W)
 
         [<Property>]
-        let ``Clamping one vector between two other vectors by reference clamps all components`` (a : Vector4, b : Vector4, w : Vector4) =
-            let res = Vector4.Clamp(ref w, ref a, ref b)
-
+        let ``Clamping one vector between two other vectors by reference clamps all components between corresponding components`` (a : Vector4, b : Vector4, w : Vector4) =
             let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X
             let expY = if w.Y < a.Y then a.Y else if w.Y > b.Y then b.Y else w.Y
             let expZ = if w.Z < a.Z then a.Z else if w.Z > b.Z then b.Z else w.Z
             let expW = if w.W < a.W then a.W else if w.W > b.W then b.W else w.W
+
+            let res = Vector4.Clamp(ref w, ref a, ref b)
 
             Assert.Equal(expX, res.X)
             Assert.Equal(expY, res.Y)
