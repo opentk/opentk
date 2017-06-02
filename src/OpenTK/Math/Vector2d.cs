@@ -692,7 +692,8 @@ namespace OpenTK
         #region MagnitudeMin
 
         /// <summary>
-        /// Returns the Vector2d with the minimum magnitude
+        /// Returns the Vector2d with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
@@ -703,7 +704,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the Vector2d with the minimum magnitude
+        /// Returns the Vector2d with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
@@ -719,7 +721,8 @@ namespace OpenTK
         #region MagnitudeMax
 
         /// <summary>
-        /// Returns the Vector2d with the minimum magnitude
+        /// Returns the Vector2d with the minimum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
@@ -730,7 +733,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the Vector2d with the maximum magnitude
+        /// Returns the Vector2d with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
