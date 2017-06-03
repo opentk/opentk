@@ -658,7 +658,7 @@ namespace OpenTK
         #region ComponentMin
 
         /// <summary>
-        /// Calculate the component-wise minimum of two vectors
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -672,7 +672,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the component-wise minimum of two vectors
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -689,7 +689,7 @@ namespace OpenTK
         #region ComponentMax
 
         /// <summary>
-        /// Calculate the component-wise maximum of two vectors
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -703,7 +703,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the component-wise maximum of two vectors
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -717,6 +717,60 @@ namespace OpenTK
 
         #endregion
 
+        #region MagnitudeMin
+
+        /// <summary>
+        /// Returns the Vector3d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector3d</returns>
+        public static Vector3d MagnitudeMin(Vector3d left, Vector3d right)
+        {
+            return left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector3d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise minimum</param>
+        /// <returns>The minimum Vector3d</returns>
+        public static void MagnitudeMin(ref Vector3d left, ref Vector3d right, out Vector3d result)
+        {
+            result = left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
+        #region MagnitudeMax
+
+        /// <summary>
+        /// Returns the Vector3d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector3d</returns>
+        public static Vector3d MagnitudeMax(Vector3d left, Vector3d right)
+        {
+            return left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector3d with the maximum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise maximum</param>
+        /// <returns>The maximum Vector3d</returns>
+        public static void MagnitudeMax(ref Vector3d left, ref Vector3d right, out Vector3d result)
+        {
+            result = left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
         #region Min
 
         /// <summary>
@@ -725,6 +779,7 @@ namespace OpenTK
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <returns>The minimum Vector3</returns>
+        [Obsolete("Use MagnitudeMin() instead.")]
         public static Vector3d Min(Vector3d left, Vector3d right)
         {
             return left.LengthSquared < right.LengthSquared ? left : right;
@@ -740,6 +795,7 @@ namespace OpenTK
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <returns>The minimum Vector3</returns>
+        [Obsolete("Use MagnitudeMax() instead.")]
         public static Vector3d Max(Vector3d left, Vector3d right)
         {
             return left.LengthSquared >= right.LengthSquared ? left : right;
@@ -1372,7 +1428,7 @@ namespace OpenTK
             vec.Z *= scale;
             return vec;
         }
-		
+
         /// <summary>
         /// Component-wise multiplication between the specified instance by a scale vector.
         /// </summary>
@@ -1386,7 +1442,7 @@ namespace OpenTK
             vec.Z *= scale.Z;
             return vec;
         }
-		
+
         /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>
