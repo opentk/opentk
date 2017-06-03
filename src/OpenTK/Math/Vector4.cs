@@ -514,11 +514,10 @@ namespace OpenTK
         /// <returns>Result of the division</returns>
         public static Vector4 Div(Vector4 a, float f)
         {
-            float mult = 1.0f / f;
-            a.X *= mult;
-            a.Y *= mult;
-            a.Z *= mult;
-            a.W *= mult;
+            a.X /= f;
+            a.Y /= f;
+            a.Z /= f;
+            a.W /= f;
             return a;
         }
 
@@ -530,11 +529,10 @@ namespace OpenTK
         /// <param name="result">Result of the division</param>
         public static void Div(ref Vector4 a, float f, out Vector4 result)
         {
-            float mult = 1.0f / f;
-            result.X = a.X * mult;
-            result.Y = a.Y * mult;
-            result.Z = a.Z * mult;
-            result.W = a.W * mult;
+            result.X = a.X / f;
+            result.Y = a.Y / f;
+            result.Z = a.Z / f;
+            result.W = a.W / f;
         }
 
         #endregion
@@ -667,7 +665,10 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector4 vector, float scale, out Vector4 result)
         {
-            Multiply(ref vector, 1 / scale, out result);
+            result.X = vector.X / scale;
+            result.Y = vector.Y / scale;
+            result.Z = vector.Z / scale;
+            result.W = vector.W / scale;
         }
 
         /// <summary>
@@ -1705,11 +1706,10 @@ namespace OpenTK
         /// <returns>The result of the calculation.</returns>
         public static Vector4 operator /(Vector4 vec, float scale)
         {
-            float mult = 1.0f / scale;
-            vec.X *= mult;
-            vec.Y *= mult;
-            vec.Z *= mult;
-            vec.W *= mult;
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
+            vec.W /= scale;
             return vec;
         }
 

@@ -669,7 +669,10 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector4d vector, double scale, out Vector4d result)
         {
-            Multiply(ref vector, 1 / scale, out result);
+            result.X = vector.X / scale;
+            result.Y = vector.Y / scale;
+            result.Z = vector.Z / scale;
+            result.W = vector.W / scale;
         }
 
         /// <summary>
@@ -1641,11 +1644,10 @@ namespace OpenTK
         /// <returns>The result of the calculation.</returns>
         public static Vector4d operator /(Vector4d vec, double scale)
         {
-            double mult = 1 / scale;
-            vec.X *= mult;
-            vec.Y *= mult;
-            vec.Z *= mult;
-            vec.W *= mult;
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
+            vec.W /= scale;
             return vec;
         }
 

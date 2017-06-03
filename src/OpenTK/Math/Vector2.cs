@@ -623,7 +623,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector2 vector, float scale, out Vector2 result)
         {
-            Multiply(ref vector, 1 / scale, out result);
+            result.X = vector.X / scale;
+            result.Y = vector.Y / scale;
         }
 
         /// <summary>
@@ -1143,9 +1144,8 @@ namespace OpenTK
         /// <returns>Result of the division.</returns>
         public static Vector2 operator /(Vector2 vec, float scale)
         {
-            float mult = 1.0f / scale;
-            vec.X *= mult;
-            vec.Y *= mult;
+            vec.X /= scale;
+            vec.Y /= scale;
             return vec;
         }
 
