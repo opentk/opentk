@@ -770,7 +770,7 @@ namespace OpenTK
         #region ComponentMin
 
         /// <summary>
-        /// Calculate the component-wise minimum of two vectors
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -785,7 +785,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the component-wise minimum of two vectors
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -803,7 +803,7 @@ namespace OpenTK
         #region ComponentMax
 
         /// <summary>
-        /// Calculate the component-wise maximum of two vectors
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -818,7 +818,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the component-wise maximum of two vectors
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
