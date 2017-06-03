@@ -567,7 +567,7 @@ module Vector2 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = Vector2(transformedQuat.X, transformedQuat.Y)
 
-            Assert.Equal(transformedVector, Vector2.Transform(v, q))
+            Assert.ApproximatelyEqual(transformedVector, Vector2.Transform(v, q))
 
         [<Property>]
         let ``Transformation by quaternion by reference is the same as multiplication by quaternion and its conjugate`` (v : Vector2, q : Quaternion) =
@@ -577,7 +577,7 @@ module Vector2 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = Vector2(transformedQuat.X, transformedQuat.Y)
 
-            Assert.Equal(transformedVector, Vector2.Transform(ref v, ref q))
+            Assert.ApproximatelyEqual(transformedVector, Vector2.Transform(ref v, ref q))
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Serialization =

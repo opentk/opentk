@@ -885,7 +885,7 @@ module Vector4 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = Vector4(transformedQuat.X, transformedQuat.Y, transformedQuat.Z, transformedQuat.W)
 
-            Assert.Equal(transformedVector, Vector4.Transform(v, q))
+            Assert.ApproximatelyEqual(transformedVector, Vector4.Transform(v, q))
 
         [<Property>]
         let ``Transformation by quaternion with static method by reference is the same as multiplication by quaternion and its conjugate`` (v : Vector4, q : Quaternion) =
@@ -895,7 +895,7 @@ module Vector4 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = Vector4(transformedQuat.X, transformedQuat.Y,transformedQuat.Z, transformedQuat.W)
 
-            Assert.Equal(transformedVector, Vector4.Transform(ref v, ref q))
+            Assert.ApproximatelyEqual(transformedVector, Vector4.Transform(ref v, ref q))
 
         [<Property>]
         let ``Transformation by quaternion by multiplication using right-handed notation is the same as multiplication by quaternion and its conjugate`` (v : Vector4, q : Quaternion) =
@@ -905,4 +905,4 @@ module Vector4 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = Vector4(transformedQuat.X, transformedQuat.Y, transformedQuat.Z, transformedQuat.W)
 
-            Assert.Equal(transformedVector, q * v)
+            Assert.ApproximatelyEqual(transformedVector, q * v)
