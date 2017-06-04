@@ -38,8 +38,15 @@ namespace OpenTK
     {
         #region Fields
 
-        Vector3d xyz;
-        double w;
+        /// <summary>
+        /// The X, Y and Z components of the Quaternion.
+        /// </summary>
+        public Vector3d Xyz_;
+
+        /// <summary>
+        /// The W component of the Quaternion.
+        /// </summary>        
+        public double W_;
 
         #endregion
 
@@ -52,8 +59,8 @@ namespace OpenTK
         /// <param name="w">The w part</param>
         public Quaterniond(Vector3d v, double w)
         {
-            this.xyz = v;
-            this.w = w;
+            Xyz_ = v;
+            W_ = w;
         }
 
         /// <summary>
@@ -86,10 +93,10 @@ namespace OpenTK
             double s2 = Math.Sin(pitch);
             double s3 = Math.Sin(roll);
 
-            this.w = c1 * c2 * c3 - s1 * s2 * s3;
-            this.xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
-            this.xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
-            this.xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+            W_ = c1 * c2 * c3 - s1 * s2 * s3;
+            Xyz_.X = s1 * s2 * c3 + c1 * c2 * s3;
+            Xyz_.Y = s1 * c2 * c3 + c1 * s2 * s3;
+            Xyz_.Z = c1 * s2 * c3 - s1 * c2 * s3;
         }
 
         /// <summary>
@@ -120,7 +127,7 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets an OpenTK.Vector3d with the X, Y and Z components of this instance.
         /// </summary>
-        public Vector3d Xyz { get { return xyz; } set { xyz = value; } }
+        public Vector3d Xyz { get { return Xyz_; } set { Xyz_ = value; } }
 
         #pragma warning restore 3005
 
@@ -128,24 +135,24 @@ namespace OpenTK
         /// Gets or sets the X component of this instance.
         /// </summary>
         [XmlIgnore]
-        public double X { get { return xyz.X; } set { xyz.X = value; } }
+        public double X { get { return Xyz_.X; } set { Xyz_.X = value; } }
 
         /// <summary>
         /// Gets or sets the Y component of this instance.
         /// </summary>
         [XmlIgnore]
-        public double Y { get { return xyz.Y; } set { xyz.Y = value; } }
+        public double Y { get { return Xyz_.Y; } set { Xyz_.Y = value; } }
 
         /// <summary>
         /// Gets or sets the Z component of this instance.
         /// </summary>
         [XmlIgnore]
-        public double Z { get { return xyz.Z; } set { xyz.Z = value; } }
+        public double Z { get { return Xyz_.Z; } set { Xyz_.Z = value; } }
 
         /// <summary>
         /// Gets or sets the W component of this instance.
         /// </summary>
-        public double W { get { return w; } set { w = value; } }
+        public double W { get { return W_; } set { W_ = value; } }
         
         #endregion
 
@@ -582,10 +589,10 @@ namespace OpenTK
             double s2 = Math.Sin(eulerAngles.X * 0.5);
             double s3 = Math.Sin(eulerAngles.Z * 0.5);
 
-            result.w = c1 * c2 * c3 - s1 * s2 * s3;
-            result.xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
-            result.xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
-            result.xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+            result.W_ = c1 * c2 * c3 - s1 * s2 * s3;
+            result.Xyz_.X = s1 * s2 * c3 + c1 * c2 * s3;
+            result.Xyz_.Y = s1 * c2 * c3 + c1 * s2 * s3;
+            result.Xyz_.Z = c1 * s2 * c3 - s1 * c2 * s3;
         }
 
         #endregion
@@ -618,10 +625,10 @@ namespace OpenTK
                 double s = Math.Sqrt(trace + 1) * 2;
                 double invS = 1.0 / s;
 
-                result.w = s * 0.25;
-                result.xyz.X = (matrix.Row2.Y - matrix.Row1.Z) * invS;
-                result.xyz.Y = (matrix.Row0.Z - matrix.Row2.X) * invS;
-                result.xyz.Z = (matrix.Row1.X - matrix.Row0.Y) * invS;
+                result.W_ = s * 0.25;
+                result.Xyz_.X = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                result.Xyz_.Y = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                result.Xyz_.Z = (matrix.Row1.X - matrix.Row0.Y) * invS;
             }
             else
             {
@@ -632,30 +639,30 @@ namespace OpenTK
                     double s = Math.Sqrt(1 + m00 - m11 - m22) * 2;
                     double invS = 1.0 / s;
 
-                    result.w = (matrix.Row2.Y - matrix.Row1.Z) * invS;
-                    result.xyz.X = s * 0.25;
-                    result.xyz.Y = (matrix.Row0.Y + matrix.Row1.X) * invS;
-                    result.xyz.Z = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                    result.W_ = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                    result.Xyz_.X = s * 0.25;
+                    result.Xyz_.Y = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.Xyz_.Z = (matrix.Row0.Z + matrix.Row2.X) * invS;
                 }
                 else if (m11 > m22)
                 {
                     double s = Math.Sqrt(1 + m11 - m00 - m22) * 2;
                     double invS = 1.0 / s;
 
-                    result.w = (matrix.Row0.Z - matrix.Row2.X) * invS;
-                    result.xyz.X = (matrix.Row0.Y + matrix.Row1.X) * invS;
-                    result.xyz.Y = s * 0.25;
-                    result.xyz.Z = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                    result.W_ = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                    result.Xyz_.X = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.Xyz_.Y = s * 0.25;
+                    result.Xyz_.Z = (matrix.Row1.Z + matrix.Row2.Y) * invS;
                 }
                 else
                 {
                     double s = Math.Sqrt(1 + m22 - m00 - m11) * 2;
                     double invS = 1.0 / s;
 
-                    result.w = (matrix.Row1.X - matrix.Row0.Y) * invS;
-                    result.xyz.X = (matrix.Row0.Z + matrix.Row2.X) * invS;
-                    result.xyz.Y = (matrix.Row1.Z + matrix.Row2.Y) * invS;
-                    result.xyz.Z = s * 0.25;
+                    result.W_ = (matrix.Row1.X - matrix.Row0.Y) * invS;
+                    result.Xyz_.X = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                    result.Xyz_.Y = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                    result.Xyz_.Z = s * 0.25;
                 }
             }
         }
@@ -859,7 +866,7 @@ namespace OpenTK
         {
             unchecked
             {
-                return (this.xyz.GetHashCode() * 397) ^ this.w.GetHashCode();
+                return (this.Xyz_.GetHashCode() * 397) ^ this.W_.GetHashCode();
             }
         }
 
