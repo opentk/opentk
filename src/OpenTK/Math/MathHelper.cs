@@ -3,13 +3,14 @@
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
- * 
+ *
  * Contributions by Andy Gill, James Talton and Georg Wächter.
  */
 #endregion
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace OpenTK
@@ -353,6 +354,73 @@ namespace OpenTK
 			long intDiff = Math.Abs(aInt - bInt);
 			return intDiff <= (1 << maxDeltaBits);
 		}
+
+        /// <summary>
+        /// Approximates double-precision floating point equality by an epsilon (maximum error) value.
+        /// This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
+        /// </summary>
+        /// <param name="a">The first float.</param>
+        /// <param name="b">The second float.</param>
+        /// <param name="epsilon">The maximum error between the two.</param>
+        /// <returns><value>true</value> if the values are approximately equal within the error margin; otherwise, <value>false</value>.</returns>
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+        public static bool ApproximatelyEqualEpsilon(double a, double b, double epsilon)
+        {
+            const double doubleNormal = (1L << 52) * double.Epsilon;
+            double absA = Math.Abs(a);
+            double absB = Math.Abs(b);
+            double diff = Math.Abs(a - b);
+
+            if (a == b)
+            {
+                // Shortcut, handles infinities
+                return true;
+            }
+
+            if (a == 0.0f || b == 0.0f || diff < doubleNormal)
+            {
+                // a or b is zero, or both are extremely close to it.
+                // relative error is less meaningful here
+                return diff < (epsilon * doubleNormal);
+            }
+
+            // use relative error
+            return diff / Math.Min((absA + absB), double.MaxValue) < epsilon;
+        }
+
+        /// <summary>
+        /// Approximates single-precision floating point equality by an epsilon (maximum error) value.
+        /// This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
+        /// </summary>
+        /// <param name="a">The first float.</param>
+        /// <param name="b">The second float.</param>
+        /// <param name="epsilon">The maximum error between the two.</param>
+        /// <returns><value>true</value> if the values are approximately equal within the error margin; otherwise, <value>false</value>.</returns>
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+        public static bool ApproximatelyEqualEpsilon(float a, float b, float epsilon)
+        {
+            const float floatNormal = (1 << 23) * float.Epsilon;
+            float absA = Math.Abs(a);
+            float absB = Math.Abs(b);
+            float diff = Math.Abs(a - b);
+
+            if (a == b)
+            {
+                // Shortcut, handles infinities
+                return true;
+            }
+
+            if (a == 0.0f || b == 0.0f || diff < floatNormal)
+            {
+                // a or b is zero, or both are extremely close to it.
+                // relative error is less meaningful here
+                return diff < (epsilon * floatNormal);
+            }
+
+            // use relative error
+            float relativeError = diff / Math.Min((absA + absB), float.MaxValue);
+            return relativeError < epsilon;
+        }
 
 		#endregion
 
