@@ -7,7 +7,7 @@ open System
 open OpenTK
 
 module Matrix4 =
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Constructors =
         //
         [<Property>]
@@ -88,7 +88,7 @@ module Matrix4 =
             Assert.Equal(o, A.M43)
             Assert.Equal(p, A.M44)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Equality =
         //
         [<Property>]
@@ -103,7 +103,7 @@ module Matrix4 =
         let ``A matrix is not equal to an object which is not a matrix`` (a : Matrix4, b : Vector3) =
             Assert.False(a.Equals(b))
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Multiplication =
         //
         [<Property>]
@@ -202,7 +202,7 @@ module Matrix4 =
             Assert.Equal(R4, AScaled.Row3)
 
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Addition =
         //
         [<Property>]
@@ -232,7 +232,7 @@ module Matrix4 =
             Assert.Equal(o + o, sum.M43)
             Assert.Equal(p + p, sum.M44)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Subtraction =
         //
         [<Property>]
@@ -262,7 +262,7 @@ module Matrix4 =
             Assert.Equal(o - o, sub.M43)
             Assert.Equal(p - p, sub.M44)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Indexing =
         //
         [<Property>]
@@ -338,7 +338,7 @@ module Matrix4 =
         let ``Indexed set operator throws exception for negative indices`` (b : Matrix4, x : float32) =
             let mutable a = b
 
-            
+
 
             (fun() -> a.[-1, 2] <- x) |> Assert.ThrowsIndexExn
             (fun() -> a.[1, -2] <- x) |> Assert.ThrowsIndexExn
@@ -363,7 +363,7 @@ module Matrix4 =
             (fun() -> a.[1, 6] |> ignore) |> Assert.ThrowsIndexExn
             (fun() -> a.[7, 12] |> ignore) |> Assert.ThrowsIndexExn
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module ``Row and column properties`` =
         //
         [<Property>]

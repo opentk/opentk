@@ -8,7 +8,7 @@ open System.Runtime.InteropServices
 open OpenTK
 
 module Vector2 =
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Constructors =
         //
         [<Property>]
@@ -23,7 +23,7 @@ module Vector2 =
             Assert.Equal(x,v.X)
             Assert.Equal(y,v.Y)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Clamping =
         //
         [<Property>]
@@ -46,7 +46,7 @@ module Vector2 =
             Assert.Equal(expX, res.X)
             Assert.Equal(expY, res.Y)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Length =
         //
         [<Property>]
@@ -75,7 +75,7 @@ module Vector2 =
 
             Assert.Equal(lsq, v.LengthSquared)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module ``Unit vectors and perpendicularity`` =
         //
         [<Property>]
@@ -92,7 +92,7 @@ module Vector2 =
 
             Assert.Equal(perp, v.PerpendicularLeft)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Indexing =
         //
         [<Property>]
@@ -126,7 +126,7 @@ module Vector2 =
 
             (fun() -> v.[2] |> ignore) |> Assert.ThrowsIndexExn
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module ``Simple Properties`` =
         //
         [<Property>]
@@ -139,7 +139,7 @@ module Vector2 =
             //
             Assert.True(a.Length >= 0.0f)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Addition =
         //
         [<Property>]
@@ -176,7 +176,7 @@ module Vector2 =
 
             Assert.ApproximatelyEqual(v1, sum)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Multiplication =
         //
         [<Property>]
@@ -227,7 +227,7 @@ module Vector2 =
             Assert.Equal(a.X * f,r.X)
             Assert.Equal(a.Y * f,r.Y)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Subtraction =
         //
         [<Property>]
@@ -252,49 +252,50 @@ module Vector2 =
 
             Assert.ApproximatelyEqual(v1, sum)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Division =
         //
         [<Property>]
         let ``Vector2-float division is the same as component-float division`` (a : Vector2, f : float32) =
-            let r = a / f
+            if not (approxEq f 0.0f) then
+                let r = a / f
 
-            Assert.ApproximatelyEqual(a.X / f,r.X)
-            Assert.ApproximatelyEqual(a.Y / f,r.Y)
+                Assert.ApproximatelyEqual(a.X / f,r.X)
+                Assert.ApproximatelyEqual(a.Y / f,r.Y)
 
         [<Property>]
         let ``Static Vector2-Vector2 division method is the same as component division`` (a : Vector2, b : Vector2) =
+            if not (anyZero2 a || anyZero2 b) then
+                let v1 = Vector2(a.X / b.X, a.Y / b.Y)
+                let sum = Vector2.Divide(a, b)
 
-            let v1 = Vector2(a.X / b.X, a.Y / b.Y)
-            let sum = Vector2.Divide(a, b)
-
-            Assert.ApproximatelyEqual(v1, sum)
+                Assert.ApproximatelyEqual(v1, sum)
 
         [<Property>]
         let ``Static Vector2-Vector2 divison method by reference `` (a : Vector2, b : Vector2) =
+            if not (anyZero2 a || anyZero2 b) then
+                let v1 = Vector2(a.X / b.X, a.Y / b.Y)
+                let sum = Vector2.Divide(ref a, ref b)
 
-            let v1 = Vector2(a.X / b.X, a.Y / b.Y)
-            let sum = Vector2.Divide(ref a, ref b)
-
-            Assert.ApproximatelyEqual(v1, sum)
+                Assert.ApproximatelyEqual(v1, sum)
 
         [<Property>]
         let ``Static Vector2-scalar division method is the same as component division`` (a : Vector2, b : float32) =
+            if not (approxEq b 0.0f) then
+                let v1 = Vector2(a.X / b, a.Y / b)
+                let sum = Vector2.Divide(a, b)
 
-            let v1 = Vector2(a.X / b, a.Y / b)
-            let sum = Vector2.Divide(a, b)
-
-            Assert.ApproximatelyEqual(v1, sum)
+                Assert.ApproximatelyEqual(v1, sum)
 
         [<Property>]
         let ``Static Vector2-scalar divison method by reference is the same as component division`` (a : Vector2, b : float32) =
+            if not (approxEq b 0.0f) then
+                let v1 = Vector2(a.X / b, a.Y / b)
+                let sum = Vector2.Divide(ref a, b)
 
-            let v1 = Vector2(a.X / b, a.Y / b)
-            let sum = Vector2.Divide(ref a, b)
+                Assert.ApproximatelyEqual(v1, sum)
 
-            Assert.ApproximatelyEqual(v1, sum)
-
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Negation =
         //
         [<Property>]
@@ -304,7 +305,7 @@ module Vector2 =
             Assert.Equal(-x, vNeg.X)
             Assert.Equal(-y, vNeg.Y)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Equality =
         //
         [<Property>]
@@ -335,7 +336,7 @@ module Vector2 =
             Assert.True(equality)
             Assert.False(inequalityByOtherType)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Swizzling =
         //
         [<Property>]
@@ -346,7 +347,7 @@ module Vector2 =
             let v1yx = v1.Yx;
             Assert.Equal(v2, v1yx);
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Interpolation =
         //
         [<Property>]
@@ -373,7 +374,7 @@ module Vector2 =
             let vRes = Vector2.BaryCentric(ref a, ref b, ref c, u, v)
             Assert.Equal(r, vRes)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module ``Vector products`` =
         //
         [<Property>]
@@ -394,7 +395,7 @@ module Vector2 =
             let vRes = Vector2.PerpDot(ref a, ref b)
             Assert.Equal(perpDot, vRes)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Normalization =
         //
         [<Property>]
@@ -434,16 +435,20 @@ module Vector2 =
 
         [<Property>]
         let ``Normalization by reference is the same as division by magnitude`` (a : Vector2) =
-            let norm = a / a.Length
-            let vRes = Vector2.Normalize(ref a)
+            // Zero-length vectors can't be normalized
+            if not (approxEq a.Length 0.0f) then
+                let norm = a / a.Length
+                let vRes = Vector2.Normalize(ref a)
 
-            Assert.ApproximatelyEqual(norm, vRes)
+                Assert.ApproximatelyEqual(norm, vRes)
 
         [<Property>]
         let ``Normalization is the same as division by magnitude`` (a : Vector2) =
-            let norm = a / a.Length
+            // Zero-length vectors can't be normalized
+            if not (approxEq a.Length 0.0f) then
+                let norm = a / a.Length
 
-            Assert.ApproximatelyEqual(norm, Vector2.Normalize(a));
+                Assert.ApproximatelyEqual(norm, Vector2.Normalize(a));
 
         [<Property>]
         let ``Fast approximate normalization by reference is the same as multiplication by the fast inverse square`` (a : Vector2) =
@@ -462,66 +467,74 @@ module Vector2 =
 
             Assert.ApproximatelyEqual(norm, Vector2.NormalizeFast(a));
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module ``Magnitude min and max`` =
         //
         [<Property>]
         let ``MagnitudeMin selects the vector with equal or lesser magnitude given two vectors`` (v1 : Vector2, v2: Vector2) =
-            let l1 = v1.LengthSquared
-            let l2 = v2.LengthSquared
+            // Results do not matter for equal vectors
+            if not (v1 = v2) then
+                let l1 = v1.LengthSquared
+                let l2 = v2.LengthSquared
 
-            let vMin = Vector2.MagnitudeMin(v1, v2)
+                let vMin = Vector2.MagnitudeMin(v1, v2)
 
-            if vMin = v1 then
-                let v1ShorterThanv2 = l1 < l2
-                Assert.True(v1ShorterThanv2)
-            else
-                let v2ShorterThanOrEqualTov1 = l2 <= l1
-                Assert.True(v2ShorterThanOrEqualTov1)
+                if vMin = v1 then
+                    let v1ShorterThanv2 = l1 < l2
+                    Assert.True(v1ShorterThanv2)
+                else
+                    let v2ShorterThanOrEqualTov1 = l2 <= l1
+                    Assert.True(v2ShorterThanOrEqualTov1)
 
         [<Property>]
         let ``MagnitudeMax selects the vector with equal or greater magnitude given two vectors`` (v1 : Vector2, v2: Vector2) =
-            let l1 = v1.LengthSquared
-            let l2 = v2.LengthSquared
+            // Results do not matter for equal vectors
+            if not (v1 = v2) then
+                let l1 = v1.LengthSquared
+                let l2 = v2.LengthSquared
 
-            let vMin = Vector2.MagnitudeMax(v1, v2)
+                let vMin = Vector2.MagnitudeMax(v1, v2)
 
-            if vMin = v1 then
-                let v1LongerThanOrEqualTov2 = l1 >= l2
-                Assert.True(v1LongerThanOrEqualTov2)
-            else
-                let v2LongerThanv1 = l2 > l1
-                Assert.True(v2LongerThanv1)
+                if vMin = v1 then
+                    let v1LongerThanOrEqualTov2 = l1 >= l2
+                    Assert.True(v1LongerThanOrEqualTov2)
+                else
+                    let v2LongerThanv1 = l2 > l1
+                    Assert.True(v2LongerThanv1)
 
         [<Property>]
         let ``MagnitudeMin by reference selects the vector with equal or lesser magnitude given two vectors`` (v1 : Vector2, v2: Vector2) =
-            let l1 = v1.LengthSquared
-            let l2 = v2.LengthSquared
+            // Results do not matter for equal vectors
+            if not (v1 = v2) then
+                let l1 = v1.LengthSquared
+                let l2 = v2.LengthSquared
 
-            let vMin = Vector2.MagnitudeMin(ref v1, ref v2)
+                let vMin = Vector2.MagnitudeMin(ref v1, ref v2)
 
-            if vMin = v1 then
-                let v1ShorterThanv2 = l1 < l2
-                Assert.True(v1ShorterThanv2)
-            else
-                let v2ShorterThanOrEqualTov1 = l2 <= l1
-                Assert.True(v2ShorterThanOrEqualTov1)
+                if vMin = v1 then
+                    let v1ShorterThanv2 = l1 < l2
+                    Assert.True(v1ShorterThanv2)
+                else
+                    let v2ShorterThanOrEqualTov1 = l2 <= l1
+                    Assert.True(v2ShorterThanOrEqualTov1)
 
         [<Property>]
         let ``MagnitudeMax by reference selects the vector with equal greater magnitude given two vectors`` (v1 : Vector2, v2: Vector2) =
-            let l1 = v1.LengthSquared
-            let l2 = v2.LengthSquared
+            // Results do not matter for equal vectors
+            if not (v1 = v2) then
+                let l1 = v1.LengthSquared
+                let l2 = v2.LengthSquared
 
-            let vMin = Vector2.MagnitudeMax(ref v1, ref v2)
+                let vMin = Vector2.MagnitudeMax(ref v1, ref v2)
 
-            if vMin = v1 then
-                let v1LongerThanOrEqualTov2 = l1 >= l2
-                Assert.True(v1LongerThanOrEqualTov2)
-            else
-                let v2LongerThanv1 = l2 > l1
-                Assert.True(v2LongerThanv1)
+                if vMin = v1 then
+                    let v1LongerThanOrEqualTov2 = l1 >= l2
+                    Assert.True(v1LongerThanOrEqualTov2)
+                else
+                    let v2LongerThanv1 = l2 > l1
+                    Assert.True(v2LongerThanv1)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module ``Component min and max`` =
         //
         [<Property>]
@@ -556,7 +569,7 @@ module Vector2 =
             Assert.True(isComponentLargest vMax.X v1.X v2.X)
             Assert.True(isComponentLargest vMax.Y v1.Y v2.Y)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Transformation =
         //
         [<Property>]
@@ -579,7 +592,7 @@ module Vector2 =
 
             Assert.ApproximatelyEqual(transformedVector, Vector2.Transform(ref v, ref q))
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
     module Serialization =
         //
         [<Property>]
