@@ -160,7 +160,32 @@ namespace OpenTK.Platform.MacOS
         // Not the _stret version, perhaps because a NSPoint fits in one register?
         // thefiddler: gcc is indeed using objc_msgSend for NSPoint on i386
         [DllImport (LibObjC, EntryPoint="objc_msgSend")]
-        public extern static NSPoint SendPoint(IntPtr receiver, IntPtr selector);
+        public extern static NSPointF SendPointF(IntPtr receiver, IntPtr selector);
+        [DllImport (LibObjC, EntryPoint="objc_msgSend")]
+        public extern static NSPointD SendPointD(IntPtr receiver, IntPtr selector);
+
+        public static NSPoint SendPoint(IntPtr receiver, IntPtr selector)
+        {
+            NSPoint r = new NSPoint();
+
+            unsafe
+            {
+                if (IntPtr.Size == 4)
+                {
+                    NSPointF pf = SendPointF(receiver, selector);
+                    r.X.Value = *(IntPtr *)&pf.x;
+                    r.Y.Value = *(IntPtr *)&pf.y;
+                }
+                else
+                {
+                    NSPointD pd = SendPointD(receiver, selector);
+                    r.X.Value = *(IntPtr *)&pd.x;
+                    r.Y.Value = *(IntPtr *)&pd.y;
+                }
+            }
+
+            return r;
+        }
 
         [DllImport (LibObjC, EntryPoint="objc_msgSend_stret")]
         extern static void SendRect(out NSRect retval, IntPtr receiver, IntPtr selector);

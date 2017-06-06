@@ -45,6 +45,18 @@ namespace OpenTK.Platform.MacOS
     {
         IntPtr value;
 
+        public IntPtr Value
+        {
+            get
+            {
+                return value;
+            }
+            set
+            {
+                this.value = value;
+            }
+        }
+
         public static implicit operator NSFloat(float v)
         {
             NSFloat f;
@@ -179,5 +191,17 @@ namespace OpenTK.Platform.MacOS
             return new RectangleF(s.Location, s.Size);
         } 
     }
-}
 
+    // Using IntPtr in NSFloat cause that if imported function
+    // return struct that consist of them you will get wrong data 
+    // This types are used for such function.
+    public struct NSPointF
+    {
+        public float x, y;
+    }
+
+    public struct NSPointD
+    {
+        public double x, y;
+    }
+}
