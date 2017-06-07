@@ -425,7 +425,8 @@ namespace OpenTK
         /// <summary>
         /// Approximates equivalence between two single-precision floating-point numbers on a direct human scale.
         /// It is important to note that this does not approximate equality - instead, it merely checks whether or not
-        /// two numbers could be considered equivalent to each other within a certain tolerance.
+        /// two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
+        /// inclusive.
         /// </summary>
         /// <param name="a">The first value to compare.</param>
         /// <param name="b">The second value to compare·</param>
@@ -441,13 +442,14 @@ namespace OpenTK
             }
 
             float diff = Math.Abs(a - b);
-            return diff < tolerance;
+            return diff <= tolerance;
         }
 
         /// <summary>
         /// Approximates equivalence between two double-precision floating-point numbers on a direct human scale.
         /// It is important to note that this does not approximate equality - instead, it merely checks whether or not
-        /// two numbers could be considered equivalent to each other within a certain tolerance.
+        /// two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
+        /// inclusive.
         /// </summary>
         /// <param name="a">The first value to compare.</param>
         /// <param name="b">The second value to compare·</param>
@@ -463,7 +465,7 @@ namespace OpenTK
             }
 
             double diff = Math.Abs(a - b);
-            return diff < tolerance;
+            return diff <= tolerance;
         }
 
 		#endregion
