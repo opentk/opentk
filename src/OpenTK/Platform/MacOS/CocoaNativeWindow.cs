@@ -38,6 +38,9 @@ using System.Threading;
 using OpenTK.Graphics;
 using OpenTK.Input;
 
+//using MonoMac.AppKit;
+//using MonoMac.Foundation;
+
 namespace OpenTK.Platform.MacOS
 {
     class CocoaNativeWindow : NativeWindowBase
@@ -116,6 +119,7 @@ namespace OpenTK.Platform.MacOS
         static readonly IntPtr NSImage;
         static readonly IntPtr NSBitmapImageRep;
         static readonly IntPtr NSDeviceRGBColorSpace = Cocoa.ToNSString("NSDeviceRGBColorSpace");
+        static readonly IntPtr NSFilenamesPboardType;
 
         static CocoaNativeWindow()
         {
@@ -125,6 +129,7 @@ namespace OpenTK.Platform.MacOS
             NSCursor = Class.Get("NSCursor");
             NSImage = Class.Get("NSImage");
             NSBitmapImageRep = Class.Get("NSBitmapImageRep");
+            NSFilenamesPboardType = Cocoa.GetStringConstant(Cocoa.AppKitLibrary, "NSFilenamesPboardType");
         }
 
         private CocoaWindowInfo windowInfo;
@@ -165,6 +170,8 @@ namespace OpenTK.Platform.MacOS
             CanBecomeKeyWindowHandler = CanBecomeKeyWindow;
             CanBecomeMainWindowHandler = CanBecomeMainWindow;
             ResetCursorRectsHandler = ResetCursorRects;
+            PerformDragOperationHandler = PerformDragOperation;
+            DraggingEnteredHandler = DraggingEntered;
 
             // Create the window class
             int unique_id = Interlocked.Increment(ref UniqueId);
@@ -182,6 +189,9 @@ namespace OpenTK.Platform.MacOS
             Class.RegisterMethod(windowClass, AcceptsFirstResponderHandler, "acceptsFirstResponder", "b@:");
             Class.RegisterMethod(windowClass, CanBecomeKeyWindowHandler, "canBecomeKeyWindow", "b@:");
             Class.RegisterMethod(windowClass, CanBecomeMainWindowHandler, "canBecomeMainWindow", "b@:");
+            Class.RegisterMethod(windowClass, DraggingEnteredHandler, "draggingEntered:", "@@:@");
+            Class.RegisterMethod(windowClass, PerformDragOperationHandler, "performDragOperation:", "b@:@");
+
             Class.RegisterClass(windowClass);
 
             IntPtr viewClass = Class.AllocateClass("OpenTK_NSView" + unique_id, "NSView");
@@ -257,6 +267,16 @@ namespace OpenTK.Platform.MacOS
 
             exists = true;
             NSApplication.Quit += ApplicationQuit;
+
+            // Enable drag and drop
+            Cocoa.SendIntPtr(
+                windowPtr,
+                Selector.Get("registerForDraggedTypes:"),
+                Cocoa.SendIntPtr(
+                    Class.Get("NSArray"),
+                    Selector.Get("arrayWithObjects:"),
+                    NSFilenamesPboardType,
+                    IntPtr.Zero));
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
@@ -287,6 +307,10 @@ namespace OpenTK.Platform.MacOS
         delegate bool CanBecomeMainWindowDelegate(IntPtr self, IntPtr cmd);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void ResetCursorRectsDelegate(IntPtr self, IntPtr cmd);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        delegate IntPtr DraggingEnteredDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        delegate bool PerformDragOperationDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
 
         WindowKeyDownDelegate WindowKeyDownHandler;
         WindowDidResizeDelegate WindowDidResizeHandler;
@@ -302,6 +326,37 @@ namespace OpenTK.Platform.MacOS
         CanBecomeKeyWindowDelegate CanBecomeKeyWindowHandler;
         CanBecomeMainWindowDelegate CanBecomeMainWindowHandler;
         ResetCursorRectsDelegate ResetCursorRectsHandler;
+        DraggingEnteredDelegate DraggingEnteredHandler;
+        PerformDragOperationDelegate PerformDragOperationHandler;
+
+        private IntPtr DraggingEntered(IntPtr self, IntPtr cmd, IntPtr sender)
+        {
+            int mask = Cocoa.SendInt(sender, Selector.Get("draggingSourceOperationMask"));
+
+            if ((mask & (int)NSDragOperation.Generic) == (int)NSDragOperation.Generic)
+            {
+                return new IntPtr((int)NSDragOperation.Generic);
+            }
+
+            return new IntPtr((int)NSDragOperation.None);
+        }
+
+        private bool PerformDragOperation(IntPtr self, IntPtr cmd, IntPtr sender)
+        {
+            IntPtr pboard = Cocoa.SendIntPtr(sender, Selector.Get("draggingPasteboard"));
+            
+            IntPtr files = Cocoa.SendIntPtr(pboard, Selector.Get("propertyListForType:"), NSFilenamesPboardType);
+
+            int count = Cocoa.SendInt(files, Selector.Get("count"));
+            for (int i = 0; i < count; ++i)
+            {
+                IntPtr obj = Cocoa.SendIntPtr(files, Selector.Get("objectAtIndex:"), new IntPtr(i));
+                IntPtr str = Cocoa.SendIntPtr(obj, Selector.Get("cStringUsingEncoding:"), new IntPtr(1));
+                OnDrop(Marshal.PtrToStringAnsi(str));
+            }
+            
+            return true;
+        }
 
         private void WindowKeyDown(IntPtr self, IntPtr cmd, IntPtr notification)
         {
