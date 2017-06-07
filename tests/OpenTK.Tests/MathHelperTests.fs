@@ -60,69 +60,69 @@ module MathHelper =
         //
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for large positive values``() =
-            Assert.ApproximatelyEquivalentEpsilon(1000000.0f, 1000001.0f);
-            Assert.ApproximatelyEquivalentEpsilon(1000001.0f, 1000000.0f);
+            Assert.ApproximatelyEqualEpsilon(1000000.0f, 1000001.0f);
+            Assert.ApproximatelyEqualEpsilon(1000001.0f, 1000000.0f);
             Assert.NotApproximatelyEqualEpsilon(10000.0f, 10001.0f);
             Assert.NotApproximatelyEqualEpsilon(10001.0f, 10000.0f);
 
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for large negative values``() =
-            Assert.ApproximatelyEquivalentEpsilon(-1000000.0f, -1000001.0f);
-            Assert.ApproximatelyEquivalentEpsilon(-1000001.0f, -1000000.0f);
+            Assert.ApproximatelyEqualEpsilon(-1000000.0f, -1000001.0f);
+            Assert.ApproximatelyEqualEpsilon(-1000001.0f, -1000000.0f);
             Assert.NotApproximatelyEqualEpsilon(-10000.0f, -10001.0f);
             Assert.NotApproximatelyEqualEpsilon(-10001.0f, -10000.0f);
 
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for positive values around 1``() =
-            Assert.ApproximatelyEquivalentEpsilon(1.0000001f, 1.0000002f);
-            Assert.ApproximatelyEquivalentEpsilon(1.0000002f, 1.0000001f);
+            Assert.ApproximatelyEqualEpsilon(1.0000001f, 1.0000002f);
+            Assert.ApproximatelyEqualEpsilon(1.0000002f, 1.0000001f);
             Assert.NotApproximatelyEqualEpsilon(1.0002f, 1.0001f);
             Assert.NotApproximatelyEqualEpsilon(1.0001f, 1.0002f);
 
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for negative values around -1``() =
-            Assert.ApproximatelyEquivalentEpsilon(-1.000001f, -1.000002f);
-            Assert.ApproximatelyEquivalentEpsilon(-1.000002f, -1.000001f);
+            Assert.ApproximatelyEqualEpsilon(-1.000001f, -1.000002f);
+            Assert.ApproximatelyEqualEpsilon(-1.000002f, -1.000001f);
             Assert.NotApproximatelyEqualEpsilon(-1.0001f, -1.0002f);
             Assert.NotApproximatelyEqualEpsilon(-1.0002f, -1.0001f);
 
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for values between 1 and 0``() =
-            Assert.ApproximatelyEquivalentEpsilon(0.000000001000001f, 0.000000001000002f);
-            Assert.ApproximatelyEquivalentEpsilon(0.000000001000002f, 0.000000001000001f);
+            Assert.ApproximatelyEqualEpsilon(0.000000001000001f, 0.000000001000002f);
+            Assert.ApproximatelyEqualEpsilon(0.000000001000002f, 0.000000001000001f);
             Assert.NotApproximatelyEqualEpsilon(0.000000000001002f, 0.000000000001001f);
             Assert.NotApproximatelyEqualEpsilon(0.000000000001001f, 0.000000000001002f);
 
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for values between -1 and 0``() =
-            Assert.ApproximatelyEquivalentEpsilon(-0.000000001000001f, -0.000000001000002f);
-            Assert.ApproximatelyEquivalentEpsilon(-0.000000001000002f, -0.000000001000001f);
+            Assert.ApproximatelyEqualEpsilon(-0.000000001000001f, -0.000000001000002f);
+            Assert.ApproximatelyEqualEpsilon(-0.000000001000002f, -0.000000001000001f);
             Assert.NotApproximatelyEqualEpsilon(-0.000000000001002f, -0.000000000001001f);
             Assert.NotApproximatelyEqualEpsilon(-0.000000000001001f, -0.000000000001002f);
 
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for comparisons involving 0``() =
-            Assert.ApproximatelyEquivalentEpsilon(0.0f, 0.0f);
-            Assert.ApproximatelyEquivalentEpsilon(0.0f, -0.0f);
-            Assert.ApproximatelyEquivalentEpsilon(-0.0f, -0.0f);
+            Assert.ApproximatelyEqualEpsilon(0.0f, 0.0f);
+            Assert.ApproximatelyEqualEpsilon(0.0f, -0.0f);
+            Assert.ApproximatelyEqualEpsilon(-0.0f, -0.0f);
             Assert.NotApproximatelyEqualEpsilon(0.00000001f, 0.0f);
             Assert.NotApproximatelyEqualEpsilon(0.0f, 0.00000001f);
             Assert.NotApproximatelyEqualEpsilon(-0.00000001f, 0.0f);
             Assert.NotApproximatelyEqualEpsilon(0.0f, -0.00000001f);
 
-            Assert.ApproximatelyEquivalentEpsilon(0.0f, 1e-40f, 0.01f);
-            Assert.ApproximatelyEquivalentEpsilon(1e-40f, 0.0f, 0.01f);
+            Assert.ApproximatelyEqualEpsilon(0.0f, 1e-40f, 0.01f);
+            Assert.ApproximatelyEqualEpsilon(1e-40f, 0.0f, 0.01f);
             Assert.NotApproximatelyEqualEpsilon(1e-40f, 0.0f, 0.000001f);
             Assert.NotApproximatelyEqualEpsilon(0.0f, 1e-40f, 0.000001f);
 
-            Assert.ApproximatelyEquivalentEpsilon(0.0f, -1e-40f, 0.1f);
-            Assert.ApproximatelyEquivalentEpsilon(-1e-40f, 0.0f, 0.1f);
+            Assert.ApproximatelyEqualEpsilon(0.0f, -1e-40f, 0.1f);
+            Assert.ApproximatelyEqualEpsilon(-1e-40f, 0.0f, 0.1f);
             Assert.NotApproximatelyEqualEpsilon(-1e-40f, 0.0f, 0.00000001f);
             Assert.NotApproximatelyEqualEpsilon(0.0f, -1e-40f, 0.00000001f);
 
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for extreme values with overflow potential``() =
-            Assert.ApproximatelyEquivalentEpsilon(System.Single.MaxValue, System.Single.MaxValue);
+            Assert.ApproximatelyEqualEpsilon(System.Single.MaxValue, System.Single.MaxValue);
             Assert.NotApproximatelyEqualEpsilon(System.Single.MaxValue, -System.Single.MaxValue);
             Assert.NotApproximatelyEqualEpsilon(-System.Single.MaxValue, System.Single.MaxValue);
             Assert.NotApproximatelyEqualEpsilon(System.Single.MaxValue, System.Single.MaxValue / 2.0f);
@@ -131,8 +131,8 @@ module MathHelper =
 
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for values involving infinities``() =
-            Assert.ApproximatelyEquivalentEpsilon(System.Single.PositiveInfinity, System.Single.PositiveInfinity);
-            Assert.ApproximatelyEquivalentEpsilon(System.Single.NegativeInfinity, System.Single.NegativeInfinity);
+            Assert.ApproximatelyEqualEpsilon(System.Single.PositiveInfinity, System.Single.PositiveInfinity);
+            Assert.ApproximatelyEqualEpsilon(System.Single.NegativeInfinity, System.Single.NegativeInfinity);
             Assert.NotApproximatelyEqualEpsilon(System.Single.NegativeInfinity, System.Single.PositiveInfinity);
             Assert.NotApproximatelyEqualEpsilon(System.Single.PositiveInfinity, System.Single.MaxValue);
             Assert.NotApproximatelyEqualEpsilon(System.Single.NegativeInfinity, -System.Single.MaxValue);
@@ -163,18 +163,18 @@ module MathHelper =
             Assert.NotApproximatelyEqualEpsilon(-1.0f, 1.000000001f);
             Assert.NotApproximatelyEqualEpsilon(-1.000000001f, 1.0f);
             Assert.NotApproximatelyEqualEpsilon(1.0f, -1.000000001f);
-            Assert.ApproximatelyEquivalentEpsilon(10.0f * System.Single.Epsilon, 10.0f * -System.Single.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(10.0f * System.Single.Epsilon, 10.0f * -System.Single.Epsilon);
             Assert.NotApproximatelyEqualEpsilon(10000.0f * System.Single.Epsilon, 10000.0f * -System.Single.Epsilon);
 
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for values very close to 0``() =
-            Assert.ApproximatelyEquivalentEpsilon(System.Single.Epsilon, System.Single.Epsilon);
-            Assert.ApproximatelyEquivalentEpsilon(System.Single.Epsilon, -System.Single.Epsilon);
-            Assert.ApproximatelyEquivalentEpsilon(-System.Single.Epsilon, System.Single.Epsilon);
-            Assert.ApproximatelyEquivalentEpsilon(System.Single.Epsilon, 0.0f);
-            Assert.ApproximatelyEquivalentEpsilon(0.0f, System.Single.Epsilon);
-            Assert.ApproximatelyEquivalentEpsilon(-System.Single.Epsilon, 0.0f);
-            Assert.ApproximatelyEquivalentEpsilon(0.0f, -System.Single.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(System.Single.Epsilon, System.Single.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(System.Single.Epsilon, -System.Single.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(-System.Single.Epsilon, System.Single.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(System.Single.Epsilon, 0.0f);
+            Assert.ApproximatelyEqualEpsilon(0.0f, System.Single.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(-System.Single.Epsilon, 0.0f);
+            Assert.ApproximatelyEqualEpsilon(0.0f, -System.Single.Epsilon);
 
             Assert.NotApproximatelyEqualEpsilon(0.000000001f, -System.Single.Epsilon);
             Assert.NotApproximatelyEqualEpsilon(0.000000001f, System.Single.Epsilon);
@@ -186,69 +186,69 @@ module MathHelper =
         //
         [<Fact>]
         let ``ApproximatelyEqual (double precision) is correct for large positive values``() =
-            Assert.ApproximatelyEquivalentEpsilon(1000000.0, 1000001.0);
-            Assert.ApproximatelyEquivalentEpsilon(1000001.0, 1000000.0);
+            Assert.ApproximatelyEqualEpsilon(1000000.0, 1000001.0);
+            Assert.ApproximatelyEqualEpsilon(1000001.0, 1000000.0);
             Assert.NotApproximatelyEqualEpsilon(10000.0, 10001.0);
             Assert.NotApproximatelyEqualEpsilon(10001.0, 10000.0);
 
         [<Fact>]
         let ``ApproximatelyEqual (double precision) is correct for large negative values``() =
-            Assert.ApproximatelyEquivalentEpsilon(-1000000.0, -1000001.0);
-            Assert.ApproximatelyEquivalentEpsilon(-1000001.0, -1000000.0);
+            Assert.ApproximatelyEqualEpsilon(-1000000.0, -1000001.0);
+            Assert.ApproximatelyEqualEpsilon(-1000001.0, -1000000.0);
             Assert.NotApproximatelyEqualEpsilon(-10000.0, -10001.0);
             Assert.NotApproximatelyEqualEpsilon(-10001.0, -10000.0);
 
         [<Fact>]
         let ``ApproximatelyEqual (double precision) is correct for positive values around 1``() =
-            Assert.ApproximatelyEquivalentEpsilon(1.0000001, 1.0000002);
-            Assert.ApproximatelyEquivalentEpsilon(1.0000002, 1.0000001);
+            Assert.ApproximatelyEqualEpsilon(1.0000001, 1.0000002);
+            Assert.ApproximatelyEqualEpsilon(1.0000002, 1.0000001);
             Assert.NotApproximatelyEqualEpsilon(1.0002, 1.0001);
             Assert.NotApproximatelyEqualEpsilon(1.0001, 1.0002);
 
         [<Fact>]
         let ``ApproximatelyEqual (double precision) is correct for negative values around -1``() =
-            Assert.ApproximatelyEquivalentEpsilon(-1.000001, -1.000002);
-            Assert.ApproximatelyEquivalentEpsilon(-1.000002, -1.000001);
+            Assert.ApproximatelyEqualEpsilon(-1.000001, -1.000002);
+            Assert.ApproximatelyEqualEpsilon(-1.000002, -1.000001);
             Assert.NotApproximatelyEqualEpsilon(-1.0001, -1.0002);
             Assert.NotApproximatelyEqualEpsilon(-1.0002, -1.0001);
 
         [<Fact>]
         let ``ApproximatelyEqual (double precision) is correct for values between 1 and 0``() =
-            Assert.ApproximatelyEquivalentEpsilon(0.000000001000001, 0.000000001000002);
-            Assert.ApproximatelyEquivalentEpsilon(0.000000001000002, 0.000000001000001);
+            Assert.ApproximatelyEqualEpsilon(0.000000001000001, 0.000000001000002);
+            Assert.ApproximatelyEqualEpsilon(0.000000001000002, 0.000000001000001);
             Assert.NotApproximatelyEqualEpsilon(0.000000000001002, 0.000000000001001);
             Assert.NotApproximatelyEqualEpsilon(0.000000000001001, 0.000000000001002);
 
         [<Fact>]
         let ``ApproximatelyEqual (double precision) is correct for values between -1 and 0``() =
-            Assert.ApproximatelyEquivalentEpsilon(-0.000000001000001, -0.000000001000002);
-            Assert.ApproximatelyEquivalentEpsilon(-0.000000001000002, -0.000000001000001);
+            Assert.ApproximatelyEqualEpsilon(-0.000000001000001, -0.000000001000002);
+            Assert.ApproximatelyEqualEpsilon(-0.000000001000002, -0.000000001000001);
             Assert.NotApproximatelyEqualEpsilon(-0.000000000001002, -0.000000000001001);
             Assert.NotApproximatelyEqualEpsilon(-0.000000000001001, -0.000000000001002);
 
         [<Fact>]
         let ``ApproximatelyEqual (double precision) is correct for comparisons involving 0``() =
-            Assert.ApproximatelyEquivalentEpsilon(0.0, 0.0);
-            Assert.ApproximatelyEquivalentEpsilon(0.0, -0.0);
-            Assert.ApproximatelyEquivalentEpsilon(-0.0, -0.0);
+            Assert.ApproximatelyEqualEpsilon(0.0, 0.0);
+            Assert.ApproximatelyEqualEpsilon(0.0, -0.0);
+            Assert.ApproximatelyEqualEpsilon(-0.0, -0.0);
             Assert.NotApproximatelyEqualEpsilon(0.00000001, 0.0);
             Assert.NotApproximatelyEqualEpsilon(0.0, 0.00000001);
             Assert.NotApproximatelyEqualEpsilon(-0.00000001, 0.0);
             Assert.NotApproximatelyEqualEpsilon(0.0, -0.00000001);
 
-            Assert.ApproximatelyEquivalentEpsilon(0.0, 1e-310, 0.01);
-            Assert.ApproximatelyEquivalentEpsilon(1e-310, 0.0, 0.01);
+            Assert.ApproximatelyEqualEpsilon(0.0, 1e-310, 0.01);
+            Assert.ApproximatelyEqualEpsilon(1e-310, 0.0, 0.01);
             Assert.NotApproximatelyEqualEpsilon(1e-310, 0.0, 0.000001);
             Assert.NotApproximatelyEqualEpsilon(0.0, 1e-310, 0.000001);
 
-            Assert.ApproximatelyEquivalentEpsilon(0.0, -1e-310, 0.1);
-            Assert.ApproximatelyEquivalentEpsilon(-1e-310, 0.0, 0.1);
+            Assert.ApproximatelyEqualEpsilon(0.0, -1e-310, 0.1);
+            Assert.ApproximatelyEqualEpsilon(-1e-310, 0.0, 0.1);
             Assert.NotApproximatelyEqualEpsilon(-1e-310, 0.0, 0.00000001);
             Assert.NotApproximatelyEqualEpsilon(0.0, -1e-310, 0.00000001);
 
         [<Fact>]
         let ``ApproximatelyEqual (double precision) is correct for extreme values with overflow potential``() =
-            Assert.ApproximatelyEquivalentEpsilon(System.Double.MaxValue, System.Double.MaxValue);
+            Assert.ApproximatelyEqualEpsilon(System.Double.MaxValue, System.Double.MaxValue);
             Assert.NotApproximatelyEqualEpsilon(System.Double.MaxValue, -System.Double.MaxValue);
             Assert.NotApproximatelyEqualEpsilon(-System.Double.MaxValue, System.Double.MaxValue);
             Assert.NotApproximatelyEqualEpsilon(System.Double.MaxValue, System.Double.MaxValue / 2.0);
@@ -257,8 +257,8 @@ module MathHelper =
 
         [<Fact>]
         let ``ApproximatelyEqual (double precision) is correct for values involving infinities``() =
-            Assert.ApproximatelyEquivalentEpsilon(System.Double.PositiveInfinity, System.Double.PositiveInfinity);
-            Assert.ApproximatelyEquivalentEpsilon(System.Double.NegativeInfinity, System.Double.NegativeInfinity);
+            Assert.ApproximatelyEqualEpsilon(System.Double.PositiveInfinity, System.Double.PositiveInfinity);
+            Assert.ApproximatelyEqualEpsilon(System.Double.NegativeInfinity, System.Double.NegativeInfinity);
             Assert.NotApproximatelyEqualEpsilon(System.Double.NegativeInfinity, System.Double.PositiveInfinity);
             Assert.NotApproximatelyEqualEpsilon(System.Double.PositiveInfinity, System.Double.MaxValue);
             Assert.NotApproximatelyEqualEpsilon(System.Double.NegativeInfinity, -System.Double.MaxValue);
@@ -289,18 +289,18 @@ module MathHelper =
             Assert.NotApproximatelyEqualEpsilon(-1.0, 1.000000001);
             Assert.NotApproximatelyEqualEpsilon(-1.000000001, 1.0);
             Assert.NotApproximatelyEqualEpsilon(1.0, -1.000000001);
-            Assert.ApproximatelyEquivalentEpsilon(10.0 * System.Double.Epsilon, 10.0 * -System.Double.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(10.0 * System.Double.Epsilon, 10.0 * -System.Double.Epsilon);
             Assert.NotApproximatelyEqualEpsilon(100000000000.0 * System.Double.Epsilon, 100000000000.0 * -System.Double.Epsilon);
 
         [<Fact>]
         let ``ApproximatelyEqual (double precision) is correct for values very close to 0``() =
-            Assert.ApproximatelyEquivalentEpsilon(System.Double.Epsilon, System.Double.Epsilon);
-            Assert.ApproximatelyEquivalentEpsilon(System.Double.Epsilon, -System.Double.Epsilon);
-            Assert.ApproximatelyEquivalentEpsilon(-System.Double.Epsilon, System.Double.Epsilon);
-            Assert.ApproximatelyEquivalentEpsilon(System.Double.Epsilon, 0.0);
-            Assert.ApproximatelyEquivalentEpsilon(0.0, System.Double.Epsilon);
-            Assert.ApproximatelyEquivalentEpsilon(-System.Double.Epsilon, 0.0);
-            Assert.ApproximatelyEquivalentEpsilon(0.0, -System.Double.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(System.Double.Epsilon, System.Double.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(System.Double.Epsilon, -System.Double.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(-System.Double.Epsilon, System.Double.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(System.Double.Epsilon, 0.0);
+            Assert.ApproximatelyEqualEpsilon(0.0, System.Double.Epsilon);
+            Assert.ApproximatelyEqualEpsilon(-System.Double.Epsilon, 0.0);
+            Assert.ApproximatelyEqualEpsilon(0.0, -System.Double.Epsilon);
 
             Assert.NotApproximatelyEqualEpsilon(0.000000001, -System.Double.Epsilon);
             Assert.NotApproximatelyEqualEpsilon(0.000000001, System.Double.Epsilon);
