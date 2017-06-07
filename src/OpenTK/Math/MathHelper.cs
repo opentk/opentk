@@ -422,6 +422,50 @@ namespace OpenTK
             return relativeError < epsilon;
         }
 
+        /// <summary>
+        /// Approximates equivalence between two single-precision floating-point numbers on a direct human scale.
+        /// It is important to note that this does not approximate equality - instead, it merely checks whether or not
+        /// two numbers could be considered equivalent to each other within a certain tolerance.
+        /// </summary>
+        /// <param name="a">The first value to compare.</param>
+        /// <param name="b">The second value to compare·</param>
+        /// <param name="tolerance">The tolerance within which the two values would be considered equivalent.</param>
+        /// <returns>Whether or not the values can be considered equivalent within the tolerance.</returns>
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+        public static bool ApproximatelyEquivalent(float a, float b, float tolerance)
+        {
+            if (a == b)
+            {
+                // Early bailout, handles infinities
+                return true;
+            }
+
+            float diff = Math.Abs(a - b);
+            return diff < tolerance;
+        }
+
+        /// <summary>
+        /// Approximates equivalence between two double-precision floating-point numbers on a direct human scale.
+        /// It is important to note that this does not approximate equality - instead, it merely checks whether or not
+        /// two numbers could be considered equivalent to each other within a certain tolerance.
+        /// </summary>
+        /// <param name="a">The first value to compare.</param>
+        /// <param name="b">The second value to compare·</param>
+        /// <param name="tolerance">The tolerance within which the two values would be considered equivalent.</param>
+        /// <returns>Whether or not the values can be considered equivalent within the tolerance.</returns>
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+        public static bool ApproximatelyEquivalent(double a, double b, double tolerance)
+        {
+            if (a == b)
+            {
+                // Early bailout, handles infinities
+                return true;
+            }
+
+            double diff = Math.Abs(a - b);
+            return diff < tolerance;
+        }
+
 		#endregion
 
 		#endregion

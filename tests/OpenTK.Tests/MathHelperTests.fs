@@ -306,3 +306,47 @@ module MathHelper =
             Assert.NotApproximatelyEqualEpsilon(0.000000001, System.Double.Epsilon);
             Assert.NotApproximatelyEqualEpsilon(System.Double.Epsilon, 0.000000001);
             Assert.NotApproximatelyEqualEpsilon(-System.Double.Epsilon, 0.000000001);
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    module ``ApproximatelyEquivalent (tolerance diff)`` =
+        [<Fact>]
+        let ``ApproximatelyEquivalent correctly approximates equivalence where the difference falls below the tolerance``() =
+            let a = 0.0001f
+            let b = 0.00019f
+            Assert.NotEqual(a,b)
+            Assert.True(MathHelper.ApproximatelyEquivalent(a, b, 0.0001f))
+
+        [<Fact>]
+        let ``ApproximatelyEquivalent correctly approximates inequivalence where the difference is the tolerance``() =
+            let a = 0.0001f
+            let b = 0.0002f
+            Assert.NotEqual(a,b)
+            Assert.False(MathHelper.ApproximatelyEquivalent(a, b, 0.0001f))
+
+        [<Fact>]
+        let ``ApproximatelyEquivalent correctly approximates inequivalence where the difference exceeds the tolerance``() =
+            let a = 0.0001f
+            let b = 0.00021f
+            Assert.NotEqual(a,b)
+            Assert.False(MathHelper.ApproximatelyEquivalent(a, b, 0.0001f))
+
+        [<Fact>]
+        let ``ApproximatelyEquivalent reports very different values as non-equal even with a high tolerance``() =
+            let a = 2.0f
+            let b = 1.0f
+            Assert.NotEqual(a,b)
+            Assert.False(MathHelper.ApproximatelyEquivalent(a, b, 1.0f))
+
+        [<Fact>]
+        let ``ApproximatelyEquivalent works with single zero value``() =
+            let a = 1.0f
+            let b = 0.0f
+            Assert.NotEqual(a,b)
+            Assert.False(MathHelper.ApproximatelyEquivalent(a, b, 0.0001f))
+
+        [<Fact>]
+        let ``ApproximatelyEquivalent works with both zero values``() =
+            let a = 0.0f
+            let b = 0.0f
+            Assert.Equal(a,b)
+            Assert.True(MathHelper.ApproximatelyEquivalent(a, b, 0.0001f))

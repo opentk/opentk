@@ -11,8 +11,13 @@ module private AssertHelpers =
     [<Literal>]
     let private BitAccuracy = 16
 
+    [<Literal>]
+    let private EquivalenceTolerance = 0.0001f
+
+    let approxEq a b = MathHelper.ApproximatelyEquivalent(a, b, EquivalenceTolerance)
     //let approxEq a b = MathHelper.ApproximatelyEqual(a,b,BitAccuracy)
-    let approxEq a b = MathHelper.ApproximatelyEqualEpsilon(a,b,0.0001f)
+    //let approxEq a b = MathHelper.ApproximatelyEqualEpsilon(a,b,0.0001f)
+
     let approxEqSingleEpsilon a b = MathHelper.ApproximatelyEqualEpsilon(a, b, 0.00001f)
     let approxEqDoubleEpsilon a b = MathHelper.ApproximatelyEqualEpsilon(a, b, 0.00001)
 
