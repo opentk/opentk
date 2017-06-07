@@ -12,11 +12,11 @@ module private AssertHelpers =
     let private BitAccuracy = 16
 
     [<Literal>]
-    let private EquivalenceTolerance = 0.0001f
+    let private EquivalenceTolerance = 0.00005f
 
     let approxEq a b = MathHelper.ApproximatelyEquivalent(a, b, EquivalenceTolerance)
-    //let approxEq a b = MathHelper.ApproximatelyEqual(a,b,BitAccuracy)
-    //let approxEq a b = MathHelper.ApproximatelyEqualEpsilon(a,b,0.0001f)
+
+    let approxEqDelta a b = MathHelper.ApproximatelyEqual(a,b,BitAccuracy)
 
     let approxEqSingleEpsilon a b = MathHelper.ApproximatelyEqualEpsilon(a, b, 0.00001f)
     let approxEqDoubleEpsilon a b = MathHelper.ApproximatelyEqualEpsilon(a, b, 0.00001)
@@ -32,17 +32,17 @@ module private AssertHelpers =
 [<Sealed>]
 type internal Assert =
 
-    static member ApproximatelyEqual(a : Vector2,b : Vector2) =
+    static member ApproximatelyEquivalent(a : Vector2,b : Vector2) =
         if not <| approxEq a.X b.X && approxEq a.Y b.Y then raise <| new Xunit.Sdk.EqualException(a,b)
 
-    static member ApproximatelyEqual(a : Vector3,b : Vector3) =
+    static member ApproximatelyEquivalent(a : Vector3,b : Vector3) =
         if not <| approxEq a.X b.X && approxEq a.Y b.Y && approxEq a.Z b.Z then raise <| new Xunit.Sdk.EqualException(a,b)
 
-    static member ApproximatelyEqual(a : Vector4,b : Vector4) =
+    static member ApproximatelyEquivalent(a : Vector4,b : Vector4) =
         if not <| approxEq a.X b.X && approxEq a.Y b.Y && approxEq a.Z b.Z && approxEq a.W b.W then
             raise <| new Xunit.Sdk.EqualException(a,b)
 
-    static member ApproximatelyEqual(a : float32,b : float32) =
+    static member ApproximatelyEquivalent(a : float32,b : float32) =
         if not <| approxEq a b then raise <| new Xunit.Sdk.EqualException(a,b)
 
 

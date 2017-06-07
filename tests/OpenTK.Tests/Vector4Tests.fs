@@ -8,7 +8,7 @@ open System.Runtime.InteropServices
 open OpenTK
 
 module Vector4 =
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Constructors =
         //
         [<Property>]
@@ -85,7 +85,7 @@ module Vector4 =
             Assert.Equal(z, v2.Z)
             Assert.Equal(w, v2.W)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Indexing =
         //
         [<Property>]
@@ -121,7 +121,7 @@ module Vector4 =
 
             (fun() -> v.[4] |> ignore) |> Assert.ThrowsIndexExn
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Length =
         //
         [<Property>]
@@ -145,7 +145,7 @@ module Vector4 =
 
             Assert.Equal(lsq, v.LengthSquared)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Normalization =
         //
         [<Property>]
@@ -157,10 +157,10 @@ module Vector4 =
             if not (approxEq l 0.0f) then
                 let norm = v.Normalized()
 
-                Assert.ApproximatelyEqual(v.X / l, norm.X)
-                Assert.ApproximatelyEqual(v.Y / l, norm.Y)
-                Assert.ApproximatelyEqual(v.Z / l, norm.Z)
-                Assert.ApproximatelyEqual(v.W / l, norm.W)
+                Assert.ApproximatelyEquivalent(v.X / l, norm.X)
+                Assert.ApproximatelyEquivalent(v.Y / l, norm.Y)
+                Assert.ApproximatelyEquivalent(v.Z / l, norm.Z)
+                Assert.ApproximatelyEquivalent(v.W / l, norm.W)
 
         [<Property>]
         let ``Normalization of instance transforms the instance into a unit length vector with the correct components`` (x, y, z, w) =
@@ -172,10 +172,10 @@ module Vector4 =
                 let norm = Vector4(x, y, z, w)
                 norm.Normalize()
 
-                Assert.ApproximatelyEqual(v.X / l, norm.X)
-                Assert.ApproximatelyEqual(v.Y / l, norm.Y)
-                Assert.ApproximatelyEqual(v.Z / l, norm.Z)
-                Assert.ApproximatelyEqual(v.W / l, norm.W)
+                Assert.ApproximatelyEquivalent(v.X / l, norm.X)
+                Assert.ApproximatelyEquivalent(v.Y / l, norm.Y)
+                Assert.ApproximatelyEquivalent(v.Z / l, norm.Z)
+                Assert.ApproximatelyEquivalent(v.W / l, norm.W)
 
         [<Property>]
         let ``Fast approximate normalization of instance transforms the instance into a unit length vector with the correct components`` (x, y, z, w) =
@@ -185,10 +185,10 @@ module Vector4 =
 
             let scale = MathHelper.InverseSqrtFast(x * x + y * y + z * z + w * w)
 
-            Assert.ApproximatelyEqual(v.X * scale, norm.X)
-            Assert.ApproximatelyEqual(v.Y * scale, norm.Y)
-            Assert.ApproximatelyEqual(v.Z * scale, norm.Z)
-            Assert.ApproximatelyEqual(v.W * scale, norm.W)
+            Assert.ApproximatelyEquivalent(v.X * scale, norm.X)
+            Assert.ApproximatelyEquivalent(v.Y * scale, norm.Y)
+            Assert.ApproximatelyEquivalent(v.Z * scale, norm.Z)
+            Assert.ApproximatelyEquivalent(v.W * scale, norm.W)
 
         [<Property>]
         let ``Normalization by reference is the same as division by magnitude`` (a : Vector4) =
@@ -197,7 +197,7 @@ module Vector4 =
                 let norm = a / a.Length
                 let vRes = Vector4.Normalize(ref a)
 
-                Assert.ApproximatelyEqual(norm, vRes)
+                Assert.ApproximatelyEquivalent(norm, vRes)
 
         [<Property>]
         let ``Normalization is the same as division by magnitude`` (a : Vector4) =
@@ -205,7 +205,7 @@ module Vector4 =
             if not (approxEq a.Length 0.0f) then
                 let norm = a / a.Length
 
-                Assert.ApproximatelyEqual(norm, Vector4.Normalize(a));
+                Assert.ApproximatelyEquivalent(norm, Vector4.Normalize(a));
 
         [<Property>]
         let ``Fast approximate normalization by reference is the same as multiplication by the fast inverse square`` (a : Vector4) =
@@ -214,40 +214,40 @@ module Vector4 =
             let norm = a * scale
             let vRes = Vector4.NormalizeFast(ref a)
 
-            Assert.ApproximatelyEqual(norm, vRes)
+            Assert.ApproximatelyEquivalent(norm, vRes)
 
         [<Property>]
         let ``Fast approximate normalization is the same as multiplication by the fast inverse square`` (a : Vector4) =
             let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y + a.Z * a.Z + a.W * a.W)
             let norm = a * scale
 
-            Assert.ApproximatelyEqual(norm, Vector4.NormalizeFast(a));
+            Assert.ApproximatelyEquivalent(norm, Vector4.NormalizeFast(a));
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Addition =
         //
         [<Property>]
         let ``Vector4 addition is the same as component addition`` (a : Vector4, b : Vector4) =
             let c = a + b
 
-            Assert.ApproximatelyEqual(a.X + b.X,c.X)
-            Assert.ApproximatelyEqual(a.Y + b.Y,c.Y)
-            Assert.ApproximatelyEqual(a.Z + b.Z,c.Z)
-            Assert.ApproximatelyEqual(a.W + b.W,c.W)
+            Assert.ApproximatelyEquivalent(a.X + b.X,c.X)
+            Assert.ApproximatelyEquivalent(a.Y + b.Y,c.Y)
+            Assert.ApproximatelyEquivalent(a.Z + b.Z,c.Z)
+            Assert.ApproximatelyEquivalent(a.W + b.W,c.W)
 
         [<Property>]
         let ``Vector4 addition is commutative`` (a : Vector4, b : Vector4) =
             let c = a + b
             let c2 = b + a
 
-            Assert.ApproximatelyEqual(c, c2)
+            Assert.ApproximatelyEquivalent(c, c2)
 
         [<Property>]
         let ``Vector4 addition is associative`` (a : Vector4, b : Vector4, c : Vector4) =
             let r1 = (a + b) + c
             let r2 = a + (b + c)
 
-            Assert.ApproximatelyEqual(r1, r2)
+            Assert.ApproximatelyEquivalent(r1, r2)
 
         [<Property>]
         let ``Static Vector4 addition method is the same as component addition`` (a : Vector4, b : Vector4) =
@@ -255,7 +255,7 @@ module Vector4 =
             let v1 = Vector4(a.X + b.X, a.Y + b.Y, a.Z + b.Z, a.W + b.W)
             let sum = Vector4.Add(a, b)
 
-            Assert.ApproximatelyEqual(v1, sum)
+            Assert.ApproximatelyEquivalent(v1, sum)
 
         [<Property>]
         let ``Static Vector4 addition method by reference is the same as component addition`` (a : Vector4, b : Vector4) =
@@ -263,9 +263,9 @@ module Vector4 =
             let v1 = Vector4(a.X + b.X, a.Y + b.Y, a.Z + b.Z, a.W + b.W)
             let sum = Vector4.Add(ref a, ref b)
 
-            Assert.ApproximatelyEqual(v1, sum)
+            Assert.ApproximatelyEquivalent(v1, sum)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Subtraction =
         //
         [<Property>]
@@ -283,7 +283,7 @@ module Vector4 =
             let v1 = Vector4(a.X - b.X, a.Y - b.Y, a.Z - b.Z, a.W - b.W)
             let sum = Vector4.Subtract(a, b)
 
-            Assert.ApproximatelyEqual(v1, sum)
+            Assert.ApproximatelyEquivalent(v1, sum)
 
         [<Property>]
         let ``Static Vector4 subtraction method by reference is the same as component addition`` (a : Vector4, b : Vector4) =
@@ -291,9 +291,9 @@ module Vector4 =
             let v1 = Vector4(a.X - b.X, a.Y - b.Y, a.Z - b.Z, a.W - b.W)
             let sum = Vector4.Subtract(ref a, ref b)
 
-            Assert.ApproximatelyEqual(v1, sum)
+            Assert.ApproximatelyEquivalent(v1, sum)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Multiplication =
         //
         [<Property>]
@@ -371,7 +371,7 @@ module Vector4 =
             let v1 = Vector4(a.X * b.X, a.Y * b.Y, a.Z * b.Z, a.W * b.W)
             let sum = Vector4.Multiply(a, b)
 
-            Assert.ApproximatelyEqual(v1, sum)
+            Assert.ApproximatelyEquivalent(v1, sum)
 
         [<Property>]
         let ``Static Vector4 multiplication method by reference is the same as component multiplication`` (a : Vector4, b : Vector4) =
@@ -379,9 +379,9 @@ module Vector4 =
             let v1 = Vector4(a.X * b.X, a.Y * b.Y, a.Z * b.Z, a.W * b.W)
             let sum = Vector4.Multiply(ref a, ref b)
 
-            Assert.ApproximatelyEqual(v1, sum)
+            Assert.ApproximatelyEquivalent(v1, sum)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Division =
         //
         [<Property>]
@@ -389,10 +389,10 @@ module Vector4 =
             if not (approxEq f 0.0f) then // we don't support diving by zero.
                 let r = a / f
 
-                Assert.ApproximatelyEqual(a.X / f, r.X)
-                Assert.ApproximatelyEqual(a.Y / f, r.Y)
-                Assert.ApproximatelyEqual(a.Z / f, r.Z)
-                Assert.ApproximatelyEqual(a.W / f, r.W)
+                Assert.ApproximatelyEquivalent(a.X / f, r.X)
+                Assert.ApproximatelyEquivalent(a.Y / f, r.Y)
+                Assert.ApproximatelyEquivalent(a.Z / f, r.Z)
+                Assert.ApproximatelyEquivalent(a.W / f, r.W)
 
         [<Property>]
         let ``Static Vector4-Vector4 division method is the same as component division`` (a : Vector4, b : Vector4) =
@@ -400,7 +400,7 @@ module Vector4 =
                 let v1 = Vector4(a.X / b.X, a.Y / b.Y, a.Z / b.Z, a.W / b.W)
                 let sum = Vector4.Divide(a, b)
 
-                Assert.ApproximatelyEqual(v1, sum)
+                Assert.ApproximatelyEquivalent(v1, sum)
 
         [<Property>]
         let ``Static Vector4-Vector4 divison method by reference is the same as component division`` (a : Vector4, b : Vector4) =
@@ -408,7 +408,7 @@ module Vector4 =
                 let v1 = Vector4(a.X / b.X, a.Y / b.Y, a.Z / b.Z, a.W / b.W)
                 let sum = Vector4.Divide(ref a, ref b)
 
-                Assert.ApproximatelyEqual(v1, sum)
+                Assert.ApproximatelyEquivalent(v1, sum)
 
         [<Property>]
         let ``Static Vector4-scalar division method is the same as component division`` (a : Vector4, b : float32) =
@@ -416,7 +416,7 @@ module Vector4 =
                 let v1 = Vector4(a.X / b, a.Y / b, a.Z / b, a.W / b)
                 let sum = Vector4.Divide(a, b)
 
-                Assert.ApproximatelyEqual(v1, sum)
+                Assert.ApproximatelyEquivalent(v1, sum)
 
         [<Property>]
         let ``Static Vector4-scalar divison method by reference is the same as component division`` (a : Vector4, b : float32) =
@@ -424,9 +424,9 @@ module Vector4 =
                 let v1 = Vector4(a.X / b, a.Y / b, a.Z / b, a.W / b)
                 let sum = Vector4.Divide(ref a, b)
 
-                Assert.ApproximatelyEqual(v1, sum)
+                Assert.ApproximatelyEquivalent(v1, sum)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Negation =
         //
         [<Property>]
@@ -438,7 +438,7 @@ module Vector4 =
             Assert.Equal(-z, vNeg.Z)
             Assert.Equal(-w, vNeg.W)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Equality =
         //
         [<Property>]
@@ -478,7 +478,7 @@ module Vector4 =
 
             Assert.False(inequalityByOtherType)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Swizzling =
         //
         [<Property>]
@@ -657,7 +657,7 @@ module Vector4 =
             Assert.Equal(wy, v.Wy)
             Assert.Equal(wz, v.Wz)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Interpolation =
         //
         [<Property>]
@@ -686,7 +686,7 @@ module Vector4 =
             let vRes = Vector4.BaryCentric(ref a, ref b, ref c, u, v)
             Assert.Equal(r, vRes)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Vector products`` =
         //
         [<Property>]
@@ -698,7 +698,7 @@ module Vector4 =
             let vRes = Vector4.Dot(ref a, ref b)
             Assert.Equal(dot, vRes)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Magnitude min and max`` =
         //
         [<Property>]
@@ -765,7 +765,7 @@ module Vector4 =
                     let v2LongerThanv1 = l2 > l1
                     Assert.True(v2LongerThanv1)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Component min and max`` =
         //
         [<Property>]
@@ -809,7 +809,7 @@ module Vector4 =
             Assert.True(isComponentLargest vMax.W v1.W v2.W)
 
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Clamping =
         //
         [<Property>]
@@ -840,7 +840,7 @@ module Vector4 =
             Assert.Equal(expZ, res.Z)
             Assert.Equal(expW, res.W)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Unit vectors``=
         //
         [<Property>]
@@ -879,7 +879,7 @@ module Vector4 =
 
             Assert.Equal(Vector4.One, unitOne)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Serialization =
         //
         [<Property>]
@@ -889,7 +889,7 @@ module Vector4 =
             Assert.Equal(expectedSize, Vector4.SizeInBytes)
             Assert.Equal(expectedSize, Marshal.SizeOf(Vector4()))
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |], MaxTest = 10000)>]
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Transformation =
         //
         [<Property>]
@@ -900,7 +900,7 @@ module Vector4 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = Vector4(transformedQuat.X, transformedQuat.Y, transformedQuat.Z, transformedQuat.W)
 
-            Assert.ApproximatelyEqual(transformedVector, Vector4.Transform(v, q))
+            Assert.ApproximatelyEquivalent(transformedVector, Vector4.Transform(v, q))
 
         [<Property>]
         let ``Transformation by quaternion with static method by reference is the same as multiplication by quaternion and its conjugate`` (v : Vector4, q : Quaternion) =
@@ -910,7 +910,7 @@ module Vector4 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = Vector4(transformedQuat.X, transformedQuat.Y,transformedQuat.Z, transformedQuat.W)
 
-            Assert.ApproximatelyEqual(transformedVector, Vector4.Transform(ref v, ref q))
+            Assert.ApproximatelyEquivalent(transformedVector, Vector4.Transform(ref v, ref q))
 
         [<Property>]
         let ``Transformation by quaternion by multiplication using right-handed notation is the same as multiplication by quaternion and its conjugate`` (v : Vector4, q : Quaternion) =
@@ -920,4 +920,4 @@ module Vector4 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = Vector4(transformedQuat.X, transformedQuat.Y, transformedQuat.Z, transformedQuat.W)
 
-            Assert.ApproximatelyEqual(transformedVector, q * v)
+            Assert.ApproximatelyEquivalent(transformedVector, q * v)
