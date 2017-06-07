@@ -338,7 +338,7 @@ module Matrix4 =
         let ``Indexed set operator throws exception for negative indices`` (b : Matrix4, x : float32) =
             let mutable a = b
 
-            
+
 
             (fun() -> a.[-1, 2] <- x) |> Assert.ThrowsIndexExn
             (fun() -> a.[1, -2] <- x) |> Assert.ThrowsIndexExn
