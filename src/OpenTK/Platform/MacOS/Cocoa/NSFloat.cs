@@ -118,7 +118,7 @@ namespace OpenTK.Platform.MacOS
                 }
                 else
                 {
-                    return *(float*)&f.value;
+                    return *(double*)&f.value;
                 }
             }
         }
