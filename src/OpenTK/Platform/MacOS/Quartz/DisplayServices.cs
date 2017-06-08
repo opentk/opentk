@@ -60,7 +60,7 @@ namespace OpenTK.Platform.MacOS
     {
         const string lib = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
 
-        // CGPoint -> HIPoint
+        // CGPoint -> NSPoint
         // CGSize -> HISize
         // CGRect -> HIRect
 
@@ -116,7 +116,7 @@ namespace OpenTK.Platform.MacOS
         internal static extern IntPtr DisplaySwitchToMode(IntPtr display, IntPtr displayMode);
 
         [DllImport(lib, EntryPoint = "CGWarpMouseCursorPosition")]
-        internal static extern CGError WarpMouseCursorPosition(HIPoint newCursorPosition);
+        internal static extern CGError WarpMouseCursorPosition(NSPoint newCursorPosition);
 
         [DllImport(lib, EntryPoint = "CGCursorIsVisible")]
         internal static extern bool CursorIsVisible();

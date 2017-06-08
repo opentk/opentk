@@ -66,7 +66,32 @@ namespace OpenTK.Platform.MacOS
             CGEventField field);
 
         [DllImport(lib, EntryPoint = "CGEventGetLocation")]
-        internal static extern Carbon.HIPoint EventGetLocation(CGEventRef @event);
+        internal static extern NSPointF EventGetLocationF(CGEventRef @event);
+        [DllImport(lib, EntryPoint = "CGEventGetLocation")]
+        internal static extern NSPointD EventGetLocationD(CGEventRef @event);
+
+        internal static NSPoint EventGetLocation(CGEventRef @event)
+        {
+            NSPoint r = new NSPoint();
+
+            unsafe {
+                if (IntPtr.Size == 4)
+                {
+                    NSPointF pf = EventGetLocationF(@event);
+                    r.X.Value = *(IntPtr *)&pf.x;
+                    r.Y.Value = *(IntPtr *)&pf.y;
+                }
+                else
+                {
+                    NSPointD pd = EventGetLocationD(@event);
+                    r.X.Value = *(IntPtr *)&pd.x;
+                    r.Y.Value = *(IntPtr *)&pd.y;
+                }
+            }
+
+            return r;
+        }
+
     }
 
     enum CGEventTapLocation
