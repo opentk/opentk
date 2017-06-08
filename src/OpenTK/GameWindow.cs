@@ -102,6 +102,8 @@ namespace OpenTK
 
         bool is_running_slowly; // true, when UpdatePeriod cannot reach TargetUpdatePeriod
 
+        bool fix_cpu_waste = false;
+
         FrameEventArgs update_args = new FrameEventArgs();
         FrameEventArgs render_args = new FrameEventArgs();
 
@@ -458,9 +460,12 @@ namespace OpenTK
             double timestamp = watch.Elapsed.TotalSeconds;
             double elapsed = 0;
 
+            bool updatedEver = !fix_cpu_waste;
+
             elapsed = ClampElapsed(timestamp - update_timestamp);
             while (elapsed > 0 && elapsed + update_epsilon >= TargetUpdatePeriod)
             {
+                updatedEver = true;
                 RaiseUpdateFrame(elapsed, ref timestamp);
                 
                 // Calculate difference (positive or negative) between
@@ -492,7 +497,13 @@ namespace OpenTK
             elapsed = ClampElapsed(timestamp - render_timestamp);
             if (elapsed > 0 && elapsed >= TargetRenderPeriod)
             {
+                updatedEver = true;
                 RaiseRenderFrame(elapsed, ref timestamp);
+            }
+
+            if (!updatedEver)
+            {
+                Thread.Sleep(1);
             }
         }
 
@@ -876,6 +887,27 @@ namespace OpenTK
             {
                 EnsureUndisposed();
                 return update_time;
+            }
+        }
+
+        #endregion
+
+        #region ReduceCPUWaste
+
+        /// <summary>
+        /// Gets or sets a boolean indicating whether CPU usage should be reduced via thread yielding.
+        /// </summary>
+        public bool ReduceCPUWaste
+        {
+            get
+            {
+                EnsureUndisposed();
+                return fix_cpu_waste;
+            }
+            set
+            {
+                EnsureUndisposed();
+                fix_cpu_waste = value;
             }
         }
 
