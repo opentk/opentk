@@ -750,9 +750,6 @@
     <Compile Include="Platform\MacOS\CarbonWindowInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\MacOS\Carbon\CarbonAPI.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\MacOS\Carbon\MacOSKeys.cs">
       <SubType>Code</SubType>
     </Compile>

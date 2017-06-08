@@ -61,8 +61,8 @@ namespace OpenTK.Platform.MacOS
         const string lib = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
 
         // CGPoint -> NSPoint
-        // CGSize -> HISize
-        // CGRect -> HIRect
+        // CGSize -> NSSize
+        // CGRect -> NSRect
 
         [DllImport(lib,EntryPoint="CGGetActiveDisplayList")]
         internal unsafe static extern CGDisplayErr GetActiveDisplayList(int maxDisplays, IntPtr* activeDspys, out int dspyCnt);
@@ -75,15 +75,15 @@ namespace OpenTK.Platform.MacOS
         // first parameter slot. This is normally handled automatically
         // by gcc/clang, but here we have to do it ourselves.
         // See "Listing 4" on https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/LowLevelABI/130-IA-32_Function_Calling_Conventions/IA32.html#//apple_ref/doc/uid/TP40002492-SW3
-        internal unsafe static HIRect DisplayBounds(IntPtr display)
+        internal unsafe static NSRect DisplayBounds(IntPtr display)
         {
-            HIRect rect;
+            NSRect rect;
             DisplayBounds(out rect, display);
             return rect;
         }
 
         [DllImport(lib, EntryPoint = "CGDisplayBounds")]
-        unsafe static extern void DisplayBounds(out HIRect rect, IntPtr display);
+        unsafe static extern void DisplayBounds(out NSRect rect, IntPtr display);
 
         [DllImport(lib,EntryPoint="CGDisplayPixelsWide")]
         internal static extern int DisplayPixelsWide(IntPtr display);
