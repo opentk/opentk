@@ -175,7 +175,7 @@ namespace OpenTK
         #endregion
 
         #region Public Members
-        
+
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
@@ -669,7 +669,10 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector4d vector, double scale, out Vector4d result)
         {
-            Multiply(ref vector, 1 / scale, out result);
+            result.X = vector.X / scale;
+            result.Y = vector.Y / scale;
+            result.Z = vector.Z / scale;
+            result.W = vector.W / scale;
         }
 
         /// <summary>
@@ -705,6 +708,7 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <returns>The component-wise minimum</returns>
+        [Obsolete("Use ComponentMin() instead.")]
         public static Vector4d Min(Vector4d a, Vector4d b)
         {
             a.X = a.X < b.X ? a.X : b.X;
@@ -720,6 +724,7 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <param name="result">The component-wise minimum</param>
+        [Obsolete("Use ComponentMin() instead.")]
         public static void Min(ref Vector4d a, ref Vector4d b, out Vector4d result)
         {
             result.X = a.X < b.X ? a.X : b.X;
@@ -738,6 +743,7 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <returns>The component-wise maximum</returns>
+        [Obsolete("Use ComponentMax() instead.")]
         public static Vector4d Max(Vector4d a, Vector4d b)
         {
             a.X = a.X > b.X ? a.X : b.X;
@@ -753,12 +759,133 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <param name="result">The component-wise maximum</param>
+        [Obsolete("Use ComponentMax() instead.")]
         public static void Max(ref Vector4d a, ref Vector4d b, out Vector4d result)
         {
             result.X = a.X > b.X ? a.X : b.X;
             result.Y = a.Y > b.Y ? a.Y : b.Y;
             result.Z = a.Z > b.Z ? a.Z : b.Z;
             result.W = a.W > b.W ? a.W : b.W;
+        }
+
+        #endregion
+
+        #region ComponentMin
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <returns>The component-wise minimum</returns>
+        public static Vector4d ComponentMin(Vector4d a, Vector4d b)
+        {
+            a.X = a.X < b.X ? a.X : b.X;
+            a.Y = a.Y < b.Y ? a.Y : b.Y;
+            a.Z = a.Z < b.Z ? a.Z : b.Z;
+            a.W = a.W < b.W ? a.W : b.W;
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <param name="result">The component-wise minimum</param>
+        public static void ComponentMin(ref Vector4d a, ref Vector4d b, out Vector4d result)
+        {
+            result.X = a.X < b.X ? a.X : b.X;
+            result.Y = a.Y < b.Y ? a.Y : b.Y;
+            result.Z = a.Z < b.Z ? a.Z : b.Z;
+            result.W = a.W < b.W ? a.W : b.W;
+        }
+
+        #endregion
+
+        #region ComponentMax
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <returns>The component-wise maximum</returns>
+        public static Vector4d ComponentMax(Vector4d a, Vector4d b)
+        {
+            a.X = a.X > b.X ? a.X : b.X;
+            a.Y = a.Y > b.Y ? a.Y : b.Y;
+            a.Z = a.Z > b.Z ? a.Z : b.Z;
+            a.W = a.W > b.W ? a.W : b.W;
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <param name="result">The component-wise maximum</param>
+        public static void ComponentMax(ref Vector4d a, ref Vector4d b, out Vector4d result)
+        {
+            result.X = a.X > b.X ? a.X : b.X;
+            result.Y = a.Y > b.Y ? a.Y : b.Y;
+            result.Z = a.Z > b.Z ? a.Z : b.Z;
+            result.W = a.W > b.W ? a.W : b.W;
+        }
+
+        #endregion
+
+        #region MagnitudeMin
+
+        /// <summary>
+        /// Returns the Vector4d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector4d</returns>
+        public static Vector4d MagnitudeMin(Vector4d left, Vector4d right)
+        {
+            return left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector4d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise minimum</param>
+        /// <returns>The minimum Vector4d</returns>
+        public static void MagnitudeMin(ref Vector4d left, ref Vector4d right, out Vector4d result)
+        {
+            result = left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
+        #region MagnitudeMax
+
+        /// <summary>
+        /// Returns the Vector4d with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector4d</returns>
+        public static Vector4d MagnitudeMax(Vector4d left, Vector4d right)
+        {
+            return left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector4d with the maximum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise maximum</param>
+        /// <returns>The maximum Vector4d</returns>
+        public static void MagnitudeMax(ref Vector4d left, ref Vector4d right, out Vector4d result)
+        {
+            result = left.LengthSquared >= right.LengthSquared ? left : right;
         }
 
         #endregion
@@ -1493,7 +1620,7 @@ namespace OpenTK
             vec.W *= scale;
             return vec;
         }
-		
+
         /// <summary>
         /// Component-wise multiplication between the specified instance by a scale vector.
         /// </summary>
@@ -1517,11 +1644,10 @@ namespace OpenTK
         /// <returns>The result of the calculation.</returns>
         public static Vector4d operator /(Vector4d vec, double scale)
         {
-            double mult = 1 / scale;
-            vec.X *= mult;
-            vec.Y *= mult;
-            vec.Z *= mult;
-            vec.W *= mult;
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
+            vec.W /= scale;
             return vec;
         }
 

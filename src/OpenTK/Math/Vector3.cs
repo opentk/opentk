@@ -629,7 +629,9 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector3 vector, float scale, out Vector3 result)
         {
-            Multiply(ref vector, 1 / scale, out result);
+            result.X = vector.X / scale;
+            result.Y = vector.Y / scale;
+            result.Z = vector.Z / scale;
         }
 
         /// <summary>
@@ -660,7 +662,7 @@ namespace OpenTK
         #region ComponentMin
 
         /// <summary>
-        /// Calculate the component-wise minimum of two vectors
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -674,7 +676,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the component-wise minimum of two vectors
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -691,7 +693,7 @@ namespace OpenTK
         #region ComponentMax
 
         /// <summary>
-        /// Calculate the component-wise maximum of two vectors
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -705,7 +707,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the component-wise maximum of two vectors
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -719,6 +721,64 @@ namespace OpenTK
 
         #endregion
 
+        #region MagnitudeMin
+
+        /// <summary>
+        /// Returns the Vector3 with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector3</returns>
+        public static Vector3 MagnitudeMin(Vector3 left, Vector3 right)
+        {
+            return left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector3 with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise minimum</param>
+        /// <returns>The minimum Vector3</returns>
+        public static void MagnitudeMin(ref Vector3 left, ref Vector3 right, out Vector3 result)
+        {
+            result = left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
+        #region MagnitudeMax
+
+        /// <summary>
+        /// Returns the Vector3 with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The maximum Vector3</returns>
+        public static Vector3 MagnitudeMax(Vector3 left, Vector3 right)
+        {
+            return left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector3 with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise maximum</param>
+        /// <returns>The maximum Vector3</returns>
+        public static void MagnitudeMax(ref Vector3 left, ref Vector3 right, out Vector3 result)
+        {
+            result = left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
         #region Min
 
         /// <summary>
@@ -727,6 +787,7 @@ namespace OpenTK
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <returns>The minimum Vector3</returns>
+        [Obsolete("Use MagnitudeMin() instead.")]
         public static Vector3 Min(Vector3 left, Vector3 right)
         {
             return left.LengthSquared < right.LengthSquared ? left : right;
@@ -742,6 +803,7 @@ namespace OpenTK
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <returns>The minimum Vector3</returns>
+        [Obsolete("Use MagnitudeMax() instead.")]
         public static Vector3 Max(Vector3 left, Vector3 right)
         {
             return left.LengthSquared >= right.LengthSquared ? left : right;
@@ -1270,10 +1332,10 @@ namespace OpenTK
         {
             Vector4 result;
 
-            result.X = 
-                vector.X * worldViewProjection.M11 + 
-                vector.Y * worldViewProjection.M21 + 
-                vector.Z * worldViewProjection.M31 + 
+            result.X =
+                vector.X * worldViewProjection.M11 +
+                vector.Y * worldViewProjection.M21 +
+                vector.Z * worldViewProjection.M31 +
                 worldViewProjection.M41;
 
             result.Y =
@@ -1574,10 +1636,9 @@ namespace OpenTK
         /// <returns>The result of the calculation.</returns>
         public static Vector3 operator /(Vector3 vec, float scale)
         {
-            float mult = 1.0f / scale;
-            vec.X *= mult;
-            vec.Y *= mult;
-            vec.Z *= mult;
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
             return vec;
         }
 

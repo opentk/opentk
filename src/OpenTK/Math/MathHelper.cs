@@ -3,13 +3,14 @@
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
- * 
+ *
  * Contributions by Andy Gill, James Talton and Georg Wächter.
  */
 #endregion
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace OpenTK
@@ -326,8 +327,149 @@ namespace OpenTK
             return Math.Max(Math.Min(n, max), min);
         }
 
-        #endregion
+		private static unsafe int FloatToInt32Bits(float f) {
+			return *((int*) &f);
+		}
 
-        #endregion
-    }
+		/// <summary>
+		/// Approximates floating point equality with a maximum number of different bits.
+		/// This is typically used in place of an epsilon comparison.
+		/// see: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+		/// see: https://stackoverflow.com/questions/3874627/floating-point-comparison-functions-for-c-sharp
+		/// </summary>
+		/// <param name="a">the first value to compare</param>
+		/// <param name="b">>the second value to compare</param>
+		/// <param name="maxDeltaBits">the number of floating point bits to check</param>
+		/// <returns></returns>
+		public static bool ApproximatelyEqual(float a, float b, int maxDeltaBits) {
+			// we use longs here, otherwise we run into a two's complement problem, causing this to fail with -2 and 2.0
+			long aInt = FloatToInt32Bits(a);
+			if (aInt < 0)
+				aInt = Int32.MinValue - aInt;
+
+			long bInt = FloatToInt32Bits(b);
+			if (bInt < 0)
+				bInt = Int32.MinValue - bInt;
+
+			long intDiff = Math.Abs(aInt - bInt);
+			return intDiff <= (1 << maxDeltaBits);
+		}
+
+        /// <summary>
+        /// Approximates double-precision floating point equality by an epsilon (maximum error) value.
+        /// This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
+        /// </summary>
+        /// <param name="a">The first float.</param>
+        /// <param name="b">The second float.</param>
+        /// <param name="epsilon">The maximum error between the two.</param>
+        /// <returns><value>true</value> if the values are approximately equal within the error margin; otherwise, <value>false</value>.</returns>
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+        public static bool ApproximatelyEqualEpsilon(double a, double b, double epsilon)
+        {
+            const double doubleNormal = (1L << 52) * double.Epsilon;
+            double absA = Math.Abs(a);
+            double absB = Math.Abs(b);
+            double diff = Math.Abs(a - b);
+
+            if (a == b)
+            {
+                // Shortcut, handles infinities
+                return true;
+            }
+
+            if (a == 0.0f || b == 0.0f || diff < doubleNormal)
+            {
+                // a or b is zero, or both are extremely close to it.
+                // relative error is less meaningful here
+                return diff < (epsilon * doubleNormal);
+            }
+
+            // use relative error
+            return diff / Math.Min((absA + absB), double.MaxValue) < epsilon;
+        }
+
+        /// <summary>
+        /// Approximates single-precision floating point equality by an epsilon (maximum error) value.
+        /// This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
+        /// </summary>
+        /// <param name="a">The first float.</param>
+        /// <param name="b">The second float.</param>
+        /// <param name="epsilon">The maximum error between the two.</param>
+        /// <returns><value>true</value> if the values are approximately equal within the error margin; otherwise, <value>false</value>.</returns>
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+        public static bool ApproximatelyEqualEpsilon(float a, float b, float epsilon)
+        {
+            const float floatNormal = (1 << 23) * float.Epsilon;
+            float absA = Math.Abs(a);
+            float absB = Math.Abs(b);
+            float diff = Math.Abs(a - b);
+
+            if (a == b)
+            {
+                // Shortcut, handles infinities
+                return true;
+            }
+
+            if (a == 0.0f || b == 0.0f || diff < floatNormal)
+            {
+                // a or b is zero, or both are extremely close to it.
+                // relative error is less meaningful here
+                return diff < (epsilon * floatNormal);
+            }
+
+            // use relative error
+            float relativeError = diff / Math.Min((absA + absB), float.MaxValue);
+            return relativeError < epsilon;
+        }
+
+        /// <summary>
+        /// Approximates equivalence between two single-precision floating-point numbers on a direct human scale.
+        /// It is important to note that this does not approximate equality - instead, it merely checks whether or not
+        /// two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
+        /// inclusive.
+        /// </summary>
+        /// <param name="a">The first value to compare.</param>
+        /// <param name="b">The second value to compare·</param>
+        /// <param name="tolerance">The tolerance within which the two values would be considered equivalent.</param>
+        /// <returns>Whether or not the values can be considered equivalent within the tolerance.</returns>
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+        public static bool ApproximatelyEquivalent(float a, float b, float tolerance)
+        {
+            if (a == b)
+            {
+                // Early bailout, handles infinities
+                return true;
+            }
+
+            float diff = Math.Abs(a - b);
+            return diff <= tolerance;
+        }
+
+        /// <summary>
+        /// Approximates equivalence between two double-precision floating-point numbers on a direct human scale.
+        /// It is important to note that this does not approximate equality - instead, it merely checks whether or not
+        /// two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
+        /// inclusive.
+        /// </summary>
+        /// <param name="a">The first value to compare.</param>
+        /// <param name="b">The second value to compare·</param>
+        /// <param name="tolerance">The tolerance within which the two values would be considered equivalent.</param>
+        /// <returns>Whether or not the values can be considered equivalent within the tolerance.</returns>
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+        public static bool ApproximatelyEquivalent(double a, double b, double tolerance)
+        {
+            if (a == b)
+            {
+                // Early bailout, handles infinities
+                return true;
+            }
+
+            double diff = Math.Abs(a - b);
+            return diff <= tolerance;
+        }
+
+		#endregion
+
+		#endregion
+	}
 }
