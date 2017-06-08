@@ -514,11 +514,10 @@ namespace OpenTK
         /// <returns>Result of the division</returns>
         public static Vector4 Div(Vector4 a, float f)
         {
-            float mult = 1.0f / f;
-            a.X *= mult;
-            a.Y *= mult;
-            a.Z *= mult;
-            a.W *= mult;
+            a.X /= f;
+            a.Y /= f;
+            a.Z /= f;
+            a.W /= f;
             return a;
         }
 
@@ -530,11 +529,10 @@ namespace OpenTK
         /// <param name="result">Result of the division</param>
         public static void Div(ref Vector4 a, float f, out Vector4 result)
         {
-            float mult = 1.0f / f;
-            result.X = a.X * mult;
-            result.Y = a.Y * mult;
-            result.Z = a.Z * mult;
-            result.W = a.W * mult;
+            result.X = a.X / f;
+            result.Y = a.Y / f;
+            result.Z = a.Z / f;
+            result.W = a.W / f;
         }
 
         #endregion
@@ -667,7 +665,10 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector4 vector, float scale, out Vector4 result)
         {
-            Multiply(ref vector, 1 / scale, out result);
+            result.X = vector.X / scale;
+            result.Y = vector.Y / scale;
+            result.Z = vector.Z / scale;
+            result.W = vector.W / scale;
         }
 
         /// <summary>
@@ -703,6 +704,7 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <returns>The component-wise minimum</returns>
+        [Obsolete("Use ComponentMin() instead.")]
         public static Vector4 Min(Vector4 a, Vector4 b)
         {
             a.X = a.X < b.X ? a.X : b.X;
@@ -718,6 +720,7 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <param name="result">The component-wise minimum</param>
+        [Obsolete("Use ComponentMin() instead.")]
         public static void Min(ref Vector4 a, ref Vector4 b, out Vector4 result)
         {
             result.X = a.X < b.X ? a.X : b.X;
@@ -736,6 +739,7 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <returns>The component-wise maximum</returns>
+        [Obsolete("Use ComponentMax() instead.")]
         public static Vector4 Max(Vector4 a, Vector4 b)
         {
             a.X = a.X > b.X ? a.X : b.X;
@@ -751,12 +755,137 @@ namespace OpenTK
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
         /// <param name="result">The component-wise maximum</param>
+        [Obsolete("Use ComponentMax() instead.")]
         public static void Max(ref Vector4 a, ref Vector4 b, out Vector4 result)
         {
             result.X = a.X > b.X ? a.X : b.X;
             result.Y = a.Y > b.Y ? a.Y : b.Y;
             result.Z = a.Z > b.Z ? a.Z : b.Z;
             result.W = a.W > b.W ? a.W : b.W;
+        }
+
+        #endregion
+
+        #region ComponentMin
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <returns>The component-wise minimum</returns>
+        public static Vector4 ComponentMin(Vector4 a, Vector4 b)
+        {
+            a.X = a.X < b.X ? a.X : b.X;
+            a.Y = a.Y < b.Y ? a.Y : b.Y;
+            a.Z = a.Z < b.Z ? a.Z : b.Z;
+            a.W = a.W < b.W ? a.W : b.W;
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <param name="result">The component-wise minimum</param>
+        public static void ComponentMin(ref Vector4 a, ref Vector4 b, out Vector4 result)
+        {
+            result.X = a.X < b.X ? a.X : b.X;
+            result.Y = a.Y < b.Y ? a.Y : b.Y;
+            result.Z = a.Z < b.Z ? a.Z : b.Z;
+            result.W = a.W < b.W ? a.W : b.W;
+        }
+
+        #endregion
+
+        #region ComponentMax
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <returns>The component-wise maximum</returns>
+        public static Vector4 ComponentMax(Vector4 a, Vector4 b)
+        {
+            a.X = a.X > b.X ? a.X : b.X;
+            a.Y = a.Y > b.Y ? a.Y : b.Y;
+            a.Z = a.Z > b.Z ? a.Z : b.Z;
+            a.W = a.W > b.W ? a.W : b.W;
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <param name="result">The component-wise maximum</param>
+        public static void ComponentMax(ref Vector4 a, ref Vector4 b, out Vector4 result)
+        {
+            result.X = a.X > b.X ? a.X : b.X;
+            result.Y = a.Y > b.Y ? a.Y : b.Y;
+            result.Z = a.Z > b.Z ? a.Z : b.Z;
+            result.W = a.W > b.W ? a.W : b.W;
+        }
+
+        #endregion
+
+        #region MagnitudeMin
+
+        /// <summary>
+        /// Returns the Vector4 with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector4</returns>
+        public static Vector4 MagnitudeMin(Vector4 left, Vector4 right)
+        {
+            return left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector4 with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise minimum</param>
+        /// <returns>The minimum Vector4</returns>
+        public static void MagnitudeMin(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        {
+            result = left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
+        #region MagnitudeMax
+
+        /// <summary>
+        /// Returns the Vector4 with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The maximum Vector4</returns>
+        public static Vector4 MagnitudeMax(Vector4 left, Vector4 right)
+        {
+            return left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector4 with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise maximum</param>
+        /// <returns>The maximum Vector4</returns>
+        public static void MagnitudeMax(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        {
+            result = left.LengthSquared >= right.LengthSquared ? left : right;
         }
 
         #endregion
@@ -774,8 +903,8 @@ namespace OpenTK
         {
             vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
             vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            vec.Z = vec.X < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-            vec.W = vec.Y < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+            vec.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+            vec.W = vec.W < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
             return vec;
         }
 
@@ -790,8 +919,8 @@ namespace OpenTK
         {
             result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
             result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            result.Z = vec.X < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-            result.W = vec.Y < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+            result.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+            result.W = vec.W < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
         }
 
         #endregion
@@ -1514,7 +1643,7 @@ namespace OpenTK
             vec.W *= scale;
             return vec;
         }
-        
+
         /// <summary>
         /// Component-wise multiplication between the specified instance by a scale vector.
         /// </summary>
@@ -1577,11 +1706,10 @@ namespace OpenTK
         /// <returns>The result of the calculation.</returns>
         public static Vector4 operator /(Vector4 vec, float scale)
         {
-            float mult = 1.0f / scale;
-            vec.X *= mult;
-            vec.Y *= mult;
-            vec.Z *= mult;
-            vec.W *= mult;
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
+            vec.W /= scale;
             return vec;
         }
 

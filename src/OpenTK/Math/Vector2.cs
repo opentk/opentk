@@ -623,7 +623,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector2 vector, float scale, out Vector2 result)
         {
-            Multiply(ref vector, 1 / scale, out result);
+            result.X = vector.X / scale;
+            result.Y = vector.Y / scale;
         }
 
         /// <summary>
@@ -654,7 +655,7 @@ namespace OpenTK
         #region ComponentMin
 
         /// <summary>
-        /// Calculate the component-wise minimum of two vectors
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -667,7 +668,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the component-wise minimum of two vectors
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -683,7 +684,7 @@ namespace OpenTK
         #region ComponentMax
 
         /// <summary>
-        /// Calculate the component-wise maximum of two vectors
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -696,7 +697,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the component-wise maximum of two vectors
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -709,6 +710,64 @@ namespace OpenTK
 
         #endregion
 
+        #region MagnitudeMin
+
+        /// <summary>
+        /// Returns the Vector2 with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector2</returns>
+        public static Vector2 MagnitudeMin(Vector2 left, Vector2 right)
+        {
+            return left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector2 with the minimum magnitude. If the magnitudes are equal, the second vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise minimum</param>
+        /// <returns>The minimum Vector2</returns>
+        public static void MagnitudeMin(ref Vector2 left, ref Vector2 right, out Vector2 result)
+        {
+            result = left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
+        #region MagnitudeMax
+
+        /// <summary>
+        /// Returns the Vector2 with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The maximum Vector2</returns>
+        public static Vector2 MagnitudeMax(Vector2 left, Vector2 right)
+        {
+            return left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        /// <summary>
+        /// Returns the Vector2 with the maximum magnitude. If the magnitudes are equal, the first vector
+        /// is selected.
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <param name="result">The magnitude-wise maximum</param>
+        /// <returns>The maximum Vector2</returns>
+        public static void MagnitudeMax(ref Vector2 left, ref Vector2 right, out Vector2 result)
+        {
+            result = left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
         #region Min
 
         /// <summary>
@@ -717,6 +776,7 @@ namespace OpenTK
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <returns>The minimum Vector3</returns>
+        [Obsolete("Use MagnitudeMin() instead.")]
         public static Vector2 Min(Vector2 left, Vector2 right)
         {
             return left.LengthSquared < right.LengthSquared ? left : right;
@@ -732,6 +792,7 @@ namespace OpenTK
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <returns>The minimum Vector3</returns>
+        [Obsolete("Use MagnitudeMax() instead.")]
         public static Vector2 Max(Vector2 left, Vector2 right)
         {
             return left.LengthSquared >= right.LengthSquared ? left : right;
@@ -1074,7 +1135,7 @@ namespace OpenTK
             vec.Y *= scale.Y;
             return vec;
         }
-		
+
         /// <summary>
         /// Divides the specified instance by a scalar.
         /// </summary>
@@ -1083,9 +1144,8 @@ namespace OpenTK
         /// <returns>Result of the division.</returns>
         public static Vector2 operator /(Vector2 vec, float scale)
         {
-            float mult = 1.0f / scale;
-            vec.X *= mult;
-            vec.Y *= mult;
+            vec.X /= scale;
+            vec.Y /= scale;
             return vec;
         }
 
