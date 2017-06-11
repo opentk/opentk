@@ -97,6 +97,9 @@ namespace OpenTK.Platform.Windows
         IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
         int cursor_visible_count = 0;
 
+        // tracking for w10 duplicate scroll inputs.
+        IntPtr scrollHandle;
+
         static readonly object SyncRoot = new object();
 
         #endregion
@@ -534,7 +537,12 @@ namespace OpenTK.Platform.Windows
         {
             // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
             // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
-            OnMouseWheel(0, ((long)wParam << 32 >> 48) / 120.0f);
+	        if (scrollHandle == IntPtr.Zero) {
+		        scrollHandle = handle;
+	        }
+            if (handle == scrollHandle) {
+		        OnMouseWheel(0, ((long)wParam << 32 >> 48) / 120.0f);
+            }
         }
 
         void HandleMouseHWheel(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
