@@ -747,11 +747,11 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.MOUSEWHEEL:
                     HandleMouseWheel(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MOUSEHWHEEL:
                     HandleMouseHWheel(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.LBUTTONDOWN:
                     HandleLButtonDown(handle, message, wParam, lParam);
