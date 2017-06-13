@@ -97,9 +97,6 @@ namespace OpenTK.Platform.Windows
         IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
         int cursor_visible_count = 0;
 
-        // tracking for w10 duplicate scroll inputs.
-        IntPtr scrollHandle;
-
         static readonly object SyncRoot = new object();
 
         #endregion
@@ -537,12 +534,7 @@ namespace OpenTK.Platform.Windows
         {
             // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
             // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
-	        if (scrollHandle == IntPtr.Zero) {
-		        scrollHandle = handle;
-	        }
-            if (handle == scrollHandle) {
-		        OnMouseWheel(0, ((long)wParam << 32 >> 48) / 120.0f);
-            }
+            OnMouseWheel(0, ((long)wParam << 32 >> 48) / 120.0f);
         }
 
         void HandleMouseHWheel(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -755,43 +747,43 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.MOUSEWHEEL:
                     HandleMouseWheel(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MOUSEHWHEEL:
                     HandleMouseHWheel(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.LBUTTONDOWN:
                     HandleLButtonDown(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MBUTTONDOWN:
                     HandleMButtonDown(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.RBUTTONDOWN:
                     HandleRButtonDown(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.XBUTTONDOWN:
                     HandleXButtonDown(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.LBUTTONUP:
                     HandleLButtonUp(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MBUTTONUP:
                     HandleMButtonUp(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.RBUTTONUP:
                     HandleRButtonUp(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.XBUTTONUP:
                     HandleXButtonUp(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 // Keyboard events:
                 case WindowMessage.KEYDOWN:
@@ -841,7 +833,7 @@ namespace OpenTK.Platform.Windows
         {
             if (mouse_capture_count == 0)
             {
-                Functions.SetCapture(window.Handle);
+                Functions.SetCapture(child_window.Handle);
             }
             mouse_capture_count++;
         }
