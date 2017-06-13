@@ -137,6 +137,12 @@ namespace OpenTK
         {
         }
 
+        /// <summary>Constructs a new GLWidget using a given GraphicsMode</summary>
+        public GLWidget(GraphicsMode graphicsMode)
+            : this(graphicsMode, 1, 0, GraphicsContextFlags.Default)
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GLWidget"/> class.
         /// </summary>
@@ -146,7 +152,7 @@ namespace OpenTK
         /// <param name="graphicsContextFlags">
         /// Any flags which should be used during initialization of the <see cref="GraphicsContext"/>.
         /// </param>
-        public GLWidget(GraphicsMode graphicsMode, int glVersionMajor = 1, int glVersionMinor = 0, GraphicsContextFlags graphicsContextFlags = GraphicsContextFlags.Default)
+        public GLWidget(GraphicsMode graphicsMode, int glVersionMajor, int glVersionMinor, GraphicsContextFlags graphicsContextFlags)
         {
             this.DoubleBuffered = false;
 
