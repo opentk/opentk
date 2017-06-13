@@ -408,7 +408,7 @@ namespace OpenTK
             else if (Configuration.RunningOnMacOS)
                 _WindowInfo = OSXWindowInfoInitializer.Initialize(widgetWindowHandle);
             else
-                _WindowInfo = XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.RootWindow.Handle);
+                _WindowInfo = XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.Screen.RootWindow.Handle);
 
             // GraphicsContext
             _GraphicsContext = new GraphicsContext(graphicsMode, _WindowInfo, GlVersionMajor, GlVersionMinor, _GraphicsContextFlags);
