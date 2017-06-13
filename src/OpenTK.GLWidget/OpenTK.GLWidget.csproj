@@ -82,7 +82,7 @@
     <SignAssembly>True</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)\OpenTK.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
