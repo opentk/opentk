@@ -177,34 +177,47 @@ namespace OpenTK
             Dispose(false);
         }
 
-#if GTK3
         /// <summary>
         /// Destroys this <see cref="Widget"/>, disposing it and destroying it in the context of GTK.
         /// </summary>
         public override void Destroy()
-#else
+        {
+            GC.SuppressFinalize(this);
+            Dispose(true);
+
+            base.Destroy();
+        }
+
+#if !GTK3
         /// <summary>
         /// Disposes the current object, releasing any native resources it was using.
         /// </summary>
         /// <param name="disposing"></param>
         public override void Dispose()
-#endif
         {
             GC.SuppressFinalize(this);
             Dispose(true);
-#if GTK3
-            base.Destroy();
-#else
-            base.Dispose();
-#endif
-        }
 
+            base.Dispose();
+        }
+#endif
+
+#if GTK3
+        /// <summary>
+        /// Disposes the current object, releasing any native resources it was using.
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+#else
         /// <summary>
         /// Disposes the current object, releasing any native resources it was using.
         /// </summary>
         /// <param name="disposing"></param>
         public virtual void Dispose(bool disposing)
         {
+#endif
             if (disposing)
             {
                 _GraphicsContext.MakeCurrent(_WindowInfo);
