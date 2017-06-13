@@ -747,43 +747,43 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.MOUSEWHEEL:
                     HandleMouseWheel(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MOUSEHWHEEL:
                     HandleMouseHWheel(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.LBUTTONDOWN:
                     HandleLButtonDown(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MBUTTONDOWN:
                     HandleMButtonDown(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.RBUTTONDOWN:
                     HandleRButtonDown(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.XBUTTONDOWN:
                     HandleXButtonDown(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.LBUTTONUP:
                     HandleLButtonUp(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MBUTTONUP:
                     HandleMButtonUp(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.RBUTTONUP:
                     HandleRButtonUp(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.XBUTTONUP:
                     HandleXButtonUp(handle, message, wParam, lParam);
-                    break;
+                    return IntPtr.Zero;
 
                 // Keyboard events:
                 case WindowMessage.KEYDOWN:
@@ -833,7 +833,7 @@ namespace OpenTK.Platform.Windows
         {
             if (mouse_capture_count == 0)
             {
-                Functions.SetCapture(window.Handle);
+                Functions.SetCapture(child_window.Handle);
             }
             mouse_capture_count++;
         }

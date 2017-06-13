@@ -23,3 +23,4 @@ description
     OpenTK provides several utility libraries, including a math/linear algebra package, a windowing system, and input handling.
 files
     OpenTK.dll.config => content/
+    ../../bin/OpenTK/OpenTK.pdb => lib/net20/

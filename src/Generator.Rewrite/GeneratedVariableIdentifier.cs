@@ -40,7 +40,7 @@ namespace OpenTK.Rewrite
 
             if (definition == null)
             {
-                throw new ArgumentException("The definition argument cannot be null.", nameof(body));
+                throw new ArgumentException("The definition argument cannot be null.", nameof(definition));
             }
 
             if (string.IsNullOrEmpty(name))
