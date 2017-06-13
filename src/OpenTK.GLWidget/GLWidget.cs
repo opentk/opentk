@@ -49,7 +49,7 @@ namespace OpenTK
         #region Static attrs.
 
         private static int _GraphicsContextCount;
-        private static bool _SharedContextInitialized = false;
+        private static bool _SharedContextInitialized;
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace OpenTK
         private IGraphicsContext _GraphicsContext;
         private IWindowInfo _WindowInfo;
         private GraphicsContextFlags _GraphicsContextFlags;
-        private bool _Initialized = false;
+        private bool _Initialized;
 
         #endregion
 
