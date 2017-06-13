@@ -39,6 +39,9 @@ using OpenTK.X11;
 
 namespace OpenTK
 {
+    /// <summary>
+    /// The <see cref="GLWidget"/> is a GTK widget for which an OpenGL context can be used to draw arbitrary graphics.
+    /// </summary>
     [ToolboxItem(true)]
     public class GLWidget: DrawingArea
     {
@@ -61,34 +64,55 @@ namespace OpenTK
 
         #region Properties
 
-        /// <summary>Use a single buffer versus a double buffer.</summary>
+        /// <summary>
+        /// Use a single buffer versus a double buffer.
+        /// </summary>
         [Browsable(true)]
         public bool SingleBuffer { get; set; }
 
-        /// <summary>Color Buffer Bits-Per-Pixel</summary>
+        /// <summary>
+        /// Color Buffer Bits-Per-Pixel
+        /// </summary>
         public int ColorBPP { get; set; }
 
-        /// <summary>Accumulation Buffer Bits-Per-Pixel</summary>
+        /// <summary>
+        /// Accumulation Buffer Bits-Per-Pixel
+        /// </summary>
         public int AccumulatorBPP { get; set; }
 
-        /// <summary>Depth Buffer Bits-Per-Pixel</summary>
+        /// <summary>
+        /// Depth Buffer Bits-Per-Pixel
+        /// </summary>
         public int DepthBPP { get; set; }
 
-        /// <summary>Stencil Buffer Bits-Per-Pixel</summary>
+        /// <summary>
+        /// Stencil Buffer Bits-Per-Pixel
+        /// </summary>
         public int StencilBPP { get; set; }
 
-        /// <summary>Number of samples</summary>
+        /// <summary>
+        /// Number of samples
+        /// </summary>
         public int Samples { get; set; }
 
-        /// <summary>Indicates if steropic renderering is enabled</summary>
+        /// <summary>
+        /// Indicates if steropic renderering is enabled
+        /// </summary>
         public bool Stereo { get; set; }
 
-        /// <summary>The major version of OpenGL to use.</summary>
+        /// <summary>
+        /// The major version of OpenGL to use.
+        /// </summary>
         public int GlVersionMajor { get; set; }
 
-        /// <summary>The minor version of OpenGL to use.</summary>
+        /// <summary>
+        /// The minor version of OpenGL to use.
+        /// </summary>
         public int GlVersionMinor { get; set; }
 
+        /// <summary>
+        /// The set <see cref="GraphicsContextFlags"/> for this widget.
+        /// </summary>
         public GraphicsContextFlags GraphicsContextFlags
         {
             get
@@ -105,7 +129,9 @@ namespace OpenTK
 
         #region Construction/Destruction
 
-        /// <summary>Constructs a new GLWidget.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GLWidget"/> class.
+        /// </summary>
         public GLWidget()
             : this(GraphicsMode.Default)
         {
@@ -117,7 +143,15 @@ namespace OpenTK
         {
         }
 
-        /// <summary>Constructs a new GLWidget</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GLWidget"/> class.
+        /// </summary>
+        /// <param name="graphicsMode">The <see cref="GraphicsMode"/> which the widget should be constructed with.</param>
+        /// <param name="glVersionMajor">The major OpenGL version to attempt to initialize.</param>
+        /// <param name="glVersionMinor">The minor OpenGL version to attempt to initialize.</param>
+        /// <param name="graphicsContextFlags">
+        /// Any flags which should be used during initialization of the <see cref="GraphicsContext"/>.
+        /// </param>
         public GLWidget(GraphicsMode graphicsMode, int glVersionMajor, int glVersionMinor, GraphicsContextFlags graphicsContextFlags)
         {
             this.DoubleBuffered = false;
@@ -135,17 +169,27 @@ namespace OpenTK
             GraphicsContextFlags = graphicsContextFlags;
         }
 
+        /// <summary>
+        /// Destructs this object.
+        /// </summary>
         ~GLWidget()
         {
             Dispose(false);
         }
 
 #if GTK3
-        public override void Destroy() {
+        /// <summary>
+        /// Destroys this <see cref="Widget"/>, disposing it and destroying it in the context of GTK.
+        /// </summary>
+        public override void Destroy()
 #else
+        /// <summary>
+        /// Disposes the current object, releasing any native resources it was using.
+        /// </summary>
+        /// <param name="disposing"></param>
         public override void Dispose()
-        {
 #endif
+        {
             GC.SuppressFinalize(this);
             Dispose(true);
 #if GTK3
@@ -155,6 +199,10 @@ namespace OpenTK
 #endif
         }
 
+        /// <summary>
+        /// Disposes the current object, releasing any native resources it was using.
+        /// </summary>
+        /// <param name="disposing"></param>
         public virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -174,45 +222,73 @@ namespace OpenTK
 
         #region New Events
 
-        // Called when the first GraphicsContext is created in the case of GraphicsContext.ShareContexts == True;
+        /// <summary>
+        /// Called when the first <see cref="GraphicsContext"/> is created in the case where
+        /// GraphicsContext.ShareContexts == true;
+        /// </summary>
         public static event EventHandler GraphicsContextInitialized;
 
+        /// <summary>
+        /// Invokes the <see cref="GraphicsContextInitialized"/> event.
+        /// </summary>
         static void OnGraphicsContextInitialized()
         {
             if (GraphicsContextInitialized != null)
                 GraphicsContextInitialized(null, EventArgs.Empty);
         }
 
-        // Called when the first GraphicsContext is being destroyed in the case of GraphicsContext.ShareContexts == True;
+        /// <summary>
+        /// Called when the first <see cref="GraphicsContext"/> is being destroyed in the case where
+        /// GraphicsContext.ShareContext == true;
+        /// </summary>
         public static event EventHandler GraphicsContextShuttingDown;
 
+        /// <summary>
+        /// Invokes the <see cref="GraphicsContextShuttingDown"/> event.
+        /// </summary>
         static void OnGraphicsContextShuttingDown()
         {
             if (GraphicsContextShuttingDown != null)
                 GraphicsContextShuttingDown(null, EventArgs.Empty);
         }
 
-        // Called when this GLWidget has a valid GraphicsContext
+        /// <summary>
+        /// Called when this <see cref="GLWidget"/> has finished initializing and has a valid
+        /// <see cref="GraphicsContext"/>.
+        /// </summary>
         public event EventHandler Initialized;
 
+        /// <summary>
+        /// Invokes the <see cref="Initialized"/> event.
+        /// </summary>
         protected virtual void OnInitialized()
         {
             if (Initialized != null)
                 Initialized(this, EventArgs.Empty);
         }
 
-        // Called when this GLWidget needs to render a frame
+        /// <summary>
+        /// Called when this <see cref="GLWidget"/> needs to render a frame.
+        /// </summary>
         public event EventHandler RenderFrame;
 
+        /// <summary>
+        /// Invokes the <see cref="RenderFrame"/> event.
+        /// </summary>
         protected virtual void OnRenderFrame()
         {
             if (RenderFrame != null)
                 RenderFrame(this, EventArgs.Empty);
         }
 
-        // Called when this GLWidget is being Disposed
+        /// <summary>
+        /// Called when this <see cref="GLWidget"/> is being disposed.
+        /// </summary>
         public event EventHandler ShuttingDown;
 
+        /// <summary>
+        /// Invokes the <see cref="ShuttingDown"/> event.
+        /// </summary>
         protected virtual void OnShuttingDown()
         {
             if (ShuttingDown != null)
@@ -221,13 +297,19 @@ namespace OpenTK
 
         #endregion
 
-        // Called when a widget is realized. (window handles and such are valid)
-        // protected override void OnRealized() { base.OnRealized(); }
-
-        // Called when the widget needs to be (fully or partially) redrawn.
 #if GTK3
+        /// <summary>
+        /// Called when the widget needs to be (fully or partially) redrawn.
+        /// </summary>
+        /// <param name="cr"></param>
+        /// <returns></returns>
         protected override bool OnDrawn(Cairo.Context cr)
 #else
+        /// <summary>
+        /// Called when the widget is exposed.
+        /// </summary>
+        /// <param name="cr"></param>
+        /// <returns></returns>
         protected override bool OnExposeEvent(Gdk.EventExpose evnt)
 #endif
         {
@@ -253,7 +335,11 @@ namespace OpenTK
             return result;
         }
 
-        // Called on Resize
+        /// <summary>
+        /// Called whenever the widget is resized.
+        /// </summary>
+        /// <param name="evnt"></param>
+        /// <returns></returns>
         protected override bool OnConfigureEvent(Gdk.EventConfigure evnt)
         {
             bool result = base.OnConfigureEvent(evnt);
@@ -264,6 +350,9 @@ namespace OpenTK
             return result;
         }
 
+        /// <summary>
+        /// Initializes the <see cref="GLWidget"/> with its given values and creates a <see cref="GraphicsContext"/>.
+        /// </summary>
         void Initialize()
         {
             _Initialized = true;
