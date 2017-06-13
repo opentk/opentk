@@ -6,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -36,6 +36,9 @@ using OpenTK.Graphics;
 using OpenTK.Platform;
 
 using Gtk;
+using OpenTK.OSX;
+using OpenTK.Win;
+using OpenTK.X11;
 
 namespace OpenTK
 {
@@ -92,12 +95,12 @@ namespace OpenTK
         public GraphicsContextFlags GraphicsContextFlags
         {
             get
-            { 
-                return _GraphicsContextFlags; 
+            {
+                return _GraphicsContextFlags;
             }
             set
-            { 
-                _GraphicsContextFlags = value; 
+            {
+                _GraphicsContextFlags = value;
             }
         }
 
@@ -108,13 +111,13 @@ namespace OpenTK
         /// <summary>Constructs a new GLWidget.</summary>
         public GLWidget()
             : this(GraphicsMode.Default)
-        { 
+        {
         }
 
         /// <summary>Constructs a new GLWidget using a given GraphicsMode</summary>
         public GLWidget(GraphicsMode graphicsMode)
             : this(graphicsMode, 1, 0, GraphicsContextFlags.Default)
-        { 
+        {
         }
 
         /// <summary>Constructs a new GLWidget</summary>
@@ -136,8 +139,8 @@ namespace OpenTK
         }
 
         ~GLWidget()
-        { 
-            Dispose(false); 
+        {
+            Dispose(false);
         }
 
 #if GTK3
@@ -180,43 +183,43 @@ namespace OpenTK
         static void OnGraphicsContextInitialized()
         {
             if (GraphicsContextInitialized != null)
-                GraphicsContextInitialized(null, EventArgs.Empty); 
+                GraphicsContextInitialized(null, EventArgs.Empty);
         }
 
         // Called when the first GraphicsContext is being destroyed in the case of GraphicsContext.ShareContexts == True;
         public static event EventHandler GraphicsContextShuttingDown;
 
         static void OnGraphicsContextShuttingDown()
-        { 
+        {
             if (GraphicsContextShuttingDown != null)
-                GraphicsContextShuttingDown(null, EventArgs.Empty); 
+                GraphicsContextShuttingDown(null, EventArgs.Empty);
         }
 
         // Called when this GLWidget has a valid GraphicsContext
         public event EventHandler Initialized;
 
         protected virtual void OnInitialized()
-        { 
+        {
             if (Initialized != null)
-                Initialized(this, EventArgs.Empty); 
+                Initialized(this, EventArgs.Empty);
         }
 
         // Called when this GLWidget needs to render a frame
         public event EventHandler RenderFrame;
 
         protected virtual void OnRenderFrame()
-        { 
+        {
             if (RenderFrame != null)
-                RenderFrame(this, EventArgs.Empty); 
+                RenderFrame(this, EventArgs.Empty);
         }
 
         // Called when this GLWidget is being Disposed
         public event EventHandler ShuttingDown;
 
         protected virtual void OnShuttingDown()
-        { 
+        {
             if (ShuttingDown != null)
-                ShuttingDown(this, EventArgs.Empty); 
+                ShuttingDown(this, EventArgs.Empty);
         }
 
         #endregion
@@ -291,16 +294,16 @@ namespace OpenTK
                 Console.WriteLine("OpenTK running on windows");
             else if (Configuration.RunningOnMacOS)
                 Console.WriteLine("OpenTK running on OSX");
-            else 
+            else
                 Console.WriteLine("OpenTK running on X11");
 
             // IWindowInfo
             if (Configuration.RunningOnWindows)
-                _WindowInfo = InitializeWindows();
+                _WindowInfo = WinWindowsInfoInitializer.Initialize(this.Window.Handle);
             else if (Configuration.RunningOnMacOS)
-                _WindowInfo = InitializeOSX();
+                _WindowInfo = OSXWindowInfoInitializer.Initialize(this.Window.Handle);
             else
-                _WindowInfo = InitializeX(graphicsMode);
+                _WindowInfo = XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, this.Window.Handle, this.RootWindow.Handle);
 
             // GraphicsContext
             _GraphicsContext = new GraphicsContext(graphicsMode, _WindowInfo, GlVersionMajor, GlVersionMinor, _GraphicsContextFlags);
@@ -361,7 +364,7 @@ namespace OpenTK
 #else
         const string MacLibGdkName = "libgdk-quartz-2.0.0.dylib";
 #endif
-        
+
         [SuppressUnmanagedCodeSecurity, DllImport(MacLibGdkName)]
         static extern IntPtr gdk_quartz_window_get_nswindow(IntPtr handle);
 
