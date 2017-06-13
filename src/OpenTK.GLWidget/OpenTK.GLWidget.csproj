@@ -89,32 +89,32 @@
       <Name>System</Name>
     </Reference>
   </ItemGroup>
-  <Choose>
+  <Choose>-
     <When Condition="$(DefineConstants.Contains('GTK3'))">
       <ItemGroup>
         <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\atk-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\atk-sharp.dll</HintPath>
         </Reference>
         <Reference Include="cairo-sharp, Version=1.12.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
-          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\cairo-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\cairo-sharp.dll</HintPath>
         </Reference>
         <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\gdk-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\gdk-sharp.dll</HintPath>
         </Reference>
         <Reference Include="gio-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\gio-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\gio-sharp.dll</HintPath>
         </Reference>
         <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\glib-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\glib-sharp.dll</HintPath>
         </Reference>
         <Reference Include="gtk-dotnet, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\gtk-dotnet.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\gtk-dotnet.dll</HintPath>
         </Reference>
         <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\gtk-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\gtk-sharp.dll</HintPath>
         </Reference>
         <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\pango-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\pango-sharp.dll</HintPath>
         </Reference>
       </ItemGroup>
     </When>
