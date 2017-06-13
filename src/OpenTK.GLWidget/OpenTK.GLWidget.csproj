@@ -93,28 +93,28 @@
     <When Condition="$(DefineConstants.Contains('GTK3'))">
       <ItemGroup>
         <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>$(SolutionDir)\packages\gtk-sharp3.3.22.0.0\lib\net40\atk-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\atk-sharp.dll</HintPath>
         </Reference>
         <Reference Include="cairo-sharp, Version=1.12.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
-          <HintPath>$(SolutionDir)\packages\gtk-sharp3.3.22.0.0\lib\net40\cairo-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\cairo-sharp.dll</HintPath>
         </Reference>
         <Reference Include="gdk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>$(SolutionDir)\packages\gtk-sharp3.3.22.0.0\lib\net40\gdk-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\gdk-sharp.dll</HintPath>
         </Reference>
         <Reference Include="gio-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>$(SolutionDir)\packages\gtk-sharp3.3.22.0.0\lib\net40\gio-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\gio-sharp.dll</HintPath>
         </Reference>
         <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>$(SolutionDir)\packages\gtk-sharp3.3.22.0.0\lib\net40\glib-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\glib-sharp.dll</HintPath>
         </Reference>
         <Reference Include="gtk-dotnet, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>$(SolutionDir)\packages\gtk-sharp3.3.22.0.0\lib\net40\gtk-dotnet.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\gtk-dotnet.dll</HintPath>
         </Reference>
         <Reference Include="gtk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>$(SolutionDir)\packages\gtk-sharp3.3.22.0.0\lib\net40\gtk-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\gtk-sharp.dll</HintPath>
         </Reference>
         <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-          <HintPath>$(SolutionDir)\packages\gtk-sharp3.3.22.0.0\lib\net40\pango-sharp.dll</HintPath>
+          <HintPath>..\..\packages\gtk-sharp3.3.22.0.0\lib\net40\pango-sharp.dll</HintPath>
         </Reference>
       </ItemGroup>
     </When>
@@ -164,17 +164,17 @@
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')">
       <ItemGroup>
         <Reference Include="cairo-sharp">
-          <HintPath>$(SolutionDir)\packages\GtkSharp\lib\net45\cairo-sharp.dll</HintPath>
+          <HintPath>..\..\packages\GtkSharp\lib\net45\cairo-sharp.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="gio-sharp">
-          <HintPath>$(SolutionDir)\packages\GtkSharp\lib\net45\gio-sharp.dll</HintPath>
+          <HintPath>..\..\packages\GtkSharp\lib\net45\gio-sharp.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
     </When>
   </Choose>
-  <Import Project="$(SolutionDir)\packages\GtkSharp\build\$(__paket__GtkSharp_targets).targets" Condition="Exists('$(SolutionDir)\packages\GtkSharp\build\$(__paket__GtkSharp_targets).targets')" Label="Paket" />
+  <Import Project="..\..\packages\GtkSharp\build\$(__paket__GtkSharp_targets).targets" Condition="Exists('..\..\packages\GtkSharp\build\$(__paket__GtkSharp_targets).targets')" Label="Paket" />
 </Project>
