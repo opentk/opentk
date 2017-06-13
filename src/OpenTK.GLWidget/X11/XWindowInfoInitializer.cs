@@ -53,8 +53,8 @@ namespace OpenTK.X11
 		    IntPtr windowXid = gdk_x11_window_get_xid(gdkWindowHandle);
 		    IntPtr rootWindowXid = gdk_x11_window_get_xid(gdkRootWindowHandle);
 #else
-            IntPtr windowHandle = gdk_x11_drawable_get_xid(gdkWindowHandle);
-            IntPtr rootWindow = gdk_x11_drawable_get_xid(gdkRootWindowHandle);
+            IntPtr windowXid = gdk_x11_drawable_get_xid(gdkWindowHandle);
+            IntPtr rootWindowXid = gdk_x11_drawable_get_xid(gdkRootWindowHandle);
 #endif
 
 			IntPtr visualInfo;
