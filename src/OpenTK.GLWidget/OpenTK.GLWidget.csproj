@@ -89,7 +89,7 @@
       <Name>System</Name>
     </Reference>
   </ItemGroup>
-  <Choose>-
+  <Choose>
     <When Condition="$(DefineConstants.Contains('GTK3'))">
       <ItemGroup>
         <Reference Include="atk-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
