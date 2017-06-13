@@ -37,13 +37,16 @@ using OpenTK.OSX;
 using OpenTK.Win;
 using OpenTK.X11;
 
+// ReSharper disable ClassWithVirtualMembersNeverInherited.Global
+// ReSharper disable EventNeverSubscribedTo.Global
+
 namespace OpenTK
 {
     /// <summary>
     /// The <see cref="GLWidget"/> is a GTK widget for which an OpenGL context can be used to draw arbitrary graphics.
     /// </summary>
     [ToolboxItem(true)]
-    public class GLWidget: DrawingArea
+    public class GLWidget : DrawingArea
     {
 
         #region Static attrs.
