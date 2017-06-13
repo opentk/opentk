@@ -195,31 +195,6 @@ namespace OpenTK.Platform.Linux
         HorizontalScroll = 1
     }
 
-    struct Fixed24
-    {
-        internal readonly int Value;
-
-        public static implicit operator double(Fixed24 n)
-        {
-            long l = ((1023L + 44L) << 52) + (1L << 51) + n.Value;
-            unsafe
-            {
-                double d = *(double*)&l;
-                return d - (3L << 43);
-            }
-        }
-
-        public static implicit operator float(Fixed24 n)
-        {
-            return (float)(double)n;
-        }
-
-        public static explicit operator int(Fixed24 n)
-        {
-            return n.Value >> 8;
-        }
-    }
-
     [StructLayout(LayoutKind.Sequential)]
     class InputInterface
     {
