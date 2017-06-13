@@ -48,17 +48,17 @@ namespace OpenTK
 
         #region Static attrs.
 
-        static int _GraphicsContextCount;
-        static bool _SharedContextInitialized = false;
+        private static int _GraphicsContextCount;
+        private static bool _SharedContextInitialized = false;
 
         #endregion
 
         #region Attributes
 
-        IGraphicsContext _GraphicsContext;
-        IWindowInfo _WindowInfo;
-        GraphicsContextFlags _GraphicsContextFlags;
-        bool _Initialized = false;
+        private IGraphicsContext _GraphicsContext;
+        private IWindowInfo _WindowInfo;
+        private GraphicsContextFlags _GraphicsContextFlags;
+        private bool _Initialized = false;
 
         #endregion
 
@@ -231,7 +231,7 @@ namespace OpenTK
         /// <summary>
         /// Invokes the <see cref="GraphicsContextInitialized"/> event.
         /// </summary>
-        static void OnGraphicsContextInitialized()
+        private static void OnGraphicsContextInitialized()
         {
             if (GraphicsContextInitialized != null)
                 GraphicsContextInitialized(null, EventArgs.Empty);
@@ -246,7 +246,7 @@ namespace OpenTK
         /// <summary>
         /// Invokes the <see cref="GraphicsContextShuttingDown"/> event.
         /// </summary>
-        static void OnGraphicsContextShuttingDown()
+        private static void OnGraphicsContextShuttingDown()
         {
             if (GraphicsContextShuttingDown != null)
                 GraphicsContextShuttingDown(null, EventArgs.Empty);
@@ -353,7 +353,7 @@ namespace OpenTK
         /// <summary>
         /// Initializes the <see cref="GLWidget"/> with its given values and creates a <see cref="GraphicsContext"/>.
         /// </summary>
-        void Initialize()
+        private void Initialize()
         {
             _Initialized = true;
 
