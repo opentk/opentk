@@ -396,13 +396,19 @@ namespace OpenTK
             else
                 Console.WriteLine("OpenTK running on X11");
 
+#if GTK3
+            IntPtr widgetWindowHandle = this.Window.Handle;
+#else
+            IntPtr widgetWindowHandle = this.GdkWindow.Handle;
+#endif
+
             // IWindowInfo
             if (Configuration.RunningOnWindows)
-                _WindowInfo = WinWindowsInfoInitializer.Initialize(this.Window.Handle);
+                _WindowInfo = WinWindowsInfoInitializer.Initialize(widgetWindowHandle);
             else if (Configuration.RunningOnMacOS)
-                _WindowInfo = OSXWindowInfoInitializer.Initialize(this.Window.Handle);
+                _WindowInfo = OSXWindowInfoInitializer.Initialize(widgetWindowHandle);
             else
-                _WindowInfo = XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, this.Window.Handle, this.RootWindow.Handle);
+                _WindowInfo = XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.RootWindow.Handle);
 
             // GraphicsContext
             _GraphicsContext = new GraphicsContext(graphicsMode, _WindowInfo, GlVersionMajor, GlVersionMinor, _GraphicsContextFlags);
