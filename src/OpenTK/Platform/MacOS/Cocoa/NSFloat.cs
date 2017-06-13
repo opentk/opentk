@@ -195,13 +195,17 @@ namespace OpenTK.Platform.MacOS
     // Using IntPtr in NSFloat cause that if imported function
     // return struct that consist of them you will get wrong data 
     // This types are used for such function.
-    public struct NSPointF
+    [StructLayout(LayoutKind.Sequential)]
+    struct NSPointF
     {
-        public float x, y;
+        public float X;
+        public float Y;
     }
 
-    public struct NSPointD
+    [StructLayout(LayoutKind.Sequential)]
+    struct NSPointD
     {
-        public double x, y;
+        public double X;
+        public double Y;
     }
 }

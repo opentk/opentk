@@ -173,14 +173,14 @@ namespace OpenTK.Platform.MacOS
                 if (IntPtr.Size == 4)
                 {
                     NSPointF pf = SendPointF(receiver, selector);
-                    r.X.Value = *(IntPtr *)&pf.x;
-                    r.Y.Value = *(IntPtr *)&pf.y;
+                    r.X.Value = *(IntPtr *)&pf.X;
+                    r.Y.Value = *(IntPtr *)&pf.Y;
                 }
                 else
                 {
                     NSPointD pd = SendPointD(receiver, selector);
-                    r.X.Value = *(IntPtr *)&pd.x;
-                    r.Y.Value = *(IntPtr *)&pd.y;
+                    r.X.Value = *(IntPtr *)&pd.X;
+                    r.Y.Value = *(IntPtr *)&pd.Y;
                 }
             }
 
