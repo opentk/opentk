@@ -32,6 +32,10 @@ using OpenTK.Platform;
 
 namespace OpenTK.Win
 {
+    /// <summary>
+    /// Handler class for initializing <see cref="IWindowInfo"/> objects under the Windows platform for both GTK2 and
+    /// GTK3.
+    /// </summary>
 	public static class WinWindowsInfoInitializer
 	{
 #if GTK3
@@ -39,6 +43,11 @@ namespace OpenTK.Win
 #else
         private const string WinLibGDKName = "libgdk-win32-2.0-0.dll";
 #endif
+
+	    /// <summary>
+	    /// Initializes an <see cref="IWindowInfo"/> under the Windows platform.
+	    /// </summary>
+	    /// <param name="gdkWindowHandle"></param>
 		public static IWindowInfo Initialize(IntPtr gdkWindowHandle)
 		{
 #if GTK3

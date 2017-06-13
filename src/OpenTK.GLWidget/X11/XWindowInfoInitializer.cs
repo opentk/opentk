@@ -34,6 +34,9 @@ using OpenTK.Platform;
 
 namespace OpenTK.X11
 {
+    /// <summary>
+    /// Handler class for initializing <see cref="IWindowInfo"/> objects under the X11 platform for both GTK2 and GTK3.
+    /// </summary>
 	public static class XWindowInfoInitializer
 	{
 
@@ -45,6 +48,15 @@ namespace OpenTK.X11
 		private const string UnixLibX11Name = "libX11.so.6";
 		private const string UnixLibGLName = "libGL.so.1";
 
+	    /// <summary>
+	    /// Initializes an <see cref="IWindowInfo"/> under the X11 platform.
+	    /// </summary>
+	    /// <param name="mode"></param>
+	    /// <param name="displayHandle"></param>
+	    /// <param name="screenNumber"></param>
+	    /// <param name="gdkWindowHandle"></param>
+	    /// <param name="gdkRootWindowHandle"></param>
+	    /// <returns></returns>
 		public static IWindowInfo Initialize(GraphicsMode mode, IntPtr displayHandle, int screenNumber, IntPtr gdkWindowHandle, IntPtr gdkRootWindowHandle)
 		{
 			IntPtr display = gdk_x11_display_get_xdisplay(displayHandle);

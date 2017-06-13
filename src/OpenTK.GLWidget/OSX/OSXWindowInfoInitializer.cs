@@ -32,6 +32,10 @@ using OpenTK.Platform;
 
 namespace OpenTK.OSX
 {
+    /// <summary>
+    /// Handler class for initializing <see cref="IWindowInfo"/> objects under the OSX platform for both GTK2 and
+    /// GTK3.
+    /// </summary>
 	public static class OSXWindowInfoInitializer
 	{
 #if GTK3
@@ -40,6 +44,10 @@ namespace OpenTK.OSX
         const string OSXLibGdkName = "libgdk-quartz-2.0.0.dylib";
 #endif
 
+	    /// <summary>
+	    /// Initializes an <see cref="IWindowInfo"/> under the OSX platform.
+	    /// </summary>
+	    /// <param name="gdkWindowHandle"></param>
 		public static IWindowInfo Initialize(IntPtr gdkWindowHandle)
 		{
 			IntPtr windowHandle = gdk_quartz_window_get_nswindow(gdkWindowHandle);
