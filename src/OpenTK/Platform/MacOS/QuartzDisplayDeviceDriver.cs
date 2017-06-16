@@ -109,8 +109,8 @@ namespace OpenTK.Platform.MacOS
                         
                     }
                     
-                    HIRect bounds = CG.DisplayBounds(currentDisplay);
-                    Rectangle newRect = new Rectangle((int)bounds.Origin.X, (int)bounds.Origin.Y, (int)bounds.Size.Width, (int)bounds.Size.Height);
+                    NSRect bounds = CG.DisplayBounds(currentDisplay);
+                    Rectangle newRect = new Rectangle((int)bounds.Location.X, (int)bounds.Location.Y, (int)bounds.Size.Width, (int)bounds.Size.Height);
                     
                     Debug.Print("Display {0} bounds: {1}", i, newRect);
                     
