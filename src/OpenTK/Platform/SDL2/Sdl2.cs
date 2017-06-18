@@ -1461,8 +1461,6 @@ namespace OpenTK.Platform.SDL2
         public MultiGestureEvent mgesture;
         [FieldOffset(0)]
         public DollarGestureEvent dgesture;
-        [FieldOffset(0)]
-        public DropEvent drop;
 #endif
 
         // Ensure the structure is big enough
@@ -1761,6 +1759,7 @@ namespace OpenTK.Platform.SDL2
         public Int32 Data2;
     }
 
+    // For detailed info look: https://wiki.libsdl.org/SDL_DropEvent
     struct DropEvent
     {
         public UInt32 Type;
