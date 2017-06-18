@@ -861,7 +861,6 @@ namespace OpenTK.Platform.X11
             // Process all pending events
             while (Exists && window != null)
             {
-                //Functions.XNextEvent(window.Display, ref e);
                 using (new XLock(window.Display))
                 {
                     if (!Functions.XCheckWindowEvent(window.Display, window.Handle, window.EventMask, ref e) &&
@@ -910,9 +909,13 @@ namespace OpenTK.Platform.X11
                                 break;
                             }
                         }
+                        // For X11 drag and drop handling use https://freedesktop.org/wiki/Specifications/XDND/#index9h2
                         else if (e.ClientMessageEvent.message_type == _atom_xdnd_enter)
                         {
                             // Xdnd started
+                            // ptr1 -> source window handler
+                            // ptr2 bit 0 -> set to 1 if source support more than three data formats
+                            // ptr2 third byte contains Xdnd version that source supports
                             bool useList = ((e.ClientMessageEvent.ptr2.ToInt64() & 1) == 1);
                             sourceHandler = e.ClientMessageEvent.ptr1;
                             sourceXdndVersion = e.ClientMessageEvent.ptr2.ToInt64() >> 24;
@@ -927,7 +930,6 @@ namespace OpenTK.Platform.X11
                             }
                             else
                             {
-                                // Bad code it will save only 1 format
                                 formats = Marshal.AllocHGlobal(3 * IntPtr.Size);
                                 Marshal.WriteIntPtr(formats, e.ClientMessageEvent.ptr3);
                                 Marshal.WriteIntPtr(formats, IntPtr.Size * 2, e.ClientMessageEvent.ptr4);

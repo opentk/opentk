@@ -693,9 +693,8 @@ namespace OpenTK.Platform.Windows
                 IntPtr str = Marshal.AllocHGlobal((int)fileNameSize);
 
                 Functions.DragQueryFile(hDrop, i, str, fileNameSize);
-                
-                Marshal.Copy(str, byteArray, 0, (int)(fileNameSize - 1));
-                string dropString = System.Text.Encoding.UTF8.GetString(byteArray);
+
+                string dropString = Marshal.PtrToStringAuto(str);
                 OnFileDrop(dropString);
 
                 Marshal.FreeHGlobal(str);
