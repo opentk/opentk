@@ -349,7 +349,7 @@ namespace OpenTK.Platform.MacOS
             {
                 IntPtr obj = Cocoa.SendIntPtr(files, Selector.Get("objectAtIndex:"), new IntPtr(i));
                 IntPtr str = Cocoa.SendIntPtr(obj, Selector.Get("cStringUsingEncoding:"), new IntPtr(1));
-                OnFileDrop(Marshal.PtrToStringAnsi(str));
+                OnFileDrop(Marshal.PtrToStringAuto(str));
             }
             
             return true;
