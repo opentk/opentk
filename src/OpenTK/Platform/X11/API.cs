@@ -70,7 +70,7 @@ namespace OpenTK.Platform.X11
         static int DefaultScreen { get { return defaultScreen; } }
         //internal static Window RootWindow { get { return rootWindow; } }
         internal static int ScreenCount { get { return screenCount; } }
-        
+
         internal static object Lock = new object();
 
         #endregion
@@ -79,9 +79,9 @@ namespace OpenTK.Platform.X11
         {
             int has_threaded_x = Functions.XInitThreads();
             Debug.Print("Initializing threaded X11: {0}.", has_threaded_x.ToString());
-        
+
             defaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
-                
+
             if (defaultDisplay == IntPtr.Zero)
                 throw new PlatformException("Could not establish connection to the X-Server.");
 
@@ -202,7 +202,7 @@ namespace OpenTK.Platform.X11
         /// If a window is not interested in a device event,
         /// it usually propagates to the closest ancestor that is interested,
         /// unless the do_not_propagate mask prohibits it.
-        /// Setting the event-mask attribute of a window overrides any previous call for the same window but not for other clients. Multiple clients can select for the same events on the same window with the following restrictions: 
+        /// Setting the event-mask attribute of a window overrides any previous call for the same window but not for other clients. Multiple clients can select for the same events on the same window with the following restrictions:
         /// <para>Multiple clients can select events on the same window because their event masks are disjoint. When the X server generates an event, it reports it to all interested clients. </para>
         /// <para>Only one client at a time can select CirculateRequest, ConfigureRequest, or MapRequest events, which are associated with the event mask SubstructureRedirectMask. </para>
         /// <para>Only one client at a time can select a ResizeRequest event, which is associated with the event mask ResizeRedirectMask. </para>
@@ -343,7 +343,7 @@ namespace OpenTK.Platform.X11
             public short htotal;
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public short hskew;
 
@@ -368,7 +368,7 @@ namespace OpenTK.Platform.X11
             public short vtotal;
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public short vskew;
 
@@ -580,26 +580,26 @@ XF86VidModeGetGammaRampSize(
         public XcursorUInt delay;
         public XcursorPixel* pixels;
     }
-    
+
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorImages 
+    unsafe struct XcursorImages
     {
         public int nimage;
         public XcursorImage **images;
         public char *name;
     }
-    
+
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorCursors 
+    unsafe struct XcursorCursors
     {
         public Display dpy;
         public int refcount;
         public int ncursor;
         public Cursor *cursors;
     }
-    
+
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorAnimate 
+    unsafe struct XcursorAnimate
     {
         public XcursorCursors *cursors;
         public int sequence;
@@ -607,10 +607,10 @@ XF86VidModeGetGammaRampSize(
 
     #endregion
 
-    #region internal class XVisualInfo
+    #region public class XVisualInfo
 
     [StructLayout(LayoutKind.Sequential)]
-    struct XVisualInfo
+    public struct XVisualInfo
     {
         public IntPtr Visual;
         public VisualID VisualID;
@@ -755,7 +755,7 @@ XF86VidModeGetGammaRampSize(
         UIntPtr black_pixel;    /* White and Black pixel values */  // unsigned long
         int max_maps, min_maps;    /* max and min color maps */
         int backing_store;    /* Never, WhenMapped, Always */
-        Bool save_unders;    
+        Bool save_unders;
         long root_input_mask;    /* initial root input mask */
     }
 
@@ -773,9 +773,9 @@ XF86VidModeGetGammaRampSize(
     };
 
     #endregion
-    
+
     #region Motif
-    
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct MotifWmHints
     {
@@ -790,7 +790,7 @@ XF86VidModeGetGammaRampSize(
             return string.Format("MotifWmHints <flags={0}, functions={1}, decorations={2}, input_mode={3}, status={4}", (MotifFlags) flags.ToInt32 (), (MotifFunctions) functions.ToInt32 (), (MotifDecorations) decorations.ToInt32 (), (MotifInputMode) input_mode.ToInt32 (), status.ToInt32 ());
         }
     }
-    
+
     [Flags]
     internal enum MotifFlags
     {
@@ -821,7 +821,7 @@ XF86VidModeGetGammaRampSize(
         Menu        = 0x10,
         Minimize    = 0x20,
         Maximize    = 0x40,
-        
+
     }
 
     [Flags]
@@ -832,7 +832,7 @@ XF86VidModeGetGammaRampSize(
         SystemModal             = 2,
         FullApplicationModal    = 3
     }
-    
+
     #endregion
 
     #endregion
@@ -985,7 +985,7 @@ XF86VidModeGetGammaRampSize(
         SingleCandidate             = 0xff3c,
         MultipleCandidate           = 0xff3d,
         PreviousCandidate           = 0xff3e,
-                
+
         /* Japanese keyboard support */
 
         Kanji                       = 0xff21,  /* Kanji, Kanji convert */
@@ -1367,7 +1367,7 @@ XF86VidModeGetGammaRampSize(
 #pragma warning restore 1591
 
     [Flags]
-    internal enum XVisualInfoMask
+    public enum XVisualInfoMask
     {
         No = 0x0,
         ID = 0x1,
@@ -1437,7 +1437,7 @@ XF86VidModeGetGammaRampSize(
         /// <param name="attributes">Specifies the structure from which the values (as specified by the value mask) are to be taken. The value mask should have the appropriate bits set to indicate which attributes have been set in the structure.</param>
         /// <returns>The window ID of the created window.</returns>
         /// <remarks>
-        /// The coordinate system has the X axis horizontal and the Y axis vertical with the origin [0, 0] at the upper-left corner. Coordinates are integral, in terms of pixels, and coincide with pixel centers. Each window and pixmap has its own coordinate system. For a window, the origin is inside the border at the inside, upper-left corner. 
+        /// The coordinate system has the X axis horizontal and the Y axis vertical with the origin [0, 0] at the upper-left corner. Coordinates are integral, in terms of pixels, and coincide with pixel centers. Each window and pixmap has its own coordinate system. For a window, the origin is inside the border at the inside, upper-left corner.
         /// <para>The border_width for an InputOnly window must be zero, or a BadMatch error results. For class InputOutput, the visual type and depth must be a combination supported for the screen, or a BadMatch error results. The depth need not be the same as the parent, but the parent must not be a window of class InputOnly, or a BadMatch error results. For an InputOnly window, the depth must be zero, and the visual must be one supported by the screen. If either condition is not met, a BadMatch error results. The parent window, however, may have any depth and class. If you specify any invalid window attribute for a window, a BadMatch error results. </para>
         /// <para>The created window is not yet displayed (mapped) on the user's display. To display the window, call XMapWindow(). The new window initially uses the same cursor as its parent. A new cursor can be defined for the new window by calling XDefineCursor(). The window will not be visible on the screen unless it and all of its ancestors are mapped and it is not obscured by any of its ancestors. </para>
         /// <para>XCreateWindow can generate BadAlloc BadColor, BadCursor, BadMatch, BadPixmap, BadValue, and BadWindow errors. </para>
@@ -1488,7 +1488,7 @@ XF86VidModeGetGammaRampSize(
         internal static unsafe extern void XcursorImageDestroy(XcursorImage* image);
 
         [DllImport(XcursorLibrary)]
-        internal static unsafe extern Cursor XcursorImageLoadCursor(Display dpy, XcursorImage* image); 
+        internal static unsafe extern Cursor XcursorImageLoadCursor(Display dpy, XcursorImage* image);
 
         #endregion
 
@@ -1538,7 +1538,7 @@ XF86VidModeGetGammaRampSize(
         /// <param name="event">Specifies the event.</param>
         [DllImport(X11Library, EntryPoint = "XPutBackEvent")]
         public static extern void XPutBackEvent(IntPtr display, ref XEvent @event);
-        
+
         #endregion
 
         #region Xrandr
