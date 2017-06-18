@@ -38,9 +38,6 @@ using System.Threading;
 using OpenTK.Graphics;
 using OpenTK.Input;
 
-//using MonoMac.AppKit;
-//using MonoMac.Foundation;
-
 namespace OpenTK.Platform.MacOS
 {
     class CocoaNativeWindow : NativeWindowBase
@@ -352,7 +349,7 @@ namespace OpenTK.Platform.MacOS
             {
                 IntPtr obj = Cocoa.SendIntPtr(files, Selector.Get("objectAtIndex:"), new IntPtr(i));
                 IntPtr str = Cocoa.SendIntPtr(obj, Selector.Get("cStringUsingEncoding:"), new IntPtr(1));
-                OnDrop(Marshal.PtrToStringAnsi(str));
+                OnFileDrop(Marshal.PtrToStringAnsi(str));
             }
             
             return true;

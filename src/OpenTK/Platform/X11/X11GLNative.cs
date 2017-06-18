@@ -1197,7 +1197,7 @@ namespace OpenTK.Platform.X11
 
                             for (int i = 0; i < fileNames.Length; i++)
                             {
-                                OnDrop(fileNames[i]);
+                                OnFileDrop(fileNames[i]);
                             }
 
                             XEvent reply = new XEvent ();

@@ -313,7 +313,7 @@ namespace OpenTK.Platform.SDL2
             byte [] byteArray = new byte[length];
             Marshal.Copy(ev.File, byteArray, 0, length);
             string dropString = System.Text.Encoding.UTF8.GetString(byteArray);
-            window.OnDrop(dropString);
+            window.OnFileDrop(dropString);
         }
 
         static void ProcessWindowEvent(Sdl2NativeWindow window, WindowEvent e)

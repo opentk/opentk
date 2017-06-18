@@ -710,9 +710,9 @@ namespace OpenTK
         public event EventHandler<MouseWheelEventArgs> MouseWheel = delegate { };
 
 		/// <summary>
-		/// Occurs whenever a file dropped in window;
+		/// Occurs whenever a file dropped on window;
 		/// </summary>
-        public event EventHandler<DropEventArgs> Drop = delegate { };
+        public event EventHandler<FileDropEventArgs> FileDrop = delegate { };
 
         #endregion
 
@@ -986,9 +986,16 @@ namespace OpenTK
             MouseWheel(this, e);
         }
 
-        protected virtual void OnDrop(DropEventArgs e)
+        /// <summary>
+        /// Raises the <see cref="FileDrop"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="FileDropEventArgs"/> instance carrying file name.
+        /// The information carried by this instance is only valid within this method body.
+        /// </param>
+        protected virtual void OnFileDrop(FileDropEventArgs e)
         {
-            Drop(this, e);
+            FileDrop(this, e);
         }
 
         #region OnResize
@@ -1152,7 +1159,11 @@ namespace OpenTK
         private void OnMouseMoveInternal(object sender, MouseMoveEventArgs e) { OnMouseMove(e); }
         private void OnMouseWheelInternal(object sender, MouseWheelEventArgs e) { OnMouseWheel(e); }
 
-        private void OnDropInternal(object sender, DropEventArgs e) { OnDrop(e); }
+        #region OnFileDropInternal
+
+        private void OnFileDropInternal(object sender, FileDropEventArgs e) { OnFileDrop(e); }
+
+        #endregion
 
         #region OnMoveInternal
 
@@ -1226,7 +1237,7 @@ namespace OpenTK
                     implementation.VisibleChanged += OnVisibleChangedInternal;
                     implementation.WindowBorderChanged += OnWindowBorderChangedInternal;
                     implementation.WindowStateChanged += OnWindowStateChangedInternal;
-                    implementation.Drop += OnDropInternal;
+                    implementation.FileDrop += OnFileDropInternal;
                     events = true;
                 }
                 else if (events)
@@ -1251,7 +1262,7 @@ namespace OpenTK
                     implementation.VisibleChanged -= OnVisibleChangedInternal;
                     implementation.WindowBorderChanged -= OnWindowBorderChangedInternal;
                     implementation.WindowStateChanged -= OnWindowStateChangedInternal;
-                    implementation.Drop -= OnDropInternal;
+                    implementation.FileDrop -= OnFileDropInternal;
                     events = false;
                 }
                 else

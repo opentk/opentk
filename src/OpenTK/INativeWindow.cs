@@ -285,10 +285,9 @@ namespace OpenTK
         //event EventHandler<MouseEventArgs> MouseClick;
         //event EventHandler<MouseEventArgs> MouseDoubleClick;
 
-        event EventHandler<OpenTK.Input.DropEventArgs> Drop;
-        //event EventHandler<DragEventArgs> DragDrop;
-        //event EventHandler<DragEventArgs> DragEnter;
-        //event EventHandler<DragEventArgs> DragOver;
-        //event EventHandler<EventArgs> DragLeave;
+        /// <summary>
+        /// Occurs whenever file dropped on window.
+        /// </summary>
+        event EventHandler<OpenTK.Input.FileDropEventArgs> FileDrop;
     }
 }

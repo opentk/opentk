@@ -696,7 +696,7 @@ namespace OpenTK.Platform.Windows
                 
                 Marshal.Copy(str, byteArray, 0, (int)(fileNameSize - 1));
                 string dropString = System.Text.Encoding.UTF8.GetString(byteArray);
-                OnDrop(dropString);
+                OnFileDrop(dropString);
 
                 Marshal.FreeHGlobal(str);
             }

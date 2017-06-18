@@ -53,7 +53,7 @@ namespace OpenTK.Platform
         readonly KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
         readonly KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
 
-        readonly DropEventArgs DropArgs = new DropEventArgs();
+        readonly FileDropEventArgs FileDropArgs = new FileDropEventArgs();
 
         // In order to simplify mouse event implementation,
         // we can store the current mouse state here.
@@ -158,11 +158,11 @@ namespace OpenTK.Platform
             KeyUp(this, e);
         }
 
-        protected void OnDrop(string s)
+        protected void OnFileDrop(string s)
         {
-            var e = DropArgs;
-            DropArgs.DropString = s;
-            Drop(this, e);
+            var e = FileDropArgs;
+            FileDropArgs.FileName = s;
+            FileDrop(this, e);
         }
 
         /// \internal
@@ -327,7 +327,7 @@ namespace OpenTK.Platform
         public event EventHandler<MouseButtonEventArgs> MouseUp = delegate { };
         public event EventHandler<MouseMoveEventArgs> MouseMove = delegate { };
         public event EventHandler<MouseWheelEventArgs> MouseWheel = delegate { };
-        public event EventHandler<DropEventArgs> Drop = delegate { };
+        public event EventHandler<FileDropEventArgs> FileDrop = delegate { };
 
         public abstract void Close();
 
