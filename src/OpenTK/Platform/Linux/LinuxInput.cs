@@ -314,7 +314,7 @@ namespace OpenTK.Platform.Linux
             }
             Debug.Print("[Input] Udev.New() = {0:x}", udev);
 
-            input_context = LibInput.CreateContext(input_interface, IntPtr.Zero, udev, "seat0");
+            input_context = LibInput.CreateContext(input_interface, IntPtr.Zero, udev);
             if (input_context == IntPtr.Zero)
             {
                 Debug.Print("[Input] LibInput.CreateContext({0:x}) failed.", udev);
@@ -322,6 +322,16 @@ namespace OpenTK.Platform.Linux
                 return;
             }
             Debug.Print("[Input] LibInput.CreateContext({0:x}) = {1:x}", udev, input_context);
+
+            string seat_id = "seat0";
+            int seat_assignment = LibInput.AssignSeat(input_context, seat_id);
+            if (seat_assignment == -1)
+            {
+                Debug.Print("[Input] LibInput.AssignSeat({0:x}) = {1} failed.", input_context, seat_id);
+                Interlocked.Increment(ref exit);
+                return;
+            }
+            Debug.Print("[Input] LibInput.AssignSeat({0:x}) = {1}", input_context, seat_id);
 
             fd = LibInput.GetFD(input_context);
             if (fd < 0)
@@ -475,21 +485,13 @@ namespace OpenTK.Platform.Linux
             {
                 mouse.State.SetIsConnected(true);
 
-                double value = e.AxisValue;
-                PointerAxis axis = e.Axis;
-                switch (axis)
+                if (e.HasAxis(PointerAxis.HorizontalScroll))
                 {
-                    case PointerAxis.HorizontalScroll:
-                        mouse.State.SetScrollRelative((float)value, 0);
-                        break;
-
-                    case PointerAxis.VerticalScroll:
-                        mouse.State.SetScrollRelative(0, (float)value);
-                        break;
-
-                    default:
-                        Debug.Print("[Input] Unknown scroll axis {0}.", axis);
-                        break;
+                    mouse.State.SetScrollRelative((float)e.AxisValue(PointerAxis.HorizontalScroll), 0);
+                }
+                if (e.HasAxis(PointerAxis.VerticalScroll))
+                {
+                    mouse.State.SetScrollRelative(0, (float)e.AxisValue(PointerAxis.VerticalScroll));
                 }
             }
         }
@@ -508,7 +510,7 @@ namespace OpenTK.Platform.Linux
 
         void HandlePointerMotion(MouseDevice mouse, PointerEvent e)
         {
-            Vector2 delta = new Vector2((float)e.X, (float)e.Y);
+            Vector2 delta = new Vector2((float)e.DeltaX, (float)e.DeltaY);
             if (mouse != null)
             {
                 mouse.State.SetIsConnected(true);
@@ -526,12 +528,12 @@ namespace OpenTK.Platform.Linux
             if (mouse != null)
             {
                 mouse.State.SetIsConnected(true);
-                mouse.State.Position = new Vector2(e.X, e.Y);
+                mouse.State.Position = new Vector2((float)e.X, (float)e.Y);
             }
 
             CursorPosition = new Vector2(
-                e.TransformedX(bounds.Width),
-                e.TransformedY(bounds.Height));
+                (float)e.TransformedX(bounds.Width),
+                (float)e.TransformedY(bounds.Height));
             UpdateCursor();
         }
 
