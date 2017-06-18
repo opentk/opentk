@@ -31,6 +31,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using OpenTK.Graphics;
 using OpenTK.Platform;
+using OpenTK.Platform.X11;
 
 namespace OpenTK.X11
 {
