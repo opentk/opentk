@@ -42,7 +42,7 @@ namespace OpenTK
         /// The X, Y and Z components of this instance.
         /// </summary>
         public Vector3 Xyz;
-        
+
         /// <summary>
         /// The W component of this instance.
         /// </summary>
@@ -113,19 +113,6 @@ namespace OpenTK
 
         #region Properties
 
-        #pragma warning disable 3005 // Identifier differing only in case is not CLS-compliant, compiler bug in Mono 3.4.0
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3 with the X, Y and Z components of this instance.
-        /// </summary>
-        [Obsolete("Use Xyz property instead.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [XmlIgnore]
-        [CLSCompliant(false)]
-        public Vector3 XYZ { get { return Xyz; } set { Xyz = value; } }
-
-        #pragma warning restore 3005
-
         /// <summary>
         /// Gets or sets the X component of this instance.
         /// </summary>
@@ -182,7 +169,7 @@ namespace OpenTK
             }
             else
             {
-                // This occurs when the angle is zero. 
+                // This occurs when the angle is zero.
                 // Not a problem: just set an arbitrary normalized axis.
                 result.Xyz = Vector3.UnitX;
             }
@@ -662,7 +649,7 @@ namespace OpenTK
         #region Slerp
 
         /// <summary>
-        /// Do Spherical linear interpolation between two quaternions 
+        /// Do Spherical linear interpolation between two quaternions
         /// </summary>
         /// <param name="q1">The first quaternion</param>
         /// <param name="q2">The second quaternion</param>
@@ -833,7 +820,7 @@ namespace OpenTK
         #region public override bool Equals (object o)
 
         /// <summary>
-        /// Compares this object instance to another object for equality. 
+        /// Compares this object instance to another object for equality.
         /// </summary>
         /// <param name="other">The other object to be used in the comparison.</param>
         /// <returns>True if both objects are Quaternions of equal value. Otherwise it returns false.</returns>
@@ -848,7 +835,7 @@ namespace OpenTK
         #region public override int GetHashCode ()
 
         /// <summary>
-        /// Provides the hash code for this object. 
+        /// Provides the hash code for this object.
         /// </summary>
         /// <returns>A hash code formed from the bitwise XOR of this objects members.</returns>
         public override int GetHashCode()
@@ -868,7 +855,7 @@ namespace OpenTK
         #region IEquatable<Quaternion> Members
 
         /// <summary>
-        /// Compares this Quaternion instance to another Quaternion for equality. 
+        /// Compares this Quaternion instance to another Quaternion for equality.
         /// </summary>
         /// <param name="other">The other Quaternion to be used in the comparison.</param>
         /// <returns>True if both instances are equal; false otherwise.</returns>
