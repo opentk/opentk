@@ -716,7 +716,6 @@
     <Compile Include="Input\ConfigurationType.cs" />
     <Compile Include="Input\GamePadConfigurationSource.cs" />
     <Compile Include="Input\GamePadConfigurationItem.cs" />
-    <Compile Include="Platform\LegacyJoystickDriver.cs" />
     <Compile Include="Platform\PlatformFactoryBase.cs" />
     <Compile Include="Input\JoystickHat.cs" />
     <Compile Include="Input\HatPosition.cs" />
