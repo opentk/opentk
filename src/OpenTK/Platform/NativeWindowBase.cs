@@ -40,10 +40,6 @@ namespace OpenTK.Platform
     // Common base class for all INativeWindow implementations
     abstract class NativeWindowBase : INativeWindow
     {
-        #pragma warning disable 612,618
-        readonly LegacyInputDriver LegacyInputDriver;
-        #pragma warning restore 612,618
-
         readonly MouseButtonEventArgs MouseDownArgs = new MouseButtonEventArgs();
         readonly MouseButtonEventArgs MouseUpArgs = new MouseButtonEventArgs();
         readonly MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
@@ -62,9 +58,6 @@ namespace OpenTK.Platform
 
         internal NativeWindowBase()
         {
-            #pragma warning disable 612,618
-            LegacyInputDriver = new LegacyInputDriver(this);
-            #pragma warning restore 612,618
             MouseState.SetIsConnected(true);
             KeyboardState.SetIsConnected(true);
             PreviousMouseState.SetIsConnected(true);
@@ -447,15 +440,6 @@ namespace OpenTK.Platform
         }
 
         public abstract Size ClientSize { get; set; }
-
-        [Obsolete]
-        public virtual IInputDriver InputDriver
-        {
-            get
-            {
-                return LegacyInputDriver;
-            }
-        }
 
         public abstract bool CursorVisible { get; set; }
 

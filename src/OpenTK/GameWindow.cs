@@ -6,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -91,7 +91,7 @@ namespace OpenTK
 
         double update_period, render_period;
         double target_update_period, target_render_period;
-        
+
         double update_time; // length of last UpdateFrame event
         double render_time; // length of last RenderFrame event
 
@@ -462,7 +462,7 @@ namespace OpenTK
             while (elapsed > 0 && elapsed + update_epsilon >= TargetUpdatePeriod)
             {
                 RaiseUpdateFrame(elapsed, ref timestamp);
-                
+
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must
                 // compensate for this difference.
@@ -591,38 +591,6 @@ namespace OpenTK
         {
             get { return LegacyJoystick.Joysticks; }
         }
-
-        #endregion
-
-        #region Keyboard
-
-        #pragma warning disable 0612
-
-        /// <summary>
-        /// Gets the primary Keyboard device, or null if no Keyboard exists.
-        /// </summary>
-        public KeyboardDevice Keyboard
-        {
-            get { return InputDriver.Keyboard.Count > 0 ? InputDriver.Keyboard[0] : null; }
-        }
-
-        #pragma warning restore 0612
-
-        #endregion
-
-        #region Mouse
-
-        #pragma warning disable 0612
-
-        /// <summary>
-        /// Gets the primary Mouse device, or null if no Mouse exists.
-        /// </summary>
-        public MouseDevice Mouse
-        {
-            get { return InputDriver.Mouse.Count > 0 ? InputDriver.Mouse[0] : null; }
-        }
-
-        #pragma warning restore 0612
 
         #endregion
 
