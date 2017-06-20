@@ -224,9 +224,6 @@
     <Compile Include="Platform\Utilities.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\INativeGLWindow.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\DesktopGraphicsContext.cs">
       <SubType>Code</SubType>
     </Compile>
