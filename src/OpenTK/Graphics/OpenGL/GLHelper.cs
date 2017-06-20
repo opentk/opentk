@@ -111,11 +111,6 @@ namespace OpenTK.Graphics.OpenGL
 
         #region --- GL Overloads ---
 
-#pragma warning disable 3019
-#pragma warning disable 1591
-#pragma warning disable 1572
-#pragma warning disable 1573
-
         // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
         // We work around this issue by doubling the StringBuilder capacity.
 
