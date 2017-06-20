@@ -6,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -104,7 +104,7 @@ namespace OpenTK
             {
                 Backend = PlatformBackend.PreferNative
             });
-            
+
             SetStyle(ControlStyles.Opaque, true);
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -273,7 +273,7 @@ namespace OpenTK
                 return;
             }
 
-            if (Configuration.RunningOnMacOS) 
+            if (Configuration.RunningOnMacOS)
             {
                 DelayUpdate delay = PerformContextUpdate;
                 BeginInvoke(delay); //Need the native window to resize first otherwise our control will be in the wrong place.
@@ -479,38 +479,6 @@ namespace OpenTK
         public IWindowInfo WindowInfo
         {
             get { return implementation.WindowInfo; }
-        }
-        
-        #endregion
-
-        #region public Bitmap GrabScreenshot()
-
-        /// <summary>
-        /// Grabs a screenshot of the frontbuffer contents.
-        /// When using multiple <c>GLControl</c>s, ensure that  <see cref="Context"/>
-        /// is current before accessing this property.
-        /// <seealso cref="Context"/>
-        /// <seealso cref="MakeCurrent"/>
-        /// </summary>
-        /// <returns>A System.Drawing.Bitmap, containing the contents of the frontbuffer.</returns>
-        /// <exception cref="OpenTK.Graphics.GraphicsContextException">
-        /// Occurs when no OpenTK.Graphics.GraphicsContext is current in the calling thread.
-        /// </exception>
-        [Obsolete("This method will not work correctly with OpenGL|ES. Please use GL.ReadPixels to capture the contents of the framebuffer (refer to http://www.opentk.com/doc/graphics/save-opengl-rendering-to-disk for more information).")]
-        public Bitmap GrabScreenshot()
-        {
-            ValidateState();
-            ValidateContext("GrabScreenshot()");
-
-            Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
-            System.Drawing.Imaging.BitmapData data =
-                bmp.LockBits(this.ClientRectangle, System.Drawing.Imaging.ImageLockMode.WriteOnly,
-                             System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            GL.ReadPixels(0, 0, this.ClientSize.Width, this.ClientSize.Height, PixelFormat.Bgr, PixelType.UnsignedByte,
-                          data.Scan0);
-            bmp.UnlockBits(data);
-            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-			return bmp;
         }
 
         #endregion
