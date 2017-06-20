@@ -6,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -93,20 +93,6 @@ namespace OpenTK.Graphics.OpenGL
             _EntryPointsInstance = EntryPoints;
             _EntryPointNamesInstance = EntryPointNames;
             _EntryPointNameOffsetsInstance = EntryPointNameOffsets;
-        }
-
-        #endregion
-
-        #region --- Public Members ---
-
-        /// <summary>
-        /// Loads all OpenGL entry points (core and extension).
-        /// This method is provided for compatibility purposes with older OpenTK versions.
-        /// </summary>
-        [Obsolete("If you are using a context constructed outside of OpenTK, create a new GraphicsContext and pass your context handle to it. Otherwise, there is no need to call this method.")]
-        public static void LoadAll()
-        {
-            new GL().LoadEntryPoints();
         }
 
         #endregion
@@ -1603,7 +1589,7 @@ namespace OpenTK.Graphics.OpenGL
     #pragma warning disable 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
 
     /// <summary>
-    /// Defines the signature of a debug callback for 
+    /// Defines the signature of a debug callback for
     /// <see cref="GL.Amd.DebugMessageCallback"/>.
     /// </summary>
     /// <param name="id">The id of this debug message.</param>
@@ -1618,7 +1604,7 @@ namespace OpenTK.Graphics.OpenGL
         int length, IntPtr message, IntPtr userParam);
 
     /// <summary>
-    /// Defines the signature of a debug callback for 
+    /// Defines the signature of a debug callback for
     /// <see cref="GL.Arb.DebugMessageCallback"/>.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource"/> for this debug message.</param>
@@ -1635,7 +1621,7 @@ namespace OpenTK.Graphics.OpenGL
         IntPtr userParam);
 
     /// <summary>
-    /// Defines the signature of a debug callback for 
+    /// Defines the signature of a debug callback for
     /// <see cref="GL.DebugMessageCallback"/>.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource"/> for this debug message.</param>
@@ -1652,7 +1638,7 @@ namespace OpenTK.Graphics.OpenGL
         IntPtr userParam);
 
     /// <summary>
-    /// Defines the signature of a debug callback for 
+    /// Defines the signature of a debug callback for
     /// <see cref="GL.Khr.DebugMessageCallback"/>.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource"/> for this debug message.</param>
