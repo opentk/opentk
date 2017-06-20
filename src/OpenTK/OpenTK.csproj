@@ -437,9 +437,6 @@
     <Compile Include="Input\Key.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Input\IInputDriver.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Input\KeyboardDevice.cs">
       <SubType>Code</SubType>
     </Compile>
